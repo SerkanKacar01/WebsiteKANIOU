@@ -15,6 +15,31 @@ import {
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
 import { Product, Category } from "@shared/schema";
 
+// Product categories with their display labels and URL paths
+const productCategories = [
+  { label: "Overgordijnen", urlPath: "overgordijnen" },
+  { label: "Vitrages", urlPath: "vitrages" },
+  { label: "Rolgordijnen", urlPath: "rolgordijnen" },
+  { label: "Duo rolgordijnen", urlPath: "duo-rolgordijnen" },
+  { label: "Textiel lamellen", urlPath: "textiel-lamellen" },
+  { label: "Kunststof lamellen", urlPath: "kunststof-lamellen" },
+  { label: "Houten jaloezieën", urlPath: "houten-jaloezieen" },
+  { label: "Kunststof jaloezieën", urlPath: "kunststof-jaloezieen" },
+  { label: "Textiel raamfolie", urlPath: "textiel-raamfolie" },
+  { label: "Houten shutters", urlPath: "houten-shutters" },
+  { label: "Inzethorren", urlPath: "inzethorren" },
+  { label: "Opzethorren", urlPath: "opzethorren" },
+  { label: "Plissé hordeuren", urlPath: "plisse-hordeuren" },
+  { label: "Plissé", urlPath: "plisse" },
+  { label: "Duo plissé", urlPath: "duo-plisse" },
+  { label: "Duo plissé voor dakramen", urlPath: "duo-plisse-dakramen" },
+  { label: "Dakraam zonweringen (Fakro, Velux)", urlPath: "dakraam-zonwering" },
+  { label: "Gordijnrails", urlPath: "gordijnrails" },
+  { label: "Gordijnroedes", urlPath: "gordijnroedes" },
+  { label: "Horren", urlPath: "horren" },
+  { label: "SQUID textiel folie", urlPath: "squid" },
+];
+
 const ProductCategoryPage = () => {
   const [, setLocation] = useLocation();
   const params = useParams();
@@ -38,15 +63,39 @@ const ProductCategoryPage = () => {
     if (categories.length > 0 && allProducts.length > 0 && category) {
       setLoading(true);
       
-      // Find matching category
-      const foundCategory = categories.find((cat: Category) => {
-        const slugifiedName = cat.name.toLowerCase().replace(/\s+/g, '-');
-        return (
-          slugifiedName === category || 
-          category === `${slugifiedName}s` || // Handle plural forms
-          category.replace(/-/g, '') === slugifiedName.replace(/\s+/g, '') // Handle dashes
-        );
-      });
+      // Find matching category based on URL
+      // Map specific URL segments to their corresponding categories
+      const urlToCategoryMap: Record<string, string> = {
+        'overgordijnen': 'Curtains',
+        'vitrages': 'Sheer Drapes',
+        'rolgordijnen': 'Sunblinds',
+        'duo-rolgordijnen': 'Sunblinds',
+        'textiel-lamellen': 'Curtains',
+        'kunststof-lamellen': 'Curtains',
+        'houten-jaloezieen': 'Curtains',
+        'kunststof-jaloezieen': 'Curtains',
+        'textiel-raamfolie': 'SQUID',
+        'houten-shutters': 'Curtains',
+        'inzethorren': 'Insect Screens',
+        'opzethorren': 'Insect Screens',
+        'plisse-hordeuren': 'Insect Screens',
+        'plisse': 'Roman Blinds',
+        'duo-plisse': 'Roman Blinds',
+        'duo-plisse-dakramen': 'Roof Window Shades',
+        'dakraam-zonwering': 'Roof Window Shades',
+        'gordijnrails': 'Curtain Rails',
+        'gordijnroedes': 'Curtain Rods',
+        'horren': 'Insect Screens',
+        'squid': 'SQUID'
+      };
+      
+      // Get the matching category name or default to the first one
+      const categoryName = urlToCategoryMap[category as string] || '';
+      
+      // Find the category object
+      const foundCategory = categories.find((cat: Category) => 
+        cat.name === categoryName
+      );
       
       if (foundCategory) {
         setCategoryData(foundCategory);
@@ -80,10 +129,13 @@ const ProductCategoryPage = () => {
   return (
     <>
       <Helmet>
-        <title>{categoryData.name} | Elegant Drapes</title>
+        {/* Use the product-specific label or fall back to category name */}
+        <title>
+          {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} | Elegant Drapes
+        </title>
         <meta
           name="description"
-          content={`Discover our premium quality ${categoryData.name.toLowerCase()} collection. ${categoryData.description}`}
+          content={`Discover our premium quality ${categoryData.name.toLowerCase()} collection. ${categoryData.description}. Request a free quote for your ${productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label.toLowerCase() || categoryData.name.toLowerCase()}.`}
         />
       </Helmet>
 
@@ -106,7 +158,10 @@ const ProductCategoryPage = () => {
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink>{categoryData.name}</BreadcrumbLink>
+                {/* Use the label from productCategories or fallback to category data */}
+                <BreadcrumbLink>
+                  {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
+                </BreadcrumbLink>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -123,7 +178,7 @@ const ProductCategoryPage = () => {
         <Container>
           <div className="max-w-2xl">
             <h1 className="font-display text-4xl md:text-5xl text-white font-semibold mb-4">
-              {categoryData.name}
+              {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
             </h1>
             <p className="font-body text-white text-lg mb-8">
               {categoryData.description}
@@ -192,10 +247,10 @@ const ProductCategoryPage = () => {
       <div id="products" className="py-16 bg-neutral-50">
         <Container>
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-6">
-            {categoryData.name} Collection
+            {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-12">
-            Explore our wide range of {categoryData.name.toLowerCase()} designed to enhance your living space with style and functionality.
+            Explore our wide range of {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} designed to enhance your living space with style and functionality.
           </p>
           
           {products.length === 0 ? (

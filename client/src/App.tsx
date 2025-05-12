@@ -21,27 +21,28 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/products" component={ProductsPage} />
       <Route path="/products/:id(\d+)" component={ProductDetail} />
+      {/* Product category pages with exact URLs as specified */}
       <Route path="/products/overgordijnen" component={ProductCategoryPage} />
       <Route path="/products/vitrages" component={ProductCategoryPage} />
       <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
       <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
       <Route path="/products/textiel-lamellen" component={ProductCategoryPage} />
       <Route path="/products/kunststof-lamellen" component={ProductCategoryPage} />
-      <Route path="/products/houten-jaloezieën" component={ProductCategoryPage} />
-      <Route path="/products/kunststof-jaloezieën" component={ProductCategoryPage} />
+      <Route path="/products/houten-jaloezieen" component={ProductCategoryPage} />
+      <Route path="/products/kunststof-jaloezieen" component={ProductCategoryPage} />
       <Route path="/products/textiel-raamfolie" component={ProductCategoryPage} />
       <Route path="/products/houten-shutters" component={ProductCategoryPage} />
       <Route path="/products/inzethorren" component={ProductCategoryPage} />
       <Route path="/products/opzethorren" component={ProductCategoryPage} />
-      <Route path="/products/plissé-hordeuren" component={ProductCategoryPage} />
-      <Route path="/products/plissé" component={ProductCategoryPage} />
-      <Route path="/products/duo-plissé" component={ProductCategoryPage} />
-      <Route path="/products/duo-plissé-voor-dakramen" component={ProductCategoryPage} />
-      <Route path="/products/dakraam-zonweringen" component={ProductCategoryPage} />
+      <Route path="/products/plisse-hordeuren" component={ProductCategoryPage} />
+      <Route path="/products/plisse" component={ProductCategoryPage} />
+      <Route path="/products/duo-plisse" component={ProductCategoryPage} />
+      <Route path="/products/duo-plisse-dakramen" component={ProductCategoryPage} />
+      <Route path="/products/dakraam-zonwering" component={ProductCategoryPage} />
       <Route path="/products/gordijnrails" component={ProductCategoryPage} />
       <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
       <Route path="/products/horren" component={ProductCategoryPage} />
-      <Route path="/products/squid-textiel-folie" component={ProductCategoryPage} />
+      <Route path="/products/squid" component={ProductCategoryPage} />
       <Route path="/products/:category" component={ProductsPage} />
       <Route path="/gallery" component={GalleryPage} />
       <Route path="/about" component={AboutPage} />

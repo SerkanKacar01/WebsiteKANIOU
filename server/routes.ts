@@ -128,7 +128,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Gallery Items
   app.get("/api/gallery", async (req: Request, res: Response) => {
     try {
-      const galleryItems = await storage.getGalleryItems();
+      const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string) : undefined;
+      let galleryItems;
+      
+      if (categoryId) {
+        galleryItems = await storage.getGalleryItemsByCategory(categoryId);
+      } else {
+        galleryItems = await storage.getGalleryItems();
+      }
+      
       res.json(galleryItems);
     } catch (error) {
       console.error("Error fetching gallery items:", error);

@@ -1,39 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GalleryItem } from "@shared/schema";
+import { GalleryItem, Category } from "@shared/schema";
 
 const GalleryPage = () => {
   const [activeTab, setActiveTab] = useState("all");
   
-  const { data: galleryItems, isLoading, error } = useQuery({
-    queryKey: ["/api/gallery"],
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["/api/categories"],
+  });
+  
+  const { data: galleryItems = [], isLoading, error, refetch } = useQuery<GalleryItem[]>({
+    queryKey: ["/api/gallery", activeTab],
+    queryFn: async () => {
+      if (activeTab === "all") {
+        const res = await fetch("/api/gallery");
+        if (!res.ok) throw new Error("Failed to fetch gallery items");
+        return res.json();
+      } else {
+        const categoryId = parseInt(activeTab);
+        const res = await fetch(`/api/gallery?categoryId=${categoryId}`);
+        if (!res.ok) throw new Error("Failed to fetch gallery items");
+        return res.json();
+      }
+    },
   });
 
-  // Filter gallery items based on the active tab
-  const filteredItems = galleryItems
-    ? activeTab === "all"
-      ? galleryItems
-      : galleryItems.filter((item: GalleryItem) => {
-          // This is just a simple example, in a real implementation,
-          // you'd have a category field on gallery items
-          switch (activeTab) {
-            case "living":
-              return item.title.toLowerCase().includes("living");
-            case "bedroom":
-              return item.title.toLowerCase().includes("bedroom");
-            case "kitchen":
-              return item.title.toLowerCase().includes("kitchen");
-            case "office":
-              return item.title.toLowerCase().includes("office");
-            default:
-              return true;
-          }
-        })
-    : [];
+  // When the active tab changes, refetch the data
+  useEffect(() => {
+    refetch();
+  }, [activeTab, refetch]);
 
   return (
     <>
@@ -49,11 +48,11 @@ const GalleryPage = () => {
         <Container>
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Our Installation Gallery
+              Product Installation Gallery
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto">
-              Browse through our portfolio of completed projects to find inspiration for your own space.
-              See how our premium window treatments transform interiors across various styles.
+              Browse through our portfolio of completed installations to find inspiration for your own space.
+              Filter by product category to see how our premium window treatments transform interiors.
             </p>
           </div>
           
@@ -63,17 +62,18 @@ const GalleryPage = () => {
             onValueChange={(value) => setActiveTab(value)}
             className="mb-8"
           >
-            <TabsList className="w-full justify-center">
-              <TabsTrigger value="all">All Spaces</TabsTrigger>
-              <TabsTrigger value="living">Living Rooms</TabsTrigger>
-              <TabsTrigger value="bedroom">Bedrooms</TabsTrigger>
-              <TabsTrigger value="kitchen">Kitchens</TabsTrigger>
-              <TabsTrigger value="office">Home Offices</TabsTrigger>
+            <TabsList className="w-full justify-center flex-wrap">
+              <TabsTrigger value="all">All Products</TabsTrigger>
+              {(categories || []).map((category: Category) => (
+                <TabsTrigger key={category.id} value={category.id.toString()}>
+                  {category.name}
+                </TabsTrigger>
+              ))}
             </TabsList>
           </Tabs>
           
           <GalleryGrid 
-            items={filteredItems} 
+            items={galleryItems} 
             isLoading={isLoading} 
             error={error as Error} 
           />

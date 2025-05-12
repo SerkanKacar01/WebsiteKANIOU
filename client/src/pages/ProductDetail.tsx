@@ -89,9 +89,7 @@ const ProductDetail = () => {
             The product you're looking for might have been removed or is temporarily unavailable.
           </p>
           <Link href="/products">
-            <a>
-              <Button>Return to Products</Button>
-            </a>
+            <Button>Return to Products</Button>
           </Link>
         </div>
       </Container>

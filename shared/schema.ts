@@ -1,6 +1,7 @@
-import { pgTable, text, serial, integer, boolean, doublePrecision, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, doublePrecision, timestamp, foreignKey, unique } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { relations } from "drizzle-orm";
 
 // Product Categories
 export const categories = pgTable("categories", {
@@ -21,7 +22,7 @@ export const products = pgTable("products", {
   description: text("description").notNull(),
   price: doublePrecision("price").notNull(),
   imageUrl: text("image_url").notNull(),
-  categoryId: integer("category_id").notNull(),
+  categoryId: integer("category_id").notNull().references(() => categories.id, { onDelete: 'cascade' }),
   isFeatured: boolean("is_featured").default(false),
   isBestSeller: boolean("is_best_seller").default(false),
   isNewArrival: boolean("is_new_arrival").default(false),
@@ -92,6 +93,18 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   id: true,
   createdAt: true,
 });
+
+// Define relations between tables
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  products: many(products),
+}));
+
+export const productsRelations = relations(products, ({ one }) => ({
+  category: one(categories, {
+    fields: [products.categoryId],
+    references: [categories.id],
+  }),
+}));
 
 // Export type definitions
 export type Category = typeof categories.$inferSelect;

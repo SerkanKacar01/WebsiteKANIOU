@@ -225,7 +225,7 @@ const Header = () => {
                       onClick={toggleDropdown}
                       onMouseEnter={() => setShowDropdown(true)}
                     >
-                      {item.label}
+                      {t(item.labelKey)}
                       <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                     </div>
                     
@@ -247,7 +247,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <a className="block px-4 py-2 text-sm text-accent font-medium">
-                                View All Products
+                                {t('nav.viewAllProducts')}
                               </a>
                             </Link>
                           </div>
@@ -264,18 +264,21 @@ const Header = () => {
                           : "text-text-dark hover:text-accent"
                       } transition-colors`}
                     >
-                      {item.label}
+                      {t(item.labelKey)}
                     </a>
                   </Link>
                 )
               )}
-              <Link href="/quote">
-                <a>
-                  <Button className="bg-secondary hover:bg-accent">
-                    Get Quote
-                  </Button>
-                </a>
-              </Link>
+              <div className="flex items-center gap-4">
+                <LanguageSelector />
+                <Link href="/quote">
+                  <a>
+                    <Button className="bg-secondary hover:bg-accent">
+                      {t('nav.quote')}
+                    </Button>
+                  </a>
+                </Link>
+              </div>
             </nav>
           )}
         </div>

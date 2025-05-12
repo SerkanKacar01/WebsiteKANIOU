@@ -32,18 +32,19 @@ const productCategories = [
   { label: "SQUID textiel folie", href: "/products/squid-textiel-folie" },
 ];
 
-const navItems = [
-  { labelKey: "nav.home", href: "/" },
-  { labelKey: "nav.products", href: "/products", hasDropdown: true },
-  { labelKey: "nav.gallery", href: "/gallery" },
-  { labelKey: "nav.about", href: "/about" },
-  { labelKey: "nav.contact", href: "/contact" },
+const getNavItems = (t: (key: string) => string) => [
+  { label: t("nav.home"), href: "/" },
+  { label: t("nav.products"), href: "/products", hasDropdown: true },
+  { label: t("nav.gallery"), href: "/gallery" },
+  { label: t("nav.about"), href: "/about" },
+  { label: t("nav.contact"), href: "/contact" },
 ];
 
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
+  const navItems = getNavItems(t);
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -149,7 +150,7 @@ const Header = () => {
                           } cursor-pointer`}
                           onClick={toggleMobileSubmenu}
                         >
-                          {t(item.labelKey)}
+                          {item.label}
                           <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
                         </div>
                         
@@ -192,7 +193,7 @@ const Header = () => {
                           }`}
                           onClick={handleCloseSheet}
                         >
-                          {t(item.labelKey)}
+                          {item.label}
                         </a>
                       </Link>
                     )
@@ -204,7 +205,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        {t('nav.quote')}
+                        {t("nav.quote")}
                       </Button>
                     </a>
                   </Link>
@@ -225,7 +226,7 @@ const Header = () => {
                       onClick={toggleDropdown}
                       onMouseEnter={() => setShowDropdown(true)}
                     >
-                      {t(item.labelKey)}
+                      {item.label}
                       <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                     </div>
                     
@@ -264,7 +265,7 @@ const Header = () => {
                           : "text-text-dark hover:text-accent"
                       } transition-colors`}
                     >
-                      {t(item.labelKey)}
+                      {item.label}
                     </a>
                   </Link>
                 )
@@ -274,7 +275,7 @@ const Header = () => {
                 <Link href="/quote">
                   <a>
                     <Button className="bg-secondary hover:bg-accent">
-                      {t('nav.quote')}
+                      {t("nav.quote")}
                     </Button>
                   </a>
                 </Link>

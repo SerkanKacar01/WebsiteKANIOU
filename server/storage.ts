@@ -1,0 +1,400 @@
+import {
+  categories,
+  Category,
+  InsertCategory,
+  products,
+  Product,
+  InsertProduct,
+  galleryItems,
+  GalleryItem,
+  InsertGalleryItem,
+  testimonials,
+  Testimonial,
+  InsertTestimonial,
+  quoteRequests,
+  QuoteRequest,
+  InsertQuoteRequest,
+  contactSubmissions,
+  ContactSubmission,
+  InsertContactSubmission,
+} from "@shared/schema";
+
+export interface IStorage {
+  // Categories
+  getCategories(): Promise<Category[]>;
+  getCategoryById(id: number): Promise<Category | undefined>;
+  createCategory(category: InsertCategory): Promise<Category>;
+  
+  // Products
+  getProducts(): Promise<Product[]>;
+  getProductById(id: number): Promise<Product | undefined>;
+  getProductsByCategory(categoryId: number): Promise<Product[]>;
+  getFeaturedProducts(): Promise<Product[]>;
+  createProduct(product: InsertProduct): Promise<Product>;
+  
+  // Gallery
+  getGalleryItems(): Promise<GalleryItem[]>;
+  getGalleryItemById(id: number): Promise<GalleryItem | undefined>;
+  createGalleryItem(item: InsertGalleryItem): Promise<GalleryItem>;
+  
+  // Testimonials
+  getTestimonials(): Promise<Testimonial[]>;
+  getTestimonialById(id: number): Promise<Testimonial | undefined>;
+  createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
+  
+  // Quote Requests
+  createQuoteRequest(request: InsertQuoteRequest): Promise<QuoteRequest>;
+  getQuoteRequests(): Promise<QuoteRequest[]>;
+  
+  // Contact Submissions
+  createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
+  getContactSubmissions(): Promise<ContactSubmission[]>;
+}
+
+export class MemStorage implements IStorage {
+  private categories: Map<number, Category>;
+  private products: Map<number, Product>;
+  private galleryItems: Map<number, GalleryItem>;
+  private testimonials: Map<number, Testimonial>;
+  private quoteRequests: Map<number, QuoteRequest>;
+  private contactSubmissions: Map<number, ContactSubmission>;
+  
+  private categoryId: number;
+  private productId: number;
+  private galleryItemId: number;
+  private testimonialId: number;
+  private quoteRequestId: number;
+  private contactSubmissionId: number;
+  
+  constructor() {
+    this.categories = new Map();
+    this.products = new Map();
+    this.galleryItems = new Map();
+    this.testimonials = new Map();
+    this.quoteRequests = new Map();
+    this.contactSubmissions = new Map();
+    
+    this.categoryId = 1;
+    this.productId = 1;
+    this.galleryItemId = 1;
+    this.testimonialId = 1;
+    this.quoteRequestId = 1;
+    this.contactSubmissionId = 1;
+    
+    // Seed with initial data
+    this.seedData();
+  }
+  
+  // Categories
+  async getCategories(): Promise<Category[]> {
+    return Array.from(this.categories.values());
+  }
+  
+  async getCategoryById(id: number): Promise<Category | undefined> {
+    return this.categories.get(id);
+  }
+  
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const id = this.categoryId++;
+    const newCategory = { ...category, id };
+    this.categories.set(id, newCategory);
+    return newCategory;
+  }
+  
+  // Products
+  async getProducts(): Promise<Product[]> {
+    return Array.from(this.products.values());
+  }
+  
+  async getProductById(id: number): Promise<Product | undefined> {
+    return this.products.get(id);
+  }
+  
+  async getProductsByCategory(categoryId: number): Promise<Product[]> {
+    return Array.from(this.products.values()).filter(
+      (product) => product.categoryId === categoryId
+    );
+  }
+  
+  async getFeaturedProducts(): Promise<Product[]> {
+    return Array.from(this.products.values()).filter(
+      (product) => product.isFeatured
+    );
+  }
+  
+  async createProduct(product: InsertProduct): Promise<Product> {
+    const id = this.productId++;
+    const newProduct = { ...product, id };
+    this.products.set(id, newProduct);
+    return newProduct;
+  }
+  
+  // Gallery
+  async getGalleryItems(): Promise<GalleryItem[]> {
+    return Array.from(this.galleryItems.values());
+  }
+  
+  async getGalleryItemById(id: number): Promise<GalleryItem | undefined> {
+    return this.galleryItems.get(id);
+  }
+  
+  async createGalleryItem(item: InsertGalleryItem): Promise<GalleryItem> {
+    const id = this.galleryItemId++;
+    const newItem = { ...item, id };
+    this.galleryItems.set(id, newItem);
+    return newItem;
+  }
+  
+  // Testimonials
+  async getTestimonials(): Promise<Testimonial[]> {
+    return Array.from(this.testimonials.values());
+  }
+  
+  async getTestimonialById(id: number): Promise<Testimonial | undefined> {
+    return this.testimonials.get(id);
+  }
+  
+  async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
+    const id = this.testimonialId++;
+    const newTestimonial = { ...testimonial, id };
+    this.testimonials.set(id, newTestimonial);
+    return newTestimonial;
+  }
+  
+  // Quote Requests
+  async createQuoteRequest(request: InsertQuoteRequest): Promise<QuoteRequest> {
+    const id = this.quoteRequestId++;
+    const createdAt = new Date();
+    const newRequest = { ...request, id, createdAt };
+    this.quoteRequests.set(id, newRequest);
+    return newRequest;
+  }
+  
+  async getQuoteRequests(): Promise<QuoteRequest[]> {
+    return Array.from(this.quoteRequests.values());
+  }
+  
+  // Contact Submissions
+  async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
+    const id = this.contactSubmissionId++;
+    const createdAt = new Date();
+    const newSubmission = { ...submission, id, createdAt };
+    this.contactSubmissions.set(id, newSubmission);
+    return newSubmission;
+  }
+  
+  async getContactSubmissions(): Promise<ContactSubmission[]> {
+    return Array.from(this.contactSubmissions.values());
+  }
+  
+  // Seed with initial data
+  private seedData() {
+    // Seed Categories
+    const curtainsCategory = this.seedCategory({
+      name: "Curtains",
+      description: "Classic elegance for any room",
+      imageUrl: "https://pixabay.com/get/ga0f2e660437ddd1c90e6416e545e80dc57cc91e9911e81b9186604d9fbf2d6fcc18ee1b212dc3e177204c00ce7977370edb3a3ba6b854f008c9592fd61d83922_1280.jpg"
+    });
+    
+    const sunblindsCategory = this.seedCategory({
+      name: "Sunblinds",
+      description: "Perfect light control solution",
+      imageUrl: "https://pixabay.com/get/g0db340fa81f283e739007d19afdf12d8d66f8659e94c58f18e6336c3c175f5e02cf316d5b656a07e68c7e1c54b9679c483bbf1a01eabfa1aeeb9015126371509_1280.jpg"
+    });
+    
+    const romanBlindsCategory = this.seedCategory({
+      name: "Roman Blinds",
+      description: "Timeless style and functionality",
+      imageUrl: "https://images.unsplash.com/photo-1611048268330-53de574cae3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000"
+    });
+    
+    const sheerDrapesCategory = this.seedCategory({
+      name: "Sheer Drapes",
+      description: "Subtle elegance and light diffusion",
+      imageUrl: "https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000"
+    });
+    
+    // Seed Products
+    this.seedProduct({
+      name: "Milano Linen Curtains",
+      description: "Premium linen curtains with a classic pleated heading, perfect for adding elegance to any room.",
+      price: 129.99,
+      imageUrl: "https://images.unsplash.com/photo-1518012312832-96aea3c91144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: curtainsCategory.id,
+      isFeatured: true,
+      isBestSeller: true,
+      isNewArrival: false,
+      material: "100% Linen",
+      dimensions: "Standard and custom sizes available",
+      features: ["Machine Washable", "Multiple Sizes", "Pleated Heading"],
+      colors: ["#D8C0A8", "#B8C5D6", "#CCD6CA"],
+    });
+    
+    this.seedProduct({
+      name: "Nordic Roller Blinds",
+      description: "Modern roller blinds with minimal design, providing excellent light control for any space.",
+      price: 79.99,
+      imageUrl: "https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: sunblindsCategory.id,
+      isFeatured: true,
+      isBestSeller: false,
+      isNewArrival: false,
+      material: "Polyester",
+      dimensions: "Width: 60-180cm, Drop: 160-200cm",
+      features: ["Blackout Option", "Easy Installation", "UV Protection"],
+      colors: ["#FFFFFF", "#F5F0E6", "#E6E6E6"],
+    });
+    
+    this.seedProduct({
+      name: "Tuscany Roman Blinds",
+      description: "Luxurious textured Roman blinds adding sophistication and warmth to your interior space.",
+      price: 109.99,
+      imageUrl: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: romanBlindsCategory.id,
+      isFeatured: true,
+      isBestSeller: false,
+      isNewArrival: true,
+      material: "Textured Fabric",
+      dimensions: "Width: 40-120cm, Drop: 100-180cm",
+      features: ["Textured Fabric", "Cordless Option", "Custom Sizes"],
+      colors: ["#D8C8B8", "#B8B8B8", "#E8D8C8"],
+    });
+    
+    this.seedProduct({
+      name: "Aria Sheer Curtains",
+      description: "Lightweight, flowing sheer curtains that filter light beautifully while maintaining privacy.",
+      price: 89.99,
+      imageUrl: "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: sheerDrapesCategory.id,
+      isFeatured: true,
+      isBestSeller: false,
+      isNewArrival: false,
+      material: "Sheer Fabric",
+      dimensions: "Width: 140-300cm, Drop: 220-260cm",
+      features: ["Sheer Fabric", "Rod Pocket Top", "Extra Long"],
+      colors: ["#FFFFFF", "#F8F0E8", "#E0E8F0"],
+    });
+    
+    this.seedProduct({
+      name: "Aspen Wooden Blinds",
+      description: "Premium wooden blinds with wide slats for a natural, warm aesthetic in any room.",
+      price: 149.99,
+      imageUrl: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: sunblindsCategory.id,
+      isFeatured: true,
+      isBestSeller: false,
+      isNewArrival: false,
+      material: "Real Wood",
+      dimensions: "Width: 40-240cm, Drop: 100-200cm",
+      features: ["Real Wood", "50mm Slats", "Cord Control"],
+      colors: ["#9A7B58", "#D8C8A8", "#5C4A38"],
+    });
+    
+    this.seedProduct({
+      name: "Metro Vertical Blinds",
+      description: "Sleek vertical blinds ideal for large windows and patio doors, with precise light control.",
+      price: 119.99,
+      imageUrl: "https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: sunblindsCategory.id,
+      isFeatured: true,
+      isBestSeller: false,
+      isNewArrival: false,
+      material: "Flame Retardant Fabric",
+      dimensions: "Width: 100-300cm, Drop: 100-260cm",
+      features: ["Flame Retardant", "Wand Control", "89mm Slats"],
+      colors: ["#F0F0F0", "#D0D0D0", "#404040"],
+    });
+    
+    // Seed Gallery Items
+    this.seedGalleryItem({
+      title: "Luxury Living Room",
+      description: "Floor-to-ceiling silk curtains",
+      imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+    });
+    
+    this.seedGalleryItem({
+      title: "Modern Home Office",
+      description: "Wooden Venetian blinds",
+      imageUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+    });
+    
+    this.seedGalleryItem({
+      title: "Contemporary Kitchen",
+      description: "Minimalist roller blinds",
+      imageUrl: "https://images.unsplash.com/photo-1556912167-f556f1f39fdf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+    });
+    
+    this.seedGalleryItem({
+      title: "Cozy Bedroom",
+      description: "Textured Roman blinds",
+      imageUrl: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+    });
+    
+    this.seedGalleryItem({
+      title: "Bright Dining Room",
+      description: "Light-filtering sheer curtains",
+      imageUrl: "https://images.unsplash.com/photo-1617806118233-18e1de247200?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+    });
+    
+    this.seedGalleryItem({
+      title: "Spacious Sunroom",
+      description: "Adjustable vertical blinds",
+      imageUrl: "https://images.unsplash.com/photo-1599619585752-c3edb42a414c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+    });
+    
+    // Seed Testimonials
+    this.seedTestimonial({
+      name: "Sarah Johnson",
+      location: "New York, NY",
+      content: "The curtains I ordered are absolutely stunning and the quality exceeds my expectations. The customer service team was incredibly helpful with selecting the right size and fabric for my living room. I couldn't be happier with the result!",
+      rating: 5,
+      imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=300",
+    });
+    
+    this.seedTestimonial({
+      name: "Michael Roberts",
+      location: "Chicago, IL",
+      content: "We needed custom blinds for our unusually shaped windows and the team at Elegant Drapes went above and beyond to make it happen. The installation was perfect and the blinds look fantastic!",
+      rating: 5,
+      imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=300",
+    });
+    
+    this.seedTestimonial({
+      name: "Emily Chen",
+      location: "San Francisco, CA",
+      content: "The Roman blinds I purchased are of exceptional quality and transform the look of my home office. The fabric is beautiful and the mechanism works flawlessly. Highly recommend!",
+      rating: 5,
+      imageUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=300",
+    });
+  }
+  
+  private seedCategory(category: InsertCategory): Category {
+    const id = this.categoryId++;
+    const newCategory = { ...category, id };
+    this.categories.set(id, newCategory);
+    return newCategory;
+  }
+  
+  private seedProduct(product: InsertProduct): Product {
+    const id = this.productId++;
+    const newProduct = { ...product, id };
+    this.products.set(id, newProduct);
+    return newProduct;
+  }
+  
+  private seedGalleryItem(item: InsertGalleryItem): GalleryItem {
+    const id = this.galleryItemId++;
+    const newItem = { ...item, id };
+    this.galleryItems.set(id, newItem);
+    return newItem;
+  }
+  
+  private seedTestimonial(testimonial: InsertTestimonial): Testimonial {
+    const id = this.testimonialId++;
+    const newTestimonial = { ...testimonial, id };
+    this.testimonials.set(id, newTestimonial);
+    return newTestimonial;
+  }
+}
+
+export const storage = new MemStorage();

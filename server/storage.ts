@@ -37,6 +37,7 @@ export interface IStorage {
   // Gallery
   getGalleryItems(): Promise<GalleryItem[]>;
   getGalleryItemById(id: number): Promise<GalleryItem | undefined>;
+  getGalleryItemsByCategory(categoryId: number): Promise<GalleryItem[]>;
   createGalleryItem(item: InsertGalleryItem): Promise<GalleryItem>;
   
   // Testimonials
@@ -100,6 +101,10 @@ export class DatabaseStorage implements IStorage {
   async getGalleryItemById(id: number): Promise<GalleryItem | undefined> {
     const result = await db.select().from(galleryItems).where(eq(galleryItems.id, id));
     return result[0];
+  }
+  
+  async getGalleryItemsByCategory(categoryId: number): Promise<GalleryItem[]> {
+    return await db.select().from(galleryItems).where(eq(galleryItems.categoryId, categoryId));
   }
   
   async createGalleryItem(item: InsertGalleryItem): Promise<GalleryItem> {
@@ -241,12 +246,29 @@ async function seedInitialData(storage: DatabaseStorage) {
       title: "Luxury Living Room",
       description: "Floor-to-ceiling silk curtains",
       imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: curtainsCategory.id,
     });
     
     await storage.createGalleryItem({
       title: "Modern Home Office",
       description: "Wooden Venetian blinds",
       imageUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: sunblindsCategory.id,
+    });
+    
+    // Add more gallery items for each category
+    await storage.createGalleryItem({
+      title: "Elegant Bedroom",
+      description: "Classic roman blinds installation",
+      imageUrl: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: romanBlindsCategory.id,
+    });
+    
+    await storage.createGalleryItem({
+      title: "Bright Kitchen Space",
+      description: "Sheer curtains allowing natural light",
+      imageUrl: "https://images.unsplash.com/photo-1556912173-3bb406ef7e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      categoryId: sheerDrapesCategory.id,
     });
     
     // Seed Testimonials

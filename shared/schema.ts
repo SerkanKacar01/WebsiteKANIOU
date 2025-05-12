@@ -42,6 +42,7 @@ export const galleryItems = pgTable("gallery_items", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   imageUrl: text("image_url").notNull(),
+  categoryId: integer("category_id").references(() => categories.id, { onDelete: 'cascade' }),
 });
 
 export const insertGalleryItemSchema = createInsertSchema(galleryItems).omit({
@@ -97,11 +98,19 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
 // Define relations between tables
 export const categoriesRelations = relations(categories, ({ many }) => ({
   products: many(products),
+  galleryItems: many(galleryItems),
 }));
 
 export const productsRelations = relations(products, ({ one }) => ({
   category: one(categories, {
     fields: [products.categoryId],
+    references: [categories.id],
+  }),
+}));
+
+export const galleryItemsRelations = relations(galleryItems, ({ one }) => ({
+  category: one(categories, {
+    fields: [galleryItems.categoryId],
     references: [categories.id],
   }),
 }));

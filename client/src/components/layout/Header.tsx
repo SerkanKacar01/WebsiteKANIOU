@@ -109,11 +109,11 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between py-4">
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 cursor-pointer">
                 <span className="font-display text-2xl md:text-3xl font-semibold text-primary">
                   Elegant<span className="text-secondary">Drapes</span>
                 </span>
-              </a>
+              </div>
             </Link>
           </div>
 
@@ -159,24 +159,24 @@ const Header = () => {
                             {productCategories.map((category) => (
                               <div key={category.href}>
                                 <Link href={category.href}>
-                                  <a 
-                                    className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors"
+                                  <div 
+                                    className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
                                     {category.label}
-                                  </a>
+                                  </div>
                                 </Link>
                               </div>
                             ))}
                             <div className="pt-2 mt-2 border-t border-neutral-200">
                               <div>
                                 <Link href="/products">
-                                  <a 
-                                    className="font-body text-sm block py-1.5 text-accent font-medium"
+                                  <div 
+                                    className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
                                     View All Products
-                                  </a>
+                                  </div>
                                 </Link>
                               </div>
                             </div>
@@ -238,18 +238,18 @@ const Header = () => {
                         {productCategories.map((category) => (
                           <div key={category.href} className="dropdown-menu-item">
                             <Link href={category.href}>
-                              <a className="block px-4 py-2 text-sm text-text-dark hover:text-accent">
+                              <div className="block px-4 py-2 text-sm text-text-dark hover:text-accent cursor-pointer">
                                 {category.label}
-                              </a>
+                              </div>
                             </Link>
                           </div>
                         ))}
                         <div className="border-t border-neutral-200 mt-2 pt-2">
                           <div className="dropdown-menu-item">
                             <Link href="/products">
-                              <a className="block px-4 py-2 text-sm text-accent font-medium">
+                              <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
                                 View All Products
-                              </a>
+                              </div>
                             </Link>
                           </div>
                         </div>

@@ -1,14 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
+
+const productCategories = [
+  { label: "Overgordijnen", href: "/products/overgordijnen" },
+  { label: "Vitrages", href: "/products/vitrages" },
+  { label: "Rolgordijnen", href: "/products/rolgordijnen" },
+  { label: "Duo rolgordijnen", href: "/products/duo-rolgordijnen" },
+  { label: "Textiel lamellen", href: "/products/textiel-lamellen" },
+  { label: "Kunststof lamellen", href: "/products/kunststof-lamellen" },
+  { label: "Houten jaloezieën", href: "/products/houten-jaloezieën" },
+  { label: "Kunststof jaloezieën", href: "/products/kunststof-jaloezieën" },
+  { label: "Textiel raamfolie", href: "/products/textiel-raamfolie" },
+  { label: "Houten shutters", href: "/products/houten-shutters" },
+  { label: "Inzethorren", href: "/products/inzethorren" },
+  { label: "Opzethorren", href: "/products/opzethorren" },
+  { label: "Plissé hordeuren", href: "/products/plissé-hordeuren" },
+  { label: "Plissé", href: "/products/plissé" },
+  { label: "Duo plissé", href: "/products/duo-plissé" },
+  { label: "Duo plissé voor dakramen", href: "/products/duo-plissé-voor-dakramen" },
+  { label: "Dakraam zonweringen (Fakro, Velux)", href: "/products/dakraam-zonweringen" },
+  { label: "Gordijnrails", href: "/products/gordijnrails" },
+  { label: "Gordijnroedes", href: "/products/gordijnroedes" },
+  { label: "Horren", href: "/products/horren" },
+  { label: "SQUID textiel folie", href: "/products/squid-textiel-folie" },
+];
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
+  { label: "Products", href: "/products", hasDropdown: true },
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -19,6 +43,9 @@ const Header = () => {
   const isMobile = useMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showMobileSubmenu, setShowMobileSubmenu] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,14 +63,36 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleCloseSheet = () => {
     setSheetOpen(false);
+    setShowMobileSubmenu(false);
   };
 
   const isActive = (href: string) => {
     if (href === "/" && location === "/") return true;
     if (href !== "/" && location.startsWith(href)) return true;
     return false;
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const toggleMobileSubmenu = () => {
+    setShowMobileSubmenu(!showMobileSubmenu);
   };
 
   return (
@@ -85,20 +134,61 @@ const Header = () => {
                       <X className="h-5 w-5" />
                     </Button>
                   </div>
-                  {navItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <a
-                        className={`font-body py-2 border-b border-neutral-200 ${
-                          isActive(item.href)
-                            ? "text-accent font-medium"
-                            : "text-text-dark"
-                        }`}
-                        onClick={handleCloseSheet}
-                      >
-                        {item.label}
-                      </a>
-                    </Link>
-                  ))}
+                  
+                  {navItems.map((item) => 
+                    item.hasDropdown ? (
+                      <div key={item.href} className="py-2 border-b border-neutral-200">
+                        <div 
+                          className={`font-body flex items-center justify-between ${
+                            isActive(item.href) ? "text-accent font-medium" : "text-text-dark"
+                          } cursor-pointer`}
+                          onClick={toggleMobileSubmenu}
+                        >
+                          {item.label}
+                          <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
+                        </div>
+                        
+                        {showMobileSubmenu && (
+                          <div className="mt-3 ml-2 space-y-1 max-h-80 overflow-y-auto border-l-2 border-neutral-200 pl-3">
+                            {productCategories.map((category) => (
+                              <Link key={category.href} href={category.href}>
+                                <a 
+                                  className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors"
+                                  onClick={handleCloseSheet}
+                                >
+                                  {category.label}
+                                </a>
+                              </Link>
+                            ))}
+                            <div className="pt-2 mt-2 border-t border-neutral-200">
+                              <Link href="/products">
+                                <a 
+                                  className="font-body text-sm block py-1.5 text-accent font-medium"
+                                  onClick={handleCloseSheet}
+                                >
+                                  View All Products
+                                </a>
+                              </Link>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <Link key={item.href} href={item.href}>
+                        <a
+                          className={`font-body py-2 border-b border-neutral-200 ${
+                            isActive(item.href)
+                              ? "text-accent font-medium"
+                              : "text-text-dark"
+                          }`}
+                          onClick={handleCloseSheet}
+                        >
+                          {item.label}
+                        </a>
+                      </Link>
+                    )
+                  )}
+                  
                   <Link href="/quote">
                     <a className="mt-4">
                       <Button
@@ -114,19 +204,58 @@ const Header = () => {
             </Sheet>
           ) : (
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <a
-                    className={`font-body ${
-                      isActive(item.href)
-                        ? "text-accent font-medium"
-                        : "text-text-dark hover:text-accent"
-                    } transition-colors`}
-                  >
-                    {item.label}
-                  </a>
-                </Link>
-              ))}
+              {navItems.map((item) => 
+                item.hasDropdown ? (
+                  <div key={item.href} className="relative" ref={dropdownRef}>
+                    <div 
+                      className={`font-body flex items-center cursor-pointer ${
+                        isActive(item.href) || showDropdown
+                          ? "text-accent font-medium"
+                          : "text-text-dark hover:text-accent"
+                      } transition-colors`}
+                      onClick={toggleDropdown}
+                      onMouseEnter={() => setShowDropdown(true)}
+                    >
+                      {item.label}
+                      <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                    </div>
+                    
+                    {showDropdown && (
+                      <div 
+                        className="absolute left-0 mt-2 w-64 bg-white rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
+                        onMouseLeave={() => setShowDropdown(false)}
+                      >
+                        {productCategories.map((category) => (
+                          <Link key={category.href} href={category.href}>
+                            <a className="block px-4 py-2 text-sm text-text-dark hover:text-accent dropdown-menu-item">
+                              {category.label}
+                            </a>
+                          </Link>
+                        ))}
+                        <div className="border-t border-neutral-200 mt-2 pt-2">
+                          <Link href="/products">
+                            <a className="block px-4 py-2 text-sm text-accent font-medium dropdown-menu-item">
+                              View All Products
+                            </a>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link key={item.href} href={item.href}>
+                    <a
+                      className={`font-body ${
+                        isActive(item.href)
+                          ? "text-accent font-medium"
+                          : "text-text-dark hover:text-accent"
+                      } transition-colors`}
+                    >
+                      {item.label}
+                    </a>
+                  </Link>
+                )
+              )}
               <Link href="/quote">
                 <a>
                   <Button className="bg-secondary hover:bg-accent">

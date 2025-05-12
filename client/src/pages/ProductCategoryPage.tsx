@@ -129,19 +129,19 @@ const ProductCategoryPage = () => {
               {categoryData.description}
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button 
-                className="bg-primary hover:bg-primary/90 text-white"
-                onClick={() => window.location.href = "/quote"}
-              >
-                Request a Quote
-              </Button>
-              <Button 
-                variant="outline" 
-                className="bg-white/10 text-white border-white hover:bg-white/20"
-                onClick={() => window.location.href = "#products"}
-              >
-                View Products
-              </Button>
+              <Link href="/quote">
+                <Button className="bg-primary hover:bg-primary/90 text-white">
+                  Request a Quote
+                </Button>
+              </Link>
+              <a href="#products">
+                <Button 
+                  variant="outline" 
+                  className="bg-white/10 text-white border-white hover:bg-white/20"
+                >
+                  View Products
+                </Button>
+              </a>
             </div>
           </div>
         </Container>
@@ -206,34 +206,30 @@ const ProductCategoryPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product) => (
                 <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02]">
-                  <Link href={`/products/${product.id}`}>
-                    <a>
-                      <div className="aspect-[4/3] relative overflow-hidden">
-                        <img 
-                          src={product.imageUrl} 
-                          alt={product.name} 
-                          className="w-full h-full object-cover transition-transform hover:scale-105"
-                        />
-                        {product.isNewArrival && (
-                          <div className="absolute top-2 right-2 bg-accent text-white text-xs px-2 py-1 rounded">
-                            New Arrival
-                          </div>
-                        )}
-                        {product.isBestSeller && (
-                          <div className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
-                            Best Seller
-                          </div>
-                        )}
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <Link href={`/products/${product.id}`}>
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name} 
+                        className="w-full h-full object-cover transition-transform hover:scale-105"
+                      />
+                    </Link>
+                    {product.isNewArrival && (
+                      <div className="absolute top-2 right-2 bg-accent text-white text-xs px-2 py-1 rounded">
+                        New Arrival
                       </div>
-                    </a>
-                  </Link>
+                    )}
+                    {product.isBestSeller && (
+                      <div className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
+                        Best Seller
+                      </div>
+                    )}
+                  </div>
                   <div className="p-4">
                     <Link href={`/products/${product.id}`}>
-                      <a>
-                        <h3 className="font-display text-lg font-medium mb-2 hover:text-primary transition-colors">
-                          {product.name}
-                        </h3>
-                      </a>
+                      <h3 className="font-display text-lg font-medium mb-2 hover:text-primary transition-colors">
+                        {product.name}
+                      </h3>
                     </Link>
                     <p className="text-text-medium text-sm mb-3 line-clamp-2">
                       {product.description}
@@ -241,9 +237,9 @@ const ProductCategoryPage = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-accent font-semibold">${product.price.toFixed(2)}</span>
                       <Link href={`/products/${product.id}`}>
-                        <a className="text-primary text-sm font-medium hover:underline">
+                        <span className="text-primary text-sm font-medium hover:underline cursor-pointer">
                           View Details
-                        </a>
+                        </span>
                       </Link>
                     </div>
                   </div>
@@ -254,11 +250,9 @@ const ProductCategoryPage = () => {
           
           <div className="text-center mt-12">
             <Link href="/quote">
-              <a>
-                <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Request a Quote
-                </Button>
-              </a>
+              <Button className="bg-primary hover:bg-primary/90 text-white">
+                Request a Quote
+              </Button>
             </Link>
           </div>
         </Container>
@@ -333,18 +327,14 @@ const ProductCategoryPage = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/quote">
-                <a>
-                  <Button className="bg-white text-primary hover:bg-white/90">
-                    Request a Quote
-                  </Button>
-                </a>
+                <Button className="bg-white text-primary hover:bg-white/90">
+                  Request a Quote
+                </Button>
               </Link>
               <Link href="/contact">
-                <a>
-                  <Button variant="outline" className="border-white text-white hover:bg-white/20">
-                    Contact Us
-                  </Button>
-                </a>
+                <Button variant="outline" className="border-white text-white hover:bg-white/20">
+                  Contact Us
+                </Button>
               </Link>
             </div>
           </div>

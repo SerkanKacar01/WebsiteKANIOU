@@ -80,7 +80,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               />
             ))}
           </div>
-          <Link href={`/products/${product.id}`}>
+          <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
             <a className="font-body inline-flex items-center text-primary hover:text-accent">
               View Details <ArrowRight className="ml-2 h-4 w-4" />
             </a>

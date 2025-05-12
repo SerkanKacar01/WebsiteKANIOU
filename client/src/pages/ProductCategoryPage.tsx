@@ -262,7 +262,7 @@ const ProductCategoryPage = () => {
               {products.map((product) => (
                 <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02]">
                   <div className="aspect-[4/3] relative overflow-hidden">
-                    <Link href={`/products/${product.id}`}>
+                    <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
@@ -281,7 +281,7 @@ const ProductCategoryPage = () => {
                     )}
                   </div>
                   <div className="p-4">
-                    <Link href={`/products/${product.id}`}>
+                    <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <h3 className="font-display text-lg font-medium mb-2 hover:text-primary transition-colors">
                         {product.name}
                       </h3>
@@ -291,7 +291,7 @@ const ProductCategoryPage = () => {
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-accent font-semibold">${product.price.toFixed(2)}</span>
-                      <Link href={`/products/${product.id}`}>
+                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                         <span className="text-primary text-sm font-medium hover:underline cursor-pointer">
                           View Details
                         </span>

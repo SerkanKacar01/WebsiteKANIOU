@@ -155,7 +155,17 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // Translation function
   const t = (key: string): string => {
-    return currentTranslations[key] || key;
+    if (!key) return '';
+    // Check if the translation exists
+    if (currentTranslations && currentTranslations[key]) {
+      return currentTranslations[key];
+    }
+    // Fallback to English if the current language doesn't have the translation
+    if (language !== 'en' && translations['en'] && translations['en'][key]) {
+      return translations['en'][key];
+    }
+    // Return key without the prefix as last resort
+    return key.split('.').pop() || key;
   };
 
   return (

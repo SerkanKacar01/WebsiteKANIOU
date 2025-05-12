@@ -258,26 +258,24 @@ const Header = () => {
                   </div>
                 ) : (
                   <Link key={item.href} href={item.href}>
-                    <a
+                    <div
                       className={`font-body ${
                         isActive(item.href)
                           ? "text-accent font-medium"
                           : "text-text-dark hover:text-accent"
-                      } transition-colors`}
+                      } transition-colors cursor-pointer`}
                     >
                       {item.label}
-                    </a>
+                    </div>
                   </Link>
                 )
               )}
               <div className="flex items-center gap-4">
                 <LanguageSelector />
                 <Link href="/quote">
-                  <a>
-                    <Button className="bg-secondary hover:bg-accent">
-                      Get Quote
-                    </Button>
-                  </a>
+                  <Button className="bg-secondary hover:bg-accent">
+                    Get Quote
+                  </Button>
                 </Link>
               </div>
             </nav>

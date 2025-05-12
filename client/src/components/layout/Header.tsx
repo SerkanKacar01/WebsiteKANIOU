@@ -5,6 +5,8 @@ import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
 
 const productCategories = [
   { label: "Overgordijnen", href: "/products/overgordijnen" },
@@ -31,16 +33,17 @@ const productCategories = [
 ];
 
 const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/products", hasDropdown: true },
-  { label: "Gallery", href: "/gallery" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { labelKey: "nav.home", href: "/" },
+  { labelKey: "nav.products", href: "/products", hasDropdown: true },
+  { labelKey: "nav.gallery", href: "/gallery" },
+  { labelKey: "nav.about", href: "/about" },
+  { labelKey: "nav.contact", href: "/contact" },
 ];
 
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -135,6 +138,8 @@ const Header = () => {
                     </Button>
                   </div>
                   
+                  <LanguageSelector isMobile={true} onClose={handleCloseSheet} />
+                
                   {navItems.map((item) => 
                     item.hasDropdown ? (
                       <div key={item.href} className="py-2 border-b border-neutral-200">
@@ -144,7 +149,7 @@ const Header = () => {
                           } cursor-pointer`}
                           onClick={toggleMobileSubmenu}
                         >
-                          {item.label}
+                          {t(item.labelKey)}
                           <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
                         </div>
                         
@@ -169,7 +174,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium"
                                     onClick={handleCloseSheet}
                                   >
-                                    View All Products
+                                    {t('nav.viewAllProducts')}
                                   </a>
                                 </Link>
                               </div>
@@ -187,7 +192,7 @@ const Header = () => {
                           }`}
                           onClick={handleCloseSheet}
                         >
-                          {item.label}
+                          {t(item.labelKey)}
                         </a>
                       </Link>
                     )
@@ -199,7 +204,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        Get Quote
+                        {t('nav.quote')}
                       </Button>
                     </a>
                   </Link>

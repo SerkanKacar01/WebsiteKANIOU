@@ -378,7 +378,7 @@ const ProductCategoryPage = () => {
               Ready to Transform Your Space?
             </h2>
             <p className="font-body mb-8">
-              Contact us today for a personalized consultation and free quote. Our experts will help you find the perfect {categoryData.name.toLowerCase()} solution for your home or business.
+              Contact us today for a personalized consultation and free quote. Our experts will help you find the perfect {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} solution for your home or business.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/quote">

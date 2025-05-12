@@ -32,19 +32,19 @@ const productCategories = [
   { label: "SQUID textiel folie", href: "/products/squid-textiel-folie" },
 ];
 
-const getNavItems = (t: (key: string) => string) => [
-  { label: t("nav.home"), href: "/" },
-  { label: t("nav.products"), href: "/products", hasDropdown: true },
-  { label: t("nav.gallery"), href: "/gallery" },
-  { label: t("nav.about"), href: "/about" },
-  { label: t("nav.contact"), href: "/contact" },
-];
-
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
-  const navItems = getNavItems(t);
+  
+  // Define navigation items directly with proper translations
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products", hasDropdown: true },
+    { label: "Gallery", href: "/gallery" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -175,7 +175,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium"
                                     onClick={handleCloseSheet}
                                   >
-                                    {t('nav.viewAllProducts')}
+                                    View All Products
                                   </a>
                                 </Link>
                               </div>
@@ -205,7 +205,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        {t("nav.quote")}
+                        Get Quote
                       </Button>
                     </a>
                   </Link>
@@ -248,7 +248,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <a className="block px-4 py-2 text-sm text-accent font-medium">
-                                {t('nav.viewAllProducts')}
+                                View All Products
                               </a>
                             </Link>
                           </div>
@@ -275,7 +275,7 @@ const Header = () => {
                 <Link href="/quote">
                   <a>
                     <Button className="bg-secondary hover:bg-accent">
-                      {t("nav.quote")}
+                      Get Quote
                     </Button>
                   </a>
                 </Link>

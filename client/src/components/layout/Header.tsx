@@ -151,24 +151,28 @@ const Header = () => {
                         {showMobileSubmenu && (
                           <div className="mt-3 ml-2 space-y-1 max-h-80 overflow-y-auto border-l-2 border-neutral-200 pl-3">
                             {productCategories.map((category) => (
-                              <Link key={category.href} href={category.href}>
-                                <a 
-                                  className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors"
-                                  onClick={handleCloseSheet}
-                                >
-                                  {category.label}
-                                </a>
-                              </Link>
+                              <div key={category.href}>
+                                <Link href={category.href}>
+                                  <a 
+                                    className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors"
+                                    onClick={handleCloseSheet}
+                                  >
+                                    {category.label}
+                                  </a>
+                                </Link>
+                              </div>
                             ))}
                             <div className="pt-2 mt-2 border-t border-neutral-200">
-                              <Link href="/products">
-                                <a 
-                                  className="font-body text-sm block py-1.5 text-accent font-medium"
-                                  onClick={handleCloseSheet}
-                                >
-                                  View All Products
-                                </a>
-                              </Link>
+                              <div>
+                                <Link href="/products">
+                                  <a 
+                                    className="font-body text-sm block py-1.5 text-accent font-medium"
+                                    onClick={handleCloseSheet}
+                                  >
+                                    View All Products
+                                  </a>
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         )}
@@ -226,18 +230,22 @@ const Header = () => {
                         onMouseLeave={() => setShowDropdown(false)}
                       >
                         {productCategories.map((category) => (
-                          <Link key={category.href} href={category.href}>
-                            <a className="block px-4 py-2 text-sm text-text-dark hover:text-accent dropdown-menu-item">
-                              {category.label}
-                            </a>
-                          </Link>
+                          <div key={category.href} className="dropdown-menu-item">
+                            <Link href={category.href}>
+                              <a className="block px-4 py-2 text-sm text-text-dark hover:text-accent">
+                                {category.label}
+                              </a>
+                            </Link>
+                          </div>
                         ))}
                         <div className="border-t border-neutral-200 mt-2 pt-2">
-                          <Link href="/products">
-                            <a className="block px-4 py-2 text-sm text-accent font-medium dropdown-menu-item">
-                              View All Products
-                            </a>
-                          </Link>
+                          <div className="dropdown-menu-item">
+                            <Link href="/products">
+                              <a className="block px-4 py-2 text-sm text-accent font-medium">
+                                View All Products
+                              </a>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     )}

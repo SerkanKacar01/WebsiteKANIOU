@@ -1,55 +1,79 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { useLocation, useParams } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import ProductGrid from "@/components/products/ProductGrid";
 import ProductFilter from "@/components/products/ProductFilter";
 import { ProductFilterOptions } from "@/lib/types";
-import { Product } from "@shared/schema";
+import { Product, Category } from "@shared/schema";
 
 const ProductsPage = () => {
   const [, setLocation] = useLocation();
+  const params = useParams();
+  const { category } = params;
   const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
   const [filters, setFilters] = useState<ProductFilterOptions>({});
+  const [pageTitle, setPageTitle] = useState("Our Premium Products");
+  
+  // Fetch categories to match the URL category with category ID
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["/api/categories"],
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      setSearchParams(params);
+      const urlParams = new URLSearchParams(window.location.search);
+      setSearchParams(urlParams);
       
-      // Parse filters from URL
+      // Parse filters from URL query parameters
       const initialFilters: ProductFilterOptions = {};
       
-      if (params.has("category")) {
-        const categoryId = parseInt(params.get("category") || "");
+      if (urlParams.has("category")) {
+        const categoryId = parseInt(urlParams.get("category") || "");
         if (!isNaN(categoryId)) {
           initialFilters.categoryId = categoryId;
         }
       }
       
-      if (params.has("featured") && params.get("featured") === "true") {
+      if (urlParams.has("featured") && urlParams.get("featured") === "true") {
         initialFilters.isFeatured = true;
       }
       
-      if (params.has("bestseller") && params.get("bestseller") === "true") {
+      if (urlParams.has("bestseller") && urlParams.get("bestseller") === "true") {
         initialFilters.isBestSeller = true;
       }
       
-      if (params.has("newarrival") && params.get("newarrival") === "true") {
+      if (urlParams.has("newarrival") && urlParams.get("newarrival") === "true") {
         initialFilters.isNewArrival = true;
       }
       
-      if (params.has("search")) {
-        initialFilters.searchQuery = params.get("search") || "";
+      if (urlParams.has("search")) {
+        initialFilters.searchQuery = urlParams.get("search") || "";
+      }
+      
+      // Handle category from URL path (e.g., /products/overgordijnen)
+      if (category && categories) {
+        // Find matching category to get the ID
+        const foundCategory = categories.find((cat: Category) => {
+          const slugifiedName = cat.name.toLowerCase().replace(/\s+/g, '-');
+          return slugifiedName === category || 
+                 category === `${slugifiedName}s` || // Handle plural forms
+                 category.replace(/-/g, '') === slugifiedName.replace(/\s+/g, ''); // Handle dashes
+        });
+        
+        if (foundCategory) {
+          initialFilters.categoryId = foundCategory.id;
+          setPageTitle(foundCategory.name);
+        }
       }
       
       setFilters(initialFilters);
     }
-  }, []);
+  }, [category, categories]);
 
   // Fetch all products and apply filters client-side
-  const { data: products, isLoading, error } = useQuery({
+  const { data: products = [], isLoading, error } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
 
@@ -83,55 +107,53 @@ const ProductsPage = () => {
   };
 
   // Apply filters to products
-  const filteredProducts = products
-    ? products.filter((product: Product) => {
-        // Category filter
-        if (filters.categoryId && product.categoryId !== filters.categoryId) {
-          return false;
-        }
-        
-        // Special filters
-        if (filters.isFeatured && !product.isFeatured) {
-          return false;
-        }
-        
-        if (filters.isBestSeller && !product.isBestSeller) {
-          return false;
-        }
-        
-        if (filters.isNewArrival && !product.isNewArrival) {
-          return false;
-        }
-        
-        // Price range filter
-        if (filters.priceRange) {
-          const [min, max] = filters.priceRange;
-          if (product.price < min || product.price > max) {
-            return false;
-          }
-        }
-        
-        // Search query
-        if (filters.searchQuery) {
-          const query = filters.searchQuery.toLowerCase();
-          return (
-            product.name.toLowerCase().includes(query) ||
-            product.description.toLowerCase().includes(query) ||
-            (product.material && product.material.toLowerCase().includes(query))
-          );
-        }
-        
-        return true;
-      })
-    : [];
+  const filteredProducts = products.filter((product: Product) => {
+    // Category filter
+    if (filters.categoryId && product.categoryId !== filters.categoryId) {
+      return false;
+    }
+    
+    // Special filters
+    if (filters.isFeatured && !product.isFeatured) {
+      return false;
+    }
+    
+    if (filters.isBestSeller && !product.isBestSeller) {
+      return false;
+    }
+    
+    if (filters.isNewArrival && !product.isNewArrival) {
+      return false;
+    }
+    
+    // Price range filter
+    if (filters.priceRange) {
+      const [min, max] = filters.priceRange;
+      if (product.price < min || product.price > max) {
+        return false;
+      }
+    }
+    
+    // Search query
+    if (filters.searchQuery) {
+      const query = filters.searchQuery.toLowerCase();
+      return (
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query) ||
+        (product.material && product.material.toLowerCase().includes(query))
+      );
+    }
+    
+    return true;
+  });
 
   return (
     <>
       <Helmet>
-        <title>Products | Elegant Drapes</title>
+        <title>{pageTitle} | Elegant Drapes</title>
         <meta
           name="description"
-          content="Browse our extensive collection of premium curtains, blinds, drapes, and window treatments for any style and budget."
+          content={`Browse our extensive collection of premium ${pageTitle.toLowerCase()}, window treatments, and other home decor products for any style and budget.`}
         />
       </Helmet>
       
@@ -139,7 +161,7 @@ const ProductsPage = () => {
         <Container>
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Our Premium Products
+              {pageTitle}
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto">
               Discover our extensive range of high-quality window treatments designed to

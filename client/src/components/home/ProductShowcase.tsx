@@ -15,15 +15,15 @@ const ProductShowcase = () => {
   const getCategoryNameById = useMemo(() => {
     return (categoryId: number) => {
       const categoryMap: Record<number, string> = {
-        1: t('categories.curtains'),
-        2: t('categories.blinds'),
-        3: t('categories.shades'),
-        4: t('categories.drapes'),
+        1: 'curtains',
+        2: 'blinds',
+        3: 'shades',
+        4: 'drapes',
       };
 
-      return categoryMap[categoryId] || t('categories');
+      return categoryMap[categoryId] || '';
     };
-  }, [t]);
+  }, []);
 
   const { data: featuredProducts, isLoading, error } = useQuery({
     queryKey: ["/api/products", { featured: true }],
@@ -47,10 +47,10 @@ const ProductShowcase = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('title')}
+            Browse by Category
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('subtitle')}
+            Find the perfect window treatment by selecting a product category below.
           </p>
         </div>
 

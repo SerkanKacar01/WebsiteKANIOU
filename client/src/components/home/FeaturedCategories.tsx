@@ -19,7 +19,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
           {category.name}
         </h3>
         <p className="font-body text-white text-sm mb-4">{category.description}</p>
-        <Link href={`/products?category=${category.id}`}>
+        <Link href={`/products/${category.id}`}>
           <a className="font-body inline-block text-white text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
             {t('hero.cta')}
           </a>
@@ -40,10 +40,10 @@ const FeaturedCategories = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Our Categories
+            Browse by Category
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Explore our wide range of window treatments
+            Find the perfect window treatment by selecting a product category below
           </p>
         </div>
 

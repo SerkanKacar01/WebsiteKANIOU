@@ -37,13 +37,13 @@ const Header = () => {
   const isMobile = useMobile();
   const { t } = useLanguage();
   
-  // Define navigation items directly with proper translations
+  // Define navigation items with translation keys
   const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Products", href: "/products", hasDropdown: true },
-    { label: "Gallery", href: "/gallery" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: t('nav.home'), href: "/" },
+    { label: t('nav.products'), href: "/products", hasDropdown: true },
+    { label: t('nav.gallery'), href: "/gallery" },
+    { label: t('nav.about'), href: "/about" },
+    { label: t('nav.contact'), href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -175,7 +175,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    View All Products
+                                    {t('nav.viewAllProducts')}
                                   </div>
                                 </Link>
                               </div>
@@ -205,7 +205,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        Get Quote
+                        {t('nav.quote')}
                       </Button>
                     </a>
                   </Link>
@@ -248,7 +248,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
-                                View All Products
+                                {t('nav.viewAllProducts')}
                               </div>
                             </Link>
                           </div>
@@ -274,7 +274,7 @@ const Header = () => {
                 <LanguageSelector />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent">
-                    Get Quote
+                    {t('nav.quote')}
                   </Button>
                 </Link>
               </div>

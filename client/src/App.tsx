@@ -1,8 +1,11 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Helmet } from "react-helmet-async";
+import { useLanguage } from "@/context/LanguageContext";
+import { useEffect } from "react";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -17,52 +20,80 @@ import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
 
 function Router() {
+  const { t } = useLanguage();
+  const [location] = useLocation();
+  
+  // Get page title based on current route
+  const getPageTitle = () => {
+    if (location === "/") return t("app.title") + " | " + t("app.subtitle");
+    if (location === "/products") return t("products.title") + " | " + t("app.title");
+    if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
+    if (location === "/about") return t("about.title") + " | " + t("app.title");
+    if (location === "/contact") return t("contact.title") + " | " + t("app.title");
+    if (location === "/quote") return t("quote.title") + " | " + t("app.title");
+    return t("app.title") + " | " + t("app.subtitle");
+  };
+
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/products" component={ProductsPage} />
-      <Route path="/products/:id(\d+)" component={ProductDetail} />
-      
-      {/* Specific product pages */}
-      <Route path="/products/milano-linen-curtains" component={ProductPage} />
-      <Route path="/products/nordic-roller-blinds" component={ProductPage} />
-      <Route path="/products/tuscany-roman-blinds" component={ProductPage} />
-      <Route path="/products/aria-sheer-curtains" component={ProductPage} />
-      
-      {/* Product category pages with exact URLs as specified */}
-      <Route path="/products/overgordijnen" component={ProductCategoryPage} />
-      <Route path="/products/vitrages" component={ProductCategoryPage} />
-      <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
-      <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
-      <Route path="/products/textiel-lamellen" component={ProductCategoryPage} />
-      <Route path="/products/kunststof-lamellen" component={ProductCategoryPage} />
-      <Route path="/products/houten-jaloezieen" component={ProductCategoryPage} />
-      <Route path="/products/kunststof-jaloezieen" component={ProductCategoryPage} />
-      <Route path="/products/textiel-raamfolie" component={ProductCategoryPage} />
-      <Route path="/products/houten-shutters" component={ProductCategoryPage} />
-      <Route path="/products/inzethorren" component={ProductCategoryPage} />
-      <Route path="/products/opzethorren" component={ProductCategoryPage} />
-      <Route path="/products/plisse-hordeuren" component={ProductCategoryPage} />
-      <Route path="/products/plisse" component={ProductCategoryPage} />
-      <Route path="/products/duo-plisse" component={ProductCategoryPage} />
-      <Route path="/products/duo-plisse-dakramen" component={ProductCategoryPage} />
-      <Route path="/products/dakraam-zonwering" component={ProductCategoryPage} />
-      <Route path="/products/gordijnrails" component={ProductCategoryPage} />
-      <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
-      <Route path="/products/horren" component={ProductCategoryPage} />
-      <Route path="/products/squid" component={ProductCategoryPage} />
-      
-      <Route path="/products/:category" component={ProductsPage} />
-      <Route path="/gallery" component={GalleryPage} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/contact" component={ContactPage} />
-      <Route path="/quote" component={QuotePage} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Helmet>
+        <title>{getPageTitle()}</title>
+        <meta name="description" content={t("app.subtitle")} />
+      </Helmet>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/products" component={ProductsPage} />
+        <Route path="/products/:id(\d+)" component={ProductDetail} />
+        
+        {/* Specific product pages */}
+        <Route path="/products/milano-linen-curtains" component={ProductPage} />
+        <Route path="/products/nordic-roller-blinds" component={ProductPage} />
+        <Route path="/products/tuscany-roman-blinds" component={ProductPage} />
+        <Route path="/products/aria-sheer-curtains" component={ProductPage} />
+        
+        {/* Product category pages with exact URLs as specified */}
+        <Route path="/products/overgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/vitrages" component={ProductCategoryPage} />
+        <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/textiel-lamellen" component={ProductCategoryPage} />
+        <Route path="/products/kunststof-lamellen" component={ProductCategoryPage} />
+        <Route path="/products/houten-jaloezieen" component={ProductCategoryPage} />
+        <Route path="/products/kunststof-jaloezieen" component={ProductCategoryPage} />
+        <Route path="/products/textiel-raamfolie" component={ProductCategoryPage} />
+        <Route path="/products/houten-shutters" component={ProductCategoryPage} />
+        <Route path="/products/inzethorren" component={ProductCategoryPage} />
+        <Route path="/products/opzethorren" component={ProductCategoryPage} />
+        <Route path="/products/plisse-hordeuren" component={ProductCategoryPage} />
+        <Route path="/products/plisse" component={ProductCategoryPage} />
+        <Route path="/products/duo-plisse" component={ProductCategoryPage} />
+        <Route path="/products/duo-plisse-dakramen" component={ProductCategoryPage} />
+        <Route path="/products/dakraam-zonwering" component={ProductCategoryPage} />
+        <Route path="/products/gordijnrails" component={ProductCategoryPage} />
+        <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
+        <Route path="/products/horren" component={ProductCategoryPage} />
+        <Route path="/products/squid" component={ProductCategoryPage} />
+        
+        <Route path="/products/:category" component={ProductsPage} />
+        <Route path="/gallery" component={GalleryPage} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/contact" component={ContactPage} />
+        <Route path="/quote" component={QuotePage} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 
 function App() {
+  const { language } = useLanguage();
+  
+  // Update language-specific metadata
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  }, [language]);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

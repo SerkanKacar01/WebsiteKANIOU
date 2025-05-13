@@ -38,20 +38,18 @@
     }
   },
   "products": {
-    "title": "Our Window Treatment Products",
-    "subtitle": "Discover all our custom-made curtains, blinds, shutters and more.",
+    "title": "Browse by Category",
+    "subtitle": "Find the perfect window treatment by selecting a product category below",
     "viewAll": "View All Products",
     "featured": "Featured Products",
     "newArrivals": "New Arrivals",
     "bestSellers": "Best Sellers",
     "customSolutions": "Custom Solutions",
-    "categories": {
-      "curtains": "Curtains",
-      "blinds": "Blinds",
-      "shades": "Shades",
-      "drapes": "Drapes",
-      "accessories": "Accessories"
-    },
+    "curtains": "Curtains",
+    "blinds": "Blinds", 
+    "shades": "Shades",
+    "drapes": "Drapes",
+    "accessories": "Accessories",
     "filters": {
       "title": "Filters",
       "categories": "Categories",

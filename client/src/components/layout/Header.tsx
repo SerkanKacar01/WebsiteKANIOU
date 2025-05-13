@@ -150,7 +150,7 @@ const Header = () => {
                           } cursor-pointer`}
                           onClick={toggleMobileSubmenu}
                         >
-                          {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
+                          {t(`nav.${item.label}`)}
                           <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
                         </div>
                         
@@ -175,7 +175,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    View All Products
+                                    {t('nav.viewAllProducts')}
                                   </div>
                                 </Link>
                               </div>
@@ -193,7 +193,7 @@ const Header = () => {
                           }`}
                           onClick={handleCloseSheet}
                         >
-                          {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
+                          {t(`nav.${item.label}`)}
                         </a>
                       </Link>
                     )
@@ -205,7 +205,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        GET QUOTE
+                        {t('nav.quote')}
                       </Button>
                     </a>
                   </Link>

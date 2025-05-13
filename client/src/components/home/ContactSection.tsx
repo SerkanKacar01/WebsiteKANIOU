@@ -23,17 +23,17 @@ const ContactSection = () => {
               <MapPin className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              Visit Our Showroom
+              {t('contact.showroom.title')}
             </h3>
             <p className="font-body text-text-medium">
-              123 Design Avenue
+              {t('contact.showroom.address1')}
               <br />
-              New York, NY 10001
+              {t('contact.showroom.address2')}
             </p>
             <p className="font-body text-text-medium mt-2">
-              Mon - Sat: 10am - 6pm
+              {t('contact.showroom.hours1')}
               <br />
-              Sunday: Closed
+              {t('contact.showroom.hours2')}
             </p>
           </div>
 
@@ -42,13 +42,13 @@ const ContactSection = () => {
               <Phone className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              Call Us
+              {t('contact.call.title')}
             </h3>
-            <p className="font-body text-text-medium">+1 (555) 123-4567</p>
+            <p className="font-body text-text-medium">{t('contact.call.phone')}</p>
             <p className="font-body text-text-medium mt-2">
-              Mon - Fri: 9am - 5pm
+              {t('contact.call.hours1')}
               <br />
-              Weekend: 10am - 4pm
+              {t('contact.call.hours2')}
             </p>
           </div>
 
@@ -57,11 +57,11 @@ const ContactSection = () => {
               <Mail className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              Email Us
+              {t('contact.email.title')}
             </h3>
-            <p className="font-body text-text-medium">info@elegantdrapes.com</p>
+            <p className="font-body text-text-medium">{t('contact.email.address1')}</p>
             <p className="font-body text-text-medium mt-2">
-              customer.service@elegantdrapes.com
+              {t('contact.email.address2')}
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@ const ContactSection = () => {
               style={{ border: 0 }}
               allowFullScreen={false}
               loading="lazy"
-              title="Elegant Drapes Location"
+              title={t('contact.map.title')}
             ></iframe>
           </div>
         </div>

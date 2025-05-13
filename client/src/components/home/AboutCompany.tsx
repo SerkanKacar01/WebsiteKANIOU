@@ -2,6 +2,7 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const AboutCompany = () => {
   return (

@@ -7,37 +7,28 @@ const HeroSection = () => {
   const { t } = useLanguage();
   
   return (
-    <section className="relative h-[70vh] overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://pixabay.com/get/ge1b0bd2a58bc087af5a183393f59af6069457d6847b1138080076ba2fed8732ba996cead471a0bbab0e606d3bba35573549f25f83d1859e8945b79670be0610d_1280.jpg')",
-          filter: "brightness(0.85)",
-        }}
-      ></div>
-      
-      <div className="absolute inset-0 bg-primary opacity-20"></div>
+    <section className="relative h-[70vh] overflow-hidden bg-[#e5e7e6]">
+      {/* Using a light gray background color to match the image */}
       
       <Container className="h-full flex flex-col justify-center">
         <div className="max-w-xl relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white font-semibold leading-tight mb-4">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-[#333333] font-semibold leading-tight mb-4">
             {t('hero.title')}
           </h1>
-          <p className="font-body text-lg md:text-xl text-white mb-8">
+          <p className="font-body text-lg md:text-xl text-[#333333] mb-8">
             {t('hero.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link href="/products">
               <div>
-                <Button size="lg" className="w-full sm:w-auto bg-secondary hover:bg-accent text-white">
-                  {t('hero.cta')}
+                <Button size="lg" className="w-full sm:w-auto bg-[#d5c096] hover:bg-[#c4b183] text-white">
+                  Browse collection
                 </Button>
               </div>
             </Link>
             <Link href="/quote">
               <div>
-                <Button size="lg" variant="secondary" className="w-full sm:w-auto bg-white hover:bg-neutral-100 text-primary">
+                <Button size="lg" variant="secondary" className="w-full sm:w-auto bg-white hover:bg-neutral-100 text-[#333333]">
                   Get quote
                 </Button>
               </div>

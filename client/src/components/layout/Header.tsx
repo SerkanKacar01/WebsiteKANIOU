@@ -39,11 +39,11 @@ const Header = () => {
   
   // Define navigation items with translation keys
   const navItems = [
-    { label: t('nav.home'), href: "/" },
-    { label: t('nav.products'), href: "/products", hasDropdown: true },
-    { label: t('nav.gallery'), href: "/gallery" },
-    { label: t('nav.about'), href: "/about" },
-    { label: t('nav.contact'), href: "/contact" },
+    { label: 'home', href: "/" },
+    { label: 'products', href: "/products", hasDropdown: true },
+    { label: 'gallery', href: "/gallery" },
+    { label: 'about', href: "/about" },
+    { label: 'contact', href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -175,7 +175,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    {t('nav.viewAllProducts')}
+                                    View All Products
                                   </div>
                                 </Link>
                               </div>
@@ -205,7 +205,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        {t('nav.quote')}
+                        GET QUOTE
                       </Button>
                     </a>
                   </Link>
@@ -248,7 +248,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
-                                {t('nav.viewAllProducts')}
+                                View All Products
                               </div>
                             </Link>
                           </div>
@@ -274,7 +274,7 @@ const Header = () => {
                 <LanguageSelector />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent">
-                    {t('nav.quote')}
+                    GET QUOTE
                   </Button>
                 </Link>
               </div>

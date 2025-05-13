@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@shared/schema";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ProductShowcase = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const { t } = useLanguage();
   
   const { data: featuredProducts, isLoading, error } = useQuery({
     queryKey: ["/api/products", { featured: true }],
@@ -31,11 +33,10 @@ const ProductShowcase = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Featured Products
+            {t('products.featured')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Explore our bestselling window treatments crafted with premium
-            materials and exquisite attention to detail.
+            {t('products.subtitle')}
           </p>
         </div>
 
@@ -50,7 +51,7 @@ const ProductShowcase = () => {
                   : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
               }
             >
-              All Products
+              {t('products.viewAll')}
             </Button>
             
             {categories.map((categoryId) => (
@@ -81,7 +82,7 @@ const ProductShowcase = () => {
           </div>
         ) : error ? (
           <div className="text-center text-red-500">
-            Failed to load products. Please try again later.
+            {t('common.error')}
           </div>
         ) : (
           <>
@@ -95,7 +96,7 @@ const ProductShowcase = () => {
               <Link href="/products">
                 <a>
                   <Button size="lg" className="bg-primary hover:bg-accent">
-                    View All Products
+                    {t('products.viewAll')}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="ml-2 h-4 w-4"
@@ -124,14 +125,15 @@ const ProductShowcase = () => {
 // Helper function to get category name by ID
 // In a real implementation, this would query the categories data
 function getCategoryNameById(categoryId: number) {
+  const { t } = useLanguage();
   const categoryMap: Record<number, string> = {
-    1: "Curtains",
-    2: "Sunblinds",
-    3: "Roman Blinds",
-    4: "Sheer Drapes",
+    1: t('products.categories.curtains'),
+    2: t('products.categories.blinds'),
+    3: t('products.categories.shades'),
+    4: t('products.categories.drapes'),
   };
   
-  return categoryMap[categoryId] || "Category";
+  return categoryMap[categoryId] || t('products.categories');
 }
 
 export default ProductShowcase;

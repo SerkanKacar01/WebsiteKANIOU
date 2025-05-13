@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import Container from "@/components/ui/container";
 import { Category } from "@shared/schema";
+import { useLanguage } from "@/context/LanguageContext";
 
 const CategoryCard = ({ category }: { category: Category }) => {
   return (

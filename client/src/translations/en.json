@@ -1,0 +1,147 @@
+{
+  "app": {
+    "title": "Elegant Drapes",
+    "subtitle": "Premium Curtains & Window Treatments"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "gallery": "Gallery",
+    "about": "About",
+    "contact": "Contact",
+    "quote": "Get Quote",
+    "viewAllProducts": "View All Products",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Transform Your Space",
+    "subtitle": "Premium Curtains & Window Treatments",
+    "cta": "Explore Our Collection"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Our Story",
+    "paragraph1": "Since 2005, Elegant Drapes has been providing premium window treatments and exceptional service to homeowners and businesses.",
+    "paragraph2": "Our team of experts is dedicated to helping you find the perfect window solutions that match your style, budget, and functional needs.",
+    "values": {
+      "title": "Our Values",
+      "quality": "Quality",
+      "qualityText": "We use only the finest materials and craftsmanship in all our products.",
+      "service": "Service",
+      "serviceText": "We provide personalized service from consultation to installation.",
+      "innovation": "Innovation",
+      "innovationText": "We continually update our product offerings with the latest designs and technologies."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "text": "To transform spaces through beautiful, functional window treatments that enhance the comfort and aesthetics of any room."
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "Premium Window Treatments",
+    "viewAll": "View All Products",
+    "featured": "Featured Products",
+    "newArrivals": "New Arrivals",
+    "bestSellers": "Best Sellers",
+    "filters": {
+      "title": "Filters",
+      "categories": "Categories",
+      "priceRange": "Price Range",
+      "reset": "Reset Filters",
+      "apply": "Apply Filters"
+    },
+    "details": {
+      "description": "Description",
+      "features": "Features",
+      "specifications": "Specifications",
+      "relatedProducts": "Related Products",
+      "requestQuote": "Request Quote for This Product"
+    }
+  },
+  "gallery": {
+    "title": "Inspiration Gallery",
+    "subtitle": "See Our Products in Beautiful Spaces",
+    "categories": "Categories",
+    "all": "All",
+    "viewMore": "View More"
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Testimonials"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in Touch",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Business Hours",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send Message",
+      "success": "Your message has been sent successfully!",
+      "error": "There was an error sending your message. Please try again."
+    }
+  },
+  "quote": {
+    "title": "Request a Quote",
+    "subtitle": "Tell Us About Your Project",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "phone": "Phone Number",
+      "address": "Address",
+      "productType": "Product Type",
+      "dimensions": "Dimensions",
+      "quantity": "Quantity",
+      "additionalInfo": "Additional Information",
+      "submit": "Submit Quote Request",
+      "success": "Your quote request has been submitted successfully!",
+      "error": "There was an error submitting your request. Please try again."
+    }
+  },
+  "footer": {
+    "company": "Company",
+    "products": "Products",
+    "support": "Support",
+    "legal": {
+      "title": "Legal",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "warranty": "Warranty Information"
+    },
+    "newsletter": {
+      "title": "Subscribe to Our Newsletter",
+      "placeholder": "Your Email",
+      "submit": "Subscribe",
+      "success": "Thank you for subscribing!",
+      "error": "There was an error. Please try again."
+    },
+    "copyright": "© 2023 Elegant Drapes. All rights reserved."
+  },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "nl": "Nederlands",
+    "tr": "Türkçe",
+    "ar": "العربية"
+  },
+  "common": {
+    "loading": "Loading...",
+    "viewDetails": "View Details",
+    "readMore": "Read More",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "showMore": "Show More",
+    "showLess": "Show Less",
+    "notFound": "Page Not Found",
+    "error": "An error occurred",
+    "retry": "Retry"
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "app": {
+    "title": "Elegant Drapes",
+    "subtitle": "Premium Perdeler ve Pencere Tedavileri"
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "products": "Ürünler",
+    "gallery": "Galeri",
+    "about": "Hakkımızda",
+    "contact": "İletişim",
+    "quote": "Teklif Al",
+    "viewAllProducts": "Tüm Ürünleri Görüntüle",
+    "language": "Dil"
+  },
+  "hero": {
+    "title": "Mekanınızı Dönüştürün",
+    "subtitle": "Premium Perdeler ve Pencere Tedavileri",
+    "cta": "Koleksiyonumuzu Keşfedin"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Hikayemiz",
+    "paragraph1": "2005 yılından beri Elegant Drapes, ev sahiplerine ve işletmelere premium pencere tedavileri ve olağanüstü hizmet sunmaktadır.",
+    "paragraph2": "Uzman ekibimiz, stilinize, bütçenize ve işlevsel ihtiyaçlarınıza uygun mükemmel pencere çözümlerini bulmanıza yardımcı olmaya kendini adamıştır.",
+    "values": {
+      "title": "Değerlerimiz",
+      "quality": "Kalite",
+      "qualityText": "Tüm ürünlerimizde sadece en kaliteli malzemeleri ve işçiliği kullanıyoruz.",
+      "service": "Hizmet",
+      "serviceText": "Danışmanlıktan kuruluma kadar kişiselleştirilmiş hizmet sunuyoruz.",
+      "innovation": "Yenilik",
+      "innovationText": "Ürün yelpazemizi sürekli olarak en son tasarımlar ve teknolojilerle güncelliyoruz."
+    },
+    "mission": {
+      "title": "Misyonumuz",
+      "text": "Herhangi bir odanın konforunu ve estetiğini geliştiren güzel, işlevsel pencere tedavileri ile alanları dönüştürmek."
+    }
+  },
+  "products": {
+    "title": "Ürünlerimiz",
+    "subtitle": "Premium Pencere Tedavileri",
+    "viewAll": "Tüm Ürünleri Görüntüle",
+    "featured": "Öne Çıkan Ürünler",
+    "newArrivals": "Yeni Gelenler",
+    "bestSellers": "En Çok Satanlar",
+    "filters": {
+      "title": "Filtreler",
+      "categories": "Kategoriler",
+      "priceRange": "Fiyat Aralığı",
+      "reset": "Filtreleri Sıfırla",
+      "apply": "Filtreleri Uygula"
+    },
+    "details": {
+      "description": "Açıklama",
+      "features": "Özellikler",
+      "specifications": "Teknik Özellikler",
+      "relatedProducts": "İlgili Ürünler",
+      "requestQuote": "Bu Ürün İçin Teklif İste"
+    }
+  },
+  "gallery": {
+    "title": "İlham Galerisi",
+    "subtitle": "Ürünlerimizi Güzel Mekanlarda Görün",
+    "categories": "Kategoriler",
+    "all": "Tümü",
+    "viewMore": "Daha Fazla Görüntüle"
+  },
+  "testimonials": {
+    "title": "Müşterilerimiz Ne Diyor",
+    "subtitle": "Referanslar"
+  },
+  "contact": {
+    "title": "Bizimle İletişime Geçin",
+    "subtitle": "İletişime Geçin",
+    "address": "Adres",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "hours": "Çalışma Saatleri",
+    "form": {
+      "name": "Adınız",
+      "email": "E-posta Adresiniz",
+      "phone": "Telefon Numarası",
+      "subject": "Konu",
+      "message": "Mesajınız",
+      "submit": "Mesaj Gönder",
+      "success": "Mesajınız başarıyla gönderildi!",
+      "error": "Mesajınızı gönderirken bir hata oluştu. Lütfen tekrar deneyin."
+    }
+  },
+  "quote": {
+    "title": "Teklif İsteyin",
+    "subtitle": "Projeniz Hakkında Bize Bilgi Verin",
+    "form": {
+      "name": "Adınız",
+      "email": "E-posta Adresiniz",
+      "phone": "Telefon Numarası",
+      "address": "Adres",
+      "productType": "Ürün Tipi",
+      "dimensions": "Boyutlar",
+      "quantity": "Miktar",
+      "additionalInfo": "Ek Bilgiler",
+      "submit": "Teklif İsteği Gönder",
+      "success": "Teklif isteğiniz başarıyla gönderildi!",
+      "error": "İsteğinizi gönderirken bir hata oluştu. Lütfen tekrar deneyin."
+    }
+  },
+  "footer": {
+    "company": "Şirket",
+    "products": "Ürünler",
+    "support": "Destek",
+    "legal": {
+      "title": "Yasal",
+      "terms": "Hizmet Şartları",
+      "privacy": "Gizlilik Politikası",
+      "warranty": "Garanti Bilgileri"
+    },
+    "newsletter": {
+      "title": "Bültenimize Abone Olun",
+      "placeholder": "E-posta Adresiniz",
+      "submit": "Abone Ol",
+      "success": "Abone olduğunuz için teşekkürler!",
+      "error": "Bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "copyright": "© 2023 Elegant Drapes. Tüm hakları saklıdır."
+  },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "nl": "Nederlands",
+    "tr": "Türkçe",
+    "ar": "العربية"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "viewDetails": "Detayları Görüntüle",
+    "readMore": "Daha Fazla Oku",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki",
+    "showMore": "Daha Fazla Göster",
+    "showLess": "Daha Az Göster",
+    "notFound": "Sayfa Bulunamadı",
+    "error": "Bir hata oluştu",
+    "retry": "Tekrar Dene"
+  }
+}

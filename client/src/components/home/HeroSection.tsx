@@ -8,7 +8,7 @@ const HeroSection = () => {
   
   return (
     <section className="relative h-[70vh] overflow-hidden">
-      {/* Background image of a bedroom with curtains */}
+      {/* Background image of a living room with curtains */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -19,23 +19,23 @@ const HeroSection = () => {
       ></div>
       
       <Container className="h-full flex flex-col justify-center">
-        <div className="max-w-md relative z-10 pl-3">
-          <h1 className="font-display text-5xl text-white font-semibold leading-none mb-1">
-            hero.title
+        <div className="max-w-lg relative z-10 pl-4">
+          <h1 className="font-display text-6xl text-white font-semibold leading-tight mb-4">
+            Transform Your Space With Elegant Window Treatments
           </h1>
-          <p className="font-body text-lg text-white mb-4 opacity-90">
-            hero.subtitle
+          <p className="font-body text-xl text-white mb-8 opacity-90">
+            Premium curtains, blinds, and drapes tailored to your style and needs.
           </p>
-          <div className="flex gap-2 mt-2">
+          <div className="flex gap-4 mt-4">
             <Link href="/products">
-              <div className="bg-[#d5c096] hover:bg-[#c4b183] px-4 py-1.5 rounded-sm cursor-pointer">
-                <span className="text-white text-sm">hero.cta</span>
-              </div>
+              <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-2.5 rounded">
+                Browse Collection
+              </Button>
             </Link>
             <Link href="/quote">
-              <div className="bg-white/80 hover:bg-white px-4 py-1.5 rounded-sm cursor-pointer">
-                <span className="text-black text-sm">nav.quote</span>
-              </div>
+              <Button variant="outline" className="bg-white/80 hover:bg-white text-black px-6 py-2.5 rounded">
+                Request Quote
+              </Button>
             </Link>
           </div>
         </div>

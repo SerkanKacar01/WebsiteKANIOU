@@ -7,30 +7,34 @@ const HeroSection = () => {
   const { t } = useLanguage();
   
   return (
-    <section className="relative h-[70vh] overflow-hidden bg-[#e5e7e6]">
-      {/* Using a light gray background color to match the image */}
+    <section className="relative h-[70vh] overflow-hidden">
+      {/* Background image of a bedroom with curtains */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1560185007-5f0bb1866cab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80')",
+          filter: "brightness(0.9)",
+        }}
+      ></div>
       
       <Container className="h-full flex flex-col justify-center">
-        <div className="max-w-xl relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-[#333333] font-semibold leading-tight mb-4">
-            {t('hero.title')}
+        <div className="max-w-md relative z-10 pl-3">
+          <h1 className="font-display text-5xl text-white font-semibold leading-none mb-1">
+            hero.title
           </h1>
-          <p className="font-body text-lg md:text-xl text-[#333333] mb-8">
-            {t('hero.subtitle')}
+          <p className="font-body text-lg text-white mb-4 opacity-90">
+            hero.subtitle
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex gap-2 mt-2">
             <Link href="/products">
-              <div>
-                <Button size="lg" className="w-full sm:w-auto bg-[#d5c096] hover:bg-[#c4b183] text-white">
-                  Browse collection
-                </Button>
+              <div className="bg-[#d5c096] hover:bg-[#c4b183] px-4 py-1.5 rounded-sm cursor-pointer">
+                <span className="text-white text-sm">hero.cta</span>
               </div>
             </Link>
             <Link href="/quote">
-              <div>
-                <Button size="lg" variant="secondary" className="w-full sm:w-auto bg-white hover:bg-neutral-100 text-[#333333]">
-                  Get quote
-                </Button>
+              <div className="bg-white/80 hover:bg-white px-4 py-1.5 rounded-sm cursor-pointer">
+                <span className="text-black text-sm">nav.quote</span>
               </div>
             </Link>
           </div>

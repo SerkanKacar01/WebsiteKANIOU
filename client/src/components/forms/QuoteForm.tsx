@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Form,
   FormControl,
@@ -38,6 +39,7 @@ type QuoteFormValues = z.infer<typeof quoteFormSchema>;
 const QuoteForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteFormSchema),
@@ -56,17 +58,17 @@ const QuoteForm = () => {
       apiRequest("POST", "/api/quote-requests", data),
     onSuccess: () => {
       toast({
-        title: "Quote Request Submitted",
-        description: "Thank you! We'll get back to you with a personalized quote shortly.",
-        variant: "success",
+        title: t('quote.form.success'),
+        description: t('quote.form.successMessage'),
+        variant: "success" as any,
       });
       form.reset();
       setIsSubmitting(false);
     },
     onError: (error) => {
       toast({
-        title: "Submission Failed",
-        description: error.message || "Failed to submit quote request. Please try again.",
+        title: t('quote.form.error'),
+        description: error.message || t('quote.form.errorMessage'),
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -87,7 +89,7 @@ const QuoteForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Name</FormLabel>
+                <FormLabel>{t('quote.form.name')}</FormLabel>
                 <FormControl>
                   <Input placeholder="John Doe" {...field} />
                 </FormControl>

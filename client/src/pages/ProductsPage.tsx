@@ -7,14 +7,16 @@ import ProductGrid from "@/components/products/ProductGrid";
 import ProductFilter from "@/components/products/ProductFilter";
 import { ProductFilterOptions } from "@/lib/types";
 import { Product, Category } from "@shared/schema";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ProductsPage = () => {
   const [, setLocation] = useLocation();
   const params = useParams();
   const { category } = params;
+  const { t } = useLanguage();
   const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
   const [filters, setFilters] = useState<ProductFilterOptions>({});
-  const [pageTitle, setPageTitle] = useState("Our Premium Products");
+  const [pageTitle, setPageTitle] = useState(t("products.title"));
   
   // Fetch categories to match the URL category with category ID
   const { data: categories = [] } = useQuery<Category[]>({
@@ -164,8 +166,7 @@ const ProductsPage = () => {
               {pageTitle}
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto">
-              Discover our extensive range of high-quality window treatments designed to
-              enhance your interior space with elegance and functionality.
+              {t("products.subtitle")}
             </p>
           </div>
           

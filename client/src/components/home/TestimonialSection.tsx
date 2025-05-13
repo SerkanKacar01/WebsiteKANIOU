@@ -4,9 +4,11 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Testimonial } from "@shared/schema";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { t } = useLanguage();
   
   const { data: testimonials, isLoading, error } = useQuery({
     queryKey: ["/api/testimonials"],
@@ -40,11 +42,10 @@ const TestimonialSection = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            What Our Clients Say
+            {t('testimonials.title')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Hear from our satisfied customers about their experience with our
-            products and services.
+            {t('testimonials.subtitle')} 
           </p>
         </div>
 
@@ -63,7 +64,7 @@ const TestimonialSection = () => {
             </div>
           ) : error ? (
             <div className="text-center text-red-500">
-              Failed to load testimonials. Please try again later.
+              {t('common.error')}
             </div>
           ) : testimonials && testimonials.length > 0 ? (
             <div className="testimonial-slider">
@@ -105,7 +106,7 @@ const TestimonialSection = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center">No testimonials available.</div>
+            <div className="text-center">{t('common.notFound')}</div>
           )}
 
           {testimonials && testimonials.length > 1 && (

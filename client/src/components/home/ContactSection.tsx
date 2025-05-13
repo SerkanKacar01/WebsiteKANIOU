@@ -1,17 +1,19 @@
 import Container from "@/components/ui/container";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ContactSection = () => {
+  const { t } = useLanguage();
+  
   return (
     <section id="contact" className="py-16">
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Get in Touch
+            {t('contact.title')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            We're here to help with any questions about our products or services.
-            Reach out to our friendly team.
+            {t('contact.subtitle')}
           </p>
         </div>
 

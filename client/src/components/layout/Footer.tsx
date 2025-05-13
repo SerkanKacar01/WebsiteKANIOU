@@ -160,7 +160,7 @@ const Footer = () => {
             <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <Input
                 type="email"
-                placeholder="Write your email here"
+                placeholder={t('emailPlaceholder')}
                 className="rounded-r-none text-black bg-white border-0"
               />
               <Button
@@ -181,7 +181,7 @@ const Footer = () => {
             <div className="flex space-x-6">
               <Link href="/privacy-policy">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  Privacy Policy
+                  {t('privacy')}
                 </div>
               </Link>
               <Link href="/terms-of-service">

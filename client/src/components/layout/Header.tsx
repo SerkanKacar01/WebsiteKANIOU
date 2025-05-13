@@ -248,7 +248,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
-                                {t('nav.viewAllProducts')}
+                                View All Products
                               </div>
                             </Link>
                           </div>

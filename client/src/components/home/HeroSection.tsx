@@ -38,7 +38,7 @@ const HeroSection = () => {
             <Link href="/quote">
               <div>
                 <Button size="lg" variant="secondary" className="w-full sm:w-auto bg-white hover:bg-neutral-100 text-primary">
-                  {t('nav.quote')}
+                  Get quote
                 </Button>
               </div>
             </Link>

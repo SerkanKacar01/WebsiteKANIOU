@@ -47,7 +47,7 @@ const ProductShowcase = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('products.featured')}
+            {t('products.title')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
             {t('products.subtitle')}

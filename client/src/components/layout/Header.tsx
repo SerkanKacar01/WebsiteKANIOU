@@ -150,7 +150,7 @@ const Header = () => {
                           } cursor-pointer`}
                           onClick={toggleMobileSubmenu}
                         >
-                          {item.label}
+                          {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
                           <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
                         </div>
                         
@@ -193,7 +193,7 @@ const Header = () => {
                           }`}
                           onClick={handleCloseSheet}
                         >
-                          {item.label}
+                          {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
                         </a>
                       </Link>
                     )
@@ -226,7 +226,7 @@ const Header = () => {
                       onClick={toggleDropdown}
                       onMouseEnter={() => setShowDropdown(true)}
                     >
-                      {item.label}
+                      {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
                       <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                     </div>
                     
@@ -265,7 +265,7 @@ const Header = () => {
                           : "text-text-dark hover:text-accent"
                       } transition-colors cursor-pointer`}
                     >
-                      {item.label}
+                      {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
                     </div>
                   </Link>
                 )

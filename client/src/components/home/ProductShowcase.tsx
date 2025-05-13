@@ -10,21 +10,21 @@ import { useLanguage } from "@/context/LanguageContext";
 const ProductShowcase = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const { t } = useLanguage();
-  
+
   // Create the category name function with the translation function using useMemo
   const getCategoryNameById = useMemo(() => {
     return (categoryId: number) => {
       const categoryMap: Record<number, string> = {
-        1: t('products.categories.curtains'),
-        2: t('products.categories.blinds'),
-        3: t('products.categories.shades'),
-        4: t('products.categories.drapes'),
+        1: t('categories.curtains'),
+        2: t('categories.blinds'),
+        3: t('categories.shades'),
+        4: t('categories.drapes'),
       };
-      
-      return categoryMap[categoryId] || t('products.categories');
+
+      return categoryMap[categoryId] || t('categories');
     };
   }, [t]);
-  
+
   const { data: featuredProducts, isLoading, error } = useQuery({
     queryKey: ["/api/products", { featured: true }],
   });
@@ -47,10 +47,10 @@ const ProductShowcase = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('products.title')}
+            {t('title')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('products.subtitle')}
+            {t('subtitle')}
           </p>
         </div>
 
@@ -65,9 +65,9 @@ const ProductShowcase = () => {
                   : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
               }
             >
-              {t('products.viewAll')}
+              View All
             </Button>
-            
+
             {categories.map((categoryId) => (
               <Button
                 key={categoryId}
@@ -110,7 +110,7 @@ const ProductShowcase = () => {
               <Link href="/products">
                 <a>
                   <Button size="lg" className="bg-primary hover:bg-accent">
-                    {t('products.viewAll')}
+                    View All
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="ml-2 h-4 w-4"

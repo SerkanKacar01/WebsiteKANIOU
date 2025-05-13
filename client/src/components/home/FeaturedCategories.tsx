@@ -40,10 +40,10 @@ const FeaturedCategories = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('products.title')}
+            Our Categories
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('products.subtitle')}
+            Explore our wide range of window treatments
           </p>
         </div>
 

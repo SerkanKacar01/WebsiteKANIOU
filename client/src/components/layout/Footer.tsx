@@ -58,42 +58,42 @@ const Footer = () => {
               <li>
                 <Link href="/products?category=curtains">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('products.categories.curtains', 'Curtains')}
+                    {t('products.categories.curtains')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=blinds">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('products.categories.blinds', 'Blinds')}
+                    {t('products.categories.blinds')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=shades">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('products.categories.shades', 'Shades')}
+                    {t('products.categories.shades')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=drapes">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('products.categories.drapes', 'Drapes')}
+                    {t('products.categories.drapes')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=accessories">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('products.categories.accessories', 'Accessories')}
+                    {t('products.categories.accessories')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/quote">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('products.customSolutions', 'Custom Solutions')}
+                    {t('products.customSolutions')}
                   </div>
                 </Link>
               </li>
@@ -108,42 +108,42 @@ const Footer = () => {
               <li>
                 <Link href="/about#measure-guide">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('footer.measureGuide', 'Measure Guide')}
+                    {t('footer.measureGuide')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#installation-guide">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('footer.installationGuide', 'Installation Guide')}
+                    {t('footer.installationGuide')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#care-instructions">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('footer.careInstructions', 'Care Instructions')}
+                    {t('footer.careInstructions')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#return-policy">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('footer.returnPolicy', 'Return Policy')}
+                    {t('footer.returnPolicy')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#warranty">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('footer.warranty', 'Warranty Info')}
+                    {t('footer.warranty')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#faq">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('footer.faq', 'FAQs')}
+                    {t('footer.faq')}
                   </div>
                 </Link>
               </li>
@@ -155,7 +155,7 @@ const Footer = () => {
               {t('footer.newsletter.title')}
             </h4>
             <p className="font-body text-neutral-300 mb-4">
-              {t('footer.newsletter.description', 'Subscribe for design tips and exclusive offers.')}
+              {t('footer.newsletter.description')}
             </p>
             <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <Input
@@ -191,7 +191,7 @@ const Footer = () => {
               </Link>
               <Link href="/sitemap">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t('footer.sitemap', 'Sitemap')}
+                  {t('footer.sitemap')}
                 </div>
               </Link>
             </div>

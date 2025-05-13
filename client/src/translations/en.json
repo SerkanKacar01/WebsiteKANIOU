@@ -44,6 +44,14 @@
     "featured": "Featured Products",
     "newArrivals": "New Arrivals",
     "bestSellers": "Best Sellers",
+    "customSolutions": "Custom Solutions",
+    "categories": {
+      "curtains": "Curtains",
+      "blinds": "Blinds",
+      "shades": "Shades",
+      "drapes": "Drapes",
+      "accessories": "Accessories"
+    },
     "filters": {
       "title": "Filters",
       "categories": "Categories",
@@ -109,6 +117,13 @@
     "company": "Company",
     "products": "Products",
     "support": "Support",
+    "measureGuide": "Measure Guide",
+    "installationGuide": "Installation Guide",
+    "careInstructions": "Care Instructions",
+    "returnPolicy": "Return Policy",
+    "warranty": "Warranty Information",
+    "faq": "FAQs",
+    "sitemap": "Sitemap",
     "legal": {
       "title": "Legal",
       "terms": "Terms of Service",
@@ -117,6 +132,7 @@
     },
     "newsletter": {
       "title": "Subscribe to Our Newsletter",
+      "description": "Subscribe for design tips and exclusive offers.",
       "placeholder": "Your Email",
       "submit": "Subscribe",
       "success": "Thank you for subscribing!",

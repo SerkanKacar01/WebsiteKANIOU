@@ -39,11 +39,11 @@ const Header = () => {
   
   // Define navigation items
   const navItems = [
-    { label: 'nav.home', href: "/" },
-    { label: 'nav.products', href: "/products", hasDropdown: true },
-    { label: 'nav.gallery', href: "/gallery" },
-    { label: 'nav.about', href: "/about" },
-    { label: 'nav.contact', href: "/contact" },
+    { label: 'Home', href: "/" },
+    { label: 'Products', href: "/products", hasDropdown: true },
+    { label: 'Gallery', href: "/gallery" },
+    { label: 'About', href: "/about" },
+    { label: 'Contact', href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -150,7 +150,7 @@ const Header = () => {
                           } cursor-pointer`}
                           onClick={toggleMobileSubmenu}
                         >
-                          {t(`nav.${item.label}`)}
+                          {item.label}
                           <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
                         </div>
                         
@@ -175,7 +175,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    {t('nav.viewAllProducts')}
+                                    View All Products
                                   </div>
                                 </Link>
                               </div>
@@ -193,7 +193,7 @@ const Header = () => {
                           }`}
                           onClick={handleCloseSheet}
                         >
-                          {t(`nav.${item.label}`)}
+                          {item.label}
                         </a>
                       </Link>
                     )
@@ -205,7 +205,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        {t('nav.quote')}
+                        Get quote
                       </Button>
                     </a>
                   </Link>
@@ -226,7 +226,7 @@ const Header = () => {
                       onClick={toggleDropdown}
                       onMouseEnter={() => setShowDropdown(true)}
                     >
-                      {t(`nav.${item.label}`)}
+                      {item.label}
                       <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                     </div>
                     
@@ -265,7 +265,7 @@ const Header = () => {
                           : "text-text-dark hover:text-accent"
                       } transition-colors cursor-pointer`}
                     >
-                      {t(`nav.${item.label}`)}
+                      {item.label}
                     </div>
                   </Link>
                 )
@@ -274,7 +274,7 @@ const Header = () => {
                 <LanguageSelector />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent">
-                    {t('nav.quote')}
+                    Get quote
                   </Button>
                 </Link>
               </div>

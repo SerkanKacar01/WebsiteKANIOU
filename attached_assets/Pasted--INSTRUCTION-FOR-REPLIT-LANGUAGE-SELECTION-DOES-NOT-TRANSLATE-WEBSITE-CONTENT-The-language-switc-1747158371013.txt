@@ -1,0 +1,51 @@
+✅ INSTRUCTION FOR REPLIT — LANGUAGE SELECTION DOES NOT TRANSLATE WEBSITE CONTENT
+
+The language switcher is visible and clickable, but selecting a language does not change the text on the website. The interface stays in the original language or does not respond at all.
+
+This is a critical issue that must be fixed completely so that changing the language actually updates the entire website content.
+
+⸻
+
+📌 GOAL:
+
+Make sure that when a user selects a language from the dropdown (EN, FR, NL, TR, AR), all visible content on the page is instantly updated to that language or reloaded correctly.
+
+⸻
+
+✅ WHAT YOU NEED TO DO:
+	1.	Activate language switching logic
+	•	Selecting a language must trigger the i18n.changeLanguage() or equivalent function used in your app
+	•	The selected language must be applied to the entire app context (not just stored)
+	2.	Store the selected language
+	•	Save the selected language in localStorage or cookies so it persists after refresh or page change
+	3.	Ensure the app watches the selected language
+	•	All pages and components must automatically re-render when the language changes
+	•	Use a reactive or observer pattern if needed
+	4.	Verify language files are loaded
+	•	All five language files (en.json, fr.json, nl.json, tr.json, ar.json) must exist
+	•	Make sure they are being loaded properly at runtime
+	•	If the file is missing or contains errors, fix it or fallback to English
+	5.	Apply translations to every text
+	•	Every visible word (header, navigation, footer, buttons, forms, titles, placeholders) must use a translation key
+	•	No hardcoded strings should be used
+	6.	Arabic (AR) must render Right-To-Left
+	•	When ar is selected, the HTML body must use dir="rtl"
+	•	The font, alignment, and flow must adjust accordingly
+	7.	Fix the dropdown
+	•	Make sure the language dropdown updates the interface immediately
+	•	Replace raw keys (language.en, language.fr) with correct native names like:
+	•	English
+	•	Français
+	•	Nederlands
+	•	Türkçe
+	•	العربية
+
+⸻
+
+✅ FINAL RESULT REQUIRED:
+	•	✅ Language switcher changes all visible website content
+	•	✅ No text remains untranslated after switching
+	•	✅ Arabic layout is RTL and renders properly
+	•	✅ Language preference is remembered across pages
+	•	✅ Language names appear correctly in the selector
+	•	✅ Translation works on desktop and mobile

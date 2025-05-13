@@ -44,6 +44,14 @@
     "featured": "Öne Çıkan Ürünler",
     "newArrivals": "Yeni Gelenler",
     "bestSellers": "En Çok Satanlar",
+    "customSolutions": "Özel Çözümler",
+    "categories": {
+      "curtains": "Perdeler",
+      "blinds": "Jaluziler",
+      "shades": "Storlar",
+      "drapes": "Fon Perdeler",
+      "accessories": "Aksesuarlar"
+    },
     "filters": {
       "title": "Filtreler",
       "categories": "Kategoriler",
@@ -109,6 +117,13 @@
     "company": "Şirket",
     "products": "Ürünler",
     "support": "Destek",
+    "measureGuide": "Ölçüm Kılavuzu",
+    "installationGuide": "Kurulum Kılavuzu",
+    "careInstructions": "Bakım Talimatları",
+    "returnPolicy": "İade Politikası",
+    "warranty": "Garanti Bilgileri",
+    "faq": "Sık Sorulan Sorular",
+    "sitemap": "Site Haritası",
     "legal": {
       "title": "Yasal",
       "terms": "Hizmet Şartları",
@@ -117,6 +132,7 @@
     },
     "newsletter": {
       "title": "Bültenimize Abone Olun",
+      "description": "Tasarım ipuçları ve özel teklifler için abone olun.",
       "placeholder": "E-posta Adresiniz",
       "submit": "Abone Ol",
       "success": "Abone olduğunuz için teşekkürler!",

@@ -44,6 +44,14 @@
     "featured": "Produits en Vedette",
     "newArrivals": "Nouveautés",
     "bestSellers": "Meilleures Ventes",
+    "customSolutions": "Solutions Sur Mesure",
+    "categories": {
+      "curtains": "Rideaux",
+      "blinds": "Stores",
+      "shades": "Ombrages",
+      "drapes": "Tentures",
+      "accessories": "Accessoires"
+    },
     "filters": {
       "title": "Filtres",
       "categories": "Catégories",
@@ -109,6 +117,13 @@
     "company": "Entreprise",
     "products": "Produits",
     "support": "Support",
+    "measureGuide": "Guide de Mesure",
+    "installationGuide": "Guide d'Installation",
+    "careInstructions": "Instructions d'Entretien",
+    "returnPolicy": "Politique de Retour",
+    "warranty": "Informations de Garantie",
+    "faq": "FAQ",
+    "sitemap": "Plan du Site",
     "legal": {
       "title": "Légal",
       "terms": "Conditions d'Utilisation",
@@ -117,6 +132,7 @@
     },
     "newsletter": {
       "title": "Abonnez-vous à Notre Newsletter",
+      "description": "Abonnez-vous pour des conseils de design et des offres exclusives.",
       "placeholder": "Votre Email",
       "submit": "S'abonner",
       "success": "Merci de vous être abonné!",

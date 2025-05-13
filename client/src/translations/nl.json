@@ -44,6 +44,14 @@
     "featured": "Uitgelichte Producten",
     "newArrivals": "Nieuwe Aankomsten",
     "bestSellers": "Bestsellers",
+    "customSolutions": "Maatwerk Oplossingen",
+    "categories": {
+      "curtains": "Gordijnen",
+      "blinds": "Jaloezieën",
+      "shades": "Rolgordijnen",
+      "drapes": "Overgordijnen",
+      "accessories": "Accessoires"
+    },
     "filters": {
       "title": "Filters",
       "categories": "Categorieën",
@@ -109,6 +117,13 @@
     "company": "Bedrijf",
     "products": "Producten",
     "support": "Ondersteuning",
+    "measureGuide": "Meetgids",
+    "installationGuide": "Installatiegids",
+    "careInstructions": "Verzorgingsinstructies",
+    "returnPolicy": "Retourbeleid",
+    "warranty": "Garantie-informatie",
+    "faq": "Veelgestelde Vragen",
+    "sitemap": "Sitemap",
     "legal": {
       "title": "Juridisch",
       "terms": "Servicevoorwaarden",
@@ -117,6 +132,7 @@
     },
     "newsletter": {
       "title": "Abonneer op Onze Nieuwsbrief",
+      "description": "Abonneer voor ontwerptips en exclusieve aanbiedingen.",
       "placeholder": "Uw E-mail",
       "submit": "Abonneren",
       "success": "Bedankt voor uw abonnement!",

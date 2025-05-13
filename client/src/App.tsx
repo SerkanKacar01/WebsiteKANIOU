@@ -18,6 +18,7 @@ import GalleryPage from "@/pages/GalleryPage";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
+import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 
 function Router() {
   const { t } = useLanguage();
@@ -31,6 +32,7 @@ function Router() {
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
+    if (location === "/privacy-policy") return t("privacy") + " | " + t("app.title");
     return t("app.title") + " | " + t("app.subtitle");
   };
 
@@ -79,6 +81,7 @@ function Router() {
         <Route path="/about" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/quote" component={QuotePage} />
+        <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route component={NotFound} />
       </Switch>
     </>

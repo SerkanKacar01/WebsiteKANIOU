@@ -37,13 +37,13 @@ const Header = () => {
   const isMobile = useMobile();
   const { t } = useLanguage();
   
-  // Define navigation items with translation keys
+  // Define navigation items
   const navItems = [
-    { label: 'home', href: "/" },
-    { label: 'products', href: "/products", hasDropdown: true },
-    { label: 'gallery', href: "/gallery" },
-    { label: 'about', href: "/about" },
-    { label: 'contact', href: "/contact" },
+    { label: 'nav.home', href: "/" },
+    { label: 'nav.products', href: "/products", hasDropdown: true },
+    { label: 'nav.gallery', href: "/gallery" },
+    { label: 'nav.about', href: "/about" },
+    { label: 'nav.contact', href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);

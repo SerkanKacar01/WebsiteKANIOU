@@ -14,11 +14,11 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ isMobile = false, o
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const languages: { code: Language; name: string }[] = [
-    { code: 'en', name: t('language.en') },
-    { code: 'fr', name: t('language.fr') }, 
-    { code: 'nl', name: t('language.nl') },
-    { code: 'tr', name: t('language.tr') },
-    { code: 'ar', name: t('language.ar') }
+    { code: 'en', name: 'English' },
+    { code: 'fr', name: 'Français' }, 
+    { code: 'nl', name: 'Nederlands' },
+    { code: 'tr', name: 'Türkçe' },
+    { code: 'ar', name: 'العربية' }
   ];
 
   const toggleDropdown = () => {

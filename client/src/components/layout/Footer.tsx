@@ -160,7 +160,7 @@ const Footer = () => {
             <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <Input
                 type="email"
-                placeholder={t('emailPlaceholder')}
+                placeholder="Write your email here"
                 className="rounded-r-none text-black bg-white border-0"
               />
               <Button

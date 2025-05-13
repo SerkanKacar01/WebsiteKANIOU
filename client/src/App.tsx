@@ -19,6 +19,7 @@ import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
+import TermsOfServicePage from "@/pages/TermsOfServicePage";
 
 function Router() {
   const { t } = useLanguage();
@@ -33,6 +34,7 @@ function Router() {
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
+    if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
     return t("app.title") + " | " + t("app.subtitle");
   };
 
@@ -82,6 +84,7 @@ function Router() {
         <Route path="/contact" component={ContactPage} />
         <Route path="/quote" component={QuotePage} />
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+        <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route component={NotFound} />
       </Switch>
     </>

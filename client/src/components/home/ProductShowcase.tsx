@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,20 @@ import { useLanguage } from "@/context/LanguageContext";
 const ProductShowcase = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const { t } = useLanguage();
+  
+  // Create the category name function with the translation function using useMemo
+  const getCategoryNameById = useMemo(() => {
+    return (categoryId: number) => {
+      const categoryMap: Record<number, string> = {
+        1: t('products.categories.curtains'),
+        2: t('products.categories.blinds'),
+        3: t('products.categories.shades'),
+        4: t('products.categories.drapes'),
+      };
+      
+      return categoryMap[categoryId] || t('products.categories');
+    };
+  }, [t]);
   
   const { data: featuredProducts, isLoading, error } = useQuery({
     queryKey: ["/api/products", { featured: true }],
@@ -122,18 +136,6 @@ const ProductShowcase = () => {
   );
 };
 
-// Helper function to get category name by ID
-// In a real implementation, this would query the categories data
-function getCategoryNameById(categoryId: number) {
-  const { t } = useLanguage();
-  const categoryMap: Record<number, string> = {
-    1: t('products.categories.curtains'),
-    2: t('products.categories.blinds'),
-    3: t('products.categories.shades'),
-    4: t('products.categories.drapes'),
-  };
-  
-  return categoryMap[categoryId] || t('products.categories');
-}
+
 
 export default ProductShowcase;

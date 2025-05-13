@@ -5,6 +5,8 @@ import { Category } from "@shared/schema";
 import { useLanguage } from "@/context/LanguageContext";
 
 const CategoryCard = ({ category }: { category: Category }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="group relative h-80 rounded-lg overflow-hidden shadow-md">
       <div
@@ -19,7 +21,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
         <p className="font-body text-white text-sm mb-4">{category.description}</p>
         <Link href={`/products?category=${category.id}`}>
           <a className="font-body inline-block text-white text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
-            Explore Collection
+            {t('hero.cta')}
           </a>
         </Link>
       </div>
@@ -28,6 +30,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
 };
 
 const FeaturedCategories = () => {
+  const { t } = useLanguage();
   const { data: categories, isLoading, error } = useQuery({
     queryKey: ["/api/categories"],
   });
@@ -37,11 +40,10 @@ const FeaturedCategories = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Our Premium Collections
+            {t('products.title')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Discover our handpicked selection of high-quality window treatments
-            designed to complement any interior style.
+            {t('products.subtitle')}
           </p>
         </div>
 
@@ -53,7 +55,7 @@ const FeaturedCategories = () => {
           </div>
         ) : error ? (
           <div className="text-center text-red-500">
-            Failed to load categories. Please try again later.
+            {t('common.error')}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

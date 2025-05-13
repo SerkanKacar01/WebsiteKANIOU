@@ -10,7 +10,7 @@ const PrivacyPolicyPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('privacy')} | {t('app.title')}</title>
+        <title>Privacy Policy | {t('app.title')}</title>
         <meta
           name="description"
           content="Privacy Policy and information about how we handle your personal data."
@@ -25,7 +25,7 @@ const PrivacyPolicyPage = () => {
           
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              {t('privacy')}
+              Privacy Policy
             </h1>
           </div>
           

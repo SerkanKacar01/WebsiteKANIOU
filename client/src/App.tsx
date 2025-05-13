@@ -32,7 +32,7 @@ function Router() {
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
-    if (location === "/privacy-policy") return t("privacy") + " | " + t("app.title");
+    if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
     return t("app.title") + " | " + t("app.subtitle");
   };
 

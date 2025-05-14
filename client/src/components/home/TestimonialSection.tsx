@@ -4,13 +4,11 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Testimonial } from "@shared/schema";
-import { useLanguage } from "@/context/LanguageContext";
 
 const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { t } = useLanguage();
   
-  const { data: testimonials, isLoading, error } = useQuery({
+  const { data: testimonials = [], isLoading, error } = useQuery<Testimonial[]>({
     queryKey: ["/api/testimonials"],
   });
 
@@ -42,10 +40,10 @@ const TestimonialSection = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('testimonials.title')}
+            Wat Onze Klanten Zeggen
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('testimonials.subtitle')} 
+            Ontdek waarom onze klanten zo tevreden zijn met onze producten en service
           </p>
         </div>
 
@@ -64,7 +62,7 @@ const TestimonialSection = () => {
             </div>
           ) : error ? (
             <div className="text-center text-red-500">
-              {t('common.error')}
+              Er is een fout opgetreden bij het laden van de beoordelingen.
             </div>
           ) : testimonials && testimonials.length > 0 ? (
             <div className="testimonial-slider">
@@ -81,7 +79,7 @@ const TestimonialSection = () => {
                       <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center text-white text-xl font-bold border-4 border-secondary">
                         {testimonials[currentIndex].name
                           .split(" ")
-                          .map((n) => n[0])
+                          .map((n: string) => n[0])
                           .join("")}
                       </div>
                     )}
@@ -106,7 +104,7 @@ const TestimonialSection = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center">{t('common.notFound')}</div>
+            <div className="text-center">Geen beoordelingen gevonden.</div>
           )}
 
           {testimonials && testimonials.length > 1 && (

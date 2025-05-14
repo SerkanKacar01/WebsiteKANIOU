@@ -4,7 +4,6 @@ import { useLocation, useParams, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/context/LanguageContext";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -45,7 +44,6 @@ const ProductCategoryPage = () => {
   const [, setLocation] = useLocation();
   const params = useParams();
   const { category } = params;
-  const { t } = useLanguage();
   
   const [categoryData, setCategoryData] = useState<Category | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -176,7 +174,7 @@ const ProductCategoryPage = () => {
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+                <BreadcrumbLink href="/products">Producten</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <ChevronRight className="h-4 w-4" />
@@ -210,7 +208,7 @@ const ProductCategoryPage = () => {
             <div className="flex flex-wrap gap-4">
               <Link href="/quote">
                 <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Request a Quote
+                  Offerte Aanvragen
                 </Button>
               </Link>
               <a href="#products">
@@ -218,7 +216,7 @@ const ProductCategoryPage = () => {
                   variant="outline" 
                   className="bg-white/10 text-white border-white hover:bg-white/20"
                 >
-                  View Products
+                  Bekijk Producten
                 </Button>
               </a>
             </div>
@@ -230,7 +228,7 @@ const ProductCategoryPage = () => {
       <div className="py-16 bg-white">
         <Container>
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
-            Key Features
+            Belangrijkste Kenmerken
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -238,9 +236,9 @@ const ProductCategoryPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-medium mb-2">Premium Quality</h3>
+              <h3 className="font-display text-xl font-medium mb-2">Premium Kwaliteit</h3>
               <p className="text-text-medium">
-                Crafted with the finest materials to ensure durability and elegant appearance
+                Gemaakt van de beste materialen om duurzaamheid en een elegante uitstraling te garanderen
               </p>
             </div>
             
@@ -248,9 +246,9 @@ const ProductCategoryPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-medium mb-2">Custom Options</h3>
+              <h3 className="font-display text-xl font-medium mb-2">Aanpasbare Opties</h3>
               <p className="text-text-medium">
-                Available in multiple sizes, colors, and styles to perfectly match your interior
+                Beschikbaar in meerdere maten, kleuren en stijlen om perfect bij uw interieur te passen
               </p>
             </div>
             
@@ -258,9 +256,9 @@ const ProductCategoryPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-medium mb-2">Professional Installation</h3>
+              <h3 className="font-display text-xl font-medium mb-2">Professionele Installatie</h3>
               <p className="text-text-medium">
-                Expert installation service available to ensure perfect fit and finish
+                Deskundige installatieservice beschikbaar voor een perfecte pasvorm en afwerking
               </p>
             </div>
           </div>
@@ -274,12 +272,12 @@ const ProductCategoryPage = () => {
             {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-12">
-            Explore our wide range of {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} designed to enhance your living space with style and functionality.
+            Ontdek ons uitgebreide assortiment {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} ontworpen om uw leefruimte te verfraaien met stijl en functionaliteit.
           </p>
           
           {products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-text-medium">No products available in this category at the moment.</p>
+              <p className="text-text-medium">Er zijn momenteel geen producten beschikbaar in deze categorie.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -295,12 +293,12 @@ const ProductCategoryPage = () => {
                     </Link>
                     {product.isNewArrival && (
                       <div className="absolute top-2 right-2 bg-accent text-white text-xs px-2 py-1 rounded">
-                        New Arrival
+                        Nieuw Binnen
                       </div>
                     )}
                     {product.isBestSeller && (
                       <div className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
-                        Best Seller
+                        Bestseller
                       </div>
                     )}
                   </div>
@@ -317,7 +315,7 @@ const ProductCategoryPage = () => {
                       <span className="text-accent font-semibold">${product.price.toFixed(2)}</span>
                       <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                         <span className="text-primary text-sm font-medium hover:underline cursor-pointer">
-                          View Details
+                          Bekijk Details
                         </span>
                       </Link>
                     </div>
@@ -330,7 +328,7 @@ const ProductCategoryPage = () => {
           <div className="text-center mt-12">
             <Link href="/quote">
               <Button className="bg-primary hover:bg-primary/90 text-white">
-                Request a Quote
+                Offerte Aanvragen
               </Button>
             </Link>
           </div>

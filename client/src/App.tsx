@@ -4,7 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
-import { useLanguage } from "@/context/LanguageContext";
 import { useEffect } from "react";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
@@ -22,27 +21,26 @@ import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 
 function Router() {
-  const { t } = useLanguage();
   const [location] = useLocation();
   
   // Get page title based on current route
   const getPageTitle = () => {
-    if (location === "/") return t("app.title") + " | " + t("app.subtitle");
-    if (location === "/products") return t("products.title") + " | " + t("app.title");
-    if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
-    if (location === "/about") return t("about.title") + " | " + t("app.title");
-    if (location === "/contact") return t("contact.title") + " | " + t("app.title");
-    if (location === "/quote") return t("quote.title") + " | " + t("app.title");
-    if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
-    if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
-    return t("app.title") + " | " + t("app.subtitle");
+    if (location === "/") return "Elegant Drapes | Premium Gordijnen & Raambehandelingen";
+    if (location === "/products") return "Onze Producten | Elegant Drapes";
+    if (location === "/gallery") return "Inspiratie Galerij | Elegant Drapes";
+    if (location === "/about") return "Over Ons | Elegant Drapes";
+    if (location === "/contact") return "Neem Contact Op | Elegant Drapes";
+    if (location === "/quote") return "Offerte Aanvragen | Elegant Drapes";
+    if (location === "/privacy-policy") return "Privacybeleid | Elegant Drapes";
+    if (location === "/terms-of-service") return "Servicevoorwaarden | Elegant Drapes";
+    return "Elegant Drapes | Premium Gordijnen & Raambehandelingen";
   };
 
   return (
     <>
       <Helmet>
         <title>{getPageTitle()}</title>
-        <meta name="description" content={t("app.subtitle")} />
+        <meta name="description" content="Premium Gordijnen & Raambehandelingen" />
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
@@ -92,13 +90,11 @@ function Router() {
 }
 
 function App() {
-  const { language } = useLanguage();
-  
-  // Update language-specific metadata
+  // Set Dutch as the fixed language
   useEffect(() => {
-    document.documentElement.lang = language;
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-  }, [language]);
+    document.documentElement.lang = 'nl';
+    document.documentElement.dir = 'ltr';
+  }, []);
   
   return (
     <QueryClientProvider client={queryClient}>

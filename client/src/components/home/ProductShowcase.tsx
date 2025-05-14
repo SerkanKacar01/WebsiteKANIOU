@@ -5,20 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@shared/schema";
-import { useLanguage } from "@/context/LanguageContext";
 
 const ProductShowcase = () => {
   const [activeFilter, setActiveFilter] = useState("all");
-  const { t } = useLanguage();
 
-  // Create the category name function with the translation function using useMemo
+  // Function to get Dutch category names by ID
   const getCategoryNameById = useMemo(() => {
     return (categoryId: number) => {
       const categoryMap: Record<number, string> = {
-        1: 'curtains',
-        2: 'blinds',
-        3: 'shades',
-        4: 'drapes',
+        1: 'Gordijnen',
+        2: 'Jaloezieën',
+        3: 'Rolluiken',
+        4: 'Overgordijnen',
       };
 
       return categoryMap[categoryId] || '';
@@ -44,10 +42,10 @@ const ProductShowcase = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Browse by Category
+            Bladeren op Categorie
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Find the perfect window treatment by selecting a product category below.
+            Vind de perfecte raambehandeling door hieronder een productcategorie te selecteren.
           </p>
         </div>
 
@@ -62,7 +60,7 @@ const ProductShowcase = () => {
                   : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
               }
             >
-              View All
+              Bekijk Alles
             </Button>
 
             {categories.map((categoryId) => (
@@ -93,7 +91,7 @@ const ProductShowcase = () => {
           </div>
         ) : error ? (
           <div className="text-center text-red-500">
-            {t('common.error')}
+            Er is een fout opgetreden bij het laden van de producten.
           </div>
         ) : (
           <>
@@ -106,7 +104,7 @@ const ProductShowcase = () => {
             <div className="text-center mt-12">
               <Link href="/products">
                 <Button size="lg" className="bg-primary hover:bg-accent">
-                  View All
+                  Alle Producten Bekijken
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="ml-2 h-4 w-4"

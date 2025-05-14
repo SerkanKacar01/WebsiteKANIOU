@@ -13,7 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { ColorSwatch } from "@/lib/types";
-import { Product, GalleryItem } from "@shared/schema";
+import { Product, GalleryItem, Category } from "@shared/schema";
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
 import { getProductImageUrl } from "@/lib/imageUtils";
 
@@ -166,17 +166,17 @@ const ProductDetail = () => {
           <div className="relative">
             <div className="rounded-lg overflow-hidden">
               <img
-                src={product.imageUrl}
-                alt={product.name}
+                src={enhancedProduct.imageUrl}
+                alt={enhancedProduct.name}
                 className="w-full h-auto object-cover"
               />
             </div>
-            {product.isBestSeller && (
+            {enhancedProduct.isBestSeller && (
               <div className="absolute top-4 right-4 bg-secondary text-white text-sm py-1 px-3 rounded-full">
                 Best Seller
               </div>
             )}
-            {product.isNewArrival && (
+            {enhancedProduct.isNewArrival && (
               <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
                 New Arrival
               </div>
@@ -185,26 +185,26 @@ const ProductDetail = () => {
 
           <div>
             <h1 className="font-display text-3xl text-primary font-semibold mb-2">
-              {product.name}
+              {enhancedProduct.name}
             </h1>
             <p className="text-accent text-2xl font-semibold mb-4">
               ${productPrice}
             </p>
             
-            <p className="text-text-medium mb-6">{product.description}</p>
+            <p className="text-text-medium mb-6">{enhancedProduct.description}</p>
             
             <div className="space-y-6">
-              {product.material && (
+              {enhancedProduct.material && (
                 <div>
                   <h3 className="font-medium mb-2">Material</h3>
-                  <p className="text-text-medium">{product.material}</p>
+                  <p className="text-text-medium">{enhancedProduct.material}</p>
                 </div>
               )}
               
-              {product.dimensions && (
+              {enhancedProduct.dimensions && (
                 <div>
                   <h3 className="font-medium mb-2">Dimensions</h3>
-                  <p className="text-text-medium">{product.dimensions}</p>
+                  <p className="text-text-medium">{enhancedProduct.dimensions}</p>
                 </div>
               )}
               
@@ -290,18 +290,18 @@ const ProductDetail = () => {
             <TabsContent value="details" className="py-6">
               <div className="prose max-w-none">
                 <p className="mb-4">
-                  {product.description}
+                  {enhancedProduct.description}
                 </p>
-                {product.dimensions && (
+                {enhancedProduct.dimensions && (
                   <>
                     <h3 className="text-lg font-medium mb-2">Dimensions</h3>
-                    <p className="mb-4">{product.dimensions}</p>
+                    <p className="mb-4">{enhancedProduct.dimensions}</p>
                   </>
                 )}
-                {product.material && (
+                {enhancedProduct.material && (
                   <>
                     <h3 className="text-lg font-medium mb-2">Material</h3>
-                    <p>{product.material}</p>
+                    <p>{enhancedProduct.material}</p>
                   </>
                 )}
               </div>
@@ -309,9 +309,9 @@ const ProductDetail = () => {
             <TabsContent value="features" className="py-6">
               <div className="prose max-w-none">
                 <h3 className="text-lg font-medium mb-4">Key Features</h3>
-                {product.features && product.features.length > 0 ? (
+                {enhancedProduct.features && enhancedProduct.features.length > 0 ? (
                   <ul className="space-y-2">
-                    {product.features.map((feature, index) => (
+                    {enhancedProduct.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <Check className="h-5 w-5 text-secondary mr-2 mt-0.5" />
                         <span>{feature}</span>
@@ -327,7 +327,7 @@ const ProductDetail = () => {
               <div className="prose max-w-none">
                 <h3 className="text-lg font-medium mb-4">Care Instructions</h3>
                 <p className="mb-4">
-                  To ensure the longevity and appearance of your {product.name}, please follow these care instructions:
+                  To ensure the longevity and appearance of your {enhancedProduct.name}, please follow these care instructions:
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start">

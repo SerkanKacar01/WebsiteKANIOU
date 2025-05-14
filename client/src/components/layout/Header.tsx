@@ -13,28 +13,113 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const productCategories = [
-  { label: "Overgordijnen", href: "/products/overgordijnen" },
-  { label: "Vitrages", href: "/products/vitrages" },
-  { label: "Rolgordijnen", href: "/products/rolgordijnen" },
-  { label: "Duo rolgordijnen", href: "/products/duo-rolgordijnen" },
-  { label: "Textiel lamellen", href: "/products/textiel-lamellen" },
-  { label: "Kunststof lamellen", href: "/products/kunststof-lamellen" },
-  { label: "Houten jaloezieën", href: "/products/houten-jaloezieen" },
-  { label: "Kunststof jaloezieën", href: "/products/kunststof-jaloezieen" },
-  { label: "Textiel raamfolie", href: "/products/textiel-raamfolie" },
-  { label: "Houten shutters", href: "/products/houten-shutters" },
-  { label: "Inzethorren", href: "/products/inzethorren" },
-  { label: "Opzethorren", href: "/products/opzethorren" },
-  { label: "Plissé hordeuren", href: "/products/plisse-hordeuren" },
-  { label: "Plissé", href: "/products/plisse" },
-  { label: "Duo plissé", href: "/products/duo-plisse" },
-  { label: "Duo plissé voor dakramen", href: "/products/duo-plisse-dakramen" },
-  { label: "Dakraam zonweringen (Fakro, Velux)", href: "/products/dakraam-zonwering" },
-  { label: "Gordijnrails", href: "/products/gordijnrails" },
-  { label: "Gordijnroedes", href: "/products/gordijnroedes" },
-  { label: "Horren", href: "/products/horren" },
-  { label: "SQUID textiel folie", href: "/products/squid" },
+// We'll define product categories with translations for both languages
+const getProductCategories = (t: (key: string) => string) => [
+  { 
+    label: t('products.category.curtains'), 
+    href: "/products/overgordijnen",
+    key: "overgordijnen" 
+  },
+  { 
+    label: t('products.category.sheers'), 
+    href: "/products/vitrages",
+    key: "vitrages" 
+  },
+  { 
+    label: t('products.category.rollerBlinds'), 
+    href: "/products/rolgordijnen",
+    key: "rolgordijnen" 
+  },
+  { 
+    label: t('products.category.duoRollerBlinds'), 
+    href: "/products/duo-rolgordijnen",
+    key: "duo-rolgordijnen" 
+  },
+  { 
+    label: t('products.category.verticalTextileBlinds'), 
+    href: "/products/textiel-lamellen",
+    key: "textiel-lamellen" 
+  },
+  { 
+    label: t('products.category.verticalPlasticBlinds'), 
+    href: "/products/kunststof-lamellen",
+    key: "kunststof-lamellen" 
+  },
+  { 
+    label: t('products.category.woodenBlinds'), 
+    href: "/products/houten-jaloezieen",
+    key: "houten-jaloezieen" 
+  },
+  { 
+    label: t('products.category.plasticBlinds'), 
+    href: "/products/kunststof-jaloezieen",
+    key: "kunststof-jaloezieen" 
+  },
+  { 
+    label: t('products.category.textileWindowFilm'), 
+    href: "/products/textiel-raamfolie",
+    key: "textiel-raamfolie" 
+  },
+  { 
+    label: t('products.category.woodenShutters'), 
+    href: "/products/houten-shutters",
+    key: "houten-shutters" 
+  },
+  { 
+    label: t('products.category.insetScreens'), 
+    href: "/products/inzethorren",
+    key: "inzethorren" 
+  },
+  { 
+    label: t('products.category.mountedScreens'), 
+    href: "/products/opzethorren",
+    key: "opzethorren" 
+  },
+  { 
+    label: t('products.category.pleatScreenDoors'), 
+    href: "/products/plisse-hordeuren",
+    key: "plisse-hordeuren" 
+  },
+  { 
+    label: t('products.category.pleatedBlinds'), 
+    href: "/products/plisse",
+    key: "plisse" 
+  },
+  { 
+    label: t('products.category.duoPleatedBlinds'), 
+    href: "/products/duo-plisse",
+    key: "duo-plisse" 
+  },
+  { 
+    label: t('products.category.duoPleatedRoofBlinds'), 
+    href: "/products/duo-plisse-dakramen",
+    key: "duo-plisse-dakramen" 
+  },
+  { 
+    label: t('products.category.roofWindowBlinds'), 
+    href: "/products/dakraam-zonwering",
+    key: "dakraam-zonwering" 
+  },
+  { 
+    label: t('products.category.curtainRails'), 
+    href: "/products/gordijnrails",
+    key: "gordijnrails" 
+  },
+  { 
+    label: t('products.category.curtainRods'), 
+    href: "/products/gordijnroedes",
+    key: "gordijnroedes" 
+  },
+  { 
+    label: t('products.category.screens'), 
+    href: "/products/horren",
+    key: "horren" 
+  },
+  { 
+    label: t('products.category.squidFilm'), 
+    href: "/products/squid",
+    key: "squid" 
+  },
 ];
 
 const Header = () => {
@@ -159,8 +244,8 @@ const Header = () => {
                         
                         {showMobileSubmenu && (
                           <div className="mt-3 ml-2 space-y-1 max-h-80 overflow-y-auto border-l-2 border-neutral-200 pl-3">
-                            {productCategories.map((category) => (
-                              <div key={category.href}>
+                            {getProductCategories(t).map((category) => (
+                              <div key={category.key}>
                                 <Link href={category.href}>
                                   <div 
                                     className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors cursor-pointer"
@@ -178,7 +263,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    Alle Producten Bekijken
+                                    {t('common.viewAll')}
                                   </div>
                                 </Link>
                               </div>
@@ -259,8 +344,8 @@ const Header = () => {
                         className="absolute left-0 mt-2 w-64 bg-white rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
                         onMouseLeave={() => setShowDropdown(false)}
                       >
-                        {productCategories.map((category) => (
-                          <div key={category.href} className="dropdown-menu-item">
+                        {getProductCategories(t).map((category) => (
+                          <div key={category.key} className="dropdown-menu-item">
                             <Link href={category.href}>
                               <div className="block px-4 py-2 text-sm text-text-dark hover:text-accent cursor-pointer">
                                 {category.label}
@@ -272,7 +357,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
-                                Alle Producten Bekijken
+                                {t('common.viewAll')}
                               </div>
                             </Link>
                           </div>

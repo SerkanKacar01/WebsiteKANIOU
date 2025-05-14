@@ -2,10 +2,8 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
 
 const AboutCompany = () => {
-  const { t } = useLanguage();
   
   return (
     <section id="about" className="py-16 bg-neutral-100">
@@ -13,14 +11,14 @@ const AboutCompany = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              {t('about.title')}
+              Over Ons
             </h2>
             <p className="font-body text-text-medium mb-6">
-              {t('about.paragraph1')}
+              Sinds 2005 levert Elegant Drapes premium raambehandelingen en uitzonderlijke service aan huiseigenaren en bedrijven.
             </p>
 
             <p className="font-body text-text-medium mb-6">
-              {t('about.paragraph2')}
+              Ons team van experts is toegewijd om u te helpen de perfecte raamoplossingen te vinden die passen bij uw stijl, budget en functionele behoeften.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
@@ -29,10 +27,10 @@ const AboutCompany = () => {
                   <Award className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.values.quality')}
+                  Kwaliteit
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.values.qualityText')}
+                  We gebruiken alleen de beste materialen en vakmanschap in al onze producten.
                 </p>
               </div>
 
@@ -41,10 +39,10 @@ const AboutCompany = () => {
                   <Ruler className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.values.service')}
+                  Service
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.values.serviceText')}
+                  We bieden persoonlijke service van consultatie tot installatie.
                 </p>
               </div>
 
@@ -53,10 +51,10 @@ const AboutCompany = () => {
                   <Truck className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.values.innovation')}
+                  Innovatie
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.values.innovationText')}
+                  We updaten voortdurend ons productaanbod met de nieuwste ontwerpen en technologieën.
                 </p>
               </div>
 
@@ -65,10 +63,10 @@ const AboutCompany = () => {
                   <Headphones className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.mission.title')}
+                  Onze Missie
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.mission.text')}
+                  Ruimtes transformeren door mooie, functionele raambehandelingen die het comfort en de esthetiek van elke kamer verbeteren.
                 </p>
               </div>
             </div>
@@ -76,7 +74,7 @@ const AboutCompany = () => {
             <Link href="/contact">
               <a>
                 <Button size="lg" className="bg-secondary hover:bg-accent">
-                  {t('contact.title')}
+                  Neem Contact Op
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="ml-2 h-4 w-4"
@@ -99,13 +97,13 @@ const AboutCompany = () => {
           <div className="relative">
             <img
               src="https://pixabay.com/get/g356064e5e472162ea3bdf7db76831017a205df5f1807a09d7636efef6f9b054d4c9aaf47b9c21d1c58d3c45cc428f1f1560cf1e2a2d0ead5771100045f79d161_1280.jpg"
-              alt={t('about.showroomImage')}
+              alt="Onze showroom"
               className="w-full h-auto rounded-lg shadow-lg"
             />
             <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
               <p className="font-display text-lg text-primary font-medium">20+</p>
               <p className="font-body text-text-medium text-sm">
-                {t('about.yearsExperience')}
+                Jaren Ervaring
               </p>
             </div>
             <div className="absolute -top-6 -right-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
@@ -113,7 +111,7 @@ const AboutCompany = () => {
                 5000+
               </p>
               <p className="font-body text-text-medium text-sm">
-                {t('about.happyCustomers')}
+                Tevreden Klanten
               </p>
             </div>
           </div>

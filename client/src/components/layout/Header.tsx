@@ -5,8 +5,6 @@ import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
-import { useLanguage } from "@/context/LanguageContext";
-import LanguageSelector from "./LanguageSelector";
 
 const productCategories = [
   { label: "Overgordijnen", href: "/products/overgordijnen" },
@@ -35,14 +33,13 @@ const productCategories = [
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
-  const { t } = useLanguage();
   
   // Define navigation items
   const navItems = [
     { label: 'Home', href: "/" },
-    { label: 'Products', href: "/products", hasDropdown: true },
-    { label: 'Gallery', href: "/gallery" },
-    { label: 'About', href: "/about" },
+    { label: 'Producten', href: "/products", hasDropdown: true },
+    { label: 'Galerij', href: "/gallery" },
+    { label: 'Over Ons', href: "/about" },
     { label: 'Contact', href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
@@ -138,8 +135,6 @@ const Header = () => {
                       <X className="h-5 w-5" />
                     </Button>
                   </div>
-                  
-                  <LanguageSelector isMobile={true} onClose={handleCloseSheet} />
                 
                   {navItems.map((item) => 
                     item.hasDropdown ? (
@@ -175,7 +170,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    View All Products
+                                    Alle Producten Bekijken
                                   </div>
                                 </Link>
                               </div>
@@ -205,7 +200,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        Get quote
+                        Offerte Aanvragen
                       </Button>
                     </a>
                   </Link>
@@ -248,7 +243,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
-                                View All Products
+                                Alle Producten Bekijken
                               </div>
                             </Link>
                           </div>
@@ -271,10 +266,9 @@ const Header = () => {
                 )
               )}
               <div className="flex items-center gap-4">
-                <LanguageSelector />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent">
-                    Get quote
+                    Offerte Aanvragen
                   </Button>
                 </Link>
               </div>

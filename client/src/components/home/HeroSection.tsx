@@ -1,10 +1,8 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
-import { useLanguage } from "@/context/LanguageContext";
 
 const HeroSection = () => {
-  const { t } = useLanguage();
   
   return (
     <section className="relative h-[70vh] min-h-[450px] overflow-hidden">
@@ -21,20 +19,20 @@ const HeroSection = () => {
       <Container className="h-full flex flex-col justify-center">
         <div className="max-w-lg relative z-10 px-4 sm:pl-4">
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-semibold leading-tight mb-3 sm:mb-4">
-            Transform Your Space With Elegant Window Treatments
+            Transformeer Uw Ruimte Met Elegante Raambehandelingen
           </h1>
           <p className="font-body text-base sm:text-lg md:text-xl text-white mb-5 sm:mb-8 opacity-90">
-            Premium curtains, blinds, and drapes tailored to your style and needs.
+            Premium gordijnen, jaloezieën en overgordijnen op maat van uw stijl en behoeften.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
             <Link href="/products">
               <Button className="w-full sm:w-auto bg-[#d5c096] hover:bg-[#c4b183] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded">
-                Browse Collection
+                Ontdek Onze Collectie
               </Button>
             </Link>
             <Link href="/quote">
               <Button variant="outline" className="w-full sm:w-auto mt-2 sm:mt-0 bg-white/80 hover:bg-white text-black px-4 sm:px-6 py-2 sm:py-2.5 rounded">
-                Request Quote
+                Offerte Aanvragen
               </Button>
             </Link>
           </div>

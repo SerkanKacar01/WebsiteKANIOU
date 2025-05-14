@@ -1,19 +1,17 @@
 import Container from "@/components/ui/container";
 import { MapPin, Phone, Mail } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
 
 const ContactSection = () => {
-  const { t } = useLanguage();
   
   return (
     <section id="contact" className="py-16">
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('contact.title')}
+            Neem Contact Op
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('contact.subtitle')}
+            Kom in Contact
           </p>
         </div>
 
@@ -23,17 +21,17 @@ const ContactSection = () => {
               <MapPin className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              {t('contact.showroom.title')}
+              Bezoek Onze Showroom
             </h3>
             <p className="font-body text-text-medium">
-              {t('contact.showroom.address1')}
+              Raambehandelingstraat 123
               <br />
-              {t('contact.showroom.address2')}
+              1234 AB Amsterdam
             </p>
             <p className="font-body text-text-medium mt-2">
-              {t('contact.showroom.hours1')}
+              Maandag - Vrijdag: 9:00 - 18:00
               <br />
-              {t('contact.showroom.hours2')}
+              Zaterdag: 10:00 - 17:00
             </p>
           </div>
 
@@ -42,13 +40,13 @@ const ContactSection = () => {
               <Phone className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              {t('contact.call.title')}
+              Bel Ons
             </h3>
-            <p className="font-body text-text-medium">{t('contact.call.phone')}</p>
+            <p className="font-body text-text-medium">+31 20 123 4567</p>
             <p className="font-body text-text-medium mt-2">
-              {t('contact.call.hours1')}
+              Maandag - Vrijdag: 9:00 - 18:00
               <br />
-              {t('contact.call.hours2')}
+              Zaterdag: 10:00 - 17:00
             </p>
           </div>
 
@@ -57,11 +55,11 @@ const ContactSection = () => {
               <Mail className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              {t('contact.email.title')}
+              E-mail Ons
             </h3>
-            <p className="font-body text-text-medium">{t('contact.email.address1')}</p>
+            <p className="font-body text-text-medium">info@elegantdrapes.com</p>
             <p className="font-body text-text-medium mt-2">
-              {t('contact.email.address2')}
+              Wij reageren binnen 24 uur
             </p>
           </div>
         </div>
@@ -75,7 +73,7 @@ const ContactSection = () => {
               style={{ border: 0 }}
               allowFullScreen={false}
               loading="lazy"
-              title={t('contact.map.title')}
+              title="Onze locatie op de kaart"
             ></iframe>
           </div>
         </div>

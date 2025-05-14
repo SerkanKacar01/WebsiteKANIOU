@@ -2,10 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import Container from "@/components/ui/container";
 import { Category } from "@shared/schema";
-import { useLanguage } from "@/context/LanguageContext";
 
 const CategoryCard = ({ category }: { category: Category }) => {
-  const { t } = useLanguage();
   
   return (
     <div className="group relative h-64 sm:h-72 md:h-80 rounded-lg overflow-hidden shadow-md">
@@ -21,7 +19,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
         <p className="font-body text-white text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">{category.description}</p>
         <Link href={`/products/${category.id}`}>
           <a className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
-            {t('hero.cta')}
+            Ontdek Onze Collectie
           </a>
         </Link>
       </div>
@@ -30,7 +28,6 @@ const CategoryCard = ({ category }: { category: Category }) => {
 };
 
 const FeaturedCategories = () => {
-  const { t } = useLanguage();
   const { data: categories = [], isLoading, error } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
@@ -40,10 +37,10 @@ const FeaturedCategories = () => {
       <Container>
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-primary font-semibold mb-2 sm:mb-4">
-            Browse by Category
+            Doorzoek per Categorie
           </h2>
           <p className="font-body text-sm sm:text-base text-text-medium max-w-2xl mx-auto px-2">
-            Find the perfect window treatment by selecting a product category below
+            Vind de perfecte raambehandeling door hieronder een productcategorie te selecteren
           </p>
         </div>
 
@@ -55,7 +52,7 @@ const FeaturedCategories = () => {
           </div>
         ) : error ? (
           <div className="text-center text-red-500">
-            {t('common.error')}
+            Er is een fout opgetreden
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">

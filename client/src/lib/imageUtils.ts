@@ -7,6 +7,9 @@ const getRandomItem = (items: GalleryItem[]): GalleryItem | null => {
   return items[randomIndex];
 };
 
+// Custom window blinds image for products without images
+const WINDOW_BLINDS_IMAGE = "/assets/window-blinds.jpg";
+
 // Map to store assigned image URLs for each product ID
 // This ensures the same product gets the same image on re-renders
 const productImageMap = new Map<number, string>();

@@ -26,7 +26,7 @@ const ProductDetail = () => {
     enabled: !!productId,
   });
 
-  const { data: categories } = useQuery({
+  const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
   
@@ -63,14 +63,14 @@ const ProductDetail = () => {
   }, [product, galleryItems, selectedColor]);
 
   // Convert the color hex values to ColorSwatch objects
-  const colorSwatches: ColorSwatch[] = product?.colors
-    ? product.colors.map((color) => ({ color }))
+  const colorSwatches: ColorSwatch[] = enhancedProduct?.colors
+    ? enhancedProduct.colors.map((color) => ({ color }))
     : [];
 
   // Get category name
   const getCategoryName = (categoryId: number | undefined) => {
     if (!categoryId || !categories) return "Category";
-    const category = categories.find((cat: any) => cat.id === categoryId);
+    const category = categories.find((cat) => cat.id === categoryId);
     return category ? category.name : "Category";
   };
 
@@ -105,7 +105,7 @@ const ProductDetail = () => {
     );
   }
 
-  if (error || !product) {
+  if (error || !enhancedProduct) {
     return (
       <Container className="py-12">
         <div className="text-center py-16 bg-neutral-100 rounded-lg">
@@ -121,14 +121,14 @@ const ProductDetail = () => {
     );
   }
 
-  const productPrice = product.price.toFixed(2);
-  const totalPrice = (product.price * quantity).toFixed(2);
+  const productPrice = enhancedProduct.price.toFixed(2);
+  const totalPrice = (enhancedProduct.price * quantity).toFixed(2);
 
   return (
     <>
       <Helmet>
-        <title>{product.name} | Elegant Drapes</title>
-        <meta name="description" content={product.description} />
+        <title>{enhancedProduct.name} | Elegant Drapes</title>
+        <meta name="description" content={enhancedProduct.description} />
       </Helmet>
 
       <Container className="py-8">
@@ -149,15 +149,15 @@ const ProductDetail = () => {
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink href={`/products?category=${product.categoryId}`}>
-                {getCategoryName(product.categoryId)}
+              <BreadcrumbLink href={`/products?category=${enhancedProduct.categoryId}`}>
+                {getCategoryName(enhancedProduct.categoryId)}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink>{product.name}</BreadcrumbLink>
+              <BreadcrumbLink>{enhancedProduct.name}</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

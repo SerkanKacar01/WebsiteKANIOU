@@ -13,7 +13,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
-import { Product, Category } from "@shared/schema";
+import { Product, Category, GalleryItem } from "@shared/schema";
+import { getProductImageUrl } from "@/lib/imageUtils";
 
 // Product categories with their display labels and URL paths
 const productCategories = [

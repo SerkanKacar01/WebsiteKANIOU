@@ -90,12 +90,12 @@ const ProductsPage = () => {
     resetProductImageAssignments();
   }, []);
   
-  // Enhance products with random images when gallery items are available
+  // Enhance products with window blinds image for those without an image
   const productsWithRandomImages = products.map(product => {
     // Clone the product
     const enhancedProduct = { ...product };
     
-    // Replace the imageUrl with a random one if needed
+    // Replace the imageUrl with our window blinds image if needed
     if (!enhancedProduct.imageUrl || enhancedProduct.imageUrl.trim() === '') {
       enhancedProduct.imageUrl = getProductImageUrl(
         product.id, 
@@ -223,7 +223,7 @@ const ProductsPage = () => {
                     }}
                     className="text-sm text-primary hover:text-accent underline"
                   >
-                    Randomize Images
+                    Refresh Images
                   </button>
                 )}
               </div>

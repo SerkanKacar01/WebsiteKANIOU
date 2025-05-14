@@ -42,11 +42,8 @@ export const getProductImageUrl = (
     return productImageMap.get(productId)!;
   }
 
-  // Get a random gallery item
-  const randomItem = getRandomItem(galleryItems);
-  
-  // If no gallery items are available, use a fallback URL
-  const imageUrl = randomItem?.imageUrl || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600";
+  // Use our window blinds image instead of random gallery images
+  const imageUrl = WINDOW_BLINDS_IMAGE;
   
   // Store the assigned image URL for this product
   productImageMap.set(productId, imageUrl);

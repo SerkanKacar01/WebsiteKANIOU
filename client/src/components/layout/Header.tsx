@@ -3,17 +3,11 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown, Globe } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-// We'll define product categories with translations for both languages
+// Product categories for the dropdown menu
 const getProductCategories = (t: (key: string) => string) => [
   { 
     label: t('products.category.curtains'), 
@@ -125,16 +119,17 @@ const getProductCategories = (t: (key: string) => string) => [
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
-  const { language, setLanguage, t, availableLanguages } = useLanguage();
+  const { t } = useLanguage();
   
-  // Define navigation items
+  // Define navigation items based on requirements
   const navItems = [
-    { label: t('nav.home'), href: "/" },
-    { label: t('nav.products'), href: "/products", hasDropdown: true },
-    { label: t('nav.gallery'), href: "/gallery" },
-    { label: t('nav.about'), href: "/about" },
-    { label: t('nav.contact'), href: "/contact" },
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products", hasDropdown: true },
+    { label: "Gallery", href: "/gallery" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ];
+  
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -287,34 +282,13 @@ const Header = () => {
                     )
                   )}
                   
-                  {/* Language Switcher for Mobile */}
-                  <div className="mt-6 mb-2 border-t border-neutral-200 pt-4">
-                    <p className="text-sm text-text-medium mb-2">{t('common.language')}</p>
-                    <div className="flex space-x-2">
-                      <Button 
-                        variant={language === 'nl' ? "secondary" : "outline"} 
-                        size="sm"
-                        onClick={() => setLanguage('nl')}
-                      >
-                        Nederlands
-                      </Button>
-                      <Button 
-                        variant={language === 'en' ? "secondary" : "outline"} 
-                        size="sm"
-                        onClick={() => setLanguage('en')}
-                      >
-                        English
-                      </Button>
-                    </div>
-                  </div>
-                  
                   <Link href="/quote">
                     <div className="mt-4">
                       <Button
-                        className="w-full bg-secondary hover:bg-accent"
+                        className="w-full bg-secondary hover:bg-secondary/90 text-white font-medium"
                         onClick={handleCloseSheet}
                       >
-                        {t('nav.quote')}
+                        Get Quote
                       </Button>
                     </div>
                   </Link>
@@ -379,39 +353,13 @@ const Header = () => {
                   </Link>
                 )
               )}
-              <div className="flex items-center gap-4">
-                {/* Language Switcher */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <div className="cursor-pointer flex items-center">
-                      <Globe className="h-5 w-5" />
-                      <span className="ml-1 font-semibold">{language === 'en' ? 'EN' : 'NL'}</span>
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem 
-                      onClick={() => setLanguage('nl')}
-                      className={language === 'nl' ? 'bg-accent/10 font-medium' : ''}
-                    >
-                      Nederlands
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => setLanguage('en')}
-                      className={language === 'en' ? 'bg-accent/10 font-medium' : ''}
-                    >
-                      English
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                
-                <Link href="/quote">
-                  <div>
-                    <Button className="bg-secondary text-white hover:bg-secondary/90">
-                      Get quote
-                    </Button>
-                  </div>
-                </Link>
-              </div>
+              <Link href="/quote">
+                <div>
+                  <Button className="bg-secondary text-white hover:bg-secondary/90 font-medium">
+                    Get Quote
+                  </Button>
+                </div>
+              </Link>
             </nav>
           )}
         </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 // Define translations
 const translations = {
@@ -10,6 +10,8 @@ const translations = {
     "common.contactUs": "Contact Us",
     "common.showMore": "Show More",
     "common.showAll": "Show All",
+    "common.viewAll": "View All Products",
+    "common.language": "Language",
     
     // Navigation
     "nav.home": "Home",
@@ -104,22 +106,134 @@ const translations = {
     "footer.privacy": "Privacy Policy",
     "footer.copyright": "© 2023 Elegant Drapes. All rights reserved.",
   },
+  nl: {
+    // Common
+    "common.learnMore": "Meer Informatie",
+    "common.viewDetails": "Details Bekijken",
+    "common.requestQuote": "Offerte Aanvragen",
+    "common.contactUs": "Contact Opnemen",
+    "common.showMore": "Meer Tonen",
+    "common.showAll": "Alles Tonen",
+    "common.viewAll": "Alle Producten Bekijken",
+    "common.language": "Taal",
+    
+    // Navigation
+    "nav.home": "Home",
+    "nav.products": "Producten",
+    "nav.gallery": "Galerij",
+    "nav.about": "Over Ons",
+    "nav.contact": "Contact",
+    "nav.quote": "Offerte Aanvragen",
+    
+    // Home Page
+    "hero.title": "Transformeer Uw Ramen met Elegante Oplossingen",
+    "hero.subtitle": "Premium raambehandelingen op maat gemaakt voor uw stijl en behoeften",
+    "hero.cta": "Ontdek Onze Collectie",
+    
+    // Categories
+    "categories.title": "Blader per Categorie",
+    "categories.subtitle": "Ontdek ons assortiment premium raambehandelingen",
+    
+    // Products
+    "products.title": "Onze Producten",
+    "products.subtitle": "Blader door onze volledige collectie premium raambehandelingen voor elke stijl",
+    "products.featured": "Uitgelichte Producten",
+    "products.new": "Nieuwe Artikelen",
+    "products.bestsellers": "Bestsellers",
+    "products.filter.category": "Categorie",
+    "products.filter.price": "Prijsklasse",
+    "products.filter.features": "Eigenschappen",
+    "products.filter.search": "Producten Zoeken",
+    "products.filter.featured": "Uitgelicht",
+    "products.filter.bestseller": "Bestseller",
+    "products.filter.new": "Nieuw",
+    "products.filter.apply": "Filters Toepassen",
+    "products.filter.reset": "Resetten",
+    "products.notFound": "Geen producten gevonden",
+    
+    // Gallery
+    "gallery.title": "Onze Galerij",
+    "gallery.subtitle": "Laat u inspireren door onze eerdere installaties en projecten",
+    "gallery.categories.all": "Alles",
+    "gallery.notFound": "Geen galerij-items gevonden",
+    
+    // About
+    "about.title": "Over Ons",
+    "about.subtitle": "Premium raambehandelingsoplossingen sinds 1995",
+    "about.history.title": "Ons Verhaal",
+    "about.mission.title": "Onze Missie",
+    "about.values.title": "Onze Waarden",
+    
+    // Contact
+    "contact.title": "Contact",
+    "contact.subtitle": "We horen graag van u. Neem contact met ons op.",
+    "contact.form.name": "Uw Naam",
+    "contact.form.email": "E-mailadres",
+    "contact.form.phone": "Telefoonnummer",
+    "contact.form.message": "Uw Bericht",
+    "contact.form.submit": "Bericht Versturen",
+    "contact.success": "Bedankt! Uw bericht is verzonden.",
+    "contact.error": "Er is een fout opgetreden bij het verzenden van uw bericht. Probeer het opnieuw.",
+    "contact.info.title": "Contactgegevens",
+    "contact.info.address": "Adres",
+    "contact.info.phone": "Telefoon",
+    "contact.info.email": "E-mail",
+    "contact.info.hours": "Openingstijden",
+    
+    // Quote
+    "quote.title": "Vraag een Gratis Offerte Aan",
+    "quote.subtitle": "Vul het onderstaande formulier in en we nemen contact met u op met een persoonlijke offerte",
+    "quote.form.name": "Uw Naam",
+    "quote.form.email": "E-mailadres",
+    "quote.form.phone": "Telefoonnummer",
+    "quote.form.address": "Installatieadres",
+    "quote.form.productType": "Producttype",
+    "quote.form.roomType": "Kamertype",
+    "quote.form.windowCount": "Aantal Ramen",
+    "quote.form.windowMeasurements": "Raamafmetingen",
+    "quote.form.additionalInfo": "Aanvullende Informatie",
+    "quote.form.submit": "Offerteaanvraag Indienen",
+    "quote.success": "Bedankt! Uw offerteaanvraag is ingediend.",
+    "quote.error": "Er is een fout opgetreden bij het indienen van uw aanvraag. Probeer het opnieuw.",
+    
+    // Testimonials
+    "testimonials.title": "Wat Onze Klanten Zeggen",
+    "testimonials.subtitle": "Lees reviews van onze tevreden klanten",
+    
+    // Footer
+    "footer.about": "Over Ons",
+    "footer.products": "Producten",
+    "footer.services": "Diensten",
+    "footer.support": "Ondersteuning",
+    "footer.contact": "Contact",
+    "footer.terms": "Algemene Voorwaarden",
+    "footer.privacy": "Privacybeleid",
+    "footer.copyright": "© 2023 Elegant Drapes. Alle rechten voorbehouden.",
+  }
 };
 
-// Default to English
-const defaultLanguage = 'en';
+// Default language - auto-detect from browser or default to Dutch
+const getBrowserLanguage = (): string => {
+  if (typeof window !== 'undefined') {
+    const browserLang = navigator.language.split('-')[0];
+    return browserLang === 'nl' ? 'nl' : 'en';
+  }
+  return 'nl'; // Default to Dutch as requested
+};
 
 // Create the context
 type LanguageContextType = {
   language: string;
   setLanguage: (lang: string) => void;
   t: (key: string) => string;
+  availableLanguages: string[];
 };
 
 const LanguageContext = createContext<LanguageContextType>({
-  language: defaultLanguage,
+  language: 'nl',
   setLanguage: () => {},
   t: () => '',
+  availableLanguages: ['en', 'nl'],
 });
 
 // Provider component
@@ -128,16 +242,38 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState(defaultLanguage);
+  const [language, setLanguage] = useState<string>('nl');
+
+  // Set initial language based on browser locale or local storage
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    if (savedLanguage && ['en', 'nl'].includes(savedLanguage)) {
+      setLanguage(savedLanguage);
+    } else {
+      const detectedLanguage = getBrowserLanguage();
+      setLanguage(detectedLanguage);
+      localStorage.setItem('preferredLanguage', detectedLanguage);
+    }
+  }, []);
+
+  // Save language preference when it changes
+  useEffect(() => {
+    localStorage.setItem('preferredLanguage', language);
+  }, [language]);
 
   // Translation function
   const t = (key: string): string => {
-    const currentTranslations = translations[language as keyof typeof translations] || translations[defaultLanguage];
+    const currentTranslations = translations[language as keyof typeof translations] || translations['nl'];
     return currentTranslations[key as keyof typeof currentTranslations] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      setLanguage, 
+      t, 
+      availableLanguages: ['en', 'nl']
+    }}>
       {children}
     </LanguageContext.Provider>
   );

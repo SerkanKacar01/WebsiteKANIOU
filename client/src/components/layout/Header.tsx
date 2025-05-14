@@ -3,8 +3,15 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Globe } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
+import { useLanguage } from "@/context/LanguageContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const productCategories = [
   { label: "Overgordijnen", href: "/products/overgordijnen" },
@@ -33,14 +40,15 @@ const productCategories = [
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
+  const { language, setLanguage, t, availableLanguages } = useLanguage();
   
   // Define navigation items
   const navItems = [
-    { label: 'Home', href: "/" },
-    { label: 'Producten', href: "/products", hasDropdown: true },
-    { label: 'Galerij', href: "/gallery" },
-    { label: 'Over Ons', href: "/about" },
-    { label: 'Contact', href: "/contact" },
+    { label: t('nav.home'), href: "/" },
+    { label: t('nav.products'), href: "/products", hasDropdown: true },
+    { label: t('nav.gallery'), href: "/gallery" },
+    { label: t('nav.about'), href: "/about" },
+    { label: t('nav.contact'), href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -194,13 +202,34 @@ const Header = () => {
                     )
                   )}
                   
+                  {/* Language Switcher for Mobile */}
+                  <div className="mt-6 mb-2 border-t border-neutral-200 pt-4">
+                    <p className="text-sm text-text-medium mb-2">{t('common.language')}</p>
+                    <div className="flex space-x-2">
+                      <Button 
+                        variant={language === 'nl' ? "secondary" : "outline"} 
+                        size="sm"
+                        onClick={() => setLanguage('nl')}
+                      >
+                        Nederlands
+                      </Button>
+                      <Button 
+                        variant={language === 'en' ? "secondary" : "outline"} 
+                        size="sm"
+                        onClick={() => setLanguage('en')}
+                      >
+                        English
+                      </Button>
+                    </div>
+                  </div>
+                  
                   <Link href="/quote">
                     <a className="mt-4">
                       <Button
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        Offerte Aanvragen
+                        {t('nav.quote')}
                       </Button>
                     </a>
                   </Link>
@@ -266,9 +295,32 @@ const Header = () => {
                 )
               )}
               <div className="flex items-center gap-4">
+                {/* Language Switcher */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon" className="rounded-full w-9 h-9">
+                      <Globe className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem 
+                      onClick={() => setLanguage('nl')}
+                      className={language === 'nl' ? 'bg-accent/10 font-medium' : ''}
+                    >
+                      Nederlands
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setLanguage('en')}
+                      className={language === 'en' ? 'bg-accent/10 font-medium' : ''}
+                    >
+                      English
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent">
-                    Offerte Aanvragen
+                    {t('nav.quote')}
                   </Button>
                 </Link>
               </div>

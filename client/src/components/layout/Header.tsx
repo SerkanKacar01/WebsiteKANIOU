@@ -273,7 +273,7 @@ const Header = () => {
                       </div>
                     ) : (
                       <Link key={item.href} href={item.href}>
-                        <a
+                        <div
                           className={`font-body py-2 border-b border-neutral-200 ${
                             isActive(item.href)
                               ? "text-accent font-medium"
@@ -282,7 +282,7 @@ const Header = () => {
                           onClick={handleCloseSheet}
                         >
                           {item.label}
-                        </a>
+                        </div>
                       </Link>
                     )
                   )}
@@ -309,14 +309,14 @@ const Header = () => {
                   </div>
                   
                   <Link href="/quote">
-                    <a className="mt-4">
+                    <div className="mt-4">
                       <Button
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
                         {t('nav.quote')}
                       </Button>
-                    </a>
+                    </div>
                   </Link>
                 </div>
               </SheetContent>
@@ -341,7 +341,7 @@ const Header = () => {
                     
                     {showDropdown && (
                       <div 
-                        className="absolute left-0 mt-2 w-64 bg-white rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
+                        className="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
                         onMouseLeave={() => setShowDropdown(false)}
                       >
                         {getProductCategories(t).map((category) => (
@@ -404,9 +404,11 @@ const Header = () => {
                 </DropdownMenu>
                 
                 <Link href="/quote">
-                  <Button className="bg-secondary hover:bg-accent">
-                    {t('nav.quote')}
-                  </Button>
+                  <div>
+                    <Button className="bg-secondary hover:bg-accent">
+                      {t('nav.quote')}
+                    </Button>
+                  </div>
                 </Link>
               </div>
             </nav>

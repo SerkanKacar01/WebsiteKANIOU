@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
@@ -13,14 +13,15 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { ColorSwatch } from "@/lib/types";
-import { Product } from "@shared/schema";
+import { Product, GalleryItem } from "@shared/schema";
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
+import { getProductImageUrl } from "@/lib/imageUtils";
 
 const ProductDetail = () => {
   const [, params] = useRoute("/products/:id");
   const productId = params?.id ? parseInt(params.id) : null;
 
-  const { data: product, isLoading, error } = useQuery({
+  const { data: product, isLoading, error } = useQuery<Product>({
     queryKey: [`/api/products/${productId}`],
     enabled: !!productId,
   });
@@ -28,14 +29,38 @@ const ProductDetail = () => {
   const { data: categories } = useQuery({
     queryKey: ["/api/categories"],
   });
+  
+  // Fetch gallery items to use for image assignment
+  const { data: galleryItems = [] } = useQuery<GalleryItem[]>({
+    queryKey: ["/api/gallery"],
+  });
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [enhancedProduct, setEnhancedProduct] = useState<Product | null>(null);
 
-  // Initialize selected color once product is loaded
-  if (product && !selectedColor && product.colors && product.colors.length > 0) {
-    setSelectedColor(product.colors[0]);
-  }
+  // Effect to enhance product with window blinds image when needed
+  useEffect(() => {
+    if (product && galleryItems.length > 0) {
+      // Create enhanced product with window blinds image if needed
+      const productWithImage = { ...product };
+      
+      if (!productWithImage.imageUrl || productWithImage.imageUrl.trim() === '') {
+        productWithImage.imageUrl = getProductImageUrl(
+          productWithImage.id, 
+          productWithImage.imageUrl, 
+          galleryItems
+        );
+      }
+      
+      setEnhancedProduct(productWithImage);
+      
+      // Initialize selected color if available
+      if (!selectedColor && productWithImage.colors && productWithImage.colors.length > 0) {
+        setSelectedColor(productWithImage.colors[0]);
+      }
+    }
+  }, [product, galleryItems, selectedColor]);
 
   // Convert the color hex values to ColorSwatch objects
   const colorSwatches: ColorSwatch[] = product?.colors

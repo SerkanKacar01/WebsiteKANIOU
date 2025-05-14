@@ -59,9 +59,14 @@ const ProductCategoryPage = () => {
   const { data: allProducts = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
+  
+  // Fetch gallery items to use for image assignment
+  const { data: galleryItems = [], isLoading: galleryLoading } = useQuery<GalleryItem[]>({
+    queryKey: ["/api/gallery"],
+  });
 
   useEffect(() => {
-    if (categories.length > 0 && allProducts.length > 0 && category) {
+    if (categories.length > 0 && allProducts.length > 0 && galleryItems.length > 0 && category) {
       setLoading(true);
       
       // Find matching category based on URL
@@ -105,7 +110,25 @@ const ProductCategoryPage = () => {
         const categoryProducts = allProducts.filter(
           (product: Product) => product.categoryId === foundCategory.id
         );
-        setProducts(categoryProducts);
+        
+        // Enhance products with window blinds image for those without an image
+        const enhancedProducts = categoryProducts.map(product => {
+          // Clone the product
+          const enhancedProduct = { ...product };
+          
+          // Replace the imageUrl with our window blinds image if needed
+          if (!enhancedProduct.imageUrl || enhancedProduct.imageUrl.trim() === '') {
+            enhancedProduct.imageUrl = getProductImageUrl(
+              product.id, 
+              product.imageUrl, 
+              galleryItems
+            );
+          }
+          
+          return enhancedProduct;
+        });
+        
+        setProducts(enhancedProducts);
       } else {
         // Redirect to products page if category not found
         setLocation("/products", { replace: true });
@@ -113,10 +136,10 @@ const ProductCategoryPage = () => {
       
       setLoading(false);
     }
-  }, [categories, allProducts, category, setLocation]);
+  }, [categories, allProducts, category, galleryItems, setLocation]);
 
   // Loading state
-  if (loading || categoriesLoading || productsLoading || !categoryData) {
+  if (loading || categoriesLoading || productsLoading || galleryLoading || !categoryData) {
     return (
       <Container className="py-16">
         <div className="flex flex-col items-center justify-center py-12">

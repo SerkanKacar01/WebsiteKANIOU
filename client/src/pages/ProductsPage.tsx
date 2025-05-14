@@ -6,8 +6,9 @@ import Container from "@/components/ui/container";
 import ProductGrid from "@/components/products/ProductGrid";
 import ProductFilter from "@/components/products/ProductFilter";
 import { ProductFilterOptions } from "@/lib/types";
-import { Product, Category } from "@shared/schema";
+import { Product, Category, GalleryItem } from "@shared/schema";
 import { useLanguage } from "@/context/LanguageContext";
+import { getProductImageUrl, resetProductImageAssignments } from "@/lib/imageUtils";
 
 const ProductsPage = () => {
   const [, setLocation] = useLocation();
@@ -75,8 +76,35 @@ const ProductsPage = () => {
   }, [category, categories]);
 
   // Fetch all products and apply filters client-side
-  const { data: products = [], isLoading, error } = useQuery<Product[]>({
+  const { data: products = [], isLoading: productsLoading, error: productsError } = useQuery<Product[]>({
     queryKey: ["/api/products"],
+  });
+  
+  // Fetch gallery items to use for random image assignment
+  const { data: galleryItems = [], isLoading: galleryLoading } = useQuery<GalleryItem[]>({
+    queryKey: ["/api/gallery"],
+  });
+  
+  // Reset image assignments when component mounts
+  useEffect(() => {
+    resetProductImageAssignments();
+  }, []);
+  
+  // Enhance products with random images when gallery items are available
+  const productsWithRandomImages = products.map(product => {
+    // Clone the product
+    const enhancedProduct = { ...product };
+    
+    // Replace the imageUrl with a random one if needed
+    if (!enhancedProduct.imageUrl || enhancedProduct.imageUrl.trim() === '') {
+      enhancedProduct.imageUrl = getProductImageUrl(
+        product.id, 
+        product.imageUrl, 
+        galleryItems
+      );
+    }
+    
+    return enhancedProduct;
   });
 
   const handleFilterChange = (newFilters: ProductFilterOptions) => {
@@ -108,8 +136,8 @@ const ProductsPage = () => {
     setLocation(`/products?${params.toString()}`, { replace: true });
   };
 
-  // Apply filters to products
-  const filteredProducts = products.filter((product: Product) => {
+  // Apply filters to products using our enhanced products with random images
+  const filteredProducts = productsWithRandomImages.filter((product: Product) => {
     // Category filter
     if (filters.categoryId && product.categoryId !== filters.categoryId) {
       return false;
@@ -149,6 +177,9 @@ const ProductsPage = () => {
     return true;
   });
 
+  // Determine if we're in a loading state
+  const isLoading = productsLoading || galleryLoading;
+
   return (
     <>
       <Helmet>
@@ -183,12 +214,24 @@ const ProductsPage = () => {
                 <p className="text-text-medium">
                   Showing {filteredProducts.length} products
                 </p>
+                {!isLoading && (
+                  <button 
+                    onClick={() => {
+                      resetProductImageAssignments();
+                      // Force re-render
+                      setFilters({...filters});
+                    }}
+                    className="text-sm text-primary hover:text-accent underline"
+                  >
+                    Randomize Images
+                  </button>
+                )}
               </div>
               
               <ProductGrid 
                 products={filteredProducts} 
                 isLoading={isLoading} 
-                error={error as Error}
+                error={productsError as Error}
               />
             </div>
           </div>

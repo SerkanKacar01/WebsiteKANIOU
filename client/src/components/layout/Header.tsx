@@ -199,8 +199,8 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between py-4">
           <div className="flex items-center">
             <Link href="/">
-              <div className="flex items-center space-x-2 cursor-pointer">
-                <span className="font-display text-2xl md:text-3xl font-semibold text-primary">
+              <div className="flex items-center cursor-pointer">
+                <span className="font-display text-2xl font-semibold text-primary">
                   Elegant<span className="text-secondary">Drapes</span>
                 </span>
               </div>
@@ -329,8 +329,8 @@ const Header = () => {
                     <div 
                       className={`font-body flex items-center cursor-pointer ${
                         isActive(item.href) || showDropdown
-                          ? "text-accent font-medium"
-                          : "text-text-dark hover:text-accent"
+                          ? "font-medium"
+                          : "hover:text-primary"
                       } transition-colors`}
                       onClick={toggleDropdown}
                       onMouseEnter={() => setShowDropdown(true)}
@@ -347,7 +347,7 @@ const Header = () => {
                         {getProductCategories(t).map((category) => (
                           <div key={category.key} className="dropdown-menu-item">
                             <Link href={category.href}>
-                              <div className="block px-4 py-2 text-sm text-text-dark hover:text-accent cursor-pointer">
+                              <div className="block px-4 py-2 text-sm hover:text-primary cursor-pointer">
                                 {category.label}
                               </div>
                             </Link>
@@ -356,7 +356,7 @@ const Header = () => {
                         <div className="border-t border-neutral-200 mt-2 pt-2">
                           <div className="dropdown-menu-item">
                             <Link href="/products">
-                              <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
+                              <div className="block px-4 py-2 text-sm text-primary font-medium cursor-pointer">
                                 {t('common.viewAll')}
                               </div>
                             </Link>
@@ -370,8 +370,8 @@ const Header = () => {
                     <div
                       className={`font-body ${
                         isActive(item.href)
-                          ? "text-accent font-medium"
-                          : "text-text-dark hover:text-accent"
+                          ? "font-medium"
+                          : "hover:text-primary"
                       } transition-colors cursor-pointer`}
                     >
                       {item.label}
@@ -383,9 +383,10 @@ const Header = () => {
                 {/* Language Switcher */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full w-9 h-9">
-                      <Globe className="h-4 w-4" />
-                    </Button>
+                    <div className="cursor-pointer flex items-center">
+                      <Globe className="h-5 w-5" />
+                      <span className="ml-1 font-semibold">{language === 'en' ? 'EN' : 'NL'}</span>
+                    </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem 
@@ -405,8 +406,8 @@ const Header = () => {
                 
                 <Link href="/quote">
                   <div>
-                    <Button className="bg-secondary hover:bg-accent">
-                      {t('nav.quote')}
+                    <Button className="bg-secondary text-white hover:bg-secondary/90">
+                      Get quote
                     </Button>
                   </div>
                 </Link>

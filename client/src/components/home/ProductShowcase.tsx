@@ -102,9 +102,9 @@ const ProductShowcase = () => {
             </div>
 
             <div className="text-center mt-12">
-              <Link href="/products">
+              <Link href="/browse-collection">
                 <Button size="lg" className="bg-primary hover:bg-accent">
-                  Alle Producten Bekijken
+                  Bekijk Alle Categorieën
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="ml-2 h-4 w-4"

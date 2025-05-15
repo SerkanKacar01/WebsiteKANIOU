@@ -97,7 +97,7 @@ const FeaturedCategories = () => {
             </div>
             
             <div className="text-center mt-12">
-              <Link href="/products">
+              <Link href="/browse-collection">
                 <span className="inline-block">
                   <Button size="lg" className="bg-primary hover:bg-accent">
                     Bekijk Alle Categorieën

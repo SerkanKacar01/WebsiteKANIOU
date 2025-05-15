@@ -196,7 +196,7 @@ const Header = () => {
             <Link href="/">
               <div className="flex items-center cursor-pointer">
                 <span className="font-display text-2xl font-semibold text-primary">
-                  Elegant<span className="text-secondary">Drapes</span>
+                  KANIOU <span className="text-secondary">ZILVERNAALD</span>
                 </span>
               </div>
             </Link>
@@ -213,7 +213,7 @@ const Header = () => {
                 <div className="flex flex-col space-y-3 p-6">
                   <div className="flex justify-between items-center mb-6">
                     <span className="font-display text-xl font-semibold text-primary">
-                      Elegant<span className="text-secondary">Drapes</span>
+                      KANIOU <span className="text-secondary">ZILVERNAALD</span>
                     </span>
                     <Button
                       variant="ghost"

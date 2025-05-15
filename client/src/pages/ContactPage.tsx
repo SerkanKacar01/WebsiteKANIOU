@@ -7,10 +7,10 @@ const ContactPage = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us | Elegant Drapes</title>
+        <title>Contact Us | KANIOU ZILVERNAALD</title>
         <meta
           name="description"
-          content="Get in touch with Elegant Drapes for questions about our premium curtains, blinds, and window treatments. Visit our showroom or contact us online."
+          content="Get in touch with KANIOU ZILVERNAALD for questions about our premium curtains, blinds, and window treatments. Visit our showroom in Maasmechelen or contact us online."
         />
       </Helmet>
 

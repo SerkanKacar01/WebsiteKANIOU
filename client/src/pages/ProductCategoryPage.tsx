@@ -32,12 +32,11 @@ const productCategories = [
   { label: "Plissé hordeuren", urlPath: "plisse-hordeuren" },
   { label: "Plissé", urlPath: "plisse" },
   { label: "Duo plissé", urlPath: "duo-plisse" },
-  { label: "Duo plissé voor dakramen", urlPath: "duo-plisse-dakramen" },
-  { label: "Dakraam zonweringen (Fakro, Velux)", urlPath: "dakraam-zonwering" },
+  { label: "Duo plissé dakramen", urlPath: "duo-plisse-dakramen" },
+  { label: "Dakraam zonwering", urlPath: "dakraam-zonwering" },
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },
-  { label: "Horren", urlPath: "horren" },
-  { label: "SQUID textiel folie", urlPath: "squid" },
+  { label: "SQUID", urlPath: "squid" },
 ];
 
 const ProductCategoryPage = () => {

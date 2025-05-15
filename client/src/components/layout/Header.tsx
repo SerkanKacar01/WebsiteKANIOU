@@ -19,31 +19,37 @@ const Header = () => {
     queryKey: ["/api/categories"],
   });
   
-  // Map fetched categories to menu format
+  // Get the product categories for the navigation menu
   const getProductCategories = () => {
-    // Create a mapping for URLs
-    const nameToUrlMapping: Record<string, string> = {
-      "Curtains": "overgordijnen",
-      "Sheer Drapes": "vitrages",
-      "Sunblinds": "rolgordijnen",
-      "Roman Blinds": "plisse",
-      "SQUID": "squid",
-      "Curtain Rails": "gordijnrails",
-      "Curtain Rods": "gordijnroedes",
-      "Insect Screens": "horren",
-      "Roof Window Shades": "dakraam-zonwering"
-    };
+    // Official list of product categories with their paths
+    const productCategories = [
+      { label: "Overgordijnen", urlPath: "overgordijnen" },
+      { label: "Vitrages", urlPath: "vitrages" },
+      { label: "Rolgordijnen", urlPath: "rolgordijnen" },
+      { label: "Duo rolgordijnen", urlPath: "duo-rolgordijnen" },
+      { label: "Textiel lamellen", urlPath: "textiel-lamellen" },
+      { label: "Kunststof lamellen", urlPath: "kunststof-lamellen" },
+      { label: "Houten jaloezieën", urlPath: "houten-jaloezieen" },
+      { label: "Kunststof jaloezieën", urlPath: "kunststof-jaloezieen" },
+      { label: "Textiel raamfolie", urlPath: "textiel-raamfolie" },
+      { label: "Houten shutters", urlPath: "houten-shutters" },
+      { label: "Inzethorren", urlPath: "inzethorren" },
+      { label: "Opzethorren", urlPath: "opzethorren" },
+      { label: "Plissé hordeuren", urlPath: "plisse-hordeuren" },
+      { label: "Plissé", urlPath: "plisse" },
+      { label: "Duo plissé", urlPath: "duo-plisse" },
+      { label: "Duo plissé dakramen", urlPath: "duo-plisse-dakramen" },
+      { label: "Dakraam zonwering", urlPath: "dakraam-zonwering" },
+      { label: "Gordijnrails", urlPath: "gordijnrails" },
+      { label: "Gordijnroedes", urlPath: "gordijnroedes" },
+      { label: "SQUID", urlPath: "squid" }
+    ];
     
-    // Process the database categories
-    return categories.map(category => {
-      // Get the category key - either from the mapping or use a slug of the name
-      const urlPath = nameToUrlMapping[category.name] || 
-                     category.name.toLowerCase().replace(/\s+/g, "-");
-                     
+    return productCategories.map(category => {
       return {
-        label: category.name,
-        href: `/products/${urlPath}`,
-        key: urlPath
+        label: category.label,
+        href: `/products/${category.urlPath}`,
+        key: category.urlPath
       };
     });
   };

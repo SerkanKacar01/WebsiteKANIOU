@@ -7,6 +7,34 @@ import { Button } from "@/components/ui/button";
 // Featured category IDs (manually selected)
 const FEATURED_CATEGORY_IDS = [1, 2, 3, 5, 6, 8];
 
+// Map category names to URL paths based on the official product list
+const getURLPath = (categoryName: string): string => {
+  const categoryMapping: Record<string, string> = {
+    "Curtains": "overgordijnen",
+    "Sheer Drapes": "vitrages",
+    "Sunblinds": "rolgordijnen",
+    "Duo Blinds": "duo-rolgordijnen",
+    "Textile Vertical Blinds": "textiel-lamellen",
+    "Plastic Vertical Blinds": "kunststof-lamellen",
+    "Wooden Blinds": "houten-jaloezieen",
+    "Plastic Blinds": "kunststof-jaloezieen",
+    "Textile Window Film": "textiel-raamfolie",
+    "Wooden Shutters": "houten-shutters",
+    "Inset Insect Screens": "inzethorren",
+    "Mount-on Insect Screens": "opzethorren",
+    "Pleated Insect Doors": "plisse-hordeuren",
+    "Pleated Blinds": "plisse",
+    "Duo Pleated Blinds": "duo-plisse",
+    "Duo Pleated Roof Window Blinds": "duo-plisse-dakramen",
+    "Roof Window Shading": "dakraam-zonwering",
+    "Curtain Rails": "gordijnrails",
+    "Curtain Rods": "gordijnroedes",
+    "SQUID": "squid"
+  };
+  
+  return categoryMapping[categoryName] || categoryName.toLowerCase().replace(/\s+/g, "-");
+};
+
 const CategoryCard = ({ category }: { category: Category }) => {
   return (
     <div className="group relative h-64 sm:h-72 md:h-80 rounded-lg overflow-hidden shadow-md">
@@ -20,7 +48,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
           {category.name}
         </h3>
         <p className="font-body text-white text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">{category.description}</p>
-        <Link href={`/products/${category.id}`} className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
+        <Link href={`/products/${getURLPath(category.name)}`} className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
           Ontdek Onze Collectie
         </Link>
       </div>

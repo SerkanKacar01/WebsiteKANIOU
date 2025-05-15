@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useLocation, useParams } from "wouter";
+import { useLocation, useParams, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Category, GalleryItem, Product } from "@shared/schema";
@@ -17,7 +17,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight } from "lucide-react";
+import { HomeIcon, ChevronRight, ArrowRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Official list of 20 product categories from the requirements
 const officialCategories = [
@@ -172,14 +173,42 @@ const ProductsPage = () => {
   };
 
   if (isMainProductsPage) {
-    // Main product page displaying all products
+    // Main product page displaying one representative product per category
+    
+    // Create an array to hold one product per category
+    const oneProductPerCategory = officialCategories.map((categoryName) => {
+      // Find the category object matching this category name
+      const categoryObject = categories.find(cat => cat.name === categoryName);
+      
+      if (!categoryObject) {
+        return null;
+      }
+      
+      // Find the first product in this category
+      const categoryProduct = enhancedProducts.find(product => product.categoryId === categoryObject.id);
+      
+      // If we found a product, return it along with its category
+      if (categoryProduct) {
+        return {
+          product: categoryProduct,
+          category: categoryObject
+        };
+      }
+      
+      // If no product found, return a placeholder
+      return {
+        product: null,
+        category: categoryObject
+      };
+    }).filter(Boolean); // Filter out any null entries
+    
     return (
       <>
         <Helmet>
-          <title>Alle Producten | Elegant Drapes</title>
+          <title>Onze Producten | Elegant Drapes</title>
           <meta
             name="description"
-            content="Bekijk ons volledige assortiment van premium raambehandelingen, gordijnen, jaloezieën en meer. Vind de perfecte oplossing voor elke stijl en budget."
+            content="Bekijk één selectie uit elke productcategorie – klik door voor het volledige aanbod. Premium raambehandelingen voor elk interieur."
           />
         </Helmet>
         
@@ -207,87 +236,103 @@ const ProductsPage = () => {
           <Container>
             <div className="text-center mb-12">
               <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-                Alle Producten
+                Onze Producten
               </h1>
               <p className="font-body text-text-medium max-w-2xl mx-auto">
-                Bekijk ons uitgebreide assortiment premium raambehandelingen en oplossingen voor elke ruimte in uw huis
+                Bekijk één selectie uit elke productcategorie – klik door voor het volledige aanbod.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              <div className="lg:col-span-1">
-                <div className="bg-white p-6 rounded-lg shadow-sm sticky top-24">
-                  <h2 className="font-display text-xl font-medium mb-4">Filters</h2>
-                  <ProductFilter 
-                    onFilterChange={handleFilterChange}
-                    initialFilters={filters}
-                  />
-                </div>
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p className="text-text-medium">Loading...</p>
               </div>
-              
-              <div className="lg:col-span-3">
-                {isLoading ? (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p className="text-text-medium">Loading...</p>
-                  </div>
-                ) : filteredProducts.length === 0 ? (
-                  <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-                    <h3 className="font-display text-xl mb-2">Geen producten gevonden</h3>
-                    <p className="text-text-medium">
-                      Probeer andere filtercriteria of bekijk onze productcategorieën hieronder.
-                    </p>
-                    <div className="mt-8">
-                      <h4 className="font-display text-lg font-medium mb-4">Productcategorieën</h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {categories.slice(0, 6).map(category => (
-                          <div 
-                            key={category.id}
-                            className="bg-neutral-50 p-4 rounded-md hover:bg-neutral-100 transition-colors"
-                          >
-                            <a 
-                              href={`/products/${officialCategories.findIndex(c => c === category.name) >= 0 
-                                ? officialCategories[officialCategories.findIndex(c => c === category.name)]
-                                  .toLowerCase()
-                                  .replace(/\s+/g, '-')
-                                : category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="block text-text-dark hover:text-primary transition-colors"
-                            >
-                              {category.name}
-                            </a>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {oneProductPerCategory.filter((item): item is NonNullable<typeof item> => item !== null).map((item) => {
+                  // Now TypeScript knows item cannot be null
+                  const categoryName = item.category.name;
+                  const categoryUrl = categoryName.toLowerCase().replace(/\s+/g, '-');
+                  
+                  if (item.product) {
+                    // We have a product, show the product card with category badge
+                    return (
+                      <div key={item.category.id} className="flex flex-col h-full">
+                        <Card className="group overflow-hidden shadow-md transition-shadow hover:shadow-lg h-full">
+                          <div className="relative h-64 overflow-hidden">
+                            <img
+                              src={item.product.imageUrl}
+                              alt={item.product.name}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                            <div className="absolute top-4 left-4 bg-primary text-white text-sm py-1 px-3 rounded-full">
+                              {categoryName}
+                            </div>
+                            {item.product.isBestSeller && (
+                              <div className="absolute top-4 right-4 bg-secondary text-white text-sm py-1 px-3 rounded-full">
+                                Best Seller
+                              </div>
+                            )}
+                            {item.product.isNewArrival && (
+                              <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
+                                Nieuw
+                              </div>
+                            )}
                           </div>
-                        ))}
+                          <CardContent className="p-6 flex flex-col flex-grow">
+                            <div className="flex justify-between items-start mb-2">
+                              <h3 className="font-display text-xl text-primary font-medium">
+                                {item.product.name}
+                              </h3>
+                            </div>
+                            <p className="font-body text-text-medium text-sm mb-4 flex-grow">
+                              {item.product.description}
+                            </p>
+                            <Link href={`/products/${categoryUrl}`}>
+                              <div className="w-full bg-primary hover:bg-accent text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
+                                Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
+                              </div>
+                            </Link>
+                          </CardContent>
+                        </Card>
                       </div>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <div className="mb-6 flex justify-between items-center">
-                      <p className="text-text-medium">
-                        {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'producten'} gevonden
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {filteredProducts.map(product => (
-                        <ProductCard key={product.id} product={product} />
-                      ))}
-                    </div>
-                  </>
-                )}
+                    );
+                  } else {
+                    // No product for this category, show a placeholder
+                    return (
+                      <div key={item.category.id} className="flex flex-col h-full">
+                        <Card className="group overflow-hidden shadow-md transition-shadow hover:shadow-lg h-full">
+                          <div className="relative h-64 overflow-hidden bg-gradient-to-r from-primary/50 to-accent/50">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="text-white text-center p-6">
+                                <h3 className="font-display text-xl mb-2">{categoryName}</h3>
+                                <p>Ontdek binnenkort onze nieuwe collectie</p>
+                              </div>
+                            </div>
+                          </div>
+                          <CardContent className="p-6 flex flex-col flex-grow">
+                            <div className="flex justify-between items-start mb-2">
+                              <h3 className="font-display text-xl text-primary font-medium">
+                                {categoryName}
+                              </h3>
+                            </div>
+                            <p className="font-body text-text-medium text-sm mb-4 flex-grow">
+                              Ontdek ons uitgebreide assortiment {categoryName.toLowerCase()} voor elk interieur en budget.
+                            </p>
+                            <Link href={`/products/${categoryUrl}`}>
+                              <div className="w-full bg-primary hover:bg-accent text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
+                                Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
+                              </div>
+                            </Link>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    );
+                  }
+                })}
               </div>
-            </div>
-            
-            {/* Show categories at the bottom */}
-            <div className="mt-16">
-              <h2 className="font-display text-2xl text-primary font-semibold text-center mb-8">
-                Ontdek onze productcategorieën
-              </h2>
-              <CategoryGrid 
-                categories={categories}
-                isLoading={isLoading}
-                error={categoriesError as Error}
-              />
-            </div>
+            )}
           </Container>
         </div>
       </>

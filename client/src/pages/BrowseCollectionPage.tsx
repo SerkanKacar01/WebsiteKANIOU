@@ -14,6 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, ArrowRight } from "lucide-react";
+import { ShareLink } from "@/components/ui/share-link";
 
 // Official list of 20 product categories
 const officialCategories = [
@@ -216,13 +217,20 @@ const BrowseCollectionPage = () => {
       
       <main className="py-12 bg-neutral-100">
         <Container className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
               Browse Our Collection
             </h1>
-            <p className="font-body text-text-medium max-w-2xl mx-auto">
+            <p className="font-body text-text-medium max-w-2xl mx-auto mb-4">
               Bekijk onze uitgebreide collectie premium raambehandelingen en vind de perfecte oplossing voor uw interieur.
             </p>
+            <div className="flex justify-center mb-4">
+              <ShareLink 
+                url="/browse-collection"
+                title="Kaniou Zilvernaald Collection"
+                className="mx-auto"
+              />
+            </div>
           </div>
           
           {isLoading ? (
@@ -260,6 +268,14 @@ const BrowseCollectionPage = () => {
                             aria-hidden="true"
                           >
                             {item.displayName}
+                          </div>
+                          
+                          {/* Share button */}
+                          <div className="absolute top-4 right-4 z-10">
+                            <ShareLink 
+                              url={`/products/${item.urlPath}`}
+                              title={`${item.displayName} Collection`}
+                            />
                           </div>
                         </div>
                         <CardContent className="p-6 flex flex-col flex-grow">
@@ -305,6 +321,14 @@ const BrowseCollectionPage = () => {
                             aria-hidden="true"
                           >
                             {item.displayName}
+                          </div>
+                          
+                          {/* Share button */}
+                          <div className="absolute top-4 right-4 z-10">
+                            <ShareLink 
+                              url={`/products/${item.urlPath}`}
+                              title={`${item.displayName} Collection`}
+                            />
                           </div>
                         </div>
                         <CardContent className="p-6 flex flex-col flex-grow">

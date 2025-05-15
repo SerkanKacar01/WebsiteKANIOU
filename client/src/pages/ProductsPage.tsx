@@ -10,6 +10,7 @@ import ProductFilter from "@/components/products/ProductFilter";
 import { useState, useEffect } from "react";
 import { ProductFilterOptions } from "@/lib/types";
 import { getProductImageUrl } from "@/lib/imageUtils";
+import { getCategoryImage } from "@/lib/categoryImages";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -94,7 +95,26 @@ const ProductsPage = () => {
     );
     
     if (existingCategory) {
+      // If we have a specific image for this category, use it
+      const categoryImage = getCategoryImage(existingCategory.name);
+      if (categoryImage) {
+        return {
+          ...existingCategory,
+          imageUrl: categoryImage
+        };
+      }
       return existingCategory;
+    }
+    
+    // Check if we have a custom image for this category
+    const categoryImage = getCategoryImage(categoryName);
+    if (categoryImage) {
+      return {
+        id: 1000 + index, // Use high IDs to avoid conflicts
+        name: categoryName,
+        description: `Ontdek onze collectie ${categoryName.toLowerCase()} voor elk interieur en budget.`,
+        imageUrl: categoryImage,
+      } as Category;
     }
     
     // If not found, create a placeholder with gallery image

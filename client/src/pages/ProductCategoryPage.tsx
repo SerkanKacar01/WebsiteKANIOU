@@ -14,6 +14,7 @@ import {
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
 import { Product, Category, GalleryItem } from "@shared/schema";
 import { getProductImageUrl } from "@/lib/imageUtils";
+import { getCategoryImage } from "@/lib/categoryImages";
 
 // Product categories with their display labels and URL paths
 const productCategories = [

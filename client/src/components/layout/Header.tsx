@@ -57,7 +57,7 @@ const Header = () => {
   // Define navigation items based on requirements
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Products", href: "/products", hasDropdown: true },
+    { label: "Browse Collection", href: "/products", hasDropdown: true },
     { label: "Gallery", href: "/gallery" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
@@ -191,7 +191,7 @@ const Header = () => {
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
-                                    {t('common.viewAll')}
+                                    Browse All Categories
                                   </div>
                                 </Link>
                               </div>
@@ -264,7 +264,7 @@ const Header = () => {
                           <div className="dropdown-menu-item">
                             <Link href="/products">
                               <div className="block px-4 py-2 text-sm text-primary font-medium cursor-pointer">
-                                {t('common.viewAll')}
+                                Browse All Categories
                               </div>
                             </Link>
                           </div>

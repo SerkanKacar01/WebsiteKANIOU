@@ -120,7 +120,18 @@ const ProductCategoryPage = () => {
       );
       
       if (foundCategory) {
-        setCategoryData(foundCategory);
+        // Check if we have a custom image for this category
+        const categoryImage = getCategoryImage(foundCategory.name);
+        
+        // If we have a custom image, use it
+        if (categoryImage) {
+          setCategoryData({
+            ...foundCategory,
+            imageUrl: categoryImage
+          });
+        } else {
+          setCategoryData(foundCategory);
+        }
         
         // Filter products by category
         const categoryProducts = allProducts.filter(

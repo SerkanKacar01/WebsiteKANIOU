@@ -289,11 +289,7 @@ const ProductsPage = () => {
                             <div className="absolute top-4 left-4 bg-primary text-white text-sm py-1 px-3 rounded-full">
                               {categoryName}
                             </div>
-                            {item.product.isBestSeller && (
-                              <div className="absolute top-4 right-4 bg-secondary text-white text-sm py-1 px-3 rounded-full">
-                                Best Seller
-                              </div>
-                            )}
+
                             {item.product.isNewArrival && (
                               <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
                                 Nieuw

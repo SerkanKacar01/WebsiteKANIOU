@@ -171,11 +171,7 @@ const ProductDetail = () => {
                 className="w-full h-auto object-cover"
               />
             </div>
-            {enhancedProduct.isBestSeller && (
-              <div className="absolute top-4 right-4 bg-secondary text-white text-sm py-1 px-3 rounded-full">
-                Best Seller
-              </div>
-            )}
+
             {enhancedProduct.isNewArrival && (
               <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
                 New Arrival

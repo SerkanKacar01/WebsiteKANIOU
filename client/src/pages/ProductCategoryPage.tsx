@@ -331,11 +331,6 @@ const ProductCategoryPage = () => {
                         Nieuw
                       </div>
                     )}
-                    {product.isBestSeller && (
-                      <div className="absolute top-4 right-4 bg-[#C8A165] text-white text-xs py-1 px-3 rounded-full font-medium">
-                        Best Seller
-                      </div>
-                    )}
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">

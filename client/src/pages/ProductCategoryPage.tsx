@@ -321,23 +321,25 @@ const ProductCategoryPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product) => (
-                <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                       />
+                      {/* Overlay effect on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </Link>
                     
                     {/* Category tag */}
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium">
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium transform transition-transform duration-300 group-hover:scale-105 group-hover:bg-white/95">
                       {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
                     </div>
                     
                     {/* Share button */}
-                    <div className="absolute top-4 right-4 z-10">
+                    <div className="absolute top-4 right-4 z-10 opacity-90 hover:opacity-100 transition-opacity">
                       <ShareLink 
                         url={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
                         title={`${product.name} - ${productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}`}
@@ -346,7 +348,7 @@ const ProductCategoryPage = () => {
 
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                    <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                       <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                         {product.name}
                       </Link>
@@ -355,11 +357,14 @@ const ProductCategoryPage = () => {
                       {product.description}
                     </p>
                     <div className="flex justify-between items-center mb-4">
-                      <span className="text-[#C8A165] text-lg font-semibold">${product.price.toFixed(2)}</span>
+                      <span className="text-[#C8A165] text-lg font-semibold transform group-hover:scale-105 transition-transform duration-300">${product.price.toFixed(2)}</span>
                     </div>
-                    <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
+                    <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-all duration-300 flex items-center justify-center cursor-pointer group-hover:shadow-md group-hover:translate-y-[-2px]">
                       <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`} className="flex items-center justify-center w-full text-white">
-                        Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
+                        <span className="relative inline-flex items-center">
+                          <span>Bekijk meer</span>
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                        </span>
                       </Link>
                     </div>
                   </div>
@@ -370,8 +375,11 @@ const ProductCategoryPage = () => {
           
           <div className="text-center mt-12">
             <Link href="/quote">
-              <Button className="bg-primary hover:bg-primary/90 text-white">
-                Offerte Aanvragen
+              <Button className="bg-primary hover:bg-primary/90 text-white transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] relative group">
+                <span className="inline-flex items-center">
+                  Offerte Aanvragen
+                  <Check className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-5px] group-hover:translate-x-0" />
+                </span>
               </Button>
             </Link>
           </div>

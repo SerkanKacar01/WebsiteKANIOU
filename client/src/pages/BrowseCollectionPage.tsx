@@ -249,29 +249,31 @@ const BrowseCollectionPage = () => {
                   // We have a product, show the product card with category badge
                   return (
                     <div key={`${item.category.id}-${index}`} className="flex flex-col h-full">
-                      <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                      <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
                         <div className="aspect-[4/3] relative overflow-hidden">
                           <Link href={`/products/${item.urlPath}`}>
-                            <a>
+                            <a className="block h-full">
                               <img
                                 src={item.product.imageUrl}
                                 alt={`${item.product.name} - ${item.displayName} product`}
-                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                               />
+                              {/* Overlay effect on hover */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                               <span className="sr-only">View {item.product.name} in {item.displayName} category</span>
                             </a>
                           </Link>
                           
                           {/* Category tag */}
                           <div 
-                            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium"
+                            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium transform transition-transform duration-300 group-hover:scale-105 group-hover:bg-white/95"
                             aria-hidden="true"
                           >
                             {item.displayName}
                           </div>
                           
                           {/* Share button */}
-                          <div className="absolute top-4 right-4 z-10">
+                          <div className="absolute top-4 right-4 z-10 opacity-90 hover:opacity-100 transition-opacity">
                             <ShareLink 
                               url={`/products/${item.urlPath}`}
                               title={`${item.displayName} Collection`}
@@ -279,7 +281,7 @@ const BrowseCollectionPage = () => {
                           </div>
                         </div>
                         <CardContent className="p-6 flex flex-col flex-grow">
-                          <h2 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                          <h2 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                             <Link href={`/products/${item.urlPath}`}>
                               <a>{item.product.name}</a>
                             </Link>
@@ -288,11 +290,14 @@ const BrowseCollectionPage = () => {
                             {item.product.description}
                           </p>
                           <div className="flex justify-between items-center mb-4">
-                            <span className="text-[#C8A165] text-lg font-semibold">${item.product.price.toFixed(2)}</span>
+                            <span className="text-[#C8A165] text-lg font-semibold transform group-hover:scale-105 transition-transform duration-300">${item.product.price.toFixed(2)}</span>
                           </div>
                           <Link href={`/products/${item.urlPath}`}>
-                            <a className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center">
-                              Bekijk meer <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                            <a className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-all duration-300 flex items-center justify-center group-hover:shadow-md group-hover:translate-y-[-2px]">
+                              <span className="relative inline-flex items-center">
+                                <span>Bekijk meer</span>
+                                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                              </span>
                             </a>
                           </Link>
                         </CardContent>
@@ -303,28 +308,31 @@ const BrowseCollectionPage = () => {
                   // No product for this category, show a placeholder
                   return (
                     <div key={`${item.category.id}-${index}`} className="flex flex-col h-full">
-                      <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                        <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-r from-primary/50 to-accent/50">
+                      <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+                        <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-primary/60 to-accent/60 group-hover:from-primary/70 group-hover:to-accent/70 transition-colors duration-500">
                           <Link href={`/products/${item.urlPath}`}>
                             <a className="absolute inset-0 flex items-center justify-center">
-                              <div className="text-white text-center p-6">
-                                <h2 className="font-display text-xl mb-2">{item.displayName}</h2>
-                                <p>Er zijn momenteel geen producten beschikbaar in deze categorie.</p>
+                              <div className="text-white text-center p-6 transform transition-transform duration-300 group-hover:scale-105">
+                                <h2 className="font-display text-xl mb-2 group-hover:text-white/95">{item.displayName}</h2>
+                                <p className="transition-all duration-300 group-hover:text-white/90">Er zijn momenteel geen producten beschikbaar in deze categorie.</p>
                               </div>
                               <span className="sr-only">Browse {item.displayName} category</span>
                             </a>
                           </Link>
                           
+                          {/* Animated pattern overlay */}
+                          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0aDR2MWgtNHYtMXptMC0yaDR2MWgtNHYtMXptMC00aDR2MWgtNFYyOHptMC00aDR2MWgtNHYtMXptMC00aDR2MWgtNHYtMXptMjQtMTJWNGgtNHYtMWg1djVoLTF6bS0yIDBoMXYtNGgxdjVoLTV2LTFoM3ptLTQtNnYtM2gtNHYxaC0xdi0yaDZ2NWgtMXYtMXptLTgtMWg0djFoLTR2LTF6bTAtMmg0djFoLTR2LTF6bS0yNCAxMmg0djFoLTR2LTF6bTAtMmg0djFoLTR2LTF6bTAtNGg0djFoLTRWMjh6bTAtNGg0djFoLTR2LTF6bTAtNGg0djFoLTR2LTF6TTE0IDRoMXY1aC01di0xaDR2LTR6bS00IDdoNXYxaC01di0xem0yLTZoLTN2NWgtMXYtNmg0djF6bS00IDE1aDR2MWgtNHYtMXptMC0yaDR2MWgtNHYtMXptMC00aDR2MWgtNFYxNHptMC00aDR2MWgtNHYtMXptMC00aDR2MWgtNFY2em0tNiA1aDR2MUgzdi0xem0wLTJoNHYxSDN2LTF6bTAtNGg0djFIM1Y1em0wLTRoNHYxSDN2LTF6bTIwIDhoNHYxaC00di0xem0wLTJoNHYxaC00di0xem0wLTRoNHYxaC00VjN6TTMgMmg0djFIM3YtMXptMTcgMTNoNHYxaC00di0xem0wLTJoNHYxaC00di0xem0wLTRoNHYxaC00VjloNHYxaC00djF6bTAgMGg0di0xaC00djF6bTAtNGg0VjRoLTR2MXptLTE0IDJoNFY4SDZ2MXptMC0yaDRWNkg2djF6bTAtNGg0VjJINnYxeiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')] opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                          
                           {/* Category tag */}
                           <div 
-                            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium"
+                            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium transform transition-transform duration-300 group-hover:scale-105 group-hover:bg-white/95"
                             aria-hidden="true"
                           >
                             {item.displayName}
                           </div>
                           
                           {/* Share button */}
-                          <div className="absolute top-4 right-4 z-10">
+                          <div className="absolute top-4 right-4 z-10 opacity-90 hover:opacity-100 transition-opacity">
                             <ShareLink 
                               url={`/products/${item.urlPath}`}
                               title={`${item.displayName} Collection`}
@@ -332,7 +340,7 @@ const BrowseCollectionPage = () => {
                           </div>
                         </div>
                         <CardContent className="p-6 flex flex-col flex-grow">
-                          <h2 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                          <h2 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                             <Link href={`/products/${item.urlPath}`}>
                               <a>{item.displayName}</a>
                             </Link>
@@ -341,8 +349,11 @@ const BrowseCollectionPage = () => {
                             Ontdek ons uitgebreide assortiment {item.displayName.toLowerCase()} voor elk interieur en budget.
                           </p>
                           <Link href={`/products/${item.urlPath}`}>
-                            <a className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center">
-                              Bekijk meer <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                            <a className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-all duration-300 flex items-center justify-center group-hover:shadow-md group-hover:translate-y-[-2px]">
+                              <span className="relative inline-flex items-center">
+                                <span>Bekijk meer</span>
+                                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                              </span>
                             </a>
                           </Link>
                         </CardContent>

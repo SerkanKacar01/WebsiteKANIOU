@@ -26,7 +26,7 @@ function Router() {
   // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return "Elegant Drapes | Premium Gordijnen & Raambehandelingen";
-    if (location === "/products") return "Browse Collection | Elegant Drapes";
+    if (location === "/products") return "Onze Producten | Elegant Drapes";
     if (location === "/gallery") return "Inspiratie Galerij | Elegant Drapes";
     if (location === "/about") return "Over Ons | Elegant Drapes";
     if (location === "/contact") return "Neem Contact Op | Elegant Drapes";

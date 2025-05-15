@@ -54,35 +54,35 @@ const Footer = () => {
             <h4 className="font-display text-lg font-medium mb-4">Producten</h4>
             <ul className="font-body space-y-2">
               <li>
-                <Link href="/products?category=curtains">
+                <Link href="/products/overgordijnen">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
                     Gordijnen
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=blinds">
+                <Link href="/products/houten-jaloezieen">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
                     Jaloezieën
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=shades">
+                <Link href="/products/rolgordijnen">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
                     Rolgordijnen
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=drapes">
+                <Link href="/products/overgordijnen">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
                     Overgordijnen
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=accessories">
+                <Link href="/products/gordijnrails">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
                     Accessoires
                   </div>

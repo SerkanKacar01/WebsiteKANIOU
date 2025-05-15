@@ -44,7 +44,6 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/products" component={ProductsPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         
         {/* Specific product pages */}
@@ -75,7 +74,8 @@ function Router() {
         <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/products/squid" component={ProductCategoryPage} />
         
-        <Route path="/products/:category" component={ProductsPage} />
+        {/* The following handles product category pages */}
+        <Route path="/products/:category" component={ProductCategoryPage} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />

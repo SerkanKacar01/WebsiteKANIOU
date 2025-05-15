@@ -41,7 +41,7 @@ const Footer = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="mailto:info@elegantdrapes.com"
+                href="mailto:info@kaniou.be"
                 className="text-white hover:text-secondary transition-colors"
                 aria-label="Email"
               >
@@ -174,7 +174,7 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="font-body text-neutral-400 text-sm mb-4 md:mb-0">
-              © {currentYear} Elegant Drapes. Alle rechten voorbehouden.
+              © {currentYear} KANIOU bvba ZILVERNAALD. Alle rechten voorbehouden.
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy-policy">

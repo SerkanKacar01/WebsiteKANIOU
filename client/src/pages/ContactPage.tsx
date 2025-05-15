@@ -37,7 +37,7 @@ const ContactPage = () => {
               <p className="font-body text-text-medium">
                 Pauwengraaf 66
                 <br />
-                3630 Maasmechelen te België
+                3630 Maasmechelen, België
               </p>
               <div className="mt-4 pt-4 border-t border-neutral-200">
                 <div className="flex items-center justify-center mb-2">
@@ -60,7 +60,7 @@ const ContactPage = () => {
               </h3>
               <p className="font-body text-text-medium">
                 <a
-                  href="tel:+15551234567"
+                  href="tel:+32467856405"
                   className="hover:text-accent transition-colors"
                 >
                   +32 467 85 64 05
@@ -120,13 +120,13 @@ const ContactPage = () => {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="h-full w-full min-h-[400px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095989797!2d-74.00425634857871!3d40.741889379328765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1630525618522!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2510.9025166717856!2d5.6891177!3d50.988689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c0c5d2ad242f0f%3A0x1d9efc14cec41751!2sKANIOU%20bvba%20ZILVERNAALD!5e0!3m2!1sen!2sus!4v1716522932854!5m2!1sen!2sus"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen={false}
                   loading="lazy"
-                  title="Elegant Drapes Location"
+                  title="KANIOU bvba ZILVERNAALD Location"
                 ></iframe>
               </div>
             </div>
@@ -163,7 +163,7 @@ const ContactPage = () => {
                   Bezoek onze showroom om ons volledige assortiment te ontdekken en te spreken met ons ontwerpteam.
                 </p>
                 <a
-                  href="tel:+15551234567"
+                  href="tel:+32467856405"
                   className="inline-block bg-secondary hover:bg-accent text-white px-6 py-2 rounded-md transition-colors"
                 >
                   Telefonisch boeken
@@ -178,7 +178,7 @@ const ContactPage = () => {
                   Krijg deskundig advies vanuit het comfort van uw eigen woning via een videogesprek met onze ontwerpers.
                 </p>
                 <a
-                  href="mailto:appointments@elegantdrapes.com"
+                  href="mailto:info@kaniou.be"
                   className="inline-block bg-secondary hover:bg-accent text-white px-6 py-2 rounded-md transition-colors"
                 >
                   Online aanvragen

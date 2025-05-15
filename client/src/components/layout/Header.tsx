@@ -1,125 +1,52 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
-
-// Product categories for the dropdown menu
-const getProductCategories = (t: (key: string) => string) => [
-  { 
-    label: t('products.category.curtains'), 
-    href: "/products/overgordijnen",
-    key: "overgordijnen" 
-  },
-  { 
-    label: t('products.category.sheers'), 
-    href: "/products/vitrages",
-    key: "vitrages" 
-  },
-  { 
-    label: t('products.category.rollerBlinds'), 
-    href: "/products/rolgordijnen",
-    key: "rolgordijnen" 
-  },
-  { 
-    label: t('products.category.duoRollerBlinds'), 
-    href: "/products/duo-rolgordijnen",
-    key: "duo-rolgordijnen" 
-  },
-  { 
-    label: t('products.category.verticalTextileBlinds'), 
-    href: "/products/textiel-lamellen",
-    key: "textiel-lamellen" 
-  },
-  { 
-    label: t('products.category.verticalPlasticBlinds'), 
-    href: "/products/kunststof-lamellen",
-    key: "kunststof-lamellen" 
-  },
-  { 
-    label: t('products.category.woodenBlinds'), 
-    href: "/products/houten-jaloezieen",
-    key: "houten-jaloezieen" 
-  },
-  { 
-    label: t('products.category.plasticBlinds'), 
-    href: "/products/kunststof-jaloezieen",
-    key: "kunststof-jaloezieen" 
-  },
-  { 
-    label: t('products.category.textileWindowFilm'), 
-    href: "/products/textiel-raamfolie",
-    key: "textiel-raamfolie" 
-  },
-  { 
-    label: t('products.category.woodenShutters'), 
-    href: "/products/houten-shutters",
-    key: "houten-shutters" 
-  },
-  { 
-    label: t('products.category.insetScreens'), 
-    href: "/products/inzethorren",
-    key: "inzethorren" 
-  },
-  { 
-    label: t('products.category.mountedScreens'), 
-    href: "/products/opzethorren",
-    key: "opzethorren" 
-  },
-  { 
-    label: t('products.category.pleatScreenDoors'), 
-    href: "/products/plisse-hordeuren",
-    key: "plisse-hordeuren" 
-  },
-  { 
-    label: t('products.category.pleatedBlinds'), 
-    href: "/products/plisse",
-    key: "plisse" 
-  },
-  { 
-    label: t('products.category.duoPleatedBlinds'), 
-    href: "/products/duo-plisse",
-    key: "duo-plisse" 
-  },
-  { 
-    label: t('products.category.duoPleatedRoofBlinds'), 
-    href: "/products/duo-plisse-dakramen",
-    key: "duo-plisse-dakramen" 
-  },
-  { 
-    label: t('products.category.roofWindowBlinds'), 
-    href: "/products/dakraam-zonwering",
-    key: "dakraam-zonwering" 
-  },
-  { 
-    label: t('products.category.curtainRails'), 
-    href: "/products/gordijnrails",
-    key: "gordijnrails" 
-  },
-  { 
-    label: t('products.category.curtainRods'), 
-    href: "/products/gordijnroedes",
-    key: "gordijnroedes" 
-  },
-  { 
-    label: t('products.category.screens'), 
-    href: "/products/horren",
-    key: "horren" 
-  },
-  { 
-    label: t('products.category.squidFilm'), 
-    href: "/products/squid",
-    key: "squid" 
-  },
-];
+import { Category } from "@shared/schema";
 
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
+  
+  // Fetch categories from API
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["/api/categories"],
+  });
+  
+  // Map fetched categories to menu format
+  const getProductCategories = () => {
+    // Create a mapping for URLs
+    const nameToUrlMapping: Record<string, string> = {
+      "Curtains": "overgordijnen",
+      "Sheer Drapes": "vitrages",
+      "Sunblinds": "rolgordijnen",
+      "Roman Blinds": "plisse",
+      "SQUID": "squid",
+      "Curtain Rails": "gordijnrails",
+      "Curtain Rods": "gordijnroedes",
+      "Insect Screens": "horren",
+      "Roof Window Shades": "dakraam-zonwering"
+    };
+    
+    // Process the database categories
+    return categories.map(category => {
+      // Get the category key - either from the mapping or use a slug of the name
+      const urlPath = nameToUrlMapping[category.name] || 
+                     category.name.toLowerCase().replace(/\s+/g, "-");
+                     
+      return {
+        label: category.name,
+        href: `/products/${urlPath}`,
+        key: urlPath
+      };
+    });
+  };
   
   // Define navigation items based on requirements
   const navItems = [
@@ -239,7 +166,7 @@ const Header = () => {
                         
                         {showMobileSubmenu && (
                           <div className="mt-3 ml-2 space-y-1 max-h-80 overflow-y-auto border-l-2 border-neutral-200 pl-3">
-                            {getProductCategories(t).map((category) => (
+                            {getProductCategories().map((category) => (
                               <div key={category.key}>
                                 <Link href={category.href}>
                                   <div 
@@ -318,7 +245,7 @@ const Header = () => {
                         className="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
                         onMouseLeave={() => setShowDropdown(false)}
                       >
-                        {getProductCategories(t).map((category) => (
+                        {getProductCategories().map((category) => (
                           <div key={category.key} className="dropdown-menu-item">
                             <Link href={category.href}>
                               <div className="block px-4 py-2 text-sm hover:text-primary cursor-pointer">

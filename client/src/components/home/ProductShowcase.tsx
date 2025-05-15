@@ -38,10 +38,17 @@ const ProductShowcase = () => {
       );
 
   return (
-    <section id="products" className="py-16">
+    <section 
+      id="products" 
+      className="py-16"
+      aria-labelledby="product-showcase-heading"
+    >
       <Container>
         <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+          <h2 
+            id="product-showcase-heading"
+            className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4"
+          >
             Bladeren op Categorie
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
@@ -50,7 +57,11 @@ const ProductShowcase = () => {
         </div>
 
         <div className="mb-8">
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
+          <div 
+            className="flex flex-wrap items-center justify-center gap-4 mb-8"
+            role="tablist"
+            aria-label="Filter products by category"
+          >
             <Button
               variant={activeFilter === "all" ? "default" : "outline"}
               onClick={() => setActiveFilter("all")}
@@ -59,6 +70,10 @@ const ProductShowcase = () => {
                   ? "bg-primary text-white hover:bg-accent"
                   : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
               }
+              role="tab"
+              aria-selected={activeFilter === "all"}
+              aria-controls="product-grid"
+              id="tab-all"
             >
               Bekijk Alles
             </Button>
@@ -73,6 +88,10 @@ const ProductShowcase = () => {
                     ? "bg-primary text-white hover:bg-accent"
                     : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
                 }
+                role="tab"
+                aria-selected={activeFilter === categoryId.toString()}
+                aria-controls="product-grid"
+                id={`tab-category-${categoryId}`}
               >
                 {getCategoryNameById(categoryId)}
               </Button>
@@ -81,21 +100,36 @@ const ProductShowcase = () => {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            role="status"
+            aria-live="polite"
+          >
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
                 className="h-96 bg-neutral-200 rounded-lg animate-pulse"
+                aria-hidden="true"
               ></div>
             ))}
+            <div className="sr-only">Producten worden geladen</div>
           </div>
         ) : error ? (
-          <div className="text-center text-red-500">
+          <div 
+            className="text-center text-red-500"
+            role="alert"
+            aria-live="assertive"
+          >
             Er is een fout opgetreden bij het laden van de producten.
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div 
+              id="product-grid"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              role="tabpanel"
+              aria-labelledby={activeFilter === "all" ? "tab-all" : `tab-category-${activeFilter}`}
+            >
               {filteredProducts.map((product: Product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -103,23 +137,29 @@ const ProductShowcase = () => {
 
             <div className="text-center mt-12">
               <Link href="/browse-collection">
-                <Button size="lg" className="bg-primary hover:bg-accent">
-                  Bekijk Alle Categorieën
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="ml-2 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                <a className="inline-block">
+                  <Button 
+                    size="lg" 
+                    className="bg-primary hover:bg-accent group focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </Button>
+                    <span>Bekijk Alle Categorieën</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </Button>
+                </a>
               </Link>
             </div>
           </>

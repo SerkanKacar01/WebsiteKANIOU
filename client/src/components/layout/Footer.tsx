@@ -13,32 +13,18 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="font-display text-xl font-medium mb-4">
-              Elegant<span className="text-secondary">Drapes</span>
+              KANIOU<span className="text-secondary">zilvernaald</span>
             </h3>
             <p className="font-body text-neutral-300 mb-6">
-              Premium Gordijnen & Raambehandelingen
+              Premium Gordijnen & Zonweringen... nog veel meer.
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
-                className="text-white hover:text-secondary transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
+                href="https://www.instagram.com/kanioubvbazilvernaald/"
                 className="text-white hover:text-secondary transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="text-white hover:text-secondary transition-colors"
-                aria-label="Linkedin"
-              >
-                <Linkedin className="h-5 w-5" />
               </a>
               <a
                 href="mailto:info@kaniou.be"
@@ -84,7 +70,7 @@ const Footer = () => {
               <li>
                 <Link href="/products/gordijnrails">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Accessoires
+                    Gordijn rails- en roedes
                   </div>
                 </Link>
               </li>
@@ -150,7 +136,7 @@ const Footer = () => {
 
           <div>
             <h4 className="font-display text-lg font-medium mb-4">
-              Abonneer op Onze Nieuwsbrief
+              Abonneer op onze nieuwsbrief
             </h4>
             <p className="font-body text-neutral-300 mb-4">
               Abonneer voor ontwerptips en exclusieve aanbiedingen.
@@ -174,12 +160,15 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="font-body text-neutral-400 text-sm mb-4 md:mb-0">
-              © {currentYear} KANIOU bvba ZILVERNAALD. Alle rechten voorbehouden.
+              © {currentYear} KANIOU bvba ZILVERNAALD. Alle rechten
+              voorbehouden. <h3 className="font-display text-xl font-medium mb-4">
+                SELF<span className="text-secondary">MADE design & agency</span>
+              </h3>
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy-policy">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  Privacybeleid
+                  Privacy Policy
                 </div>
               </Link>
               <Link href="/terms-of-service">
@@ -187,9 +176,9 @@ const Footer = () => {
                   Servicevoorwaarden
                 </div>
               </Link>
-              <Link href="/sitemap">
+              <Link href="/Algmene-voorwaarden">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  Sitemap
+                  Algemene voorwaarden
                 </div>
               </Link>
             </div>

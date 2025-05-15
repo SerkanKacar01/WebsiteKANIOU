@@ -50,12 +50,13 @@ const ContactForm = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: ContactFormValues) => 
+    mutationFn: (data: ContactFormValues) =>
       apiRequest("POST", "/api/contact", data),
     onSuccess: () => {
       toast({
         title: "Bericht verzonden",
-        description: "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
+        description:
+          "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
         variant: "Succes",
       });
       form.reset();
@@ -64,7 +65,9 @@ const ContactForm = () => {
     onError: (error) => {
       toast({
         title: "Verzending mislukt",
-        description: error.message || "Het verzenden van het bericht is mislukt. Probeer het alstublieft opnieuw.",
+        description:
+          error.message ||
+          "Het verzenden van het bericht is mislukt. Probeer het alstublieft opnieuw.",
         variant: "Fout",
       });
       setIsSubmitting(false);
@@ -85,9 +88,9 @@ const ContactForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Uw naam</FormLabel>
+                <FormLabel>Voor - en Achternaam</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,7 +104,7 @@ const ContactForm = () => {
               <FormItem>
                 <FormLabel>E-mail adres</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@voorbeeld.com" {...field} />
+                  <Input type="email" placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -141,8 +144,8 @@ const ContactForm = () => {
           )}
         />
 
-        <Button 
-          type="Verzenden" 
+        <Button
+          type="Verzenden"
           className="bg-secondary hover:bg-accent"
           disabled={isSubmitting}
         >

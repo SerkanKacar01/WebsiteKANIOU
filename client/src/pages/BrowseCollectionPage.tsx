@@ -199,21 +199,22 @@ const BrowseCollectionPage = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">
-                  <HomeIcon className="h-4 w-4" />
+                  <HomeIcon className="h-4 w-4" aria-hidden="true" />
+                  <span className="sr-only">Home</span>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink>Browse Collection</BreadcrumbLink>
+                <BreadcrumbLink aria-current="page">Browse Collection</BreadcrumbLink>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </Container>
       </div>
       
-      <div className="py-12 bg-neutral-100">
+      <main className="py-12 bg-neutral-100">
         <Container className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
@@ -225,12 +226,16 @@ const BrowseCollectionPage = () => {
           </div>
           
           {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-12">
+            <div className="flex flex-col items-center justify-center py-12" role="status" aria-live="polite">
               <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-              <p className="text-text-medium">Loading...</p>
+              <p className="text-text-medium">Loading categories...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              role="region"
+              aria-label="Product Categories"
+            >
               {oneProductPerCategory.map((item, index) => {
                 if (item.product) {
                   // We have a product, show the product card with category badge
@@ -239,36 +244,42 @@ const BrowseCollectionPage = () => {
                       <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                         <div className="aspect-[4/3] relative overflow-hidden">
                           <Link href={`/products/${item.urlPath}`}>
-                            <img
-                              src={item.product.imageUrl}
-                              alt={item.product.name}
-                              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                            />
+                            <a>
+                              <img
+                                src={item.product.imageUrl}
+                                alt={`${item.product.name} - ${item.displayName} product`}
+                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                              />
+                              <span className="sr-only">View {item.product.name} in {item.displayName} category</span>
+                            </a>
                           </Link>
                           
                           {/* Category tag */}
-                          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium">
+                          <div 
+                            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium"
+                            aria-hidden="true"
+                          >
                             {item.displayName}
                           </div>
                         </div>
-                        <div className="p-6 flex flex-col flex-grow">
-                          <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                          <h2 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
                             <Link href={`/products/${item.urlPath}`}>
-                              {item.product.name}
+                              <a>{item.product.name}</a>
                             </Link>
-                          </h3>
+                          </h2>
                           <p className="text-muted text-sm mb-4 line-clamp-2 flex-grow">
                             {item.product.description}
                           </p>
                           <div className="flex justify-between items-center mb-4">
                             <span className="text-[#C8A165] text-lg font-semibold">${item.product.price.toFixed(2)}</span>
                           </div>
-                          <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
-                            <Link href={`/products/${item.urlPath}`} className="flex items-center justify-center w-full text-white">
-                              Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </div>
-                        </div>
+                          <Link href={`/products/${item.urlPath}`}>
+                            <a className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                              Bekijk meer <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                            </a>
+                          </Link>
+                        </CardContent>
                       </Card>
                     </div>
                   );
@@ -279,34 +290,38 @@ const BrowseCollectionPage = () => {
                       <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                         <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-r from-primary/50 to-accent/50">
                           <Link href={`/products/${item.urlPath}`}>
-                            <div className="absolute inset-0 flex items-center justify-center">
+                            <a className="absolute inset-0 flex items-center justify-center">
                               <div className="text-white text-center p-6">
-                                <h3 className="font-display text-xl mb-2">{item.displayName}</h3>
+                                <h2 className="font-display text-xl mb-2">{item.displayName}</h2>
                                 <p>Er zijn momenteel geen producten beschikbaar in deze categorie.</p>
                               </div>
-                            </div>
+                              <span className="sr-only">Browse {item.displayName} category</span>
+                            </a>
                           </Link>
                           
                           {/* Category tag */}
-                          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium">
+                          <div 
+                            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium"
+                            aria-hidden="true"
+                          >
                             {item.displayName}
                           </div>
                         </div>
-                        <div className="p-6 flex flex-col flex-grow">
-                          <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                          <h2 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
                             <Link href={`/products/${item.urlPath}`}>
-                              {item.displayName}
+                              <a>{item.displayName}</a>
                             </Link>
-                          </h3>
+                          </h2>
                           <p className="text-muted text-sm mb-4 line-clamp-2 flex-grow">
                             Ontdek ons uitgebreide assortiment {item.displayName.toLowerCase()} voor elk interieur en budget.
                           </p>
-                          <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
-                            <Link href={`/products/${item.urlPath}`} className="flex items-center justify-center w-full text-white">
-                              Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </div>
-                        </div>
+                          <Link href={`/products/${item.urlPath}`}>
+                            <a className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                              Bekijk meer <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                            </a>
+                          </Link>
+                        </CardContent>
                       </Card>
                     </div>
                   );
@@ -315,7 +330,7 @@ const BrowseCollectionPage = () => {
             </div>
           )}
         </Container>
-      </div>
+      </main>
     </>
   );
 };

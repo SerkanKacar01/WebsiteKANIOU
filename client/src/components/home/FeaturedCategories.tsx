@@ -41,15 +41,19 @@ const CategoryCard = ({ category }: { category: Category }) => {
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
         style={{ backgroundImage: `url('${category.imageUrl}')` }}
+        aria-hidden="true"
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-60"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-60" aria-hidden="true"></div>
       <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6">
-        <h3 className="font-display text-xl sm:text-2xl text-white font-medium mb-1 sm:mb-2">
+        <h2 className="font-display text-xl sm:text-2xl text-white font-medium mb-1 sm:mb-2">
           {category.name}
-        </h3>
+        </h2>
         <p className="font-body text-white text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">{category.description}</p>
-        <Link href={`/products/${getURLPath(category.name)}`} className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
-          Ontdek Onze Collectie
+        <Link href={`/products/${getURLPath(category.name)}`}>
+          <a className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
+            Ontdek Onze Collectie
+            <span className="sr-only"> van {category.name}</span>
+          </a>
         </Link>
       </div>
     </div>
@@ -67,10 +71,16 @@ const FeaturedCategories = () => {
   );
 
   return (
-    <section className="py-10 sm:py-12 md:py-16 bg-neutral-100">
+    <section 
+      className="py-10 sm:py-12 md:py-16 bg-neutral-100"
+      aria-labelledby="featured-categories-heading"
+    >
       <Container>
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-primary font-semibold mb-2 sm:mb-4">
+          <h2 
+            id="featured-categories-heading" 
+            className="font-display text-2xl sm:text-3xl md:text-4xl text-primary font-semibold mb-2 sm:mb-4"
+          >
             Doorzoek per Categorie
           </h2>
           <p className="font-body text-sm sm:text-base text-text-medium max-w-2xl mx-auto px-2">
@@ -79,18 +89,31 @@ const FeaturedCategories = () => {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+          <div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6"
+            role="status"
+            aria-live="polite"
+          >
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-64 sm:h-72 md:h-80 rounded-lg bg-neutral-200 animate-pulse"></div>
+              <div key={i} className="h-64 sm:h-72 md:h-80 rounded-lg bg-neutral-200 animate-pulse" aria-hidden="true"></div>
             ))}
+            <div className="sr-only">Categorieën worden geladen</div>
           </div>
         ) : error ? (
-          <div className="text-center text-red-500">
-            Er is een fout opgetreden
+          <div 
+            className="text-center text-red-500"
+            role="alert"
+            aria-live="assertive"
+          >
+            Er is een fout opgetreden bij het laden van categorieën
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+            <div 
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6"
+              role="region"
+              aria-label="Uitgelichte productcategorieën"
+            >
               {featuredCategories.map((category: Category) => (
                 <CategoryCard key={category.id} category={category} />
               ))}
@@ -98,15 +121,16 @@ const FeaturedCategories = () => {
             
             <div className="text-center mt-12">
               <Link href="/browse-collection">
-                <span className="inline-block">
-                  <Button size="lg" className="bg-primary hover:bg-accent">
-                    Bekijk Alle Categorieën
+                <a className="inline-block">
+                  <Button size="lg" className="bg-primary hover:bg-accent group focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <span>Bekijk Alle Categorieën</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="ml-2 h-4 w-4"
+                      className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -116,7 +140,7 @@ const FeaturedCategories = () => {
                       />
                     </svg>
                   </Button>
-                </span>
+                </a>
               </Link>
             </div>
           </>

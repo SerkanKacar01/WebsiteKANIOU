@@ -338,22 +338,22 @@ const ProductCategoryPage = () => {
                     )}
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
-                    <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
-                      <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                    <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
+                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                         {product.name}
-                      </h3>
-                    </Link>
+                      </Link>
+                    </h3>
                     <p className="text-muted text-sm mb-4 line-clamp-2 flex-grow">
                       {product.description}
                     </p>
                     <div className="flex justify-between items-center mb-4">
                       <span className="text-[#C8A165] text-lg font-semibold">${product.price.toFixed(2)}</span>
                     </div>
-                    <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
-                      <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
+                    <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
+                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`} className="flex items-center justify-center w-full text-white">
                         Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}

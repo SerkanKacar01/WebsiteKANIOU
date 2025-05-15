@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Category, GalleryItem } from "@shared/schema";
 import { useLanguage } from "@/context/LanguageContext";
-import CategoryGrid from "@/components/categories/CategoryGrid";
+import CategoryGrid, { officialCategories } from "@/components/categories/CategoryGrid";
 
 const ProductsPage = () => {
   const [, setLocation] = useLocation();
@@ -14,7 +14,7 @@ const ProductsPage = () => {
   
   // Fetch all categories for the browse collection page
   const { 
-    data: categories = [], 
+    data: categoriesFromDb = [], 
     isLoading: categoriesLoading, 
     error: categoriesError 
   } = useQuery<Category[]>({
@@ -26,23 +26,34 @@ const ProductsPage = () => {
     queryKey: ["/api/gallery"],
   });
 
-  // Enhance categories with gallery image for those without an image
-  const enhancedCategories = categories.map(category => {
-    // Clone the category
-    const enhancedCategory = { ...category };
+  // Create a mapping from Dutch category names to their details
+  const categoryDetailsMap = categoriesFromDb.reduce((acc, category) => {
+    acc[category.name] = category;
+    return acc;
+  }, {} as Record<string, Category>);
+  
+  // Create categories array based on the official list
+  const categories = officialCategories.map((categoryName, index) => {
+    // Look for an existing category with this name
+    const existingCategory = categoriesFromDb.find(
+      c => c.name === categoryName || 
+           categoryName === categoryDetailsMap[c.name]?.name
+    );
     
-    // Replace the imageUrl with a gallery image if needed
-    if (!enhancedCategory.imageUrl || enhancedCategory.imageUrl.trim() === '') {
-      // Find a random gallery item to use for the category
-      const randomIndex = category.id % galleryItems.length;
-      const galleryItem = galleryItems[randomIndex] || galleryItems[0];
-      
-      if (galleryItem) {
-        enhancedCategory.imageUrl = galleryItem.imageUrl;
-      }
+    if (existingCategory) {
+      return existingCategory;
     }
     
-    return enhancedCategory;
+    // If not found, create a placeholder with gallery image
+    const randomIndex = index % galleryItems.length;
+    const galleryItem = galleryItems[randomIndex] || galleryItems[0];
+    
+    return {
+      id: 1000 + index, // Use high IDs to avoid conflicts
+      name: categoryName,
+      description: `Ontdek onze collectie ${categoryName.toLowerCase()} voor elk interieur en budget.`,
+      imageUrl: galleryItem?.imageUrl || '',
+    } as Category;
   });
 
   // Determine if we're in a loading state
@@ -51,10 +62,10 @@ const ProductsPage = () => {
   return (
     <>
       <Helmet>
-        <title>Browse Collection | Elegant Drapes</title>
+        <title>Onze Productcategorieën | Elegant Drapes</title>
         <meta
           name="description"
-          content="Browse our extensive collection of premium window treatments including curtains, blinds, shades, and more. Find the perfect solution for any style and budget."
+          content="Bekijk onze uitgebreide collectie van premium raambehandelingen, gordijnen, jaloezieën en meer. Vind de perfecte oplossing voor elke stijl en budget."
         />
       </Helmet>
       
@@ -62,15 +73,15 @@ const ProductsPage = () => {
         <Container>
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Browse Our Collection
+              Onze Productcategorieën
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto">
-              Discover our extensive range of premium window treatments and solutions for every room in your home
+              Ontdek ons uitgebreide assortiment premium raambehandelingen en oplossingen voor elke ruimte in uw huis
             </p>
           </div>
           
           <CategoryGrid 
-            categories={enhancedCategories} 
+            categories={categories} 
             isLoading={isLoading} 
             error={categoriesError as Error}
           />

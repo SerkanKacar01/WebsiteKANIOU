@@ -7,6 +7,30 @@ interface CategoryGridProps {
   error: Error | null;
 }
 
+// Official list of 20 product categories from the requirements
+export const officialCategories = [
+  "Overgordijnen",
+  "Vitrages",
+  "Rolgordijnen",
+  "Duo rolgordijnen",
+  "Textiel lamellen",
+  "Kunststof lamellen",
+  "Houten jaloezieën",
+  "Kunststof jaloezieën",
+  "Textiel raamfolie",
+  "Houten shutters",
+  "Inzethorren",
+  "Opzethorren",
+  "Plissé hordeuren",
+  "Plissé",
+  "Duo plissé",
+  "Duo plissé dakramen",
+  "Dakraam zonwering",
+  "Gordijnrails",
+  "Gordijnroedes",
+  "SQUID"
+];
+
 // Map category names to URL paths based on the official product list
 const categoryMapping: Record<string, string> = {
   "Curtains": "overgordijnen",
@@ -55,8 +79,44 @@ const dutchNameMapping: Record<string, string> = {
   "squid": "SQUID"
 };
 
+// Map the official Dutch names to URL-friendly paths
+const officialCategoryUrlMapping: Record<string, string> = {
+  "Overgordijnen": "overgordijnen",
+  "Vitrages": "vitrages",
+  "Rolgordijnen": "rolgordijnen",
+  "Duo rolgordijnen": "duo-rolgordijnen",
+  "Textiel lamellen": "textiel-lamellen",
+  "Kunststof lamellen": "kunststof-lamellen",
+  "Houten jaloezieën": "houten-jaloezieen",
+  "Kunststof jaloezieën": "kunststof-jaloezieen",
+  "Textiel raamfolie": "textiel-raamfolie",
+  "Houten shutters": "houten-shutters",
+  "Inzethorren": "inzethorren",
+  "Opzethorren": "opzethorren",
+  "Plissé hordeuren": "plisse-hordeuren",
+  "Plissé": "plisse",
+  "Duo plissé": "duo-plisse",
+  "Duo plissé dakramen": "duo-plisse-dakramen",
+  "Dakraam zonwering": "dakraam-zonwering",
+  "Gordijnrails": "gordijnrails",
+  "Gordijnroedes": "gordijnroedes",
+  "SQUID": "squid"
+};
+
 const getURLPath = (categoryName: string): string => {
-  return categoryMapping[categoryName] || categoryName.toLowerCase().replace(/\s+/g, "-");
+  // First try to use the official mapping for Dutch category names
+  if (officialCategoryUrlMapping[categoryName]) {
+    return officialCategoryUrlMapping[categoryName];
+  }
+  
+  // If not found in official mapping, try the existing English-to-Dutch mapping 
+  // (for backward compatibility with existing English category names)
+  if (categoryMapping[categoryName]) {
+    return categoryMapping[categoryName];
+  }
+  
+  // Fall back to a slugified version of the category name
+  return categoryName.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 };
 
 // Component for each category card

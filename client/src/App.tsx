@@ -73,7 +73,6 @@ function Router() {
         <Route path="/products/dakraam-zonwering" component={ProductCategoryPage} />
         <Route path="/products/gordijnrails" component={ProductCategoryPage} />
         <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
-        <Route path="/products/horren" component={ProductCategoryPage} />
         <Route path="/products/squid" component={ProductCategoryPage} />
         
         <Route path="/products/:category" component={ProductsPage} />

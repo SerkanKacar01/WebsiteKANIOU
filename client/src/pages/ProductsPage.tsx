@@ -4,7 +4,31 @@ import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Category, GalleryItem } from "@shared/schema";
 import { useLanguage } from "@/context/LanguageContext";
-import CategoryGrid, { officialCategories } from "@/components/categories/CategoryGrid";
+import CategoryGrid from "@/components/categories/CategoryGrid";
+
+// Official list of 20 product categories from the requirements
+const officialCategories = [
+  "Overgordijnen",
+  "Vitrages",
+  "Rolgordijnen",
+  "Duo rolgordijnen",
+  "Textiel lamellen",
+  "Kunststof lamellen",
+  "Houten jaloezieën",
+  "Kunststof jaloezieën",
+  "Textiel raamfolie",
+  "Houten shutters",
+  "Inzethorren",
+  "Opzethorren",
+  "Plissé hordeuren",
+  "Plissé",
+  "Duo plissé",
+  "Duo plissé dakramen",
+  "Dakraam zonwering",
+  "Gordijnrails",
+  "Gordijnroedes",
+  "SQUID"
+];
 
 const ProductsPage = () => {
   const [, setLocation] = useLocation();
@@ -33,7 +57,7 @@ const ProductsPage = () => {
   }, {} as Record<string, Category>);
   
   // Create categories array based on the official list
-  const categories = officialCategories.map((categoryName, index) => {
+  const categories = officialCategories.map((categoryName: string, index: number) => {
     // Look for an existing category with this name
     const existingCategory = categoriesFromDb.find(
       c => c.name === categoryName || 

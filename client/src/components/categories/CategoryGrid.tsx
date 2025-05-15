@@ -7,8 +7,8 @@ interface CategoryGridProps {
   error: Error | null;
 }
 
-// Official list of 20 product categories from the requirements
-export const officialCategories = [
+// List of official product categories - Now defined directly in ProductsPage.tsx 
+const officialCategoriesList = [
   "Overgordijnen",
   "Vitrages",
   "Rolgordijnen",

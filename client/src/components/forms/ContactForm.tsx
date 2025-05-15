@@ -20,16 +20,16 @@ import { apiRequest } from "@/lib/queryClient";
 // Define the form schema with validation
 const contactFormSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: "Naam moet minstens 2 tekens bevatten.",
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: "Voer een geldig e-mailadres in.",
   }),
   subject: z.string().min(2, {
-    message: "Subject must be at least 2 characters.",
+    message: "Onderwerp moet minstens 2 tekens bevatten.",
   }),
   message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
+    message: "Bericht moet minstens 10 tekens bevatten.",
   }),
 });
 
@@ -54,18 +54,18 @@ const ContactForm = () => {
       apiRequest("POST", "/api/contact", data),
     onSuccess: () => {
       toast({
-        title: "Message Sent",
-        description: "Thank you for your message. We'll respond as soon as possible.",
-        variant: "success",
+        title: "Bericht verzonden",
+        description: "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
+        variant: "Succes",
       });
       form.reset();
       setIsSubmitting(false);
     },
     onError: (error) => {
       toast({
-        title: "Submission Failed",
-        description: error.message || "Failed to send message. Please try again.",
-        variant: "destructive",
+        title: "Verzending mislukt",
+        description: error.message || "Het verzenden van het bericht is mislukt. Probeer het alstublieft opnieuw.",
+        variant: "Fout",
       });
       setIsSubmitting(false);
     },
@@ -85,7 +85,7 @@ const ContactForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Name</FormLabel>
+                <FormLabel>Uw naam</FormLabel>
                 <FormControl>
                   <Input placeholder="John Doe" {...field} />
                 </FormControl>
@@ -99,9 +99,9 @@ const ContactForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email Address</FormLabel>
+                <FormLabel>E-mail adres</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" {...field} />
+                  <Input type="email" placeholder="john@voorbeeld.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,12 +111,12 @@ const ContactForm = () => {
 
         <FormField
           control={form.control}
-          name="subject"
+          name="Onderwerp"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subject</FormLabel>
+              <FormLabel>Onderwerp</FormLabel>
               <FormControl>
-                <Input placeholder="How can we help you?" {...field} />
+                <Input placeholder="Hoe kunnen wij u helpen?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,14 +125,14 @@ const ContactForm = () => {
 
         <FormField
           control={form.control}
-          name="message"
+          name="Bericht"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>Bericht</FormLabel>
               <FormControl>
                 <Textarea
                   rows={6}
-                  placeholder="Please provide details about your inquiry..."
+                  placeholder="Gelieve de details van uw aanvraag te vermelden...."
                   {...field}
                 />
               </FormControl>
@@ -142,11 +142,11 @@ const ContactForm = () => {
         />
 
         <Button 
-          type="submit" 
+          type="Verzenden" 
           className="bg-secondary hover:bg-accent"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : "Send Message"}
+          {isSubmitting ? "Sending..." : "Bericht verzenden"}
         </Button>
       </form>
     </Form>

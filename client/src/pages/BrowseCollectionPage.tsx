@@ -219,10 +219,10 @@ const BrowseCollectionPage = () => {
         <Container className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Browse Our Collection
+              Doorblader onze collectie
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto mb-4">
-              Bekijk onze uitgebreide collectie premium raambehandelingen en vind de perfecte oplossing voor uw interieur.
+              Ontdek onze uitgebreide collectie hoogwaardige raambekleding en vind de ideale oplossing die aansluit bij uw interieurwensen. Onze producten zijn ontworpen om uw ruimte te veredelen en te beschermen tegen het zonlicht.
             </p>
             <div className="flex justify-center mb-4">
               <ShareLink 

@@ -64,6 +64,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  app.put("/api/categories/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid category ID" });
+      }
+      
+      // Validate the update data
+      const updateSchema = insertCategorySchema.partial();
+      const validatedData = updateSchema.safeParse(req.body);
+      if (!validatedData.success) {
+        return res.status(400).json({ 
+          message: "Invalid category data", 
+          errors: fromZodError(validatedData.error).message 
+        });
+      }
+      
+      // Check if category exists
+      const existingCategory = await storage.getCategoryById(id);
+      if (!existingCategory) {
+        return res.status(404).json({ message: "Category not found" });
+      }
+      
+      // Update the category
+      const updatedCategory = await storage.updateCategory(id, validatedData.data);
+      res.json(updatedCategory);
+    } catch (error) {
+      console.error("Error updating category:", error);
+      res.status(500).json({ message: "Failed to update category" });
+    }
+  });
+  
   // Products
   app.get("/api/products", async (req: Request, res: Response) => {
     try {

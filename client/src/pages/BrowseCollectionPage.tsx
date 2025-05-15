@@ -254,7 +254,7 @@ const BrowseCollectionPage = () => {
                           <Link href={`/products/${item.urlPath}`}>
                             <a className="block h-full">
                               <img
-                                src={item.product.imageUrl}
+                                src={getAssetUrl(item.product.imageUrl)}
                                 alt={`${item.product.name} - ${item.displayName} product`}
                                 className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                               />

@@ -37,7 +37,7 @@ const GalleryPage = () => {
   return (
     <>
       <Helmet>
-        <title>Gallery | Elegant Drapes</title>
+        <title>Gallerij | KANIOU Zilvernaald</title>
         <meta
           name="description"
           content="Explore our installation gallery showcasing our premium curtains, blinds, and window treatments in beautiful interior spaces."
@@ -48,11 +48,11 @@ const GalleryPage = () => {
         <Container>
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Product Installation Gallery
+              Galerij van Productinstallaties
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto">
-              Browse through our portfolio of completed installations to find inspiration for your own space.
-              Filter by product category to see how our premium window treatments transform interiors.
+              Bekijk ons portfolio met voltooide installaties ter inspiratie voor uw eigen interieur.
+              U kunt filteren op productcategorie om te ontdekken hoe onze hoogwaardige raamdecoratie verschillende ruimtes transformeert met stijl en vakmanschap.
             </p>
           </div>
           
@@ -80,21 +80,20 @@ const GalleryPage = () => {
           
           <div className="mt-16 bg-white p-8 rounded-lg shadow-md text-center">
             <h2 className="font-display text-2xl text-primary font-semibold mb-4">
-              Love What You See?
+              Enthousiast over wat u ziet?
             </h2>
             <p className="font-body text-text-medium max-w-2xl mx-auto mb-6">
-              Our designers can help you achieve the perfect look for your home. 
-              Contact us for a consultation or request a quote today.
+              Onze interieurontwerpers helpen u graag om de perfecte uitstraling voor uw woning te realiseren. Neem contact met ons op voor een adviesgesprek of vraag vandaag nog een offerte aan.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/quote" className="w-full sm:w-auto">
                 <button className="w-full sm:w-auto bg-secondary hover:bg-accent text-white px-8 py-3 rounded-md font-medium transition-colors">
-                  Request a Quote
+                  Offerte aanvragen
                 </button>
               </a>
               <a href="/contact" className="w-full sm:w-auto">
                 <button className="w-full sm:w-auto border border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-md font-medium transition-colors">
-                  Contact Us
+                  Contacteer ons
                 </button>
               </a>
             </div>

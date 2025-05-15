@@ -4,7 +4,6 @@ import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
 
 const AboutCompany = () => {
-  
   return (
     <section id="about" className="py-16 bg-neutral-100">
       <Container>
@@ -14,11 +13,14 @@ const AboutCompany = () => {
               Over Ons
             </h2>
             <p className="font-body text-text-medium mb-6">
-              Sinds 2005 levert Elegant Drapes premium raambehandelingen en uitzonderlijke service aan huiseigenaren en bedrijven.
+              Sinds 1991 levert KANIOU Zilvernaald premium raamdecoraties en
+              uitzonderlijke service aan huiseigenaren en bedrijven.
             </p>
 
             <p className="font-body text-text-medium mb-6">
-              Ons team van experts is toegewijd om u te helpen de perfecte raamoplossingen te vinden die passen bij uw stijl, budget en functionele behoeften.
+              Ons team van experts is toegewijd om u te helpen de perfecte
+              raamoplossingen te vinden die passen bij uw stijl, budget en
+              functionele behoeften.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
@@ -30,7 +32,8 @@ const AboutCompany = () => {
                   Kwaliteit
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  We gebruiken alleen de beste materialen en vakmanschap in al onze producten.
+                  We gebruiken alleen de beste materialen en vakmanschap in al
+                  onze producten.
                 </p>
               </div>
 
@@ -42,7 +45,8 @@ const AboutCompany = () => {
                   Service
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  We bieden persoonlijke service van consultatie tot installatie.
+                  We bieden persoonlijke service van consultatie tot
+                  installatie.
                 </p>
               </div>
 
@@ -54,7 +58,8 @@ const AboutCompany = () => {
                   Innovatie
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  We updaten voortdurend ons productaanbod met de nieuwste ontwerpen en technologieën.
+                  We updaten voortdurend ons productaanbod met de nieuwste
+                  ontwerpen en technologieën.
                 </p>
               </div>
 
@@ -66,7 +71,9 @@ const AboutCompany = () => {
                   Onze Missie
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  Ruimtes transformeren door mooie, functionele raambehandelingen die het comfort en de esthetiek van elke kamer verbeteren.
+                  Ruimtes transformeren door mooie, functionele
+                  raambehandelingen die het comfort en de esthetiek van elke
+                  kamer verbeteren.
                 </p>
               </div>
             </div>
@@ -101,7 +108,9 @@ const AboutCompany = () => {
               className="w-full h-auto rounded-lg shadow-lg"
             />
             <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
-              <p className="font-display text-lg text-primary font-medium">20+</p>
+              <p className="font-display text-lg text-primary font-medium">
+                30+
+              </p>
               <p className="font-body text-text-medium text-sm">
                 Jaren Ervaring
               </p>

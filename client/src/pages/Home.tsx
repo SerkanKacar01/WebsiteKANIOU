@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Elegant Drapes | Premium Curtains & Window Treatments</title>
+        <title>KANIOU Zilvernaald | Premium Gordijnen & Raamdecoraties</title>
         <meta
           name="description"
           content="Transform your space with Elegant Drapes' premium curtains, blinds, and window treatments. Custom solutions tailored to your style and needs."

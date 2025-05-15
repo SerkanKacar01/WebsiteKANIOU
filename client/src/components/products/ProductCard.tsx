@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "@shared/schema";
 import { ArrowRight } from "lucide-react";
 import { ColorSwatch } from "@/lib/types";
+import { getAssetUrl } from "@/lib/imageUtils";
 
 interface ProductCardProps {
   product: Product;
@@ -26,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={product.imageUrl}
+          src={getAssetUrl(product.imageUrl)}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-focus:scale-110"
         />

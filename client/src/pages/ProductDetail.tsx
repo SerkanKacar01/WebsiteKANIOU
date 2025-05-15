@@ -15,7 +15,7 @@ import {
 import { ColorSwatch } from "@/lib/types";
 import { Product, GalleryItem, Category } from "@shared/schema";
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
-import { getProductImageUrl } from "@/lib/imageUtils";
+import { getProductImageUrl, getAssetUrl } from "@/lib/imageUtils";
 
 const ProductDetail = () => {
   const [, params] = useRoute("/products/:id");
@@ -166,7 +166,7 @@ const ProductDetail = () => {
           <div className="relative">
             <div className="rounded-lg overflow-hidden">
               <img
-                src={enhancedProduct.imageUrl}
+                src={getAssetUrl(enhancedProduct.imageUrl)}
                 alt={enhancedProduct.name}
                 className="w-full h-auto object-cover"
               />

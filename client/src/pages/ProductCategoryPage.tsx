@@ -67,37 +67,55 @@ const ProductCategoryPage = () => {
       setLoading(true);
       
       // Find matching category based on URL
-      // Map specific URL segments to their corresponding categories
-      const urlToCategoryMap: Record<string, string> = {
+      // Create a more robust mapping system that handles all categories
+      // This is a more complete mapping that covers all possible URL paths
+      const urlToCategoryName: Record<string, string> = {};
+      
+      // First, map all categories by their exact name (case-insensitive)
+      categories.forEach((cat: Category) => {
+        // Create a URL-friendly version of the name
+        const urlFriendlyName = cat.name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+        urlToCategoryName[urlFriendlyName] = cat.name;
+      });
+      
+      // Add additional mappings that might be used in the UI
+      const additionalMappings: Record<string, string> = {
         'overgordijnen': 'Curtains',
         'vitrages': 'Sheer Drapes',
         'rolgordijnen': 'Sunblinds',
-        'duo-rolgordijnen': 'Sunblinds',
-        'textiel-lamellen': 'Curtains',
-        'kunststof-lamellen': 'Curtains',
-        'houten-jaloezieen': 'Curtains',
-        'kunststof-jaloezieen': 'Curtains',
-        'textiel-raamfolie': 'SQUID',
-        'houten-shutters': 'Curtains',
-        'inzethorren': 'Insect Screens',
-        'opzethorren': 'Insect Screens',
-        'plisse-hordeuren': 'Insect Screens',
-        'plisse': 'Roman Blinds',
-        'duo-plisse': 'Roman Blinds',
-        'duo-plisse-dakramen': 'Roof Window Shades',
-        'dakraam-zonwering': 'Roof Window Shades',
+        'duo-rolgordijnen': 'Duo Blinds',
+        'textiel-lamellen': 'Textile Vertical Blinds',
+        'kunststof-lamellen': 'Plastic Vertical Blinds',
+        'houten-jaloezieen': 'Wooden Blinds',
+        'kunststof-jaloezieen': 'Plastic Blinds',
+        'textiel-raamfolie': 'Textile Window Film',
+        'houten-shutters': 'Wooden Shutters',
+        'inzethorren': 'Inset Insect Screens',
+        'opzethorren': 'Mount-on Insect Screens',
+        'plisse-hordeuren': 'Pleated Insect Doors',
+        'plisse': 'Pleated Blinds',
+        'duo-plisse': 'Duo Pleated Blinds',
+        'duo-plisse-dakramen': 'Duo Pleated Roof Window Blinds',
+        'dakraam-zonwering': 'Roof Window Shading',
         'gordijnrails': 'Curtain Rails',
         'gordijnroedes': 'Curtain Rods',
         'horren': 'Insect Screens',
         'squid': 'SQUID'
       };
       
-      // Get the matching category name or default to the first one
-      const categoryName = urlToCategoryMap[category as string] || '';
+      // Merge the additional mappings into our URL-to-category mapping
+      Object.entries(additionalMappings).forEach(([url, name]) => {
+        urlToCategoryName[url] = urlToCategoryName[url] || name;
+      });
       
-      // Find the category object
+      // Get the matching category name or default to an empty string
+      const categoryName = urlToCategoryName[category as string] || '';
+      
+      console.log(`URL path: ${category}, Mapped category name: ${categoryName}`);
+      
+      // Find the category object by name - doing a case-insensitive match to be more forgiving
       const foundCategory = categories.find((cat: Category) => 
-        cat.name === categoryName
+        cat.name.toLowerCase() === categoryName.toLowerCase()
       );
       
       if (foundCategory) {

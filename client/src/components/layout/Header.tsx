@@ -160,14 +160,23 @@ const Header = () => {
                   {navItems.map((item) => 
                     item.hasDropdown ? (
                       <div key={item.href} className="py-2 border-b border-neutral-200">
-                        <div 
-                          className={`font-body flex items-center justify-between ${
-                            isActive(item.href) ? "text-accent font-medium" : "text-text-dark"
-                          } cursor-pointer`}
-                          onClick={toggleMobileSubmenu}
-                        >
-                          {item.label}
-                          <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
+                        <div className="flex items-center justify-between">
+                          <Link href={item.href}>
+                            <div 
+                              className={`font-body ${
+                                isActive(item.href) ? "text-accent font-medium" : "text-text-dark"
+                              } cursor-pointer`}
+                              onClick={handleCloseSheet}
+                            >
+                              {item.label}
+                            </div>
+                          </Link>
+                          <div
+                            className="p-2 cursor-pointer"
+                            onClick={toggleMobileSubmenu}
+                          >
+                            <ChevronDown className={`h-4 w-4 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
+                          </div>
                         </div>
                         
                         {showMobileSubmenu && (
@@ -233,18 +242,25 @@ const Header = () => {
               {navItems.map((item) => 
                 item.hasDropdown ? (
                   <div key={item.href} className="relative" ref={dropdownRef}>
-                    <div 
-                      className={`font-body flex items-center cursor-pointer ${
-                        isActive(item.href) || showDropdown
-                          ? "font-medium"
-                          : "hover:text-primary"
-                      } transition-colors`}
-                      onClick={toggleDropdown}
-                      onMouseEnter={() => setShowDropdown(true)}
-                    >
-                      {item.label}
-                      <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-                    </div>
+                    <Link href={item.href}>
+                      <div 
+                        className={`font-body flex items-center cursor-pointer ${
+                          isActive(item.href) || showDropdown
+                            ? "font-medium"
+                            : "hover:text-primary"
+                        } transition-colors`}
+                        onMouseEnter={() => setShowDropdown(true)}
+                      >
+                        {item.label}
+                        <ChevronDown 
+                          className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`}
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevent navigation when clicking the chevron
+                            toggleDropdown();
+                          }}
+                        />
+                      </div>
+                    </Link>
                     
                     {showDropdown && (
                       <div 

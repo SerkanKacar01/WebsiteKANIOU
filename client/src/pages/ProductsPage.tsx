@@ -290,11 +290,7 @@ const ProductsPage = () => {
                               {categoryName}
                             </div>
 
-                            {item.product.isNewArrival && (
-                              <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
-                                Nieuw
-                              </div>
-                            )}
+
                           </div>
                           <CardContent className="p-6 flex flex-col flex-grow">
                             <div className="flex justify-between items-start mb-2">

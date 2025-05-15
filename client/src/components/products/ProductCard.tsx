@@ -28,11 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
 
-        {product.isNewArrival && (
-          <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
-            New Arrival
-          </div>
-        )}
+
       </div>
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-2">

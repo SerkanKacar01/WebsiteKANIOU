@@ -326,11 +326,7 @@ const ProductCategoryPage = () => {
                       {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
                     </div>
                     
-                    {product.isNewArrival && (
-                      <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs py-1 px-3 rounded-full font-medium">
-                        Nieuw
-                      </div>
-                    )}
+
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">

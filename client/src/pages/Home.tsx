@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedCategories from "@/components/home/FeaturedCategories";
-import ProductShowcase from "@/components/home/ProductShowcase";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
 import TestimonialSection from "@/components/home/TestimonialSection";
 import GallerySection from "@/components/home/GallerySection";
 import AboutCompany from "@/components/home/AboutCompany";
@@ -21,7 +21,7 @@ const Home = () => {
       
       <HeroSection />
       <FeaturedCategories />
-      <ProductShowcase />
+      <FeaturedProducts />
       <TestimonialSection />
       <GallerySection />
       <AboutCompany />

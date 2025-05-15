@@ -11,7 +11,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check } from "lucide-react";
+import { HomeIcon, ChevronRight, Check, ArrowRight } from "lucide-react";
 import { Product, Category, GalleryItem } from "@shared/schema";
 import { getProductImageUrl } from "@/lib/imageUtils";
 import { getCategoryImage } from "@/lib/categoryImages";
@@ -296,7 +296,7 @@ const ProductCategoryPage = () => {
 
       {/* Products Section */}
       <div id="products" className="py-16 bg-neutral-50">
-        <Container>
+        <Container className="max-w-7xl mx-auto px-4">
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-6">
             {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection
           </h2>
@@ -309,45 +309,51 @@ const ProductCategoryPage = () => {
               <p className="text-text-medium">Er zijn momenteel geen producten beschikbaar in deze categorie.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product) => (
-                <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02]">
+                <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
-                        className="w-full h-full object-cover transition-transform hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
                     </Link>
+                    
+                    {/* Category tag */}
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium">
+                      {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
+                    </div>
+                    
                     {product.isNewArrival && (
-                      <div className="absolute top-2 right-2 bg-accent text-white text-xs px-2 py-1 rounded">
-                        Nieuw Binnen
+                      <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs py-1 px-3 rounded-full font-medium">
+                        Nieuw
                       </div>
                     )}
                     {product.isBestSeller && (
-                      <div className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
-                        Bestseller
+                      <div className="absolute top-4 right-4 bg-[#C8A165] text-white text-xs py-1 px-3 rounded-full font-medium">
+                        Best Seller
                       </div>
                     )}
                   </div>
-                  <div className="p-4">
+                  <div className="p-6 flex flex-col flex-grow">
                     <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
-                      <h3 className="font-display text-lg font-medium mb-2 hover:text-primary transition-colors">
+                      <h3 className="font-display text-xl font-semibold mb-2 hover:text-primary transition-colors">
                         {product.name}
                       </h3>
                     </Link>
-                    <p className="text-text-medium text-sm mb-3 line-clamp-2">
+                    <p className="text-muted text-sm mb-4 line-clamp-2 flex-grow">
                       {product.description}
                     </p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-accent font-semibold">${product.price.toFixed(2)}</span>
-                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
-                        <span className="text-primary text-sm font-medium hover:underline cursor-pointer">
-                          Bekijk Details
-                        </span>
-                      </Link>
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-[#C8A165] text-lg font-semibold">${product.price.toFixed(2)}</span>
                     </div>
+                    <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                      <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer">
+                        Bekijk meer <ArrowRight className="ml-2 h-4 w-4" />
+                      </div>
+                    </Link>
                   </div>
                 </div>
               ))}

@@ -15,6 +15,7 @@ import { HomeIcon, ChevronRight, Check, ArrowRight } from "lucide-react";
 import { Product, Category, GalleryItem } from "@shared/schema";
 import { getProductImageUrl } from "@/lib/imageUtils";
 import { getCategoryImage } from "@/lib/categoryImages";
+import { ShareLink } from "@/components/ui/share-link";
 
 // Product categories with their display labels and URL paths
 const productCategories = [
@@ -300,9 +301,18 @@ const ProductCategoryPage = () => {
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-6">
             {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-12">
+          <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-4">
             Ontdek ons uitgebreide assortiment {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} ontworpen om uw leefruimte te verfraaien met stijl en functionaliteit.
           </p>
+          
+          {/* Share button for the entire category */}
+          <div className="flex justify-center mb-8">
+            <ShareLink 
+              url={`/products/${category}`}
+              title={`${productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection`}
+              className="mx-auto"
+            />
+          </div>
           
           {products.length === 0 ? (
             <div className="text-center py-12">
@@ -326,6 +336,13 @@ const ProductCategoryPage = () => {
                       {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
                     </div>
                     
+                    {/* Share button */}
+                    <div className="absolute top-4 right-4 z-10">
+                      <ShareLink 
+                        url={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
+                        title={`${product.name} - ${productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}`}
+                      />
+                    </div>
 
                   </div>
                   <div className="p-6 flex flex-col flex-grow">

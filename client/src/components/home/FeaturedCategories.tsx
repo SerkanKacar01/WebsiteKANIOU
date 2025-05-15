@@ -20,10 +20,8 @@ const CategoryCard = ({ category }: { category: Category }) => {
           {category.name}
         </h3>
         <p className="font-body text-white text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">{category.description}</p>
-        <Link href={`/products/${category.id}`}>
-          <a className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
-            Ontdek Onze Collectie
-          </a>
+        <Link href={`/products/${category.id}`} className="font-body inline-block text-white text-xs sm:text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
+          Ontdek Onze Collectie
         </Link>
       </div>
     </div>
@@ -72,23 +70,25 @@ const FeaturedCategories = () => {
             
             <div className="text-center mt-12">
               <Link href="/products">
-                <Button size="lg" className="bg-primary hover:bg-accent">
-                  Bekijk Alle Categorieën
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="ml-2 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </Button>
+                <span className="inline-block">
+                  <Button size="lg" className="bg-primary hover:bg-accent">
+                    Bekijk Alle Categorieën
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="ml-2 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </Button>
+                </span>
               </Link>
             </div>
           </>

@@ -13,6 +13,7 @@ import ProductsPage from "@/pages/ProductsPage";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductPage from "@/pages/ProductPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
+import BrowseCollectionPage from "@/pages/BrowseCollectionPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
@@ -27,6 +28,7 @@ function Router() {
   const getPageTitle = () => {
     if (location === "/") return "Elegant Drapes | Premium Gordijnen & Raambehandelingen";
     if (location === "/products") return "Browse Collection | Elegant Drapes";
+    if (location === "/browse-collection") return "Browse Collection | Elegant Drapes";
     if (location === "/gallery") return "Inspiratie Galerij | Elegant Drapes";
     if (location === "/about") return "Over Ons | Elegant Drapes";
     if (location === "/contact") return "Neem Contact Op | Elegant Drapes";
@@ -76,6 +78,9 @@ function Router() {
         
         {/* Products main page */}
         <Route path="/products" component={ProductsPage} />
+        
+        {/* Browse Collection page with all 20 categories */}
+        <Route path="/browse-collection" component={BrowseCollectionPage} />
         
         {/* The following handles product category pages */}
         <Route path="/products/:category" component={ProductCategoryPage} />

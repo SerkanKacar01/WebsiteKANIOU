@@ -74,6 +74,9 @@ function Router() {
         <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/products/squid" component={ProductCategoryPage} />
         
+        {/* Products main page */}
+        <Route path="/products" component={ProductsPage} />
+        
         {/* The following handles product category pages */}
         <Route path="/products/:category" component={ProductCategoryPage} />
         <Route path="/gallery" component={GalleryPage} />

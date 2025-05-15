@@ -342,21 +342,41 @@ const ProductsPage = () => {
     return (
       <>
         <Helmet>
-          <title>Onze Productcategorieën | Elegant Drapes</title>
+          <title>Doorzoek per Categorie | Elegant Drapes</title>
           <meta
             name="description"
             content="Bekijk onze uitgebreide collectie van premium raambehandelingen, gordijnen, jaloezieën en meer. Vind de perfecte oplossing voor elke stijl en budget."
           />
         </Helmet>
         
+        <div className="bg-neutral-100 py-4">
+          <Container>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">
+                    <HomeIcon className="h-4 w-4" />
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  <ChevronRight className="h-4 w-4" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink>Producten</BreadcrumbLink>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </Container>
+        </div>
+        
         <div className="py-12 bg-neutral-100">
           <Container>
             <div className="text-center mb-12">
               <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-                Onze Productcategorieën
+                Doorzoek per Categorie
               </h1>
               <p className="font-body text-text-medium max-w-2xl mx-auto">
-                Ontdek ons uitgebreide assortiment premium raambehandelingen en oplossingen voor elke ruimte in uw huis
+                Vind de perfecte raambekleding door hieronder een productcategorie te selecteren
               </p>
             </div>
             

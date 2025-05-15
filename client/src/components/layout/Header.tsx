@@ -57,7 +57,7 @@ const Header = () => {
   // Define navigation items based on requirements
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Browse Collection", href: "#", hasDropdown: true },
+    { label: "Browse Collection", href: "/products", hasDropdown: true },
     { label: "Gallery", href: "/gallery" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },

@@ -131,6 +131,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
   };
 
   const dutchName = getDutchName(category.name);
+  const categoryUrl = getURLPath(category.name);
   
   return (
     <div className="group relative h-64 sm:h-72 md:h-80 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
@@ -146,8 +147,10 @@ const CategoryCard = ({ category }: { category: Category }) => {
         <p className="font-body text-white text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
           {category.description}
         </p>
-        <Link href={`/products/${getURLPath(category.name)}`} className="font-body inline-block text-white text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
-          Ontdek Onze Collectie
+        <Link href={`/products/${categoryUrl}`}>
+          <button className="bg-white hover:bg-white/90 text-primary font-medium text-sm py-2 px-4 rounded-md transition-colors">
+            Ontdek Onze Collectie
+          </button>
         </Link>
       </div>
     </div>

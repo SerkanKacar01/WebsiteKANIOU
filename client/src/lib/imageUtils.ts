@@ -1,4 +1,5 @@
 import { GalleryItem } from "@shared/schema";
+import { overgordijnenImage, insectScreenImage, curtainRailsImage } from '@/assets';
 
 // Function to get a random gallery item
 const getRandomItem = (items: GalleryItem[]): GalleryItem | null => {
@@ -12,6 +13,29 @@ const WINDOW_BLINDS_IMAGE = "/assets/window-blinds.jpg";
 
 // Map to store assigned image URLs for each product ID
 // This ensures the same product gets the same image on re-renders
+
+// Map for asset paths to imported assets
+const assetMap: Record<string, string> = {
+  '/assets/overgordijnen.jpeg': overgordijnenImage,
+  '/assets/insect_screen.jpeg': insectScreenImage,
+  '/assets/curtain_rails.jpeg': curtainRailsImage
+};
+
+/**
+ * Convert asset path to imported asset URL if needed
+ * @param url - The image URL to process
+ * @returns The appropriate URL to use
+ */
+export const getAssetUrl = (url: string | undefined): string => {
+  if (!url) return WINDOW_BLINDS_IMAGE;
+  
+  // If it's an asset path, return the imported asset
+  if (url.startsWith('/assets/') && assetMap[url]) {
+    return assetMap[url];
+  }
+  
+  return url;
+};
 const productImageMap = new Map<number, string>();
 
 /**

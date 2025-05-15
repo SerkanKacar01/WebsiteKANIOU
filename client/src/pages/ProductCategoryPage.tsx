@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check, ArrowRight } from "lucide-react";
 import { Product, Category, GalleryItem } from "@shared/schema";
-import { getProductImageUrl } from "@/lib/imageUtils";
+import { getProductImageUrl, getAssetUrl } from "@/lib/imageUtils";
 import { getCategoryImage } from "@/lib/categoryImages";
 import { ShareLink } from "@/components/ui/share-link";
 
@@ -224,7 +224,7 @@ const ProductCategoryPage = () => {
       <div 
         className="relative bg-cover bg-center py-24" 
         style={{ 
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})` 
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${getAssetUrl(categoryData.imageUrl)})` 
         }}
       >
         <Container>
@@ -325,7 +325,7 @@ const ProductCategoryPage = () => {
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <img 
-                        src={product.imageUrl} 
+                        src={getAssetUrl(product.imageUrl)} 
                         alt={product.name} 
                         className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                       />

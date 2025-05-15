@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import { Category, GalleryItem, Product } from "@shared/schema";
-import { getProductImageUrl } from "@/lib/imageUtils";
+import { getProductImageUrl, getAssetUrl } from "@/lib/imageUtils";
 import { getCategoryImage } from "@/lib/categoryImages";
 import {
   Breadcrumb,

@@ -2,9 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import Container from "@/components/ui/container";
 import { Category } from "@shared/schema";
+import { Button } from "@/components/ui/button";
+
+// Featured category IDs (manually selected)
+const FEATURED_CATEGORY_IDS = [1, 2, 3, 5, 6, 8];
 
 const CategoryCard = ({ category }: { category: Category }) => {
-  
   return (
     <div className="group relative h-64 sm:h-72 md:h-80 rounded-lg overflow-hidden shadow-md">
       <div
@@ -28,9 +31,14 @@ const CategoryCard = ({ category }: { category: Category }) => {
 };
 
 const FeaturedCategories = () => {
-  const { data: categories = [], isLoading, error } = useQuery<Category[]>({
+  const { data: allCategories = [], isLoading, error } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
+
+  // Filter only featured categories
+  const featuredCategories = allCategories.filter(category => 
+    FEATURED_CATEGORY_IDS.includes(category.id)
+  );
 
   return (
     <section className="py-10 sm:py-12 md:py-16 bg-neutral-100">
@@ -45,8 +53,8 @@ const FeaturedCategories = () => {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
-            {[...Array(4)].map((_, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+            {[...Array(6)].map((_, i) => (
               <div key={i} className="h-64 sm:h-72 md:h-80 rounded-lg bg-neutral-200 animate-pulse"></div>
             ))}
           </div>
@@ -55,11 +63,35 @@ const FeaturedCategories = () => {
             Er is een fout opgetreden
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
-            {categories.map((category: Category) => (
-              <CategoryCard key={category.id} category={category} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+              {featuredCategories.map((category: Category) => (
+                <CategoryCard key={category.id} category={category} />
+              ))}
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link href="/products">
+                <Button size="lg" className="bg-primary hover:bg-accent">
+                  Bekijk Alle Categorieën
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="ml-2 h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </Button>
+              </Link>
+            </div>
+          </>
         )}
       </Container>
     </section>

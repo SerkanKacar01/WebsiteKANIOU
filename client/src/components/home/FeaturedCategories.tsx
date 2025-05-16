@@ -31,7 +31,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
 
 const FeaturedCategories = () => {
   const { t } = useLanguage();
-  const { data: categories, isLoading, error } = useQuery({
+  const { data: categories = [], isLoading, error } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 
@@ -58,8 +58,8 @@ const FeaturedCategories = () => {
             {t('common.error')}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories?.map((category: Category) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories?.slice(0, 6).map((category: Category) => (
               <CategoryCard key={category.id} category={category} />
             ))}
           </div>

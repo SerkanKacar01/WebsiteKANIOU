@@ -101,11 +101,12 @@ const FeaturedCategories = () => {
           </div>
         ) : error ? (
           <div 
-            className="text-center text-red-500"
+            className="text-center text-amber-700 bg-amber-50 p-4 rounded-lg border border-amber-200"
             role="alert"
             aria-live="assertive"
           >
-            Er is een fout opgetreden bij het laden van categorieën
+            <p className="mb-2 font-medium">Categorieën worden geladen...</p>
+            <p className="text-sm">De gegevens worden verwerkt, even geduld a.u.b.</p>
           </div>
         ) : (
           <>

@@ -61,8 +61,9 @@ const TestimonialSection = () => {
               </div>
             </div>
           ) : error ? (
-            <div className="text-center text-red-500">
-              Er is een fout opgetreden bij het laden van de beoordelingen.
+            <div className="text-center text-amber-700 bg-amber-50 p-4 rounded-lg border border-amber-200">
+              <p className="mb-2 font-medium">Beoordelingen worden geladen...</p>
+              <p className="text-sm">De gegevens worden verwerkt, even geduld a.u.b.</p>
             </div>
           ) : testimonials && testimonials.length > 0 ? (
             <div className="testimonial-slider">

@@ -106,7 +106,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-white py-4 ${
+      className={`sticky top-0 z-50 w-full bg-white py-4 md:py-2 ${
         isScrolled ? "shadow-md" : ""
       }`}
     >
@@ -115,10 +115,10 @@ const Header = () => {
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer">
-                <span className="font-display text-2xl md:text-3xl font-semibold text-primary">
+                <span className="font-display text-2xl md:text-xl lg:text-2xl font-semibold text-primary">
                   KANIOU<span className="text-secondary">zilvernaald</span>
                 </span>
-                <span className="font-display text-xl md:text-1xl font-semibold text-primary">
+                <span className="font-display text-sm md:text-xs lg:text-sm font-semibold text-primary">
                   || Gordijnen & Zonweringen
                   <span className="text-secondary"></span>
                 </span>
@@ -227,12 +227,12 @@ const Header = () => {
               </SheetContent>
             </Sheet>
           ) : (
-            <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+            <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
               {navItems.map((item) =>
                 item.hasDropdown ? (
                   <div key={item.href} className="relative" ref={dropdownRef}>
                     <div
-                      className={`font-body flex items-center cursor-pointer ${
+                      className={`font-body text-sm flex items-center cursor-pointer ${
                         isActive(item.href) || showDropdown
                           ? "text-accent font-medium"
                           : "text-text-dark hover:text-accent"
@@ -242,7 +242,7 @@ const Header = () => {
                     >
                       {item.label}
                       <ChevronDown
-                        className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? "rotate-180" : ""}`}
+                        className={`h-3 w-3 ml-1 transition-transform ${showDropdown ? "rotate-180" : ""}`}
                       />
                     </div>
 
@@ -278,7 +278,7 @@ const Header = () => {
                 ) : (
                   <Link key={item.href} href={item.href}>
                     <div
-                      className={`font-body ${
+                      className={`font-body text-sm ${
                         isActive(item.href)
                           ? "text-accent font-medium"
                           : "text-text-dark hover:text-accent"
@@ -291,7 +291,7 @@ const Header = () => {
               )}
               <div className="flex items-center gap-4">
                 <Link href="/quote">
-                  <Button className="bg-secondary hover:bg-accent">
+                  <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">
                     Get quote
                   </Button>
                 </Link>

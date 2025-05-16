@@ -41,11 +41,11 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Producten", href: "/producten", hasDropdown: true },
-    { label: "Gallerij", href: "/gallerij" },
-    { label: "Over ons", href: "/over ons" },
-    { label: "Contact", href: "/contact" },
+    { label: t('nav.home'), href: "/" },
+    { label: t('nav.products'), href: "/products", hasDropdown: true },
+    { label: t('nav.gallery'), href: "/gallery" },
+    { label: t('nav.about'), href: "/about" },
+    { label: t('nav.contact'), href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -223,7 +223,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        Get quote
+                        {t('nav.quote')}
                       </Button>
                     </a>
                   </Link>
@@ -296,7 +296,7 @@ const Header = () => {
               <div className="flex items-center gap-4">
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">
-                    Get quote
+                    {t('nav.quote')}
                   </Button>
                 </Link>
               </div>

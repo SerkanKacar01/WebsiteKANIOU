@@ -199,7 +199,6 @@ html.rtl .right-0 {
   z-index: 50;
   background-color: #fff;
   transition: all 0.3s ease;
-  height: 64px; /* Fixed height for consistency */
 }
 
 .sticky-header.scrolled {
@@ -209,36 +208,12 @@ html.rtl .right-0 {
 
 /* Add margin to main content to prevent it from being hidden under the fixed header */
 .header-offset {
-  padding-top: 64px; /* Exactly matches header height */
+  padding-top: 64px; /* Matches header height */
 }
 
 /* Responsive adjustments for different screen sizes */
-@media (min-width: 768px) {
-  .sticky-header {
-    height: 64px;
-  }
-  
-  .header-offset {
-    padding-top: 64px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .sticky-header {
-    height: 64px;
-  }
-  
-  .header-offset {
-    padding-top: 64px;
-  }
-}
-
 @media (max-width: 767px) {
-  .sticky-header {
-    height: 56px;
-  }
-  
   .header-offset {
-    padding-top: 56px;
+    padding-top: 56px; /* Slightly smaller on mobile */
   }
 }

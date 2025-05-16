@@ -106,10 +106,12 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky-header ${isScrolled ? "scrolled" : ""}`}
+      className={`sticky top-0 z-50 w-full bg-white py-4 ${
+        isScrolled ? "shadow-md" : ""
+      }`}
     >
       <Container>
-        <div className="flex items-center justify-between h-full">
+        <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer">

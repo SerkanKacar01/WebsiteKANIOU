@@ -109,14 +109,14 @@ const Header = () => {
       className={`sticky-header ${isScrolled ? "scrolled" : ""}`}
     >
       <Container>
-        <div className="flex h-16 items-center justify-between py-4">
+        <div className="flex items-center justify-between h-full">
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer">
                 <span className="font-display text-2xl md:text-3xl font-semibold text-primary">
                   KANIOU<span className="text-secondary">zilvernaald</span>
                 </span>
-                <span className="font-display text -2xl md:text-1xl font-semibold text-primary">
+                <span className="font-display text-xl md:text-1xl font-semibold text-primary">
                   || Gordijnen & Zonweringen
                   <span className="text-secondary"></span>
                 </span>
@@ -225,7 +225,7 @@ const Header = () => {
               </SheetContent>
             </Sheet>
           ) : (
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
               {navItems.map((item) =>
                 item.hasDropdown ? (
                   <div key={item.href} className="relative" ref={dropdownRef}>
@@ -246,7 +246,7 @@ const Header = () => {
 
                     {showDropdown && (
                       <div
-                        className="absolute left-0 mt-2 w-64 bg-white rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
+                        className="absolute left-0 mt-2 w-64 bg-white rounded-md py-2 z-[100] max-h-96 overflow-y-auto dropdown-menu shadow-md"
                         onMouseLeave={() => setShowDropdown(false)}
                       >
                         {productCategories.map((category) => (

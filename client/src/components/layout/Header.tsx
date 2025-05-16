@@ -148,11 +148,6 @@ const Header = () => {
                     </Button>
                   </div>
 
-                  <LanguageSelector
-                    isMobile={true}
-                    onClose={handleCloseSheet}
-                  />
-
                   {navItems.map((item) =>
                     item.hasDropdown ? (
                       <div
@@ -295,7 +290,6 @@ const Header = () => {
                 ),
               )}
               <div className="flex items-center gap-4">
-                <LanguageSelector />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent">
                     Get quote

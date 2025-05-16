@@ -8,39 +8,40 @@ const QuotePage = () => {
   return (
     <>
       <Helmet>
-        <title>Request a Quote | Elegant Drapes</title>
+        <title>Offerte aanvragen | KANIOU zilvernaald</title>
         <meta
           name="description"
           content="Request a personalized quote for premium curtains, blinds, and window treatments from Elegant Drapes. Custom solutions tailored to your needs."
         />
       </Helmet>
-      
+
       <div className="py-12 bg-primary relative">
         <Container className="relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <h1 className="font-display text-3xl md:text-4xl text-white font-semibold mb-4">
-                Request a Free Quote
+                Vraag vrijblijvend offerte aan
               </h1>
               <p className="font-body text-white/90 max-w-2xl mx-auto">
-                Fill out the form below and our specialists will get back to you
-                with a personalized quote tailored to your requirements.
+                Vul onderstaand formulier in en onze specialisten nemen contact
+                met je op met een gepersonaliseerde offerte op maat van jouw
+                wensen.
               </p>
             </div>
-            
+
             <Card className="shadow-xl overflow-hidden">
               <CardContent className="p-8 md:p-10">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2">
                     <h2 className="font-display text-2xl text-primary font-semibold mb-6">
-                      Your Quote Details
+                      Start je offerte aanvraag hier
                     </h2>
                     <QuoteForm />
                   </div>
-                  
+
                   <div className="bg-neutral-100 p-6 rounded-lg">
                     <h3 className="font-display text-xl text-primary font-medium mb-4">
-                      What Happens Next
+                      Wat je mag verwachten na je aanvraag
                     </h3>
                     <ul className="space-y-4">
                       <li className="flex items-start">
@@ -48,7 +49,7 @@ const QuotePage = () => {
                           <CheckCircle className="h-4 w-4 text-white" />
                         </div>
                         <span className="text-text-medium">
-                          We'll review your request within 24 hours
+                          Binnen 24 uur analyseren wij je aanvraag zorgvuldig.
                         </span>
                       </li>
                       <li className="flex items-start">
@@ -56,7 +57,8 @@ const QuotePage = () => {
                           <CheckCircle className="h-4 w-4 text-white" />
                         </div>
                         <span className="text-text-medium">
-                          A design consultant will contact you to discuss requirements
+                          Een adviseur neemt contact met je op om je wensen te
+                          bespreken.
                         </span>
                       </li>
                       <li className="flex items-start">
@@ -64,7 +66,7 @@ const QuotePage = () => {
                           <CheckCircle className="h-4 w-4 text-white" />
                         </div>
                         <span className="text-text-medium">
-                          We'll schedule an in-home measurement if needed
+                          Indien nodig plannen we een opmeting bij je thuis in.
                         </span>
                       </li>
                       <li className="flex items-start">
@@ -72,40 +74,41 @@ const QuotePage = () => {
                           <CheckCircle className="h-4 w-4 text-white" />
                         </div>
                         <span className="text-text-medium">
-                          You'll receive a detailed quote with options
+                          Je ontvangt een duidelijke offerte met materialen,
+                          afwerkingen en prijzen.
                         </span>
                       </li>
                     </ul>
-                    
+
                     <div className="mt-8 pt-6 border-t border-neutral-300">
-                      <h4 className="font-medium mb-2">Questions?</h4>
+                      <h4 className="font-medium mb-2">Vragen?</h4>
                       <p className="text-text-medium text-sm mb-2">
-                        Call us directly at:
+                        Neem gerust rechtstreeks contact met ons op:
                       </p>
-                      <a 
-                        href="tel:+15551234567" 
+                      <a
+                        href="tel:+15551234567"
                         className="text-accent font-medium text-lg"
                       >
-                        +1 (555) 123-4567
+                        +32 467 85 64 05
                       </a>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            
+
             <div className="mt-12 bg-white p-8 rounded-lg shadow-md">
               <h2 className="font-display text-2xl text-primary font-semibold mb-6 text-center">
-                What Our Customers Say
+                Wat onze klanten over ons zeggen
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-neutral-100 p-6 rounded-lg">
                   <div className="flex text-secondary mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <svg 
+                      <svg
                         key={i}
-                        xmlns="http://www.w3.org/2000/svg" 
-                        className="h-5 w-5 fill-current" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 fill-current"
                         viewBox="0 0 20 20"
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -113,19 +116,20 @@ const QuotePage = () => {
                     ))}
                   </div>
                   <p className="font-body text-text-medium italic mb-4">
-                    "The team was incredibly helpful throughout the entire process. The curtains are stunning and fit perfectly!"
+                    "Super te vrede! Goede prijs en goede kwaliteit en vlotte
+                    service. En super vriendelijke personen! AANRADER"
                   </p>
-                  <p className="font-medium">Sarah J.</p>
-                  <p className="text-text-light text-sm">New York, NY</p>
+                  <p className="font-medium">Mr. Remm.</p>
+                  <p className="text-text-light text-sm">Nederland</p>
                 </div>
-                
+
                 <div className="bg-neutral-100 p-6 rounded-lg">
                   <div className="flex text-secondary mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <svg 
+                      <svg
                         key={i}
-                        xmlns="http://www.w3.org/2000/svg" 
-                        className="h-5 w-5 fill-current" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 fill-current"
                         viewBox="0 0 20 20"
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -133,19 +137,21 @@ const QuotePage = () => {
                     ))}
                   </div>
                   <p className="font-body text-text-medium italic mb-4">
-                    "From quote to installation, everything was smooth and professional. The blinds transformed our living room!"
+                    "Mooie winkel met een groot aanbod, professionele opmeting
+                    en plaatsing, snelle levering. Wij raden deze zaak zeker
+                    aan"
                   </p>
-                  <p className="font-medium">Michael R.</p>
-                  <p className="text-text-light text-sm">Chicago, IL</p>
+                  <p className="font-medium">Mr. Van Gelder</p>
+                  <p className="text-text-light text-sm">België</p>
                 </div>
-                
+
                 <div className="bg-neutral-100 p-6 rounded-lg">
                   <div className="flex text-secondary mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <svg 
+                      <svg
                         key={i}
-                        xmlns="http://www.w3.org/2000/svg" 
-                        className="h-5 w-5 fill-current" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 fill-current"
                         viewBox="0 0 20 20"
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -153,10 +159,12 @@ const QuotePage = () => {
                     ))}
                   </div>
                   <p className="font-body text-text-medium italic mb-4">
-                    "I was nervous about custom window treatments, but the quote process was simple and the final result exceeded my expectations!"
+                    "Klant vriendelijk en professioneel. Ik ben goed geadviseerd
+                    in het maken van mijn keuze. Heel blij met mijn gordijnen,
+                    in een woord top!"
                   </p>
-                  <p className="font-medium">Emily C.</p>
-                  <p className="text-text-light text-sm">San Francisco, CA</p>
+                  <p className="font-medium">Mrs. Lndra</p>
+                  <p className="text-text-light text-sm">Nederland</p>
                 </div>
               </div>
             </div>

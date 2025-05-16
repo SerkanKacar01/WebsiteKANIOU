@@ -54,12 +54,12 @@ const QuoteForm = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: QuoteFormValues) => 
+    mutationFn: (data: QuoteFormValues) =>
       apiRequest("POST", "/api/quote-requests", data),
     onSuccess: () => {
       toast({
-        title: t('quote.form.success'),
-        description: t('quote.form.successMessage'),
+        title: t("quote.form.success"),
+        description: t("quote.form.successMessage"),
         variant: "success" as any,
       });
       form.reset();
@@ -67,8 +67,8 @@ const QuoteForm = () => {
     },
     onError: (error) => {
       toast({
-        title: t('quote.form.error'),
-        description: error.message || t('quote.form.errorMessage'),
+        title: t("quote.form.error"),
+        description: error.message || t("quote.form.errorMessage"),
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -89,9 +89,9 @@ const QuoteForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('quote.form.name')}</FormLabel>
+                <FormLabel>Voor - en Achternaam</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,13 +103,9 @@ const QuoteForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email Address</FormLabel>
+                <FormLabel>E-mail Adres</FormLabel>
                 <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="john@example.com"
-                    {...field}
-                  />
+                  <Input type="email" placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,9 +117,9 @@ const QuoteForm = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel>Mobiel nummer</FormLabel>
                 <FormControl>
-                  <Input placeholder="(123) 456-7890" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -135,22 +131,48 @@ const QuoteForm = () => {
             name="productType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Product Type</FormLabel>
+                <FormLabel>Kies je raamdecoratie</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select product type" />
+                      <SelectValue placeholder="Selecteer" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="curtains">Curtains</SelectItem>
-                    <SelectItem value="blinds">Blinds</SelectItem>
-                    <SelectItem value="shades">Shades</SelectItem>
-                    <SelectItem value="drapes">Drapes</SelectItem>
-                    <SelectItem value="accessories">Accessories</SelectItem>
+                    <SelectItem value="curtains">Gordijnen</SelectItem>
+                    <SelectItem value="blinds">Inbetweens</SelectItem>
+                    <SelectItem value="shades">Vouwgordijnen</SelectItem>
+                    <SelectItem value="drapes">Textiel Lamellen</SelectItem>
+                    <SelectItem value="accessories">
+                      Kunststof lamellen
+                    </SelectItem>
+                    <SelectItem value="accessories">
+                      Kunststof jaloezieën
+                    </SelectItem>
+                    <SelectItem value="accessories">
+                      Houten jaloezieën
+                    </SelectItem>
+                    <SelectItem value="accessories">Houten shutters</SelectItem>
+                    <SelectItem value="accessories">Plissé</SelectItem>
+                    <SelectItem value="accessories">Duo-Plissé</SelectItem>
+                    <SelectItem value="accessories">Rolgordijnen</SelectItem>
+                    <SelectItem value="accessories">
+                      Duo-rolgordijnen
+                    </SelectItem>
+                    <SelectItem value="accessories">Gordijnrails</SelectItem>
+                    <SelectItem value="accessories">Gordijnroedes</SelectItem>
+                    <SelectItem value="accessories">SQUID</SelectItem>
+                    <SelectItem value="accessories">Inzethorren</SelectItem>
+                    <SelectItem value="accessories">Opzethorren</SelectItem>
+                    <SelectItem value="accessories">
+                      Plissé hordeuren
+                    </SelectItem>
+                    <SelectItem value="accessories">
+                      Dakraam Velux/Fakro
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -164,9 +186,9 @@ const QuoteForm = () => {
           name="dimensions"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Window Dimensions (if known)</FormLabel>
+              <FormLabel>Afmetingen van het raam (indien bekend)</FormLabel>
               <FormControl>
-                <Input placeholder="Width x Height" {...field} />
+                <Input placeholder="Breedte x Hoogte in cm" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -178,11 +200,11 @@ const QuoteForm = () => {
           name="requirements"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Additional Requirements</FormLabel>
+              <FormLabel>Aanvullende vereisten</FormLabel>
               <FormControl>
                 <Textarea
                   rows={4}
-                  placeholder="Please provide any specific requirements or questions..."
+                  placeholder="Gelieve eventuele specifieke vereisten of vragen te vermelden…"
                   {...field}
                 />
               </FormControl>
@@ -191,12 +213,12 @@ const QuoteForm = () => {
           )}
         />
 
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           className="w-full bg-secondary hover:bg-accent"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Submit Quote Request"}
+          {isSubmitting ? "Submitting..." : "Offerteaanvraag verzenden"}
         </Button>
       </form>
     </Form>

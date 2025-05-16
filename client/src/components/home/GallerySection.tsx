@@ -6,7 +6,11 @@ import GalleryItem from "@/components/gallery/GalleryItem";
 import { GalleryItem as GalleryItemType } from "@shared/schema";
 
 const GallerySection = () => {
-  const { data: galleryItems, isLoading, error } = useQuery({
+  const {
+    data: galleryItems,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["/api/gallery"],
   });
 
@@ -18,11 +22,9 @@ const GallerySection = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Our Installation Gallery
+            Onze Installatiegalerij
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Explore our completed projects and find inspiration for your own space.
-          </p>
+          <p className="font-body text-text-medium max-w-2xl mx-auto"></p>
         </div>
 
         {isLoading ? (
@@ -36,7 +38,7 @@ const GallerySection = () => {
           </div>
         ) : error ? (
           <div className="text-center text-red-500">
-            Failed to load gallery items. Please try again later.
+            Niet gelukt om galerij-items te laden. Probeer het later opnieuw.
           </div>
         ) : (
           <>
@@ -54,7 +56,8 @@ const GallerySection = () => {
                     variant="outline"
                     className="border-primary text-primary hover:bg-primary hover:text-white"
                   >
-                    View Complete Gallery
+                    Bekijk onze afgeronde projecten en laat u inspireren voor uw
+                    eigen interieur.
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="ml-2 h-4 w-4"

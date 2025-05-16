@@ -12,6 +12,7 @@ const productCategories = [
   { label: "Overgordijnen", href: "/products/overgordijnen" },
   { label: "Vitrages", href: "/products/vitrages" },
   { label: "Rolgordijnen", href: "/products/rolgordijnen" },
+  { label: "Vouwgordijnen", href: "/products/vouwgordijnen" },
   { label: "Duo rolgordijnen", href: "/products/duo-rolgordijnen" },
   { label: "Textiel lamellen", href: "/products/textiel-lamellen" },
   { label: "Kunststof lamellen", href: "/products/kunststof-lamellen" },
@@ -24,11 +25,12 @@ const productCategories = [
   { label: "Plissé hordeuren", href: "/products/plisse-hordeuren" },
   { label: "Plissé", href: "/products/plisse" },
   { label: "Duo plissé", href: "/products/duo-plisse" },
-  { label: "Duo plissé voor dakramen", href: "/products/duo-plisse-dakramen" },
-  { label: "Dakraam zonweringen (Fakro, Velux)", href: "/products/dakraam-zonwering" },
+  {
+    label: "Dakraam zonweringen (Fakro, Velux)",
+    href: "/products/dakraam-zonwering",
+  },
   { label: "Gordijnrails", href: "/products/gordijnrails" },
   { label: "Gordijnroedes", href: "/products/gordijnroedes" },
-  { label: "Horren", href: "/products/horren" },
   { label: "SQUID textiel folie", href: "/products/squid" },
 ];
 
@@ -36,14 +38,14 @@ const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
-  
+
   // Define navigation items
   const navItems = [
-    { label: 'Home', href: "/" },
-    { label: 'Products', href: "/products", hasDropdown: true },
-    { label: 'Gallery', href: "/gallery" },
-    { label: 'About', href: "/about" },
-    { label: 'Contact', href: "/contact" },
+    { label: "Home", href: "/" },
+    { label: "Producten", href: "/producten", hasDropdown: true },
+    { label: "Gallerij", href: "/gallerij" },
+    { label: "Over ons", href: "/over ons" },
+    { label: "Contact", href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -69,14 +71,17 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -111,7 +116,11 @@ const Header = () => {
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer">
                 <span className="font-display text-2xl md:text-3xl font-semibold text-primary">
-                  Elegant<span className="text-secondary">Drapes</span>
+                  KANIOU<span className="text-secondary">zilvernaald</span>
+                </span>
+                <span className="font-display text -2xl md:text-1xl font-semibold text-primary">
+                  || Gordijnen & Zonweringen
+                  <span className="text-secondary"></span>
                 </span>
               </div>
             </Link>
@@ -138,28 +147,38 @@ const Header = () => {
                       <X className="h-5 w-5" />
                     </Button>
                   </div>
-                  
-                  <LanguageSelector isMobile={true} onClose={handleCloseSheet} />
-                
-                  {navItems.map((item) => 
+
+                  <LanguageSelector
+                    isMobile={true}
+                    onClose={handleCloseSheet}
+                  />
+
+                  {navItems.map((item) =>
                     item.hasDropdown ? (
-                      <div key={item.href} className="py-2 border-b border-neutral-200">
-                        <div 
+                      <div
+                        key={item.href}
+                        className="py-2 border-b border-neutral-200"
+                      >
+                        <div
                           className={`font-body flex items-center justify-between ${
-                            isActive(item.href) ? "text-accent font-medium" : "text-text-dark"
+                            isActive(item.href)
+                              ? "text-accent font-medium"
+                              : "text-text-dark"
                           } cursor-pointer`}
                           onClick={toggleMobileSubmenu}
                         >
                           {item.label}
-                          <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? 'rotate-180' : ''}`} />
+                          <ChevronDown
+                            className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? "rotate-180" : ""}`}
+                          />
                         </div>
-                        
+
                         {showMobileSubmenu && (
                           <div className="mt-3 ml-2 space-y-1 max-h-80 overflow-y-auto border-l-2 border-neutral-200 pl-3">
                             {productCategories.map((category) => (
                               <div key={category.href}>
                                 <Link href={category.href}>
-                                  <div 
+                                  <div
                                     className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
@@ -171,7 +190,7 @@ const Header = () => {
                             <div className="pt-2 mt-2 border-t border-neutral-200">
                               <div>
                                 <Link href="/products">
-                                  <div 
+                                  <div
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
@@ -196,9 +215,9 @@ const Header = () => {
                           {item.label}
                         </a>
                       </Link>
-                    )
+                    ),
                   )}
-                  
+
                   <Link href="/quote">
                     <a className="mt-4">
                       <Button
@@ -214,10 +233,10 @@ const Header = () => {
             </Sheet>
           ) : (
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => 
+              {navItems.map((item) =>
                 item.hasDropdown ? (
                   <div key={item.href} className="relative" ref={dropdownRef}>
-                    <div 
+                    <div
                       className={`font-body flex items-center cursor-pointer ${
                         isActive(item.href) || showDropdown
                           ? "text-accent font-medium"
@@ -227,16 +246,21 @@ const Header = () => {
                       onMouseEnter={() => setShowDropdown(true)}
                     >
                       {item.label}
-                      <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                      <ChevronDown
+                        className={`h-4 w-4 ml-1 transition-transform ${showDropdown ? "rotate-180" : ""}`}
+                      />
                     </div>
-                    
+
                     {showDropdown && (
-                      <div 
+                      <div
                         className="absolute left-0 mt-2 w-64 bg-white rounded-md py-2 z-50 max-h-96 overflow-y-auto dropdown-menu"
                         onMouseLeave={() => setShowDropdown(false)}
                       >
                         {productCategories.map((category) => (
-                          <div key={category.href} className="dropdown-menu-item">
+                          <div
+                            key={category.href}
+                            className="dropdown-menu-item"
+                          >
                             <Link href={category.href}>
                               <div className="block px-4 py-2 text-sm text-text-dark hover:text-accent cursor-pointer">
                                 {category.label}
@@ -268,7 +292,7 @@ const Header = () => {
                       {item.label}
                     </div>
                   </Link>
-                )
+                ),
               )}
               <div className="flex items-center gap-4">
                 <LanguageSelector />

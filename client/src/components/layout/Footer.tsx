@@ -15,35 +15,24 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="font-display text-xl font-medium mb-4">
-              {t('app.title').split(' ')[0]}<span className="text-secondary">{t('app.title').split(' ')[1] || 'Drapes'}</span>
+              {t("KANIOU").split(" ")[0]}
+              <span className="text-secondary">
+                {t("zilvernaald").split(" ")[1] || "zilvernaald"}
+              </span>
             </h3>
             <p className="font-body text-neutral-300 mb-6">
-              {t('hero.subtitle')}
+              {t("PREMIUM | Gordijnen & Zonweringen")}
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
-                className="text-white hover:text-secondary transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
+                href="https://www.instagram.com/kanioubvbazilvernaald/"
                 className="text-white hover:text-secondary transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="#"
-                className="text-white hover:text-secondary transition-colors"
-                aria-label="Linkedin"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="mailto:info@elegantdrapes.com"
+                href="mailto:info@kaniou.be"
                 className="text-white hover:text-secondary transition-colors"
                 aria-label="Email"
               >
@@ -53,47 +42,49 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-display text-lg font-medium mb-4">{t('products')}</h4>
+            <h4 className="font-display text-lg font-medium mb-4">
+              {t("Producten")}
+            </h4>
             <ul className="font-body space-y-2">
               <li>
                 <Link href="/products?category=curtains">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('curtains')}
+                    {t("Gordijnen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=blinds">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('blinds')}
+                    {t("Zonweringen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=shades">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('shades')}
+                    {t("Vouwgordijnen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=drapes">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('drapes')}
+                    {t("SQUID")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=accessories">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('accessories')}
+                    {t("Gordijnrails")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/quote">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('customSolutions')}
+                    {t("Gordijnroedes")}
                   </div>
                 </Link>
               </li>
@@ -102,48 +93,48 @@ const Footer = () => {
 
           <div>
             <h4 className="font-display text-lg font-medium mb-4">
-              {t('support')}
+              {t("Klantenserice")}
             </h4>
             <ul className="font-body space-y-2">
               <li>
                 <Link href="/about#measure-guide">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('measureGuide')}
+                    {t("Meet instructies")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#installation-guide">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('installationGuide')}
+                    {t("Installatie instructies")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#care-instructions">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('careInstructions')}
+                    {t("Onderhouds instructies")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#return-policy">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('returnPolicy')}
+                    {t("Retour beleid")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#warranty">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('warranty')}
+                    {t("Garantie voorwaarden")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#faq">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    {t('faq')}
+                    {t("Veelgestelde vragen")}
                   </div>
                 </Link>
               </li>
@@ -152,15 +143,17 @@ const Footer = () => {
 
           <div>
             <h4 className="font-display text-lg font-medium mb-4">
-              {t('newsletter')}
+              {t("Nieuwsbrief")}
             </h4>
             <p className="font-body text-neutral-300 mb-4">
-              {t('newsletterDescription')}
+              {t(
+                "Blijf op de hoogte van nieuwe collecties, aanbiedingen en inspiratie voor uw interieur.",
+              )}
             </p>
             <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <Input
                 type="email"
-                placeholder={t('emailPlaceholder')}
+                placeholder={t("E-mail")}
                 className="rounded-r-none text-black bg-white border-0"
               />
               <Button
@@ -176,22 +169,22 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="font-body text-neutral-400 text-sm mb-4 md:mb-0">
-              {t('copyright').replace('{year}', currentYear.toString())}
+              {t("copyright").replace("{year}", currentYear.toString())}
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy-policy">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t('privacy')}
+                  {t("privacy")}
                 </div>
               </Link>
               <Link href="/terms-of-service">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t('terms')}
+                  {t("terms")}
                 </div>
               </Link>
               <Link href="/sitemap">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t('sitemap')}
+                  {t("sitemap")}
                 </div>
               </Link>
             </div>

@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const HeroSection = () => {
   const { t } = useLanguage();
-  
+
   return (
     <section className="relative h-[70vh] overflow-hidden">
       {/* Background image of a living room with curtains */}
@@ -17,24 +17,28 @@ const HeroSection = () => {
           filter: "brightness(0.9)",
         }}
       ></div>
-      
+
       <Container className="h-full flex flex-col justify-center">
         <div className="max-w-lg relative z-10 pl-4">
           <h1 className="font-display text-6xl text-white font-semibold leading-tight mb-4">
-            Transform Your Space With Elegant Window Treatments
+            Verhef Elke Ruimte met Tijdloze Elegantie
           </h1>
           <p className="font-body text-xl text-white mb-8 opacity-90">
-            Premium curtains, blinds, and drapes tailored to your style and needs.
+            Premium gordijnen & zonweringen op maat, afgestemd op uw
+            interieurstijl en woonbehoeften.
           </p>
           <div className="flex gap-4 mt-4">
             <Link href="/products">
               <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-2.5 rounded">
-                Browse Collection
+                Onze collecties
               </Button>
             </Link>
             <Link href="/quote">
-              <Button variant="outline" className="bg-white/80 hover:bg-white text-black px-6 py-2.5 rounded">
-                Request Quote
+              <Button
+                variant="outline"
+                className="bg-white/80 hover:bg-white text-black px-6 py-2.5 rounded"
+              >
+                Vrijblijvend offerte aanvragen
               </Button>
             </Link>
           </div>

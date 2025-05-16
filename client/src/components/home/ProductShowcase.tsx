@@ -25,22 +25,26 @@ const ProductShowcase = () => {
     };
   }, [t]);
 
-  const { data: featuredProducts, isLoading, error } = useQuery({
+  const { data: featuredProducts = [], isLoading, error } = useQuery<Product[]>({
     queryKey: ["/api/products", { featured: true }],
   });
 
   // Get all unique categories from featured products for filtering
-  const categories = featuredProducts 
-    ? [...new Set(featuredProducts.map((product: Product) => product.categoryId))]
-    : [];
+  const uniqueCategoryIds = new Set<number>();
+  featuredProducts.forEach((product: Product) => {
+    uniqueCategoryIds.add(product.categoryId);
+  });
+  const categories = Array.from(uniqueCategoryIds);
 
-  const filteredProducts = featuredProducts
-    ? activeFilter === "all"
-      ? featuredProducts
-      : featuredProducts.filter(
-          (product: Product) => product.categoryId.toString() === activeFilter
-        )
-    : [];
+  // First filter products by category
+  const categoryFilteredProducts = activeFilter === "all"
+    ? [...featuredProducts]
+    : featuredProducts.filter(
+        (product: Product) => product.categoryId.toString() === activeFilter
+      );
+    
+  // Then limit to a maximum of 6 products
+  const filteredProducts = categoryFilteredProducts.slice(0, 6);
 
   return (
     <section id="products" className="py-16">

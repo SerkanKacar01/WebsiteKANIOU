@@ -189,3 +189,31 @@ html.rtl .right-0 {
   right: auto;
   left: 0;
 }
+
+/* Sticky Header Styles */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.sticky-header.scrolled {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Add margin to main content to prevent it from being hidden under the fixed header */
+.header-offset {
+  padding-top: 4rem; /* 64px - matches header height */
+}
+
+@media (max-width: 768px) {
+  .header-offset {
+    padding-top: 3.5rem; /* Slightly smaller on mobile */
+  }
+}

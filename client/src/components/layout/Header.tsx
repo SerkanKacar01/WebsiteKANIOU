@@ -106,9 +106,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md" : "bg-white"
-      }`}
+      className={`sticky-header ${isScrolled ? "scrolled" : ""}`}
     >
       <Container>
         <div className="flex h-16 items-center justify-between py-4">

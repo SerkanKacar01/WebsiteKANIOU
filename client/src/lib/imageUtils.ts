@@ -1,5 +1,5 @@
 import { GalleryItem } from "@shared/schema";
-import { overgordijnenImage, insectScreenImage, curtainRailsImage } from '@/assets';
+import { overgordijnenImage, overgordijnenNewImage, insectScreenImage, curtainRailsImage } from '@/assets';
 
 // Function to get a random gallery item
 const getRandomItem = (items: GalleryItem[]): GalleryItem | null => {
@@ -17,6 +17,7 @@ const WINDOW_BLINDS_IMAGE = "/assets/window-blinds.jpg";
 // Map for asset paths to imported assets
 const assetMap: Record<string, string> = {
   '/assets/overgordijnen.jpeg': overgordijnenImage,
+  '/assets/overgordijnen_new.jpeg': overgordijnenNewImage,
   '/assets/insect_screen.jpeg': insectScreenImage,
   '/assets/curtain_rails.jpeg': curtainRailsImage
 };

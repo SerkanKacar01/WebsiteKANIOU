@@ -66,7 +66,7 @@ const AboutPage = () => {
                 className="w-full h-auto rounded-lg shadow-lg"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
-                <p className="font-display text-lg text-primary font-medium">20+</p>
+                <p className="font-display text-lg text-primary font-medium">30+</p>
                 <p className="font-body text-text-medium text-sm">
                   Years of Excellence
                 </p>
@@ -76,7 +76,7 @@ const AboutPage = () => {
                   5000+
                 </p>
                 <p className="font-body text-text-medium text-sm">
-                  Happy Customers
+                  Tevreden klanten
                 </p>
               </div>
             </div>

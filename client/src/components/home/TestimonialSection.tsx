@@ -42,10 +42,10 @@ const TestimonialSection = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('testimonials.title')}
+            {t('Wat onze klanten vertellen over ons')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('testimonials.subtitle')} 
+            {t('Ervaar waarom klanten vertrouwen op KANIOU Zilvernaald voor hun raamdecoratie. Ontdek hun ervaringen met onze kwaliteit, service en maatwerkoplossingen.')} 
           </p>
         </div>
 

@@ -1,4 +1,3 @@
-import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -8,43 +7,14 @@ import { Product } from "@shared/schema";
 import { useLanguage } from "@/context/LanguageContext";
 
 const ProductShowcase = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
   const { t } = useLanguage();
-
-  // Create the category name function with the translation function using useMemo
-  const getCategoryNameById = useMemo(() => {
-    return (categoryId: number) => {
-      const categoryMap: Record<number, string> = {
-        1: t('categories.curtains'),
-        2: t('categories.blinds'),
-        3: t('categories.shades'),
-        4: t('categories.drapes'),
-      };
-
-      return categoryMap[categoryId] || t('categories');
-    };
-  }, [t]);
 
   const { data: featuredProducts = [], isLoading, error } = useQuery<Product[]>({
     queryKey: ["/api/products", { featured: true }],
   });
-
-  // Get all unique categories from featured products for filtering
-  const uniqueCategoryIds = new Set<number>();
-  featuredProducts.forEach((product: Product) => {
-    uniqueCategoryIds.add(product.categoryId);
-  });
-  const categories = Array.from(uniqueCategoryIds);
-
-  // First filter products by category
-  const categoryFilteredProducts = activeFilter === "all"
-    ? [...featuredProducts]
-    : featuredProducts.filter(
-        (product: Product) => product.categoryId.toString() === activeFilter
-      );
     
-  // Then limit to a maximum of 6 products
-  const filteredProducts = categoryFilteredProducts.slice(0, 6);
+  // Display at most 6 products
+  const filteredProducts = featuredProducts.slice(0, 6);
 
   return (
     <section id="products" className="py-16">
@@ -58,36 +28,7 @@ const ProductShowcase = () => {
           </p>
         </div>
 
-        <div className="mb-8">
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
-            <Button
-              variant={activeFilter === "all" ? "default" : "outline"}
-              onClick={() => setActiveFilter("all")}
-              className={
-                activeFilter === "all"
-                  ? "bg-primary text-white hover:bg-accent"
-                  : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
-              }
-            >
-              View All
-            </Button>
-
-            {categories.map((categoryId) => (
-              <Button
-                key={categoryId}
-                variant={activeFilter === categoryId.toString() ? "default" : "outline"}
-                onClick={() => setActiveFilter(categoryId.toString())}
-                className={
-                  activeFilter === categoryId.toString()
-                    ? "bg-primary text-white hover:bg-accent"
-                    : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
-                }
-              >
-                {getCategoryNameById(categoryId)}
-              </Button>
-            ))}
-          </div>
-        </div>
+        {/* Product filters removed as requested */}
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

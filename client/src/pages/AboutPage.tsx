@@ -84,7 +84,7 @@ const AboutPage = () => {
           
           <div className="mb-16">
             <h2 className="font-display text-2xl text-primary font-semibold mb-6 text-center">
-              Why Choose Elegant Drapes
+              Over KANIOU Zilvernaald
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -92,7 +92,7 @@ const AboutPage = () => {
                   <Award className="h-8 w-8" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  Premium Quality
+                  Premium Qualit
                 </h3>
                 <p className="font-body text-text-medium">
                   Only the finest materials and craftmanship in every product, ensuring beauty and durability.

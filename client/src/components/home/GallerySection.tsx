@@ -6,7 +6,7 @@ import GalleryItem from "@/components/gallery/GalleryItem";
 import { GalleryItem as GalleryItemType } from "@shared/schema";
 
 const GallerySection = () => {
-  const { data: galleryItems, isLoading, error } = useQuery({
+  const { data: galleryItems = [], isLoading, error } = useQuery<GalleryItemType[]>({
     queryKey: ["/api/gallery"],
   });
 

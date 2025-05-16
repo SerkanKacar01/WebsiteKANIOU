@@ -1,10 +1,10 @@
-import { overgordijnenImage, insectScreenImage, curtainRailsImage } from '@/assets';
+import { overgordijnenNewImage, insectScreenImage, curtainRailsImage } from '@/assets';
 
 // Map category names to specific images
 export const getCategoryImage = (categoryName: string): string | null => {
   const categoryImageMap: Record<string, string> = {
-    'Overgordijnen': overgordijnenImage,
-    'Curtains': overgordijnenImage, // English mapping
+    'Overgordijnen': overgordijnenNewImage,
+    'Curtains': overgordijnenNewImage, // English mapping
     'Inzethorren': insectScreenImage,
     'Opzethorren': insectScreenImage,
     'Inset Insect Screens': insectScreenImage, // English mapping

@@ -3,9 +3,11 @@ import Container from "@/components/ui/container";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-primary text-white pt-16 pb-8">
@@ -13,21 +15,35 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="font-display text-xl font-medium mb-4">
-              KANIOU<span className="text-secondary">zilvernaald</span>
+              {t('app.title').split(' ')[0]}<span className="text-secondary">{t('app.title').split(' ')[1] || 'Drapes'}</span>
             </h3>
             <p className="font-body text-neutral-300 mb-6">
-              Premium Gordijnen & Zonweringen... nog veel meer.
+              {t('hero.subtitle')}
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://www.instagram.com/kanioubvbazilvernaald/"
+                href="#"
+                className="text-white hover:text-secondary transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
                 className="text-white hover:text-secondary transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="mailto:info@kaniou.be"
+                href="#"
+                className="text-white hover:text-secondary transition-colors"
+                aria-label="Linkedin"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                href="mailto:info@elegantdrapes.com"
                 className="text-white hover:text-secondary transition-colors"
                 aria-label="Email"
               >
@@ -37,47 +53,47 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-display text-lg font-medium mb-4">Producten</h4>
+            <h4 className="font-display text-lg font-medium mb-4">{t('products')}</h4>
             <ul className="font-body space-y-2">
               <li>
-                <Link href="/products/overgordijnen">
+                <Link href="/products?category=curtains">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Gordijnen
+                    {t('curtains')}
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products/houten-jaloezieen">
+                <Link href="/products?category=blinds">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Jaloezieën
+                    {t('blinds')}
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products/rolgordijnen">
+                <Link href="/products?category=shades">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Rolgordijnen
+                    {t('shades')}
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products/overgordijnen">
+                <Link href="/products?category=drapes">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Overgordijnen
+                    {t('drapes')}
                   </div>
                 </Link>
               </li>
               <li>
-                <Link href="/products/gordijnrails">
+                <Link href="/products?category=accessories">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Gordijn rails- en roedes
+                    {t('accessories')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/quote">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Maatwerk Oplossingen
+                    {t('customSolutions')}
                   </div>
                 </Link>
               </li>
@@ -86,48 +102,48 @@ const Footer = () => {
 
           <div>
             <h4 className="font-display text-lg font-medium mb-4">
-              Ondersteuning
+              {t('support')}
             </h4>
             <ul className="font-body space-y-2">
               <li>
                 <Link href="/about#measure-guide">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Meetgids
+                    {t('measureGuide')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#installation-guide">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Installatiegids
+                    {t('installationGuide')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#care-instructions">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Verzorgingsinstructies
+                    {t('careInstructions')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#return-policy">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Retourbeleid
+                    {t('returnPolicy')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#warranty">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Garantie-informatie
+                    {t('warranty')}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#faq">
                   <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
-                    Veelgestelde Vragen
+                    {t('faq')}
                   </div>
                 </Link>
               </li>
@@ -136,15 +152,15 @@ const Footer = () => {
 
           <div>
             <h4 className="font-display text-lg font-medium mb-4">
-              Abonneer op onze nieuwsbrief
+              {t('newsletter')}
             </h4>
             <p className="font-body text-neutral-300 mb-4">
-              Abonneer voor ontwerptips en exclusieve aanbiedingen.
+              {t('newsletterDescription')}
             </p>
             <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <Input
                 type="email"
-                placeholder="Schrijf hier uw e-mail"
+                placeholder={t('emailPlaceholder')}
                 className="rounded-r-none text-black bg-white border-0"
               />
               <Button
@@ -160,25 +176,22 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="font-body text-neutral-400 text-sm mb-4 md:mb-0">
-              © {currentYear} KANIOU bvba ZILVERNAALD. Alle rechten
-              voorbehouden. <h3 className="font-display text-xl font-medium mb-4">
-                SELF<span className="text-secondary">MADE design & agency</span>
-              </h3>
+              {t('copyright').replace('{year}', currentYear.toString())}
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy-policy">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  Privacy Policy
+                  {t('privacy')}
                 </div>
               </Link>
               <Link href="/terms-of-service">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  Servicevoorwaarden
+                  {t('terms')}
                 </div>
               </Link>
-              <Link href="/Algmene-voorwaarden">
+              <Link href="/sitemap">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  Algemene voorwaarden
+                  {t('sitemap')}
                 </div>
               </Link>
             </div>

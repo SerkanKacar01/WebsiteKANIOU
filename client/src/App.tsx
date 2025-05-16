@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
+import { useLanguage } from "@/context/LanguageContext";
 import { useEffect } from "react";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
@@ -13,7 +14,6 @@ import ProductsPage from "@/pages/ProductsPage";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductPage from "@/pages/ProductPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
-import BrowseCollectionPage from "@/pages/BrowseCollectionPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
@@ -22,30 +22,31 @@ import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 
 function Router() {
+  const { t } = useLanguage();
   const [location] = useLocation();
   
   // Get page title based on current route
   const getPageTitle = () => {
-    if (location === "/") return "Elegant Drapes | Premium Gordijnen & Raambehandelingen";
-    if (location === "/products") return "Browse Collection | Elegant Drapes";
-    if (location === "/browse-collection") return "Browse Collection | Elegant Drapes";
-    if (location === "/gallery") return "Inspiratie Galerij | Elegant Drapes";
-    if (location === "/about") return "Over Ons | Elegant Drapes";
-    if (location === "/contact") return "Neem Contact Op | Elegant Drapes";
-    if (location === "/quote") return "Offerte Aanvragen | Elegant Drapes";
-    if (location === "/privacy-policy") return "Privacybeleid | Elegant Drapes";
-    if (location === "/terms-of-service") return "Servicevoorwaarden | Elegant Drapes";
-    return "Elegant Drapes | Premium Gordijnen & Raambehandelingen";
+    if (location === "/") return t("app.title") + " | " + t("app.subtitle");
+    if (location === "/products") return t("products.title") + " | " + t("app.title");
+    if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
+    if (location === "/about") return t("about.title") + " | " + t("app.title");
+    if (location === "/contact") return t("contact.title") + " | " + t("app.title");
+    if (location === "/quote") return t("quote.title") + " | " + t("app.title");
+    if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
+    if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
+    return t("app.title") + " | " + t("app.subtitle");
   };
 
   return (
     <>
       <Helmet>
         <title>{getPageTitle()}</title>
-        <meta name="description" content="Premium Gordijnen & Raambehandelingen" />
+        <meta name="description" content={t("app.subtitle")} />
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/products" component={ProductsPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         
         {/* Specific product pages */}
@@ -74,16 +75,10 @@ function Router() {
         <Route path="/products/dakraam-zonwering" component={ProductCategoryPage} />
         <Route path="/products/gordijnrails" component={ProductCategoryPage} />
         <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
+        <Route path="/products/horren" component={ProductCategoryPage} />
         <Route path="/products/squid" component={ProductCategoryPage} />
         
-        {/* Products main page */}
-        <Route path="/products" component={ProductsPage} />
-        
-        {/* Browse Collection page with all 20 categories */}
-        <Route path="/browse-collection" component={BrowseCollectionPage} />
-        
-        {/* The following handles product category pages */}
-        <Route path="/products/:category" component={ProductCategoryPage} />
+        <Route path="/products/:category" component={ProductsPage} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
@@ -97,11 +92,13 @@ function Router() {
 }
 
 function App() {
-  // Set Dutch as the fixed language
+  const { language } = useLanguage();
+  
+  // Update language-specific metadata
   useEffect(() => {
-    document.documentElement.lang = 'nl';
-    document.documentElement.dir = 'ltr';
-  }, []);
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  }, [language]);
   
   return (
     <QueryClientProvider client={queryClient}>

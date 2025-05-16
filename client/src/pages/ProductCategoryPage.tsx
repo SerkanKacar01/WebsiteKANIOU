@@ -4,6 +4,7 @@ import { useLocation, useParams, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,11 +12,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check, ArrowRight } from "lucide-react";
-import { Product, Category, GalleryItem } from "@shared/schema";
-import { getProductImageUrl, getAssetUrl } from "@/lib/imageUtils";
-import { getCategoryImage } from "@/lib/categoryImages";
-import { ShareLink } from "@/components/ui/share-link";
+import { HomeIcon, ChevronRight, Check } from "lucide-react";
+import { Product, Category } from "@shared/schema";
 
 // Product categories with their display labels and URL paths
 const productCategories = [
@@ -34,17 +32,19 @@ const productCategories = [
   { label: "Plissé hordeuren", urlPath: "plisse-hordeuren" },
   { label: "Plissé", urlPath: "plisse" },
   { label: "Duo plissé", urlPath: "duo-plisse" },
-  { label: "Duo plissé dakramen", urlPath: "duo-plisse-dakramen" },
-  { label: "Dakraam zonwering", urlPath: "dakraam-zonwering" },
+  { label: "Duo plissé voor dakramen", urlPath: "duo-plisse-dakramen" },
+  { label: "Dakraam zonweringen (Fakro, Velux)", urlPath: "dakraam-zonwering" },
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },
-  { label: "SQUID", urlPath: "squid" },
+  { label: "Horren", urlPath: "horren" },
+  { label: "SQUID textiel folie", urlPath: "squid" },
 ];
 
 const ProductCategoryPage = () => {
   const [, setLocation] = useLocation();
   const params = useParams();
   const { category } = params;
+  const { t } = useLanguage();
   
   const [categoryData, setCategoryData] = useState<Category | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -58,105 +58,53 @@ const ProductCategoryPage = () => {
   const { data: allProducts = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
-  
-  // Fetch gallery items to use for image assignment
-  const { data: galleryItems = [], isLoading: galleryLoading } = useQuery<GalleryItem[]>({
-    queryKey: ["/api/gallery"],
-  });
 
   useEffect(() => {
-    if (categories.length > 0 && allProducts.length > 0 && galleryItems.length > 0 && category) {
+    if (categories.length > 0 && allProducts.length > 0 && category) {
       setLoading(true);
       
       // Find matching category based on URL
-      // Create a more robust mapping system that handles all categories
-      // This is a more complete mapping that covers all possible URL paths
-      const urlToCategoryName: Record<string, string> = {};
-      
-      // First, map all categories by their exact name (case-insensitive)
-      categories.forEach((cat: Category) => {
-        // Create a URL-friendly version of the name
-        const urlFriendlyName = cat.name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
-        urlToCategoryName[urlFriendlyName] = cat.name;
-      });
-      
-      // Add additional mappings that might be used in the UI
-      const additionalMappings: Record<string, string> = {
+      // Map specific URL segments to their corresponding categories
+      const urlToCategoryMap: Record<string, string> = {
         'overgordijnen': 'Curtains',
         'vitrages': 'Sheer Drapes',
         'rolgordijnen': 'Sunblinds',
-        'duo-rolgordijnen': 'Duo Blinds',
-        'textiel-lamellen': 'Textile Vertical Blinds',
-        'kunststof-lamellen': 'Plastic Vertical Blinds',
-        'houten-jaloezieen': 'Wooden Blinds',
-        'kunststof-jaloezieen': 'Plastic Blinds',
-        'textiel-raamfolie': 'Textile Window Film',
-        'houten-shutters': 'Wooden Shutters',
-        'inzethorren': 'Inset Insect Screens',
-        'opzethorren': 'Mount-on Insect Screens',
-        'plisse-hordeuren': 'Pleated Insect Doors',
-        'plisse': 'Pleated Blinds',
-        'duo-plisse': 'Duo Pleated Blinds',
-        'duo-plisse-dakramen': 'Duo Pleated Roof Window Blinds',
-        'dakraam-zonwering': 'Roof Window Shading',
+        'duo-rolgordijnen': 'Sunblinds',
+        'textiel-lamellen': 'Curtains',
+        'kunststof-lamellen': 'Curtains',
+        'houten-jaloezieen': 'Curtains',
+        'kunststof-jaloezieen': 'Curtains',
+        'textiel-raamfolie': 'SQUID',
+        'houten-shutters': 'Curtains',
+        'inzethorren': 'Insect Screens',
+        'opzethorren': 'Insect Screens',
+        'plisse-hordeuren': 'Insect Screens',
+        'plisse': 'Roman Blinds',
+        'duo-plisse': 'Roman Blinds',
+        'duo-plisse-dakramen': 'Roof Window Shades',
+        'dakraam-zonwering': 'Roof Window Shades',
         'gordijnrails': 'Curtain Rails',
         'gordijnroedes': 'Curtain Rods',
         'horren': 'Insect Screens',
         'squid': 'SQUID'
       };
       
-      // Merge the additional mappings into our URL-to-category mapping
-      Object.entries(additionalMappings).forEach(([url, name]) => {
-        urlToCategoryName[url] = urlToCategoryName[url] || name;
-      });
+      // Get the matching category name or default to the first one
+      const categoryName = urlToCategoryMap[category as string] || '';
       
-      // Get the matching category name or default to an empty string
-      const categoryName = urlToCategoryName[category as string] || '';
-      
-      console.log(`URL path: ${category}, Mapped category name: ${categoryName}`);
-      
-      // Find the category object by name - doing a case-insensitive match to be more forgiving
+      // Find the category object
       const foundCategory = categories.find((cat: Category) => 
-        cat.name.toLowerCase() === categoryName.toLowerCase()
+        cat.name === categoryName
       );
       
       if (foundCategory) {
-        // Check if we have a custom image for this category
-        const categoryImage = getCategoryImage(foundCategory.name);
-        
-        // If we have a custom image, use it
-        if (categoryImage) {
-          setCategoryData({
-            ...foundCategory,
-            imageUrl: categoryImage
-          });
-        } else {
-          setCategoryData(foundCategory);
-        }
+        setCategoryData(foundCategory);
         
         // Filter products by category
         const categoryProducts = allProducts.filter(
           (product: Product) => product.categoryId === foundCategory.id
         );
-        
-        // Enhance products with window blinds image for those without an image
-        const enhancedProducts = categoryProducts.map(product => {
-          // Clone the product
-          const enhancedProduct = { ...product };
-          
-          // Replace the imageUrl with our window blinds image if needed
-          if (!enhancedProduct.imageUrl || enhancedProduct.imageUrl.trim() === '') {
-            enhancedProduct.imageUrl = getProductImageUrl(
-              product.id, 
-              product.imageUrl, 
-              galleryItems
-            );
-          }
-          
-          return enhancedProduct;
-        });
-        
-        setProducts(enhancedProducts);
+        setProducts(categoryProducts);
       } else {
         // Redirect to products page if category not found
         setLocation("/products", { replace: true });
@@ -164,10 +112,10 @@ const ProductCategoryPage = () => {
       
       setLoading(false);
     }
-  }, [categories, allProducts, category, galleryItems, setLocation]);
+  }, [categories, allProducts, category, setLocation]);
 
   // Loading state
-  if (loading || categoriesLoading || productsLoading || galleryLoading || !categoryData) {
+  if (loading || categoriesLoading || productsLoading || !categoryData) {
     return (
       <Container className="py-16">
         <div className="flex flex-col items-center justify-center py-12">
@@ -204,7 +152,7 @@ const ProductCategoryPage = () => {
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products">Producten</BreadcrumbLink>
+                <BreadcrumbLink href="/products">Products</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <ChevronRight className="h-4 w-4" />
@@ -224,7 +172,7 @@ const ProductCategoryPage = () => {
       <div 
         className="relative bg-cover bg-center py-24" 
         style={{ 
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${getAssetUrl(categoryData.imageUrl)})` 
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})` 
         }}
       >
         <Container>
@@ -238,7 +186,7 @@ const ProductCategoryPage = () => {
             <div className="flex flex-wrap gap-4">
               <Link href="/quote">
                 <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Offerte Aanvragen
+                  Request a Quote
                 </Button>
               </Link>
               <a href="#products">
@@ -246,7 +194,7 @@ const ProductCategoryPage = () => {
                   variant="outline" 
                   className="bg-white/10 text-white border-white hover:bg-white/20"
                 >
-                  Bekijk Producten
+                  View Products
                 </Button>
               </a>
             </div>
@@ -258,7 +206,7 @@ const ProductCategoryPage = () => {
       <div className="py-16 bg-white">
         <Container>
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
-            Belangrijkste Kenmerken
+            Key Features
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -266,9 +214,9 @@ const ProductCategoryPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-medium mb-2">Premium Kwaliteit</h3>
+              <h3 className="font-display text-xl font-medium mb-2">Premium Quality</h3>
               <p className="text-text-medium">
-                Gemaakt van de beste materialen om duurzaamheid en een elegante uitstraling te garanderen
+                Crafted with the finest materials to ensure durability and elegant appearance
               </p>
             </div>
             
@@ -276,9 +224,9 @@ const ProductCategoryPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-medium mb-2">Aanpasbare Opties</h3>
+              <h3 className="font-display text-xl font-medium mb-2">Custom Options</h3>
               <p className="text-text-medium">
-                Beschikbaar in meerdere maten, kleuren en stijlen om perfect bij uw interieur te passen
+                Available in multiple sizes, colors, and styles to perfectly match your interior
               </p>
             </div>
             
@@ -286,9 +234,9 @@ const ProductCategoryPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                 <Check className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-medium mb-2">Professionele Installatie</h3>
+              <h3 className="font-display text-xl font-medium mb-2">Professional Installation</h3>
               <p className="text-text-medium">
-                Deskundige installatieservice beschikbaar voor een perfecte pasvorm en afwerking
+                Expert installation service available to ensure perfect fit and finish
               </p>
             </div>
           </div>
@@ -297,73 +245,55 @@ const ProductCategoryPage = () => {
 
       {/* Products Section */}
       <div id="products" className="py-16 bg-neutral-50">
-        <Container className="max-w-7xl mx-auto px-4">
+        <Container>
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-6">
             {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-4">
-            Ontdek ons uitgebreide assortiment {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} ontworpen om uw leefruimte te verfraaien met stijl en functionaliteit.
+          <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-12">
+            Explore our wide range of {(productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name).toLowerCase()} designed to enhance your living space with style and functionality.
           </p>
-          
-          {/* Share button for the entire category */}
-          <div className="flex justify-center mb-8">
-            <ShareLink 
-              url={`/products/${category}`}
-              title={`${productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name} Collection`}
-              className="mx-auto"
-            />
-          </div>
           
           {products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-text-medium">Er zijn momenteel geen producten beschikbaar in deze categorie.</p>
+              <p className="text-text-medium">No products available in this category at the moment.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product) => (
-                <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+                <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02]">
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <img 
-                        src={getAssetUrl(product.imageUrl)} 
+                        src={product.imageUrl} 
                         alt={product.name} 
-                        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform hover:scale-105"
                       />
-                      {/* Overlay effect on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </Link>
-                    
-                    {/* Category tag */}
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary text-xs py-1 px-3 rounded-full font-medium transform transition-transform duration-300 group-hover:scale-105 group-hover:bg-white/95">
-                      {productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}
-                    </div>
-                    
-                    {/* Share button */}
-                    <div className="absolute top-4 right-4 z-10 opacity-90 hover:opacity-100 transition-opacity">
-                      <ShareLink 
-                        url={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
-                        title={`${product.name} - ${productCategories.find((pc: {label: string, urlPath: string}) => pc.urlPath === category)?.label || categoryData.name}`}
-                      />
-                    </div>
-
+                    {product.isNewArrival && (
+                      <div className="absolute top-2 right-2 bg-accent text-white text-xs px-2 py-1 rounded">
+                        New Arrival
+                      </div>
+                    )}
+                    {product.isBestSeller && (
+                      <div className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
+                        Best Seller
+                      </div>
+                    )}
                   </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
-                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                  <div className="p-4">
+                    <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                      <h3 className="font-display text-lg font-medium mb-2 hover:text-primary transition-colors">
                         {product.name}
-                      </Link>
-                    </h3>
-                    <p className="text-muted text-sm mb-4 line-clamp-2 flex-grow">
+                      </h3>
+                    </Link>
+                    <p className="text-text-medium text-sm mb-3 line-clamp-2">
                       {product.description}
                     </p>
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-[#C8A165] text-lg font-semibold transform group-hover:scale-105 transition-transform duration-300">${product.price.toFixed(2)}</span>
-                    </div>
-                    <div className="w-full bg-[#1F2937] hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-all duration-300 flex items-center justify-center cursor-pointer group-hover:shadow-md group-hover:translate-y-[-2px]">
-                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`} className="flex items-center justify-center w-full text-white">
-                        <span className="relative inline-flex items-center">
-                          <span>Bekijk meer</span>
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                    <div className="flex justify-between items-center">
+                      <span className="text-accent font-semibold">${product.price.toFixed(2)}</span>
+                      <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                        <span className="text-primary text-sm font-medium hover:underline cursor-pointer">
+                          View Details
                         </span>
                       </Link>
                     </div>
@@ -375,11 +305,8 @@ const ProductCategoryPage = () => {
           
           <div className="text-center mt-12">
             <Link href="/quote">
-              <Button className="bg-primary hover:bg-primary/90 text-white transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] relative group">
-                <span className="inline-flex items-center">
-                  Offerte Aanvragen
-                  <Check className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-5px] group-hover:translate-x-0" />
-                </span>
+              <Button className="bg-primary hover:bg-primary/90 text-white">
+                Request a Quote
               </Button>
             </Link>
           </div>

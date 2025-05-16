@@ -6,7 +6,7 @@ import GalleryItem from "@/components/gallery/GalleryItem";
 import { GalleryItem as GalleryItemType } from "@shared/schema";
 
 const GallerySection = () => {
-  const { data: galleryItems = [], isLoading, error } = useQuery<GalleryItemType[]>({
+  const { data: galleryItems, isLoading, error } = useQuery({
     queryKey: ["/api/gallery"],
   });
 
@@ -35,9 +35,8 @@ const GallerySection = () => {
             ))}
           </div>
         ) : error ? (
-          <div className="text-center text-amber-700 bg-amber-50 p-4 rounded-lg border border-amber-200">
-            <p className="mb-2 font-medium">Gallery items worden geladen...</p>
-            <p className="text-sm">De gegevens worden verwerkt, even geduld a.u.b.</p>
+          <div className="text-center text-red-500">
+            Failed to load gallery items. Please try again later.
           </div>
         ) : (
           <>

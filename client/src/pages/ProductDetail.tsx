@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
@@ -13,64 +13,39 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { ColorSwatch } from "@/lib/types";
-import { Product, GalleryItem, Category } from "@shared/schema";
+import { Product } from "@shared/schema";
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
-import { getProductImageUrl, getAssetUrl } from "@/lib/imageUtils";
 
 const ProductDetail = () => {
   const [, params] = useRoute("/products/:id");
   const productId = params?.id ? parseInt(params.id) : null;
 
-  const { data: product, isLoading, error } = useQuery<Product>({
+  const { data: product, isLoading, error } = useQuery({
     queryKey: [`/api/products/${productId}`],
     enabled: !!productId,
   });
 
-  const { data: categories = [] } = useQuery<Category[]>({
+  const { data: categories } = useQuery({
     queryKey: ["/api/categories"],
-  });
-  
-  // Fetch gallery items to use for image assignment
-  const { data: galleryItems = [] } = useQuery<GalleryItem[]>({
-    queryKey: ["/api/gallery"],
   });
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
-  const [enhancedProduct, setEnhancedProduct] = useState<Product | null>(null);
 
-  // Effect to enhance product with window blinds image when needed
-  useEffect(() => {
-    if (product && galleryItems.length > 0) {
-      // Create enhanced product with window blinds image if needed
-      const productWithImage = { ...product };
-      
-      if (!productWithImage.imageUrl || productWithImage.imageUrl.trim() === '') {
-        productWithImage.imageUrl = getProductImageUrl(
-          productWithImage.id, 
-          productWithImage.imageUrl, 
-          galleryItems
-        );
-      }
-      
-      setEnhancedProduct(productWithImage);
-      
-      // Initialize selected color if available
-      if (!selectedColor && productWithImage.colors && productWithImage.colors.length > 0) {
-        setSelectedColor(productWithImage.colors[0]);
-      }
-    }
-  }, [product, galleryItems, selectedColor]);
+  // Initialize selected color once product is loaded
+  if (product && !selectedColor && product.colors && product.colors.length > 0) {
+    setSelectedColor(product.colors[0]);
+  }
 
   // Convert the color hex values to ColorSwatch objects
-  const colorSwatches: ColorSwatch[] = enhancedProduct?.colors
-    ? enhancedProduct.colors.map((color) => ({ color }))
+  const colorSwatches: ColorSwatch[] = product?.colors
+    ? product.colors.map((color) => ({ color }))
     : [];
 
   // Get category name
   const getCategoryName = (categoryId: number | undefined) => {
     if (!categoryId || !categories) return "Category";
-    const category = categories.find((cat) => cat.id === categoryId);
+    const category = categories.find((cat: any) => cat.id === categoryId);
     return category ? category.name : "Category";
   };
 
@@ -105,7 +80,7 @@ const ProductDetail = () => {
     );
   }
 
-  if (error || !enhancedProduct) {
+  if (error || !product) {
     return (
       <Container className="py-12">
         <div className="text-center py-16 bg-neutral-100 rounded-lg">
@@ -121,14 +96,14 @@ const ProductDetail = () => {
     );
   }
 
-  const productPrice = enhancedProduct.price.toFixed(2);
-  const totalPrice = (enhancedProduct.price * quantity).toFixed(2);
+  const productPrice = product.price.toFixed(2);
+  const totalPrice = (product.price * quantity).toFixed(2);
 
   return (
     <>
       <Helmet>
-        <title>{enhancedProduct.name} | Elegant Drapes</title>
-        <meta name="description" content={enhancedProduct.description} />
+        <title>{product.name} | Elegant Drapes</title>
+        <meta name="description" content={product.description} />
       </Helmet>
 
       <Container className="py-8">
@@ -149,15 +124,15 @@ const ProductDetail = () => {
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink href={`/products?category=${enhancedProduct.categoryId}`}>
-                {getCategoryName(enhancedProduct.categoryId)}
+              <BreadcrumbLink href={`/products?category=${product.categoryId}`}>
+                {getCategoryName(product.categoryId)}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink>{enhancedProduct.name}</BreadcrumbLink>
+              <BreadcrumbLink>{product.name}</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -166,37 +141,45 @@ const ProductDetail = () => {
           <div className="relative">
             <div className="rounded-lg overflow-hidden">
               <img
-                src={getAssetUrl(enhancedProduct.imageUrl)}
-                alt={enhancedProduct.name}
+                src={product.imageUrl}
+                alt={product.name}
                 className="w-full h-auto object-cover"
               />
             </div>
-
-
+            {product.isBestSeller && (
+              <div className="absolute top-4 right-4 bg-secondary text-white text-sm py-1 px-3 rounded-full">
+                Best Seller
+              </div>
+            )}
+            {product.isNewArrival && (
+              <div className="absolute top-4 right-4 bg-accent text-white text-sm py-1 px-3 rounded-full">
+                New Arrival
+              </div>
+            )}
           </div>
 
           <div>
             <h1 className="font-display text-3xl text-primary font-semibold mb-2">
-              {enhancedProduct.name}
+              {product.name}
             </h1>
             <p className="text-accent text-2xl font-semibold mb-4">
               ${productPrice}
             </p>
             
-            <p className="text-text-medium mb-6">{enhancedProduct.description}</p>
+            <p className="text-text-medium mb-6">{product.description}</p>
             
             <div className="space-y-6">
-              {enhancedProduct.material && (
+              {product.material && (
                 <div>
                   <h3 className="font-medium mb-2">Material</h3>
-                  <p className="text-text-medium">{enhancedProduct.material}</p>
+                  <p className="text-text-medium">{product.material}</p>
                 </div>
               )}
               
-              {enhancedProduct.dimensions && (
+              {product.dimensions && (
                 <div>
                   <h3 className="font-medium mb-2">Dimensions</h3>
-                  <p className="text-text-medium">{enhancedProduct.dimensions}</p>
+                  <p className="text-text-medium">{product.dimensions}</p>
                 </div>
               )}
               
@@ -282,18 +265,18 @@ const ProductDetail = () => {
             <TabsContent value="details" className="py-6">
               <div className="prose max-w-none">
                 <p className="mb-4">
-                  {enhancedProduct.description}
+                  {product.description}
                 </p>
-                {enhancedProduct.dimensions && (
+                {product.dimensions && (
                   <>
                     <h3 className="text-lg font-medium mb-2">Dimensions</h3>
-                    <p className="mb-4">{enhancedProduct.dimensions}</p>
+                    <p className="mb-4">{product.dimensions}</p>
                   </>
                 )}
-                {enhancedProduct.material && (
+                {product.material && (
                   <>
                     <h3 className="text-lg font-medium mb-2">Material</h3>
-                    <p>{enhancedProduct.material}</p>
+                    <p>{product.material}</p>
                   </>
                 )}
               </div>
@@ -301,9 +284,9 @@ const ProductDetail = () => {
             <TabsContent value="features" className="py-6">
               <div className="prose max-w-none">
                 <h3 className="text-lg font-medium mb-4">Key Features</h3>
-                {enhancedProduct.features && enhancedProduct.features.length > 0 ? (
+                {product.features && product.features.length > 0 ? (
                   <ul className="space-y-2">
-                    {enhancedProduct.features.map((feature, index) => (
+                    {product.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <Check className="h-5 w-5 text-secondary mr-2 mt-0.5" />
                         <span>{feature}</span>
@@ -319,7 +302,7 @@ const ProductDetail = () => {
               <div className="prose max-w-none">
                 <h3 className="text-lg font-medium mb-4">Care Instructions</h3>
                 <p className="mb-4">
-                  To ensure the longevity and appearance of your {enhancedProduct.name}, please follow these care instructions:
+                  To ensure the longevity and appearance of your {product.name}, please follow these care instructions:
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start">

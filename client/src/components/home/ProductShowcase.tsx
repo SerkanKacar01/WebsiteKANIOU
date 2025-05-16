@@ -5,69 +5,57 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@shared/schema";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ProductShowcase = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const { t } = useLanguage();
 
-  // Function to get Dutch category names by ID
+  // Create the category name function with the translation function using useMemo
   const getCategoryNameById = useMemo(() => {
     return (categoryId: number) => {
       const categoryMap: Record<number, string> = {
-        1: "Gordijnen",
-        2: "Jaloezieën",
-        3: "Rolluiken",
-        4: "Overgordijnen",
+        1: t('categories.curtains'),
+        2: t('categories.blinds'),
+        3: t('categories.shades'),
+        4: t('categories.drapes'),
       };
 
-      return categoryMap[categoryId] || "";
+      return categoryMap[categoryId] || t('categories');
     };
-  }, []);
+  }, [t]);
 
-  const {
-    data: featuredProducts = [],
-    isLoading,
-    error,
-  } = useQuery<Product[]>({
+  const { data: featuredProducts, isLoading, error } = useQuery({
     queryKey: ["/api/products", { featured: true }],
   });
 
   // Get all unique categories from featured products for filtering
-  const categoryIds = featuredProducts.map((product) => product.categoryId);
-  const categories = Array.from(new Set(categoryIds)) as number[];
+  const categories = featuredProducts 
+    ? [...new Set(featuredProducts.map((product: Product) => product.categoryId))]
+    : [];
 
-  const filteredProducts =
-    activeFilter === "all"
+  const filteredProducts = featuredProducts
+    ? activeFilter === "all"
       ? featuredProducts
       : featuredProducts.filter(
-          (product) => product.categoryId.toString() === activeFilter,
-        );
+          (product: Product) => product.categoryId.toString() === activeFilter
+        )
+    : [];
 
   return (
-    <section
-      id="products"
-      className="py-16"
-      aria-labelledby="product-showcase-heading"
-    >
+    <section id="products" className="py-16">
       <Container>
         <div className="text-center mb-12">
-          <h2
-            id="product-showcase-heading"
-            className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4"
-          >
-            Doorzoek op Categorie
+          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+            {t('title')}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Selecteer hieronder een productcategorie om de meest geschikte
-            raambekleding voor uw interieur te ontdekken.
+            {t('subtitle')}
           </p>
         </div>
 
         <div className="mb-8">
-          <div
-            className="flex flex-wrap items-center justify-center gap-4 mb-8"
-            role="tablist"
-            aria-label="Filter products by category"
-          >
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
             <Button
               variant={activeFilter === "all" ? "default" : "outline"}
               onClick={() => setActiveFilter("all")}
@@ -76,30 +64,20 @@ const ProductShowcase = () => {
                   ? "bg-primary text-white hover:bg-accent"
                   : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
               }
-              role="tab"
-              aria-selected={activeFilter === "all"}
-              aria-controls="product-grid"
-              id="tab-all"
             >
-              Bekijk Alles
+              View All
             </Button>
 
             {categories.map((categoryId) => (
               <Button
                 key={categoryId}
-                variant={
-                  activeFilter === categoryId.toString() ? "default" : "outline"
-                }
+                variant={activeFilter === categoryId.toString() ? "default" : "outline"}
                 onClick={() => setActiveFilter(categoryId.toString())}
                 className={
                   activeFilter === categoryId.toString()
                     ? "bg-primary text-white hover:bg-accent"
                     : "bg-neutral-200 text-text-dark hover:bg-secondary hover:text-white"
                 }
-                role="tab"
-                aria-selected={activeFilter === categoryId.toString()}
-                aria-controls="product-grid"
-                id={`tab-category-${categoryId}`}
               >
                 {getCategoryNameById(categoryId)}
               </Button>
@@ -108,60 +86,37 @@ const ProductShowcase = () => {
         </div>
 
         {isLoading ? (
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            role="status"
-            aria-live="polite"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
                 className="h-96 bg-neutral-200 rounded-lg animate-pulse"
-                aria-hidden="true"
               ></div>
             ))}
-            <div className="sr-only">Producten worden geladen</div>
           </div>
         ) : error ? (
-          <div
-            className="text-center text-red-500"
-            role="alert"
-            aria-live="assertive"
-          >
-            Er is een fout opgetreden bij het laden van de producten.
+          <div className="text-center text-red-500">
+            {t('common.error')}
           </div>
         ) : (
           <>
-            <div
-              id="product-grid"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              role="tabpanel"
-              aria-labelledby={
-                activeFilter === "all"
-                  ? "tab-all"
-                  : `tab-category-${activeFilter}`
-              }
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProducts.map((product: Product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
 
             <div className="text-center mt-12">
-              <Link href="/browse-collection">
-                <a className="inline-block">
-                  <Button
-                    size="lg"
-                    className="bg-primary hover:bg-accent group focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                  >
-                    <span>Bekijk Alle Categorieën</span>
+              <Link href="/products">
+                <a>
+                  <Button size="lg" className="bg-primary hover:bg-accent">
+                    View All
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                      className="ml-2 h-4 w-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -180,5 +135,7 @@ const ProductShowcase = () => {
     </section>
   );
 };
+
+
 
 export default ProductShowcase;

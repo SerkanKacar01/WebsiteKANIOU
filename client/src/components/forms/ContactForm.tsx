@@ -20,16 +20,16 @@ import { apiRequest } from "@/lib/queryClient";
 // Define the form schema with validation
 const contactFormSchema = z.object({
   name: z.string().min(2, {
-    message: "Naam moet minstens 2 tekens bevatten.",
+    message: "Name must be at least 2 characters.",
   }),
   email: z.string().email({
-    message: "Voer een geldig e-mailadres in.",
+    message: "Please enter a valid email address.",
   }),
   subject: z.string().min(2, {
-    message: "Onderwerp moet minstens 2 tekens bevatten.",
+    message: "Subject must be at least 2 characters.",
   }),
   message: z.string().min(10, {
-    message: "Bericht moet minstens 10 tekens bevatten.",
+    message: "Message must be at least 10 characters.",
   }),
 });
 
@@ -50,25 +50,22 @@ const ContactForm = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: ContactFormValues) =>
+    mutationFn: (data: ContactFormValues) => 
       apiRequest("POST", "/api/contact", data),
     onSuccess: () => {
       toast({
-        title: "Bericht verzonden",
-        description:
-          "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
-        variant: "Succes",
+        title: "Message Sent",
+        description: "Thank you for your message. We'll respond as soon as possible.",
+        variant: "success",
       });
       form.reset();
       setIsSubmitting(false);
     },
     onError: (error) => {
       toast({
-        title: "Verzending mislukt",
-        description:
-          error.message ||
-          "Het verzenden van het bericht is mislukt. Probeer het alstublieft opnieuw.",
-        variant: "Fout",
+        title: "Submission Failed",
+        description: error.message || "Failed to send message. Please try again.",
+        variant: "destructive",
       });
       setIsSubmitting(false);
     },
@@ -88,9 +85,9 @@ const ContactForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Voor - en Achternaam</FormLabel>
+                <FormLabel>Your Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input placeholder="John Doe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,9 +99,9 @@ const ContactForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>E-mail adres</FormLabel>
+                <FormLabel>Email Address</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="" {...field} />
+                  <Input type="email" placeholder="john@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,12 +111,12 @@ const ContactForm = () => {
 
         <FormField
           control={form.control}
-          name="Onderwerp"
+          name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Onderwerp</FormLabel>
+              <FormLabel>Subject</FormLabel>
               <FormControl>
-                <Input placeholder="Hoe kunnen wij u helpen?" {...field} />
+                <Input placeholder="How can we help you?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -128,14 +125,14 @@ const ContactForm = () => {
 
         <FormField
           control={form.control}
-          name="Bericht"
+          name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bericht</FormLabel>
+              <FormLabel>Message</FormLabel>
               <FormControl>
                 <Textarea
                   rows={6}
-                  placeholder="Gelieve de details van uw aanvraag te vermelden...."
+                  placeholder="Please provide details about your inquiry..."
                   {...field}
                 />
               </FormControl>
@@ -144,12 +141,12 @@ const ContactForm = () => {
           )}
         />
 
-        <Button
-          type="Verzenden"
+        <Button 
+          type="submit" 
           className="bg-secondary hover:bg-accent"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : "Bericht verzenden"}
+          {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
       </form>
     </Form>

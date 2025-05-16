@@ -24,7 +24,7 @@ const GalleryGrid = ({ items, isLoading, error }: GalleryGridProps) => {
   if (error) {
     return (
       <div className="text-center text-red-500 my-8">
-        Laden van galerij-items mislukt. Probeer het later opnieuw.
+        Failed to load gallery items. Please try again later.
       </div>
     );
   }
@@ -32,9 +32,9 @@ const GalleryGrid = ({ items, isLoading, error }: GalleryGridProps) => {
   if (!items || items.length === 0) {
     return (
       <div className="text-center my-8 p-8 bg-neutral-100 rounded-lg">
-        <h3 className="text-xl font-medium mb-2">Geen galerij-items gevonden.</h3>
+        <h3 className="text-xl font-medium mb-2">No Gallery Items Found</h3>
         <p className="text-text-medium">
-          Kom later terug voor nieuwe installaties en projecten.
+          Check back later for new installations and projects.
         </p>
       </div>
     );

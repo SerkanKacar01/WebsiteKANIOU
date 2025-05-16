@@ -1,6 +1,5 @@
-import type { Express, Request, Response, NextFunction } from "express";
+import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
-import path from "path";
 import { storage } from "./storage";
 import { 
   insertCategorySchema,
@@ -65,38 +64,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.put("/api/categories/:id", async (req: Request, res: Response) => {
-    try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid category ID" });
-      }
-      
-      // Validate the update data
-      const updateSchema = insertCategorySchema.partial();
-      const validatedData = updateSchema.safeParse(req.body);
-      if (!validatedData.success) {
-        return res.status(400).json({ 
-          message: "Invalid category data", 
-          errors: fromZodError(validatedData.error).message 
-        });
-      }
-      
-      // Check if category exists
-      const existingCategory = await storage.getCategoryById(id);
-      if (!existingCategory) {
-        return res.status(404).json({ message: "Category not found" });
-      }
-      
-      // Update the category
-      const updatedCategory = await storage.updateCategory(id, validatedData.data);
-      res.json(updatedCategory);
-    } catch (error) {
-      console.error("Error updating category:", error);
-      res.status(500).json({ message: "Failed to update category" });
-    }
-  });
-  
   // Products
   app.get("/api/products", async (req: Request, res: Response) => {
     try {
@@ -155,38 +122,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error creating product:", error);
       res.status(500).json({ message: "Failed to create product" });
-    }
-  });
-  
-  app.put("/api/products/:id", async (req: Request, res: Response) => {
-    try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid product ID" });
-      }
-      
-      // Validate the update data
-      const updateSchema = insertProductSchema.partial();
-      const validatedData = updateSchema.safeParse(req.body);
-      if (!validatedData.success) {
-        return res.status(400).json({ 
-          message: "Invalid product data", 
-          errors: fromZodError(validatedData.error).message 
-        });
-      }
-      
-      // Check if product exists
-      const existingProduct = await storage.getProductById(id);
-      if (!existingProduct) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-      
-      // Update the product
-      const updatedProduct = await storage.updateProduct(id, validatedData.data);
-      res.json(updatedProduct);
-    } catch (error) {
-      console.error("Error updating product:", error);
-      res.status(500).json({ message: "Failed to update product" });
     }
   });
   

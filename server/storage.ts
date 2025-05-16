@@ -26,7 +26,6 @@ export interface IStorage {
   getCategories(): Promise<Category[]>;
   getCategoryById(id: number): Promise<Category | undefined>;
   createCategory(category: InsertCategory): Promise<Category>;
-  updateCategory(id: number, category: Partial<InsertCategory>): Promise<Category | undefined>;
   
   // Products
   getProducts(): Promise<Product[]>;
@@ -34,7 +33,6 @@ export interface IStorage {
   getProductsByCategory(categoryId: number): Promise<Product[]>;
   getFeaturedProducts(): Promise<Product[]>;
   createProduct(product: InsertProduct): Promise<Product>;
-  updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product | undefined>;
   
   // Gallery
   getGalleryItems(): Promise<GalleryItem[]>;
@@ -72,14 +70,6 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
   
-  async updateCategory(id: number, category: Partial<InsertCategory>): Promise<Category | undefined> {
-    const result = await db.update(categories)
-      .set(category)
-      .where(eq(categories.id, id))
-      .returning();
-    return result[0];
-  }
-  
   // Products
   async getProducts(): Promise<Product[]> {
     return await db.select().from(products);
@@ -100,14 +90,6 @@ export class DatabaseStorage implements IStorage {
   
   async createProduct(product: InsertProduct): Promise<Product> {
     const result = await db.insert(products).values(product).returning();
-    return result[0];
-  }
-  
-  async updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product | undefined> {
-    const result = await db.update(products)
-      .set(product)
-      .where(eq(products.id, id))
-      .returning();
     return result[0];
   }
   

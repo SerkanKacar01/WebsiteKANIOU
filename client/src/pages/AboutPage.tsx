@@ -16,8 +16,8 @@ const AboutPage = () => {
       <Helmet>
         <title>About Us | Elegant Drapes</title>
         <meta
-          name="Beschrijving"
-          content="Maak kennis met de meer dan 20 jaar ervaring van Elegant Drapes in het creëren van hoogwaardige raamdecoratie. Ontdek ons verhaal, onze kernwaarden en onze toewijding aan kwaliteit."
+          name="description"
+          content="Learn about Elegant Drapes' 20+ years of experience creating premium window treatments. Discover our story, values, and commitment to quality."
         />
       </Helmet>
       
@@ -25,39 +25,50 @@ const AboutPage = () => {
         <Container>
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Over KANIOU bvba Zilvernaald
+              About Elegant Drapes
             </h1>
             <p className="font-body text-text-medium max-w-2xl mx-auto">
-              Al meer dan 30 jaar vervaardigen wij hoogwaardige raamdecoratie die gewone ruimtes omtovert tot stijlvolle en karaktervolle interieurs.
+              For over 20 years, we've been crafting premium window treatments
+              that transform ordinary spaces into extraordinary interiors.
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
               <h2 className="font-display text-2xl text-primary font-semibold mb-4">
-                Ons verhaal
+                Our Story
               </h2>
               <p className="font-body text-text-medium mb-6">
-                Opgericht in 1991 begon Elegant Drapes met één duidelijke missie: het creëren van prachtige, hoogwaardige raamdecoratie die de persoonlijke stijl van elke klant weerspiegelt. Wat ooit begon als een klein familiebedrijf, is uitgegroeid tot een toonaangevende leverancier van premium raamoplossingen in de regio.
+                Founded in 2001, Elegant Drapes began with a simple mission: to create 
+                beautiful, high-quality window coverings that reflect each client's 
+                personal style. What started as a small family business has grown into 
+                one of the leading providers of premium window treatments in the region.
               </p>
               <p className="font-body text-text-medium mb-6">
-                Onze reis begon met een eenvoudige overtuiging: iedereen verdient stijlvolle en kwalitatieve raamdecoratie die perfect aansluit bij zijn of haar interieur en persoonlijkheid. Vandaag de dag zijn we trots dat we jaarlijks duizenden klanten mogen begeleiden in het transformeren van hun ruimtes met onze vakmanschap en expertise.
+                Our journey began with a simple belief: everyone deserves beautiful,
+                high-quality window coverings that reflect their personal style. Today, 
+                we're proud to serve thousands of customers each year, helping them 
+                transform their spaces with our expert craftsmanship and design.
               </p>
               <p className="font-body text-text-medium">
-                We hechten veel waarde aan een persoonlijke aanpak: we luisteren aandachtig naar de wensen en voorkeuren van elke klant en leveren oplossingen die hun verwachtingen overtreffen. Ons team van ervaren ontwerpers en plaatsers is gepassioneerd over hun vak — en dat merkt u aan het resultaat.
+                We take pride in our personalized approach, working closely with each 
+                client to understand their needs and preferences, and delivering 
+                solutions that exceed expectations. Our team of experienced designers 
+                and installers are passionate about what they do, and it shows in 
+                the quality of our work.
               </p>
             </div>
             
             <div className="relative">
               <img
                 src="https://pixabay.com/get/g356064e5e472162ea3bdf7db76831017a205df5f1807a09d7636efef6f9b054d4c9aaf47b9c21d1c58d3c45cc428f1f1560cf1e2a2d0ead5771100045f79d161_1280.jpg"
-                alt="KANIOU bvba Zilvernaald showroom"
+                alt="Elegant Drapes Showroom"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
-                <p className="font-display text-lg text-primary font-medium">30+</p>
+                <p className="font-display text-lg text-primary font-medium">20+</p>
                 <p className="font-body text-text-medium text-sm">
-                  Jaren van Vakmanschap
+                  Years of Excellence
                 </p>
               </div>
               <div className="absolute -top-6 -right-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
@@ -65,7 +76,7 @@ const AboutPage = () => {
                   5000+
                 </p>
                 <p className="font-body text-text-medium text-sm">
-                  Tevreden Klanten
+                  Happy Customers
                 </p>
               </div>
             </div>
@@ -73,7 +84,7 @@ const AboutPage = () => {
           
           <div className="mb-16">
             <h2 className="font-display text-2xl text-primary font-semibold mb-6 text-center">
-              Waarom kiezen voor KANIOU bvba Zilvernaald?
+              Why Choose Elegant Drapes
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -81,10 +92,10 @@ const AboutPage = () => {
                   <Award className="h-8 w-8" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  Premium kwaliteit
+                  Premium Quality
                 </h3>
                 <p className="font-body text-text-medium">
-                  Wij gebruiken uitsluitend de beste materialen en vakmanschap in elk product, wat garant staat voor zowel schoonheid als duurzaamheid.
+                  Only the finest materials and craftmanship in every product, ensuring beauty and durability.
                 </p>
               </div>
               
@@ -93,10 +104,10 @@ const AboutPage = () => {
                   <Ruler className="h-8 w-8" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  Maatwerkoplossingen
+                  Custom Made
                 </h3>
                 <p className="font-body text-text-medium">
-                  Volledig afgestemd op uw exacte afmetingen en wensen, voor een perfecte pasvorm – elke keer opnieuw.
+                  Tailored to your exact specifications and requirements for a perfect fit every time.
                 </p>
               </div>
               
@@ -105,10 +116,10 @@ const AboutPage = () => {
                   <Truck className="h-8 w-8" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  Professionele plaatsingsdienst
+                  Professional Installation
                 </h3>
                 <p className="font-body text-text-medium">
-                  Vakkundige montageservice die garant
+                  Expert fitting service ensuring perfect results with minimum disruption to your home.
                 </p>
               </div>
               
@@ -117,10 +128,10 @@ const AboutPage = () => {
                   <Headphones className="h-8 w-8" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  Professioneel Advies
+                  Expert Consultation
                 </h3>
                 <p className="font-body text-text-medium">
-                  Persoonlijk advies van onze raamdecoratiespecialisten om u te helpen de beste keuze te maken.
+                  Personalized advice from our window treatment specialists to help you make the best choice.
                 </p>
               </div>
             </div>
@@ -128,23 +139,17 @@ const AboutPage = () => {
           
           <div className="bg-white p-8 rounded-lg shadow-md mb-16">
             <h2 className="font-display text-2xl text-primary font-semibold mb-6" id="measure-guide">
-              Meet- en Installatiegidsen
+              Measurement & Installation Guides
             </h2>
             
             <Accordion type="single" collapsible className="mb-8">
               <AccordionItem value="measure-curtains">
-                <AccordionTrigger className="text-lg font-medium">Hoe Gordijnen Opmeten?</AccordionTrigger>
+                <AccordionTrigger className="text-lg font-medium">How to Measure for Curtains</AccordionTrigger>
                 <AccordionContent>
                   <div className="space-y-4 pt-2">
-                    <p>Om een perfecte pasvorm van uw gordijnen te garanderen, volgt u zorgvuldig onderstaande stappen:</p>
+                    <p>To ensure a perfect fit for your curtains, follow these steps:</p>
                     <ol className="list-decimal pl-5 space-y-2">
-                      <li>Meet de breedte
-                          •	Meet de volledige breedte van uw raam, gordijnrail of roede.
-                          •	Voor een mooie, volle uitstraling raden wij aan om 15 à 20 cm extra te nemen aan elke zijde van het raam.
-                        (Bijvoorbeeld: raam is 100 cm breed → bestelbreedte = ±130–140 cm) 
-                        <p>***Let op:
-                        Als u een dubbele plooi of wave-plooi kiest, wordt de stofdoorloop automatisch berekend — geef ons gewoon de gemeten breedte door, wij zorgen voor de juiste confectie.***</p>
-                    </li>
+                      <li>Measure the width of your window or track. For a fuller look, add 15-20cm on each side.</li>
                       <li>Measure from the top of the track/pole to where you want the curtains to finish (typically either windowsill, below sill, or floor length).</li>
                       <li>For track-mounted curtains, add 2-3cm to the height measurement to allow for the heading.</li>
                       <li>For pole-mounted curtains, measure from the top of the pole to your desired end point, then add 2-3cm for rings.</li>
@@ -155,7 +160,7 @@ const AboutPage = () => {
               </AccordionItem>
               
               <AccordionItem value="measure-blinds">
-                <AccordionTrigger className="text-lg font-medium">Hoe zonweringen Opmeten?</AccordionTrigger>
+                <AccordionTrigger className="text-lg font-medium">How to Measure for Blinds</AccordionTrigger>
                 <AccordionContent>
                   <div className="space-y-4 pt-2">
                     <p>For accurate blind measurements, follow these guidelines:</p>
@@ -177,7 +182,7 @@ const AboutPage = () => {
               </AccordionItem>
               
               <AccordionItem value="installation">
-                <AccordionTrigger className="text-lg font-medium" id="installation-guide">Installatietips</AccordionTrigger>
+                <AccordionTrigger className="text-lg font-medium" id="installation-guide">Installation Tips</AccordionTrigger>
                 <AccordionContent>
                   <div className="space-y-4 pt-2">
                     <p>While we offer professional installation services, if you choose to install yourself:</p>

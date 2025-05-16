@@ -6,7 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const CategoryCard = ({ category }: { category: Category }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="group relative h-80 rounded-lg overflow-hidden shadow-md">
       <div
@@ -18,10 +18,12 @@ const CategoryCard = ({ category }: { category: Category }) => {
         <h3 className="font-display text-2xl text-white font-medium mb-2">
           {category.name}
         </h3>
-        <p className="font-body text-white text-sm mb-4">{category.description}</p>
+        <p className="font-body text-white text-sm mb-4">
+          {category.description}
+        </p>
         <Link href={`/products/${category.id}`}>
           <a className="font-body inline-block text-white text-sm border-b border-white pb-1 transition-all group-hover:border-secondary group-hover:text-secondary">
-            {t('hero.cta')}
+            {t("hero.cta")}
           </a>
         </Link>
       </div>
@@ -31,7 +33,11 @@ const CategoryCard = ({ category }: { category: Category }) => {
 
 const FeaturedCategories = () => {
   const { t } = useLanguage();
-  const { data: categories = [], isLoading, error } = useQuery<Category[]>({
+  const {
+    data: categories = [],
+    isLoading,
+    error,
+  } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 
@@ -40,28 +46,33 @@ const FeaturedCategories = () => {
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            Browse by Category
+            Populaire raamdecoraties
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Find the perfect window treatment by selecting a product category below
+            Deze selectie toont onze 6 meest gekozen raambekledingsproducten,
+            geliefd bij klanten vanwege hun uitstraling, functionaliteit en
+            maatwerkmogelijkheden.
           </p>
         </div>
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-80 rounded-lg bg-neutral-200 animate-pulse"></div>
+              <div
+                key={i}
+                className="h-80 rounded-lg bg-neutral-200 animate-pulse"
+              ></div>
             ))}
           </div>
         ) : error ? (
-          <div className="text-center text-red-500">
-            {t('common.error')}
-          </div>
+          <div className="text-center text-red-500">{t("common.error")}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories?.slice(0, 6).map((category: Category) => (
-              <CategoryCard key={category.id} category={category} />
-            ))}
+            {categories
+              ?.slice(0, 6)
+              .map((category: Category) => (
+                <CategoryCard key={category.id} category={category} />
+              ))}
           </div>
         )}
       </Container>

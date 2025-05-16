@@ -20,7 +20,7 @@ interface LanguageContextProps {
 
 // Create the context with default values
 const LanguageContext = createContext<LanguageContextProps>({
-  language: 'en',
+  language: 'nl',
   setLanguage: () => {},
   translations: {},
   t: (key: string) => key,
@@ -37,13 +37,13 @@ const translations: Record<Language, Record<string, any>> = {
 
 // Provider component that wraps your app and provides the language context
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Get stored language from localStorage or default to 'en'
+  // Get stored language from localStorage or default to 'nl'
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
       const storedLang = localStorage.getItem('language') as Language;
-      return (storedLang && ['en', 'fr', 'nl', 'tr', 'ar'].includes(storedLang)) ? storedLang : 'en';
+      return (storedLang && ['en', 'fr', 'nl', 'tr', 'ar'].includes(storedLang)) ? storedLang : 'nl';
     }
-    return 'en';
+    return 'nl';
   });
 
   // Current translations based on selected language

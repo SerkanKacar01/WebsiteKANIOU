@@ -106,7 +106,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-white py-4 md:py-2 ${
+      className={`sticky top-0 z-50 w-full bg-white py-5 md:py-3 ${
         isScrolled ? "shadow-md" : ""
       }`}
     >
@@ -114,11 +114,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/">
-              <div className="flex items-center space-x-2 cursor-pointer">
-                <span className="font-display text-2xl md:text-xl lg:text-2xl font-semibold text-primary">
+              <div className="flex items-center space-x-3 cursor-pointer">
+                <span className="font-display text-3xl md:text-2xl lg:text-3xl font-semibold text-primary leading-tight">
                   KANIOU<span className="text-secondary">zilvernaald</span>
                 </span>
-                <span className="font-display text-sm md:text-xs lg:text-sm font-semibold text-primary">
+                <span className="font-display text-base md:text-sm lg:text-base font-semibold text-primary leading-tight">
                   || Gordijnen & Zonweringen
                   <span className="text-secondary"></span>
                 </span>
@@ -136,8 +136,8 @@ const Header = () => {
               <SheetContent side="right" className="p-0">
                 <div className="flex flex-col space-y-3 p-6">
                   <div className="flex justify-between items-center mb-6">
-                    <span className="font-display text-xl font-semibold text-primary">
-                      Elegant<span className="text-secondary">Drapes</span>
+                    <span className="font-display text-2xl font-semibold text-primary leading-tight">
+                      KANIOU<span className="text-secondary">zilvernaald</span>
                     </span>
                     <Button
                       variant="ghost"

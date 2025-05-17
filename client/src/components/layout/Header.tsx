@@ -164,16 +164,16 @@ const Header = () => {
                         className="py-2 border-b border-neutral-200"
                       >
                         <div
-                          className={`font-body flex items-center justify-between ${
+                          className={`font-body flex items-center justify-between py-2 ${
                             isActive(item.href)
                               ? "text-accent font-medium"
                               : "text-text-dark"
-                          } cursor-pointer`}
+                          } cursor-pointer text-base`}
                           onClick={toggleMobileSubmenu}
                         >
                           {item.label}
                           <ChevronDown
-                            className={`h-4 w-4 ml-1 transition-transform ${showMobileSubmenu ? "rotate-180" : ""}`}
+                            className={`h-5 w-5 ml-1 transition-transform ${showMobileSubmenu ? "rotate-180" : ""}`}
                           />
                         </div>
 
@@ -183,7 +183,7 @@ const Header = () => {
                               <div key={category.href}>
                                 <Link href={category.href}>
                                   <div
-                                    className="font-body text-sm block py-1.5 text-text-dark hover:text-accent transition-colors cursor-pointer"
+                                    className="font-body text-sm block py-2.5 text-text-dark hover:text-accent transition-colors cursor-pointer"
                                     onClick={handleCloseSheet}
                                   >
                                     {category.label}
@@ -209,7 +209,7 @@ const Header = () => {
                     ) : (
                       <Link key={item.href} href={item.href}>
                         <a
-                          className={`font-body py-2 border-b border-neutral-200 ${
+                          className={`font-body py-3 border-b border-neutral-200 block text-base ${
                             isActive(item.href)
                               ? "text-accent font-medium"
                               : "text-text-dark"

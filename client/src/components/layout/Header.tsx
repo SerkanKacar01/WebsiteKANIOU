@@ -41,11 +41,11 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t('nav.home'), href: "/" },
-    { label: t('nav.products'), href: "/products", hasDropdown: true },
-    { label: t('nav.gallery'), href: "/gallery" },
-    { label: t('nav.about'), href: "/about" },
-    { label: t('nav.contact'), href: "/contact" },
+    { label: t("HOME"), href: "home" },
+    { label: t("PRODUCTEN"), href: "/producten", hasDropdown: true },
+    { label: t("GALLERIJ"), href: "/gallerij" },
+    { label: t("OVER ONS"), href: "/overons" },
+    { label: t("CONTACT"), href: "/contact" },
   ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -128,7 +128,11 @@ const Header = () => {
           {isMobile ? (
             <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-primary p-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-primary p-1"
+                >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -137,7 +141,8 @@ const Header = () => {
                   <div className="flex justify-between items-center mb-6">
                     <div className="flex flex-col">
                       <span className="font-display text-3xl font-semibold text-primary leading-tight">
-                        KANIOU<span className="text-secondary">zilvernaald</span>
+                        KANIOU
+                        <span className="text-secondary">zilvernaald</span>
                       </span>
                       <span className="font-display text-xs font-semibold text-primary leading-tight">
                         || Gordijnen & Zonweringen
@@ -223,7 +228,7 @@ const Header = () => {
                         className="w-full bg-secondary hover:bg-accent"
                         onClick={handleCloseSheet}
                       >
-                        {t('nav.quote')}
+                        {t("OFFERTE AANVRAGEN")}
                       </Button>
                     </a>
                   </Link>
@@ -296,7 +301,7 @@ const Header = () => {
               <div className="flex items-center gap-4">
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">
-                    {t('nav.quote')}
+                    {t("nav.quote")}
                   </Button>
                 </Link>
               </div>

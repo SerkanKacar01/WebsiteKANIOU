@@ -54,13 +54,15 @@ const GallerySection = () => {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-white"
+                    className="border-primary text-primary hover:bg-primary hover:text-white text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-3 max-w-[300px] sm:max-w-none mx-auto text-center"
                   >
-                    Bekijk onze afgeronde projecten en laat u inspireren voor uw
-                    eigen interieur.
+                    <span className="line-clamp-2 sm:line-clamp-1">
+                      Bekijk onze afgeronde projecten en laat u inspireren voor uw
+                      eigen interieur.
+                    </span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="ml-2 h-4 w-4"
+                      className="ml-2 h-4 w-4 flex-shrink-0"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"

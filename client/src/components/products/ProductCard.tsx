@@ -38,17 +38,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         )}
       </div>
-      <CardContent className="p-6">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-display text-xl text-primary font-medium">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1">
+          <h3 className="font-display text-lg sm:text-xl text-primary font-medium">
             {product.name}
           </h3>
           <div className="text-accent font-semibold">${product.price.toFixed(2)}</div>
         </div>
-        <p className="font-body text-text-medium text-sm mb-4">
+        <p className="font-body text-text-medium text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
           {product.description}
         </p>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
           {product.material && (
             <span className="text-xs bg-neutral-100 text-text-medium px-2 py-1 rounded">
               {product.material}
@@ -64,7 +64,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </span>
             ))}
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
           <div className="flex gap-2">
             {colorSwatches.map((swatch, index) => (
               <button
@@ -81,7 +81,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             ))}
           </div>
           <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
-            <a className="font-body inline-flex items-center text-primary hover:text-accent">
+            <a className="font-body inline-flex items-center text-primary hover:text-accent text-sm sm:text-base">
               View Details <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Link>

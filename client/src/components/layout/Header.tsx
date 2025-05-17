@@ -140,7 +140,7 @@ const Header = () => {
                 <div className="flex flex-col space-y-3 p-6">
                   <div className="flex justify-between items-center mb-6">
                     <div className="flex flex-col">
-                      <span className="font-display text-3xl font-semibold text-primary leading-tight">
+                      <span className="font-display text-2xl font-semibold text-primary leading-tight">
                         KANIOU
                         <span className="text-secondary">zilvernaald</span>
                       </span>

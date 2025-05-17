@@ -14,11 +14,11 @@ const CategoryCard = ({ category }: { category: Category }) => {
         style={{ backgroundImage: `url('${category.imageUrl}')` }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-60"></div>
-      <div className="absolute bottom-0 left-0 right-0 p-6">
-        <h3 className="font-display text-2xl text-white font-medium mb-2">
+      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+        <h3 className="font-display text-xl sm:text-2xl text-white font-medium mb-2">
           {category.name}
         </h3>
-        <p className="font-body text-white text-sm mb-4">
+        <p className="font-body text-white text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
           {category.description}
         </p>
         <Link href={`/products/${category.id}`}>

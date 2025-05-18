@@ -18,7 +18,7 @@ const sharedFeatures = {
 export const overgordijnenConfig: ProductCalculatorConfig = {
   productId: "overgordijnen",
   productName: "Overgordijnen",
-  basePrice: 35, // Base price per square meter
+  basePrice: 40, // Base price per linear meter including confection
   minWidth: 30,
   maxWidth: 600,
   minHeight: 40,
@@ -26,41 +26,40 @@ export const overgordijnenConfig: ProductCalculatorConfig = {
   defaultWidth: 150,
   defaultHeight: 250,
   features: [
-    sharedFeatures.premium_fabric,
+    { id: "enkelevoudige_plooi", label: "Enkelvoudige plooi (standaard)", price: 0, description: "Standaard plooien zonder meerprijs" },
+    { id: "dubbele_plooi", label: "Dubbele plooi", price: 0, description: "Elegante dubbele plooien (+10%)" },
+    { id: "driedubbele_plooi", label: "Driedubbele plooi", price: 0, description: "Luxe driedubbele plooien (+15%)" },
+    { id: "wave_plooi", label: "Wave plooi", price: 0, description: "Moderne wave plooien (+20%)" },
     sharedFeatures.thermal,
     sharedFeatures.blackout,
     sharedFeatures.sound_dampening,
     sharedFeatures.custom_color,
-    sharedFeatures.anti_dust,
-    { id: "wave_pleat", label: "Wave plooien", price: 25, description: "Elegante golf plooien" },
-    { id: "pencil_pleat", label: "Potlood plooien", price: 15, description: "Klassieke potlood plooien" },
     { id: "lining", label: "Luxe voering", price: 30, description: "Extra voering voor betere isolatie" },
     sharedFeatures.installation,
   ],
   calculatePrice: (values: CalculatorValues, config: ProductCalculatorConfig) => {
-    // Calculate area in square meters (convert from cm)
-    const area = (values.width / 100) * (values.height / 100);
+    // Apply minimum width rule (100 cm)
+    const effectiveWidth = Math.max(values.width, 100);
     
-    // Base calculation (minimum 1 sq meter)
-    const effectiveArea = Math.max(area, 1);
-    let totalPrice = config.basePrice * effectiveArea;
-
-    // Extra charge for extra large curtains
-    if (values.width > 300) {
-      totalPrice *= 1.15; // 15% extra for very wide curtains
+    // Calculate base price: width in meters × €40
+    const finalWidth = effectiveWidth / 100; // Convert to meters
+    let totalPrice = config.basePrice * finalWidth;
+    
+    // Apply pleat adjustment percentages
+    if (values.features.includes("dubbele_plooi")) {
+      totalPrice *= 1.10; // 10% increase for double pleats
+    } else if (values.features.includes("driedubbele_plooi")) {
+      totalPrice *= 1.15; // 15% increase for triple pleats
+    } else if (values.features.includes("wave_plooi")) {
+      totalPrice *= 1.20; // 20% increase for wave pleats
     }
     
     // Add optional features
     values.features.forEach((featureId) => {
       const feature = config.features.find((f) => f.id === featureId);
-      if (feature) {
-        if (featureId === "premium_fabric" || featureId === "thermal" || featureId === "blackout") {
-          // These features scale with area
-          totalPrice += feature.price * effectiveArea;
-        } else {
-          // Fixed price features
-          totalPrice += feature.price;
-        }
+      if (feature && feature.price > 0) { // Skip pleat types as they're already calculated
+        // Add fixed-price features
+        totalPrice += feature.price;
       }
     });
 

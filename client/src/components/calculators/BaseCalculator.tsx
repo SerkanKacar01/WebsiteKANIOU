@@ -248,6 +248,9 @@ const BaseCalculator: React.FC<BaseCalculatorProps> = ({ config, onCalculate }) 
                 <p className="text-sm text-muted-foreground mb-2">Geschatte prijs:</p>
                 <p className="text-4xl font-bold text-primary">€{calculatedPrice}</p>
                 <p className="text-sm text-muted-foreground mt-2">
+                  Prijs inclusief confectie, exclusief ophangsysteem en installatiekosten.
+                </p>
+                <p className="text-sm text-muted-foreground mt-2">
                   Deze prijs is een indicatie en kan variëren afhankelijk van specifieke vereisten.
                 </p>
               </div>

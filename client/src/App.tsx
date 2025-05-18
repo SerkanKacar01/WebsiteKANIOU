@@ -13,6 +13,7 @@ import Home from "@/pages/Home";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductsPage from "@/pages/ProductsPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
+import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
@@ -51,6 +52,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/products" component={ProductsPage} />
+        <Route path="/price-calculator" component={PriceCalculatorPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         
         {/* Product pages with calculators */}

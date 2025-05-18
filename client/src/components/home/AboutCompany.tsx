@@ -13,14 +13,14 @@ const AboutCompany = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              {t('about.title')}
+              {t('Over KANIOU Zilvernaald')}
             </h2>
             <p className="font-body text-text-medium mb-6">
-              {t('about.paragraph1')}
+              {t('Met meer dan 30 jaar ervaring is KANIOU Zilvernaald een gevestigde naam in maatwerk raamdecoratie. Wij combineren vakmanschap met stijl, afgestemd op de behoeften van iedere klant.')}
             </p>
 
             <p className="font-body text-text-medium mb-6">
-              {t('about.paragraph2')}
+              {t('Onze missie is om woningen en werkruimtes te verrijken met functionele én esthetische oplossingen op maat, waarbij kwaliteit, service en innovatie centraal staan.')}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
@@ -29,10 +29,10 @@ const AboutCompany = () => {
                   <Award className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.values.quality')}
+                  {t('KWALITEIT')}
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.values.qualityText')}
+                  {t('Uitmuntende materialen en vakmanschap voor een hoogwaardige afwerking.')}
                 </p>
               </div>
 
@@ -41,10 +41,10 @@ const AboutCompany = () => {
                   <Ruler className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.values.service')}
+                  {t('SERVICE')}
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.values.serviceText')}
+                  {t('Persoonlijke begeleiding van advies tot plaatsing.')}
                 </p>
               </div>
 
@@ -53,10 +53,10 @@ const AboutCompany = () => {
                   <Truck className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.values.innovation')}
+                  {t('INNOVATIE')}
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.values.innovationText')}
+                  {t('Altijd up-to-date met de nieuwste trends en technieken.')}
                 </p>
               </div>
 
@@ -65,10 +65,10 @@ const AboutCompany = () => {
                   <Headphones className="h-6 w-6" />
                 </div>
                 <h3 className="font-display text-lg text-primary font-medium mb-2">
-                  {t('about.mission.title')}
+                  {t('MISSIE')}
                 </h3>
                 <p className="font-body text-text-medium text-sm">
-                  {t('about.mission.text')}
+                  {t('Uw ruimte verfraaien met stijlvolle, functionele maatwerkoplossingen.')}
                 </p>
               </div>
             </div>
@@ -76,7 +76,7 @@ const AboutCompany = () => {
             <Link href="/contact">
               <a>
                 <Button size="lg" className="bg-secondary hover:bg-accent">
-                  {t('contact.title')}
+                  {t('NEEM CONTACT MET ONS')}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="ml-2 h-4 w-4"

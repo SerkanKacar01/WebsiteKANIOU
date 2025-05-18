@@ -1,17 +1,9 @@
 import { ProductCalculatorConfig, CalculatorValues } from './BaseCalculator';
 
-// Shared features that can be reused across different product types
-const sharedFeatures = {
-  motorized: { id: "motorized", label: "Gemotoriseerd", price: 120, description: "Elektrische bediening voor gemak" },
-  remote: { id: "remote", label: "Afstandsbediening", price: 35, description: "Draadloze afstandsbediening" },
-  blackout: { id: "blackout", label: "Verduisterend", price: 35, description: "Volledig lichtdicht materiaal" },
-  thermal: { id: "thermal", label: "Thermisch isolerend", price: 40, description: "Verbeterde isolatiewaarde" },
-  premium_fabric: { id: "premium_fabric", label: "Premium stof", price: 50, description: "Hoogwaardige stoffen" },
-  custom_color: { id: "custom_color", label: "Kleur op maat", price: 25, description: "Speciale kleuren op aanvraag" },
-  installation: { id: "installation", label: "Professionele installatie", price: 80, description: "Inclusief montage" },
-  sound_dampening: { id: "sound_dampening", label: "Geluiddempend", price: 45, description: "Verbeterde akoestiek" },
-  anti_dust: { id: "anti_dust", label: "Anti-stof behandeling", price: 30, description: "Stofwerende eigenschappen" },
-  uv_protection: { id: "uv_protection", label: "UV bescherming", price: 25, description: "Beschermt tegen schadelijke UV-stralen" },
+// Feature creator functions to ensure unique objects for each product
+// This prevents shared references that would cause updates to one product to affect others
+const createFeature = (id: string, label: string, price: number, description: string) => {
+  return { id, label, price, description };
 };
 
 // Overgordijnen (Curtains) Calculator Config
@@ -26,16 +18,16 @@ export const overgordijnenConfig: ProductCalculatorConfig = {
   defaultWidth: 150,
   defaultHeight: 250,
   features: [
-    { id: "enkelevoudige_plooi", label: "Enkelvoudige plooi (standaard)", price: 0, description: "Standaard plooien zonder meerprijs" },
-    { id: "dubbele_plooi", label: "Dubbele plooi", price: 0, description: "Elegante dubbele plooien (+10%)" },
-    { id: "driedubbele_plooi", label: "Driedubbele plooi", price: 0, description: "Luxe driedubbele plooien (+15%)" },
-    { id: "wave_plooi", label: "Wave plooi", price: 0, description: "Moderne wave plooien (+20%)" },
-    sharedFeatures.thermal,
-    sharedFeatures.blackout,
-    sharedFeatures.sound_dampening,
-    sharedFeatures.custom_color,
-    { id: "lining", label: "Luxe voering", price: 30, description: "Extra voering voor betere isolatie" },
-    sharedFeatures.installation,
+    createFeature("enkelevoudige_plooi", "Enkelvoudige plooi (standaard)", 0, "Standaard plooien zonder meerprijs"),
+    createFeature("dubbele_plooi", "Dubbele plooi", 0, "Elegante dubbele plooien (+10%)"),
+    createFeature("driedubbele_plooi", "Driedubbele plooi", 0, "Luxe driedubbele plooien (+15%)"),
+    createFeature("wave_plooi", "Wave plooi", 0, "Moderne wave plooien (+20%)"),
+    createFeature("thermal", "Thermisch isolerend", 40, "Verbeterde isolatiewaarde"),
+    createFeature("blackout", "Verduisterend", 35, "Volledig lichtdicht materiaal"),
+    createFeature("sound_dampening", "Geluiddempend", 45, "Verbeterde akoestiek"),
+    createFeature("custom_color", "Kleur op maat", 25, "Speciale kleuren op aanvraag"),
+    createFeature("lining", "Luxe voering", 30, "Extra voering voor betere isolatie"),
+    createFeature("installation", "Professionele installatie", 80, "Inclusief montage"),
   ],
   calculatePrice: (values: CalculatorValues, config: ProductCalculatorConfig) => {
     // Apply minimum width rule (100 cm)
@@ -79,14 +71,14 @@ export const rolgordijnenConfig: ProductCalculatorConfig = {
   defaultWidth: 100,
   defaultHeight: 180,
   features: [
-    sharedFeatures.motorized,
-    sharedFeatures.remote,
-    sharedFeatures.blackout,
-    sharedFeatures.thermal,
-    sharedFeatures.uv_protection,
-    { id: "chain_control", label: "Kettingbediening", price: 10, description: "Bediening met ketting ipv koord" },
-    { id: "child_safety", label: "Kind-veilige bediening", price: 15, description: "Extra veiligheidsopties" },
-    sharedFeatures.installation,
+    createFeature("motorized", "Gemotoriseerd", 120, "Elektrische bediening voor gemak"),
+    createFeature("remote", "Afstandsbediening", 35, "Draadloze afstandsbediening"),
+    createFeature("blackout", "Verduisterend", 35, "Volledig lichtdicht materiaal"),
+    createFeature("thermal", "Thermisch isolerend", 40, "Verbeterde isolatiewaarde"),
+    createFeature("uv_protection", "UV bescherming", 25, "Beschermt tegen schadelijke UV-stralen"),
+    createFeature("chain_control", "Kettingbediening", 10, "Bediening met ketting ipv koord"),
+    createFeature("child_safety", "Kind-veilige bediening", 15, "Extra veiligheidsopties"),
+    createFeature("installation", "Professionele installatie", 80, "Inclusief montage"),
   ],
   calculatePrice: (values: CalculatorValues, config: ProductCalculatorConfig) => {
     // Calculate area in square meters (convert from cm)

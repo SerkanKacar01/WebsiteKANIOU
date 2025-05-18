@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { inbetweenImage } from "@/assets/index";
 
 const AboutCompany = () => {
   const { t } = useLanguage();
@@ -98,7 +99,7 @@ const AboutCompany = () => {
 
           <div className="relative">
             <img
-              src="https://pixabay.com/get/g356064e5e472162ea3bdf7db76831017a205df5f1807a09d7636efef6f9b054d4c9aaf47b9c21d1c58d3c45cc428f1f1560cf1e2a2d0ead5771100045f79d161_1280.jpg"
+              src={inbetweenImage}
               alt={t('about.showroomImage')}
               className="w-full h-auto rounded-lg shadow-lg"
             />

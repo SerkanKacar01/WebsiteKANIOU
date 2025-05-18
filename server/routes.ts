@@ -181,6 +181,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  app.put("/api/gallery/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid gallery item ID" });
+      }
+      
+      // Check if the gallery item exists
+      const existingItem = await storage.getGalleryItemById(id);
+      if (!existingItem) {
+        return res.status(404).json({ message: "Gallery item not found" });
+      }
+
+      // Validate and update the gallery item
+      const updateData = {
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        categoryId: req.body.categoryId
+      };
+      
+      const updatedItem = await storage.updateGalleryItem(id, updateData);
+      res.json(updatedItem);
+    } catch (error) {
+      console.error("Error updating gallery item:", error);
+      res.status(500).json({ message: "Failed to update gallery item" });
+    }
+  });
+  
   // Testimonials
   app.get("/api/testimonials", async (req: Request, res: Response) => {
     try {

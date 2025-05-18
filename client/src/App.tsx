@@ -80,6 +80,7 @@ function Router() {
         
         <Route path="/products/:category" component={ProductsPage} />
         <Route path="/gallery" component={GalleryPage} />
+        <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/overons" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />

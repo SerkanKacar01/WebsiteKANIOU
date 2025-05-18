@@ -1,8 +1,8 @@
-import { ProductCalculatorConfig, CalculatorValues } from './BaseCalculator';
+import { ProductCalculatorConfig, CalculatorValues, CalculatorFeature } from './BaseCalculator';
 
 // Feature creator functions to ensure unique objects for each product
 // This prevents shared references that would cause updates to one product to affect others
-const createFeature = (id: string, label: string, price: number, description: string) => {
+const createFeature = (id: string, label: string, price: number, description: string): CalculatorFeature => {
   return { id, label, price, description };
 };
 
@@ -107,15 +107,32 @@ export const rolgordijnenConfig: ProductCalculatorConfig = {
 };
 
 // Function to get calculator config by product ID
+// We create a deep clone of the configuration to ensure each instance is unique
+// This prevents shared state issues where changes to one product affect others
 export function getCalculatorConfig(productId: string): ProductCalculatorConfig {
+  // Helper function to deep clone a calculator config
+  const cloneConfig = (config: ProductCalculatorConfig): ProductCalculatorConfig => {
+    // Clone features array with new objects for each feature
+    const clonedFeatures = config.features.map(feature => ({
+      ...feature,  // Create a new object with the same properties
+    }));
+    
+    // Return a new config object with the cloned features
+    return {
+      ...config,   // Spread all the base properties
+      features: clonedFeatures,  // Use the cloned features array
+    };
+  };
+  
+  // Return a clone of the appropriate configuration
   switch (productId) {
     case 'overgordijnen':
-      return overgordijnenConfig;
+      return cloneConfig(overgordijnenConfig);
     case 'rolgordijnen':
-      return rolgordijnenConfig;
+      return cloneConfig(rolgordijnenConfig);
     // Add more cases as you implement additional calculators
     default:
       // Default to overgordijnen if no specific config is found
-      return overgordijnenConfig;
+      return cloneConfig(overgordijnenConfig);
   }
 }

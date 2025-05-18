@@ -15,6 +15,7 @@ import ProductDetail from "@/pages/ProductDetail";
 import ProductPage from "@/pages/ProductPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import GalleryPage from "@/pages/GalleryPage";
+import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
@@ -87,6 +88,7 @@ function Router() {
         <Route path="/quote" component={QuotePage} />
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
+        <Route path="/admin/gallery" component={AdminGallery} />
         <Route component={NotFound} />
       </Switch>
     </>

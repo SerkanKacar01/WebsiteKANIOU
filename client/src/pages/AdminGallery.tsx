@@ -55,10 +55,7 @@ const AdminGallery = () => {
   // Set up update mutation
   const updateMutation = useMutation({
     mutationFn: (data: Partial<GalleryItem>) =>
-      apiRequest(`/api/gallery/${selectedItem?.id}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-      }),
+      apiRequest("PUT", `/api/gallery/${selectedItem?.id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/gallery"] });
       toast({

@@ -81,7 +81,7 @@ const PriceCalculatorPage = () => {
         "Creëer een warme en elegante sfeer met onze volledig op maat gemaakte overgordijnen. Verkrijgbaar in diverse stoffen, kleuren en plooitypes — afgestemd op uw interieur.",
       imageUrl:
         "https://images.unsplash.com/photo-1518012312832-96aea3c91144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      startingPrice: 129.99,
+      startingPrice: 40,
     },
     {
       name: "Rolgordijnen",
@@ -91,7 +91,7 @@ const PriceCalculatorPage = () => {
         "Strakke en praktische oplossing voor lichtinval en privacy. Ideaal voor elke ruimte dankzij een breed scala aan stoffen en bedieningstypes.",
       imageUrl:
         "https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      startingPrice: 79.99,
+      startingPrice: 55,
     },
   ];
 
@@ -161,16 +161,18 @@ const PriceCalculatorPage = () => {
         </div>
 
         {/* Filter Buttons */}
-        <div className="mb-8 overflow-x-auto">
-          <div className="flex flex-nowrap space-x-2 pb-2 min-w-full">
+        <div className="mb-8">
+          {/* Desktop & Tablet - Multi-row grid layout */}
+          <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {productCategories.map((category) => (
               <Button
                 key={category.id}
                 variant={activeFilter === category.id ? "default" : "outline"}
                 className={cn(
-                  "whitespace-nowrap", 
-                  activeFilter === category.id ? "bg-primary text-white" : "bg-white",
-                  "transition-all duration-200 text-sm"
+                  activeFilter === category.id
+                    ? "bg-primary text-white"
+                    : "bg-white",
+                  "transition-all duration-200 text-sm h-auto py-2",
                 )}
                 onClick={() => setActiveFilter(category.id)}
               >
@@ -178,13 +180,55 @@ const PriceCalculatorPage = () => {
               </Button>
             ))}
           </div>
+          
+          {/* Mobile - Horizontal scrollable with indicators */}
+          <div className="sm:hidden relative">
+            {/* Scroll hint - left */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
+              <div className="bg-gradient-to-r from-white to-transparent w-8 h-10 flex items-center justify-start">
+                <ChevronRight className="h-4 w-4 text-muted-foreground rotate-180 opacity-70" />
+              </div>
+            </div>
+            
+            {/* Mobile scrollable buttons */}
+            <div className="overflow-x-auto">
+              <div className="flex flex-nowrap gap-2 pb-2 pl-6 pr-6">
+                {productCategories.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant={activeFilter === category.id ? "default" : "outline"}
+                    className={cn(
+                      "whitespace-nowrap flex-shrink-0",
+                      activeFilter === category.id
+                        ? "bg-primary text-white"
+                        : "bg-white",
+                      "transition-all duration-200 text-sm",
+                    )}
+                    onClick={() => setActiveFilter(category.id)}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Scroll hint - right */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
+              <div className="bg-gradient-to-l from-white to-transparent w-8 h-10 flex items-center justify-end">
+                <ChevronRight className="h-4 w-4 text-muted-foreground opacity-70" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Available Calculators Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {/* If filtered calculators exist, show them */}
           {availableCalculators
-            .filter(calculator => activeFilter === "all" || calculator.category === activeFilter)
+            .filter(
+              (calculator) =>
+                activeFilter === "all" || calculator.category === activeFilter,
+            )
             .map((calculator, index) => (
               <Link key={index} href={calculator.path}>
                 <div className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
@@ -207,33 +251,47 @@ const PriceCalculatorPage = () => {
                     <p className="font-body text-lg font-semibold text-accent">
                       <span className="text-sm font-normal">vanaf </span>€
                       {calculator.startingPrice.toFixed(2)}
-                      <span className="text-sm font-normal">
-                        {" "}
-                        per/meter -( incl. Confectie
-                      </span>
+                      <span className="text-sm font-normal"> </span>
                     </p>
                   </div>
                 </div>
               </Link>
             ))}
-          
+
           {/* If no calculators match the filter and it's not "all", show placeholder */}
-          {activeFilter !== "all" && 
-            availableCalculators.filter(calc => calc.category === activeFilter).length === 0 && (
+          {activeFilter !== "all" &&
+            availableCalculators.filter(
+              (calc) => calc.category === activeFilter,
+            ).length === 0 && (
               <div className="col-span-full flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-md">
                 <div className="aspect-video w-full max-w-md bg-neutral-100 rounded-lg flex items-center justify-center mb-6">
-                  <svg className="w-24 h-24 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  <svg
+                    className="w-24 h-24 text-neutral-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    ></path>
                   </svg>
                 </div>
                 <h3 className="font-display text-xl text-primary font-medium mb-2 text-center">
-                  {productCategories.find(cat => cat.id === activeFilter)?.name}
+                  {
+                    productCategories.find((cat) => cat.id === activeFilter)
+                      ?.name
+                  }
                 </h3>
                 <p className="font-body text-text-medium text-center mb-4">
                   Meer details en prijsberekening binnenkort beschikbaar.
                 </p>
                 <p className="text-sm text-muted-foreground text-center">
-                  We werken aan deze berekening. Kom binnenkort terug voor meer informatie.
+                  We werken aan deze berekening. Kom binnenkort terug voor meer
+                  informatie.
                 </p>
               </div>
             )}

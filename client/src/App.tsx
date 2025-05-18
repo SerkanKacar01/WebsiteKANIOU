@@ -21,6 +21,10 @@ import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 
+// Product pages with calculators
+import OvergordijnenPage from "@/pages/products/overgordijnen";
+import RolgordijnenPage from "@/pages/products/rolgordijnen";
+
 function Router() {
   const { t } = useLanguage();
   const [location] = useLocation();
@@ -47,10 +51,12 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         
-        {/* Product category pages with exact URLs as specified */}
-        <Route path="/products/overgordijnen" component={ProductCategoryPage} />
+        {/* Product pages with calculators */}
+        <Route path="/products/overgordijnen" component={OvergordijnenPage} />
+        <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
+        
+        {/* Other product category pages */}
         <Route path="/products/vitrages" component={ProductCategoryPage} />
-        <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
         <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
         <Route path="/products/textiel-lamellen" component={ProductCategoryPage} />
         <Route path="/products/kunststof-lamellen" component={ProductCategoryPage} />

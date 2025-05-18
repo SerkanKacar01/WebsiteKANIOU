@@ -30,7 +30,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
             <Link href="/price-calculator">
               <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded w-full sm:w-auto">
-                Bereken een richtprijs
+                Bekijk onze collecties & prijzen
               </Button>
             </Link>
             <Link href="/quote">

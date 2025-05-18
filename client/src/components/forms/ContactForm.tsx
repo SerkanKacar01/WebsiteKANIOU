@@ -50,12 +50,13 @@ const ContactForm = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: ContactFormValues) => 
+    mutationFn: (data: ContactFormValues) =>
       apiRequest("POST", "/api/contact", data),
     onSuccess: () => {
       toast({
         title: "Message Sent",
-        description: "Thank you for your message. We'll respond as soon as possible.",
+        description:
+          "Thank you for your message. We'll respond as soon as possible.",
         variant: "success",
       });
       form.reset();
@@ -64,7 +65,8 @@ const ContactForm = () => {
     onError: (error) => {
       toast({
         title: "Submission Failed",
-        description: error.message || "Failed to send message. Please try again.",
+        description:
+          error.message || "Failed to send message. Please try again.",
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -85,9 +87,9 @@ const ContactForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Name</FormLabel>
+                <FormLabel>Voor - en Achternaam</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,9 +101,9 @@ const ContactForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email Address</FormLabel>
+                <FormLabel>E-mail adres</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" {...field} />
+                  <Input type="email" placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,9 +116,12 @@ const ContactForm = () => {
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subject</FormLabel>
+              <FormLabel>Onderwerp</FormLabel>
               <FormControl>
-                <Input placeholder="How can we help you?" {...field} />
+                <Input
+                  placeholder="Waarmee kunnen wij u van dienst zijn?"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -128,11 +133,11 @@ const ContactForm = () => {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>Bericht</FormLabel>
               <FormControl>
                 <Textarea
                   rows={6}
-                  placeholder="Please provide details about your inquiry..."
+                  placeholder="Gelieve de details van uw aanvraag zo volledig mogelijk te vermelden…"
                   {...field}
                 />
               </FormControl>
@@ -141,12 +146,12 @@ const ContactForm = () => {
           )}
         />
 
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           className="bg-secondary hover:bg-accent"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : "Send Message"}
+          {isSubmitting ? "Sending..." : "Bericth verzenden"}
         </Button>
       </form>
     </Form>

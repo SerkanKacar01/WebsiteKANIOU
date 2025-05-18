@@ -17,42 +17,50 @@ import { useLanguage } from "@/context/LanguageContext";
 const PriceCalculatorPage = () => {
   const { t } = useLanguage();
   const [location, setLocation] = useLocation();
-  
+
   // Fetch all categories
-  const { data: categories = [], isLoading: categoriesLoading } = useQuery<Category[]>({
+  const { data: categories = [], isLoading: categoriesLoading } = useQuery<
+    Category[]
+  >({
     queryKey: ["/api/categories"],
   });
 
   // Fetch all products to calculate the minimum prices per category
-  const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
+  const { data: products = [], isLoading: productsLoading } = useQuery<
+    Product[]
+  >({
     queryKey: ["/api/products"],
   });
 
   // Calculate the minimum price for each category
   const getMinPriceForCategory = (categoryId: number) => {
-    const categoryProducts = products.filter(product => product.categoryId === categoryId);
-    
+    const categoryProducts = products.filter(
+      (product) => product.categoryId === categoryId,
+    );
+
     if (categoryProducts.length === 0) return null;
-    
-    return Math.min(...categoryProducts.map(product => product.price));
+
+    return Math.min(...categoryProducts.map((product) => product.price));
   };
 
   // Define the calculators available
   const availableCalculators = [
-    { 
+    {
       name: "Overgordijnen",
       path: "/products/overgordijnen",
       description: "Bereken de prijs voor uw op maat gemaakte overgordijnen",
-      imageUrl: "https://images.unsplash.com/photo-1518012312832-96aea3c91144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      startingPrice: 129.99
+      imageUrl:
+        "https://images.unsplash.com/photo-1518012312832-96aea3c91144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      startingPrice: 129.99 ,
     },
-    { 
+    {
       name: "Rolgordijnen",
       path: "/products/rolgordijnen",
       description: "Bereken de prijs voor uw op maat gemaakte rolgordijnen",
-      imageUrl: "https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      startingPrice: 79.99
-    }
+      imageUrl:
+        "https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      startingPrice: 79.99,
+    },
   ];
 
   // Loading states
@@ -70,10 +78,16 @@ const PriceCalculatorPage = () => {
   return (
     <>
       <Helmet>
-        <title>Bekijk onze  ||  Producten & Prijzen </title>
-        <meta name="description" content="Calculate custom prices for our premium window treatments" />
-        <meta property="og:title" content="Price Calculator | Elegant Drapes" />
-        <meta property="og:description" content="Calculate custom prices for our premium window treatments" />
+        <title>Bekijk onze || Producten & Prijzen </title>
+        <meta
+          name="description"
+          content="Calculate custom prices for our premium window treatments"
+        />
+        <meta property="og:title" content="Price Calculator | KANIOU zilvernaald" />
+        <meta
+          property="og:description"
+          content="Calculate custom prices for our premium window treatments"
+        />
         <meta property="og:type" content="website" />
       </Helmet>
 
@@ -92,7 +106,9 @@ const PriceCalculatorPage = () => {
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <span className="font-semibold">Bekijk onze Producten & Prijzen</span>
+              <span className="font-semibold">
+                Bekijk onze Producten & Prijzen
+              </span>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -100,53 +116,82 @@ const PriceCalculatorPage = () => {
         {/* Page Title */}
         <div className="text-center mb-12">
           <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-primary mb-4">
-           Onze collecties & prijzen
+            Onze collecties & prijzen
           </h1>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            Select a product category below to calculate a custom price based on your specific measurements and preferences.
+            Selecteer hieronder een productcategorie om een prijsberekening op
+            maat te ontvangen, afgestemd op uw specifieke afmetingen en
+            voorkeuren.
           </p>
         </div>
 
         {/* Available Calculators Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {availableCalculators.map((calculator, index) => (
-            <div key={index} className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={calculator.imageUrl}
-                  alt={calculator.name}
-                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                />
+            <Link key={index} href={calculator.path}>
+              <div className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={calculator.imageUrl}
+                    alt={calculator.name}
+                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <h2 className="font-display text-xl text-primary font-medium mb-2 flex items-center">
+                    {calculator.name}
+                    <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h2>
+                  <p className="font-body text-text-medium text-sm mb-4">
+                    {calculator.description}
+                  </p>
+
+                  <p className="font-body text-lg font-semibold text-accent">
+                    <span className="text-sm font-normal">From </span>€
+                    {calculator.startingPrice.toFixed(2)}
+                    <span className="text-sm font-normal"> per window</span>
+                  </p>
+                </div>
               </div>
-              <div className="p-6">
-                <h2 className="font-display text-xl text-primary font-medium mb-2 flex items-center">
-                  {calculator.name}
-                  <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h2>
-                <p className="font-body text-text-medium text-sm mb-4">
-                  {calculator.description}
-                </p>
-                
-                <p className="font-body text-lg font-semibold text-accent">
-                  <span className="text-sm font-normal">From </span>
-                  €{calculator.startingPrice.toFixed(2)}
-                  <span className="text-sm font-normal"> per window</span>
-                </p>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
 
         {/* Additional Info */}
         <div className="mt-12 bg-neutral-50 p-6 rounded-lg">
           <h2 className="font-display text-xl text-primary font-medium mb-4">
-            About Our Price Calculator
+            Over onze collecties & prijzen
           </h2>
           <p className="mb-4">
-            Our calculators provide an approximate price based on your measurements and selected options. For the most accurate quote, please request a free consultation where our experts can assess your specific needs.
-          </p>
-          <p>
-            All prices include made-to-measure fabrication but exclude installation costs unless specified.
+            <>
+              Onze raamdecoratiecollecties zijn zorgvuldig samengesteld om zowel
+              esthetiek als functionaliteit te combineren.
+              <br />
+              Elk product wordt volledig op maat gemaakt, met oog voor detail en
+              afgestemd op uw persoonlijke voorkeuren en interieureisen.
+              <br />
+              <br />
+              De vermelde prijzen in onze calculator zijn richtprijzen gebaseerd
+              op de door u ingevoerde afmetingen en geselecteerde opties.
+              <br />
+              Ze geven een eerste indicatie van het kostenplaatje voor uw
+              gewenste raamoplossing.
+              <br />
+              Houd er rekening mee dat deze prijzen inclusief maatwerk zijn,
+              maar exclusief plaatsingskosten, tenzij anders vermeld.
+              <br />
+              <br />
+              Voor een volledig transparant en accuraat prijsvoorstel raden wij
+              aan een vrijblijvende consultatie aan te vragen.
+              <br />
+              Onze specialisten komen indien gewenst bij u langs om
+              professioneel advies te geven, exacte maten op te nemen en u te
+              begeleiden in uw keuze voor materiaal, afwerking en
+              montagemethode.
+              <br />
+              Zo bent u verzekerd van een oplossing die perfect aansluit op uw
+              wensen én uw ruimte.
+            </>
           </p>
         </div>
       </Container>

@@ -48,15 +48,17 @@ const PriceCalculatorPage = () => {
     {
       name: "Overgordijnen",
       path: "/products/overgordijnen",
-      description: "Bereken de prijs voor uw op maat gemaakte overgordijnen",
+      description:
+        "Creëer een warme en elegante sfeer met onze volledig op maat gemaakte overgordijnen. Verkrijgbaar in diverse stoffen, kleuren en plooitypes — afgestemd op uw interieur.",
       imageUrl:
         "https://images.unsplash.com/photo-1518012312832-96aea3c91144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      startingPrice: 129.99 ,
+      startingPrice: 129.99,
     },
     {
       name: "Rolgordijnen",
       path: "/products/rolgordijnen",
-      description: "Bereken de prijs voor uw op maat gemaakte rolgordijnen",
+      description:
+        "Strakke en praktische oplossing voor lichtinval en privacy. Ideaal voor elke ruimte dankzij een breed scala aan stoffen en bedieningstypes.",
       imageUrl:
         "https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
       startingPrice: 79.99,
@@ -83,7 +85,10 @@ const PriceCalculatorPage = () => {
           name="description"
           content="Calculate custom prices for our premium window treatments"
         />
-        <meta property="og:title" content="Price Calculator | KANIOU zilvernaald" />
+        <meta
+          property="og:title"
+          content="Price Calculator | KANIOU zilvernaald"
+        />
         <meta
           property="og:description"
           content="Calculate custom prices for our premium window treatments"
@@ -128,7 +133,7 @@ const PriceCalculatorPage = () => {
         {/* Available Calculators Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {availableCalculators.map((calculator, index) => (
-            <div key={index}>
+            <Link key={index} href={calculator.path}>
               <div className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
@@ -147,13 +152,16 @@ const PriceCalculatorPage = () => {
                   </p>
 
                   <p className="font-body text-lg font-semibold text-accent">
-                    <span className="text-sm font-normal">From </span>€
+                    <span className="text-sm font-normal">vanaf </span>€
                     {calculator.startingPrice.toFixed(2)}
-                    <span className="text-sm font-normal"> per window</span>
+                    <span className="text-sm font-normal">
+                      {" "}
+                      per/meter -( incl. Confectie
+                    </span>
                   </p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

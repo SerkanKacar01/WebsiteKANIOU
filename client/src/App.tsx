@@ -12,7 +12,6 @@ import Footer from "@/components/layout/Footer";
 import Home from "@/pages/Home";
 import ProductsPage from "@/pages/ProductsPage";
 import ProductDetail from "@/pages/ProductDetail";
-import ProductPage from "@/pages/ProductPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
@@ -49,12 +48,6 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/products" component={ProductsPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
-        
-        {/* Specific product pages */}
-        <Route path="/products/milano-linen-curtains" component={ProductPage} />
-        <Route path="/products/nordic-roller-blinds" component={ProductPage} />
-        <Route path="/products/tuscany-roman-blinds" component={ProductPage} />
-        <Route path="/products/aria-sheer-curtains" component={ProductPage} />
         
         {/* Product category pages with exact URLs as specified */}
         <Route path="/products/overgordijnen" component={ProductCategoryPage} />

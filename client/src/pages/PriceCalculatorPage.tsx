@@ -128,7 +128,7 @@ const PriceCalculatorPage = () => {
         {/* Available Calculators Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {availableCalculators.map((calculator, index) => (
-            <Link key={index} href={calculator.path}>
+            <div key={index}>
               <div className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
@@ -153,7 +153,7 @@ const PriceCalculatorPage = () => {
                   </p>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 

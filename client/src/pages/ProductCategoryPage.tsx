@@ -330,9 +330,14 @@ const ProductCategoryPage = () => {
                       {product.description}
                     </p>
                     <div className="flex justify-between items-center">
-                      <span className="text-accent font-semibold">
-                        ${product.price.toFixed(2)}
-                      </span>
+                      <div className="text-accent">
+                        <span className="font-semibold text-lg">
+                          €{product.price.toFixed(2)}
+                        </span>
+                        <span className="text-sm font-normal text-text-medium ml-1">
+                          per window
+                        </span>
+                      </div>
                       <Link
                         href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
                       >

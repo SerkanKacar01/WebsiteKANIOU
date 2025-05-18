@@ -146,31 +146,31 @@ const QuoteForm = () => {
                     <SelectItem value="blinds">Inbetweens</SelectItem>
                     <SelectItem value="shades">Vouwgordijnen</SelectItem>
                     <SelectItem value="drapes">Textiel Lamellen</SelectItem>
-                    <SelectItem value="accessories">
+                    <SelectItem value="kunststof_lamellen">
                       Kunststof lamellen
                     </SelectItem>
-                    <SelectItem value="accessories">
+                    <SelectItem value="kunststof_jaloezieen">
                       Kunststof jaloezieën
                     </SelectItem>
-                    <SelectItem value="accessories">
+                    <SelectItem value="houten_jaloezieen">
                       Houten jaloezieën
                     </SelectItem>
-                    <SelectItem value="accessories">Houten shutters</SelectItem>
-                    <SelectItem value="accessories">Plissé</SelectItem>
-                    <SelectItem value="accessories">Duo-Plissé</SelectItem>
-                    <SelectItem value="accessories">Rolgordijnen</SelectItem>
-                    <SelectItem value="accessories">
+                    <SelectItem value="houten_shutters">Houten shutters</SelectItem>
+                    <SelectItem value="plisse">Plissé</SelectItem>
+                    <SelectItem value="duo_plisse">Duo-Plissé</SelectItem>
+                    <SelectItem value="rolgordijnen">Rolgordijnen</SelectItem>
+                    <SelectItem value="duo_rolgordijnen">
                       Duo-rolgordijnen
                     </SelectItem>
-                    <SelectItem value="accessories">Gordijnrails</SelectItem>
-                    <SelectItem value="accessories">Gordijnroedes</SelectItem>
-                    <SelectItem value="accessories">SQUID</SelectItem>
-                    <SelectItem value="accessories">Inzethorren</SelectItem>
-                    <SelectItem value="accessories">Opzethorren</SelectItem>
-                    <SelectItem value="accessories">
+                    <SelectItem value="gordijnrails">Gordijnrails</SelectItem>
+                    <SelectItem value="gordijnroedes">Gordijnroedes</SelectItem>
+                    <SelectItem value="squid">SQUID</SelectItem>
+                    <SelectItem value="inzethorren">Inzethorren</SelectItem>
+                    <SelectItem value="opzethorren">Opzethorren</SelectItem>
+                    <SelectItem value="plisse_hordeuren">
                       Plissé hordeuren
                     </SelectItem>
-                    <SelectItem value="accessories">
+                    <SelectItem value="dakraam_velux_fakro">
                       Dakraam Velux/Fakro
                     </SelectItem>
                   </SelectContent>

@@ -41,7 +41,6 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t("HOME"), href: "home" },
     { label: t("PRODUCTEN"), href: "/producten", hasDropdown: true },
     { label: t("GALLERIJ"), href: "/gallerij" },
     { label: t("OVER ONS"), href: "/overons" },
@@ -301,7 +300,7 @@ const Header = () => {
               <div className="flex items-center gap-4">
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">
-                    {t("nav.quote")}
+                    {t("OFFERTE AANVRAGEN")}
                   </Button>
                 </Link>
               </div>

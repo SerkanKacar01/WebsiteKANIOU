@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones, CheckCircle } from "lucide-react";
+import { overgordijnenImage } from "@/assets";
 
 const AboutPage = () => {
   return (
@@ -79,8 +80,8 @@ const AboutPage = () => {
 
             <div className="relative">
               <img
-                src="https://pixabay.com/get/g356064e5e472162ea3bdf7db76831017a205df5f1807a09d7636efef6f9b054d4c9aaf47b9c21d1c58d3c45cc428f1f1560cf1e2a2d0ead5771100045f79d161_1280.jpg"
-                alt="Elegant Drapes Showroom"
+                src={overgordijnenImage}
+                alt="KANIOU zilvernaald Showroom"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">

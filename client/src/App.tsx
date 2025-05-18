@@ -10,7 +10,6 @@ import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Home from "@/pages/Home";
-import ProductsPage from "@/pages/ProductsPage";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import GalleryPage from "@/pages/GalleryPage";
@@ -28,7 +27,6 @@ function Router() {
   // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
-    if (location === "/products") return t("products.title") + " | " + t("app.title");
     if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
@@ -46,7 +44,6 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/products" component={ProductsPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         
         {/* Product category pages with exact URLs as specified */}
@@ -71,8 +68,6 @@ function Router() {
         <Route path="/products/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/products/horren" component={ProductCategoryPage} />
         <Route path="/products/squid" component={ProductCategoryPage} />
-        
-        <Route path="/products/:category" component={ProductsPage} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />

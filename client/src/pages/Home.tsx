@@ -6,6 +6,7 @@ import GallerySection from "@/components/home/GallerySection";
 import AboutCompany from "@/components/home/AboutCompany";
 import QuoteRequestSection from "@/components/home/QuoteRequestSection";
 import ContactSection from "@/components/home/ContactSection";
+import ProductButtons from "@/components/home/ProductButtons";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       
       <HeroSection />
       <FeaturedCategories />
+      <ProductButtons />
       <TestimonialSection />
       <GallerySection />
       <AboutCompany />

@@ -70,7 +70,7 @@ const PriceCalculatorPage = () => {
   return (
     <>
       <Helmet>
-        <title>Price Calculator | Elegant Drapes</title>
+        <title>Bekijk onze  ||  Producten & Prijzen </title>
         <meta name="description" content="Calculate custom prices for our premium window treatments" />
         <meta property="og:title" content="Price Calculator | Elegant Drapes" />
         <meta property="og:description" content="Calculate custom prices for our premium window treatments" />
@@ -92,7 +92,7 @@ const PriceCalculatorPage = () => {
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <span className="font-semibold">Price Calculator</span>
+              <span className="font-semibold">Bekijk onze Producten & Prijzen</span>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -100,7 +100,7 @@ const PriceCalculatorPage = () => {
         {/* Page Title */}
         <div className="text-center mb-12">
           <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-primary mb-4">
-            Price Calculator
+           Onze collecties & prijzen
           </h1>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
             Select a product category below to calculate a custom price based on your specific measurements and preferences.
@@ -110,32 +110,30 @@ const PriceCalculatorPage = () => {
         {/* Available Calculators Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {availableCalculators.map((calculator, index) => (
-            <Link key={index} href={calculator.path}>
-              <div className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={calculator.imageUrl}
-                    alt={calculator.name}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6">
-                  <h2 className="font-display text-xl text-primary font-medium mb-2 flex items-center">
-                    {calculator.name}
-                    <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </h2>
-                  <p className="font-body text-text-medium text-sm mb-4">
-                    {calculator.description}
-                  </p>
-                  
-                  <p className="font-body text-lg font-semibold text-accent">
-                    <span className="text-sm font-normal">From </span>
-                    €{calculator.startingPrice.toFixed(2)}
-                    <span className="text-sm font-normal"> per window</span>
-                  </p>
-                </div>
+            <div key={index} className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={calculator.imageUrl}
+                  alt={calculator.name}
+                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                />
               </div>
-            </Link>
+              <div className="p-6">
+                <h2 className="font-display text-xl text-primary font-medium mb-2 flex items-center">
+                  {calculator.name}
+                  <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </h2>
+                <p className="font-body text-text-medium text-sm mb-4">
+                  {calculator.description}
+                </p>
+                
+                <p className="font-body text-lg font-semibold text-accent">
+                  <span className="text-sm font-normal">From </span>
+                  €{calculator.startingPrice.toFixed(2)}
+                  <span className="text-sm font-normal"> per window</span>
+                </p>
+              </div>
+            </div>
           ))}
         </div>
 

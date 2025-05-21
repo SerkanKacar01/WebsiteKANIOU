@@ -11,7 +11,17 @@ import {
   galleryImage3, 
   galleryImage4, 
   galleryImage5, 
-  galleryImage6 
+  galleryImage6,
+  galleryImage7,
+  galleryImage10,
+  galleryImage_duorol,
+  galleryImage_plisse,
+  galleryImage_IMG9293,
+  galleryImage_IMG9294,
+  galleryImage_IMG9295,
+  galleryImage_IMG9296,
+  galleryImage_IMG9297,
+  galleryImage_IMG9298
 } from "@/assets";
 
 const GalleryPage = () => {

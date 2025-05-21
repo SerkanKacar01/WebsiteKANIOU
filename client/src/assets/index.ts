@@ -17,6 +17,18 @@ import galleryImage_IMG9295 from './IMG_9295.jpg';
 import galleryImage_IMG9296 from './IMG_9296.jpg';
 import galleryImage_IMG9297 from './IMG_9297.jpg';
 import galleryImage_IMG9298 from './IMG_9298.jpg';
+import galleryImage_IMG9299 from './IMG_9299.jpg';
+import galleryImage_IMG9300 from './IMG_9300.jpg';
+import galleryImage_IMG9301 from './IMG_9301.jpg';
+import galleryImage_IMG9302 from './IMG_9302.jpg';
+import galleryImage_IMG9303 from './IMG_9303.jpg';
+import galleryImage_IMG9304 from './IMG_9304.jpg';
+import galleryImage_duoplisse from './Duoplisse.jpeg';
+import galleryImage_inbetweens from './Inbetweens.jpeg';
+import galleryImage_opzethorren from './Opzethorren.jpeg';
+import galleryImage_rolgordijnen from './Rolgordijnen.jpeg';
+import galleryImage_textiellamellen from './Textiellamellen.jpeg';
+import galleryImage_vouwgordijnen from './Vouwgordijnen.jpeg';
 
 export {
   overgordijnenImage,
@@ -37,5 +49,17 @@ export {
   galleryImage_IMG9295,
   galleryImage_IMG9296,
   galleryImage_IMG9297,
-  galleryImage_IMG9298
+  galleryImage_IMG9298,
+  galleryImage_IMG9299,
+  galleryImage_IMG9300,
+  galleryImage_IMG9301,
+  galleryImage_IMG9302,
+  galleryImage_IMG9303,
+  galleryImage_IMG9304,
+  galleryImage_duoplisse,
+  galleryImage_inbetweens,
+  galleryImage_opzethorren,
+  galleryImage_rolgordijnen,
+  galleryImage_textiellamellen,
+  galleryImage_vouwgordijnen
 };

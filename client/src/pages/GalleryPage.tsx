@@ -21,7 +21,19 @@ import {
   galleryImage_IMG9295,
   galleryImage_IMG9296,
   galleryImage_IMG9297,
-  galleryImage_IMG9298
+  galleryImage_IMG9298,
+  galleryImage_IMG9299,
+  galleryImage_IMG9300,
+  galleryImage_IMG9301,
+  galleryImage_IMG9302,
+  galleryImage_IMG9303,
+  galleryImage_IMG9304,
+  galleryImage_duoplisse,
+  galleryImage_inbetweens,
+  galleryImage_opzethorren,
+  galleryImage_rolgordijnen,
+  galleryImage_textiellamellen,
+  galleryImage_vouwgordijnen
 } from "@/assets";
 
 const GalleryPage = () => {
@@ -171,6 +183,91 @@ const GalleryPage = () => {
       description: "Bespoke window treatments enhancing architectural features",
       imageUrl: galleryImage10,
       categoryId: 2
+    },
+    // New third batch of images
+    {
+      id: 1017,
+      title: "Modern Living Room with Roller Shades",
+      description: "Stylish roller shades providing privacy while letting in natural light",
+      imageUrl: galleryImage_IMG9299,
+      categoryId: 1
+    },
+    {
+      id: 1018,
+      title: "Contemporary Dining Room Blinds",
+      description: "Modern duo roller blinds perfectly framing the dining area window",
+      imageUrl: galleryImage_IMG9300,
+      categoryId: 2
+    },
+    {
+      id: 1019,
+      title: "Blackout Roller Shades",
+      description: "Premium blackout roller shades perfect for light control",
+      imageUrl: galleryImage_IMG9301,
+      categoryId: 3
+    },
+    {
+      id: 1020,
+      title: "Elegant Day and Night Blinds",
+      description: "Sophisticated day and night blinds with modern living room installation",
+      imageUrl: galleryImage_IMG9302,
+      categoryId: 1
+    },
+    {
+      id: 1021,
+      title: "Open Plan Living with Zebra Blinds",
+      description: "Beautiful zebra blinds complementing an open plan living and dining space",
+      imageUrl: galleryImage_IMG9303,
+      categoryId: 2
+    },
+    {
+      id: 1022,
+      title: "Patio Insect Screen",
+      description: "Functional insect screen for patio doors providing protection without obstructing views",
+      imageUrl: galleryImage_IMG9304,
+      categoryId: 3
+    },
+    {
+      id: 1023,
+      title: "Dual Plissé Shades",
+      description: "Dual plissé shades offering both privacy and light filtering options",
+      imageUrl: galleryImage_duoplisse,
+      categoryId: 1
+    },
+    {
+      id: 1024,
+      title: "Premium Inbetween Curtains",
+      description: "Elegant inbetween curtains creating a soft, diffused lighting effect",
+      imageUrl: galleryImage_inbetweens,
+      categoryId: 2
+    },
+    {
+      id: 1025,
+      title: "Custom Screen Solutions",
+      description: "Custom fit insect screens for maximum protection and comfort",
+      imageUrl: galleryImage_opzethorren,
+      categoryId: 3
+    },
+    {
+      id: 1026,
+      title: "Designer Roller Blinds",
+      description: "Contemporary roller blinds with clean lines and modern appeal",
+      imageUrl: galleryImage_rolgordijnen,
+      categoryId: 1
+    },
+    {
+      id: 1027,
+      title: "Vertical Fabric Blinds",
+      description: "Vertical fabric blinds perfect for large windows and sliding doors",
+      imageUrl: galleryImage_textiellamellen,
+      categoryId: 2
+    },
+    {
+      id: 1028,
+      title: "Roman Blind Installation",
+      description: "Elegant roman blinds offering a soft, fabric window treatment solution",
+      imageUrl: galleryImage_vouwgordijnen,
+      categoryId: 3
     }
   ];
 

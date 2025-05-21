@@ -54,9 +54,9 @@ const ContactForm = () => {
       apiRequest("POST", "/api/contact", data),
     onSuccess: () => {
       toast({
-        title: "Message Sent",
+        title: "Bericht verzonden",
         description:
-          "Thank you for your message. We'll respond as soon as possible.",
+          "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
         variant: "success",
       });
       form.reset();

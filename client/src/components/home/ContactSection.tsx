@@ -4,16 +4,18 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const ContactSection = () => {
   const { t } = useLanguage();
-  
+
   return (
     <section id="contact" className="py-16">
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-            {t('contact.title')}
+            {t("Neem contact met ons op")}
           </h2>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t('contact.subtitle')}
+            {t(
+              "Voor vragen, afspraken of professioneel advies staat ons team voor u klaar.",
+            )}
           </p>
         </div>
 
@@ -23,17 +25,17 @@ const ContactSection = () => {
               <MapPin className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              {t('contact.showroom.title')}
+              {t("Showroom bezoeken")}
             </h3>
             <p className="font-body text-text-medium">
-              {t('contact.showroom.address1')}
+              {t("Pauwengraaf 66")}
               <br />
-              {t('contact.showroom.address2')}
+              {t("3630 Maasmechelen, België")}
             </p>
             <p className="font-body text-text-medium mt-2">
-              {t('contact.showroom.hours1')}
+              {t("Maandag t/m Zaterdag: 10:00 – 18:00")}
               <br />
-              {t('contact.showroom.hours2')}
+              {t("Zondag: Gesloten")}
             </p>
           </div>
 
@@ -42,13 +44,15 @@ const ContactSection = () => {
               <Phone className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              {t('contact.call.title')}
+              {t("Telefonisch bereikbaar")}
             </h3>
-            <p className="font-body text-text-medium">{t('contact.call.phone')}</p>
+            <p className="font-body text-text-medium">
+              {t("+32 467 85 64 05")}
+            </p>
             <p className="font-body text-text-medium mt-2">
-              {t('contact.call.hours1')}
+              {t("Maandag t/m Zaterdag: 10:00 – 18:00")}
               <br />
-              {t('contact.call.hours2')}
+              {t("Zondag: Gesloten")}
             </p>
           </div>
 
@@ -57,11 +61,13 @@ const ContactSection = () => {
               <Mail className="text-secondary text-xl" />
             </div>
             <h3 className="font-display text-xl text-primary font-medium mb-2">
-              {t('contact.email.title')}
+              {t("E-mail ons")}
             </h3>
-            <p className="font-body text-text-medium">{t('contact.email.address1')}</p>
+            <p className="font-body text-text-medium">
+              {t("Stuur ons een bericht via e-mail")}
+            </p>
             <p className="font-body text-text-medium mt-2">
-              {t('contact.email.address2')}
+              {t("info@kaniu.be")}
             </p>
           </div>
         </div>
@@ -75,7 +81,7 @@ const ContactSection = () => {
               style={{ border: 0 }}
               allowFullScreen={false}
               loading="lazy"
-              title={t('contact.map.title')}
+              title={t("contact.map.title")}
             ></iframe>
           </div>
         </div>

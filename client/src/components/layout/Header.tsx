@@ -106,7 +106,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-white py-3 ${
+      className={`sticky top-0 z-50 w-full bg-white py-1.5 ${
         isScrolled ? "shadow-md" : ""
       }`}
     >

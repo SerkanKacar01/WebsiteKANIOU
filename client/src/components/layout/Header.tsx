@@ -138,14 +138,12 @@ const Header = () => {
               <SheetContent side="right" className="p-0">
                 <div className="flex flex-col space-y-3 p-6">
                   <div className="flex justify-between items-center mb-6">
-                    <div className="flex flex-col">
-                      <span className="font-display text-2xl font-semibold text-primary leading-tight">
-                        KANIOU
-                        <span className="text-secondary">zilvernaald</span>
-                      </span>
-                      <span className="font-display text-xs font-semibold text-primary leading-tight">
-                        || Gordijnen & Zonweringen
-                      </span>
+                    <div>
+                      <img 
+                        src={kaniouLogo} 
+                        alt="KANIOU zilvernaald" 
+                        className="h-10" 
+                      />
                     </div>
                     <Button
                       variant="ghost"

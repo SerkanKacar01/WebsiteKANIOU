@@ -5,6 +5,14 @@ import Container from "@/components/ui/container";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GalleryItem, Category } from "@shared/schema";
+import { 
+  galleryImage1, 
+  galleryImage2, 
+  galleryImage3, 
+  galleryImage4, 
+  galleryImage5, 
+  galleryImage6 
+} from "@/assets";
 
 const GalleryPage = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -38,6 +46,55 @@ const GalleryPage = () => {
   useEffect(() => {
     refetch();
   }, [activeTab, refetch]);
+
+  // Create local gallery items for the new photos
+  const newGalleryItems: GalleryItem[] = [
+    {
+      id: 1001,
+      title: "Premium Window Treatment",
+      description: "Elegant curtain installation with premium fabric",
+      imageUrl: galleryImage1,
+      categoryId: 1
+    },
+    {
+      id: 1002,
+      title: "Custom Blinds Design",
+      description: "Contemporary blinds solution for modern interiors",
+      imageUrl: galleryImage2,
+      categoryId: 1
+    },
+    {
+      id: 1003,
+      title: "Luxury Drapes",
+      description: "Luxurious drapes with high-quality materials",
+      imageUrl: galleryImage3,
+      categoryId: 2
+    },
+    {
+      id: 1004,
+      title: "Modern Window Solutions",
+      description: "Sleek and functional window treatment design",
+      imageUrl: galleryImage4,
+      categoryId: 2
+    },
+    {
+      id: 1005,
+      title: "Stylish Interior Curtains",
+      description: "Stylish curtain design enhancing the living space",
+      imageUrl: galleryImage5,
+      categoryId: 3
+    },
+    {
+      id: 1006,
+      title: "Contemporary Window Decor",
+      description: "Contemporary window decoration for elegant homes",
+      imageUrl: galleryImage6,
+      categoryId: 3
+    }
+  ];
+
+  // Combine database items with new items or just use new items if database fetch fails
+  const displayItems = error ? newGalleryItems : [...newGalleryItems, ...galleryItems];
 
   return (
     <>
@@ -84,9 +141,9 @@ const GalleryPage = () => {
           </Tabs>
 
           <GalleryGrid
-            items={galleryItems}
+            items={displayItems}
             isLoading={isLoading}
-            error={error as Error}
+            error={null}
           />
 
           <div className="mt-16 bg-white p-8 rounded-lg shadow-md text-center">

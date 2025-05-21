@@ -28,6 +28,12 @@ import {
   galleryImage_IMG9302,
   galleryImage_IMG9303,
   galleryImage_IMG9304,
+  galleryImage_IMG9305,
+  galleryImage_IMG9306,
+  galleryImage_IMG9307,
+  galleryImage_IMG9308,
+  galleryImage_IMG9309,
+  galleryImage_IMG9310,
   galleryImage_duoplisse,
   galleryImage_inbetweens,
   galleryImage_opzethorren,
@@ -267,6 +273,49 @@ const GalleryPage = () => {
       title: "Roman Blind Installation",
       description: "Elegant roman blinds offering a soft, fabric window treatment solution",
       imageUrl: galleryImage_vouwgordijnen,
+      categoryId: 3
+    },
+    // Final batch of images
+    {
+      id: 1029,
+      title: "Contemporary Open Living Space",
+      description: "Modern living space with venetian blinds providing privacy while maintaining an open feel",
+      imageUrl: galleryImage_IMG9305,
+      categoryId: 1
+    },
+    {
+      id: 1030,
+      title: "Modern Home Office Setup",
+      description: "Stylish home office featuring premium venetian blinds for light control and privacy",
+      imageUrl: galleryImage_IMG9306,
+      categoryId: 2
+    },
+    {
+      id: 1031,
+      title: "Elegant Dining Space",
+      description: "Contemporary dining area featuring sophisticated zebra blinds for ambient lighting",
+      imageUrl: galleryImage_IMG9307,
+      categoryId: 3
+    },
+    {
+      id: 1032,
+      title: "Minimalist Living Room",
+      description: "Clean, modern living room with horizontal blinds that enhance the spacious feel",
+      imageUrl: galleryImage_IMG9308,
+      categoryId: 1
+    },
+    {
+      id: 1033,
+      title: "Cozy Living Room with Sheer Curtains",
+      description: "Warm and inviting living space with sheer curtains that softly filter natural light",
+      imageUrl: galleryImage_IMG9309,
+      categoryId: 2
+    },
+    {
+      id: 1034,
+      title: "Contemporary Vertical Blinds",
+      description: "Modern dining area featuring textured vertical blinds that complement the interior design",
+      imageUrl: galleryImage_IMG9310,
       categoryId: 3
     }
   ];

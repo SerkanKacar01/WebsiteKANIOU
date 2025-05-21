@@ -35,6 +35,7 @@ import galleryImage_opzethorren from './Opzethorren.jpeg';
 import galleryImage_rolgordijnen from './Rolgordijnen.jpeg';
 import galleryImage_textiellamellen from './Textiellamellen.jpeg';
 import galleryImage_vouwgordijnen from './Vouwgordijnen.jpeg';
+import kaniouLogo from '@assets/KAN.LOGO.png';
 
 export {
   overgordijnenImage,
@@ -73,5 +74,6 @@ export {
   galleryImage_opzethorren,
   galleryImage_rolgordijnen,
   galleryImage_textiellamellen,
-  galleryImage_vouwgordijnen
+  galleryImage_vouwgordijnen,
+  kaniouLogo
 };

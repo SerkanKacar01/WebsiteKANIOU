@@ -7,6 +7,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSelector from "./LanguageSelector";
+import { kaniouLogo } from "@/assets";
 
 const productCategories = [
   { label: "Overgordijnen", href: "/products/overgordijnen" },
@@ -113,13 +114,12 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/">
-              <div className="flex flex-col md:flex-row items-start md:items-center md:space-x-3 cursor-pointer">
-                <span className="font-display text-4xl md:text-3xl lg:text-4xl font-semibold text-primary leading-tight">
-                  KANIOU<span className="text-secondary">zilvernaald</span>
-                </span>
-                <span className="font-display text-sm md:text-sm lg:text-base font-semibold text-primary leading-tight hidden md:block">
-                  || Gordijnen & Zonweringen
-                </span>
+              <div className="flex items-center cursor-pointer">
+                <img 
+                  src={kaniouLogo} 
+                  alt="KANIOU zilvernaald" 
+                  className="h-12 md:h-14" 
+                />
               </div>
             </Link>
           </div>

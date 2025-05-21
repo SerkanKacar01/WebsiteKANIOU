@@ -90,6 +90,77 @@ const GalleryPage = () => {
       description: "Contemporary window decoration for elegant homes",
       imageUrl: galleryImage6,
       categoryId: 3
+    },
+    // Additional gallery items (second batch)
+    {
+      id: 1007,
+      title: "Modern Duo Roller Blinds",
+      description: "Elegant duo roller blinds providing both privacy and light control",
+      imageUrl: galleryImage_duorol,
+      categoryId: 2
+    },
+    {
+      id: 1008,
+      title: "Designer Plissé Shades",
+      description: "Sophisticated plissé shades for a clean, modern look",
+      imageUrl: galleryImage_plisse,
+      categoryId: 3
+    },
+    {
+      id: 1009,
+      title: "Living Room Window Treatment",
+      description: "Stylish curtain and blind combination for modern living rooms",
+      imageUrl: galleryImage_IMG9293,
+      categoryId: 1
+    },
+    {
+      id: 1010,
+      title: "Luxury Lounge Curtains",
+      description: "High-end curtain installation in a contemporary living area",
+      imageUrl: galleryImage_IMG9294,
+      categoryId: 1
+    },
+    {
+      id: 1011,
+      title: "Elegant Dining Room Drapes",
+      description: "Luxurious floor-to-ceiling drapery for formal dining spaces",
+      imageUrl: galleryImage_IMG9295,
+      categoryId: 2
+    },
+    {
+      id: 1012,
+      title: "Sheer Living Room Curtains",
+      description: "Light-filtering sheer curtains creating a bright, airy atmosphere",
+      imageUrl: galleryImage_IMG9296,
+      categoryId: 3
+    },
+    {
+      id: 1013,
+      title: "Dining Area Window Treatment",
+      description: "Contemporary curtain design for modern dining spaces",
+      imageUrl: galleryImage_IMG9297,
+      categoryId: 1
+    },
+    {
+      id: 1014,
+      title: "Contemporary Window Solutions",
+      description: "Modern window treatments combining functionality and style",
+      imageUrl: galleryImage_IMG9298,
+      categoryId: 2
+    },
+    {
+      id: 1015,
+      title: "Premium Blinds Installation",
+      description: "High-quality blinds custom-fitted to large windows",
+      imageUrl: galleryImage7,
+      categoryId: 3
+    },
+    {
+      id: 1016,
+      title: "Designer Window Coverings",
+      description: "Bespoke window treatments enhancing architectural features",
+      imageUrl: galleryImage10,
+      categoryId: 2
     }
   ];
 

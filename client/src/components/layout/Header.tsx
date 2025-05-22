@@ -19,7 +19,6 @@ const productCategories = [
   { label: "Kunststof lamellen", href: "/products/kunststof-lamellen" },
   { label: "Houten jaloezieën", href: "/products/houten-jaloezieen" },
   { label: "Kunststof jaloezieën", href: "/products/kunststof-jaloezieen" },
-  { label: "Textiel raamfolie", href: "/products/textiel-raamfolie" },
   { label: "Houten shutters", href: "/products/houten-shutters" },
   { label: "Inzethorren", href: "/products/inzethorren" },
   { label: "Opzethorren", href: "/products/opzethorren" },
@@ -115,10 +114,10 @@ const Header = () => {
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
-                <img 
-                  src={kaniouLogo} 
-                  alt="KANIOU zilvernaald" 
-                  className="h-12 md:h-14" 
+                <img
+                  src={kaniouLogo}
+                  alt="KANIOU zilvernaald"
+                  className="h-12 md:h-14"
                 />
               </div>
             </Link>
@@ -139,10 +138,10 @@ const Header = () => {
                 <div className="flex flex-col space-y-3 p-6">
                   <div className="flex justify-between items-center mb-6">
                     <div>
-                      <img 
-                        src={kaniouLogo} 
-                        alt="KANIOU zilvernaald" 
-                        className="h-10" 
+                      <img
+                        src={kaniouLogo}
+                        alt="KANIOU zilvernaald"
+                        className="h-10"
                       />
                     </div>
                     <Button

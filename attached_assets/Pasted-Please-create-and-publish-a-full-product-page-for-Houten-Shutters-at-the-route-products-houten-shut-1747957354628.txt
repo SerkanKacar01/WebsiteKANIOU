@@ -1,0 +1,109 @@
+Please create and publish a full product page for Houten Shutters at the route /products/houten-shutters.
+
+OBJECTIVE:
+Build a modern, responsive, and elegant product page for Houten Shutters, consistent with the visual style and technical implementation of other product pages.
+
+REQUIREMENTS:
+
+Page Path: /products/houten-shutters
+
+Navigation: Add to "Producten" dropdown menu
+
+Design:
+
+Premium, elegant, timeless styling
+
+Responsive across devices
+
+Visual focus on luxury, wood texture, and interior integration
+
+Subtle animations, hover effects, and clean layout
+
+Content Sections:
+
+Introduction
+
+Unique Benefits
+
+Materials & Finishes
+
+Slat Sizes & Panel Options
+
+Mounting Types
+
+Operation & Customization
+
+Maintenance
+
+Price Indication
+
+CTA (Call-to-Action)
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE AS-IS):
+
+Houten Shutters – Luxe Maatwerk voor Elke Raamvorm
+
+Houten shutters zijn stijlvolle en tijdloze raamdecoratie, gemaakt van duurzaam hout. Ze bieden optimale lichtregulatie, privacy en isolatie, en zijn een echte meerwaarde voor elk interieur – van klassiek tot modern.
+
+Unieke Voordelen
+
+Volledig op maat gemaakt
+
+Geschikt voor standaard ramen, draaikiepramen, ronde ramen en dakramen
+
+Regelbare lichtinval en privacy dankzij verstelbare lamellen
+
+Hoge isolerende waarde (zowel thermisch als akoestisch)
+
+Robuust, duurzaam en eenvoudig te reinigen
+
+Materialen & Afwerkingen
+
+Massief lindehout, eikenhout of vochtbestendige variant voor badkamers
+
+Keuze uit tientallen kleuren, beitsen en lakafwerkingen
+
+Matte, zijdeglans of natuurlijke houtnerf
+
+Lamelbreedtes & Paneelindeling
+
+Lamellen van 47 mm, 63 mm, 76 mm of 89 mm
+
+Vaste of scharnierende panelen
+
+Mogelijkheid tot vouw- of schuifpanelen bij brede oppervlakken
+
+Montage & Bediening
+
+Montage in het kozijn (in-de-dag) of erbuiten (op-de-dag)
+
+Bedienbaar via tuimelstang of verborgen bediening
+
+Geschikt voor ramen, deuren, schuifpuien en dakkapellen
+
+Onderhoud
+
+Stofvrij maken met plumeau of licht vochtige doek
+
+Geen verkleuring bij gebruik van UV-bestendige lakken
+
+Prijsindicatie
+
+Vanaf €189 per m², inclusief maatwerk, afwerking en standaard montageprofiel. Prijs varieert op basis van houtsoort, afwerking en raamvorm.
+
+Advies op Maat
+
+Onze interieurspecialisten helpen u graag bij de keuze van de juiste shutters. Plan een gratis consult of vraag een vrijblijvende offerte aan.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

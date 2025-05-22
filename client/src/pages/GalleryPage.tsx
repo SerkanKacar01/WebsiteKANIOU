@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GalleryItem, Category } from "@shared/schema";
+
+import { GalleryItem } from "@shared/schema";
 import { 
   galleryImage1, 
   galleryImage2, 
@@ -43,37 +43,13 @@ import {
 } from "@/assets";
 
 const GalleryPage = () => {
-  const [activeTab, setActiveTab] = useState("all");
-
-  const { data: categories = [] } = useQuery<Category[]>({
-    queryKey: ["/api/categories"],
-  });
-
   const {
     data: galleryItems = [],
     isLoading,
     error,
-    refetch,
   } = useQuery<GalleryItem[]>({
-    queryKey: ["/api/gallery", activeTab],
-    queryFn: async () => {
-      if (activeTab === "all") {
-        const res = await fetch("/api/gallery");
-        if (!res.ok) throw new Error("Failed to fetch gallery items");
-        return res.json();
-      } else {
-        const categoryId = parseInt(activeTab);
-        const res = await fetch(`/api/gallery?categoryId=${categoryId}`);
-        if (!res.ok) throw new Error("Failed to fetch gallery items");
-        return res.json();
-      }
-    },
+    queryKey: ["/api/gallery"],
   });
-
-  // When the active tab changes, refetch the data
-  useEffect(() => {
-    refetch();
-  }, [activeTab, refetch]);
 
   // Create local gallery items for the new photos
   const newGalleryItems: GalleryItem[] = [
@@ -351,21 +327,7 @@ const GalleryPage = () => {
             </p>
           </div>
 
-          <Tabs
-            defaultValue="all"
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value)}
-            className="mb-8"
-          >
-            <TabsList className="w-full justify-center flex-wrap">
-              <TabsTrigger value="all">All Products</TabsTrigger>
-              {(categories || []).map((category: Category) => (
-                <TabsTrigger key={category.id} value={category.id.toString()}>
-                  {category.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+
 
           <GalleryGrid
             items={displayItems}

@@ -13,6 +13,7 @@ import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "./services/email";
 import { emailConfig } from "./config/email";
+import { formRateLimiter } from "./middleware/rateLimiter";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoints
@@ -261,7 +262,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Quote Requests
-  app.post("/api/quote-requests", async (req: Request, res: Response) => {
+  app.post("/api/quote-requests", formRateLimiter, async (req: Request, res: Response) => {
     try {
       const validatedData = insertQuoteRequestSchema.safeParse(req.body);
       if (!validatedData.success) {
@@ -337,7 +338,7 @@ ${emailData.requirements ? `\nSpecial Requirements:\n${emailData.requirements}` 
   });
   
   // Contact Submissions
-  app.post("/api/contact", async (req: Request, res: Response) => {
+  app.post("/api/contact", formRateLimiter, async (req: Request, res: Response) => {
     try {
       const validatedData = insertContactSubmissionSchema.safeParse(req.body);
       if (!validatedData.success) {

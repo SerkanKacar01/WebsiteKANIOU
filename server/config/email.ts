@@ -5,7 +5,7 @@
 
 export const emailConfig = {
   // The email that will receive form notifications (your business email)
-  notificationEmail: 'info@kaniou.be',
+  notificationEmail: 'info@kaniou.be', // Confirmed email address for submissions
   
   // The address that will appear as the sender (should be verified in SendGrid)
   senderEmail: 'notifications@yourdomain.com',

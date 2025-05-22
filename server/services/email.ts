@@ -54,22 +54,32 @@ export function createContactEmailHtml(data: {
   message: string;
 }): string {
   return `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Contact Form Submission</h2>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
+      <!-- Header -->
+      <div style="background-color: #4a6da7; padding: 20px; text-align: center;">
+        <h2 style="color: white; margin: 0; font-size: 22px;">New Contact Form Message</h2>
+      </div>
       
-      <div style="margin: 20px 0;">
-        <p><strong>Name:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Subject:</strong> ${data.subject}</p>
+      <!-- Content -->
+      <div style="padding: 20px; background-color: #fff;">
+        <div style="background-color: #f9f9f9; border-left: 4px solid #4a6da7; padding: 15px; margin-bottom: 20px;">
+          <p style="margin: 0 0 5px 0;"><strong>From:</strong> ${data.name}</p>
+          <p style="margin: 0 0 5px 0;"><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #4a6da7; text-decoration: none;">${data.email}</a></p>
+          <p style="margin: 0;"><strong>Subject:</strong> ${data.subject}</p>
+        </div>
         
-        <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
-          <h3 style="color: #555;">Message:</h3>
-          <p style="line-height: 1.5; white-space: pre-line;">${data.message}</p>
+        <div style="margin-top: 20px;">
+          <h3 style="color: #4a6da7; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0;">Message Content:</h3>
+          <div style="background-color: #f9f9f9; padding: 15px; border-radius: 4px; line-height: 1.6;">
+            <p style="white-space: pre-line; margin: 0;">${data.message}</p>
+          </div>
         </div>
       </div>
       
-      <div style="color: #777; font-size: 12px; margin-top: 30px; padding-top: 10px; border-top: 1px solid #eee;">
-        <p>This email was sent from your website contact form.</p>
+      <!-- Footer -->
+      <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; color: #777;">
+        <p style="margin: 0;">This message was sent from your website contact form on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        <p style="margin: 5px 0 0 0;">To respond, simply reply to this email.</p>
       </div>
     </div>
   `;

@@ -28,6 +28,7 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 // Product pages with calculators
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
 import OvergordijnenPage from "@/pages/products/overgordijnen";
+import VitragesPage from "@/pages/products/vitrages";
 
 // All product category pages
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
@@ -81,7 +82,7 @@ function Router() {
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         
         {/* All individual product category pages */}
-        <Route path="/products/vitrages" component={ProductCategoryPage} />
+        <Route path="/products/vitrages" component={VitragesPage} />
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
         <Route path="/products/textiel-lamellen" component={TextielLamellenPage} />

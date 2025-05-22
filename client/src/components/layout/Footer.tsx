@@ -174,19 +174,19 @@ const Footer = () => {
               ).replace("{year}", currentYear.toString())}
             </p>
             <div className="flex space-x-6">
-              <Link href="/privacy-beleid">
+              <Link href="/privacy-policy">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t("Privacy beleid")}
+                  Privacy Policy
                 </div>
               </Link>
-              <Link href="/algemene voorwaarden">
+              <Link href="/terms-of-service">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t("Algemene voorwaarden")}
+                  Terms
                 </div>
               </Link>
-              <Link href="/sitemap">
+              <Link href="/disclaimer">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t("")}
+                  Disclaimer
                 </div>
               </Link>
             </div>

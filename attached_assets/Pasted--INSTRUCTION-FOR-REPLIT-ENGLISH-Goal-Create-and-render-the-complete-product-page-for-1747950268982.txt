@@ -1,0 +1,72 @@
+**INSTRUCTION FOR REPLIT (ENGLISH)**
+
+---
+
+**Goal:**
+Create and render the complete product page for **"Vitrages"** at the following route:
+`/products/vitrages`
+
+The page must contain the full Dutch content provided below, with professional layout and styling, following the same structure and visual quality as the "Overgordijnen" page.
+
+---
+
+### 📍 Required Implementation:
+
+1. **Page Location:** `/products/vitrages`
+2. **Language of content:** Dutch (do not translate)
+3. **Layout:**
+   - Title: "Vitrages op maat"
+   - Clear sections with headings, paragraphs, and lists
+   - Responsive layout on desktop, tablet, and mobile
+   - Add spacing, typography, and visual consistency
+4. **Design Quality:**
+   - Apply the best possible design for a premium user experience
+   - Optional use of hover effects, transitions, or image blocks per section
+   - Align with styling used for other product pages (especially Overgordijnen)
+
+---
+
+### 🇳🇱 DUTCH CONTENT (Insert as body of the page):
+
+# Vitrages op maat
+
+Vitrages zijn transparante gordijnen die zorgen voor een elegante lichtinval en subtiele privacy. Ze creëren een zachte sfeer in de ruimte en worden vaak gecombineerd met overgordijnen of jaloezieën.
+
+## Stoffen en lichtdoorlatendheid
+Onze vitrages zijn vervaardigd uit hoogwaardige stoffen met een luchtige structuur:
+- **Voile** – glad, fijn geweven, klassiek en elegant
+- **Inbetween** – iets dikker, semi-transparant, modern en decoratief
+- **Organza of linnenlook** – structuur en luxe uitstraling
+
+Beschikbaar in wit, gebroken wit, naturel, grijs- en zandtinten. Patronen zoals streepmotieven of geweven structuur kunnen ook geselecteerd worden.
+
+## Confectiemogelijkheden
+U kunt kiezen uit verschillende plooisoorten, afhankelijk van de gewenste uitstraling:
+- Enkelvoudige plooi (standaard)
+- Dubbele plooi (+10%)
+- Driedubbele plooi (+15%)
+- Wave plooi (+20%) – voor een strak en golvend effect
+
+## Afwerking en montage
+- Machinale blindzoom (standaard)
+- Handgenaaide afwerking (optioneel)
+- Combinatie mogelijk met overgordijnen of gordijnrails
+- Geschikt voor plaatsing met rails, roedes of spansystemen
+
+## Maatvoering
+- Minimale breedte: 40 cm
+- Maximale breedte: 600 cm
+- Maximale hoogte: 320 cm
+
+Onze vitrages worden volledig op maat geconfectioneerd. Indien gewenst komen wij gratis bij u opmeten.
+
+## Voordelen van vitrages
+- Verzachten lichtinval zonder volledige afscherming
+- Creëren een sfeervol interieur zonder inkijk
+- Perfect te combineren met andere raamdecoratie
+- Onderhoudsvriendelijk en kleurvast
+
+## Prijsindicatie
+Vanaf €19,99 per lopende meter (inclusief confectie, exclusief montage). De uiteindelijke prijs is afhankelijk van de stofkeuze en afwerking.
+
+Vraag vrijblijvend een offerte aan via onze offertepagina.

@@ -1,0 +1,95 @@
+Please create and publish the product page for Opzethorren at the route /products/opzethorren.
+
+OBJECTIVE:
+To build a responsive, lightweight, and well-structured product page for Opzethorren, consistent with all other product pages in the “Producten” section.
+
+REQUIREMENTS:
+
+Page Path: /products/opzethorren
+
+Navigation: Include in the "Producten" dropdown menu
+
+Design Expectations:
+
+Clean, user-friendly, and responsive design
+
+Consistent styling with pages like Inzethorren and Hordeuren
+
+Simple layout with accessible information structure
+
+Content Sections:
+
+Introduction
+
+Key Features
+
+Frame & Mesh Options
+
+Installation Details
+
+Maintenance Tips
+
+Price Indication
+
+Call to Action section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS WRITTEN):
+
+Opzethorren – Eenvoudig Plaatsbare Raamhorren voor Buitenmontage
+
+Opzethorren zijn ideaal voor ramen zonder ruimte binnen het kozijn of voor situaties waar een inzethor niet mogelijk is. Ze worden aan de buitenzijde van het raam geplaatst en zijn robuust, duurzaam en zeer effectief tegen insecten.
+
+Voordelen
+
+Geschikt voor naar buiten draaiende ramen
+
+Robuuste aluminium profielen
+
+In vele standaard- en RAL-kleuren leverbaar
+
+Eenvoudige bevestiging met schroeven
+
+Volledig op maat gemaakt
+
+Keuze uit diverse gaastypen
+
+Frame- & Gaasopties
+
+Framekleuren: wit, antraciet, zwart, crème of RAL op kleur
+
+Gaasopties: standaard grijs/zwart gaas, petscreen (extra stevig), pollenfiltergaas (anti-allergie)
+
+Montage
+
+Schroefmontage aan buitenzijde raamkozijn
+
+Voor vaste ramen of buiten openslaande ramen
+
+Inclusief bevestigingsmateriaal en handleiding
+
+Onderhoud
+
+Eenvoudig schoon te maken met doek of stofzuiger
+
+Gaas afspoelbaar met water en zachte borstel
+
+Prijsindicatie
+
+Vanaf €49 per stuk, afhankelijk van maat, gaaskeuze en kleur. Inclusief maatwerk en standaard bevestiging.
+
+Advies op maat
+
+Voor vragen of hulp bij uw keuze staan onze specialisten voor u klaar. Vraag direct een offerte aan of plan een adviesgesprek in de showroom.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
 import ProductCalculator from "@/components/calculators/ProductCalculator";
-import SmartMeasurementGuide from "@/components/measurement/SmartMeasurementGuide";
 
 const RolgordijnenPage = () => {
   return (
@@ -484,13 +483,21 @@ const RolgordijnenPage = () => {
               Gebruik de nieuwste augmented reality technologie om uw raam automatisch en nauwkeurig op te meten
             </p>
           </div>
-          <SmartMeasurementGuide 
-            onMeasurementComplete={(data) => {
-              console.log('Measurement completed:', data);
-              // Scroll to calculator section after measurement
-              document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          />
+          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Smartphone className="w-8 h-8 text-blue-600" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-4">AR Meetfunctie komt binnenkort!</h3>
+            <p className="text-gray-600 mb-6">
+              We werken aan een revolutionaire augmented reality meetfunctie. 
+              Binnenkort kunt u uw raam automatisch opmeten met uw smartphone camera.
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-800">
+                <strong>Preview:</strong> Camera toegang → Automatische kalibratie → AR window detection → Nauwkeurige metingen
+              </p>
+            </div>
+          </div>
         </Container>
       </div>
 

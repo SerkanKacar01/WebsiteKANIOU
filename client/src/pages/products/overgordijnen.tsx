@@ -10,13 +10,33 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check, Palette, Ruler, Shield, Phone, Layers, Home, Thermometer, Volume2, Magnet, Calendar, Euro, MapPin, Wrench } from "lucide-react";
+import {
+  HomeIcon,
+  ChevronRight,
+  Check,
+  Palette,
+  Ruler,
+  Shield,
+  Phone,
+  Layers,
+  Home,
+  Thermometer,
+  Volume2,
+  Magnet,
+  Calendar,
+  Euro,
+  MapPin,
+  Wrench,
+} from "lucide-react";
 
 const OvergordijnenPage = () => {
   return (
     <>
       <Helmet>
-        <title>Overgordijnen op Maat - Warmte, Stijl en Functionaliteit | KANIOU zilvernaald</title>
+        <title>
+          Overgordijnen op Maat - Warmte, Stijl en Functionaliteit | KANIOU
+          zilvernaald
+        </title>
         <meta
           name="description"
           content="Overgordijnen met verduistering en extra isolatie. Katoen, linnen, velours stoffen op maat. Professionele montage vanaf €129,99. Gratis advies en opmeting."
@@ -59,13 +79,22 @@ const OvergordijnenPage = () => {
                 Overgordijnen – Warmte, Stijl en Functionaliteit in Één
               </h1>
               <p className="text-xl text-text-medium mb-8 leading-relaxed">
-                Onze overgordijnen zijn ontworpen om niet alleen sfeer en stijl aan uw interieur toe te voegen, maar ook praktische voordelen te bieden zoals verduistering en extra isolatie. Ze zijn perfect geschikt voor slaapkamers, woonkamers en ruimtes waar comfort en privacy centraal staan.
+                Onze overgordijnen zijn ontworpen om niet alleen sfeer en stijl
+                aan uw interieur toe te voegen, maar ook praktische voordelen te
+                bieden zoals verduistering en extra isolatie. Ze zijn perfect
+                geschikt voor slaapkamers, woonkamers en ruimtes waar comfort en
+                privacy centraal staan.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="text-lg px-8 py-6">
                   <Link href="/quote">Vraag offerte aan</Link>
                 </Button>
-                <Button variant="outline" size="lg" asChild className="text-lg px-8 py-6">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  asChild
+                  className="text-lg px-8 py-6"
+                >
                   <Link href="/contact">Gratis adviesgesprek</Link>
                 </Button>
               </div>
@@ -77,8 +106,12 @@ const OvergordijnenPage = () => {
                 className="rounded-lg shadow-xl w-full h-[400px] object-cover"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-lg">
-                <div className="text-2xl font-bold text-primary">Vanaf €129,99</div>
-                <div className="text-text-medium">per raam - inclusief maatwerk</div>
+                <div className="text-2xl font-bold text-primary">
+                  Vanaf €35 per/meter
+                </div>
+                <div className="text-text-medium">
+                  Inclusief Confectie & Materialen
+                </div>
               </div>
             </div>
           </div>
@@ -96,7 +129,8 @@ const OvergordijnenPage = () => {
               Stoffen & Kwaliteiten
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Verkrijgbaar in een ruime selectie van hoogwaardige stoffen met duurzame eigenschappen
+              Verkrijgbaar in een ruime selectie van hoogwaardige stoffen met
+              duurzame eigenschappen
             </p>
           </div>
 
@@ -109,7 +143,8 @@ const OvergordijnenPage = () => {
                 Katoen
               </h3>
               <p className="text-blue-700">
-                Natuurlijk en ademend materiaal voor een warme, huiselijke sfeer.
+                Natuurlijk en ademend materiaal voor een warme, huiselijke
+                sfeer.
               </p>
             </div>
 
@@ -157,7 +192,8 @@ const OvergordijnenPage = () => {
                 Gemengde weefsels
               </h3>
               <p className="text-teal-700">
-                Optimale balans tussen natuurlijke en synthetische eigenschappen.
+                Optimale balans tussen natuurlijke en synthetische
+                eigenschappen.
               </p>
             </div>
 
@@ -169,7 +205,8 @@ const OvergordijnenPage = () => {
                 Brandvertragend
               </h3>
               <p className="text-gray-700">
-                Speciale behandeling voor professionele en veiligheidstoepassingen.
+                Speciale behandeling voor professionele en
+                veiligheidstoepassingen.
               </p>
             </div>
           </div>
@@ -194,11 +231,16 @@ const OvergordijnenPage = () => {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Layers className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-2">Enkelvoudige plooi</h3>
-                <span className="inline-block bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Standaard</span>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Enkelvoudige plooi
+                </h3>
+                <span className="inline-block bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                  Standaard
+                </span>
               </div>
               <p className="text-text-medium text-center mb-4">
-                Strak en minimalistisch. Klassieke, tijdloze uitstraling voor elke interieurstijl.
+                Strak en minimalistisch. Klassieke, tijdloze uitstraling voor
+                elke interieurstijl.
               </p>
             </div>
 
@@ -207,11 +249,16 @@ const OvergordijnenPage = () => {
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Layers className="w-8 h-8 text-blue-600" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-2">Dubbele plooi</h3>
-                <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Populair</span>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Dubbele plooi
+                </h3>
+                <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+                  Populair
+                </span>
               </div>
               <p className="text-text-medium text-center mb-4">
-                Voor een rijkere en vollere uitstraling. Meer volume en elegantie.
+                Voor een rijkere en vollere uitstraling. Meer volume en
+                elegantie.
               </p>
             </div>
 
@@ -220,11 +267,16 @@ const OvergordijnenPage = () => {
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Layers className="w-8 h-8 text-purple-600" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-2">Driedubbele plooi</h3>
-                <span className="inline-block bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">Luxe</span>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Driedubbele plooi
+                </h3>
+                <span className="inline-block bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
+                  Luxe
+                </span>
               </div>
               <p className="text-text-medium text-center mb-4">
-                Luxe afwerking met extra volume voor een indrukwekkende uitstraling.
+                Luxe afwerking met extra volume voor een indrukwekkende
+                uitstraling.
               </p>
             </div>
 
@@ -233,8 +285,12 @@ const OvergordijnenPage = () => {
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Layers className="w-8 h-8 text-amber-600" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-2">Wave plooi</h3>
-                <span className="inline-block bg-amber-100 text-amber-800 text-sm font-medium px-3 py-1 rounded-full">Modern</span>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Wave plooi
+                </h3>
+                <span className="inline-block bg-amber-100 text-amber-800 text-sm font-medium px-3 py-1 rounded-full">
+                  Modern
+                </span>
               </div>
               <p className="text-text-medium text-center mb-4">
                 Moderne, vloeiende lijnen met een eigentijdse look.
@@ -377,7 +433,8 @@ const OvergordijnenPage = () => {
                 Gordijnroedes
               </h3>
               <p className="text-text-medium mb-6 text-center">
-                Klassiek en elegant. Perfect voor traditionele en moderne stijlen.
+                Klassiek en elegant. Perfect voor traditionele en moderne
+                stijlen.
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
@@ -410,7 +467,8 @@ const OvergordijnenPage = () => {
               Bediening en Afwerking
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Comfortabele bediening en professionele afwerking voor langdurig gebruiksplezier
+              Comfortabele bediening en professionele afwerking voor langdurig
+              gebruiksplezier
             </p>
           </div>
 
@@ -419,7 +477,9 @@ const OvergordijnenPage = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Magnet className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="font-semibold text-lg mb-3">Handmatige bediening</h3>
+              <h3 className="font-semibold text-lg mb-3">
+                Handmatige bediening
+              </h3>
               <p className="text-text-medium">
                 Eenvoudig en betrouwbaar systeem voor dagelijks gebruik.
               </p>
@@ -463,9 +523,11 @@ const OvergordijnenPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
               <div className="text-center mb-6">
-                <h3 className="font-display text-xl font-semibold mb-2">Basis</h3>
-                <div className="text-3xl font-bold text-primary">€129,99</div>
-                <div className="text-text-medium">per raam (150x250cm)</div>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Basis
+                </h3>
+                <div className="text-3xl font-bold text-primary">€ 245 ,-</div>
+                <div className="text-text-medium">per raam (350x260cm)</div>
               </div>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
@@ -474,7 +536,7 @@ const OvergordijnenPage = () => {
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Katoen of polyester</span>
+                  <span>Polyester</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
@@ -483,6 +545,10 @@ const OvergordijnenPage = () => {
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
                   <span>Gratis inmeting</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Excl. Gordijn rails</span>
                 </li>
               </ul>
             </div>
@@ -494,52 +560,64 @@ const OvergordijnenPage = () => {
                 </span>
               </div>
               <div className="text-center mb-6">
-                <h3 className="font-display text-xl font-semibold mb-2">Premium</h3>
-                <div className="text-3xl font-bold text-primary">€199,99</div>
-                <div className="text-text-medium">per raam (150x250cm)</div>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Premium
+                </h3>
+                <div className="text-3xl font-bold text-primary">€307 ,-</div>
+                <div className="text-text-medium">per raam (350x260cm)</div>
               </div>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Dubbele of driedubbele plooi</span>
+                  <span>Dubbele plooi</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Linnen of velours</span>
+                  <span>Polyster</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Thermische voering</span>
+                  <span>Diverse soorten</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
                   <span>Professionele montage</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Excl. Gordijn rails</span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
               <div className="text-center mb-6">
-                <h3 className="font-display text-xl font-semibold mb-2">Luxe</h3>
-                <div className="text-3xl font-bold text-primary">€299,99</div>
-                <div className="text-text-medium">per raam (150x250cm)</div>
+                <h3 className="font-display text-xl font-semibold mb-2">
+                  Luxe
+                </h3>
+                <div className="text-3xl font-bold text-primary">€368</div>
+                <div className="text-text-medium">per raam (350x260cm)</div>
               </div>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Wave plooi systeem</span>
+                  <span>Wave plooi en/of Triplooi</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Designer stoffen</span>
+                  <span>Polyester</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Verduisterende voering</span>
+                  <span>Premium kwaliteit </span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Premium montage service</span>
+                  <span>Professionele montage service</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Excl. Gordijn rails</span>
                 </li>
               </ul>
             </div>
@@ -547,7 +625,7 @@ const OvergordijnenPage = () => {
 
           <div className="mt-8 text-center">
             <p className="text-text-medium mb-4">
-              * Prijzen zijn exclusief BTW en gebaseerd op standaardafmetingen
+              * Prijzen zijn inclusief BTW en gebaseerd op standaardafmetingen
             </p>
             <Button size="lg" asChild>
               <Link href="/quote">Krijg een persoonlijke offerte</Link>
@@ -564,15 +642,21 @@ const OvergordijnenPage = () => {
               Klaar om uw overgordijnen op maat te laten maken?
             </h2>
             <p className="text-xl text-text-medium mb-8 max-w-3xl mx-auto">
-              Onze experts staan klaar om u te adviseren over de beste keuzes voor uw interieur. 
-              Van stofkeuze tot montage, wij zorgen voor een perfect resultaat.
+              Onze experts staan klaar om u te adviseren over de beste keuzes
+              voor uw interieur. Van stofkeuze tot montage, wij zorgen voor een
+              perfect resultaat.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="text-lg px-8 py-6">
                 <Link href="/quote">Vraag offerte aan</Link>
               </Button>
-              <Button variant="outline" size="lg" asChild className="text-lg px-8 py-6">
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+                className="text-lg px-8 py-6"
+              >
                 <Link href="/contact">Gratis adviesgesprek</Link>
               </Button>
             </div>

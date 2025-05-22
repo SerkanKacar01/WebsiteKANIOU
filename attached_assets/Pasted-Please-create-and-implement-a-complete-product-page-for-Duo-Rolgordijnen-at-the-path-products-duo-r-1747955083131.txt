@@ -1,0 +1,90 @@
+Please create and implement a complete product page for Duo-Rolgordijnen at the path /products/duo-rolgordijnen.
+
+OBJECTIVE:
+To publish a fully designed, professional and mobile-friendly page with complete Dutch content about Duo-Rolgordijnen. The page should match the visual and structural quality of other product pages such as Overgordijnen, Vitrages, and Vouwgordijnen.
+
+WHAT TO INCLUDE:
+
+Page Path: /products/duo-rolgordijnen
+
+Menu Inclusion: Page must be linked in the "Producten" dropdown menu
+
+Design Requirements:
+
+Responsive (desktop, tablet, mobile)
+
+Clear layout with titles, paragraphs, bullet lists, and sections
+
+Visual quality must match or exceed that of existing product pages
+
+Add hover animations, fade-ins, or styling enhancements where suitable
+
+Content Sections to Add:
+
+Introduction
+
+Key Features
+
+Fabric and Color Options
+
+Light Control (Transparant vs. Verduisterend zones)
+
+Mounting and Operation
+
+Price Info
+
+Call to Action buttons
+
+DUTCH CONTENT FOR THE PAGE (DO NOT TRANSLATE):
+
+Duo-Rolgordijnen – Slimme Lichtregeling met Stijl
+
+Duo-rolgordijnen, ook wel bekend als zebra-gordijnen, bestaan uit transparante en niet-transparante stofbanen die afwisselend bewegen. Hiermee regelt u eenvoudig de hoeveelheid licht en privacy in uw woning. Perfect voor zowel woonkamers als kantoren, dankzij het strakke en moderne ontwerp.
+
+Belangrijkste voordelen
+
+Eenvoudige regeling van lichtinval en privacy
+
+Strakke, horizontale banen met modern uiterlijk
+
+Zowel verduisterend als lichtdoorlatend verkrijgbaar
+
+Geschikt voor elke ruimte en interieurstijl
+
+Leverbaar in diverse kleuren en texturen
+
+Keuze uit cassette, open profiel of standaard steunen
+
+Stoffen en kleuren
+
+Transparant & semi-transparant
+
+Verduisterend voor slaapkamers of privacy
+
+Structuurstoffen of effen kleuren
+
+Meerdere tinten wit, grijs, beige, zand, zwart
+
+Bediening & Montage
+
+Bediening links of rechts (ketting)
+
+Elektrisch bedienbaar (optioneel)
+
+Te monteren op of in het kozijn, plafond of muur
+
+Prijsindicatie
+
+Vanaf €59,95 per stuk, incl. maatwerk en montageprofiel, excl. plaatsing. Prijs afhankelijk van afmeting, type cassette en stofsoort.
+
+Advies en maatwerk
+
+Wij bieden gratis opmeetservice en advies bij u thuis of in onze showroom. Vraag vrijblijvend een offerte aan of neem contact op met onze specialisten.
+
+CTA Buttons (Nederlands):
+
+Vraag offerte aan
+
+Plan gratis adviesgesprek
+
+Please notify me when the page has been published and confirmed working.

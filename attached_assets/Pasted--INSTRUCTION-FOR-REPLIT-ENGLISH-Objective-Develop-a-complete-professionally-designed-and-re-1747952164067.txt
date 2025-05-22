@@ -1,0 +1,82 @@
+🛠️ INSTRUCTION FOR REPLIT (ENGLISH)
+
+Objective: Develop a complete, professionally designed, and responsive product page for Vouwgordijnen at the route /products/vouwgordijnen.
+
+📄 Page Requirements:
+	1.	Page Accessibility:
+	•	Ensure the page is accessible via /products/vouwgordijnen.
+	•	Include the page in the “Producten” dropdown menu. ￼
+	2.	Design & Layout:
+	•	Maintain consistency with existing product pages (e.g., Overgordijnen, Vitrages).
+	•	Implement a modern, clean, and minimalist design.
+	•	Ensure responsiveness across devices (desktop, tablet, mobile).
+	•	Incorporate subtle hover effects and smooth transitions.
+	3.	Content Structure:
+	•	Use the provided Dutch content (see below) without translation.
+	•	Organize content with appropriate headings, subheadings, and bullet points.
+	•	Include sections for:
+	•	Introduction
+	•	Advantages
+	•	Fabric Options
+	•	Customization & Finishing
+	•	Operation & Mounting
+	•	Maintenance
+	•	Price Indication
+	•	Call to Action (CTA)
+	4.	Call to Action:
+	•	Add two prominent CTA buttons at the end of the page:
+	•	“Vraag vrijblijvend een offerte aan”
+	•	“Neem contact met ons op”
+
+⸻
+
+🇳🇱 DUTCH CONTENT (TO BE USED AS-IS)
+
+Vouwgordijnen – Stijlvolle en Functionele Raamdecoratie
+
+Vouwgordijnen combineren de elegantie van gordijnen met het gebruiksgemak van jaloezieën. Ze zijn ideaal voor wie op zoek is naar een stijlvolle en functionele raamdecoratie die past in zowel klassieke als moderne interieurs. ￼
+
+Voordelen van Vouwgordijnen
+	•	Esthetiek: Strakke en moderne uitstraling die warmte en sfeer toevoegt aan elke ruimte.
+	•	Lichtregulering: Eenvoudig aan te passen voor optimale lichtinval en privacy.
+	•	Ruimtebesparend: Nemen weinig ruimte in beslag wanneer opgetrokken.
+	•	Isolerend: Bieden thermische en akoestische isolatie, afhankelijk van de stofkeuze.
+	•	Onderhoudsvriendelijk: Veel stoffen zijn afneembaar en wasbaar.
+
+Stoffen en Transparantie
+
+Vouwgordijnen zijn verkrijgbaar in diverse stoffen en transparanties:
+	•	Transparant: Voor een zachte lichtinval en subtiele privacy.
+	•	Lichtdoorlatend: Bieden meer privacy terwijl ze natuurlijk licht binnenlaten.
+	•	Verduisterend: Ideaal voor slaapkamers of ruimtes waar volledige duisternis gewenst is.
+
+Materialen variëren van linnen en katoen tot synthetische stoffen, beschikbaar in een breed scala aan kleuren en patronen.
+
+Maatwerk en Afwerking
+
+Elk vouwgordijn wordt op maat gemaakt met diverse afwerkingsopties:
+	•	Baleinen: Keuze uit baleinen aan de voor- of achterzijde voor een strakke of klassieke look.
+	•	Zoomafwerking: Standaard blindzoom of decoratieve afwerkingen zoals schulpranden.
+	•	Voering: Optioneel voor extra isolatie of verduistering.
+
+Bediening en Montage
+	•	Bedieningsopties:
+	•	Handmatige kettingbediening (links of rechts).
+	•	Elektrische bediening met afstandsbediening of via smart home systemen.
+	•	Montagemogelijkheden:
+	•	In de dag (binnen het kozijn).
+	•	Op de dag (op de muur of het plafond).
+
+Montageprofielen en bevestigingsmaterialen worden standaard meegeleverd.
+
+Onderhoud
+	•	Veel stoffen zijn afneembaar en geschikt voor machinewas of chemische reiniging.
+	•	Regelmatig stofvrij maken met een plumeau of stofzuiger met zachte borstel wordt aanbevolen.
+
+Prijsindicatie
+	•	Vanaf €29,99 per lopende meter, inclusief maatwerk en standaard afwerking.
+	•	Exacte prijs afhankelijk van stofkeuze, afmetingen en extra opties zoals voering of elektrische bediening.
+
+Advies en Offerte
+
+Onze specialisten staan klaar om u te adviseren over de beste keuze voor uw interieur. Maak gebruik van onze gratis inmeetservice en ontvang een vrijblijvende offerte op maat.

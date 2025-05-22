@@ -75,6 +75,7 @@ function Router() {
         {/* Product pages with calculators - specific routes first */}
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         <Route path="/products/overgordijnen" component={OvergordijnenPage} />
+        <Route path="/products/vitrages" component={VitragesPage} />
         
         {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />

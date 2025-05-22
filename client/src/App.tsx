@@ -29,6 +29,22 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import OvergordijnenPage from "@/pages/products/overgordijnen";
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
 
+// All product category pages
+import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
+import TextielLamellenPage from "@/pages/products/textiel-lamellen";
+import KunststofLamellenPage from "@/pages/products/kunststof-lamellen";
+import KunststofJaloezieeenPage from "@/pages/products/kunststof-jaloezieen";
+import HoutenShuttersPage from "@/pages/products/houten-shutters";
+import InzethorrenPage from "@/pages/products/inzethorren";
+import OpzethorrenPage from "@/pages/products/opzethorren";
+import PlisseHordeurenPage from "@/pages/products/plisse-hordeuren";
+import PlissePage from "@/pages/products/plisse";
+import DuoPlissePage from "@/pages/products/duo-plisse";
+import DakraamZonweringenPage from "@/pages/products/dakraam-zonweringen";
+import GordijnrailsPage from "@/pages/products/gordijnrails";
+import GordijnroedesPage from "@/pages/products/gordijnroedes";
+import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
+
 function Router() {
   const { t } = useLanguage();
   const [location] = useLocation();

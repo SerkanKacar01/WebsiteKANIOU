@@ -169,22 +169,24 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="font-body text-neutral-400 text-sm mb-4 md:mb-0">
-              {t("copyright").replace("{year}", currentYear.toString())}
+              {t(
+                "© 2025 KANIOU zilvernaald – Alle rechten voorbehouden.",
+              ).replace("{year}", currentYear.toString())}
             </p>
             <div className="flex space-x-6">
-              <Link href="/privacy-policy">
+              <Link href="/privacy-beleid">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t("privacy")}
+                  {t("Privacy beleid")}
                 </div>
               </Link>
-              <Link href="/terms-of-service">
+              <Link href="/algemene voorwaarden">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t("terms")}
+                  {t("Algemene voorwaarden")}
                 </div>
               </Link>
               <Link href="/sitemap">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  {t("sitemap")}
+                  {t("")}
                 </div>
               </Link>
             </div>

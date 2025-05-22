@@ -1,0 +1,95 @@
+Please create and publish the product page for Plissé Gordijnen at the route /products/plisse.
+
+OBJECTIVE:
+Build a stylish and responsive page for Plissé Gordijnen, aligned in layout, visuals, and interaction with the other product pages in the "Producten" section.
+
+REQUIREMENTS:
+
+Page Path: /products/plisse
+
+Navigation: Add to "Producten" dropdown
+
+Visual Design:
+
+Modern and elegant with light visual aesthetics
+
+Consistent with pages like Duo-Rolgordijnen and Vouwgordijnen
+
+Full mobile/tablet/desktop responsiveness
+
+Content Sections:
+
+Introduction
+
+Key Advantages
+
+Fabric Types
+
+Operation & Mounting
+
+Maintenance
+
+Pricing
+
+Call to Action
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS PROVIDED):
+
+Plissé Gordijnen – Elegante Lichtfiltering met Veelzijdige Toepassing
+
+Plissé gordijnen zijn stijlvolle raamdecoratie bestaande uit gevouwen stof die zich als een harmonica opent en sluit. Ze zijn geschikt voor vrijwel elk raamtype en geven een zachte uitstraling aan uw interieur.
+
+Voordelen
+
+Beschikbaar in transparante, lichtdoorlatende en verduisterende stoffen
+
+Geschikt voor rechte ramen, dakramen, draaikiepramen en serres
+
+Duoplissé-variant beschikbaar voor isolatie en privacy
+
+Top-down/bottom-up bediening mogelijk
+
+Compact en ruimtebesparend
+
+Stoffen & Kleuren
+
+Grote keuze uit stoffen met structuur of effen
+
+Kleuren: wit, grijs, zand, beige, antraciet en meer
+
+Ook leverbaar met honingraatstructuur (voor betere isolatie)
+
+Montage & Bediening
+
+In of op het kozijn te monteren
+
+Bedienbaar met koord, handgreep of elektrisch (optioneel)
+
+Ook geschikt voor plisségordijnen zonder boren (EasyFix)
+
+Onderhoud
+
+Regelmatig afstoffen met plumeau of borstel
+
+Eventueel licht vochtig reinigen met doek
+
+Prijsindicatie
+
+Vanaf €74,95 per m². Prijs afhankelijk van type stof, afmeting en montageoptie. Inclusief maatwerk.
+
+Persoonlijk Advies
+
+Onze adviseurs helpen u graag bij de keuze van het juiste plisségordijn. Vraag een vrijblijvende offerte aan of maak een afspraak in onze showroom.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

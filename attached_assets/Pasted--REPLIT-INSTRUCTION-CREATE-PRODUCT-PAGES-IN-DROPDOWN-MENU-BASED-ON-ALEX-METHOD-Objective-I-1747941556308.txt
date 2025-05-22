@@ -1,0 +1,76 @@
+✅ REPLIT INSTRUCTION — CREATE PRODUCT PAGES IN DROPDOWN MENU (BASED ON ALEX METHOD)
+
+🎯 Objective
+
+I want Replit to create an individual product page for each of the official product categories listed below and ensure that each page is correctly linked inside the “Products” dropdown menu in the website header (both desktop and mobile).
+
+This must follow the structured, reliable process recommended by Alex, which includes:
+	1.	Analyzing the existing navigation and routing system
+	2.	Properly generating and structuring all product pages
+	3.	Dynamically or statically linking them in the Products dropdown
+	4.	Ensuring all links work without 404 errors
+
+⸻
+
+📦 List of product pages to create (20 total)
+
+Create a separate page for each of the following categories using this format:
+Path: /products/[slug]
+Example: /products/overgordijnen
+	1.	Overgordijnen
+	2.	Vitrages
+	3.	Rolgordijnen
+	4.	Vouwgordijnen
+	5.	Duo rolgordijnen
+	6.	Textiel lamellen
+	7.	Kunststof lamellen
+	8.	Houten jaloezieën
+	9.	Kunststof jaloezieën
+	10.	Textiel raamfolie
+	11.	Houten shutters
+	12.	Inzethorren
+	13.	Opzethorren
+	14.	Plissé hordeuren
+	15.	Plissé
+	16.	Duo plissé
+	17.	Dakraam zonweringen
+	18.	Gordijnrails
+	19.	Gordijnroedes
+	20.	SQUID textiel folie
+
+⸻
+
+📄 Each product page should include:
+	•	A correct and clean URL (example: /products/gordijnrails)
+	•	A visible title at the top of the page matching the product name
+	•	Placeholder or intro text like:
+“Discover our made-to-measure [product name], available in various styles and colors.”
+	•	Optional: A placeholder image for visual preview
+
+⸻
+
+📂 Dropdown Menu under “Products”
+	•	Under the main navigation item “Products”, add a dropdown menu with all 20 categories
+	•	Each dropdown item must link to the corresponding product page
+	•	The dropdown must be responsive (mobile-friendly), scroll-free, and styled clearly
+	•	Follow good practices for accessible navigation (keyboard focus, tab order, etc.)
+
+⸻
+
+✅ Follow ALEX Method (Required)
+	1.	Scan the existing routing and navigation code
+	2.	Identify whether the project uses file-based routing (e.g. Next.js) or manual route definitions
+	3.	Generate each product page using the same logic and structure
+	4.	Update the menu component to reflect all new pages
+	5.	Test each page manually to ensure no 404 errors occur
+
+⸻
+
+Once all 20 pages are created and linked in the navigation, please confirm that:
+	•	The menu is clean and working on all screen sizes
+	•	Each page loads successfully with the correct slug and title
+	•	There is no menu overflow or UI glitch
+
+Let me know if you suggest grouping the items (e.g., “Curtains”, “Blinds”, “Shades”) or want design enhancements on those pages.
+
+Thank you.

@@ -93,7 +93,7 @@ const OvergordijnenPage = () => {
               <Palette className="w-8 h-8 text-primary" />
             </div>
             <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Stofkeuze en Afwerking
+              Stoffen & Kwaliteiten
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
               Verkrijgbaar in een ruime selectie van hoogwaardige stoffen met duurzame eigenschappen
@@ -173,51 +173,15 @@ const OvergordijnenPage = () => {
               </p>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-neutral-50 p-8 rounded-xl">
-              <h3 className="font-display text-xl font-semibold mb-4 text-primary">
-                Transparante varianten
-              </h3>
-              <p className="text-text-medium">
-                Voor een luchtige sfeer met zachte lichtfiltering, perfect voor woonkamers en eetkamers.
-              </p>
-            </div>
-            <div className="bg-neutral-50 p-8 rounded-xl">
-              <h3 className="font-display text-xl font-semibold mb-4 text-primary">
-                Volledig verduisterend
-              </h3>
-              <p className="text-text-medium">
-                Ideaal voor slaapkamers en ruimtes waar complete privacy en duisternis gewenst is.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-12 bg-primary/5 p-8 rounded-xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div className="flex items-center justify-center gap-3">
-                <Shield className="w-6 h-6 text-primary" />
-                <span className="font-medium">UV-bestendigheid</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <Check className="w-6 h-6 text-primary" />
-                <span className="font-medium">Kreukherstellend vermogen</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <Shield className="w-6 h-6 text-primary" />
-                <span className="font-medium">Duurzame kwaliteit</span>
-              </div>
-            </div>
-          </div>
         </Container>
       </div>
 
-      {/* Plooien en Confectie Section */}
+      {/* Plooien Section */}
       <div className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100">
         <Container>
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Plooien en Confectie
+              Plooien (Enkel, Dubbel, Triple, Wave)
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
               Kies de perfecte plooi voor uw gewenste stijl en volume
@@ -277,170 +241,148 @@ const OvergordijnenPage = () => {
               </p>
             </div>
           </div>
-
-          <div className="mt-12 text-center">
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <p className="text-lg text-text-medium">
-                Elke plooi beïnvloedt het valgedrag en de luxe uitstraling van uw overgordijnen. 
-                Onze specialisten adviseren u graag over de beste keuze voor uw interieur.
-              </p>
-            </div>
-          </div>
         </Container>
       </div>
 
-      {/* Voering & Afwerking Section */}
+      {/* Voeringen Section */}
       <div className="py-20 bg-white">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="font-display text-4xl text-primary font-semibold mb-8">
-                Voering & afwerking
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Met voering</h3>
-                    <p className="text-text-medium">
-                      Thermisch isolerend, lichtwerend en geluidsdempend.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Zonder voering</h3>
-                    <p className="text-text-medium">
-                      Meer lichtdoorlatend en soepel.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Zoomafwerking</h3>
-                    <p className="text-text-medium">
-                      Standaard blindzoom of decoratieve boord.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
-                alt="Voering en afwerking details van overgordijnen"
-                className="rounded-lg shadow-lg w-full h-[400px] object-cover"
-              />
-            </div>
-          </div>
-        </Container>
-      </div>
-
-      {/* Ophangsystemen Section */}
-      <div className="py-20 bg-gradient-to-br from-secondary/5 to-primary/5">
         <Container>
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Ophangsystemen
+              Voeringen (Verduisterend, Akoestisch, Isolerend)
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Te combineren met diverse rails en roedes voor elke situatie
+              Verbeter comfort en functionaliteit met professionele voeringen
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wrench className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary">Standaard rails</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 p-8 rounded-xl hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-6 h-6 text-white" />
               </div>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Wandmontage</span>
+              <h3 className="font-display text-xl font-semibold mb-4 text-indigo-900">
+                Verduisterend
+              </h3>
+              <p className="text-indigo-700 mb-4">
+                Blokkeer tot 99% van het licht voor optimale rust en privacy.
+              </p>
+              <ul className="space-y-2 text-sm text-indigo-600">
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4" />
+                  Ideaal voor slaapkamers
                 </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Met of zonder runners</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Soepele bediening</span>
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4" />
+                  Verbetert slaapkwaliteit
                 </li>
               </ul>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wrench className="w-8 h-8 text-purple-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary">Elektrische systemen</h3>
+            <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-xl hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Volume2 className="w-6 h-6 text-white" />
               </div>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Automatische bediening</span>
+              <h3 className="font-display text-xl font-semibold mb-4 text-emerald-900">
+                Akoestisch
+              </h3>
+              <p className="text-emerald-700 mb-4">
+                Vermindert geluid van buitenaf en verbetert de akoestiek binnen.
+              </p>
+              <ul className="space-y-2 text-sm text-emerald-600">
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4" />
+                  Rustiger woonklimaat
                 </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Afstandsbediening</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Smart home integratie</span>
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4" />
+                  Betere privacy
                 </li>
               </ul>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wrench className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary">Inbouw systemen</h3>
+            <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-xl hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Thermometer className="w-6 h-6 text-white" />
               </div>
+              <h3 className="font-display text-xl font-semibold mb-4 text-orange-900">
+                Thermisch Isolerend
+              </h3>
+              <p className="text-orange-700 mb-4">
+                Houdt warmte binnen in de winter en koelte binnen in de zomer.
+              </p>
+              <ul className="space-y-2 text-sm text-orange-600">
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4" />
+                  Lagere energiekosten
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4" />
+                  Betere wooncomfort
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Montage Opties Section */}
+      <div className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100">
+        <Container>
+          <div className="text-center mb-16">
+            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+              Montage Opties (Rails, Roedes)
+            </h2>
+            <p className="text-xl text-text-medium max-w-3xl mx-auto">
+              Kies het perfecte ophangssysteem voor uw overgordijnen
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Ruler className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-display text-2xl font-semibold mb-4 text-center">
+                Gordijnrails
+              </h3>
+              <p className="text-text-medium mb-6 text-center">
+                Modern en strak. Ideaal voor minimalistische interieurs.
+              </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Verborgen montage</span>
+                  <span>Geruisloze bediening</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Clean design</span>
+                  <span>Plafond- of wandmontage</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Plafondmontage</span>
+                  <span>Geschikt voor zware gordijnen</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Verschillende kleuren</span>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-8 h-8 text-amber-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary">Met ringen</h3>
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
+              <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Home className="w-6 h-6 text-white" />
               </div>
+              <h3 className="font-display text-2xl font-semibold mb-4 text-center">
+                Gordijnroedes
+              </h3>
+              <p className="text-text-medium mb-6 text-center">
+                Klassiek en elegant. Perfect voor traditionele en moderne stijlen.
+              </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Klassieke uitstraling</span>
+                  <span>Decoratieve eindkappen</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
@@ -448,387 +390,168 @@ const OvergordijnenPage = () => {
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-600" />
-                  <span>Eenvoudige montage</span>
+                  <span>Makkelijk te bedienen</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Sterke constructie</span>
                 </li>
               </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Layers className="w-8 h-8 text-teal-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary">Met haakjes</h3>
-              </div>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Onzichtbare bevestiging</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Soepel glijden</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Modern systeem</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wrench className="w-8 h-8 text-red-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary">Met runners</h3>
-              </div>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Zeer soepele werking</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Duurzaam systeem</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span>Professionele kwaliteit</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-12 text-center">
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <p className="text-lg text-text-medium">
-                Verkrijgbaar met of zonder ringen, haakjes of runners. Onze adviseurs begeleiden u in de keuze voor het juiste ophangsysteem.
-              </p>
             </div>
           </div>
         </Container>
       </div>
 
-      {/* Montagemogelijkheden Section */}
+      {/* Bediening en Afwerking Section */}
       <div className="py-20 bg-white">
         <Container>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
-              <MapPin className="w-8 h-8 text-primary" />
-            </div>
             <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Montagemogelijkheden
+              Bediening en Afwerking
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Flexibele montage-opties voor elke situatie
+              Comfortabele bediening en professionele afwerking voor langdurig gebruiksplezier
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-display text-2xl font-semibold text-blue-900 mb-4">
-                  In-de-dag
-                </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Magnet className="w-8 h-8 text-primary" />
               </div>
-              <p className="text-blue-700 text-lg text-center mb-4">
-                Montage tussen de muren of kozijnen voor een strakke, ingebouwde look.
+              <h3 className="font-semibold text-lg mb-3">Handmatige bediening</h3>
+              <p className="text-text-medium">
+                Eenvoudig en betrouwbaar systeem voor dagelijks gebruik.
               </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-blue-800">Minimaal zichtbare hardware</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-blue-800">Clean, moderne uitstraling</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-blue-800">Maximale ruimtebesparing</span>
-                </li>
-              </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-display text-2xl font-semibold text-green-900 mb-4">
-                  Op-de-dag
-                </h3>
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Wrench className="w-8 h-8 text-primary" />
               </div>
-              <p className="text-green-700 text-lg text-center mb-4">
-                Montage boven het raam of op de muur voor maximale flexibiliteit.
+              <h3 className="font-semibold text-lg mb-3">Koordloos systeem</h3>
+              <p className="text-text-medium">
+                Veilig en kindvriendelijk zonder losse koorden.
               </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-green-800">Eenvoudige installatie</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-green-800">Geschikt voor elke raamopening</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-green-800">Meer lichtinval mogelijk</span>
-                </li>
-              </ul>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="font-semibold text-lg mb-3">Perfecte pasvorm</h3>
+              <p className="text-text-medium">
+                Op maat gemaakt voor elke raam- en deuropening.
+              </p>
             </div>
           </div>
+        </Container>
+      </div>
 
-          {/* Afmetingen op maat */}
+      {/* Prijsindicaties Section */}
+      <div className="py-20 bg-gradient-to-br from-primary/5 to-secondary/10">
+        <Container>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
-              <Ruler className="w-8 h-8 text-primary" />
-            </div>
             <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Afmetingen op maat
+              Prijsindicaties
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Inclusief afwerking en versteviging voor extra duurzaamheid
+              Transparante prijzen voor overgordijnen van topkwaliteit
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl text-center">
-              <div className="text-4xl font-bold text-blue-900 mb-2">40 cm - 700 cm</div>
-              <div className="text-blue-700 font-medium text-lg">Breedte</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
+              <div className="text-center mb-6">
+                <h3 className="font-display text-xl font-semibold mb-2">Basis</h3>
+                <div className="text-3xl font-bold text-primary">€129,99</div>
+                <div className="text-text-medium">per raam (150x250cm)</div>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Enkelvoudige plooi</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Katoen of polyester</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Standaard kleuren</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Gratis inmeting</span>
+                </li>
+              </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl text-center">
-              <div className="text-4xl font-bold text-green-900 mb-2">Tot 350 cm</div>
-              <div className="text-green-700 font-medium text-lg">Hoogte</div>
+            <div className="bg-white p-8 rounded-xl shadow-sm border-2 border-primary relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-primary text-white px-4 py-2 rounded-full text-sm font-medium">
+                  Populair
+                </span>
+              </div>
+              <div className="text-center mb-6">
+                <h3 className="font-display text-xl font-semibold mb-2">Premium</h3>
+                <div className="text-3xl font-bold text-primary">€199,99</div>
+                <div className="text-text-medium">per raam (150x250cm)</div>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Dubbele of driedubbele plooi</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Linnen of velours</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Thermische voering</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Professionele montage</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
+              <div className="text-center mb-6">
+                <h3 className="font-display text-xl font-semibold mb-2">Luxe</h3>
+                <div className="text-3xl font-bold text-primary">€299,99</div>
+                <div className="text-text-medium">per raam (150x250cm)</div>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Wave plooi systeem</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Designer stoffen</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Verduisterende voering</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Premium montage service</span>
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-8 rounded-xl text-center">
-            <p className="text-lg text-text-dark mb-4">
-              Wij zorgen voor professionele confectie op basis van uw doorgegeven maten of komen gratis opmeten bij u thuis.
+          <div className="mt-8 text-center">
+            <p className="text-text-medium mb-4">
+              * Prijzen zijn exclusief BTW en gebaseerd op standaardafmetingen
             </p>
             <Button size="lg" asChild>
-              <Link href="/contact">
-                <Phone className="w-5 h-5 mr-2" />
-                Gratis opmeetafspraak
-              </Link>
+              <Link href="/quote">Krijg een persoonlijke offerte</Link>
             </Button>
-          </div>
-        </Container>
-      </div>
-
-      {/* Optionele Toevoegingen Section */}
-      <div className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100">
-        <Container>
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Optionele Toevoegingen
-            </h2>
-            <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Extra functionaliteiten voor optimaal comfort en privacy
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Volume2 className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary mb-4">
-                  Geluidswerende voering
-                </h3>
-              </div>
-              <p className="text-text-medium text-center mb-4">
-                Vermindert geluidshinder van buitenaf voor een rustigere leefomgeving.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm">Tot 30% geluidsreductie</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm">Ideaal voor drukke straten</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Thermometer className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary mb-4">
-                  Thermisch isolerende backing
-                </h3>
-              </div>
-              <p className="text-text-medium text-center mb-4">
-                Helpt warmte binnen te houden en zorgt voor energiebesparing.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm">Energiebesparend</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm">Koude tegenhouden</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Magnet className="w-8 h-8 text-purple-600" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-primary mb-4">
-                  Magnetische sluiting
-                </h3>
-              </div>
-              <p className="text-text-medium text-center mb-4">
-                Voor maximale verduistering met overlappanelen.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm">100% lichtdicht</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-600" />
-                  <span className="text-sm">Ideaal voor slaapkamers</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Onderhoud Section */}
-          <div className="bg-white p-8 rounded-xl shadow-sm mb-16">
-            <h3 className="font-display text-2xl font-semibold text-primary mb-6 text-center">
-              Onderhoud
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h4 className="font-semibold text-lg mb-4">Wasbare stoffen</h4>
-                <p className="text-text-medium mb-4">
-                  Veel stoffen zijn wasbaar of chemisch reinigbaar voor eenvoudig onderhoud.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-green-600" />
-                    <span>Machinewasbaarheid bij 30°C</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-green-600" />
-                    <span>Chemische reiniging mogelijk</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-lg mb-4">Onderhoudsadvies</h4>
-                <p className="text-text-medium mb-4">
-                  Inclusief onderhoudsadvies per stofkeuze voor langdurige schoonheid.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-green-600" />
-                    <span>Persoonlijke adviesgids</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-green-600" />
-                    <span>Onderhoudstips per materiaal</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Plaatsing en Service Section */}
-          <div className="bg-white p-8 rounded-xl shadow-sm">
-            <h3 className="font-display text-2xl font-semibold text-primary mb-6 text-center">
-              Plaatsing en Service
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Ruler className="w-8 h-8 text-blue-600" />
-                </div>
-                <h4 className="font-semibold text-lg mb-3">Professionele opmeting</h4>
-                <p className="text-text-medium text-sm">
-                  Gratis en nauwkeurige opmeting bij u thuis voor perfecte pasvorm.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wrench className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="font-semibold text-lg mb-3">Vakkundige plaatsing</h4>
-                <p className="text-text-medium text-sm">
-                  Professionele montage door ervaren specialisten.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-8 h-8 text-purple-600" />
-                </div>
-                <h4 className="font-semibold text-lg mb-3">Gratis advies</h4>
-                <p className="text-text-medium text-sm">
-                  Persoonlijk advies bij u thuis of in onze showroom.
-                </p>
-              </div>
-            </div>
-            
-            <div className="mt-8 text-center">
-              <div className="inline-flex items-center gap-3 bg-primary/10 px-6 py-3 rounded-full">
-                <Calendar className="w-5 h-5 text-primary" />
-                <span className="font-medium text-primary">Snelle levertijd: gemiddeld 3 tot 4 weken</span>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </div>
-
-      {/* Prijsindicatie Section */}
-      <div className="py-20 bg-gradient-to-br from-primary to-secondary text-white">
-        <Container>
-          <div className="text-center">
-            <h2 className="font-display text-4xl font-semibold mb-8">
-              Prijsindicatie
-            </h2>
-            
-            <div className="bg-white/10 backdrop-blur-sm p-12 rounded-2xl max-w-2xl mx-auto">
-              <div className="text-6xl font-bold mb-4">
-                Vanaf €129,99
-              </div>
-              <div className="text-2xl mb-6 opacity-90">
-                per raam – inclusief maatwerk en confectie
-              </div>
-              <div className="text-lg opacity-80 mb-2">
-                Exclusief montagekosten
-              </div>
-              <p className="text-lg opacity-80 mb-8">
-                Exacte prijs afhankelijk van gekozen stof, afmetingen, confectie en voering.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-6">
-                  <Link href="/quote">Vrijblijvende offerte</Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-white text-white hover:bg-white hover:text-primary">
-                  <Link href="/contact">Persoonlijk advies</Link>
-                </Button>
-              </div>
-            </div>
-            
-            <p className="text-lg opacity-80 mt-8">
-              Gebruik onze offertepagina voor een vrijblijvende berekening op maat.
-            </p>
           </div>
         </Container>
       </div>
@@ -857,31 +580,6 @@ const OvergordijnenPage = () => {
         </Container>
       </div>
     </>
-  );
-};
-
-export default OvergordijnenPage;
-import ProductDetailTemplate from "@/components/products/ProductDetailTemplate";
-
-const OvergordijnenPage = () => {
-  return (
-    <ProductDetailTemplate
-      productName="Overgordijnen"
-      productDescription="Premium overgordijnen die warmte, stijl en functionaliteit combineren. Perfect voor het creëren van een elegante sfeer met optimale lichtcontrole."
-      imageUrl="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-      startingPrice={129.99}
-      priceUnit="per raam"
-      features={[
-        "Thermische isolatie",
-        "Lichtcontrole en privacy",
-        "Diverse stofkeuzes",
-        "Op maat gemaakt",
-        "Professionele montage",
-        "Gratis inmeting"
-      ]}
-      categoryName="Overgordijnen"
-      categoryPath="overgordijnen"
-    />
   );
 };
 

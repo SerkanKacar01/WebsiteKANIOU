@@ -27,6 +27,7 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 
 // Product pages with calculators
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
+import OvergordijnenPage from "@/pages/products/overgordijnen";
 
 // All product category pages
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
@@ -72,6 +73,7 @@ function Router() {
         <Route path="/" component={Home} />
         {/* Product pages with calculators - specific routes first */}
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
+        <Route path="/products/overgordijnen" component={OvergordijnenPage} />
         
         {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />

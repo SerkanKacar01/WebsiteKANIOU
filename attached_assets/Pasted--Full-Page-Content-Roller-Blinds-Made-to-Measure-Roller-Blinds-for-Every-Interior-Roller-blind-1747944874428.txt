@@ -1,0 +1,108 @@
+📄 Full Page Content — Roller Blinds
+
+Made-to-Measure Roller Blinds for Every Interior
+
+Roller blinds offer a perfect combination of simplicity, functionality, and refined style. Their clean lines and versatile fabric options make them suitable for any interior — from modern minimalist to timeless classic. Each blind is fully custom-made to your exact measurements and aesthetic preferences.
+
+⸻
+
+Fabric Options and Light Control
+
+We offer a wide selection of fabrics, categorized by their level of light filtration:
+	•	Blackout fabrics: Completely block out light; ideal for bedrooms or any space requiring full darkness
+	•	Light-filtering fabrics: Maintain privacy while allowing natural light to pass through
+	•	Transparent fabrics: Let in ample daylight for a light and airy feel — great for living spaces
+	•	Technical screen fabrics: Woven to reduce glare and solar heat while preserving outdoor visibility
+
+All fabrics are available in a wide range of colors, textures, and finishes. They are treated for UV resistance and dust repellency.
+
+⸻
+
+Mounting Options
+
+Roller blinds can be installed in various ways depending on your needs:
+	•	Inside mount (recessed): Mounted inside the window frame for a minimalist look
+	•	Outside mount (surface): Mounted on the wall or ceiling to fully cover the window
+	•	Optional side guide system: For tilt-and-turn windows or doors to prevent movement
+
+Standard mounting hardware is made of durable metal with white finish caps. Other colors are available on request.
+
+⸻
+
+Headrail and Cassette Options
+
+You can choose from different top finishing systems:
+	•	Open roll system: Exposed roller tube for a sleek and cost-effective appearance
+	•	Semi-open profile: An aluminum profile that partially conceals the roller tube (additional 15%)
+	•	Closed cassette: Fully enclosed mechanism for a neat, dust-free look (additional 20%)
+
+All profiles come in standard white, with optional finishes available in black, aluminum, or custom RAL colors.
+
+⸻
+
+Bottom Bar Finishes
+
+The bottom weight bar is available in multiple finishes:
+	•	Standard aluminum bar: Neutral and functional (no extra cost)
+	•	One-side fabric-covered bar: Visually refined (+10%)
+	•	Both-sides fabric-covered bar: Fully integrated into the fabric (+15%)
+
+Color options include white, black, aluminum, or matching fabric.
+
+⸻
+
+Operation and Controls
+	•	Standard: White plastic chain drive (side selectable: left or right)
+	•	Optional upgrades:
+	•	Metal chain drive in brushed steel or black (+€10)
+	•	Spring mechanism (quiet operation for small windows)
+	•	Motorized control (remote or app-operated; pricing on request)
+
+All chain controls comply with European child safety regulations (EN13120) and are supplied with tensioning devices.
+
+⸻
+
+Durability and Maintenance
+
+All fabrics are low-maintenance and UV-resistant. Systems are tested for durability, suitable for daily long-term use.
+
+Cleaning requires only a dry cloth or slightly damp sponge. No chemical products needed.
+
+⸻
+
+Ideal Applications
+
+Roller blinds are suitable for:
+	•	Living rooms
+	•	Bedrooms
+	•	Kitchens
+	•	Bathrooms (when using moisture-resistant fabric)
+	•	Office environments
+	•	Practical areas like hallways or laundry rooms
+
+⸻
+
+📩 Replit Instruction — Request Optimal Design & Effects
+
+Objective:
+Enhance the /products/rolgordijnen page with a professional, clean, and modern visual layout using the full content above.
+
+Requested Design Features:
+	1.	Structure & Layout:
+	•	Clear, full-width sections for each topic (e.g., fabrics, installation, operation)
+	•	Allow space for future images next to each section if needed
+	2.	Visual Enhancements:
+	•	Subtle hover effects on content blocks or section titles
+	•	Fade-in or slide-up animations when scrolling
+	•	Section blocks with alternating background tones or layout orientation
+	3.	Typography & Readability:
+	•	Clear title hierarchy (h1, h2, h3)
+	•	Consistent font sizing and line spacing
+	•	Well-balanced spacing between elements
+	4.	Responsiveness:
+	•	Must work perfectly on mobile, tablet, and desktop
+	•	No horizontal scrolling
+	•	All content must stack cleanly on smaller devices
+	5.	Brand Consistency:
+	•	Match design elements (colors, fonts, spacing) with the rest of the website
+	•	Avoid any style or layout conflicts

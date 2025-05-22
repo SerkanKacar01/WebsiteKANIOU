@@ -89,7 +89,7 @@ const RolgordijnenPage = () => {
       <div className="py-16 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-text-medium mb-8">
+            <p className="text-lg text-text-medium mb-8 animate-fade-in">
               Ze zijn ideaal voor elk interieur, van modern tot klassiek, en worden volledig op maat gemaakt volgens uw wensen en raamafmetingen.
             </p>
           </div>
@@ -97,31 +97,45 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Stoffen en lichtdoorlatendheid */}
-      <div className="py-16 bg-neutral-50">
+      <div className="py-20 bg-neutral-50 overflow-hidden">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              🌿 Stoffen en lichtdoorlatendheid
-            </h2>
-            <p className="text-lg mb-6">
-              We bieden een breed gamma stoffen aan, van verduisterende tot lichtdoorlatende en transparante varianten:
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">Verduisterende stof</h3>
-                <p className="text-text-medium">ideaal voor slaapkamers of kinderkamers, volledig zonwerend</p>
+            <div className="text-center mb-12">
+              <h2 className="font-display text-4xl text-primary font-semibold mb-6 animate-fade-in">
+                Stoffen en lichtdoorlatendheid
+              </h2>
+              <p className="text-xl text-text-medium max-w-3xl mx-auto animate-fade-in">
+                We bieden een breed gamma stoffen aan, van verduisterende tot lichtdoorlatende en transparante varianten
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <div className="w-6 h-6 bg-primary rounded opacity-80"></div>
+                </div>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Verduisterende stof</h3>
+                <p className="text-text-medium leading-relaxed">Ideaal voor slaapkamers of kinderkamers, volledig zonwerend voor optimale rust</p>
               </div>
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">Lichtdoorlatende stof</h3>
-                <p className="text-text-medium">zorgt voor privacy zonder het daglicht volledig te blokkeren</p>
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <div className="w-6 h-6 bg-primary/60 rounded opacity-80"></div>
+                </div>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Lichtdoorlatende stof</h3>
+                <p className="text-text-medium leading-relaxed">Zorgt voor privacy zonder het daglicht volledig te blokkeren</p>
               </div>
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">Transparante stof</h3>
-                <p className="text-text-medium">een subtiele lichtfilter, perfect voor woonkamers of keukens</p>
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <div className="w-6 h-6 bg-primary/30 rounded opacity-80"></div>
+                </div>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Transparante stof</h3>
+                <p className="text-text-medium leading-relaxed">Een subtiele lichtfilter, perfect voor woonkamers of keukens</p>
               </div>
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">Screenstoffen</h3>
-                <p className="text-text-medium">technisch geweven stoffen die zon weren maar uitzicht naar buiten behouden</p>
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <div className="w-6 h-6 border-2 border-primary rounded opacity-80"></div>
+                </div>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Screenstoffen</h3>
+                <p className="text-text-medium leading-relaxed">Technisch geweven stoffen die zon weren maar uitzicht naar buiten behouden</p>
               </div>
             </div>
           </div>
@@ -129,33 +143,50 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Montageopties */}
-      <div className="py-16 bg-white">
+      <div className="py-20 bg-white relative">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              ⚙️ Montageopties
-            </h2>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-display text-lg font-medium mb-2">In-de-dag montage (in het raamkozijn)</h3>
-                  <p className="text-text-medium">strak en minimalistisch</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="font-display text-4xl text-primary font-semibold mb-8">
+                  Montageopties
+                </h2>
+                <div className="space-y-8">
+                  <div className="group p-6 rounded-lg hover:bg-neutral-50 transition-colors duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">In-de-dag montage</h3>
+                        <p className="text-text-medium leading-relaxed">Geïnstalleerd in het raamkozijn voor een strakke, minimalistische uitstraling</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="group p-6 rounded-lg hover:bg-neutral-50 transition-colors duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Op-de-dag montage</h3>
+                        <p className="text-text-medium leading-relaxed">Gemonteerd op de muur of tegen het plafond voor volledige raamafdekking</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="group p-6 rounded-lg hover:bg-neutral-50 transition-colors duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Professionele montage</h3>
+                        <p className="text-text-medium leading-relaxed">Inclusief stevige metalen montage steunen met wit afdekkapje (standaard)</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-display text-lg font-medium mb-2">Op-de-dag montage (op de muur of tegen het plafond)</h3>
-                  <p className="text-text-medium">voor volledige raamafdekking</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-display text-lg font-medium mb-2">Inclusief stevige metalen montage steunen</h3>
-                  <p className="text-text-medium">met wit afdekkapje (standaard)</p>
-                </div>
+              <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
+                <img
+                  src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Professionele rolgordijn montage"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
               </div>
             </div>
           </div>
@@ -163,24 +194,59 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Profiel- en cassetteopties */}
-      <div className="py-16 bg-neutral-50">
+      <div className="py-20 bg-neutral-50">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              🧩 Profiel- en cassetteopties
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">1. Standaard open systeem</h3>
-                <p className="text-text-medium">zichtbaar buismechanisme, minimalistisch design</p>
+            <div className="text-center mb-12">
+              <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+                Profiel- en cassetteopties
+              </h2>
+              <p className="text-xl text-text-medium max-w-3xl mx-auto">
+                Kies de afwerking die het beste past bij uw interieur en budget
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-primary/20">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <span className="text-2xl font-bold text-primary">1</span>
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-primary mb-3">Standaard open systeem</h3>
+                </div>
+                <p className="text-text-medium leading-relaxed text-center">Zichtbaar buismechanisme voor een minimalistisch en kosteneffectief design</p>
+                <div className="mt-6 text-center">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    Standaard prijs
+                  </span>
+                </div>
               </div>
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">2. Open profiel</h3>
-                <p className="text-text-medium">elegante aluminium afwerking (meerprijs: +15%), standaard in wit</p>
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-primary/20">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <span className="text-2xl font-bold text-primary">2</span>
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-primary mb-3">Open profiel</h3>
+                </div>
+                <p className="text-text-medium leading-relaxed text-center">Elegante aluminium afwerking, standaard in wit</p>
+                <div className="mt-6 text-center">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                    +15% meerprijs
+                  </span>
+                </div>
               </div>
-              <div className="bg-white p-6 rounded-lg">
-                <h3 className="font-display text-xl font-medium mb-3">3. Gesloten cassette</h3>
-                <p className="text-text-medium">volledig afgesloten bovenkant (meerprijs: +20%), strak en stofvrij</p>
+              <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-primary/20">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <span className="text-2xl font-bold text-primary">3</span>
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-primary mb-3">Gesloten cassette</h3>
+                </div>
+                <p className="text-text-medium leading-relaxed text-center">Volledig afgesloten bovenkant voor een strakke, stofvrije uitstraling</p>
+                <div className="mt-6 text-center">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                    +20% meerprijs
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -188,68 +254,121 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Onderlatvarianten */}
-      <div className="py-16 bg-white">
+      <div className="py-20 bg-white">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              🪟 Onderlatvarianten
-            </h2>
-            <div className="space-y-6 mb-8">
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-display text-lg font-medium mb-2">Standaard aluminium onderlat</h3>
-                  <p className="text-text-medium">(zonder meerprijs)</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="aspect-square rounded-xl overflow-hidden shadow-lg order-2 lg:order-1">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Rolgordijn onderlatvarianten detail"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="order-1 lg:order-2">
+                <h2 className="font-display text-4xl text-primary font-semibold mb-8">
+                  Onderlatvarianten
+                </h2>
+                <div className="space-y-6 mb-8">
+                  <div className="group p-6 rounded-lg hover:bg-neutral-50 transition-colors duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Standaard aluminium onderlat</h3>
+                        <p className="text-text-medium leading-relaxed">Functioneel en neutraal design</p>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mt-2">
+                          Zonder meerprijs
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="group p-6 rounded-lg hover:bg-neutral-50 transition-colors duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Onderlat met één zijde bekleed</h3>
+                        <p className="text-text-medium leading-relaxed">Visueel verfijnde uitstraling</p>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mt-2">
+                          +10% meerprijs
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="group p-6 rounded-lg hover:bg-neutral-50 transition-colors duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Onderlat met beide zijden bekleed</h3>
+                        <p className="text-text-medium leading-relaxed">Volledig geïntegreerd in de stof</p>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 mt-2">
+                          +15% meerprijs
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-neutral-50 to-primary/5 p-6 rounded-xl border border-primary/10">
+                  <h3 className="font-display text-lg font-semibold mb-3 text-primary">Beschikbare afwerkingen:</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-white rounded-full text-sm border border-neutral-200">Wit</span>
+                    <span className="px-3 py-1 bg-gray-800 text-white rounded-full text-sm">Zwart</span>
+                    <span className="px-3 py-1 bg-gray-300 rounded-full text-sm">Aluminium</span>
+                    <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Stofkleurig</span>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-display text-lg font-medium mb-2">Onderlat met één zijde bekleed</h3>
-                  <p className="text-text-medium">(+10%)</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-display text-lg font-medium mb-2">Onderlat met beide zijden bekleed</h3>
-                  <p className="text-text-medium">(+15%)</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-neutral-50 p-6 rounded-lg">
-              <h3 className="font-display text-lg font-medium mb-3">Afwerkingen:</h3>
-              <p className="text-text-medium">wit, zwart, aluminium of stofkleurig</p>
             </div>
           </div>
         </Container>
       </div>
 
-      {/* Bediening */}
-      <div className="py-16 bg-neutral-50">
+      {/* Bediening en gebruiksgemak */}
+      <div className="py-20 bg-neutral-50">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              ⚙️ Bediening en gebruiksgemak
-            </h2>
-            <div className="bg-white p-6 rounded-lg mb-6">
-              <h3 className="font-display text-xl font-medium mb-4">Standaard:</h3>
-              <p className="text-text-medium">Kunststof kettingbediening (wit)</p>
+            <div className="text-center mb-12">
+              <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+                Bediening en gebruiksgemak
+              </h2>
+              <p className="text-xl text-text-medium max-w-3xl mx-auto">
+                Kies de bedieningsoptie die het beste bij uw levensstijl past
+              </p>
             </div>
-            <div className="bg-white p-6 rounded-lg">
-              <h3 className="font-display text-xl font-medium mb-4">Opties:</h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-text-medium">Metalen kettingbediening (+€10)</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white p-8 rounded-xl shadow-sm border-2 border-primary/20">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <Check className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="font-display text-2xl font-semibold text-primary">Standaard</h3>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-text-medium">Veermechanisme (op aanvraag)</p>
+                <p className="text-lg text-text-medium leading-relaxed">Kunststof kettingbediening in wit, betrouwbaar en eenvoudig te bedienen</p>
+                <div className="mt-4">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    Inbegrepen
+                  </span>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-text-medium">Elektrisch met afstandsbediening of app (offerte)</p>
+              </div>
+              <div className="bg-white p-8 rounded-xl shadow-sm">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <span className="text-primary font-bold">+</span>
+                  </div>
+                  <h3 className="font-display text-2xl font-semibold text-primary">Upgrade opties</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-4 bg-neutral-50 rounded-lg">
+                    <span className="font-medium">Metalen kettingbediening</span>
+                    <span className="text-primary font-semibold">+€10</span>
+                  </div>
+                  <div className="flex justify-between items-center p-4 bg-neutral-50 rounded-lg">
+                    <span className="font-medium">Veermechanisme</span>
+                    <span className="text-primary font-semibold">Op aanvraag</span>
+                  </div>
+                  <div className="flex justify-between items-center p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg border border-primary/20">
+                    <span className="font-medium">Elektrische bediening</span>
+                    <span className="text-primary font-semibold">Offerte</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -258,30 +377,36 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Duurzaam en onderhoudsvriendelijk */}
-      <div className="py-16 bg-white">
+      <div className="py-20 bg-white">
         <Container>
-          <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              🛠️ Duurzaam en onderhoudsvriendelijk
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+              Duurzaam en onderhoudsvriendelijk
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <Check className="h-8 w-8 text-primary" />
+            <p className="text-xl text-text-medium max-w-3xl mx-auto mb-12">
+              Ontworpen voor jarenlang gebruiksplezier met minimaal onderhoud
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="group p-8 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors">
+                  <Check className="h-10 w-10 text-primary" />
                 </div>
-                <p className="text-text-medium">UV-bestendige en afwasbare stoffen</p>
+                <h3 className="font-display text-xl font-semibold mb-4 text-primary">UV-bestendig</h3>
+                <p className="text-text-medium leading-relaxed">Afwasbare stoffen die hun kleur behouden, zelfs bij intensieve zonlichtblootstelling</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <Check className="h-8 w-8 text-primary" />
+              <div className="group p-8 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors">
+                  <Check className="h-10 w-10 text-primary" />
                 </div>
-                <p className="text-text-medium">Slijtvaste mechanismen</p>
+                <h3 className="font-display text-xl font-semibold mb-4 text-primary">Slijtvast</h3>
+                <p className="text-text-medium leading-relaxed">Hoogwaardige mechanismen getest voor langdurig dagelijks gebruik</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <Check className="h-8 w-8 text-primary" />
+              <div className="group p-8 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors">
+                  <Check className="h-10 w-10 text-primary" />
                 </div>
-                <p className="text-text-medium">Geschikt voor dagelijks gebruik</p>
+                <h3 className="font-display text-xl font-semibold mb-4 text-primary">Onderhoudsarm</h3>
+                <p className="text-text-medium leading-relaxed">Eenvoudig schoon te maken met een droge doek of licht vochtige spons</p>
               </div>
             </div>
           </div>
@@ -289,30 +414,48 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Toepassingen */}
-      <div className="py-16 bg-neutral-50">
+      <div className="py-20 bg-gradient-to-br from-neutral-50 to-primary/5">
         <Container>
-          <div className="max-w-6xl mx-auto">
-            <h2 className="font-display text-3xl text-primary font-semibold mb-8">
-              📦 Toepassingen
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+              Ideale toepassingen
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              <div className="bg-white p-4 rounded-lg text-center">
-                <p className="text-text-medium">Woonkamers</p>
+            <p className="text-xl text-text-medium max-w-3xl mx-auto mb-12">
+              Rolgordijnen zijn veelzijdig en geschikt voor elke ruimte in huis of kantoor
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              <div className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-primary font-bold text-lg">🏠</span>
+                </div>
+                <p className="font-medium text-primary">Woonkamers</p>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center">
-                <p className="text-text-medium">Slaapkamers</p>
+              <div className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-primary font-bold text-lg">🛏️</span>
+                </div>
+                <p className="font-medium text-primary">Slaapkamers</p>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center">
-                <p className="text-text-medium">Keukens</p>
+              <div className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-primary font-bold text-lg">🍳</span>
+                </div>
+                <p className="font-medium text-primary">Keukens</p>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center">
-                <p className="text-text-medium">Kantoorruimtes</p>
+              <div className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-primary font-bold text-lg">💼</span>
+                </div>
+                <p className="font-medium text-primary">Kantoren</p>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center">
-                <p className="text-text-medium">Badkamers*</p>
+              <div className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-primary font-bold text-lg">🛁</span>
+                </div>
+                <p className="font-medium text-primary">Badkamers*</p>
               </div>
             </div>
-            <p className="text-sm text-text-medium mt-4 text-center">*met vochtbestendige stof</p>
+            <p className="text-sm text-text-medium mt-8 opacity-75">*met vochtbestendige stoffen voor optimale duurzaamheid</p>
           </div>
         </Container>
       </div>

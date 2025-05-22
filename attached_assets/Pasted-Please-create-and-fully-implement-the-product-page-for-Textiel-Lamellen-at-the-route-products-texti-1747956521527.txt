@@ -1,0 +1,101 @@
+Please create and fully implement the product page for Textiel Lamellen at the route /products/textiel-lamellen.
+
+OBJECTIVE:
+To develop a complete, modern, and responsive page that introduces customers to Textiel Lamellen (Fabric Vertical Blinds) with full Dutch content. The page must match the styling, layout, and interactive quality of other product pages like Overgordijnen and Duo-Rolgordijnen.
+
+REQUIREMENTS:
+
+Page Path: /products/textiel-lamellen
+
+Menu: Add to the "Producten" dropdown menu
+
+Design Style:
+
+Professional, light and clean design
+
+Hover effects and subtle animations allowed
+
+Fully responsive for desktop, tablet, and mobile
+
+Content Structure:
+
+Header with main title
+
+Product Introduction
+
+Advantages & Features
+
+Fabric Types and Color Options
+
+Mounting & Operation
+
+Maintenance Instructions
+
+Price Indication
+
+Call to Action (CTA)
+
+Call-to-Action Buttons:
+
+"Vraag een offerte aan"
+
+"Plan een gratis adviesgesprek"
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS-IS, NO TRANSLATION):
+
+Textiel Lamellen – Tijdloze Verticale Stoffen Jaloezieën
+
+Textiel lamellen zijn verticale stroken stof die elegant langs elkaar bewegen. Ze zijn uitermate geschikt voor grote raampartijen en schuifpuien. Dankzij hun flexibiliteit regelt u eenvoudig het binnenvallende licht en behoudt u uw privacy.
+
+Belangrijkste voordelen
+
+Functioneel én decoratief
+
+Ideaal voor hoge ramen en brede glaspartijen
+
+Lichtinval eenvoudig regelbaar met draaiknop
+
+Textiel uitvoering zorgt voor zachte, warme uitstraling
+
+Geluidsabsorberend en isolerend effect
+
+Leverbaar in diverse breedtes: 89 mm en 127 mm
+
+Stoffen & Kleuren
+
+Transparante stoffen voor subtiel daglicht
+
+Lichtdoorlatende stoffen met meer privacy
+
+Verduisterende stoffen voor slaapkamer of kantoor
+
+Kleuren: wit, crème, grijs, taupe, zwart en meer
+
+Montage & Bediening
+
+Links of rechts bedienbaar met ketting en koord
+
+Montage op plafond of wand
+
+Geschikt voor rechte en schuine ramen
+
+Onderhoud
+
+Stofvrij maken met plumeau of zachte borstel
+
+Sommige stoffen zijn wasbaar of reinigbaar met vochtige doek
+
+Prijsindicatie
+
+Vanaf €69,95 per vierkante meter, inclusief maatwerk en standaard rail. Prijs varieert op basis van stof, bedieningszijde en breedte van de lamel.
+
+Persoonlijk advies
+
+Vraag nu vrijblijvend een offerte aan of plan een gratis adviesgesprek met één van onze specialisten bij u thuis of in de showroom.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

@@ -26,7 +26,6 @@ import DisclaimerPage from "@/pages/DisclaimerPage";
 import CookiePolicyPage from "@/pages/CookiePolicyPage";
 
 // Product pages with calculators
-import OvergordijnenPage from "@/pages/products/overgordijnen";
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
 
 // All product category pages
@@ -72,7 +71,6 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         {/* Product pages with calculators - specific routes first */}
-        <Route path="/products/overgordijnen" component={OvergordijnenPage} />
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         
         {/* Generic routes after specific ones */}

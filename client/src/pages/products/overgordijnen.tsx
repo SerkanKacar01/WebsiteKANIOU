@@ -861,3 +861,28 @@ const OvergordijnenPage = () => {
 };
 
 export default OvergordijnenPage;
+import ProductDetailTemplate from "@/components/products/ProductDetailTemplate";
+
+const OvergordijnenPage = () => {
+  return (
+    <ProductDetailTemplate
+      productName="Overgordijnen"
+      productDescription="Premium overgordijnen die warmte, stijl en functionaliteit combineren. Perfect voor het creëren van een elegante sfeer met optimale lichtcontrole."
+      imageUrl="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+      startingPrice={129.99}
+      priceUnit="per raam"
+      features={[
+        "Thermische isolatie",
+        "Lichtcontrole en privacy",
+        "Diverse stofkeuzes",
+        "Op maat gemaakt",
+        "Professionele montage",
+        "Gratis inmeting"
+      ]}
+      categoryName="Overgordijnen"
+      categoryPath="overgordijnen"
+    />
+  );
+};
+
+export default OvergordijnenPage;

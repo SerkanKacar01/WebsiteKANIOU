@@ -71,13 +71,14 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
+        {/* Product pages with calculators - specific routes first */}
+        <Route path="/products/overgordijnen" component={OvergordijnenPage} />
+        <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
+        
+        {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />
         <Route path="/price-calculator" component={PriceCalculatorPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
-        
-        {/* Product pages with calculators */}
-        <Route path="/products/overgordijnen" component={OvergordijnenPage} />
-        <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         
         {/* All individual product category pages */}
         <Route path="/products/vitrages" component={ProductCategoryPage} />

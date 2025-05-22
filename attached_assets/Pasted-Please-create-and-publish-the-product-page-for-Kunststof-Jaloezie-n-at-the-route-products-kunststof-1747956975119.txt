@@ -1,0 +1,101 @@
+Please create and publish the product page for Kunststof Jaloezieën at the route /products/kunststof-jaloezieen.
+
+OBJECTIVE:
+To implement a clean, responsive, and informative page for Kunststof Jaloezieën (PVC Venetian Blinds), consistent in layout and styling with other product pages.
+
+REQUIREMENTS:
+
+Page Path: /products/kunststof-jaloezieen
+
+Navigation: Include in "Producten" dropdown menu
+
+Visual Design:
+
+Light, neutral styling with product images
+
+Responsive for all devices (desktop, tablet, mobile)
+
+Smooth transitions and hover effects
+
+Page Structure:
+
+Introduction
+
+Benefits & Features
+
+Materials & Colors
+
+Operation & Custom Options
+
+Maintenance
+
+Price Indication
+
+Call to Action section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE AS-IS):
+
+Kunststof Jaloezieën – Praktisch, Stijlvol en Vochtbestendig
+
+Kunststof jaloezieën zijn een ideale keuze voor wie op zoek is naar een onderhoudsvriendelijke en vochtbestendige oplossing met een moderne uitstraling. Perfect voor keukens, badkamers of bedrijfsruimtes.
+
+Voordelen
+
+Gemaakt van duurzaam PVC of kunststof
+
+Bestand tegen vocht en temperatuurschommelingen
+
+Eenvoudig schoon te maken
+
+Beschikbaar in 25 mm, 35 mm en 50 mm lamelbreedte
+
+Budgetvriendelijk alternatief voor houten jaloezieën
+
+Leverbaar in effen kleuren en houtlook prints
+
+Materialen & Kleuren
+
+Kunststof in mat of glanzende afwerking
+
+Kleuren: wit, grijs, zwart, taupe, houtlook
+
+Bediening & Opties
+
+Handmatige bediening via koord of ketting
+
+Elektrische uitvoering mogelijk (optioneel)
+
+Ladderkoord (standaard) of ladderband (meerprijs)
+
+Montage
+
+In-de-dag of op-de-dag montage
+
+Inclusief bevestigingsmateriaal en handleiding
+
+Onderhoud
+
+Afneembaar met vochtige doek of mild schoonmaakmiddel
+
+Ideaal voor vochtige omgevingen
+
+Prijsindicatie
+
+Vanaf €49,95 per m², inclusief maatwerk en standaard montage. Prijs afhankelijk van breedte, kleur en bedieningsoptie.
+
+Advies op maat
+
+Vraag vandaag nog een vrijblijvende offerte aan of plan een persoonlijk adviesgesprek bij u thuis of in onze showroom.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

@@ -1,0 +1,95 @@
+Please create and publish the product page for Duo Plissé at the route /products/duo-plisse.
+
+OBJECTIVE:
+To design a stylish and highly informative product page for Duo Plissé, consistent with other "Producten" pages in visual structure, responsiveness, and UX quality.
+
+REQUIREMENTS:
+
+Page Path: /products/duo-plisse
+
+Navigation: Include under "Producten" dropdown
+
+Design Expectations:
+
+Modern and elegant layout
+
+Smooth transitions and responsive structure
+
+High-quality UX matching pages like Plissé and Rolgordijnen
+
+Page Sections:
+
+Introduction
+
+Key Advantages
+
+Fabric and Insulation Details
+
+Operation & Mounting Options
+
+Maintenance Tips
+
+Pricing Info
+
+CTA Section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS-IS):
+
+Duo Plissé – Elegantie én Isolatie in Eén Gordijn
+
+Duo Plissé gordijnen combineren de stijlvolle uitstraling van plisségordijnen met de functionele voordelen van isolatie en privacy. Dankzij de dubbele stoflaag met honingraatstructuur ontstaat een luchtbuffer die warmte binnenhoudt in de winter en buiten houdt in de zomer.
+
+Belangrijkste voordelen
+
+Verhoogt thermisch en akoestisch comfort
+
+Energiebesparend door isolerende werking
+
+Top-down/bottom-up bediening voor maximale flexibiliteit
+
+Compact systeem – ook geschikt voor kleine ramen
+
+Duurzame en onderhoudsvriendelijke materialen
+
+Stoffen & Kleuren
+
+Transparant, lichtdoorlatend of verduisterend
+
+Honingraatstructuur met luchtkamers voor isolatie
+
+Kleuren: wit, crème, taupe, grijs, antraciet, zwart
+
+Bediening & Montage
+
+Handgreep, koord of elektrische bediening
+
+In of op het kozijn te monteren
+
+EasyFix (zonder boren) mogelijk voor kunststof ramen
+
+Onderhoud
+
+Stofvrij maken met plumeau of zachte borstel
+
+Reiniging met licht vochtige doek indien nodig
+
+Prijsindicatie
+
+Vanaf €84,95 per m², inclusief maatwerk. Prijs afhankelijk van type stof, afmeting en bedieningsoptie.
+
+Persoonlijk advies
+
+Onze specialisten geven u graag advies op maat. Vraag nu een vrijblijvende offerte aan of plan een gratis consult in onze showroom.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

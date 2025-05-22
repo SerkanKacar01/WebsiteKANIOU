@@ -23,6 +23,7 @@ import QuotePage from "@/pages/QuotePage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
+import CookiePolicyPage from "@/pages/CookiePolicyPage";
 
 // Product pages with calculators
 import OvergordijnenPage from "@/pages/products/overgordijnen";
@@ -40,6 +41,7 @@ function Router() {
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
+    if (location === "/cookie-policy") return "Cookie Policy" + " | " + t("app.title");
     if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
     if (location === "/disclaimer") return "Legal Disclaimer" + " | " + t("app.title");
     return t("app.title") + " | " + t("app.subtitle");
@@ -89,6 +91,7 @@ function Router() {
         <Route path="/quote" component={QuotePage} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+        <Route path="/cookie-policy" component={CookiePolicyPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/admin/gallery" component={AdminGallery} />

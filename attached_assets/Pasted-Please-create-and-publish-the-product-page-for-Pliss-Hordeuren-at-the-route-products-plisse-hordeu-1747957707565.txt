@@ -1,0 +1,94 @@
+Please create and publish the product page for Plissé Hordeuren at the route /products/plisse-hordeuren.
+
+OBJECTIVE:
+To develop a responsive and informative product page for Plissé Hordeuren, consistent with the design structure of other product pages under the "Producten" section.
+
+REQUIREMENTS:
+
+Page Path: /products/plisse-hordeuren
+
+Navigation: Include in the "Producten" dropdown menu
+
+Visual Design:
+
+Modern and sleek with structured layout
+
+Optimized for desktop, tablet, and mobile
+
+Subtle effects for interaction (hover, transitions)
+
+Content Sections:
+
+Introduction
+
+Advantages
+
+Frame & Mesh Options
+
+Installation & Use
+
+Maintenance Instructions
+
+Price Indication
+
+CTA Section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS PROVIDED):
+
+Plissé Hordeuren – Comfortabel en Stijlvol Beschermd Tegen Insecten
+
+Plissé hordeuren zijn dé ideale oplossing voor schuifpuien, terrasdeuren en balkondeuren. Dankzij het geplisseerde gaas schuift de deur soepel open en dicht en blijft het gaas op zijn plek – zonder terugrolmechanisme.
+
+Voordelen
+
+Eenvoudig te bedienen, ook voor kinderen en ouderen
+
+Geschikt voor intensief gebruik
+
+Plissé gaas blijft zichtbaar – voorkomt botsen
+
+Geschikt voor binnen- en buitenmontage
+
+Compact design – ruimtebesparend
+
+Verkrijgbaar in enkele en dubbele uitvoering
+
+Frame- en Gaasopties
+
+Aluminium frame: wit, zwart, antraciet, crème, of RAL-kleur
+
+Gaas: zwart of grijs plisségaas, UV-bestendig en vormvast
+
+Montage & Gebruik
+
+Geschikt voor montage in het kozijn (in-de-dag) of op het kozijn (op-de-dag)
+
+Inclusief ondergeleider voor drempelloze doorgang
+
+Maximale hoogte tot ca. 300 cm mogelijk
+
+Onderhoud
+
+Regelmatig stofvrij maken met borstel of stofzuiger
+
+Vuil verwijderen met vochtige doek en milde zeep
+
+Prijsindicatie
+
+Vanaf €159 per deur, afhankelijk van maatvoering, kleur en uitvoering (enkel/dubbel). Inclusief maatwerk.
+
+Advies op Maat
+
+Vraag vrijblijvend een offerte aan of plan een adviesgesprek met onze hordeur-specialist. Wij komen indien gewenst bij u langs voor inmeting en presentatie van mogelijkheden.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek

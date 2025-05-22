@@ -12,6 +12,7 @@ import {
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "./services/email";
+import { emailConfig } from "./config/email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoints
@@ -274,14 +275,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Send email notification about the new quote request
       try {
-        const emailData = {
+        // Create properly typed email data
+        const emailData: {
+          name: string;
+          email: string;
+          phone: string;
+          productType: string;
+          dimensions?: string;
+          requirements?: string;
+        } = {
           name: validatedData.data.name,
           email: validatedData.data.email,
           phone: validatedData.data.phone,
-          productType: validatedData.data.productType,
-          dimensions: validatedData.data.dimensions,
-          requirements: validatedData.data.requirements
+          productType: validatedData.data.productType
         };
+        
+        // Only add optional fields if they exist and aren't null
+        if (validatedData.data.dimensions) {
+          emailData.dimensions = validatedData.data.dimensions;
+        }
+        
+        if (validatedData.data.requirements) {
+          emailData.requirements = validatedData.data.requirements;
+        }
         
         const htmlContent = createQuoteRequestEmailHtml(emailData);
         
@@ -320,7 +336,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Send email notification about the new contact form submission
       try {
-        const emailData = {
+        // Create properly typed email data
+        const emailData: {
+          name: string;
+          email: string;
+          subject: string;
+          message: string;
+        } = {
           name: validatedData.data.name,
           email: validatedData.data.email,
           subject: validatedData.data.subject,

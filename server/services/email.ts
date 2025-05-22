@@ -111,7 +111,7 @@ export function createQuoteRequestEmailHtml(data: {
       </div>
       
       <div style="color: #777; font-size: 12px; margin-top: 30px; padding-top: 10px; border-top: 1px solid #eee;">
-        <p>This quote request was submitted from your website.</p>
+        <p>This quote request was submitted from your website on ${new Date().toLocaleDateString()}.</p>
       </div>
     </div>
   `;

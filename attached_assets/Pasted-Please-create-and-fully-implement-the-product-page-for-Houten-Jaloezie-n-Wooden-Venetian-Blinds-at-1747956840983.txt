@@ -1,0 +1,107 @@
+Please create and fully implement the product page for Houten Jaloezieën (Wooden Venetian Blinds) at the route /products/houten-jaloezieen.
+
+OBJECTIVE:
+To design and publish a clean, responsive, and professional page showcasing the features and customization options of Houten Jaloezieën, aligned with other product pages.
+
+REQUIREMENTS:
+
+Page Path: /products/houten-jaloezieen
+
+Dropdown Menu: Add to "Producten"
+
+Styling:
+
+Elegant, modern design with natural accents
+
+Responsive on all devices
+
+Use smooth transitions, hovers, and fade-in effects
+
+Content Sections:
+
+Introduction
+
+Key Benefits
+
+Material & Colors
+
+Operation & Custom Options
+
+Finishing Details
+
+Installation Methods
+
+Price Information
+
+CTA (Call-to-Action)
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS-IS):
+
+Houten Jaloezieën – Natuurlijke Warmte & Tijdloze Luxe
+
+Houten jaloezieën voegen een elegante en natuurlijke sfeer toe aan elk interieur. Ze combineren stijl, functionaliteit en duurzaamheid, en zijn geschikt voor zowel moderne als klassieke ruimtes.
+
+Belangrijkste voordelen
+
+Gemaakt van echt hout of bamboe
+
+Warme en natuurlijke uitstraling
+
+Beschikbaar in lamelbreedtes van 25, 50 en 65 mm
+
+Duurzaam, sterk en vormvast
+
+Leverbaar in diverse houtsoorten en kleuren
+
+Ook geschikt voor vochtige ruimtes bij keuze voor bamboe of behandeld hout
+
+Materialen & Kleuren
+
+Populierenhout, abachi, bamboe
+
+Natuurlijke houtkleuren, wit, zwart, antraciet, taupe
+
+Mat, zijdeglans of geborstelde afwerking
+
+Bediening & Opties
+
+Ladderkoord (standaard) of ladderband (+10%)
+
+Handmatige bediening met trekkoord of ketting
+
+Elektrische uitvoering met afstandsbediening (optioneel)
+
+Montage & Afwerking
+
+In-de-dag of op-de-dag montage
+
+Cassette, open profiel of losse steunen
+
+Inclusief bevestigingsmateriaal en montagehandleiding
+
+Onderhoud
+
+Afstoffen met plumeau of zachte borstel
+
+Af en toe reinigen met licht vochtige doek
+
+Prijsindicatie
+
+Vanaf €79,95 per m², inclusief maatwerk en standaard montageprofiel. Prijs afhankelijk van houtsoort, lamelbreedte en opties.
+
+Persoonlijk advies
+
+Onze specialisten staan klaar om u te begeleiden in uw keuze. Vraag een offerte aan of plan een gratis adviesgesprek voor professioneel advies op maat.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

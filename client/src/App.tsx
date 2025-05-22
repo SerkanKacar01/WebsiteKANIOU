@@ -50,7 +50,7 @@ import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 function Router() {
   const { t } = useLanguage();
   const [location] = useLocation();
-  
+
   // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
@@ -77,12 +77,12 @@ function Router() {
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         <Route path="/products/overgordijnen" component={OvergordijnenPage} />
         <Route path="/products/vitrages" component={VitragesPage} />
-        
+
         {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />
         <Route path="/price-calculator" component={PriceCalculatorPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
-        
+
         {/* All individual product category pages */}
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
@@ -121,13 +121,13 @@ function Router() {
 
 function App() {
   const { language } = useLanguage();
-  
+
   // Update language-specific metadata
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   }, [language]);
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

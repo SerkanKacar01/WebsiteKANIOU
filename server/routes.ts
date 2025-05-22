@@ -301,11 +301,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         const htmlContent = createQuoteRequestEmailHtml(emailData);
         
+        // Create plain text version as fallback
+        const textContent = `
+New Quote Request from ${emailData.name}
+
+Customer Information:
+Name: ${emailData.name}
+Email: ${emailData.email}
+Phone: ${emailData.phone}
+
+Product Type: ${emailData.productType}
+${emailData.dimensions ? `Dimensions: ${emailData.dimensions}` : ''}
+${emailData.requirements ? `\nSpecial Requirements:\n${emailData.requirements}` : ''}
+        `.trim();
+        
         await sendEmail({
-          to: 'info@kaniou.be', // Replace with your business email
-          from: 'noreply@yourdomain.com', // Replace with your verified sender
-          subject: 'New Quote Request from Your Website',
-          html: htmlContent
+          to: emailConfig.notificationEmail,
+          from: emailConfig.senderEmail,
+          subject: `${emailConfig.quoteForm.subjectPrefix}New Request from ${emailData.name}`,
+          html: htmlContent,
+          text: textContent
         });
         
         console.log('Quote request email notification sent');
@@ -351,11 +366,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         const htmlContent = createContactEmailHtml(emailData);
         
+        // Create plain text version as fallback
+        const textContent = `
+New Contact Form Message from ${emailData.name}
+
+From: ${emailData.name} (${emailData.email})
+Subject: ${emailData.subject}
+
+Message:
+${emailData.message}
+        `.trim();
+        
         await sendEmail({
-          to: 'info@kaniou.be', // Replace with your business email
-          from: 'noreply@yourdomain.com', // Replace with your verified sender
-          subject: `New Contact Form Message: ${validatedData.data.subject}`,
-          html: htmlContent
+          to: emailConfig.notificationEmail,
+          from: emailConfig.senderEmail,
+          subject: `${emailConfig.contactForm.subjectPrefix}${emailData.subject}`,
+          html: htmlContent,
+          text: textContent
         });
         
         console.log('Contact form email notification sent');

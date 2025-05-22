@@ -10,8 +10,9 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check } from "lucide-react";
+import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
 import ProductCalculator from "@/components/calculators/ProductCalculator";
+import SmartMeasurementGuide from "@/components/measurement/SmartMeasurementGuide";
 
 const RolgordijnenPage = () => {
   return (
@@ -72,6 +73,15 @@ const RolgordijnenPage = () => {
                   Vrijblijvende offerte aanvragen
                 </Button>
               </Link>
+              <a href="#measurement-guide">
+                <Button
+                  variant="outline"
+                  className="bg-blue-500/90 text-white border-blue-400 hover:bg-blue-600/90"
+                >
+                  <Smartphone className="w-4 h-4 mr-2" />
+                  AR Meting starten
+                </Button>
+              </a>
               <a href="#calculator">
                 <Button
                   variant="outline"
@@ -460,9 +470,41 @@ const RolgordijnenPage = () => {
         </Container>
       </div>
 
-      {/* Calculator Section */}
-      <div id="calculator" className="py-16 bg-white">
+      {/* Smart Measurement Guide Section */}
+      <div id="measurement-guide" className="py-20 bg-gradient-to-br from-blue-50 to-primary/5">
         <Container>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
+              <Smartphone className="w-8 h-8 text-primary" />
+            </div>
+            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+              Smart Meetgids met AR
+            </h2>
+            <p className="text-xl text-text-medium max-w-3xl mx-auto">
+              Gebruik de nieuwste augmented reality technologie om uw raam automatisch en nauwkeurig op te meten
+            </p>
+          </div>
+          <SmartMeasurementGuide 
+            onMeasurementComplete={(data) => {
+              console.log('Measurement completed:', data);
+              // Scroll to calculator section after measurement
+              document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
+        </Container>
+      </div>
+
+      {/* Calculator Section */}
+      <div id="calculator" className="py-20 bg-white">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+              Prijscalculator
+            </h2>
+            <p className="text-xl text-text-medium max-w-3xl mx-auto">
+              Bereken direct de prijs voor uw rolgordijnen op maat
+            </p>
+          </div>
           <div className="max-w-4xl mx-auto">
             <ProductCalculator productId="rolgordijnen" />
           </div>

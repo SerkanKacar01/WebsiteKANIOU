@@ -271,6 +271,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const newQuoteRequest = await storage.createQuoteRequest(validatedData.data);
+      
+      // Send email notification about the new quote request
+      try {
+        const emailData = {
+          name: validatedData.data.name,
+          email: validatedData.data.email,
+          phone: validatedData.data.phone,
+          productType: validatedData.data.productType,
+          dimensions: validatedData.data.dimensions,
+          requirements: validatedData.data.requirements
+        };
+        
+        const htmlContent = createQuoteRequestEmailHtml(emailData);
+        
+        await sendEmail({
+          to: 'info@kaniou.be', // Replace with your business email
+          from: 'noreply@yourdomain.com', // Replace with your verified sender
+          subject: 'New Quote Request from Your Website',
+          html: htmlContent
+        });
+        
+        console.log('Quote request email notification sent');
+      } catch (emailError) {
+        // Log the error but don't fail the request if email sending fails
+        console.error('Failed to send quote request email notification:', emailError);
+      }
+      
       res.status(201).json(newQuoteRequest);
     } catch (error) {
       console.error("Error creating quote request:", error);
@@ -290,6 +317,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const newSubmission = await storage.createContactSubmission(validatedData.data);
+      
+      // Send email notification about the new contact form submission
+      try {
+        const emailData = {
+          name: validatedData.data.name,
+          email: validatedData.data.email,
+          subject: validatedData.data.subject,
+          message: validatedData.data.message
+        };
+        
+        const htmlContent = createContactEmailHtml(emailData);
+        
+        await sendEmail({
+          to: 'info@kaniou.be', // Replace with your business email
+          from: 'noreply@yourdomain.com', // Replace with your verified sender
+          subject: `New Contact Form Message: ${validatedData.data.subject}`,
+          html: htmlContent
+        });
+        
+        console.log('Contact form email notification sent');
+      } catch (emailError) {
+        // Log the error but don't fail the request if email sending fails
+        console.error('Failed to send contact form email notification:', emailError);
+      }
+      
       res.status(201).json(newSubmission);
     } catch (error) {
       console.error("Error creating contact submission:", error);

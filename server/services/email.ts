@@ -5,9 +5,11 @@ if (!process.env.SENDGRID_API_KEY) {
 }
 
 const mailService = new MailService();
-// Use environment variable or empty string as fallback
-const apiKey = process.env.SENDGRID_API_KEY || '';
-mailService.setApiKey(apiKey);
+
+// Set the API key if available
+if (process.env.SENDGRID_API_KEY) {
+  mailService.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 interface EmailParams {
   to: string;
@@ -22,13 +24,18 @@ interface EmailParams {
  */
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
-    await mailService.send({
+    // Create email message object with required fields
+    const msg: any = {
       to: params.to,
       from: params.from, // This should be a verified sender in your SendGrid account
       subject: params.subject,
-      text: params.text,
-      html: params.html,
-    });
+    };
+    
+    // Add optional fields if they exist
+    if (params.text) msg.text = params.text;
+    if (params.html) msg.html = params.html;
+    
+    await mailService.send(msg);
     console.log(`Email sent successfully to ${params.to}`);
     return true;
   } catch (error) {
@@ -75,11 +82,9 @@ export function createQuoteRequestEmailHtml(data: {
   name: string;
   email: string;
   phone: string;
-  address?: string;
-  projectDetails: string;
-  productType?: string;
+  productType: string;
   dimensions?: string;
-  quantity?: number;
+  requirements?: string;
 }): string {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -90,18 +95,18 @@ export function createQuoteRequestEmailHtml(data: {
         <p><strong>Name:</strong> ${data.name}</p>
         <p><strong>Email:</strong> ${data.email}</p>
         <p><strong>Phone:</strong> ${data.phone}</p>
-        ${data.address ? `<p><strong>Address:</strong> ${data.address}</p>` : ''}
         
         <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
           <h3 style="color: #555;">Project Details:</h3>
-          ${data.productType ? `<p><strong>Product Type:</strong> ${data.productType}</p>` : ''}
+          <p><strong>Product Type:</strong> ${data.productType}</p>
           ${data.dimensions ? `<p><strong>Dimensions:</strong> ${data.dimensions}</p>` : ''}
-          ${data.quantity ? `<p><strong>Quantity:</strong> ${data.quantity}</p>` : ''}
           
+          ${data.requirements ? `
           <div style="margin-top: 15px;">
-            <h4 style="color: #666;">Additional Information:</h4>
-            <p style="line-height: 1.5; white-space: pre-line;">${data.projectDetails}</p>
+            <h4 style="color: #666;">Special Requirements:</h4>
+            <p style="line-height: 1.5; white-space: pre-line;">${data.requirements}</p>
           </div>
+          ` : ''}
         </div>
       </div>
       

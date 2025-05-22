@@ -1,0 +1,101 @@
+Please create and implement the full product page for Kunststof Lamellen at the route /products/kunststof-lamellen.
+
+OBJECTIVE:
+To publish a professionally styled and mobile-responsive page about Kunststof Lamellen (PVC vertical blinds), consistent with the design and layout of all other product pages.
+
+REQUIREMENTS:
+
+Page Path: /products/kunststof-lamellen
+
+Navigation: Add to the "Producten" dropdown menu
+
+Design:
+
+Clean and minimalistic
+
+Consistent with existing product pages (e.g., Textiel Lamellen)
+
+Optimized for desktop, tablet, and mobile
+
+Use subtle transitions and hover effects where appropriate
+
+Content Structure:
+
+Introduction
+
+Features & Advantages
+
+Material Options
+
+Use Cases (e.g. bathroom, kitchen, professional spaces)
+
+Operation & Mounting
+
+Maintenance
+
+Pricing
+
+CTA section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE AS-IS):
+
+Kunststof Lamellen – Duurzame en Onderhoudsvriendelijke Oplossing
+
+Kunststof lamellen zijn verticale jaloezieën gemaakt van hoogwaardig PVC. Ze zijn bijzonder geschikt voor vochtige ruimtes zoals badkamers, keukens en kantoren, dankzij hun waterbestendige en onderhoudsarme eigenschappen.
+
+Voordelen
+
+Vocht- en schimmelbestendig
+
+Eenvoudig te reinigen met vochtige doek
+
+Ideaal voor badkamers, keukens, medische praktijken
+
+Licht- en privacyregeling via draaiknop
+
+Leverbaar in 89 mm en 127 mm lamelbreedte
+
+Lange levensduur door robuust materiaal
+
+Kleuren en Stijlopties
+
+Effen kleuren zoals wit, crème, antraciet
+
+Mat of licht glanzend oppervlak
+
+Ook leverbaar met houtlook textuur voor warmere uitstraling
+
+Montage & Bediening
+
+Geschikt voor montage op wand of plafond
+
+Ketting- en koordbediening links of rechts
+
+Ook leverbaar in elektrische uitvoering (optioneel)
+
+Onderhoud
+
+Afneembaar met vochtige doek of mild schoonmaakmiddel
+
+Geen verkleuring bij langdurig zonlicht (UV-bestendig)
+
+Prijsindicatie
+
+Vanaf €54,95 per vierkante meter, inclusief rail en maatwerk. Prijs afhankelijk van aantal lamellen, afmetingen en type uitvoering.
+
+Persoonlijk advies
+
+Vraag een offerte op maat aan of plan een vrijblijvend adviesgesprek bij u thuis of in de showroom. Onze experts helpen u graag verder.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

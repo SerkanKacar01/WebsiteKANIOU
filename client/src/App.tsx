@@ -78,14 +78,14 @@ function Router() {
         <Route path="/products/overgordijnen" component={OvergordijnenPage} />
         <Route path="/products/vitrages" component={VitragesPage} />
 
+        {/* All individual product category pages - must come before generic routes */}
+        <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
+        <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
+
         {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />
         <Route path="/price-calculator" component={PriceCalculatorPage} />
         <Route path="/products/:id(\d+)" component={ProductDetail} />
-
-        {/* All individual product category pages */}
-        <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
-        <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
         <Route path="/products/textiel-lamellen" component={TextielLamellenPage} />
         <Route path="/products/kunststof-lamellen" component={KunststofLamellenPage} />
         <Route path="/products/houten-jaloezieen" component={ProductCategoryPage} />

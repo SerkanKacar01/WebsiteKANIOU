@@ -97,31 +97,60 @@ export function createQuoteRequestEmailHtml(data: {
   requirements?: string;
 }): string {
   return `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Quote Request</h2>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
+      <!-- Header -->
+      <div style="background-color: #4a6da7; padding: 20px; text-align: center;">
+        <h2 style="color: white; margin: 0; font-size: 22px;">New Quote Request</h2>
+      </div>
       
-      <div style="margin: 20px 0;">
-        <h3 style="color: #555;">Customer Information:</h3>
-        <p><strong>Name:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Phone:</strong> ${data.phone}</p>
-        
-        <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
-          <h3 style="color: #555;">Project Details:</h3>
-          <p><strong>Product Type:</strong> ${data.productType}</p>
-          ${data.dimensions ? `<p><strong>Dimensions:</strong> ${data.dimensions}</p>` : ''}
-          
-          ${data.requirements ? `
-          <div style="margin-top: 15px;">
-            <h4 style="color: #666;">Special Requirements:</h4>
-            <p style="line-height: 1.5; white-space: pre-line;">${data.requirements}</p>
+      <!-- Content -->
+      <div style="padding: 20px; background-color: #fff;">
+        <!-- Customer Information -->
+        <div style="margin-bottom: 25px;">
+          <h3 style="color: #4a6da7; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0;">Customer Information</h3>
+          <div style="background-color: #f9f9f9; border-left: 4px solid #4a6da7; padding: 15px; border-radius: 0 4px 4px 0;">
+            <p style="margin: 0 0 8px 0;"><strong>Name:</strong> ${data.name}</p>
+            <p style="margin: 0 0 8px 0;"><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #4a6da7; text-decoration: none;">${data.email}</a></p>
+            <p style="margin: 0;"><strong>Phone:</strong> ${data.phone}</p>
           </div>
-          ` : ''}
+        </div>
+        
+        <!-- Project Details -->
+        <div style="margin-bottom: 25px;">
+          <h3 style="color: #4a6da7; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0;">Project Details</h3>
+          <div style="background-color: #f9f9f9; padding: 15px; border-radius: 4px;">
+            <p style="margin: 0 0 8px 0;"><strong>Product Type:</strong> ${data.productType}</p>
+            ${data.dimensions ? `<p style="margin: 0 0 8px 0;"><strong>Dimensions:</strong> ${data.dimensions}</p>` : ''}
+            
+            ${data.requirements ? `
+            <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+              <p style="margin: 0 0 8px 0;"><strong>Special Requirements:</strong></p>
+              <div style="background-color: #fff; padding: 10px; border: 1px solid #eee; border-radius: 4px;">
+                <p style="white-space: pre-line; margin: 0; line-height: 1.6;">${data.requirements}</p>
+              </div>
+            </div>
+            ` : ''}
+          </div>
+        </div>
+        
+        <!-- Action Button -->
+        <div style="text-align: center; margin: 25px 0;">
+          <table cellspacing="0" cellpadding="0" style="margin: 0 auto;">
+            <tr>
+              <td style="border-radius: 4px; background-color: #4a6da7; text-align: center;">
+                <a href="mailto:${data.email}" style="border: 1px solid #4a6da7; padding: 12px 25px; color: #ffffff; text-decoration: none; display: inline-block; font-weight: bold; font-size: 16px; border-radius: 4px;">
+                  Contact Customer
+                </a>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
       
-      <div style="color: #777; font-size: 12px; margin-top: 30px; padding-top: 10px; border-top: 1px solid #eee;">
-        <p>This quote request was submitted from your website on ${new Date().toLocaleDateString()}.</p>
+      <!-- Footer -->
+      <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; color: #777;">
+        <p style="margin: 0;">This quote request was submitted from your website on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        <p style="margin: 5px 0 0 0;">To prepare a quote, contact the customer directly.</p>
       </div>
     </div>
   `;

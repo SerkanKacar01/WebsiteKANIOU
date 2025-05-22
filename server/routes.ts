@@ -304,16 +304,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         // Create plain text version as fallback
         const textContent = `
-New Quote Request from ${emailData.name}
+NEW QUOTE REQUEST
 
-Customer Information:
+CUSTOMER INFORMATION
 Name: ${emailData.name}
 Email: ${emailData.email}
 Phone: ${emailData.phone}
 
+PROJECT DETAILS
 Product Type: ${emailData.productType}
 ${emailData.dimensions ? `Dimensions: ${emailData.dimensions}` : ''}
 ${emailData.requirements ? `\nSpecial Requirements:\n${emailData.requirements}` : ''}
+
+---
+Submitted on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+To prepare a quote, please contact the customer directly.
         `.trim();
         
         await sendEmail({
@@ -369,13 +374,17 @@ ${emailData.requirements ? `\nSpecial Requirements:\n${emailData.requirements}` 
         
         // Create plain text version as fallback
         const textContent = `
-New Contact Form Message from ${emailData.name}
+NEW CONTACT FORM MESSAGE
 
-From: ${emailData.name} (${emailData.email})
-Subject: ${emailData.subject}
+FROM: ${emailData.name} (${emailData.email})
+SUBJECT: ${emailData.subject}
 
-Message:
+MESSAGE:
 ${emailData.message}
+
+---
+Submitted on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+To respond, simply reply to this email.
         `.trim();
         
         await sendEmail({

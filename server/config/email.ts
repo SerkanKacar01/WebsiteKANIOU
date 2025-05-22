@@ -8,7 +8,7 @@ export const emailConfig = {
   notificationEmail: 'info@kaniou.be', // Confirmed email address for submissions
   
   // The address that will appear as the sender (should be verified in SendGrid)
-  senderEmail: 'notifications@yourdomain.com',
+  senderEmail: 'notifications@kaniou.be', // Using your domain for better deliverability
   
   // Your business name (will appear in email subjects and content)
   businessName: 'Kaniou',

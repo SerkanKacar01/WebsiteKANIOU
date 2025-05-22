@@ -1,0 +1,91 @@
+✅ REPLIT INSTRUCTION — INSERT CONTENT FOR PRODUCT PAGE: “ROLGORDIJNEN”
+
+Language of content: Dutch
+Instruction language: English
+
+⸻
+
+🎯 Goal:
+
+Populate the /products/rolgordijnen page with the complete product content written in Dutch. The page should be structured clearly using headings, paragraphs, and lists, and be responsive on both desktop and mobile. No placeholder content should remain.
+
+⸻
+
+📘 Page Title:
+
+Rolgordijnen op Maat
+
+⸻
+
+📄 Dutch Content to be inserted (copy below into the content section):
+
+Elegantie, eenvoud en functionaliteit in één raamoplossing
+
+Onze rolgordijnen combineren tijdloze elegantie met praktische toepasbaarheid. Ze zijn ideaal voor elk interieur, van modern tot klassiek, en worden volledig op maat gemaakt volgens uw wensen en raamafmetingen.
+
+⸻
+
+🌿 Stoffen en lichtdoorlatendheid
+
+We bieden een breed gamma stoffen aan, van verduisterende tot lichtdoorlatende en transparante varianten:
+	•	Verduisterende stof – ideaal voor slaapkamers of kinderkamers, volledig zonwerend
+	•	Lichtdoorlatende stof – zorgt voor privacy zonder het daglicht volledig te blokkeren
+	•	Transparante stof – een subtiele lichtfilter, perfect voor woonkamers of keukens
+	•	Screenstoffen – technisch geweven stoffen die zon weren maar uitzicht naar buiten behouden
+
+⸻
+
+⚙️ Montageopties
+	•	In-de-dag montage (in het raamkozijn) – strak en minimalistisch
+	•	Op-de-dag montage (op de muur of tegen het plafond) – voor volledige raamafdekking
+	•	Inclusief stevige metalen montage steunen met wit afdekkapje (standaard)
+
+⸻
+
+🧩 Profiel- en cassetteopties
+	1.	Standaard open systeem – zichtbaar buismechanisme, minimalistisch design
+	2.	Open profiel – elegante aluminium afwerking (meerprijs: +15%), standaard in wit
+	3.	Gesloten cassette – volledig afgesloten bovenkant (meerprijs: +20%), strak en stofvrij
+
+⸻
+
+🪟 Onderlatvarianten
+	•	Standaard aluminium onderlat (zonder meerprijs)
+	•	Onderlat met één zijde bekleed (+10%)
+	•	Onderlat met beide zijden bekleed (+15%)
+
+Afwerkingen: wit, zwart, aluminium of stofkleurig
+
+⸻
+
+⚙️ Bediening en gebruiksgemak
+	•	Standaard: Kunststof kettingbediening (wit)
+	•	Opties:
+	•	Metalen kettingbediening (+€10)
+	•	Veermechanisme (op aanvraag)
+	•	Elektrisch met afstandsbediening of app (offerte)
+
+⸻
+
+🛠️ Duurzaam en onderhoudsvriendelijk
+	•	UV-bestendige en afwasbare stoffen
+	•	Slijtvaste mechanismen
+	•	Geschikt voor dagelijks gebruik
+
+⸻
+
+📦 Toepassingen
+	•	Woonkamers
+	•	Slaapkamers
+	•	Keukens
+	•	Kantoorruimtes
+	•	Badkamers (met vochtbestendige stof)
+
+⸻
+
+📌 Technical Guidelines:
+	•	Use clear section breaks with appropriate semantic structure (<h2>, <ul>, <p>, etc.) or components
+	•	Must be fully responsive (no layout issues on mobile)
+	•	Replace placeholder content with this real text
+	•	Keep spacing elegant and uniform
+	•	Ensure the scroll experience is smooth — no overflow or cut-off elements

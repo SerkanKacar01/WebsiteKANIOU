@@ -36,6 +36,7 @@ import DuoRolgordijnen from "@/pages/products/duo-rolgordijnen";
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import TextielLamellenPage from "@/pages/products/textiel-lamellen";
 import KunststofLamellenPage from "@/pages/products/kunststof-lamellen";
+import HoutenJaloezieeenPage from "@/pages/products/houten-jaloezieen";
 import KunststofJaloezieeenPage from "@/pages/products/kunststof-jaloezieen";
 import HoutenShuttersPage from "@/pages/products/houten-shutters";
 import InzethorrenPage from "@/pages/products/inzethorren";
@@ -89,7 +90,7 @@ function Router() {
         <Route path="/products/:id(\d+)" component={ProductDetail} />
         <Route path="/products/textiel-lamellen" component={TextielLamellenPage} />
         <Route path="/products/kunststof-lamellen" component={KunststofLamellenPage} />
-        <Route path="/products/houten-jaloezieen" component={ProductCategoryPage} />
+        <Route path="/products/houten-jaloezieen" component={HoutenJaloezieeenPage} />
         <Route path="/products/kunststof-jaloezieen" component={KunststofJaloezieeenPage} />
         <Route path="/products/textiel-raamfolie" component={ProductCategoryPage} />
         <Route path="/products/houten-shutters" component={HoutenShuttersPage} />

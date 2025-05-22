@@ -28,6 +28,7 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 // Product pages with calculators
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
 import OvergordijnenPage from "@/pages/products/overgordijnen";
+import VitragesPage from "@/pages/products/vitrages";
 
 
 // All product category pages
@@ -75,6 +76,7 @@ function Router() {
         {/* Product pages with calculators - specific routes first */}
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         <Route path="/products/overgordijnen" component={OvergordijnenPage} />
+        <Route path="/products/vitrages" component={VitragesPage} />
         
         {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />

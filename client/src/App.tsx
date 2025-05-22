@@ -29,6 +29,7 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
 import OvergordijnenPage from "@/pages/products/overgordijnen";
 import VitragesPage from "@/pages/products/vitrages";
+import DuoRolgordijnen from "@/pages/products/duo-rolgordijnen";
 
 
 // All product category pages
@@ -80,7 +81,7 @@ function Router() {
 
         {/* All individual product category pages - must come before generic routes */}
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
-        <Route path="/products/duo-rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/duo-rolgordijnen" component={DuoRolgordijnen} />
 
         {/* Generic routes after specific ones */}
         <Route path="/products" component={ProductsPage} />

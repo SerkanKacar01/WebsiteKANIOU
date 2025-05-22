@@ -1,0 +1,70 @@
+**INSTRUCTION FOR REPLIT (ENGLISH)**
+
+---
+
+**Goal:**
+Display the full page content for the product "Overgordijnen" at the following path:
+`/products/overgordijnen`
+
+**Tasks:**
+
+1. Ensure the page at `/products/overgordijnen` renders without 404 error.
+2. Inject and display the Dutch content (provided below) inside a well-structured layout.
+3. Use appropriate headings (H1, H2, H3), paragraphs, and optional bullet points.
+4. Maintain the visual consistency of other product pages.
+5. Optionally add soft hover effects, spacing, and modern typography if possible, just like done on the rolgordijnen page.
+
+**Design Guidance (Optional Enhancements):**
+- Use a soft hero banner section with a relevant image and title "Overgordijnen op maat".
+- Provide consistent padding and alignment with other product pages.
+- Section transitions or subtle animations on scroll are appreciated but not required.
+
+**Dutch Page Content (DO NOT TRANSLATE)**
+
+---
+
+# Overgordijnen op maat
+
+Onze overgordijnen zijn de perfecte keuze voor wie op zoek is naar warmte, luxe en een elegante uitstraling in huis. Ze worden volledig op maat gemaakt en afgestemd op uw interieurstijl en persoonlijke voorkeuren.
+
+## Stoffen & materialen
+Wij bieden een uitgebreide selectie hoogwaardige stoffen:
+- **Verduisterende stoffen**: ideaal voor slaapkamers en ruimtes waar u lichtinval wilt blokkeren.
+- **Inbetween stoffen**: voor een luchtige, elegante sfeer met gedeeltelijke lichtfiltering.
+- **Velours stoffen**: luxueuze, zachte texturen met een rijke uitstraling.
+- **Linnenlook stoffen**: een natuurlijke, moderne uitstraling met structuur.
+
+Alle stoffen zijn beschikbaar in diverse kleuren en patronen, met brandvertragende opties voor professionele toepassingen.
+
+## Confectie opties (plooitypes)
+U kunt kiezen uit verschillende confectiemethoden:
+- Enkelvoudige plooi (standaard)
+- Dubbele plooi (meerprijs +10%)
+- Driedubbele plooi (meerprijs +15%)
+- Wave plooi (meerprijs +20%)
+
+Elke plooi beïnvloedt het valgedrag en de luxe uitstraling van de overgordijnstof.
+
+## Voering & afwerking
+- **Met voering**: thermisch isolerend, lichtwerend en geluidsdempend.
+- **Zonder voering**: meer lichtdoorlatend en soepel.
+- **Zoomafwerking**: standaard blindzoom of decoratieve boord.
+
+## Ophangsysteem
+Onze overgordijnen zijn compatibel met:
+- **Railsysteem**: inclusief runners en wand-/plafondmontage.
+- **Gordijnroedes**: met ringen of ingestikte plooien.
+
+Montage steunen zijn standaard inbegrepen. Onze adviseurs begeleiden u in de keuze voor het juiste systeem.
+
+## Maatvoering
+Wij leveren overgordijnen op maat:
+- Minimale breedte: 40 cm
+- Maximale breedte: 600 cm
+- Maximale hoogte: 320 cm
+
+Wij zorgen voor professionele confectie op basis van uw doorgegeven maten of komen gratis opmeten bij u thuis.
+
+## Prijsindicatie
+Vanaf **€40 per lopende meter inclusief confectie**.
+Exacte prijs afhankelijk van gekozen stof, confectie en voering. Gebruik onze offertepagina voor een vrijblijvende berekening.

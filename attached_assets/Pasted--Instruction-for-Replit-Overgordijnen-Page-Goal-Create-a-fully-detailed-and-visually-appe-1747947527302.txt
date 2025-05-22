@@ -1,0 +1,77 @@
+**Instruction for Replit – Overgordijnen Page**
+
+**Goal:**
+Create a fully detailed and visually appealing product page for "Overgordijnen" under the Products section. The page must be available at the following route:
+
+**URL:** `/products/overgordijnen`
+
+---
+
+**Tasks:**
+
+1. **Page Creation & Visibility**
+   - Ensure the page is publicly accessible and appears in the product dropdown menu.
+   - The route `/products/overgordijnen` must not result in a 404 error.
+
+2. **Content Placement**
+   - Use the content provided below in Dutch.
+   - This must be added with proper heading structure, sections, spacing, and formatting.
+
+3. **Visual Design & Styling**
+   - Create the most professional, stylish, and modern design possible for this page.
+   - Add hover effects where appropriate.
+   - Use components and layout that match or improve upon the existing site aesthetic.
+
+4. **Technical Structure**
+   - Follow the layout system and components structure used in other product pages.
+   - All design work must be done with reusable components where applicable.
+
+---
+
+**CONTENT (NL):**
+
+**Overgordijnen – Warmte, Stijl en Functionaliteit in Één**
+
+Onze overgordijnen zijn ontworpen om niet alleen sfeer en stijl aan uw interieur toe te voegen, maar ook praktische voordelen te bieden zoals verduistering en extra isolatie. Ze zijn perfect geschikt voor slaapkamers, woonkamers en ruimtes waar comfort en privacy centraal staan.
+
+**Stofkeuze en Afwerking**
+- Verkrijgbaar in een ruime selectie van stoffen: katoen, linnen, velours, polyester en gemengde weefsels.
+- Zowel transparante als volledig verduisterende varianten mogelijk.
+- Duurzame stoffen met UV-bestendigheid en kreukherstellend vermogen.
+- Brandvertragende opties beschikbaar voor projecten of professionele toepassingen.
+
+**Plooien en Confectie**
+- Enkelvoudige plooi (standaard) – strak en minimalistisch
+- Dubbele plooi – voor een rijkere en vollere uitstraling
+- Driedubbele plooi – luxe afwerking met extra volume
+- Wave plooi – moderne, vloeiende lijnen met een eigentijdse look
+
+**Ophangsystemen**
+- Te combineren met diverse rails en roedes: standaard, elektrisch, inbouw of plafondmontage
+- Verkrijgbaar met of zonder ringen, haakjes of runners
+
+**Montagemogelijkheden**
+- In-de-dag (tussen de muren of kozijnen)
+- Op-de-dag (boven het raam of op de muur)
+
+**Afmetingen op maat**
+- Breedte: 40 cm tot 700 cm
+- Hoogte: tot 350 cm
+- Inclusief afwerking en versteviging voor extra duurzaamheid
+
+**Optionele Toevoegingen**
+- Geluidswerende voering
+- Thermisch isolerende backing
+- Magnetische sluiting of overlappanelen voor maximale verduistering
+
+**Onderhoud**
+- Veel stoffen zijn wasbaar of chemisch reinigbaar
+- Inclusief onderhoudsadvies per stofkeuze
+
+**Plaatsing en Service**
+- Professionele opmeting en plaatsing mogelijk
+- Gratis advies bij u thuis of in onze showroom
+- Snelle levertijd: gemiddeld 3 tot 4 weken
+
+**Prijsindicatie**
+Vanaf €129,99 per raam – inclusief maatwerk en confectie, exclusief montagekosten.

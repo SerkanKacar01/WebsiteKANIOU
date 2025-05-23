@@ -84,10 +84,9 @@ function Router() {
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/duo-rolgordijnen" component={DuoRolgordijnen} />
 
-        {/* Generic routes after specific ones */}
+        {/* Specific product pages first, then generic routes */}
         <Route path="/products" component={ProductsPage} />
         <Route path="/price-calculator" component={PriceCalculatorPage} />
-        <Route path="/products/:id(\d+)" component={ProductDetail} />
         <Route path="/products/textiel-lamellen" component={TextielLamellenPage} />
         <Route path="/products/kunststof-lamellen" component={KunststofLamellenPage} />
         <Route path="/products/houten-jaloezieen" component={HoutenJaloezieeenPage} />
@@ -103,6 +102,7 @@ function Router() {
         <Route path="/products/gordijnrails" component={GordijnrailsPage} />
         <Route path="/products/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/products/squid" component={SquidTextielFoliePage} />
+        <Route path="/products/:id(\d+)" component={ProductDetail} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />

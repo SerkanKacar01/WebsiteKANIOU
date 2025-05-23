@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
 import ProductCalculator from "@/components/calculators/ProductCalculator";
+import { textiellamellenHeroImage } from "@/assets";
 
 const RolgordijnenPage = () => {
   return (
@@ -55,7 +56,7 @@ const RolgordijnenPage = () => {
       <div
         className="relative bg-cover bg-center py-24"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1565315868674-b9a710178a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${textiellamellenHeroImage})`,
         }}
       >
         <Container>

@@ -34,6 +34,7 @@ import galleryImage_inbetweens from './Inbetweens.jpeg';
 import galleryImage_opzethorren from './Opzethorren.jpeg';
 import galleryImage_rolgordijnen from './Rolgordijnen.jpeg';
 import galleryImage_textiellamellen from './Textiellamellen.jpeg';
+import textiellamellenHeroImage from './textiellamellen-hero.jpeg';
 import galleryImage_vouwgordijnen from './Vouwgordijnen.jpeg';
 import kaniouLogo from './KAN.LOGO.png';
 
@@ -74,6 +75,7 @@ export {
   galleryImage_opzethorren,
   galleryImage_rolgordijnen,
   galleryImage_textiellamellen,
+  textiellamellenHeroImage,
   galleryImage_vouwgordijnen,
   kaniouLogo
 };

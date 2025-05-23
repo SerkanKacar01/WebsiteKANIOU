@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
+import { textiellamellenHeroImage } from "@/assets";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -132,6 +133,14 @@ const TextielLamellenPage = () => {
           </Breadcrumb>
 
           {/* Hero Section */}
+          {/* Hero Image */}
+          <div className="mb-8">
+            <img
+              src={textiellamellenHeroImage}
+              alt="Textiel Lamellen"
+              className="w-full h-[400px] object-cover rounded-lg shadow-lg"
+            />
+          </div>
           <div className="text-center mb-16">
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6">
               Textiel Lamellen

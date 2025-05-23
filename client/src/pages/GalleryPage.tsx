@@ -6,8 +6,6 @@ import GalleryGrid from "@/components/gallery/GalleryGrid";
 
 import { GalleryItem } from "@shared/schema";
 import { 
-  galleryImage1, 
-  galleryImage2, 
   galleryImage3, 
   galleryImage4, 
   galleryImage5, 
@@ -30,7 +28,7 @@ import {
   galleryImage_IMG9304,
   galleryImage_IMG9305,
   galleryImage_IMG9306,
-  galleryImage_IMG9307,
+  galleryImage_IMG9306,
   galleryImage_IMG9308,
   galleryImage_IMG9309,
   galleryImage_IMG9310,
@@ -57,14 +55,14 @@ const GalleryPage = () => {
       id: 1001,
       title: "Premium Window Treatment",
       description: "Elegant curtain installation with premium fabric",
-      imageUrl: galleryImage1,
+      imageUrl: galleryImage3,
       categoryId: 1
     },
     {
       id: 1002,
       title: "Custom Blinds Design",
       description: "Contemporary blinds solution for modern interiors",
-      imageUrl: galleryImage2,
+      imageUrl: galleryImage4,
       categoryId: 1
     },
     {

@@ -1,6 +1,11 @@
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
-import { textiellamellenHeroImage } from "@/assets";
+import { 
+  textiellamellenHeroImage,
+  galleryImage_textiellamellen,
+  galleryImage_IMG9293,
+  galleryImage_IMG9294
+} from "@/assets";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -315,6 +320,30 @@ const TextielLamellenPage = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* Gallery Section */}
+          <div className="mb-16">
+            <h2 className="font-display text-3xl font-semibold text-primary text-center mb-8">
+              Onze Textiel Lamellen
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <img 
+                src={galleryImage_textiellamellen} 
+                alt="Textiel Lamellen Voorbeeld 1"
+                className="w-full h-64 object-cover rounded-lg shadow-lg"
+              />
+              <img 
+                src={galleryImage_IMG9293} 
+                alt="Textiel Lamellen Voorbeeld 2"
+                className="w-full h-64 object-cover rounded-lg shadow-lg"
+              />
+              <img 
+                src={galleryImage_IMG9294} 
+                alt="Textiel Lamellen Voorbeeld 3"
+                className="w-full h-64 object-cover rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
 
           {/* CTA Section */}
           <Card className="bg-gradient-to-r from-primary to-accent text-white">

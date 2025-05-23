@@ -11,7 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
-import ProductCalculator from "@/components/calculators/ProductCalculator";
+
 import { textiellamellenHeroImage } from "@/assets";
 
 const RolgordijnenPage = () => {
@@ -84,14 +84,7 @@ const RolgordijnenPage = () => {
                   AR Meting starten
                 </Button>
               </a>
-              <a href="#calculator">
-                <Button
-                  variant="outline"
-                  className="bg-white/10 text-white border-white hover:bg-white/20"
-                >
-                  Bereken prijs
-                </Button>
-              </a>
+
             </div>
           </div>
         </Container>

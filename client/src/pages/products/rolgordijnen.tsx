@@ -607,22 +607,7 @@ const RolgordijnenPage = () => {
         </Container>
       </div>
 
-      {/* Calculator Section */}
-      <div id="calculator" className="py-20 bg-white">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
-              Prijscalculator
-            </h2>
-            <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Bereken direct de prijs voor uw rolgordijnen op maat
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <ProductCalculator productId="rolgordijnen" />
-          </div>
-        </Container>
-      </div>
+
 
       {/* CTA Section */}
       <div className="py-16 bg-primary text-white">

@@ -1,21 +1,20 @@
-
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/context/LanguageContext";
-import { 
-  CheckCircle, 
-  Eye, 
-  Shield, 
-  Ruler, 
-  Palette, 
-  Settings, 
+import {
+  CheckCircle,
+  Eye,
+  Shield,
+  Ruler,
+  Palette,
+  Settings,
   Sparkles,
   HomeIcon,
   ChevronRight,
-  Euro
+  Euro,
 } from "lucide-react";
 import {
   Breadcrumb,
@@ -32,51 +31,51 @@ const TextielLamellenPage = () => {
     {
       icon: <CheckCircle className="h-6 w-6 text-accent" />,
       title: "Functioneel én decoratief",
-      description: "Perfect voor dagelijks gebruik met elegante uitstraling"
+      description: "Perfect voor dagelijks gebruik met elegante uitstraling",
     },
     {
       icon: <Ruler className="h-6 w-6 text-accent" />,
       title: "Ideaal voor grote raampartijen",
-      description: "Speciaal geschikt voor hoge ramen en brede glaspartijen"
+      description: "Speciaal geschikt voor hoge ramen en brede glaspartijen",
     },
     {
       icon: <Eye className="h-6 w-6 text-accent" />,
       title: "Lichtinval eenvoudig regelbaar",
-      description: "Met draaiknop voor optimale lichtregeling"
+      description: "Met draaiknop voor optimale lichtregeling",
     },
     {
       icon: <Shield className="h-6 w-6 text-accent" />,
       title: "Zachte, warme uitstraling",
-      description: "Textiel zorgt voor gezellige sfeer in uw interieur"
+      description: "Textiel zorgt voor gezellige sfeer in uw interieur",
     },
     {
       icon: <Settings className="h-6 w-6 text-accent" />,
       title: "Geluidsabsorberend effect",
-      description: "Verbetert de akoestiek van uw ruimte"
+      description: "Verbetert de akoestiek van uw ruimte",
     },
     {
       icon: <Ruler className="h-6 w-6 text-accent" />,
       title: "Verschillende breedtes",
-      description: "Leverbaar in 89 mm en 127 mm lamelbreedtes"
-    }
+      description: "Leverbaar in 89 mm en 127 mm lamelbreedtes",
+    },
   ];
 
   const fabricTypes = [
     {
       type: "Transparante stoffen",
       description: "Voor subtiel daglicht en open gevoel",
-      icon: <Eye className="h-5 w-5 text-accent" />
+      icon: <Eye className="h-5 w-5 text-accent" />,
     },
     {
       type: "Lichtdoorlatende stoffen",
       description: "Ideaal voor meer privacy met natuurlijk licht",
-      icon: <Shield className="h-5 w-5 text-accent" />
+      icon: <Shield className="h-5 w-5 text-accent" />,
     },
     {
       type: "Verduisterende stoffen",
       description: "Perfect voor slaapkamer of kantoor",
-      icon: <CheckCircle className="h-5 w-5 text-accent" />
-    }
+      icon: <CheckCircle className="h-5 w-5 text-accent" />,
+    },
   ];
 
   const colors = ["wit", "crème", "grijs", "taupe", "zwart"];
@@ -84,13 +83,25 @@ const TextielLamellenPage = () => {
   return (
     <>
       <Helmet>
-        <title>Textiel Lamellen - Tijdloze Verticale Stoffen Jaloezieën | Elegant Drapes</title>
-        <meta name="description" content="Textiel lamellen zijn verticale stroken stof die elegant langs elkaar bewegen. Ideaal voor grote raampartijen en schuifpuien. Vanaf €69,95 per m²." />
-        <meta property="og:title" content="Textiel Lamellen - Tijdloze Verticale Stoffen Jaloezieën | Elegant Drapes" />
-        <meta property="og:description" content="Textiel lamellen zijn verticale stroken stof die elegant langs elkaar bewegen. Ideaal voor grote raampartijen en schuifpuien. Vanaf €69,95 per m²." />
+        <title>
+          Textiel Lamellen - Tijdloze Verticale Stoffen Jaloezieën | Elegant
+          Drapes
+        </title>
+        <meta
+          name="description"
+          content="Textiel lamellen zijn verticale stroken stof die elegant langs elkaar bewegen. Ideaal voor grote raampartijen en schuifpuien. Vanaf €69,95 per m²."
+        />
+        <meta
+          property="og:title"
+          content="Textiel Lamellen - Tijdloze Verticale Stoffen Jaloezieën | Elegant Drapes"
+        />
+        <meta
+          property="og:description"
+          content="Textiel lamellen zijn verticale stroken stof die elegant langs elkaar bewegen. Ideaal voor grote raampartijen en schuifpuien. Vanaf €69,95 per m²."
+        />
         <meta property="og:type" content="website" />
       </Helmet>
-      
+
       <div className="min-h-screen bg-background">
         <Container className="py-8">
           {/* Breadcrumb */}
@@ -130,9 +141,10 @@ const TextielLamellenPage = () => {
             </h2>
             <div className="max-w-4xl mx-auto">
               <p className="text-lg text-text-light leading-relaxed">
-                Textiel lamellen zijn verticale stroken stof die elegant langs elkaar bewegen. 
-                Ze zijn uitermate geschikt voor grote raampartijen en schuifpuien. 
-                Dankzij hun flexibiliteit regelt u eenvoudig het binnenvallende licht en behoudt u uw privacy.
+                Textiel lamellen zijn verticale stroken stof die elegant langs
+                elkaar bewegen. Ze zijn uitermate geschikt voor grote
+                raampartijen en schuifpuien. Dankzij hun flexibiliteit regelt u
+                eenvoudig het binnenvallende licht en behoudt u uw privacy.
               </p>
             </div>
           </div>
@@ -144,12 +156,13 @@ const TextielLamellenPage = () => {
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+                <Card
+                  key={index}
+                  className="hover:shadow-lg transition-shadow duration-300"
+                >
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0">
-                        {feature.icon}
-                      </div>
+                      <div className="flex-shrink-0">{feature.icon}</div>
                       <div>
                         <h3 className="font-semibold text-text-dark mb-2">
                           {feature.title}
@@ -175,12 +188,13 @@ const TextielLamellenPage = () => {
               </h2>
               <div className="space-y-6">
                 {fabricTypes.map((fabric, index) => (
-                  <Card key={index} className="hover:shadow-md transition-shadow duration-300">
+                  <Card
+                    key={index}
+                    className="hover:shadow-md transition-shadow duration-300"
+                  >
                     <CardContent className="p-6">
                       <div className="flex items-start space-x-4">
-                        <div className="flex-shrink-0">
-                          {fabric.icon}
-                        </div>
+                        <div className="flex-shrink-0">{fabric.icon}</div>
                         <div>
                           <h3 className="font-semibold text-text-dark mb-2">
                             {fabric.type}
@@ -203,14 +217,21 @@ const TextielLamellenPage = () => {
               </h3>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {colors.map((color, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 bg-white rounded-lg border">
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 p-3 bg-white rounded-lg border"
+                  >
                     <div className="w-4 h-4 rounded-full bg-accent"></div>
-                    <span className="text-text-dark font-medium capitalize">{color}</span>
+                    <span className="text-text-dark font-medium capitalize">
+                      {color}
+                    </span>
                   </div>
                 ))}
                 <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border col-span-2">
                   <Sparkles className="w-4 h-4 text-accent" />
-                  <span className="text-text-dark font-medium">En nog veel meer kleuren beschikbaar</span>
+                  <span className="text-text-dark font-medium">
+                    En nog veel meer kleuren beschikbaar
+                  </span>
                 </div>
               </div>
             </div>
@@ -254,7 +275,10 @@ const TextielLamellenPage = () => {
                   </div>
                   <div className="flex items-start space-x-3">
                     <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
-                    <span>Sommige stoffen zijn wasbaar of reinigbaar met vochtige doek</span>
+                    <span>
+                      Sommige stoffen zijn wasbaar of reinigbaar met vochtige
+                      doek
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -270,11 +294,14 @@ const TextielLamellenPage = () => {
               </h2>
               <div className="max-w-3xl mx-auto">
                 <div className="text-4xl font-bold text-primary mb-4">
-                  Vanaf €69,95 <span className="text-lg font-normal text-text-medium">per m²</span>
+                  Vanaf €75{" "}
+                  <span className="text-lg font-normal text-text-medium">
+                    per m²
+                  </span>
                 </div>
                 <p className="text-text-light leading-relaxed">
-                  Inclusief maatwerk en standaard rail. Prijs varieert op basis van stof, 
-                  bedieningszijde en breedte van de lamel.
+                  Inclusief maatwerk en standaard rail. Prijs varieert op basis
+                  van stof, bedieningszijde en breedte van de lamel.
                 </p>
               </div>
             </CardContent>
@@ -287,17 +314,26 @@ const TextielLamellenPage = () => {
                 Persoonlijk advies
               </h2>
               <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-                Vraag nu vrijblijvend een offerte aan of plan een gratis adviesgesprek 
-                met één van onze specialisten bij u thuis of in de showroom.
+                Vraag nu vrijblijvend een offerte aan of plan een gratis
+                adviesgesprek met één van onze specialisten bij u thuis of in de
+                showroom.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/quote">
-                  <Button size="lg" variant="secondary" className="w-full sm:w-auto text-primary hover:text-primary">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="w-full sm:w-auto text-primary hover:text-primary"
+                  >
                     Vraag een offerte aan
                   </Button>
                 </Link>
                 <Link href="/contact">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary"
+                  >
                     Plan een gratis adviesgesprek
                   </Button>
                 </Link>

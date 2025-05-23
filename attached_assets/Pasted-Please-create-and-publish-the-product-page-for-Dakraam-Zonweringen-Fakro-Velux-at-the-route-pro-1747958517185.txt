@@ -1,0 +1,102 @@
+Please create and publish the product page for Dakraam Zonweringen (Fakro & Velux) at the route /products/dakraam-zonwering.
+
+OBJECTIVE:
+To implement a product page dedicated to sun protection solutions for roof windows, compatible with Fakro and Velux systems, matching the visual identity of other product pages.
+
+REQUIREMENTS:
+
+Page Path: /products/dakraam-zonwering
+
+Navigation: Add under "Producten" dropdown menu
+
+Design Specifications:
+
+Clean, informative layout
+
+Fully responsive for all screen sizes
+
+Style consistent with Plissé and Rolgordijnen pages
+
+Page Sections:
+
+Introduction
+
+System Compatibility
+
+Benefits & Features
+
+Fabric Types
+
+Installation & Operation
+
+Maintenance
+
+Price Overview
+
+CTA Section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS PROVIDED):
+
+Dakraam Zonwering – Op Maat voor Fakro en Velux Ramen
+
+Dakraam zonweringen zorgen voor optimale licht- en warmtewering in ruimtes met dakramen. Speciaal ontworpen voor plaatsing op Fakro- en Velux-ramen, bieden ze comfort, privacy en energie-efficiëntie in elke kamer onder het dak.
+
+Systeemcompatibiliteit
+
+Geschikt voor Fakro en Velux dakramen
+
+Leverbaar in standaardmaten op basis van raamtype en code
+
+Zowel handmatig als elektrisch bedienbaar (afstandsbediening of app)
+
+Voordelen
+
+Effectieve warmte- en lichtregulatie
+
+Beschikbaar in verduisterend, lichtdoorlatend en reflecterend doek
+
+Compacte cassette met zijgeleiding voor volledige afsluiting
+
+Keuze uit verschillende kleuren en materialen
+
+Stoffen
+
+Verduisterend doek voor slaapkamers
+
+Lichtdoorlatend doek voor leefruimtes
+
+Reflecterend doek voor extra warmtewering
+
+Montage & Bediening
+
+Snelle montage via kliksysteem in bestaande raamconstructie
+
+Handmatig met greep of trekkoord
+
+Elektrisch mogelijk bij motorisatie (optioneel)
+
+Onderhoud
+
+Afstoffen met zachte doek
+
+Reiniging met licht vochtige doek indien nodig
+
+Prijsindicatie
+
+Vanaf €89 per stuk, afhankelijk van type doek, bediening en raamtype (Fakro/Velux). Inclusief maatwerk.
+
+Advies op maat
+
+Vraag vrijblijvend een offerte aan of plan een adviesgesprek voor hulp bij het kiezen van het juiste type zonwering voor uw dakraam.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek

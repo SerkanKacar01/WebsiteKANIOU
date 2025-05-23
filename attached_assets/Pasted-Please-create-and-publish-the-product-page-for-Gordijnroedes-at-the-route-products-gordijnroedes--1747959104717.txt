@@ -1,0 +1,103 @@
+Please create and publish the product page for Gordijnroedes at the route /products/gordijnroedes.
+
+OBJECTIVE:
+To create a product page for Gordijnroedes with clear structure, professional design, and full responsiveness, in line with the visual standard of other "Producten" pages.
+
+REQUIREMENTS:
+
+Page Path: /products/gordijnroedes
+
+Navigation: Add to "Producten" dropdown menu
+
+Design Expectations:
+
+Elegant and functional layout
+
+Responsive across all devices
+
+Consistent with pages like Gordijnrails and Overgordijnen
+
+Page Content Layout:
+
+Introduction
+
+Types of Curtain Rods
+
+Finials and Accessories
+
+Materials and Colors
+
+Mounting & Operation
+
+Maintenance
+
+Price Information
+
+CTA Section
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS WRITTEN):
+
+Gordijnroedes – Decoratieve Oplossing met Praktische Functionaliteit
+
+Gordijnroedes zijn niet alleen functioneel, maar ook een belangrijk onderdeel van uw interieur. Ze bieden een decoratieve manier om gordijnen op te hangen en zijn beschikbaar in diverse stijlen, materialen en kleuren.
+
+Types Gordijnroedes
+
+Klassieke ronde staaf
+
+Smeedijzeren of houten uitvoering
+
+Roedes met dubbele staaf voor overgordijnen + vitrage
+
+Uitschuifbare of vaste lengte
+
+Sierknoppen & Accessoires
+
+Eindknoppen (klassiek, modern, industrieel)
+
+Ringen, steunen, wand- of plafondbevestiging
+
+Bijpassende tiebacks en gordijnhaken
+
+Materialen & Kleuren
+
+Metaal: zwart, messing, brons, rvs
+
+Hout: wit, eiken, noten, zwart gebeitst
+
+Afwerking mat, glanzend of geborsteld
+
+Montage & Bediening
+
+Eenvoudige wand- of plafondmontage
+
+Geschikt voor lichte tot zware gordijnen
+
+Te combineren met standaard of wave-plooi
+
+Onderhoud
+
+Regelmatig afstoffen
+
+Controleer bevestigingen periodiek op stevigheid
+
+Prijsindicatie
+
+Vanaf €19,95 per meter, afhankelijk van materiaal, afwerking en accessoires.
+
+Persoonlijk advies
+
+Vraag vrijblijvend een offerte aan of maak een afspraak met een adviseur om de juiste roede en bijpassende afwerking te bepalen voor uw ruimte.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+

@@ -192,9 +192,8 @@ const RolgordijnenPage = () => {
                 </div>
               </div>
               <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
-                
                 <img
-                  src="{client/src/assets/IMG_9301.jpg}"
+                  src="client/src/assets/IMG_9301.jpg"
                   alt="Professionele rolgordijn montage"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />

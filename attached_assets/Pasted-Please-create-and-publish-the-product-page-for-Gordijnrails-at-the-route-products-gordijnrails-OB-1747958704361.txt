@@ -1,0 +1,102 @@
+Please create and publish the product page for Gordijnrails at the route /products/gordijnrails.
+
+OBJECTIVE:
+To develop a fully responsive and professional page for Gordijnrails, aligned with the structure and styling of other product pages under the "Producten" section.
+
+REQUIREMENTS:
+
+Page Path: /products/gordijnrails
+
+Navigation: Add under "Producten" dropdown
+
+Design Requirements:
+
+Functional and professional layout
+
+Consistent design with Overgordijnen and Vitrages pages
+
+Optimized for mobile, tablet, and desktop
+
+Page Content Structure:
+
+Introduction
+
+Types of Rails
+
+Materials & Finishes
+
+Operation Options
+
+Installation
+
+Maintenance
+
+Price Indication
+
+Call-to-Action
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek
+
+🇳🇱 DUTCH CONTENT (USE EXACTLY AS PROVIDED):
+
+Gordijnrails – Onmisbaar voor Functionele en Stijlvolle Raambekleding
+
+Gordijnrails vormen de basis van elk gordijnsysteem. Ze zorgen voor soepele bediening en een nette afwerking, geschikt voor zowel lichte vitrages als zware overgordijnen.
+
+Types Gordijnrails
+
+Standaard witte aluminium rail (meest gebruikt)
+
+Luxe design rail in zwart, rvs of mat wit
+
+Elektrische gordijnrail met afstandsbediening
+
+Plafond- of wandmontage mogelijk
+
+Materialen & Afwerkingen
+
+Aluminium of staal
+
+Kleur: wit, zwart, rvs, brons
+
+Met of zonder sierlijst
+
+Bediening
+
+Handmatig met trekkoord of handschuif
+
+Elektrisch bedienbaar (optioneel)
+
+Geschikt voor bochten en hoeken
+
+Montage
+
+Direct aan plafond of wand
+
+Geschikt voor alle soorten gordijnstoffen
+
+Inclusief bevestigingsmateriaal en runners
+
+Onderhoud
+
+Regelmatig afnemen met droge doek
+
+Smeren van runners indien nodig voor soepele werking
+
+Prijsindicatie
+
+Vanaf €14,95 per meter. Prijs afhankelijk van type rail, montage en bedieningsvorm.
+
+Advies op maat
+
+Onze specialisten helpen u graag met het kiezen van het juiste gordijnrailsysteem. Vraag vrijblijvend een offerte aan of maak een afspraak voor advies op maat.
+
+CTA Buttons:
+
+Vraag een offerte aan
+
+Plan een gratis adviesgesprek

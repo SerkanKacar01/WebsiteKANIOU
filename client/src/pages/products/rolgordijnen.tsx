@@ -192,8 +192,9 @@ const RolgordijnenPage = () => {
                 </div>
               </div>
               <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
+                
                 <img
-                  src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  src="/images/IMG_9301.jpg"
                   alt="Professionele rolgordijn montage"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />

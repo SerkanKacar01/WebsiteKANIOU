@@ -9,19 +9,37 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check, MessageCircle, Calculator } from "lucide-react";
+import {
+  HomeIcon,
+  ChevronRight,
+  Check,
+  MessageCircle,
+  Calculator,
+} from "lucide-react";
 
 const InzethorrenPage = () => {
   return (
     <>
       <Helmet>
-        <title>Inzethorren - De Praktische Oplossing voor Draai-Kiepramen | Elegant Drapes</title>
-        <meta name="description" content="Inzethorren ideaal voor draai-kiepramen. Geen schroeven of boren nodig, snel te plaatsen en verwijderen. Op maat gemaakt vanaf €45 per stuk." />
-        <meta property="og:title" content="Inzethorren - De Praktische Oplossing voor Draai-Kiepramen | Elegant Drapes" />
-        <meta property="og:description" content="Inzethorren ideaal voor draai-kiepramen. Geen schroeven nodig, op maat gemaakt. Vanaf €45 per stuk." />
+        <title>
+          Inzethorren - De Praktische Oplossing voor Draai-Kiepramen | Elegant
+          Drapes
+        </title>
+        <meta
+          name="description"
+          content="Inzethorren ideaal voor draai-kiepramen. Geen schroeven of boren nodig, snel te plaatsen en verwijderen. Op maat gemaakt vanaf €45 per stuk."
+        />
+        <meta
+          property="og:title"
+          content="Inzethorren - De Praktische Oplossing voor Draai-Kiepramen | Elegant Drapes"
+        />
+        <meta
+          property="og:description"
+          content="Inzethorren ideaal voor draai-kiepramen. Geen schroeven nodig, op maat gemaakt. Vanaf €45 per stuk."
+        />
         <meta property="og:type" content="website" />
       </Helmet>
-      
+
       <div className="min-h-screen bg-background">
         <Container className="py-8">
           {/* Breadcrumb */}
@@ -65,7 +83,10 @@ const InzethorrenPage = () => {
           <section className="mb-16">
             <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
               <p className="font-body text-lg text-text-medium leading-relaxed max-w-4xl mx-auto text-center">
-                Inzethorren zijn ideaal voor draai-kiepramen. Ze worden zonder schroeven of boren in het kozijn geplaatst en zijn eenvoudig te verwijderen. Perfect voor wie insecten buiten wil houden zonder het zicht te belemmeren.
+                Inzethorren zijn ideaal voor draai-kiepramen. Ze worden zonder
+                schroeven of boren in het kozijn geplaatst en zijn eenvoudig te
+                verwijderen. Perfect voor wie insecten buiten wil houden zonder
+                het zicht te belemmeren.
               </p>
             </div>
           </section>
@@ -77,17 +98,20 @@ const InzethorrenPage = () => {
                 Voordelen
               </h2>
             </div>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 "Geen schroeven of boren nodig",
-                "Snel te plaatsen en te verwijderen", 
+                "Snel te plaatsen en te verwijderen",
                 "Op maat gemaakt voor ieder raam",
                 "Slank en onopvallend profiel",
                 "Geschikt voor houten, aluminium en kunststof kozijnen",
-                "In diverse RAL-kleuren leverbaar"
+                "In diverse RAL-kleuren leverbaar",
               ].map((advantage, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+                <div
+                  key={index}
+                  className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+                >
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0 w-6 h-6 bg-accent rounded-full flex items-center justify-center mt-0.5">
                       <Check className="w-4 h-4 text-white" />
@@ -107,17 +131,18 @@ const InzethorrenPage = () => {
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-primary mb-8 text-center">
                 Frame- en Gaassoorten
               </h2>
-              
+
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="bg-white rounded-xl p-6 shadow-sm">
                   <h3 className="font-display text-xl font-semibold text-primary mb-4">
                     Aluminium Frame
                   </h3>
                   <p className="font-body text-text-medium">
-                    Verkrijgbaar in wit, antraciet, bruin of zwart
+                    Verkrijgbaar in wit, antraciet, bruin of zwart - & RAL-kleur
+                    op meerprijs
                   </p>
                 </div>
-                
+
                 <div className="bg-white rounded-xl p-6 shadow-sm">
                   <h3 className="font-display text-xl font-semibold text-primary mb-4">
                     Gaasopties
@@ -140,14 +165,17 @@ const InzethorrenPage = () => {
                 Montage
               </h2>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 "Klemmen in het kozijn zonder schade",
                 "Zowel binnen- als buitendraaiende ramen",
-                "Geschikt voor vaste of draaiende hor"
+                "Geschikt voor vaste of draaiende hor",
               ].map((method, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                <div
+                  key={index}
+                  className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300"
+                >
                   <p className="font-body text-text-dark leading-relaxed">
                     {method}
                   </p>
@@ -162,7 +190,7 @@ const InzethorrenPage = () => {
               <h2 className="font-display text-3xl md:text-4xl font-semibold text-primary mb-8 text-center">
                 Onderhoud
               </h2>
-              
+
               <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 <div className="bg-white rounded-xl p-6 shadow-sm">
                   <h3 className="font-display text-lg font-semibold text-primary mb-3">
@@ -172,7 +200,7 @@ const InzethorrenPage = () => {
                     Afneembaar met vochtige doek of stofzuiger met borstelkop
                   </p>
                 </div>
-                
+
                 <div className="bg-white rounded-xl p-6 shadow-sm">
                   <h3 className="font-display text-lg font-semibold text-primary mb-3">
                     Gaas onderhoud
@@ -193,10 +221,13 @@ const InzethorrenPage = () => {
               </h2>
               <div className="max-w-3xl mx-auto">
                 <p className="font-body text-xl text-text-dark mb-4">
-                  <span className="font-semibold text-accent">Vanaf €45 per stuk</span>
+                  <span className="font-semibold text-accent">
+                    Vanaf €45 per stuk
+                  </span>
                 </p>
                 <p className="font-body text-text-medium">
-                  Afhankelijk van afmeting, type gaas en framekleur. Altijd maatwerk inbegrepen.
+                  Afhankelijk van afmeting, type gaas en framekleur. Altijd
+                  maatwerk inbegrepen.
                 </p>
               </div>
             </div>
@@ -209,7 +240,9 @@ const InzethorrenPage = () => {
                 Persoonlijk advies
               </h2>
               <p className="font-body text-lg text-text-medium max-w-3xl mx-auto">
-                Onze hor-specialisten helpen u graag verder met een passend advies. Vraag een offerte aan of maak een afspraak in onze showroom.
+                Onze hor-specialisten helpen u graag verder met een passend
+                advies. Vraag een offerte aan of maak een afspraak in onze
+                showroom.
               </p>
             </div>
           </section>
@@ -221,12 +254,13 @@ const InzethorrenPage = () => {
                 Klaar voor uw nieuwe inzethorren?
               </h2>
               <p className="font-body text-xl mb-8 opacity-90">
-                Vraag vandaag nog een vrijblijvende offerte aan of plan een gratis adviesgesprek
+                Vraag vandaag nog een vrijblijvende offerte aan of plan een
+                gratis adviesgesprek
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  asChild 
-                  size="lg" 
+                <Button
+                  asChild
+                  size="lg"
                   className="bg-white text-primary hover:bg-gray-100 font-semibold px-8 py-3"
                 >
                   <Link href="/quote">
@@ -234,10 +268,10 @@ const InzethorrenPage = () => {
                     Vraag een offerte aan
                   </Link>
                 </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
                   className="border-white text-white hover:bg-white hover:text-primary font-semibold px-8 py-3"
                 >
                   <Link href="/contact">

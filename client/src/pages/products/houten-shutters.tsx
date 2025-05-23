@@ -5,19 +5,19 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
-import { 
-  Shield, 
-  Thermometer, 
-  Eye, 
-  Palette, 
-  Settings, 
+import {
+  Shield,
+  Thermometer,
+  Eye,
+  Palette,
+  Settings,
   Home,
   Droplets,
   CheckCircle,
   Ruler,
   TreePine,
   Wrench,
-  Euro
+  Euro,
 } from "lucide-react";
 
 const HoutenShuttersPage = () => {
@@ -27,40 +27,41 @@ const HoutenShuttersPage = () => {
     {
       icon: <Ruler className="h-6 w-6" />,
       title: "Volledig op maat gemaakt",
-      description: "Geschikt voor standaard ramen, draaikiepramen, ronde ramen en dakramen"
+      description:
+        "Geschikt voor standaard ramen, draaikiepramen, ronde ramen en dakramen",
     },
     {
       icon: <Eye className="h-6 w-6" />,
       title: "Regelbare lichtinval en privacy",
-      description: "Dankzij verstelbare lamellen"
+      description: "Dankzij verstelbare lamellen",
     },
     {
       icon: <Thermometer className="h-6 w-6" />,
       title: "Hoge isolerende waarde",
-      description: "Zowel thermisch als akoestisch"
+      description: "Zowel thermisch als akoestisch",
     },
     {
       icon: <Shield className="h-6 w-6" />,
       title: "Robuust en duurzaam",
-      description: "Eenvoudig te reinigen"
-    }
+      description: "Eenvoudig te reinigen",
+    },
   ];
 
   const materials = [
     "Massief lindehout",
-    "Eikenhout", 
+    "Eikenhout",
     "Vochtbestendige variant voor badkamers",
     "Tientallen kleuren, beitsen en lakafwerkingen",
-    "Matte, zijdeglans of natuurlijke houtnerf"
+    "Matte, zijdeglans of natuurlijke houtnerf",
   ];
 
   const slatSizes = [
     "47 mm lamellen",
-    "63 mm lamellen", 
+    "63 mm lamellen",
     "76 mm lamellen",
     "89 mm lamellen",
     "Vaste of scharnierende panelen",
-    "Vouw- of schuifpanelen bij brede oppervlakken"
+    "Vouw- of schuifpanelen bij brede oppervlakken",
   ];
 
   const mountingOptions = [
@@ -68,25 +69,37 @@ const HoutenShuttersPage = () => {
     "Montage erbuiten (op-de-dag)",
     "Bedienbaar via tuimelstang",
     "Verborgen bediening",
-    "Geschikt voor ramen, deuren, schuifpuien en dakkapellen"
+    "Geschikt voor ramen, deuren, schuifpuien en dakkapellen",
   ];
 
   const maintenancePoints = [
     "Stofvrij maken met plumeau of licht vochtige doek",
     "Geen verkleuring bij gebruik van UV-bestendige lakken",
-    "Minimaal onderhoud vereist"
+    "Minimaal onderhoud vereist",
   ];
 
   return (
     <>
       <Helmet>
-        <title>Houten Shutters – Luxe Maatwerk voor Elke Raamvorm | KANIOU Zilvernaald</title>
-        <meta name="description" content="Houten shutters zijn stijlvolle en tijdloze raamdecoratie, gemaakt van duurzaam hout. Optimale lichtregulatie, privacy en isolatie vanaf €189 per m²." />
-        <meta property="og:title" content="Houten Shutters – Luxe Maatwerk voor Elke Raamvorm | KANIOU Zilvernaald" />
-        <meta property="og:description" content="Houten shutters zijn stijlvolle en tijdloze raamdecoratie, gemaakt van duurzaam hout. Optimale lichtregulatie, privacy en isolatie vanaf €189 per m²." />
+        <title>
+          Houten Shutters – Luxe Maatwerk voor Elke Raamvorm | KANIOU
+          Zilvernaald
+        </title>
+        <meta
+          name="description"
+          content="Houten shutters zijn stijlvolle en tijdloze raamdecoratie, gemaakt van duurzaam hout. Optimale lichtregulatie, privacy en isolatie vanaf €189 per m²."
+        />
+        <meta
+          property="og:title"
+          content="Houten Shutters – Luxe Maatwerk voor Elke Raamvorm | KANIOU Zilvernaald"
+        />
+        <meta
+          property="og:description"
+          content="Houten shutters zijn stijlvolle en tijdloze raamdecoratie, gemaakt van duurzaam hout. Optimale lichtregulatie, privacy en isolatie vanaf €189 per m²."
+        />
         <meta property="og:type" content="product" />
       </Helmet>
-      
+
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background">
         <Container>
           {/* Hero Section */}
@@ -104,9 +117,10 @@ const HoutenShuttersPage = () => {
                   Luxe Maatwerk voor Elke Raamvorm
                 </p>
                 <p className="text-lg text-text-medium max-w-3xl mx-auto leading-relaxed">
-                  Houten shutters zijn stijlvolle en tijdloze raamdecoratie, gemaakt van duurzaam hout. 
-                  Ze bieden optimale lichtregulatie, privacy en isolatie, en zijn een echte meerwaarde 
-                  voor elk interieur – van klassiek tot modern.
+                  Houten shutters zijn stijlvolle en tijdloze raamdecoratie,
+                  gemaakt van duurzaam hout. Ze bieden optimale lichtregulatie,
+                  privacy en isolatie, en zijn een echte meerwaarde voor elk
+                  interieur – van klassiek tot modern.
                 </p>
               </div>
 
@@ -117,12 +131,13 @@ const HoutenShuttersPage = () => {
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {benefits.map((benefit, index) => (
-                    <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
+                    <Card
+                      key={index}
+                      className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10"
+                    >
                       <CardContent className="p-6 text-center">
                         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                          <div className="text-primary">
-                            {benefit.icon}
-                          </div>
+                          <div className="text-primary">{benefit.icon}</div>
                         </div>
                         <h3 className="font-semibold text-text-dark mb-3">
                           {benefit.title}
@@ -228,11 +243,15 @@ const HoutenShuttersPage = () => {
                 </CardHeader>
                 <CardContent className="text-center">
                   <div className="text-4xl font-bold text-primary mb-4">
-                    Vanaf €189 <span className="text-lg font-normal text-text-medium">per m²</span>
+                    Vanaf €350{" "}
+                    <span className="text-lg font-normal text-text-medium">
+                      per m²
+                    </span>
                   </div>
                   <p className="text-text-medium max-w-2xl mx-auto leading-relaxed">
-                    Inclusief maatwerk, afwerking en standaard montageprofiel. 
-                    Prijs varieert op basis van houtsoort, afwerking en raamvorm.
+                    Inclusief maatwerk, afwerking en standaard montageprofiel.
+                    Prijs varieert op basis van houtsoort, afwerking en
+                    raamvorm.
                   </p>
                 </CardContent>
               </Card>
@@ -247,10 +266,11 @@ const HoutenShuttersPage = () => {
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-lg text-text-medium mb-8 max-w-2xl mx-auto leading-relaxed">
-                    Onze interieurspecialisten helpen u graag bij de keuze van de juiste shutters. 
-                    Plan een gratis consult of vraag een vrijblijvende offerte aan.
+                    Onze interieurspecialisten helpen u graag bij de keuze van
+                    de juiste shutters. Plan een gratis consult of vraag een
+                    vrijblijvende offerte aan.
                   </p>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                     <Link href="/quote">
                       <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all">
@@ -258,7 +278,10 @@ const HoutenShuttersPage = () => {
                       </Button>
                     </Link>
                     <Link href="/contact">
-                      <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 text-lg font-semibold transition-all">
+                      <Button
+                        variant="outline"
+                        className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 text-lg font-semibold transition-all"
+                      >
                         Plan een gratis adviesgesprek
                       </Button>
                     </Link>

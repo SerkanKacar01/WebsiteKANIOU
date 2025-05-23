@@ -3,15 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { 
-  HomeIcon, 
-  ChevronRight, 
-  Shield, 
-  Palette, 
-  Settings, 
-  Sparkles, 
-  Phone, 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
+  HomeIcon,
+  ChevronRight,
+  Shield,
+  Palette,
+  Settings,
+  Sparkles,
+  Phone,
   Calendar,
   CheckCircle,
   Sun,
@@ -19,7 +25,7 @@ import {
   Droplets,
   Scissors,
   Euro,
-  Star
+  Star,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -30,19 +36,31 @@ const SquidTextielFoliePage = () => {
     { name: "Ash", colorClass: "bg-gray-300" },
     { name: "Rock", colorClass: "bg-slate-500" },
     { name: "Coal", colorClass: "bg-gray-800" },
-    { name: "Bone", colorClass: "bg-stone-200" }
+    { name: "Bone", colorClass: "bg-stone-200" },
   ];
 
   return (
     <>
       <Helmet>
-        <title>SQUID – Zelfklevend Raamtextiel voor Privacy & Design | KANIOU Zilvernaald</title>
-        <meta name="description" content="SQUID is een innovatief zelfklevend raamtextiel dat zorgt voor privacy en zonwering, zonder het uitzicht of de lichtinval volledig weg te nemen. Vanaf €42,50 per lopende meter." />
-        <meta property="og:title" content="SQUID – Zelfklevend Raamtextiel voor Privacy & Design | KANIOU Zilvernaald" />
-        <meta property="og:description" content="SQUID is een innovatief zelfklevend raamtextiel dat zorgt voor privacy en zonwering, zonder het uitzicht of de lichtinval volledig weg te nemen. Vanaf €42,50 per lopende meter." />
+        <title>
+          SQUID – Zelfklevend Raamtextiel voor Privacy & Design | KANIOU
+          Zilvernaald
+        </title>
+        <meta
+          name="description"
+          content="SQUID is een innovatief zelfklevend raamtextiel dat zorgt voor privacy en zonwering, zonder het uitzicht of de lichtinval volledig weg te nemen. Vanaf €42,50 per lopende meter."
+        />
+        <meta
+          property="og:title"
+          content="SQUID – Zelfklevend Raamtextiel voor Privacy & Design | KANIOU Zilvernaald"
+        />
+        <meta
+          property="og:description"
+          content="SQUID is een innovatief zelfklevend raamtextiel dat zorgt voor privacy en zonwering, zonder het uitzicht of de lichtinval volledig weg te nemen. Vanaf €42,50 per lopende meter."
+        />
         <meta property="og:type" content="product" />
       </Helmet>
-      
+
       {/* Breadcrumb */}
       <div className="bg-neutral-50 py-4">
         <Container>
@@ -86,9 +104,10 @@ const SquidTextielFoliePage = () => {
                 voor Privacy & Design
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                SQUID is een innovatief zelfklevend raamtextiel dat zorgt voor privacy en zonwering, 
-                zonder het uitzicht of de lichtinval volledig weg te nemen. Het is toepasbaar op elk 
-                type raam en is een perfect alternatief voor folie of gordijnen.
+                SQUID is een innovatief zelfklevend raamtextiel dat zorgt voor
+                privacy en zonwering, zonder het uitzicht of de lichtinval
+                volledig weg te nemen. Het is toepasbaar op elk type raam en is
+                een perfect alternatief voor folie of gordijnen.
               </p>
             </div>
 
@@ -101,7 +120,9 @@ const SquidTextielFoliePage = () => {
                 <Card className="border-0 shadow-md">
                   <CardContent className="p-6">
                     <Eye className="w-12 h-12 text-blue-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-3">Semi-transparant</h3>
+                    <h3 className="text-xl font-semibold mb-3">
+                      Semi-transparant
+                    </h3>
                     <p className="text-gray-600">
                       Semi-transparant textiel met moderne uitstraling
                     </p>
@@ -111,9 +132,12 @@ const SquidTextielFoliePage = () => {
                 <Card className="border-0 shadow-md">
                   <CardContent className="p-6">
                     <Settings className="w-12 h-12 text-green-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-3">Veelzijdig toepasbaar</h3>
+                    <h3 className="text-xl font-semibold mb-3">
+                      Veelzijdig toepasbaar
+                    </h3>
                     <p className="text-gray-600">
-                      Geschikt voor standaardramen, draai-kiepramen, dakramen en schuifpuien
+                      Geschikt voor standaardramen, draai-kiepramen, dakramen en
+                      schuifpuien
                     </p>
                   </CardContent>
                 </Card>
@@ -121,7 +145,9 @@ const SquidTextielFoliePage = () => {
                 <Card className="border-0 shadow-md">
                   <CardContent className="p-6">
                     <Sparkles className="w-12 h-12 text-purple-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-3">Eenvoudige montage</h3>
+                    <h3 className="text-xl font-semibold mb-3">
+                      Eenvoudige montage
+                    </h3>
                     <p className="text-gray-600">
                       Zelfklevend en eenvoudig zelf aan te brengen
                     </p>
@@ -131,7 +157,9 @@ const SquidTextielFoliePage = () => {
                 <Card className="border-0 shadow-md">
                   <CardContent className="p-6">
                     <Sun className="w-12 h-12 text-yellow-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-3">Optimale lichtinval</h3>
+                    <h3 className="text-xl font-semibold mb-3">
+                      Optimale lichtinval
+                    </h3>
                     <p className="text-gray-600">
                       Laat licht door, maar houdt inkijk tegen overdag
                     </p>
@@ -141,10 +169,10 @@ const SquidTextielFoliePage = () => {
                 <Card className="border-0 shadow-md">
                   <CardContent className="p-6">
                     <Shield className="w-12 h-12 text-red-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-3">UV- en vochtbestendig</h3>
-                    <p className="text-gray-600">
-                      Ook geschikt voor badkamers
-                    </p>
+                    <h3 className="text-xl font-semibold mb-3">
+                      UV- en vochtbestendig
+                    </h3>
+                    <p className="text-gray-600">Ook geschikt voor badkamers</p>
                   </CardContent>
                 </Card>
               </div>
@@ -158,7 +186,9 @@ const SquidTextielFoliePage = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-4xl mx-auto">
                 {colors.map((color) => (
                   <div key={color.name} className="text-center">
-                    <div className={`w-20 h-20 mx-auto rounded-full border-2 border-gray-200 shadow-md ${color.colorClass} mb-3`}></div>
+                    <div
+                      className={`w-20 h-20 mx-auto rounded-full border-2 border-gray-200 shadow-md ${color.colorClass} mb-3`}
+                    ></div>
                     <p className="font-medium text-gray-700">{color.name}</p>
                   </div>
                 ))}
@@ -176,19 +206,27 @@ const SquidTextielFoliePage = () => {
                   <ul className="space-y-4">
                     <li className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">Droog en stofvrij oppervlak noodzakelijk</span>
+                      <span className="text-gray-700">
+                        Droog en stofvrij oppervlak noodzakelijk
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">Eenvoudig aan te brengen zonder luchtbellen</span>
+                      <span className="text-gray-700">
+                        Eenvoudig aan te brengen zonder luchtbellen
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">Kan op maat worden gesneden</span>
+                      <span className="text-gray-700">
+                        Kan op maat worden gesneden
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">Geen montageaccessoires nodig</span>
+                      <span className="text-gray-700">
+                        Geen montageaccessoires nodig
+                      </span>
                     </li>
                   </ul>
                 </CardContent>
@@ -203,11 +241,15 @@ const SquidTextielFoliePage = () => {
                   <ul className="space-y-4">
                     <li className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">Droog afnemen met zachte doek of plumeau</span>
+                      <span className="text-gray-700">
+                        Droog afnemen met zachte doek of plumeau
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">Geen schurende of natte reiniging</span>
+                      <span className="text-gray-700">
+                        Geen schurende of natte reiniging
+                      </span>
                     </li>
                   </ul>
                 </CardContent>
@@ -222,7 +264,7 @@ const SquidTextielFoliePage = () => {
                   Prijsindicatie
                 </h2>
                 <div className="text-4xl font-bold text-blue-600 mb-2">
-                  Vanaf €42,50
+                  Vanaf €73
                 </div>
                 <p className="text-xl text-gray-700 mb-4">
                   per lopende meter (breedte: 130 cm)
@@ -240,8 +282,8 @@ const SquidTextielFoliePage = () => {
                   Advies
                 </h2>
                 <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-                  Onze adviseurs demonstreren SQUID graag in onze showroom of bij u thuis. 
-                  Vraag nu uw offerte aan of maak een afspraak.
+                  Onze adviseurs demonstreren SQUID graag in onze showroom of
+                  bij u thuis. Vraag nu uw offerte aan of maak een afspraak.
                 </p>
               </div>
             </div>
@@ -250,13 +292,20 @@ const SquidTextielFoliePage = () => {
             <div className="text-center">
               <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <Link href="/quote">
-                  <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg">
+                  <Button
+                    size="lg"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg"
+                  >
                     <Phone className="w-5 h-5 mr-2" />
                     Vraag een offerte aan
                   </Button>
                 </Link>
                 <Link href="/contact">
-                  <Button size="lg" variant="outline" className="w-full border-blue-600 text-blue-600 hover:bg-blue-50 py-4 text-lg">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full border-blue-600 text-blue-600 hover:bg-blue-50 py-4 text-lg"
+                  >
                     <Calendar className="w-5 h-5 mr-2" />
                     Plan een gratis adviesgesprek
                   </Button>

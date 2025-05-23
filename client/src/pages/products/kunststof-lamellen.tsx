@@ -296,7 +296,7 @@ const KunststofLamellenPage = () => {
               </h2>
               <div className="max-w-3xl mx-auto">
                 <div className="text-4xl font-bold text-primary mb-4">
-                  Vanaf €54,95 <span className="text-lg font-normal text-text-medium">per m²</span>
+                  Vanaf €110,- <span className="text-lg font-normal text-text-medium">per m²</span>
                 </div>
                 <p className="text-text-light leading-relaxed">
                   Inclusief rail en maatwerk. Prijs afhankelijk van aantal lamellen, 

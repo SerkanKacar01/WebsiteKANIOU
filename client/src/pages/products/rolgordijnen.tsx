@@ -65,7 +65,9 @@ const RolgordijnenPage = () => {
               Rolgordijnen op Maat
             </h1>
             <p className="font-body text-white text-lg mb-8">
-              Elegantie, eenvoud en functionaliteit in één raamoplossing. Onze rolgordijnen combineren tijdloze elegantie met praktische toepasbaarheid.
+              Elegantie, eenvoud en functionaliteit in één raamoplossing. Onze
+              rolgordijnen combineren tijdloze elegantie met praktische
+              toepasbaarheid.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/quote">
@@ -100,7 +102,9 @@ const RolgordijnenPage = () => {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-lg text-text-medium mb-8 animate-fade-in">
-              Ze zijn ideaal voor elk interieur, van modern tot klassiek, en worden volledig op maat gemaakt volgens uw wensen en raamafmetingen.
+              Ze zijn ideaal voor elk interieur, van modern tot klassiek, en
+              worden volledig op maat gemaakt volgens uw wensen en
+              raamafmetingen.
             </p>
           </div>
         </Container>
@@ -115,7 +119,8 @@ const RolgordijnenPage = () => {
                 Stoffen en lichtdoorlatendheid
               </h2>
               <p className="text-xl text-text-medium max-w-3xl mx-auto animate-fade-in">
-                We bieden een breed gamma stoffen aan, van verduisterende tot lichtdoorlatende en transparante varianten
+                We bieden een breed gamma stoffen aan, van verduisterende tot
+                lichtdoorlatende en transparante varianten
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -123,29 +128,47 @@ const RolgordijnenPage = () => {
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <div className="w-6 h-6 bg-primary rounded opacity-80"></div>
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Verduisterende stof</h3>
-                <p className="text-text-medium leading-relaxed">Ideaal voor slaapkamers of kinderkamers, volledig zonwerend voor optimale rust</p>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                  Verduisterende stof
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Ideaal voor slaapkamers of kinderkamers, volledig zonwerend
+                  voor optimale rust
+                </p>
               </div>
               <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <div className="w-6 h-6 bg-primary/60 rounded opacity-80"></div>
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Lichtdoorlatende stof</h3>
-                <p className="text-text-medium leading-relaxed">Zorgt voor privacy zonder het daglicht volledig te blokkeren</p>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                  Lichtdoorlatende stof
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Zorgt voor privacy zonder het daglicht volledig te blokkeren
+                </p>
               </div>
               <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <div className="w-6 h-6 bg-primary/30 rounded opacity-80"></div>
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Transparante stof</h3>
-                <p className="text-text-medium leading-relaxed">Een subtiele lichtfilter, perfect voor woonkamers of keukens</p>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                  Transparante stof
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Een subtiele lichtfilter, perfect voor woonkamers of keukens
+                </p>
               </div>
               <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <div className="w-6 h-6 border-2 border-primary rounded opacity-80"></div>
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3 text-primary">Screenstoffen</h3>
-                <p className="text-text-medium leading-relaxed">Technisch geweven stoffen die zon weren maar uitzicht naar buiten behouden</p>
+                <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                  Screenstoffen
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Technisch geweven stoffen die zon weren maar uitzicht naar
+                  buiten behouden
+                </p>
               </div>
             </div>
           </div>
@@ -153,6 +176,7 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Montageopties */}
+
       <div className="py-20 bg-white relative">
         <Container>
           <div className="max-w-6xl mx-auto">
@@ -166,8 +190,13 @@ const RolgordijnenPage = () => {
                     <div className="flex items-start gap-4">
                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">In-de-dag montage</h3>
-                        <p className="text-text-medium leading-relaxed">Geïnstalleerd in het raamkozijn voor een strakke, minimalistische uitstraling</p>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                          In-de-dag montage
+                        </h3>
+                        <p className="text-text-medium leading-relaxed">
+                          Geïnstalleerd in het raamkozijn voor een strakke,
+                          minimalistische uitstraling
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -175,8 +204,13 @@ const RolgordijnenPage = () => {
                     <div className="flex items-start gap-4">
                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Op-de-dag montage</h3>
-                        <p className="text-text-medium leading-relaxed">Gemonteerd op de muur of tegen het plafond voor volledige raamafdekking</p>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                          Op-de-dag montage
+                        </h3>
+                        <p className="text-text-medium leading-relaxed">
+                          Gemonteerd op de muur of tegen het plafond voor
+                          volledige raamafdekking
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -184,8 +218,13 @@ const RolgordijnenPage = () => {
                     <div className="flex items-start gap-4">
                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Professionele montage</h3>
-                        <p className="text-text-medium leading-relaxed">Inclusief stevige metalen montage steunen met wit afdekkapje (standaard)</p>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                          Professionele montage
+                        </h3>
+                        <p className="text-text-medium leading-relaxed">
+                          Inclusief stevige metalen montage steunen met wit
+                          afdekkapje (standaard)
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -193,7 +232,7 @@ const RolgordijnenPage = () => {
               </div>
               <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
                 <img
-                  src="client/src/assets/IMG_9301.jpg"
+                  src="https://unsplash.com/photos/green-jacket-on-a-coat-rack-3JaJx6f-9x0"
                   alt="Professionele rolgordijn montage"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -221,9 +260,14 @@ const RolgordijnenPage = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                     <span className="text-2xl font-bold text-primary">1</span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-primary mb-3">Standaard open systeem</h3>
+                  <h3 className="font-display text-xl font-semibold text-primary mb-3">
+                    Standaard open systeem
+                  </h3>
                 </div>
-                <p className="text-text-medium leading-relaxed text-center">Zichtbaar buismechanisme voor een minimalistisch en kosteneffectief design</p>
+                <p className="text-text-medium leading-relaxed text-center">
+                  Zichtbaar buismechanisme voor een minimalistisch en
+                  kosteneffectief design
+                </p>
                 <div className="mt-6 text-center">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                     Standaard prijs
@@ -235,9 +279,13 @@ const RolgordijnenPage = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                     <span className="text-2xl font-bold text-primary">2</span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-primary mb-3">Open profiel</h3>
+                  <h3 className="font-display text-xl font-semibold text-primary mb-3">
+                    Open profiel
+                  </h3>
                 </div>
-                <p className="text-text-medium leading-relaxed text-center">Elegante aluminium afwerking, standaard in wit</p>
+                <p className="text-text-medium leading-relaxed text-center">
+                  Elegante aluminium afwerking, standaard in wit
+                </p>
                 <div className="mt-6 text-center">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                     +15% meerprijs
@@ -249,9 +297,14 @@ const RolgordijnenPage = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                     <span className="text-2xl font-bold text-primary">3</span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-primary mb-3">Gesloten cassette</h3>
+                  <h3 className="font-display text-xl font-semibold text-primary mb-3">
+                    Gesloten cassette
+                  </h3>
                 </div>
-                <p className="text-text-medium leading-relaxed text-center">Volledig afgesloten bovenkant voor een strakke, stofvrije uitstraling</p>
+                <p className="text-text-medium leading-relaxed text-center">
+                  Volledig afgesloten bovenkant voor een strakke, stofvrije
+                  uitstraling
+                </p>
                 <div className="mt-6 text-center">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
                     +20% meerprijs
@@ -284,8 +337,12 @@ const RolgordijnenPage = () => {
                     <div className="flex items-start gap-4">
                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Standaard aluminium onderlat</h3>
-                        <p className="text-text-medium leading-relaxed">Functioneel en neutraal design</p>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                          Standaard aluminium onderlat
+                        </h3>
+                        <p className="text-text-medium leading-relaxed">
+                          Functioneel en neutraal design
+                        </p>
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mt-2">
                           Zonder meerprijs
                         </span>
@@ -296,8 +353,12 @@ const RolgordijnenPage = () => {
                     <div className="flex items-start gap-4">
                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Onderlat met één zijde bekleed</h3>
-                        <p className="text-text-medium leading-relaxed">Visueel verfijnde uitstraling</p>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                          Onderlat met één zijde bekleed
+                        </h3>
+                        <p className="text-text-medium leading-relaxed">
+                          Visueel verfijnde uitstraling
+                        </p>
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mt-2">
                           +10% meerprijs
                         </span>
@@ -308,8 +369,12 @@ const RolgordijnenPage = () => {
                     <div className="flex items-start gap-4">
                       <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">Onderlat met beide zijden bekleed</h3>
-                        <p className="text-text-medium leading-relaxed">Volledig geïntegreerd in de stof</p>
+                        <h3 className="font-display text-xl font-semibold mb-3 text-primary">
+                          Onderlat met beide zijden bekleed
+                        </h3>
+                        <p className="text-text-medium leading-relaxed">
+                          Volledig geïntegreerd in de stof
+                        </p>
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 mt-2">
                           +15% meerprijs
                         </span>
@@ -318,12 +383,22 @@ const RolgordijnenPage = () => {
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-neutral-50 to-primary/5 p-6 rounded-xl border border-primary/10">
-                  <h3 className="font-display text-lg font-semibold mb-3 text-primary">Beschikbare afwerkingen:</h3>
+                  <h3 className="font-display text-lg font-semibold mb-3 text-primary">
+                    Beschikbare afwerkingen:
+                  </h3>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-white rounded-full text-sm border border-neutral-200">Wit</span>
-                    <span className="px-3 py-1 bg-gray-800 text-white rounded-full text-sm">Zwart</span>
-                    <span className="px-3 py-1 bg-gray-300 rounded-full text-sm">Aluminium</span>
-                    <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Stofkleurig</span>
+                    <span className="px-3 py-1 bg-white rounded-full text-sm border border-neutral-200">
+                      Wit
+                    </span>
+                    <span className="px-3 py-1 bg-gray-800 text-white rounded-full text-sm">
+                      Zwart
+                    </span>
+                    <span className="px-3 py-1 bg-gray-300 rounded-full text-sm">
+                      Aluminium
+                    </span>
+                    <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">
+                      Stofkleurig
+                    </span>
                   </div>
                 </div>
               </div>
@@ -350,9 +425,14 @@ const RolgordijnenPage = () => {
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <Check className="h-6 w-6 text-green-600" />
                   </div>
-                  <h3 className="font-display text-2xl font-semibold text-primary">Standaard</h3>
+                  <h3 className="font-display text-2xl font-semibold text-primary">
+                    Standaard
+                  </h3>
                 </div>
-                <p className="text-lg text-text-medium leading-relaxed">Kunststof kettingbediening in wit, betrouwbaar en eenvoudig te bedienen</p>
+                <p className="text-lg text-text-medium leading-relaxed">
+                  Kunststof kettingbediening in wit, betrouwbaar en eenvoudig te
+                  bedienen
+                </p>
                 <div className="mt-4">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                     Inbegrepen
@@ -364,16 +444,22 @@ const RolgordijnenPage = () => {
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <span className="text-primary font-bold">+</span>
                   </div>
-                  <h3 className="font-display text-2xl font-semibold text-primary">Upgrade opties</h3>
+                  <h3 className="font-display text-2xl font-semibold text-primary">
+                    Upgrade opties
+                  </h3>
                 </div>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-4 bg-neutral-50 rounded-lg">
-                    <span className="font-medium">Metalen kettingbediening</span>
+                    <span className="font-medium">
+                      Metalen kettingbediening
+                    </span>
                     <span className="text-primary font-semibold">+€10</span>
                   </div>
                   <div className="flex justify-between items-center p-4 bg-neutral-50 rounded-lg">
                     <span className="font-medium">Veermechanisme</span>
-                    <span className="text-primary font-semibold">Op aanvraag</span>
+                    <span className="text-primary font-semibold">
+                      Op aanvraag
+                    </span>
                   </div>
                   <div className="flex justify-between items-center p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg border border-primary/20">
                     <span className="font-medium">Elektrische bediening</span>
@@ -401,22 +487,37 @@ const RolgordijnenPage = () => {
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors">
                   <Check className="h-10 w-10 text-primary" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-4 text-primary">UV-bestendig</h3>
-                <p className="text-text-medium leading-relaxed">Afwasbare stoffen die hun kleur behouden, zelfs bij intensieve zonlichtblootstelling</p>
+                <h3 className="font-display text-xl font-semibold mb-4 text-primary">
+                  UV-bestendig
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Afwasbare stoffen die hun kleur behouden, zelfs bij intensieve
+                  zonlichtblootstelling
+                </p>
               </div>
               <div className="group p-8 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors">
                   <Check className="h-10 w-10 text-primary" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-4 text-primary">Slijtvast</h3>
-                <p className="text-text-medium leading-relaxed">Hoogwaardige mechanismen getest voor langdurig dagelijks gebruik</p>
+                <h3 className="font-display text-xl font-semibold mb-4 text-primary">
+                  Slijtvast
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Hoogwaardige mechanismen getest voor langdurig dagelijks
+                  gebruik
+                </p>
               </div>
               <div className="group p-8 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors">
                   <Check className="h-10 w-10 text-primary" />
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-4 text-primary">Onderhoudsarm</h3>
-                <p className="text-text-medium leading-relaxed">Eenvoudig schoon te maken met een droge doek of licht vochtige spons</p>
+                <h3 className="font-display text-xl font-semibold mb-4 text-primary">
+                  Onderhoudsarm
+                </h3>
+                <p className="text-text-medium leading-relaxed">
+                  Eenvoudig schoon te maken met een droge doek of licht vochtige
+                  spons
+                </p>
               </div>
             </div>
           </div>
@@ -431,7 +532,8 @@ const RolgordijnenPage = () => {
               Ideale toepassingen
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto mb-12">
-              Rolgordijnen zijn veelzijdig en geschikt voor elke ruimte in huis of kantoor
+              Rolgordijnen zijn veelzijdig en geschikt voor elke ruimte in huis
+              of kantoor
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               <div className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -465,13 +567,18 @@ const RolgordijnenPage = () => {
                 <p className="font-medium text-primary">Badkamers*</p>
               </div>
             </div>
-            <p className="text-sm text-text-medium mt-8 opacity-75">*met vochtbestendige stoffen voor optimale duurzaamheid</p>
+            <p className="text-sm text-text-medium mt-8 opacity-75">
+              *met vochtbestendige stoffen voor optimale duurzaamheid
+            </p>
           </div>
         </Container>
       </div>
 
       {/* Smart Measurement Guide Section */}
-      <div id="measurement-guide" className="py-20 bg-gradient-to-br from-blue-50 to-primary/5">
+      <div
+        id="measurement-guide"
+        className="py-20 bg-gradient-to-br from-blue-50 to-primary/5"
+      >
         <Container>
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
@@ -481,21 +588,26 @@ const RolgordijnenPage = () => {
               Smart Meetgids met AR
             </h2>
             <p className="text-xl text-text-medium max-w-3xl mx-auto">
-              Gebruik de nieuwste augmented reality technologie om uw raam automatisch en nauwkeurig op te meten
+              Gebruik de nieuwste augmented reality technologie om uw raam
+              automatisch en nauwkeurig op te meten
             </p>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-8 text-center">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Smartphone className="w-8 h-8 text-blue-600" />
             </div>
-            <h3 className="text-2xl font-semibold mb-4">AR Meetfunctie komt binnenkort!</h3>
+            <h3 className="text-2xl font-semibold mb-4">
+              AR Meetfunctie komt binnenkort!
+            </h3>
             <p className="text-gray-600 mb-6">
-              We werken aan een revolutionaire augmented reality meetfunctie. 
-              Binnenkort kunt u uw raam automatisch opmeten met uw smartphone camera.
+              We werken aan een revolutionaire augmented reality meetfunctie.
+              Binnenkort kunt u uw raam automatisch opmeten met uw smartphone
+              camera.
             </p>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-800">
-                <strong>Preview:</strong> Camera toegang → Automatische kalibratie → AR window detection → Nauwkeurige metingen
+                <strong>Preview:</strong> Camera toegang → Automatische
+                kalibratie → AR window detection → Nauwkeurige metingen
               </p>
             </div>
           </div>
@@ -518,7 +630,7 @@ const RolgordijnenPage = () => {
           </div>
         </Container>
       </div>
-      
+
       {/* CTA Section */}
       <div className="py-16 bg-primary text-white">
         <Container>
@@ -527,8 +639,9 @@ const RolgordijnenPage = () => {
               Klaar om uw ramen te verfraaien?
             </h2>
             <p className="font-body mb-8">
-              Neem vandaag nog contact met ons op voor een persoonlijk adviesgesprek en een vrijblijvende offerte.
-              Onze experts helpen u de perfecte rolgordijnen te vinden voor uw woning of bedrijf.
+              Neem vandaag nog contact met ons op voor een persoonlijk
+              adviesgesprek en een vrijblijvende offerte. Onze experts helpen u
+              de perfecte rolgordijnen te vinden voor uw woning of bedrijf.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/quote">

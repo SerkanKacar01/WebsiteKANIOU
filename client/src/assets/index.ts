@@ -1,9 +1,8 @@
 import overgordijnenImage from './Overgordijnen.jpeg';
 import newCurtainsImage from './IMG_9219.jpeg';
 import inbetweenImage from './Inbetween.jpeg';
-// Removed missing image files - image00001.jpeg and image00002.jpeg
-import galleryImage3 from './image00003.jpeg';
-import galleryImage4 from './image00004.jpeg';
+import galleryImage3 from './IMG_9293.jpg';
+import galleryImage4 from './IMG_9294.jpg';
 import galleryImage5 from './image00005.jpeg';
 import galleryImage6 from './image00006.jpeg';
 import galleryImage7 from './image00007.jpeg';
@@ -24,7 +23,6 @@ import galleryImage_IMG9303 from './IMG_9303.jpg';
 import galleryImage_IMG9304 from './IMG_9304.jpg';
 import galleryImage_IMG9305 from './IMG_9305.jpg';
 import galleryImage_IMG9306 from './IMG_9306.jpg';
-// Missing file: import galleryImage_IMG9307 from './IMG_9307.jpg';
 import galleryImage_IMG9308 from './IMG_9308.jpg';
 import galleryImage_IMG9309 from './IMG_9309.jpg';
 import galleryImage_IMG9310 from './IMG_9310.jpg';
@@ -41,7 +39,6 @@ export {
   overgordijnenImage,
   newCurtainsImage,
   inbetweenImage,
-  // galleryImage1 and galleryImage2 removed - files don't exist
   galleryImage3,
   galleryImage4,
   galleryImage5,
@@ -64,7 +61,6 @@ export {
   galleryImage_IMG9304,
   galleryImage_IMG9305,
   galleryImage_IMG9306,
-  // galleryImage_IMG9307, // Missing file
   galleryImage_IMG9308,
   galleryImage_IMG9309,
   galleryImage_IMG9310,

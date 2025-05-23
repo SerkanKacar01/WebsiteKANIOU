@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
 
-import { textiellamellenHeroImage } from "@/assets";
+import { galleryImage_rolgordijnen } from "@/assets";
 
 const RolgordijnenPage = () => {
   return (
@@ -56,7 +56,7 @@ const RolgordijnenPage = () => {
       <div
         className="relative bg-cover bg-center py-24"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${textiellamellenHeroImage})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${galleryImage_rolgordijnen})`,
         }}
       >
         <Container>

@@ -11,8 +11,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
-
-import { galleryImage_rolgordijnen } from "@/assets";
+import ProductCalculator from "@/components/calculators/ProductCalculator";
+import { textiellamellenHeroImage } from "@/assets";
 
 const RolgordijnenPage = () => {
   return (
@@ -56,7 +56,7 @@ const RolgordijnenPage = () => {
       <div
         className="relative bg-cover bg-center py-24"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${galleryImage_rolgordijnen})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${textiellamellenHeroImage})`,
         }}
       >
         <Container>
@@ -84,7 +84,14 @@ const RolgordijnenPage = () => {
                   AR Meting starten
                 </Button>
               </a>
-
+              <a href="#calculator">
+                <Button
+                  variant="outline"
+                  className="bg-white/10 text-white border-white hover:bg-white/20"
+                >
+                  Bereken prijs
+                </Button>
+              </a>
             </div>
           </div>
         </Container>
@@ -169,7 +176,6 @@ const RolgordijnenPage = () => {
       </div>
 
       {/* Montageopties */}
-
       <div className="py-20 bg-white relative">
         <Container>
           <div className="max-w-6xl mx-auto">
@@ -225,7 +231,7 @@ const RolgordijnenPage = () => {
               </div>
               <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
                 <img
-                  src="https://unsplash.com/photos/green-jacket-on-a-coat-rack-3JaJx6f-9x0"
+                  src="{galleryImage_IMG9301}"
                   alt="Professionele rolgordijn montage"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -607,7 +613,22 @@ const RolgordijnenPage = () => {
         </Container>
       </div>
 
-
+      {/* Calculator Section */}
+      <div id="calculator" className="py-20 bg-white">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="font-display text-4xl text-primary font-semibold mb-6">
+              Prijscalculator
+            </h2>
+            <p className="text-xl text-text-medium max-w-3xl mx-auto">
+              Bereken direct de prijs voor uw rolgordijnen op maat
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <ProductCalculator productId="rolgordijnen" />
+          </div>
+        </Container>
+      </div>
 
       {/* CTA Section */}
       <div className="py-16 bg-primary text-white">

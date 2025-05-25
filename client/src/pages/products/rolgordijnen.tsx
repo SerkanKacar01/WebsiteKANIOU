@@ -13,6 +13,7 @@ import {
 import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
 import ProductCalculator from "@/components/calculators/ProductCalculator";
 import { textiellamellenHeroImage } from "@/assets";
+import rolgordijnImage1 from "@assets/IMG_9301.jpg";
 
 const RolgordijnenPage = () => {
   return (
@@ -231,7 +232,7 @@ const RolgordijnenPage = () => {
               </div>
               <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
                 <img
-                  src="{galleryImage_IMG9301}"
+                  src={rolgordijnImage1}
                   alt="Professionele rolgordijn montage"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -322,7 +323,7 @@ const RolgordijnenPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="aspect-square rounded-xl overflow-hidden shadow-lg order-2 lg:order-1">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  src={rolgordijnImage1}
                   alt="Rolgordijn onderlatvarianten detail"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />

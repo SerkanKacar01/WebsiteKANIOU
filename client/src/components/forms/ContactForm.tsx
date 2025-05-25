@@ -16,22 +16,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { insertContactSubmissionSchema } from "@shared/schema";
 
-// Define the form schema with validation
-const contactFormSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  subject: z.string().min(2, {
-    message: "Subject must be at least 2 characters.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-});
+// Use the enhanced schema from backend with all validation rules
+const contactFormSchema = insertContactSubmissionSchema;
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
@@ -46,6 +34,7 @@ const ContactForm = () => {
       email: "",
       subject: "",
       message: "",
+      website: "", // Honeypot field
     },
   });
 
@@ -57,7 +46,7 @@ const ContactForm = () => {
         title: "Bericht verzonden",
         description:
           "Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.",
-        variant: "success",
+        variant: "default",
       });
       form.reset();
       setIsSubmitting(false);

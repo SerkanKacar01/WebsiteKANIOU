@@ -26,13 +26,8 @@ import { useToast } from "@/hooks/use-toast";
 import { insertQuoteRequestSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 
-// Extend the schema with additional validation
-const quoteFormSchema = insertQuoteRequestSchema.extend({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  phone: z.string().min(7, { message: "Please enter a valid phone number" }),
-  productType: z.string().min(1, { message: "Please select a product type" }),
-});
+// Use the enhanced schema from backend with all validation rules
+const quoteFormSchema = insertQuoteRequestSchema;
 
 type QuoteFormValues = z.infer<typeof quoteFormSchema>;
 
@@ -50,6 +45,7 @@ const QuoteForm = () => {
       productType: "",
       dimensions: "",
       requirements: "",
+      website: "", // Honeypot field
     },
   });
 
@@ -210,6 +206,27 @@ const QuoteForm = () => {
               </FormControl>
               <FormMessage />
             </FormItem>
+          )}
+        />
+
+        {/* Honeypot field - hidden from users but visible to bots */}
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}>
+              <FormItem>
+                <FormLabel>Website</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Please leave this field empty"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            </div>
           )}
         />
 

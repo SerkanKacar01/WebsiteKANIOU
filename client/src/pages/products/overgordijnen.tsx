@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
+import newCurtainsImage from "@assets/IMG_9294.jpg";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import {
@@ -101,7 +102,7 @@ const OvergordijnenPage = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+                src={newCurtainsImage}
                 alt="Elegante overgordijnen in luxe interieur"
                 className="rounded-lg shadow-xl w-full h-[400px] object-cover"
               />

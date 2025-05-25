@@ -135,6 +135,27 @@ const ContactForm = () => {
           )}
         />
 
+        {/* Honeypot field - hidden from users but visible to bots */}
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}>
+              <FormItem>
+                <FormLabel>Website</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Please leave this field empty"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            </div>
+          )}
+        />
+
         <Button
           type="submit"
           className="bg-secondary hover:bg-accent"

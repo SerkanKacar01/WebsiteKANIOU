@@ -6,6 +6,9 @@ import {
   galleryImage_IMG9293,
   galleryImage_IMG9294
 } from "@/assets";
+import textielLamelImage1 from "@assets/Scherm­afbeelding 2025-05-26 om 01.46.11.png";
+import textielLamelImage2 from "@assets/Scherm­afbeelding 2025-05-26 om 01.44.26.png";
+import textielLamelImage3 from "@assets/Scherm­afbeelding 2025-05-26 om 01.43.54.png";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -328,18 +331,18 @@ const TextielLamellenPage = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <img 
-                src={galleryImage_textiellamellen} 
-                alt="Textiel Lamellen Voorbeeld 1"
+                src={textielLamelImage1} 
+                alt="Moderne keuken met verticale textiel lamellen"
                 className="w-full h-64 object-cover rounded-lg shadow-lg"
               />
               <img 
-                src={galleryImage_IMG9293} 
-                alt="Textiel Lamellen Voorbeeld 2"
+                src={textielLamelImage2} 
+                alt="Kantoorruimte met professionele textiel lamellen"
                 className="w-full h-64 object-cover rounded-lg shadow-lg"
               />
               <img 
-                src={galleryImage_IMG9294} 
-                alt="Textiel Lamellen Voorbeeld 3"
+                src={textielLamelImage3} 
+                alt="Woonkamer met elegante verticale lamellen"
                 className="w-full h-64 object-cover rounded-lg shadow-lg"
               />
             </div>

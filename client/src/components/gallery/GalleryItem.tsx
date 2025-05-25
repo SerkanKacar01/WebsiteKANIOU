@@ -19,6 +19,13 @@ import {
   galleryImage_IMG9308,
   galleryImage_IMG9309,
   galleryImage_IMG9310,
+  galleryImage5,
+  galleryImage6,
+  galleryImage7,
+  galleryImage10,
+  overgordijnenImage,
+  galleryImage_duoplisse,
+  inbetweenImage,
 } from "@/assets";
 
 interface GalleryItemProps {
@@ -44,6 +51,15 @@ const imageMap: Record<string, string> = {
   '/src/assets/IMG_9308.jpg': galleryImage_IMG9308,
   '/src/assets/IMG_9309.jpg': galleryImage_IMG9309,
   '/src/assets/IMG_9310.jpg': galleryImage_IMG9310,
+  '/src/assets/image00001.jpeg': galleryImage5,
+  '/src/assets/image00002.jpeg': galleryImage6,
+  '/src/assets/image00003.jpeg': galleryImage7,
+  '/src/assets/image00004.jpeg': galleryImage10,
+  '/src/assets/image00007.jpeg': galleryImage7,
+  '/src/assets/image00010.jpeg': galleryImage10,
+  '/src/assets/Overgordijnen.jpeg': overgordijnenImage,
+  '/src/assets/Duoplisse.jpeg': galleryImage_duoplisse,
+  '/src/assets/Inbetween.jpeg': inbetweenImage,
 };
 
 const GalleryItem = ({ item }: GalleryItemProps) => {

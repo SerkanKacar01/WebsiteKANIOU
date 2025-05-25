@@ -14,8 +14,23 @@ import { fromZodError } from "zod-validation-error";
 import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "./services/email";
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
+import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
+import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Configure multer for file uploads
+  const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only image files are allowed'));
+      }
+    }
+  });
+
   // API endpoints
   const apiRouter = app.route("/api");
   
@@ -411,6 +426,26 @@ To respond, simply reply to this email.
     } catch (error) {
       console.error("Error creating contact submission:", error);
       res.status(500).json({ message: "Failed to create contact submission" });
+    }
+  });
+
+  // Color Matcher API endpoint
+  app.post("/api/color-matcher", upload.single('roomImage'), async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file provided" });
+      }
+
+      // Convert uploaded image to base64
+      const base64Image = convertImageToBase64(req.file.buffer);
+      
+      // Analyze the room image for color recommendations
+      const analysis = await analyzeRoomForColorMatching(base64Image);
+      
+      res.json(analysis);
+    } catch (error) {
+      console.error("Error in color matcher:", error);
+      res.status(500).json({ message: "Failed to analyze image. Please try again." });
     }
   });
 

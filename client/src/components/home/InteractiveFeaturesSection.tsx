@@ -78,7 +78,7 @@ const InteractiveFeaturesSection = () => {
               </div>
 
               <Link href="/kleur-matcher">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-white group-hover:scale-105 transition-transform">
+                <Button className="w-full bg-[#B8A082] hover:bg-[#A18B73] text-white group-hover:scale-105 transition-transform">
                   Kleur Matcher Proberen
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -152,7 +152,7 @@ const InteractiveFeaturesSection = () => {
               </div>
 
               <Link href="/maatwerk-wizard">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-white group-hover:scale-105 transition-transform">
+                <Button className="w-full bg-[#B8A082] hover:bg-[#A18B73] text-white group-hover:scale-105 transition-transform">
                   Wizard Starten
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

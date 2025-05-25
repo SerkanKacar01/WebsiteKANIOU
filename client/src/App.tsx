@@ -19,6 +19,7 @@ import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
+import ColorMatcherPage from "@/pages/ColorMatcherPage";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -109,6 +110,8 @@ function Router() {
         <Route path="/overons" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/quote" component={QuotePage} />
+        <Route path="/kleur-matcher" component={ColorMatcherPage} />
+        <Route path="/color-matcher" component={ColorMatcherPage} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/cookie-policy" component={CookiePolicyPage} />

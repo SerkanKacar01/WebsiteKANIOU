@@ -210,22 +210,22 @@ async function seedInitialData(storage: DatabaseStorage) {
     });
 
     const sunblindsCategory = await storage.createCategory({
-      name: "Sunblinds",
+      name: "Vouwgordijnen",
       description: "Perfect light control solution",
       imageUrl:
         "https://pixabay.com/get/g0db340fa81f283e739007d19afdf12d8d66f8659e94c58f18e6336c3c175f5e02cf316d5b656a07e68c7e1c54b9679c483bbf1a01eabfa1aeeb9015126371509_1280.jpg",
     });
 
     const romanBlindsCategory = await storage.createCategory({
-      name: "Roman Blinds",
+      name: "Rolgordijnen",
       description: "Timeless style and functionality",
       imageUrl:
         "https://images.unsplash.com/photo-1611048268330-53de574cae3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000",
     });
 
     const sheerDrapesCategory = await storage.createCategory({
-      name: "Sheer Drapes",
-      description: "Subtle elegance and light diffusion",
+      name: "Overgordijnen",
+      description: "Subtle elegance and light diffus",
       imageUrl:
         "https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000",
     });

@@ -4,6 +4,7 @@ import FeaturedCategories from "@/components/home/FeaturedCategories";
 import TestimonialSection from "@/components/home/TestimonialSection";
 import GallerySection from "@/components/home/GallerySection";
 import AboutCompany from "@/components/home/AboutCompany";
+import InteractiveFeaturesSection from "@/components/home/InteractiveFeaturesSection";
 import QuoteRequestSection from "@/components/home/QuoteRequestSection";
 import ContactSection from "@/components/home/ContactSection";
 
@@ -20,6 +21,7 @@ const Home = () => {
       
       <HeroSection />
       <FeaturedCategories />
+      <InteractiveFeaturesSection />
       <TestimonialSection />
       <GallerySection />
       <AboutCompany />

@@ -20,6 +20,7 @@ import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
+import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -112,6 +113,8 @@ function Router() {
         <Route path="/quote" component={QuotePage} />
         <Route path="/kleur-matcher" component={ColorMatcherPage} />
         <Route path="/color-matcher" component={ColorMatcherPage} />
+        <Route path="/maatwerk-wizard" component={CustomizationWizardPage} />
+        <Route path="/customization-wizard" component={CustomizationWizardPage} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/cookie-policy" component={CookiePolicyPage} />

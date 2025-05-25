@@ -274,6 +274,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const newQuoteRequest = await storage.createQuoteRequest(validatedData.data);
       
+      // Log successful backup to database
+      console.log(`✅ QUOTE REQUEST BACKUP: Saved submission #${newQuoteRequest.id} from ${validatedData.data.name} (${validatedData.data.email}) at ${new Date().toISOString()}`);
+      
       // Send email notification about the new quote request
       try {
         // Create properly typed email data
@@ -329,10 +332,10 @@ To prepare a quote, please contact the customer directly.
           text: textContent
         });
         
-        console.log('Quote request email notification sent');
+        console.log('📧 Quote request email notification sent successfully');
       } catch (emailError) {
         // Log the error but don't fail the request if email sending fails
-        console.error('Failed to send quote request email notification:', emailError);
+        console.error('❌ EMAIL FAILED: Quote request email could not be sent, but data is safely backed up in database:', emailError);
       }
       
       res.status(201).json(newQuoteRequest);
@@ -354,6 +357,9 @@ To prepare a quote, please contact the customer directly.
       }
       
       const newSubmission = await storage.createContactSubmission(validatedData.data);
+      
+      // Log successful backup to database
+      console.log(`✅ CONTACT FORM BACKUP: Saved submission #${newSubmission.id} from ${validatedData.data.name} (${validatedData.data.email}) at ${new Date().toISOString()}`);
       
       // Send email notification about the new contact form submission
       try {
@@ -395,10 +401,10 @@ To respond, simply reply to this email.
           text: textContent
         });
         
-        console.log('Contact form email notification sent');
+        console.log('📧 Contact form email notification sent successfully');
       } catch (emailError) {
         // Log the error but don't fail the request if email sending fails
-        console.error('Failed to send contact form email notification:', emailError);
+        console.error('❌ EMAIL FAILED: Contact form email could not be sent, but data is safely backed up in database:', emailError);
       }
       
       res.status(201).json(newSubmission);

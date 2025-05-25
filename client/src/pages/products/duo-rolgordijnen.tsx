@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
+import duoRolgordijnImage from "@assets/Duorolgordijnen.jpeg";
 import { Button } from "@/components/ui/button";
 import {
   Breadcrumb,
@@ -84,7 +85,7 @@ const DuoRolgordijnen = () => {
           <div className="relative group">
             <div className="rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-neutral-100 to-neutral-200">
               <img
-                src="https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+                src={duoRolgordijnImage}
                 alt="Duo Rolgordijnen - Zebra gordijnen voor slimme lichtregeling"
                 className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-300"
               />

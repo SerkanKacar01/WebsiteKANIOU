@@ -1,6 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
+import vitrageImage1 from "@assets/IMG_9298.jpg";
+import vitrageImage2 from "@assets/IMG_9304.jpg";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,7 +74,7 @@ const VitragesPage = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+                src={vitrageImage1}
                 alt="Elegante vitrages met zachte lichtinval"
                 className="rounded-lg shadow-xl w-full h-[400px] object-cover"
               />
@@ -293,7 +295,7 @@ const VitragesPage = () => {
 
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
+                src={vitrageImage2}
                 alt="Professionele montage van vitrages"
                 className="rounded-lg shadow-xl w-full h-[350px] object-cover"
               />

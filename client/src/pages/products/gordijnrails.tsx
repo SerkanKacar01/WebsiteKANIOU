@@ -47,7 +47,7 @@ const GordijnrailsPage = () => {
                 {/* Types Section */}
                 <section className="bg-white rounded-xl p-8 shadow-sm border border-neutral-200">
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center">
                       <Settings className="w-6 h-6 text-white" />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-bold text-text-dark">
@@ -58,13 +58,13 @@ const GordijnrailsPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <Check className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                        <Check className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
                         <span className="text-text-medium">
                           Standaard witte aluminium rail (meest gebruikt)
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
-                        <Check className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                        <Check className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
                         <span className="text-text-medium">
                           Luxe design rail in zwart, rvs of mat wit
                         </span>
@@ -72,13 +72,13 @@ const GordijnrailsPage = () => {
                     </div>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <Check className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                        <Check className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
                         <span className="text-text-medium">
                           Elektrische gordijnrail met afstandsbediening
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
-                        <Check className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                        <Check className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
                         <span className="text-text-medium">
                           Plafond- of wandmontage mogelijk
                         </span>
@@ -200,19 +200,19 @@ const GordijnrailsPage = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-green-600 mt-1" />
+                      <Check className="w-5 h-5 text-amber-600 mt-1" />
                       <span className="text-text-medium">
                         Direct aan plafond of wand
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-green-600 mt-1" />
+                      <Check className="w-5 h-5 text-amber-600 mt-1" />
                       <span className="text-text-medium">
                         Geschikt voor alle soorten gordijnstoffen
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-green-600 mt-1" />
+                      <Check className="w-5 h-5 text-amber-600 mt-1" />
                       <span className="text-text-medium">
                         Inclusief bevestigingsmateriaal en runners
                       </span>
@@ -228,13 +228,13 @@ const GordijnrailsPage = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-blue-600 mt-1" />
+                      <Check className="w-5 h-5 text-amber-600 mt-1" />
                       <span className="text-text-medium">
                         Regelmatig afnemen met droge doek
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-blue-600 mt-1" />
+                      <Check className="w-5 h-5 text-amber-600 mt-1" />
                       <span className="text-text-medium">
                         Smeren van runners indien nodig voor soepele werking
                       </span>
@@ -243,9 +243,9 @@ const GordijnrailsPage = () => {
                 </section>
 
                 {/* Price Indication */}
-                <section className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 border border-blue-200">
+                <section className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl p-8 border border-amber-200">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center">
                       <Euro className="w-6 h-6 text-white" />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-bold text-text-dark">
@@ -255,7 +255,7 @@ const GordijnrailsPage = () => {
 
                   <div className="bg-white rounded-lg p-6 shadow-sm">
                     <p className="text-lg text-text-dark mb-2">
-                      <span className="font-semibold text-2xl text-blue-600">
+                      <span className="font-semibold text-2xl text-amber-600">
                         Vanaf €12,95 per meter (Excl. plaatsing)
                       </span>
                     </p>
@@ -279,32 +279,32 @@ const GordijnrailsPage = () => {
 
                   {/* CTA Buttons */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-lg">
+                    <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white p-6 rounded-lg">
                       <h3 className="text-xl font-semibold mb-4">
                         Vraag een offerte aan
                       </h3>
-                      <p className="text-blue-100 mb-6">
+                      <p className="text-amber-100 mb-6">
                         Ontvang binnen 24 uur een persoonlijke offerte op maat
                         voor uw gordijnrails.
                       </p>
                       <Link href="/quote">
-                        <Button className="w-full bg-white text-blue-600 hover:bg-blue-50">
+                        <Button className="w-full bg-white text-amber-600 hover:bg-amber-50">
                           <Mail className="w-4 h-4 mr-2" />
                           Vraag een offerte aan
                         </Button>
                       </Link>
                     </div>
 
-                    <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-lg">
+                    <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-6 rounded-lg">
                       <h3 className="text-xl font-semibold mb-4">
                         Plan een gratis adviesgesprek
                       </h3>
-                      <p className="text-green-100 mb-6">
+                      <p className="text-yellow-100 mb-6">
                         Maak een afspraak voor persoonlijk advies bij u thuis of
                         in onze showroom.
                       </p>
                       <Link href="/contact">
-                        <Button className="w-full bg-white text-green-600 hover:bg-green-50">
+                        <Button className="w-full bg-white text-yellow-600 hover:bg-yellow-50">
                           <Phone className="w-4 h-4 mr-2" />
                           Plan een gratis adviesgesprek
                         </Button>

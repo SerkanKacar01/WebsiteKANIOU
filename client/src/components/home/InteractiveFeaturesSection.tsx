@@ -26,13 +26,13 @@ const InteractiveFeaturesSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Color Matcher Feature */}
           <Card className="relative overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 group hover:shadow-xl">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-full"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full"></div>
             <CardHeader className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                   <Camera className="h-6 w-6 text-white" />
                 </div>
-                <Badge variant="secondary" className="bg-blue-100 text-blue-700">
+                <Badge variant="secondary" className="bg-primary/10 text-primary">
                   AI-Powered
                 </Badge>
               </div>
@@ -49,28 +49,28 @@ const InteractiveFeaturesSection = () => {
                 <h4 className="font-semibold text-gray-800">Hoe het werkt:</h4>
                 <div className="space-y-2">
                   <div className="flex items-center text-sm text-gray-600">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-blue-600 font-semibold">1</div>
+                    <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-3 text-primary font-semibold">1</div>
                     Upload een foto van uw kamer
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-blue-600 font-semibold">2</div>
+                    <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-3 text-primary font-semibold">2</div>
                     AI analyseert kleuren en stijl
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-blue-600 font-semibold">3</div>
+                    <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-3 text-primary font-semibold">3</div>
                     Ontvang gepersonaliseerde kleuradvies
                   </div>
                 </div>
               </div>
 
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-primary/5 p-4 rounded-lg">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium text-blue-800">Functies:</span>
-                  <Palette className="h-4 w-4 text-blue-600" />
+                  <span className="font-medium text-primary">Functies:</span>
+                  <Palette className="h-4 w-4 text-primary" />
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1">
                   {['Kleuranalyse', 'Productadvies', 'Stijlmatching'].map((feature) => (
-                    <Badge key={feature} variant="outline" className="text-xs border-blue-200 text-blue-700">
+                    <Badge key={feature} variant="outline" className="text-xs border-primary/20 text-primary">
                       {feature}
                     </Badge>
                   ))}
@@ -78,7 +78,7 @@ const InteractiveFeaturesSection = () => {
               </div>
 
               <Link href="/kleur-matcher">
-                <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white group-hover:scale-105 transition-transform">
+                <Button className="w-full bg-primary hover:bg-primary/90 text-white group-hover:scale-105 transition-transform">
                   Kleur Matcher Proberen
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -88,13 +88,13 @@ const InteractiveFeaturesSection = () => {
 
           {/* Customization Wizard Feature */}
           <Card className="relative overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 group hover:shadow-xl">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green-500/10 to-transparent rounded-bl-full"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full"></div>
             <CardHeader className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                   <Wand2 className="h-6 w-6 text-white" />
                 </div>
-                <Badge variant="secondary" className="bg-green-100 text-green-700">
+                <Badge variant="secondary" className="bg-primary/10 text-primary">
                   Interactief
                 </Badge>
               </div>
@@ -111,40 +111,40 @@ const InteractiveFeaturesSection = () => {
                 <h4 className="font-semibold text-gray-800">6 Eenvoudige Stappen:</h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center text-gray-600">
-                    <Settings className="h-4 w-4 mr-2 text-green-600" />
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
                     Ruimte kiezen
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <Settings className="h-4 w-4 mr-2 text-green-600" />
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
                     Functie bepalen
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <Settings className="h-4 w-4 mr-2 text-green-600" />
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
                     Stijl selecteren
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <Settings className="h-4 w-4 mr-2 text-green-600" />
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
                     Budget aangeven
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <Settings className="h-4 w-4 mr-2 text-green-600" />
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
                     Extra opties
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <Settings className="h-4 w-4 mr-2 text-green-600" />
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
                     Resultaten
                   </div>
                 </div>
               </div>
 
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-primary/5 p-4 rounded-lg">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium text-green-800">U krijgt:</span>
-                  <Sparkles className="h-4 w-4 text-green-600" />
+                  <span className="font-medium text-primary">U krijgt:</span>
+                  <Sparkles className="h-4 w-4 text-primary" />
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1">
                   {['Productadvies', 'Prijsindicatie', 'Offertelink'].map((benefit) => (
-                    <Badge key={benefit} variant="outline" className="text-xs border-green-200 text-green-700">
+                    <Badge key={benefit} variant="outline" className="text-xs border-primary/20 text-primary">
                       {benefit}
                     </Badge>
                   ))}
@@ -152,7 +152,7 @@ const InteractiveFeaturesSection = () => {
               </div>
 
               <Link href="/maatwerk-wizard">
-                <Button className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white group-hover:scale-105 transition-transform">
+                <Button className="w-full bg-primary hover:bg-primary/90 text-white group-hover:scale-105 transition-transform">
                   Wizard Starten
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

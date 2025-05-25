@@ -13,6 +13,7 @@ import {
   Mail,
 } from "lucide-react";
 import { Link } from "wouter";
+import houtenJaloezieeenImage from "@assets/image00006.jpeg";
 
 const HoutenJaloezieen = () => {
   const benefits = [
@@ -118,8 +119,8 @@ const HoutenJaloezieen = () => {
 
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-                alt="Houten Jaloezieën in moderne woonkamer"
+                src={houtenJaloezieeenImage}
+                alt="Stijlvolle houten jaloezieën in moderne woonkamer"
                 className="rounded-2xl shadow-2xl w-full h-[500px] object-cover"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">

@@ -78,6 +78,30 @@ export const quoteRequests = pgTable("quote_requests", {
 export const insertQuoteRequestSchema = createInsertSchema(quoteRequests).omit({
   id: true,
   createdAt: true,
+}).extend({
+  name: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  phone: z.string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(20, "Phone number must be less than 20 characters")
+    .regex(/^[\+]?[0-9\s\-\(\)]+$/, "Phone number can only contain numbers, spaces, +, -, (, )"),
+  productType: z.string()
+    .min(1, "Product type is required")
+    .max(100, "Product type must be less than 100 characters"),
+  dimensions: z.string()
+    .max(500, "Dimensions must be less than 500 characters")
+    .optional(),
+  requirements: z.string()
+    .min(10, "Requirements must be at least 10 characters")
+    .max(2000, "Requirements must be less than 2000 characters")
+    .optional(),
+  // Honeypot field for spam protection
+  website: z.string().max(0, "Invalid submission").optional(),
 });
 
 // Contact Form Submissions
@@ -93,6 +117,22 @@ export const contactSubmissions = pgTable("contact_submissions", {
 export const insertContactSubmissionSchema = createInsertSchema(contactSubmissions).omit({
   id: true,
   createdAt: true,
+}).extend({
+  name: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  subject: z.string()
+    .min(3, "Subject must be at least 3 characters")
+    .max(200, "Subject must be less than 200 characters"),
+  message: z.string()
+    .min(10, "Message must be at least 10 characters")
+    .max(2000, "Message must be less than 2000 characters"),
+  // Honeypot field for spam protection
+  website: z.string().max(0, "Invalid submission").optional(),
 });
 
 // Define relations between tables

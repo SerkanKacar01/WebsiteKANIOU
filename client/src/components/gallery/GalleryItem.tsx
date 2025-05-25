@@ -1,20 +1,63 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { GalleryItem as GalleryItemType } from "@shared/schema";
+import {
+  galleryImage_IMG9293,
+  galleryImage_IMG9294,
+  galleryImage_IMG9295,
+  galleryImage_IMG9296,
+  galleryImage_IMG9297,
+  galleryImage_IMG9298,
+  galleryImage_IMG9299,
+  galleryImage_IMG9300,
+  galleryImage_IMG9301,
+  galleryImage_IMG9302,
+  galleryImage_IMG9303,
+  galleryImage_IMG9304,
+  galleryImage_IMG9305,
+  galleryImage_IMG9306,
+  galleryImage_IMG9308,
+  galleryImage_IMG9309,
+  galleryImage_IMG9310,
+} from "@/assets";
 
 interface GalleryItemProps {
   item: GalleryItemType;
 }
 
+// Image mapping to convert database paths to actual imported images
+const imageMap: Record<string, string> = {
+  '/src/assets/IMG_9293.jpg': galleryImage_IMG9293,
+  '/src/assets/IMG_9294.jpg': galleryImage_IMG9294,
+  '/src/assets/IMG_9295.jpg': galleryImage_IMG9295,
+  '/src/assets/IMG_9296.jpg': galleryImage_IMG9296,
+  '/src/assets/IMG_9297.jpg': galleryImage_IMG9297,
+  '/src/assets/IMG_9298.jpg': galleryImage_IMG9298,
+  '/src/assets/IMG_9299.jpg': galleryImage_IMG9299,
+  '/src/assets/IMG_9300.jpg': galleryImage_IMG9300,
+  '/src/assets/IMG_9301.jpg': galleryImage_IMG9301,
+  '/src/assets/IMG_9302.jpg': galleryImage_IMG9302,
+  '/src/assets/IMG_9303.jpg': galleryImage_IMG9303,
+  '/src/assets/IMG_9304.jpg': galleryImage_IMG9304,
+  '/src/assets/IMG_9305.jpg': galleryImage_IMG9305,
+  '/src/assets/IMG_9306.jpg': galleryImage_IMG9306,
+  '/src/assets/IMG_9308.jpg': galleryImage_IMG9308,
+  '/src/assets/IMG_9309.jpg': galleryImage_IMG9309,
+  '/src/assets/IMG_9310.jpg': galleryImage_IMG9310,
+};
+
 const GalleryItem = ({ item }: GalleryItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Get the actual image URL from the mapping, or fallback to the original URL
+  const imageUrl = imageMap[item.imageUrl] || item.imageUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <div className="gallery-item group relative overflow-hidden rounded-lg cursor-pointer h-64">
           <img
-            src={item.imageUrl}
+            src={imageUrl}
             alt={item.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
@@ -27,7 +70,7 @@ const GalleryItem = ({ item }: GalleryItemProps) => {
       <DialogContent className="sm:max-w-3xl p-0 overflow-hidden">
         <div className="relative">
           <img
-            src={item.imageUrl}
+            src={imageUrl}
             alt={item.title}
             className="w-full object-contain max-h-[80vh]"
           />

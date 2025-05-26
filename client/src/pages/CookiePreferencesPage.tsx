@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import Container from "@/components/ui/container";
 import { useCookieConsent } from "@/hooks/useCookieConsent";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 export default function CookiePreferencesPage() {
   const { consent, acceptCustom, hasConsented } = useCookieConsent();
@@ -16,6 +16,20 @@ export default function CookiePreferencesPage() {
   const [marketingEnabled, setMarketingEnabled] = useState(consent.marketing);
   const [hasChanges, setHasChanges] = useState(false);
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
+
+  // Get the referring page from session storage or default to home
+  const getReferringPage = () => {
+    return sessionStorage.getItem('cookiePreferencesReferrer') || '/';
+  };
+
+  // Store current referrer when component mounts
+  useEffect(() => {
+    // If user came directly to this page, store current referrer
+    if (!sessionStorage.getItem('cookiePreferencesReferrer')) {
+      sessionStorage.setItem('cookiePreferencesReferrer', document.referrer ? new URL(document.referrer).pathname : '/');
+    }
+  }, []);
 
   // Update local state when consent changes
   useEffect(() => {
@@ -36,12 +50,24 @@ export default function CookiePreferencesPage() {
       title: "Voorkeuren opgeslagen",
       description: "Je cookievoorkeuren zijn succesvol bijgewerkt.",
     });
+    
+    // Navigate back to referring page after a brief delay
+    setTimeout(() => {
+      const referringPage = getReferringPage();
+      sessionStorage.removeItem('cookiePreferencesReferrer');
+      setLocation(referringPage);
+    }, 1500);
   };
 
   const handleCancel = () => {
     setAnalyticsEnabled(consent.analytics);
     setMarketingEnabled(consent.marketing);
     setHasChanges(false);
+    
+    // Navigate back immediately on cancel
+    const referringPage = getReferringPage();
+    sessionStorage.removeItem('cookiePreferencesReferrer');
+    setLocation(referringPage);
   };
 
   const getConsentStatusText = () => {

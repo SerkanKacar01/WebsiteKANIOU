@@ -244,8 +244,7 @@ export default function CookiePreferencesPage() {
           <Button
             onClick={handleCancel}
             variant="outline"
-            disabled={!hasChanges}
-            className="border-gray-300 hover:bg-gray-50 px-8 py-3 text-lg disabled:opacity-50"
+            className="border-gray-300 hover:bg-gray-50 px-8 py-3 text-lg"
           >
             Annuleren
           </Button>

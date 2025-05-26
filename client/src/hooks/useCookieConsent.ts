@@ -136,8 +136,9 @@ function loadMarketingScripts() {
   const FB_PIXEL_ID = import.meta.env.VITE_FB_PIXEL_ID;
   
   if (FB_PIXEL_ID) {
-    const script = document.createElement('script');
-    script.innerHTML = `
+    // Load Facebook Pixel base script first
+    const baseScript = document.createElement('script');
+    baseScript.textContent = `
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -146,10 +147,16 @@ function loadMarketingScripts() {
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '${FB_PIXEL_ID}');
-      fbq('track', 'PageView');
     `;
-    document.head.appendChild(script);
+    document.head.appendChild(baseScript);
+
+    // Initialize with sanitized pixel ID using window.fbq
+    baseScript.onload = () => {
+      if (window.fbq) {
+        window.fbq('init', FB_PIXEL_ID);
+        window.fbq('track', 'PageView');
+      }
+    };
   }
 }
 

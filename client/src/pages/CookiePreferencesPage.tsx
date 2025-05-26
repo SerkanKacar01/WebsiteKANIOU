@@ -51,12 +51,10 @@ export default function CookiePreferencesPage() {
       description: "Je cookievoorkeuren zijn succesvol bijgewerkt.",
     });
     
-    // Navigate back to referring page after a brief delay
-    setTimeout(() => {
-      const referringPage = getReferringPage();
-      sessionStorage.removeItem('cookiePreferencesReferrer');
-      setLocation(referringPage);
-    }, 1500);
+    // Navigate back immediately
+    const referringPage = getReferringPage();
+    sessionStorage.removeItem('cookiePreferencesReferrer');
+    setLocation(referringPage);
   };
 
   const handleCancel = () => {

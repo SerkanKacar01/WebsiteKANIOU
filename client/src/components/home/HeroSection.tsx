@@ -8,15 +8,18 @@ const HeroSection = () => {
 
   return (
     <section className="relative h-[70vh] overflow-hidden">
-      {/* Background image of a living room with curtains */}
+      {/* Beautiful curtain showcase background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1560185007-5f0bb1866cab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80')",
-          filter: "brightness(0.9)",
+            "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80')",
+          filter: "brightness(0.85)",
         }}
       ></div>
+      
+      {/* Gradient overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
 
       <Container className="h-full flex flex-col justify-center">
         <div className="max-w-lg relative z-10 pl-4 mx-4 sm:mx-0">

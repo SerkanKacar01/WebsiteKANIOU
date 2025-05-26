@@ -318,7 +318,7 @@ const DakraamZonweringenPage = () => {
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-2xl">💧</span>
                       </div>
                       <div>
@@ -336,16 +336,16 @@ const DakraamZonweringenPage = () => {
 
               {/* Price Overview Section */}
               <div className="mb-16">
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 md:p-12 border border-green-100">
+                <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-8 md:p-12 border border-amber-100">
                   <div className="flex items-center gap-3 mb-6">
-                    <Euro className="w-8 h-8 text-secondary" />
+                    <Euro className="w-8 h-8 text-amber-600" />
                     <h2 className="text-3xl font-bold text-text-dark">
                       Prijsindicatie
                     </h2>
                   </div>
                   <div className="text-center">
                     <div className="inline-flex items-baseline gap-2 mb-4">
-                      <span className="text-5xl font-bold text-secondary">
+                      <span className="text-5xl font-bold text-amber-600">
                         €245
                       </span>
                       <span className="text-xl text-text-light">per stuk</span>
@@ -360,7 +360,7 @@ const DakraamZonweringenPage = () => {
               </div>
 
               {/* CTA Section */}
-              <div className="bg-gradient-to-r from-secondary to-accent rounded-2xl p-8 md:p-12 text-white text-center">
+              <div className="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-8 md:p-12 text-white text-center">
                 <h2 className="text-3xl font-bold mb-4">Advies op maat</h2>
                 <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
                   Vraag vrijblijvend een offerte aan of plan een adviesgesprek
@@ -371,7 +371,7 @@ const DakraamZonweringenPage = () => {
                   <Link href="/quote">
                     <Button
                       size="lg"
-                      className="w-full sm:w-auto bg-white text-secondary hover:bg-gray-100 font-semibold"
+                      className="w-full sm:w-auto bg-white text-amber-600 hover:bg-amber-50 font-semibold"
                     >
                       Vraag een offerte aan
                     </Button>
@@ -380,7 +380,7 @@ const DakraamZonweringenPage = () => {
                     <Button
                       size="lg"
                       variant="outline"
-                      className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-secondary font-semibold"
+                      className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-amber-600 font-semibold"
                     >
                       Plan een gratis adviesgesprek
                     </Button>

@@ -10,6 +10,7 @@ import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import { ChatbotWidget } from "@/components/chatbot/ChatWidget";
 import Home from "@/pages/Home";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductsPage from "@/pages/ProductsPage";

@@ -7,7 +7,9 @@ import {
   insertGalleryItemSchema,
   insertTestimonialSchema,
   insertQuoteRequestSchema,
-  insertContactSubmissionSchema
+  insertContactSubmissionSchema,
+  insertChatbotConversationSchema,
+  insertChatbotMessageSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -15,6 +17,7 @@ import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
 import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
+import { generateChatbotResponse, detectPricingRequest, extractProductTypes } from "./openai";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -446,6 +449,127 @@ To respond, simply reply to this email.
     } catch (error) {
       console.error("Error in color matcher:", error);
       res.status(500).json({ message: "Failed to analyze image. Please try again." });
+    }
+  });
+
+  // Chatbot API endpoints
+  
+  // Start or get existing conversation
+  app.post("/api/chatbot/conversation", async (req: Request, res: Response) => {
+    try {
+      const { sessionId, language = "nl" } = req.body;
+      
+      if (!sessionId) {
+        return res.status(400).json({ message: "Session ID is required" });
+      }
+
+      // Check if conversation already exists
+      let conversation = await storage.getChatbotConversationBySessionId(sessionId);
+      
+      if (!conversation) {
+        // Create new conversation
+        conversation = await storage.createChatbotConversation({
+          sessionId,
+          language,
+          isActive: true
+        });
+      }
+
+      res.json(conversation);
+    } catch (error) {
+      console.error("Error handling chatbot conversation:", error);
+      res.status(500).json({ message: "Failed to handle conversation" });
+    }
+  });
+
+  // Send message to chatbot
+  app.post("/api/chatbot/message", async (req: Request, res: Response) => {
+    try {
+      const { conversationId, message, language = "nl" } = req.body;
+      
+      if (!conversationId || !message) {
+        return res.status(400).json({ message: "Conversation ID and message are required" });
+      }
+
+      // Get conversation
+      const conversation = await storage.getChatbotConversationBySessionId(conversationId);
+      if (!conversation) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+
+      // Save user message
+      await storage.createChatbotMessage({
+        conversationId: conversation.id,
+        role: "user",
+        content: message
+      });
+
+      // Get context for AI response
+      const [messages, products, categories, knowledgeBase] = await Promise.all([
+        storage.getChatbotMessagesByConversationId(conversation.id),
+        storage.getProducts(),
+        storage.getCategories(),
+        storage.getChatbotKnowledge(language)
+      ]);
+
+      // Generate AI response
+      const aiResponse = await generateChatbotResponse(message, {
+        conversation,
+        messages,
+        products,
+        categories,
+        knowledgeBase,
+        language
+      });
+
+      // Save AI response
+      const savedResponse = await storage.createChatbotMessage({
+        conversationId: conversation.id,
+        role: "assistant",
+        content: aiResponse.content,
+        metadata: aiResponse.metadata
+      });
+
+      // Handle pricing requests
+      if (aiResponse.requiresPricing && aiResponse.detectedProductTypes.length > 0) {
+        // Create pricing request record
+        await storage.createChatbotPricing({
+          productType: aiResponse.detectedProductTypes.join(", "),
+          pricingInfo: { requestedProducts: aiResponse.detectedProductTypes },
+          requestContext: message
+        });
+
+        console.log(`📋 PRICING REQUEST: User asked about pricing for: ${aiResponse.detectedProductTypes.join(", ")}`);
+      }
+
+      res.json({
+        message: aiResponse.content,
+        messageId: savedResponse.id,
+        requiresPricing: aiResponse.requiresPricing,
+        metadata: aiResponse.metadata
+      });
+
+    } catch (error) {
+      console.error("Error processing chatbot message:", error);
+      res.status(500).json({ message: "Failed to process message" });
+    }
+  });
+
+  // Get conversation history
+  app.get("/api/chatbot/conversation/:sessionId/messages", async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+      
+      const conversation = await storage.getChatbotConversationBySessionId(sessionId);
+      if (!conversation) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+
+      const messages = await storage.getChatbotMessagesByConversationId(conversation.id);
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching conversation messages:", error);
+      res.status(500).json({ message: "Failed to fetch messages" });
     }
   });
 

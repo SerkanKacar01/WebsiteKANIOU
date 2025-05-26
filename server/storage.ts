@@ -347,8 +347,10 @@ export class DatabaseStorage implements IStorage {
       return await db
         .select()
         .from(chatbotFaq)
-        .where(eq(chatbotFaq.adminApproved, true))
-        .where(eq(chatbotFaq.language, language))
+        .where(and(
+          eq(chatbotFaq.adminApproved, true),
+          eq(chatbotFaq.language, language)
+        ))
         .orderBy(chatbotFaq.category);
     }
     

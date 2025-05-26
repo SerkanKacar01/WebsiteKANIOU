@@ -56,14 +56,14 @@ const DakraamZonweringenPage = () => {
               <div className="mb-16">
                 <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border">
                   <div className="flex items-center gap-3 mb-6">
-                    <Settings className="w-8 h-8 text-secondary" />
+                    <Settings className="w-8 h-8 text-amber-600" />
                     <h2 className="text-3xl font-bold text-text-dark">
                       Systeemcompatibiliteit
                     </h2>
                   </div>
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                      <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="font-semibold text-text-dark mb-2">
                           Geschikt voor Fakro en Velux dakramen
@@ -74,7 +74,7 @@ const DakraamZonweringenPage = () => {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                      <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="font-semibold text-text-dark mb-2">
                           Standaardmaten beschikbaar
@@ -85,7 +85,7 @@ const DakraamZonweringenPage = () => {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                      <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="font-semibold text-text-dark mb-2">
                           Handmatig & elektrisch
@@ -111,9 +111,9 @@ const DakraamZonweringenPage = () => {
                   </p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-8">
-                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-2xl">
                     <div className="flex items-start gap-4">
-                      <CheckCircle className="w-8 h-8 text-secondary flex-shrink-0 mt-1" />
+                      <CheckCircle className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="text-xl font-semibold text-text-dark mb-3">
                           Effectieve warmte- en lichtregulatie
@@ -125,9 +125,9 @@ const DakraamZonweringenPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-2xl">
                     <div className="flex items-start gap-4">
-                      <Palette className="w-8 h-8 text-secondary flex-shrink-0 mt-1" />
+                      <Palette className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="text-xl font-semibold text-text-dark mb-3">
                           Keuze uit verschillende materialen
@@ -139,9 +139,9 @@ const DakraamZonweringenPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-2xl">
                     <div className="flex items-start gap-4">
-                      <Settings className="w-8 h-8 text-secondary flex-shrink-0 mt-1" />
+                      <Settings className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="text-xl font-semibold text-text-dark mb-3">
                           Compacte cassette met zijgeleiding
@@ -152,9 +152,9 @@ const DakraamZonweringenPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-2xl">
                     <div className="flex items-start gap-4">
-                      <Palette className="w-8 h-8 text-secondary flex-shrink-0 mt-1" />
+                      <Palette className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="text-xl font-semibold text-text-dark mb-3">
                           Verschillende kleuren en materialen
@@ -181,47 +181,47 @@ const DakraamZonweringenPage = () => {
                   </p>
                 </div>
                 <div className="grid md:grid-cols-3 gap-8">
-                  <div className="bg-slate-900 text-white p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-100 to-yellow-100 p-8 rounded-2xl">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Sparkles className="w-8 h-8" />
+                      <div className="w-16 h-16 bg-amber-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Sparkles className="w-8 h-8 text-amber-700" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">
+                      <h3 className="text-xl font-semibold mb-2 text-amber-900">
                         Verduisterend doek
                       </h3>
-                      <p className="text-slate-300">Perfect voor slaapkamers</p>
+                      <p className="text-amber-700">Perfect voor slaapkamers</p>
                     </div>
-                    <p className="text-slate-300 text-center">
+                    <p className="text-amber-700 text-center">
                       Blokkeert 100% van het licht voor optimale slaapkwaliteit
                       en complete duisternis
                     </p>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-100 to-yellow-100 p-8 rounded-2xl">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-blue-300 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Sparkles className="w-8 h-8 text-blue-600" />
+                      <div className="w-16 h-16 bg-amber-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Sparkles className="w-8 h-8 text-amber-700" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2 text-blue-900">
+                      <h3 className="text-xl font-semibold mb-2 text-amber-900">
                         Lichtdoorlatend doek
                       </h3>
-                      <p className="text-blue-700">Ideaal voor leefruimtes</p>
+                      <p className="text-amber-700">Ideaal voor leefruimtes</p>
                     </div>
-                    <p className="text-blue-700 text-center">
+                    <p className="text-amber-700 text-center">
                       Filtert het licht voor een aangename sfeer terwijl privacy
                       behouden blijft
                     </p>
                   </div>
-                  <div className="bg-gradient-to-br from-amber-100 to-orange-200 p-8 rounded-2xl">
+                  <div className="bg-gradient-to-br from-amber-100 to-yellow-100 p-8 rounded-2xl">
                     <div className="text-center mb-6">
-                      <div className="w-16 h-16 bg-orange-300 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Sparkles className="w-8 h-8 text-orange-600" />
+                      <div className="w-16 h-16 bg-amber-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Sparkles className="w-8 h-8 text-amber-700" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2 text-orange-900">
+                      <h3 className="text-xl font-semibold mb-2 text-amber-900">
                         Reflecterend doek
                       </h3>
-                      <p className="text-orange-700">Extra warmtewering</p>
+                      <p className="text-amber-700">Extra warmtewering</p>
                     </div>
-                    <p className="text-orange-700 text-center">
+                    <p className="text-amber-700 text-center">
                       Reflecteert zonnestralen voor maximale koeling en
                       energiebesparing
                     </p>
@@ -233,7 +233,7 @@ const DakraamZonweringenPage = () => {
               <div className="mb-16">
                 <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border">
                   <div className="flex items-center gap-3 mb-8">
-                    <Wrench className="w-8 h-8 text-secondary" />
+                    <Wrench className="w-8 h-8 text-amber-600" />
                     <h2 className="text-3xl font-bold text-text-dark">
                       Montage & Bediening
                     </h2>
@@ -245,20 +245,20 @@ const DakraamZonweringenPage = () => {
                       </h3>
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                           <span className="text-text-light">
                             Snelle montage via kliksysteem in bestaande
                             raamconstructie
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                           <span className="text-text-light">
                             Geen beschadiging van het dakraam
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                           <span className="text-text-light">
                             Professionele installatie door onze specialisten
                           </span>
@@ -271,19 +271,19 @@ const DakraamZonweringenPage = () => {
                       </h3>
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                           <span className="text-text-light">
                             Handmatig met greep of trekkoord
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                           <span className="text-text-light">
                             Elektrisch mogelijk bij motorisatie (optioneel)
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                           <span className="text-text-light">
                             App-bediening voor slimme woningen
                           </span>
@@ -296,16 +296,16 @@ const DakraamZonweringenPage = () => {
 
               {/* Maintenance Section */}
               <div className="mb-16">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12">
+                <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-8 md:p-12">
                   <div className="flex items-center gap-3 mb-6">
-                    <Sparkles className="w-8 h-8 text-secondary" />
+                    <Sparkles className="w-8 h-8 text-amber-600" />
                     <h2 className="text-3xl font-bold text-text-dark">
                       Onderhoud
                     </h2>
                   </div>
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-2xl">🧹</span>
                       </div>
                       <div>

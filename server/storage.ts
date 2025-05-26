@@ -563,3 +563,9 @@ export const storage = new DatabaseStorage();
 seedInitialData(storage).catch((error) => {
   console.error("Error seeding initial data:", error);
 });
+
+// Initialize AI chatbot knowledge base
+import { seedChatbotKnowledge } from "./seedKnowledgeBase";
+seedChatbotKnowledge().catch((error) => {
+  console.error("Error seeding chatbot knowledge:", error);
+});

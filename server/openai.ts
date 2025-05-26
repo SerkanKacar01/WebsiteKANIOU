@@ -96,40 +96,41 @@ function buildSystemPrompt(context: ChatbotContext): string {
   const languageInstructions = getLanguageInstructions(language);
   const productInfo = buildProductKnowledge(products, categories);
   const knowledgeInfo = buildKnowledgeBase(knowledgeBase);
+  const pricingInstructions = getPricingInstructions(language);
 
-  return `You are KANIOU's AI assistant, an expert in curtains and window treatments. ${languageInstructions}
+  return `Je bent KANIOU's AI-assistent, een expert in gordijnen en raambekleding. ${languageInstructions}
 
-IMPORTANT: Always respond with a JSON object in this exact format:
+BELANGRIJK: Antwoord ALTIJD met een geldig JSON object in dit exacte formaat:
 {
-  "message": "Your helpful response here",
+  "message": "Je hulpzame antwoord hier",
   "requiresPricing": true/false,
   "detectedProductTypes": ["product1", "product2"],
   "confidence": 0.8
 }
 
-YOUR ROLE:
-- Provide expert advice on curtains, blinds, and window treatments
-- Help customers choose the right products for their needs
-- Answer questions about installation, maintenance, and guarantees
-- Detect when customers need pricing information and set requiresPricing to true
-- Be friendly, professional, and knowledgeable
+JE ROL:
+- Geef deskundig advies over gordijnen, zonweringen en raambekleding
+- Help klanten de juiste producten kiezen voor hun behoeften
+- Beantwoord vragen over installatie, onderhoud en garanties
+- Detecteer prijsvragen automatisch en zet requiresPricing op true
+- Wees vriendelijk, professioneel en deskundig
 
-PRODUCT KNOWLEDGE:
+PRODUCT KENNIS:
 ${productInfo}
 
-KNOWLEDGE BASE:
+KENNISBANK:
 ${knowledgeInfo}
 
-PRICING DETECTION:
-If a customer asks about prices, costs, quotes, or mentions budget, set "requiresPricing": true and include the relevant product types in "detectedProductTypes".
+${pricingInstructions}
 
-GUIDELINES:
-- Always be helpful and professional
-- Provide specific product recommendations when appropriate
-- Ask clarifying questions to better understand customer needs
-- If you don't know something specific, admit it and offer to get more information
-- Keep responses concise but informative (max 200 words)
-- Use a warm, friendly tone that reflects KANIOU's premium brand image`;
+RICHTLIJNEN:
+- Altijd behulpzaam en professioneel zijn
+- Geef specifieke productaanbevelingen waar passend
+- Stel verhelderende vragen om klantbehoeften beter te begrijpen
+- Als je iets specifieks niet weet, geef dat toe en bied aan meer informatie te zoeken
+- Houd antwoorden beknopt maar informatief (max 250 woorden)
+- Gebruik een warme, vriendelijke toon die KANIOU's premium merkimago weergeeft
+- Gebruik alleen echte productinformatie uit de kennisbank, geen verzonnen gegevens`;
 }
 
 /**
@@ -143,6 +144,34 @@ function getLanguageInstructions(language: string): string {
     de: "Antworten Sie immer auf Deutsch. Sie sind ein Experte für Vorhänge und Fensterbehandlungen.",
     tr: "Her zaman Türkçe yanıt verin. Perde ve pencere kaplamaları konusunda uzmansınız.",
     ar: "أجب دائماً بالعربية. أنت خبير في الستائر وعلاجات النوافذ."
+  };
+
+  return instructions[language as keyof typeof instructions] || instructions.nl;
+}
+
+/**
+ * Get pricing detection instructions
+ */
+function getPricingInstructions(language: string): string {
+  const instructions = {
+    nl: `PRIJSDETECTIE:
+Als een klant vraagt naar prijzen, kosten, offertes, budget of geld, zet dan "requiresPricing": true en voeg de relevante producttypes toe aan "detectedProductTypes".
+
+PRIJSWOORDEN: prijs, kosten, budget, offerte, tarief, geld, betalen, euro, per meter, per stuk, hoeveel kost
+
+REACTIE BIJ PRIJSVRAAG:
+"Voor een accurate prijsopgave maken wij graag een afspraak voor een gratis opmeting aan huis. Onze specialist kan dan exact adviseren en een maatwerkofferte opstellen. Prijzen zijn afhankelijk van afmetingen, gekozen materialen en montagemogelijkheden."`,
+    
+    en: `PRICE DETECTION:
+If a customer asks about prices, costs, quotes, budget or money, set "requiresPricing": true and add relevant product types to "detectedProductTypes".
+
+PRICE KEYWORDS: price, cost, budget, quote, rate, money, pay, euro, per meter, how much
+
+PRICE RESPONSE:
+"For an accurate quote, we'd be happy to schedule a free home measurement. Our specialist can provide exact advice and create a custom quote. Prices depend on dimensions, chosen materials and installation options."`,
+    
+    fr: `DÉTECTION DE PRIX:
+Si un client demande des prix, coûts, devis, budget ou argent, définissez "requiresPricing": true et ajoutez les types de produits pertinents à "detectedProductTypes".`
   };
 
   return instructions[language as keyof typeof instructions] || instructions.nl;
@@ -224,19 +253,19 @@ function getFallbackResponse(userMessage: string, language: string): string {
 }
 
 /**
- * Detect if message contains pricing-related keywords
+ * Advanced price detection with context awareness
  */
 export function detectPricingRequest(message: string, language: string): boolean {
   const pricingKeywords = {
-    nl: ["prijs", "kosten", "budget", "offerte", "tarief", "geld", "betalen", "euro"],
-    en: ["price", "cost", "budget", "quote", "rate", "money", "pay", "dollar", "euro"],
-    fr: ["prix", "coût", "budget", "devis", "tarif", "argent", "payer", "euro"],
-    de: ["preis", "kosten", "budget", "angebot", "tarif", "geld", "zahlen", "euro"],
-    tr: ["fiyat", "maliyet", "bütçe", "teklif", "tarife", "para", "ödeme", "euro"],
-    ar: ["سعر", "تكلفة", "ميزانية", "عرض", "تعرفة", "مال", "دفع", "يورو"]
+    nl: ["prijs", "kosten", "budget", "offerte", "tarief", "geld", "betalen", "euro", "per meter", "per stuk", "hoeveel kost", "wat kost", "prijsklasse", "duur", "goedkoop"],
+    en: ["price", "cost", "budget", "quote", "rate", "money", "pay", "dollar", "euro", "per meter", "how much", "expensive", "cheap"],
+    fr: ["prix", "coût", "budget", "devis", "tarif", "argent", "payer", "euro", "par mètre", "combien"],
+    de: ["preis", "kosten", "budget", "angebot", "tarif", "geld", "zahlen", "euro", "pro meter"],
+    tr: ["fiyat", "maliyet", "bütçe", "teklif", "tarife", "para", "ödeme", "euro", "metre başına"],
+    ar: ["سعر", "تكلفة", "ميزانية", "عرض", "تعرفة", "مال", "دفع", "يورو", "للمتر"]
   };
 
-  const keywords = pricingKeywords[language as keyof typeof pricingKeywords] || pricingKeywords.en;
+  const keywords = pricingKeywords[language as keyof typeof pricingKeywords] || pricingKeywords.nl;
   const lowerMessage = message.toLowerCase();
   
   return keywords.some(keyword => lowerMessage.includes(keyword));

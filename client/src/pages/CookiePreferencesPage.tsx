@@ -236,7 +236,6 @@ export default function CookiePreferencesPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
             onClick={handleSavePreferences}
-            disabled={!hasChanges}
             className="bg-accent hover:bg-accent/90 text-white px-8 py-3 text-lg"
           >
             Voorkeuren opslaan
@@ -246,7 +245,7 @@ export default function CookiePreferencesPage() {
             onClick={handleCancel}
             variant="outline"
             disabled={!hasChanges}
-            className="border-gray-300 hover:bg-gray-50 px-8 py-3 text-lg"
+            className="border-gray-300 hover:bg-gray-50 px-8 py-3 text-lg disabled:opacity-50"
           >
             Annuleren
           </Button>

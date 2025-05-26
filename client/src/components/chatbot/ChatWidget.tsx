@@ -29,24 +29,28 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
   // Get or create conversation
   const conversationMutation = useMutation({
     mutationFn: async () => {
-      return apiRequest("/api/chatbot/conversation", {
+      const response = await fetch("/api/chatbot/conversation", {
         method: "POST",
-        body: { sessionId, language }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, language })
       });
+      return response.json();
     }
   });
 
   // Send message mutation
   const sendMessageMutation = useMutation({
     mutationFn: async (messageText: string) => {
-      return apiRequest("/api/chatbot/message", {
+      const response = await fetch("/api/chatbot/message", {
         method: "POST",
-        body: { 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
           conversationId: sessionId, 
           message: messageText, 
           language 
-        }
+        })
       });
+      return response.json();
     },
     onSuccess: () => {
       // Refresh messages
@@ -57,6 +61,10 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
   // Get conversation messages
   const { data: messages = [], isLoading: messagesLoading } = useQuery({
     queryKey: ["/api/chatbot/conversation", sessionId, "messages"],
+    queryFn: async () => {
+      const response = await fetch(`/api/chatbot/conversation/${sessionId}/messages`);
+      return response.json();
+    },
     enabled: isOpen && !!conversationMutation.data,
     refetchInterval: false
   });
@@ -155,7 +163,7 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
                   <Loader2 className="h-4 w-4 animate-spin" />
                 </div>
               ) : (
-                messages.map((msg: ChatMessage) => (
+                (messages as ChatMessage[]).map((msg: ChatMessage) => (
                   <div
                     key={msg.id}
                     className={`mb-3 ${

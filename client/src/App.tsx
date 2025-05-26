@@ -152,6 +152,7 @@ function App() {
           </main>
           <Footer />
           <CookieConsentBanner />
+          <ChatbotWidget language={language} />
         </div>
       </TooltipProvider>
     </QueryClientProvider>

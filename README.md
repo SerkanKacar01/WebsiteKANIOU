@@ -52,3 +52,4 @@ This project uses SendGrid to deliver emails. To ensure reliable delivery:
 - Email templates are defined as functions that generate HTML content
 - Both the contact and quote request APIs include email notifications
 - Form submissions are still stored in the database even if email sending fails# SerkanKacar01-WebsiteKANIOU
+# WebsiteKANIOU

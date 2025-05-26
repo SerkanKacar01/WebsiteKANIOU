@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import Home from "@/pages/Home";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductsPage from "@/pages/ProductsPage";
@@ -146,6 +147,7 @@ function App() {
             <Router />
           </main>
           <Footer />
+          <CookieConsentBanner />
         </div>
       </TooltipProvider>
     </QueryClientProvider>

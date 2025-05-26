@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { CookieSettings } from "@/components/CookieSettings";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -194,6 +195,7 @@ const Footer = () => {
                   Disclaimer
                 </div>
               </Link>
+              <CookieSettings />
             </div>
           </div>
         </div>

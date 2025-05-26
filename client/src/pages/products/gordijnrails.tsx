@@ -295,16 +295,16 @@ const GordijnrailsPage = () => {
                       </Link>
                     </div>
 
-                    <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-6 rounded-lg">
+                    <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white p-6 rounded-lg">
                       <h3 className="text-xl font-semibold mb-4">
                         Plan een gratis adviesgesprek
                       </h3>
-                      <p className="text-yellow-100 mb-6">
+                      <p className="text-amber-100 mb-6">
                         Maak een afspraak voor persoonlijk advies bij u thuis of
                         in onze showroom.
                       </p>
                       <Link href="/contact">
-                        <Button className="w-full bg-white text-yellow-600 hover:bg-yellow-50">
+                        <Button className="w-full bg-white text-amber-600 hover:bg-amber-50">
                           <Phone className="w-4 h-4 mr-2" />
                           Plan een gratis adviesgesprek
                         </Button>

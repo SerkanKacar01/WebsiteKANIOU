@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, doublePrecision, timestamp, foreignKey, unique } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, doublePrecision, timestamp, foreignKey, unique, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -173,3 +173,141 @@ export type InsertQuoteRequest = z.infer<typeof insertQuoteRequestSchema>;
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
+
+// Chatbot Conversations
+export const chatbotConversations = pgTable("chatbot_conversations", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  userId: text("user_id"), // Optional for anonymous users
+  language: text("language").default("nl"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertChatbotConversationSchema = createInsertSchema(chatbotConversations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Chatbot Messages
+export const chatbotMessages = pgTable("chatbot_messages", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").notNull().references(() => chatbotConversations.id, { onDelete: 'cascade' }),
+  role: text("role").notNull(), // 'user' or 'assistant'
+  content: text("content").notNull(),
+  metadata: jsonb("metadata"), // Additional data like tokens, processing time, etc.
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertChatbotMessageSchema = createInsertSchema(chatbotMessages).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Knowledge Base for AI responses
+export const chatbotKnowledge = pgTable("chatbot_knowledge", {
+  id: serial("id").primaryKey(),
+  category: text("category").notNull(), // 'product', 'faq', 'pricing', 'general'
+  topic: text("topic").notNull(),
+  content: text("content").notNull(),
+  language: text("language").default("nl"),
+  priority: integer("priority").default(1), // Higher priority = more important
+  adminApproved: boolean("admin_approved").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertChatbotKnowledgeSchema = createInsertSchema(chatbotKnowledge).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Pricing Information
+export const chatbotPricing = pgTable("chatbot_pricing", {
+  id: serial("id").primaryKey(),
+  productType: text("product_type").notNull(),
+  pricingInfo: jsonb("pricing_info").notNull(),
+  adminProvidedBy: text("admin_provided_by"), // Admin identifier
+  requestContext: text("request_context"), // Original user question that triggered price request
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertChatbotPricingSchema = createInsertSchema(chatbotPricing).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// FAQ Knowledge Base
+export const chatbotFaq = pgTable("chatbot_faq", {
+  id: serial("id").primaryKey(),
+  category: text("category").notNull(), // 'installation', 'guarantees', 'measuring', 'delivery'
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  language: text("language").default("nl"),
+  adminApproved: boolean("admin_approved").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertChatbotFaqSchema = createInsertSchema(chatbotFaq).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Admin Training Sessions
+export const chatbotAdminTraining = pgTable("chatbot_admin_training", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").references(() => chatbotConversations.id, { onDelete: 'cascade' }),
+  adminFeedback: text("admin_feedback").notNull(),
+  improvedResponse: text("improved_response").notNull(),
+  trainingContext: jsonb("training_context"), // Context that led to training
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertChatbotAdminTrainingSchema = createInsertSchema(chatbotAdminTraining).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Chatbot relations
+export const chatbotConversationsRelations = relations(chatbotConversations, ({ many }) => ({
+  messages: many(chatbotMessages),
+  adminTraining: many(chatbotAdminTraining),
+}));
+
+export const chatbotMessagesRelations = relations(chatbotMessages, ({ one }) => ({
+  conversation: one(chatbotConversations, {
+    fields: [chatbotMessages.conversationId],
+    references: [chatbotConversations.id],
+  }),
+}));
+
+export const chatbotAdminTrainingRelations = relations(chatbotAdminTraining, ({ one }) => ({
+  conversation: one(chatbotConversations, {
+    fields: [chatbotAdminTraining.conversationId],
+    references: [chatbotConversations.id],
+  }),
+}));
+
+// Chatbot type definitions
+export type ChatbotConversation = typeof chatbotConversations.$inferSelect;
+export type InsertChatbotConversation = z.infer<typeof insertChatbotConversationSchema>;
+
+export type ChatbotMessage = typeof chatbotMessages.$inferSelect;
+export type InsertChatbotMessage = z.infer<typeof insertChatbotMessageSchema>;
+
+export type ChatbotKnowledge = typeof chatbotKnowledge.$inferSelect;
+export type InsertChatbotKnowledge = z.infer<typeof insertChatbotKnowledgeSchema>;
+
+export type ChatbotPricing = typeof chatbotPricing.$inferSelect;
+export type InsertChatbotPricing = z.infer<typeof insertChatbotPricingSchema>;
+
+export type ChatbotFaq = typeof chatbotFaq.$inferSelect;
+export type InsertChatbotFaq = z.infer<typeof insertChatbotFaqSchema>;
+
+export type ChatbotAdminTraining = typeof chatbotAdminTraining.$inferSelect;
+export type InsertChatbotAdminTraining = z.infer<typeof insertChatbotAdminTrainingSchema>;

@@ -1,0 +1,59 @@
+Goal: Implement a full-featured cookie preferences modal (pop-up) to comply with GDPR/AVG. The content must be in Dutch and ready for production. The modal should be accessible via the cookie banner (“Beheer voorkeuren”) and a footer link (“Cookie-instellingen”).
+
+⸻
+
+🔧 Please do the following:
+	1.	Create a Modal Component
+Name: CookiePreferencesModal
+
+	•	Display when user clicks “Beheer voorkeuren” or the footer link “Cookie-instellingen”.
+
+	2.	Structure & Content (in Dutch)
+Use the following structure and text inside the modal:
+
+⸻
+
+🇳🇱 Cookievoorkeuren
+
+Wij gebruiken cookies om uw ervaring te verbeteren, het verkeer op onze website te analyseren en u relevante inhoud en advertenties aan te bieden. U kunt hieronder aangeven welke soorten cookies u toestaat. Essentiële cookies zijn altijd actief, omdat ze noodzakelijk zijn voor de werking van de website.
+
+⸻
+
+✅ Essentiële cookies (Altijd ingeschakeld)
+
+Noodzakelijk voor de basisfunctionaliteiten van de website, zoals beveiliging, netwerkbeheer en toegankelijkheid. Deze cookies kunnen niet worden uitgeschakeld.
+
+⸻
+
+📊 Analytische cookies
+
+Helpen ons te begrijpen hoe bezoekers onze website gebruiken door anonieme informatie te verzamelen. Zo kunnen we onze site verbeteren en beter afstemmen op uw behoeften.
+
+⸻
+
+🎯 Marketingcookies
+
+Worden gebruikt om gepersonaliseerde advertenties te tonen op basis van uw surfgedrag, en om de effectiviteit van advertentiecampagnes te meten.
+
+⸻
+
+	3.	Buttons (in Dutch)
+
+	•	Alles accepteren
+	•	Alles weigeren
+	•	Voorkeuren opslaan
+	•	Annuleren
+
+Each cookie section (Analytisch, Marketing) must include a toggle switch (on/off) with state stored in localStorage.
+	4.	Save Functionality
+
+	•	Save preferences in localStorage (key: cookie_preferences)
+	•	Based on choices, load or block third-party scripts
+	•	Remember user’s settings and hide the banner if previously accepted
+
+	5.	Design
+
+	•	Responsive modal
+	•	Styled in beige/white/grey tone
+	•	Match existing site theme
+	•	Focus trap and accessibility (aria-labels, esc to close, etc.)

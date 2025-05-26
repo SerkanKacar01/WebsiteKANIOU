@@ -17,9 +17,27 @@ import {
   contactSubmissions,
   ContactSubmission,
   InsertContactSubmission,
+  chatbotConversations,
+  ChatbotConversation,
+  InsertChatbotConversation,
+  chatbotMessages,
+  ChatbotMessage,
+  InsertChatbotMessage,
+  chatbotKnowledge,
+  ChatbotKnowledge,
+  InsertChatbotKnowledge,
+  chatbotPricing,
+  ChatbotPricing,
+  InsertChatbotPricing,
+  chatbotFaq,
+  ChatbotFaq,
+  InsertChatbotFaq,
+  chatbotAdminTraining,
+  ChatbotAdminTraining,
+  InsertChatbotAdminTraining,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 
 export interface IStorage {
   // Categories
@@ -55,6 +73,33 @@ export interface IStorage {
     submission: InsertContactSubmission,
   ): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+
+  // Chatbot Conversations
+  createChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
+  getChatbotConversationBySessionId(sessionId: string): Promise<ChatbotConversation | undefined>;
+  updateChatbotConversation(id: number, updates: Partial<ChatbotConversation>): Promise<ChatbotConversation>;
+
+  // Chatbot Messages
+  createChatbotMessage(message: InsertChatbotMessage): Promise<ChatbotMessage>;
+  getChatbotMessagesByConversationId(conversationId: number): Promise<ChatbotMessage[]>;
+
+  // Chatbot Knowledge
+  getChatbotKnowledge(language?: string): Promise<ChatbotKnowledge[]>;
+  createChatbotKnowledge(knowledge: InsertChatbotKnowledge): Promise<ChatbotKnowledge>;
+  updateChatbotKnowledge(id: number, updates: Partial<ChatbotKnowledge>): Promise<ChatbotKnowledge>;
+
+  // Chatbot Pricing
+  getChatbotPricing(): Promise<ChatbotPricing[]>;
+  createChatbotPricing(pricing: InsertChatbotPricing): Promise<ChatbotPricing>;
+  getChatbotPricingByProductType(productType: string): Promise<ChatbotPricing | undefined>;
+
+  // Chatbot FAQ
+  getChatbotFaq(language?: string): Promise<ChatbotFaq[]>;
+  createChatbotFaq(faq: InsertChatbotFaq): Promise<ChatbotFaq>;
+
+  // Chatbot Admin Training
+  createChatbotAdminTraining(training: InsertChatbotAdminTraining): Promise<ChatbotAdminTraining>;
+  getChatbotAdminTraining(): Promise<ChatbotAdminTraining[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -191,6 +236,151 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(contactSubmissions)
       .orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  // Chatbot Conversations
+  async createChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation> {
+    const result = await db
+      .insert(chatbotConversations)
+      .values(conversation)
+      .returning();
+    return result[0];
+  }
+
+  async getChatbotConversationBySessionId(sessionId: string): Promise<ChatbotConversation | undefined> {
+    const result = await db
+      .select()
+      .from(chatbotConversations)
+      .where(eq(chatbotConversations.sessionId, sessionId))
+      .limit(1);
+    return result[0];
+  }
+
+  async updateChatbotConversation(id: number, updates: Partial<ChatbotConversation>): Promise<ChatbotConversation> {
+    const result = await db
+      .update(chatbotConversations)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(chatbotConversations.id, id))
+      .returning();
+    return result[0];
+  }
+
+  // Chatbot Messages
+  async createChatbotMessage(message: InsertChatbotMessage): Promise<ChatbotMessage> {
+    const result = await db
+      .insert(chatbotMessages)
+      .values(message)
+      .returning();
+    return result[0];
+  }
+
+  async getChatbotMessagesByConversationId(conversationId: number): Promise<ChatbotMessage[]> {
+    return await db
+      .select()
+      .from(chatbotMessages)
+      .where(eq(chatbotMessages.conversationId, conversationId))
+      .orderBy(chatbotMessages.createdAt);
+  }
+
+  // Chatbot Knowledge
+  async getChatbotKnowledge(language?: string): Promise<ChatbotKnowledge[]> {
+    if (language) {
+      return await db
+        .select()
+        .from(chatbotKnowledge)
+        .where(eq(chatbotKnowledge.language, language))
+        .orderBy(desc(chatbotKnowledge.priority));
+    }
+    
+    return await db
+      .select()
+      .from(chatbotKnowledge)
+      .orderBy(desc(chatbotKnowledge.priority));
+  }
+
+  async createChatbotKnowledge(knowledge: InsertChatbotKnowledge): Promise<ChatbotKnowledge> {
+    const result = await db
+      .insert(chatbotKnowledge)
+      .values(knowledge)
+      .returning();
+    return result[0];
+  }
+
+  async updateChatbotKnowledge(id: number, updates: Partial<ChatbotKnowledge>): Promise<ChatbotKnowledge> {
+    const result = await db
+      .update(chatbotKnowledge)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(chatbotKnowledge.id, id))
+      .returning();
+    return result[0];
+  }
+
+  // Chatbot Pricing
+  async getChatbotPricing(): Promise<ChatbotPricing[]> {
+    return await db
+      .select()
+      .from(chatbotPricing)
+      .orderBy(desc(chatbotPricing.createdAt));
+  }
+
+  async createChatbotPricing(pricing: InsertChatbotPricing): Promise<ChatbotPricing> {
+    const result = await db
+      .insert(chatbotPricing)
+      .values(pricing)
+      .returning();
+    return result[0];
+  }
+
+  async getChatbotPricingByProductType(productType: string): Promise<ChatbotPricing | undefined> {
+    const result = await db
+      .select()
+      .from(chatbotPricing)
+      .where(eq(chatbotPricing.productType, productType))
+      .orderBy(desc(chatbotPricing.createdAt))
+      .limit(1);
+    return result[0];
+  }
+
+  // Chatbot FAQ
+  async getChatbotFaq(language?: string): Promise<ChatbotFaq[]> {
+    if (language) {
+      return await db
+        .select()
+        .from(chatbotFaq)
+        .where(eq(chatbotFaq.adminApproved, true))
+        .where(eq(chatbotFaq.language, language))
+        .orderBy(chatbotFaq.category);
+    }
+    
+    return await db
+      .select()
+      .from(chatbotFaq)
+      .where(eq(chatbotFaq.adminApproved, true))
+      .orderBy(chatbotFaq.category);
+  }
+
+  async createChatbotFaq(faq: InsertChatbotFaq): Promise<ChatbotFaq> {
+    const result = await db
+      .insert(chatbotFaq)
+      .values(faq)
+      .returning();
+    return result[0];
+  }
+
+  // Chatbot Admin Training
+  async createChatbotAdminTraining(training: InsertChatbotAdminTraining): Promise<ChatbotAdminTraining> {
+    const result = await db
+      .insert(chatbotAdminTraining)
+      .values(training)
+      .returning();
+    return result[0];
+  }
+
+  async getChatbotAdminTraining(): Promise<ChatbotAdminTraining[]> {
+    return await db
+      .select()
+      .from(chatbotAdminTraining)
+      .orderBy(desc(chatbotAdminTraining.createdAt));
   }
 }
 

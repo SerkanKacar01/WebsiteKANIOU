@@ -18,6 +18,7 @@ import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
 import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
 import { generateChatbotResponse, detectPricingRequest, extractProductTypes } from "./openai";
+import { isWithinBusinessHours, getBusinessHoursResponse, getBusinessStatus } from "./businessHours";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -504,31 +505,73 @@ To respond, simply reply to this email.
         content: message
       });
 
-      // Get context for AI response
-      const [messages, products, categories, knowledgeBase] = await Promise.all([
-        storage.getChatbotMessagesByConversationId(conversation.id),
-        storage.getProducts(),
-        storage.getCategories(),
-        storage.getChatbotKnowledge(language)
-      ]);
+      // Check business hours first
+      const isOpen = isWithinBusinessHours();
+      const businessStatus = getBusinessStatus();
+      
+      let aiResponse;
+      let savedResponse;
 
-      // Generate AI response
-      const aiResponse = await generateChatbotResponse(message, {
-        conversation,
-        messages,
-        products,
-        categories,
-        knowledgeBase,
-        language
-      });
+      if (!isOpen) {
+        // Outside business hours - provide professional after-hours response
+        const afterHoursMessage = getBusinessHoursResponse(language);
+        
+        console.log(`🕐 AFTER HOURS MESSAGE: ${businessStatus.currentTime} (${businessStatus.timezone}) - Outside business hours MA-ZA 10:00-18:00`);
+        
+        aiResponse = {
+          content: afterHoursMessage,
+          requiresPricing: false,
+          detectedProductTypes: [],
+          metadata: {
+            tokensUsed: 0,
+            responseTime: 0,
+            confidence: 1.0,
+            businessHours: false,
+            afterHours: true
+          }
+        };
 
-      // Save AI response
-      const savedResponse = await storage.createChatbotMessage({
-        conversationId: conversation.id,
-        role: "assistant",
-        content: aiResponse.content,
-        metadata: aiResponse.metadata
-      });
+        // Save after-hours response
+        savedResponse = await storage.createChatbotMessage({
+          conversationId: conversation.id,
+          role: "assistant",
+          content: aiResponse.content,
+          metadata: aiResponse.metadata
+        });
+      } else {
+        // During business hours - normal AI response
+        console.log(`✅ BUSINESS HOURS: ${businessStatus.currentTime} (${businessStatus.timezone}) - Open MA-ZA 10:00-18:00`);
+        
+        // Get context for AI response
+        const [messages, products, categories, knowledgeBase] = await Promise.all([
+          storage.getChatbotMessagesByConversationId(conversation.id),
+          storage.getProducts(),
+          storage.getCategories(),
+          storage.getChatbotKnowledge(language)
+        ]);
+
+        // Generate AI response
+        aiResponse = await generateChatbotResponse(message, {
+          conversation,
+          messages,
+          products,
+          categories,
+          knowledgeBase,
+          language
+        });
+
+        // Add business hours metadata
+        aiResponse.metadata.businessHours = true;
+        aiResponse.metadata.afterHours = false;
+
+        // Save AI response
+        savedResponse = await storage.createChatbotMessage({
+          conversationId: conversation.id,
+          role: "assistant",
+          content: aiResponse.content,
+          metadata: aiResponse.metadata
+        });
+      }
 
       // Handle pricing requests
       if (aiResponse.requiresPricing && aiResponse.detectedProductTypes.length > 0) {

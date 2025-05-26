@@ -21,16 +21,19 @@ export function CookieConsentBanner() {
             <Cookie className="w-6 h-6 text-accent mt-1 flex-shrink-0" />
             <div className="flex-1">
               <h3 className="font-semibold text-lg mb-2 text-primary">
-                {t("cookies.banner.title") || "Wij gebruiken cookies"}
+                {t("Wij respecteren uw privacy") || "Wij gebruiken cookies"}
               </h3>
               <p className="text-text-medium mb-4 leading-relaxed">
-                {t("cookies.banner.description") ||
+                {t(
+                  "Deze website maakt gebruik van cookies om uw surfervaring te verbeteren, statistieken te verzamelen en u relevante content te tonen. U kunt uw voorkeuren op elk moment aanpassen.",
+                ) ||
                   "Wij gebruiken cookies om uw ervaring op onze website te verbeteren. Sommige cookies zijn essentieel voor de werking van de website, terwijl andere ons helpen de site te verbeteren en gepersonaliseerde content aan te bieden."}{" "}
                 <a
                   href="/cookie-policy"
                   className="text-accent hover:underline"
                 >
-                  {t("cookies.banner.readMore") || "Lees meer"}
+                  {t("Meer informatie vindt u in ons cookiebeleid.") ||
+                    "Lees meer"}
                 </a>
               </p>
               <div className="flex flex-wrap gap-3">
@@ -38,14 +41,14 @@ export function CookieConsentBanner() {
                   onClick={acceptAll}
                   className="bg-accent hover:bg-accent/90 text-white"
                 >
-                  {t("cookies.banner.acceptAll") || "Alles accepteren"}
+                  {t("Alle cookies accepteren") || "Alles accepteren"}
                 </Button>
                 <Button
                   onClick={declineAll}
                   variant="outline"
                   className="border-gray-300 hover:bg-gray-50"
                 >
-                  {t("cookies.banner.declineAll") || "Alles weigeren"}
+                  {t("Alleen essentiële cookies toestaan") || "Alles weigeren"}
                 </Button>
                 <Button
                   onClick={() => setShowPreferences(true)}
@@ -53,7 +56,7 @@ export function CookieConsentBanner() {
                   className="border-gray-300 hover:bg-gray-50 inline-flex items-center gap-2"
                 >
                   <Settings className="w-4 h-4" />
-                  {t("cookies.banner.managePreferences") || "Beheer voorkeuren"}
+                  {t("Beheer cookievoorkeuren") || "Beheer voorkeuren"}
                 </Button>
               </div>
             </div>
@@ -62,9 +65,9 @@ export function CookieConsentBanner() {
       </div>
 
       {/* Cookie Preferences Modal */}
-      <CookiePreferencesModal 
-        open={showPreferences} 
-        onOpenChange={setShowPreferences} 
+      <CookiePreferencesModal
+        open={showPreferences}
+        onOpenChange={setShowPreferences}
       />
     </>
   );

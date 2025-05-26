@@ -185,6 +185,11 @@ const Footer = () => {
                   Cookie Policy
                 </div>
               </Link>
+              <Link href="/cookie-preferences">
+                <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
+                  Cookies beheren
+                </div>
+              </Link>
               <Link href="/terms-of-service">
                 <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
                   Terms

@@ -120,11 +120,11 @@ function loadAnalytics() {
     document.head.appendChild(script1);
 
     const script2 = document.createElement('script');
-    script2.innerHTML = `
+    script2.textContent = `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '${GA_ID}');
+      gtag('config', ${JSON.stringify(GA_ID)});
     `;
     document.head.appendChild(script2);
   }

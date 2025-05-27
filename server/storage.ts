@@ -35,6 +35,15 @@ import {
   chatbotAdminTraining,
   ChatbotAdminTraining,
   InsertChatbotAdminTraining,
+  priceRequestNotifications,
+  PriceRequestNotification,
+  InsertPriceRequestNotification,
+  priceResponseKnowledge,
+  PriceResponseKnowledge,
+  InsertPriceResponseKnowledge,
+  priceResponseLogs,
+  PriceResponseLog,
+  InsertPriceResponseLog,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -383,6 +392,59 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(chatbotAdminTraining)
       .orderBy(desc(chatbotAdminTraining.createdAt));
+  }
+
+  // Price Request Notifications
+  async createPriceRequestNotification(notification: InsertPriceRequestNotification): Promise<PriceRequestNotification> {
+    const result = await db
+      .insert(priceRequestNotifications)
+      .values(notification)
+      .returning();
+    return result[0];
+  }
+
+  async getPriceRequestNotifications(): Promise<PriceRequestNotification[]> {
+    return await db
+      .select()
+      .from(priceRequestNotifications)
+      .orderBy(desc(priceRequestNotifications.createdAt));
+  }
+
+  // Price Response Knowledge
+  async createPriceResponseKnowledge(knowledge: InsertPriceResponseKnowledge): Promise<PriceResponseKnowledge> {
+    const result = await db
+      .insert(priceResponseKnowledge)
+      .values(knowledge)
+      .returning();
+    return result[0];
+  }
+
+  async getPriceResponseKnowledge(language?: string): Promise<PriceResponseKnowledge[]> {
+    if (language) {
+      return await db
+        .select()
+        .from(priceResponseKnowledge)
+        .where(and(
+          eq(priceResponseKnowledge.language, language),
+          eq(priceResponseKnowledge.isActive, true)
+        ))
+        .orderBy(desc(priceResponseKnowledge.usageCount));
+    }
+    
+    return await db
+      .select()
+      .from(priceResponseKnowledge)
+      .where(eq(priceResponseKnowledge.isActive, true))
+      .orderBy(desc(priceResponseKnowledge.usageCount));
+  }
+
+  // Price Response Logs
+  async createPriceResponseLog(log: InsertPriceResponseLog): Promise<PriceResponseLog> {
+    const result = await db
+      .insert(priceResponseLogs)
+      .values(log)
+      .returning();
+    return result[0];
   }
 }
 

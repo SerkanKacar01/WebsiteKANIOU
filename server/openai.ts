@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import type { ChatbotConversation, ChatbotMessage, ChatbotKnowledge, Product, Category } from "@shared/schema";
+import { DUTCH_PRODUCT_KNOWLEDGE, getProductKnowledge, compareProducts, searchProducts } from "./productKnowledge";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -178,33 +179,52 @@ Si un client demande des prix, coûts, devis, budget ou argent, définissez "req
 }
 
 /**
- * Build product knowledge from database
+ * Build comprehensive product knowledge including database and expert knowledge
  */
 function buildProductKnowledge(products: Product[], categories: Category[]): string {
-  if (!products.length || !categories.length) {
-    return "Product information is being loaded...";
-  }
-
-  const categoryMap = new Map(categories.map(cat => [cat.id, cat]));
+  let knowledge = "KANIOU PRODUCT EXPERTISE - Uitgebreide Productkennis:\n\n";
   
-  let knowledge = "AVAILABLE PRODUCTS AND CATEGORIES:\n\n";
-  
-  categories.forEach(category => {
-    knowledge += `${category.name}:\n`;
-    knowledge += `${category.description}\n`;
-    
-    const categoryProducts = products.filter(p => p.categoryId === category.id);
-    categoryProducts.forEach(product => {
-      knowledge += `- ${product.name}: ${product.description}\n`;
-      if (product.features?.length) {
-        knowledge += `  Features: ${product.features.join(", ")}\n`;
-      }
-      if (product.material) {
-        knowledge += `  Material: ${product.material}\n`;
-      }
+  // Add comprehensive Dutch product knowledge
+  DUTCH_PRODUCT_KNOWLEDGE.forEach(productInfo => {
+    knowledge += `**${productInfo.name}** (${productInfo.category}):\n`;
+    knowledge += `${productInfo.description}\n\n`;
+    knowledge += `Voordelen:\n`;
+    productInfo.benefits.forEach(benefit => {
+      knowledge += `• ${benefit}\n`;
     });
-    knowledge += "\n";
+    knowledge += `\nKenmerken:\n`;
+    productInfo.keyFeatures.forEach(feature => {
+      knowledge += `• ${feature}\n`;
+    });
+    knowledge += `\nIdeaal voor: ${productInfo.idealFor.join(", ")}\n`;
+    knowledge += `Vergelijking: ${productInfo.vsOtherProducts}\n`;
+    knowledge += `Materialen: ${productInfo.materials.join(", ")}\n\n`;
+    knowledge += "---\n\n";
   });
+
+  // Add database products if available
+  if (products.length && categories.length) {
+    const categoryMap = new Map(categories.map(cat => [cat.id, cat]));
+    
+    knowledge += "HUIDIGE PRODUCTEN IN ONZE COLLECTIE:\n\n";
+    
+    categories.forEach(category => {
+      knowledge += `${category.name}:\n`;
+      knowledge += `${category.description}\n`;
+      
+      const categoryProducts = products.filter(p => p.categoryId === category.id);
+      categoryProducts.forEach(product => {
+        knowledge += `- ${product.name}: ${product.description}\n`;
+        if (product.features?.length) {
+          knowledge += `  Features: ${product.features.join(", ")}\n`;
+        }
+        if (product.material) {
+          knowledge += `  Material: ${product.material}\n`;
+        }
+      });
+      knowledge += "\n";
+    });
+  }
 
   return knowledge;
 }

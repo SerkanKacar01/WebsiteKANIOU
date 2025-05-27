@@ -1,0 +1,48 @@
+✅ STEP 3: Train the AI Assistant with Dynamic Product Knowledge
+
+Goal:
+Make your chatbot capable of answering questions about your window treatment products (e.g., curtains, blinds, shutters) automatically and correctly — without your manual input every time.
+
+⸻
+
+🧠 What This Step Does:
+	•	It gives the chatbot structured access to product names, descriptions, benefits, and differences.
+	•	It allows the chatbot to recognize product-related questions and reply accurately (e.g. “What are the benefits of duo rolgordijnen?” or “What is the difference between houten jaloezieën and kunststof?”).
+	•	Later steps will allow price-related or custom quote questions to trigger email alerts to you.
+
+⸻
+
+🔧 What REPLIT Must Build Now:
+	1.	Product Dataset Integration
+	•	REPLIT should create a structured product list internally (based on your official product categories).
+	•	Each product should have a:
+	•	Clear name (e.g., “Duo rolgordijn”)
+	•	Description (what it is and why it’s used)
+	•	Benefits (e.g., light control, insulation)
+	•	Key differences vs similar products
+	2.	Knowledge Retrieval Logic
+	•	The chatbot must detect product-related questions using NLP (Natural Language Processing).
+	•	It should respond with relevant product details from the dataset automatically.
+	•	The chatbot must stay within its knowledge boundaries and ask for your input only when needed (e.g., if the product is not in the list).
+	3.	Languages
+	•	For now, focus on Dutch only.
+	•	In a later step, we will add multilingual support (Dutch, French, English, Arabic, Turkish).
+
+⸻
+
+📝 Example Dialogue After This Step:
+
+Customer: Wat is een inbetween gordijn?
+AI: Een inbetween gordijn is een semi-transparante raamdecoratie die zorgt voor privacy overdag, terwijl natuurlijk licht binnenkomt. Ze zijn ideaal voor woonkamers en slaapkamers.
+
+Customer: Zijn houten jaloezieën beter dan kunststof?
+AI: Beide hebben hun voordelen. Houten jaloezieën zijn luxueuzer en natuurlijker van uitstraling, terwijl kunststof jaloezieën beter bestand zijn tegen vocht en gemakkelijker te onderhouden zijn.
+
+⸻
+
+🛠 What You Must Do Now:
+
+Nothing. REPLIT must implement this step fully by:
+	•	Creating and structuring the internal product database
+	•	Connecting it to the chatbot engine
+	•	Making sure answers are reliable, consistent, and informative

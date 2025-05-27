@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload, Camera, Palette, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload, Camera, Palette, Loader2, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "@/hooks/use-toast";
 import ColorRecommendations from "./ColorRecommendations";
@@ -31,6 +31,8 @@ const ColorMatcher = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [analysis, setAnalysis] = useState<RoomAnalysis | null>(null);
+  const [isCompressing, setIsCompressing] = useState(false);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const analyzeImageMutation = useMutation({
     mutationFn: async (file: File): Promise<RoomAnalysis> => {
@@ -54,6 +56,14 @@ const ColorMatcher = () => {
         title: "Analyse voltooid!",
         description: "Uw kameranalyse is gereed met kleuradvies.",
       });
+      
+      // Auto-scroll to results after a short delay
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }, 500);
     },
     onError: (error) => {
       console.error('Analysis error:', error);
@@ -65,14 +75,56 @@ const ColorMatcher = () => {
     },
   });
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Image compression function
+  const compressImage = (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate new dimensions (max 1200px width/height)
+        const maxSize = 1200;
+        let { width, height } = img;
+        
+        if (width > height && width > maxSize) {
+          height = (height * maxSize) / width;
+          width = maxSize;
+        } else if (height > maxSize) {
+          width = (width * maxSize) / height;
+          height = maxSize;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and compress
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const compressedFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          } else {
+            resolve(file);
+          }
+        }, 'image/jpeg', 0.8);
+      };
+      
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Validate file size (max 10MB)
-      if (file.size > 10 * 1024 * 1024) {
+      // Validate file size (max 25MB before compression)
+      if (file.size > 25 * 1024 * 1024) {
         toast({
           title: "Bestand te groot",
-          description: "Kies een afbeelding kleiner dan 10MB.",
+          description: "Kies een afbeelding kleiner dan 25MB.",
           variant: "destructive",
         });
         return;
@@ -88,15 +140,35 @@ const ColorMatcher = () => {
         return;
       }
 
-      setSelectedFile(file);
       setAnalysis(null);
+      setIsCompressing(true);
 
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setPreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        // Compress image if it's larger than 2MB
+        const finalFile = file.size > 2 * 1024 * 1024 ? await compressImage(file) : file;
+        setSelectedFile(finalFile);
+
+        // Create preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setPreview(e.target?.result as string);
+        };
+        reader.readAsDataURL(finalFile);
+
+        toast({
+          title: "Foto succesvol geüpload",
+          description: `Afbeelding geoptimaliseerd (${Math.round(finalFile.size / 1024)}KB). Klaar voor analyse!`,
+        });
+      } catch (error) {
+        console.error('Error processing image:', error);
+        toast({
+          title: "Fout bij verwerken",
+          description: "Er ging iets mis bij het verwerken van uw foto. Probeer het opnieuw.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsCompressing(false);
+      }
     }
   };
 
@@ -129,9 +201,19 @@ const ColorMatcher = () => {
           <div className="flex items-center justify-center w-full">
             <Label
               htmlFor="room-image"
-              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+              className={`flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer transition-all ${
+                isCompressing 
+                  ? "border-primary bg-primary/5" 
+                  : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+              }`}
             >
-              {preview ? (
+              {isCompressing ? (
+                <div className="flex flex-col items-center justify-center">
+                  <Loader2 className="w-8 h-8 mb-4 text-primary animate-spin" />
+                  <p className="text-sm text-primary font-medium">Afbeelding wordt geoptimaliseerd...</p>
+                  <p className="text-xs text-gray-500 mt-1">Dit duurt slechts enkele seconden</p>
+                </div>
+              ) : preview ? (
                 <img
                   src={preview}
                   alt="Room preview"
@@ -143,7 +225,7 @@ const ColorMatcher = () => {
                   <p className="mb-2 text-sm text-gray-500">
                     <span className="font-semibold">Klik om te uploaden</span> of sleep hier naartoe
                   </p>
-                  <p className="text-xs text-gray-500">PNG, JPG of JPEG (MAX. 10MB)</p>
+                  <p className="text-xs text-gray-500">PNG, JPG of JPEG (MAX. 25MB)</p>
                 </div>
               )}
               <Input
@@ -152,6 +234,7 @@ const ColorMatcher = () => {
                 accept="image/*"
                 onChange={handleFileSelect}
                 className="hidden"
+                disabled={isCompressing}
               />
             </Label>
           </div>
@@ -171,29 +254,32 @@ const ColorMatcher = () => {
           <div className="flex gap-3">
             <Button
               onClick={handleAnalyze}
-              disabled={!selectedFile || analyzeImageMutation.isPending}
+              disabled={!selectedFile || analyzeImageMutation.isPending || isCompressing}
               className="flex-1"
             >
               {analyzeImageMutation.isPending ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Analyseren...
+                  <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
+                  AI analyseert...
                 </>
               ) : (
                 <>
                   <Palette className="mr-2 h-4 w-4" />
-                  Analyseer Kleuren
+                  Start AI Kleuranalyse
                 </>
               )}
             </Button>
           </div>
 
           {analyzeImageMutation.isPending && (
-            <Alert>
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                Onze AI analyseert uw kamerfoto en bepaalt de beste kleuradviezen voor uw raambekleding. 
-                Dit kan enkele seconden duren...
+            <Alert className="border-primary/20 bg-primary/5">
+              <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+              <AlertDescription className="text-primary">
+                <strong>AI verwerkt uw foto en analyseert de kleuren. Een moment geduld alstublieft...</strong>
+                <br />
+                <span className="text-sm text-gray-600 mt-1">
+                  Onze geavanceerde AI detecteert dominante kleuren en genereert gepersonaliseerde kleuradviezen voor uw raambekleding.
+                </span>
               </AlertDescription>
             </Alert>
           )}
@@ -202,7 +288,9 @@ const ColorMatcher = () => {
 
       {/* Results Section */}
       {analysis && (
-        <ColorRecommendations analysis={analysis} />
+        <div ref={resultsRef}>
+          <ColorRecommendations analysis={analysis} />
+        </div>
       )}
     </div>
   );

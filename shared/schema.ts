@@ -311,3 +311,94 @@ export type InsertChatbotFaq = z.infer<typeof insertChatbotFaqSchema>;
 
 export type ChatbotAdminTraining = typeof chatbotAdminTraining.$inferSelect;
 export type InsertChatbotAdminTraining = z.infer<typeof insertChatbotAdminTrainingSchema>;
+
+// Price Request Notifications
+export const priceRequestNotifications = pgTable("price_request_notifications", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").notNull().references(() => chatbotConversations.id, { onDelete: 'cascade' }),
+  userMessage: text("user_message").notNull(),
+  userEmail: text("user_email"),
+  userName: text("user_name"),
+  detectedKeywords: text("detected_keywords").array(),
+  isResponded: boolean("is_responded").default(false),
+  adminResponse: text("admin_response"),
+  responseKeywords: text("response_keywords"), // Keywords to match future queries
+  createdAt: timestamp("created_at").defaultNow(),
+  respondedAt: timestamp("responded_at"),
+});
+
+export const insertPriceRequestNotificationSchema = createInsertSchema(priceRequestNotifications).omit({
+  id: true,
+  createdAt: true,
+  respondedAt: true,
+});
+
+// Price Response Knowledge Base
+export const priceResponseKnowledge = pgTable("price_response_knowledge", {
+  id: serial("id").primaryKey(),
+  triggerKeywords: text("trigger_keywords").array().notNull(), // Keywords that trigger this response
+  response: text("response").notNull(),
+  language: text("language").default("nl"),
+  adminCreatedBy: text("admin_created_by").default("serkan"),
+  usageCount: integer("usage_count").default(0),
+  lastUsedAt: timestamp("last_used_at"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertPriceResponseKnowledgeSchema = createInsertSchema(priceResponseKnowledge).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  lastUsedAt: true,
+});
+
+// Price Response Usage Logs
+export const priceResponseLogs = pgTable("price_response_logs", {
+  id: serial("id").primaryKey(),
+  knowledgeId: integer("knowledge_id").notNull().references(() => priceResponseKnowledge.id, { onDelete: 'cascade' }),
+  conversationId: integer("conversation_id").notNull().references(() => chatbotConversations.id, { onDelete: 'cascade' }),
+  customerQuestion: text("customer_question").notNull(),
+  responseUsed: text("response_used").notNull(),
+  matchedKeywords: text("matched_keywords").array(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertPriceResponseLogSchema = createInsertSchema(priceResponseLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Relations for new tables
+export const priceRequestNotificationsRelations = relations(priceRequestNotifications, ({ one }) => ({
+  conversation: one(chatbotConversations, {
+    fields: [priceRequestNotifications.conversationId],
+    references: [chatbotConversations.id],
+  }),
+}));
+
+export const priceResponseKnowledgeRelations = relations(priceResponseKnowledge, ({ many }) => ({
+  logs: many(priceResponseLogs),
+}));
+
+export const priceResponseLogsRelations = relations(priceResponseLogs, ({ one }) => ({
+  knowledge: one(priceResponseKnowledge, {
+    fields: [priceResponseLogs.knowledgeId],
+    references: [priceResponseKnowledge.id],
+  }),
+  conversation: one(chatbotConversations, {
+    fields: [priceResponseLogs.conversationId],
+    references: [chatbotConversations.id],
+  }),
+}));
+
+// Type definitions for new tables
+export type PriceRequestNotification = typeof priceRequestNotifications.$inferSelect;
+export type InsertPriceRequestNotification = z.infer<typeof insertPriceRequestNotificationSchema>;
+
+export type PriceResponseKnowledge = typeof priceResponseKnowledge.$inferSelect;
+export type InsertPriceResponseKnowledge = z.infer<typeof insertPriceResponseKnowledgeSchema>;
+
+export type PriceResponseLog = typeof priceResponseLogs.$inferSelect;
+export type InsertPriceResponseLog = z.infer<typeof insertPriceResponseLogSchema>;

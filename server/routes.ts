@@ -19,6 +19,15 @@ import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimit
 import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
 import { generateChatbotResponse, detectPricingRequest, extractProductTypes } from "./openai";
 import { isWithinBusinessHours, getBusinessHoursResponse, getBusinessStatus } from "./businessHours";
+import { 
+  detectPriceRequest, 
+  checkLearnedResponse, 
+  logResponseUsage, 
+  createPriceRequestNotification, 
+  getPriceRequestFallback,
+  checkNotificationRateLimit
+} from "./priceAssistant";
+import { sendPriceRequestNotification } from "./emailService";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -505,7 +514,61 @@ To respond, simply reply to this email.
         content: message
       });
 
-      // Check business hours first
+      // STEP 1: Enhanced Price Detection System
+      const priceDetection = detectPriceRequest(message, language);
+      console.log(`🎯 PRICE DETECTION: ${priceDetection.isPriceRequest ? 'DETECTED' : 'NOT_DETECTED'} - Confidence: ${Math.round(priceDetection.confidence * 100)}%`, 
+        priceDetection.detectedKeywords.length > 0 ? `Keywords: ${priceDetection.detectedKeywords.join(', ')}` : '');
+
+      // STEP 4: Check for learned responses first (if price request detected)
+      let learnedResponse = null;
+      if (priceDetection.isPriceRequest) {
+        learnedResponse = await checkLearnedResponse(message, language);
+        if (learnedResponse) {
+          console.log(`💡 LEARNED RESPONSE FOUND: Using knowledge #${learnedResponse.knowledgeId} - Matched: ${learnedResponse.matchedKeywords.join(', ')}`);
+          
+          // Use the learned response
+          const aiResponse = {
+            content: learnedResponse.response,
+            requiresPricing: false, // Already handled by learned response
+            detectedProductTypes: priceDetection.extractedProducts,
+            metadata: {
+              tokensUsed: 0,
+              responseTime: 50,
+              confidence: 0.95,
+              businessHours: isWithinBusinessHours(),
+              afterHours: !isWithinBusinessHours(),
+              learnedResponse: true,
+              knowledgeId: learnedResponse.knowledgeId
+            }
+          };
+
+          // Save the learned response
+          const savedResponse = await storage.createChatbotMessage({
+            conversationId: conversation.id,
+            role: "assistant",
+            content: aiResponse.content,
+            metadata: aiResponse.metadata
+          });
+
+          // STEP 5: Log usage of learned response
+          await logResponseUsage(
+            learnedResponse.knowledgeId,
+            conversation.id,
+            message,
+            learnedResponse.response,
+            learnedResponse.matchedKeywords
+          );
+
+          return res.json({
+            message: aiResponse.content,
+            messageId: savedResponse.id,
+            requiresPricing: aiResponse.requiresPricing,
+            metadata: aiResponse.metadata
+          });
+        }
+      }
+
+      // Check business hours for regular processing
       const isOpen = isWithinBusinessHours();
       const businessStatus = getBusinessStatus();
       
@@ -520,14 +583,15 @@ To respond, simply reply to this email.
         
         aiResponse = {
           content: afterHoursMessage,
-          requiresPricing: false,
-          detectedProductTypes: [],
+          requiresPricing: priceDetection.isPriceRequest,
+          detectedProductTypes: priceDetection.extractedProducts,
           metadata: {
             tokensUsed: 0,
             responseTime: 0,
             confidence: 1.0,
             businessHours: false,
-            afterHours: true
+            afterHours: true,
+            priceDetection
           }
         };
 
@@ -539,41 +603,109 @@ To respond, simply reply to this email.
           metadata: aiResponse.metadata
         });
       } else {
-        // During business hours - normal AI response
-        console.log(`✅ BUSINESS HOURS: ${businessStatus.currentTime} (${businessStatus.timezone}) - Open MA-ZA 10:00-18:00`);
-        
-        // Get context for AI response
-        const [messages, products, categories, knowledgeBase] = await Promise.all([
-          storage.getChatbotMessagesByConversationId(conversation.id),
-          storage.getProducts(),
-          storage.getCategories(),
-          storage.getChatbotKnowledge(language)
-        ]);
+        // During business hours - check if price request needs special handling
+        if (priceDetection.isPriceRequest) {
+          console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
+          
+          // Use price request fallback response
+          const priceResponse = getPriceRequestFallback(language);
+          
+          aiResponse = {
+            content: priceResponse,
+            requiresPricing: true,
+            detectedProductTypes: priceDetection.extractedProducts,
+            metadata: {
+              tokensUsed: 0,
+              responseTime: 100,
+              confidence: priceDetection.confidence,
+              businessHours: true,
+              afterHours: false,
+              priceDetection,
+              needsAdminResponse: true
+            }
+          };
 
-        // Generate AI response
-        aiResponse = await generateChatbotResponse(message, {
-          conversation,
-          messages,
-          products,
-          categories,
-          knowledgeBase,
-          language
-        });
+          // Save price request response
+          savedResponse = await storage.createChatbotMessage({
+            conversationId: conversation.id,
+            role: "assistant",
+            content: aiResponse.content,
+            metadata: aiResponse.metadata
+          });
 
-        // Add business hours metadata
-        aiResponse.metadata.businessHours = true;
-        aiResponse.metadata.afterHours = false;
+          // STEP 2: Send notification to admin (with rate limiting)
+          if (checkNotificationRateLimit('price_requests')) {
+            try {
+              // Create database notification record
+              const notificationId = await createPriceRequestNotification(
+                conversation.id,
+                message,
+                priceDetection.detectedKeywords
+              );
 
-        // Save AI response
-        savedResponse = await storage.createChatbotMessage({
-          conversationId: conversation.id,
-          role: "assistant",
-          content: aiResponse.content,
-          metadata: aiResponse.metadata
-        });
+              if (notificationId) {
+                // Send email notification to Serkan
+                const emailSent = await sendPriceRequestNotification({
+                  userMessage: message,
+                  detectedKeywords: priceDetection.detectedKeywords,
+                  timestamp: new Date(),
+                  conversationId: conversation.id,
+                  sessionId: conversation.sessionId,
+                  language: priceDetection.language,
+                  extractedProducts: priceDetection.extractedProducts,
+                  confidence: priceDetection.confidence
+                });
+
+                if (emailSent) {
+                  console.log(`📧 ADMIN NOTIFICATION: Sent price request notification #${notificationId} to admin`);
+                } else {
+                  console.log(`⚠️ EMAIL WARNING: Notification #${notificationId} saved to database but email failed`);
+                }
+              }
+            } catch (notificationError) {
+              console.error('❌ NOTIFICATION ERROR:', notificationError);
+            }
+          } else {
+            console.log(`⏰ RATE LIMITED: Price request notification skipped (max 3 per minute)`);
+          }
+        } else {
+          // Regular AI response for non-price requests
+          console.log(`✅ BUSINESS HOURS: ${businessStatus.currentTime} (${businessStatus.timezone}) - Normal AI processing`);
+          
+          // Get context for AI response
+          const [messages, products, categories, knowledgeBase] = await Promise.all([
+            storage.getChatbotMessagesByConversationId(conversation.id),
+            storage.getProducts(),
+            storage.getCategories(),
+            storage.getChatbotKnowledge(language)
+          ]);
+
+          // Generate AI response
+          aiResponse = await generateChatbotResponse(message, {
+            conversation,
+            messages,
+            products,
+            categories,
+            knowledgeBase,
+            language
+          });
+
+          // Add business hours metadata
+          aiResponse.metadata.businessHours = true;
+          aiResponse.metadata.afterHours = false;
+          aiResponse.metadata.priceDetection = priceDetection;
+
+          // Save AI response
+          savedResponse = await storage.createChatbotMessage({
+            conversationId: conversation.id,
+            role: "assistant",
+            content: aiResponse.content,
+            metadata: aiResponse.metadata
+          });
+        }
       }
 
-      // Handle pricing requests
+      // Legacy pricing handling (kept for compatibility)
       if (aiResponse.requiresPricing && aiResponse.detectedProductTypes.length > 0) {
         // Create pricing request record
         await storage.createChatbotPricing({
@@ -582,7 +714,7 @@ To respond, simply reply to this email.
           requestContext: message
         });
 
-        console.log(`📋 PRICING REQUEST: User asked about pricing for: ${aiResponse.detectedProductTypes.join(", ")}`);
+        console.log(`📋 LEGACY PRICING: Recorded request for: ${aiResponse.detectedProductTypes.join(", ")}`);
       }
 
       res.json({

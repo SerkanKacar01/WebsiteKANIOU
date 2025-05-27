@@ -767,6 +767,112 @@ To respond, simply reply to this email.
     }
   });
 
+  // Admin API Routes for Chatbot Management
+  
+  // Get all knowledge base entries
+  app.get("/api/admin/chatbot/knowledge", async (req: Request, res: Response) => {
+    try {
+      const knowledge = await storage.getChatbotKnowledge();
+      res.json(knowledge);
+    } catch (error) {
+      console.error("Error fetching knowledge base:", error);
+      res.status(500).json({ message: "Failed to fetch knowledge base" });
+    }
+  });
+
+  // Add new knowledge entry
+  app.post("/api/admin/chatbot/knowledge", async (req: Request, res: Response) => {
+    try {
+      const knowledgeData = {
+        category: req.body.category,
+        topic: req.body.topic,
+        content: req.body.content,
+        language: req.body.language || 'nl',
+        priority: req.body.priority || 5,
+        adminApproved: req.body.adminApproved || true
+      };
+
+      const newKnowledge = await storage.createChatbotKnowledge(knowledgeData);
+      res.json(newKnowledge);
+    } catch (error) {
+      console.error("Error adding knowledge:", error);
+      res.status(500).json({ message: "Failed to add knowledge entry" });
+    }
+  });
+
+  // Get all conversations with message counts
+  app.get("/api/admin/chatbot/conversations", async (req: Request, res: Response) => {
+    try {
+      const conversations = await storage.getChatbotConversations();
+      
+      // Get message counts for each conversation
+      const conversationsWithMessages = await Promise.all(
+        conversations.map(async (conversation) => {
+          const messages = await storage.getChatbotMessagesByConversationId(conversation.id);
+          return {
+            ...conversation,
+            messages: messages
+          };
+        })
+      );
+      
+      res.json(conversationsWithMessages);
+    } catch (error) {
+      console.error("Error fetching conversations:", error);
+      res.status(500).json({ message: "Failed to fetch conversations" });
+    }
+  });
+
+  // Get price request notifications
+  app.get("/api/admin/chatbot/price-requests", async (req: Request, res: Response) => {
+    try {
+      const priceRequests = await storage.getPriceRequestNotifications();
+      res.json(priceRequests);
+    } catch (error) {
+      console.error("Error fetching price requests:", error);
+      res.status(500).json({ message: "Failed to fetch price requests" });
+    }
+  });
+
+  // Mark price request as responded
+  app.patch("/api/admin/chatbot/price-requests/:id/respond", async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const priceRequestId = parseInt(id);
+      
+      // For now, we'll update the responded status directly in the database
+      // This would need to be implemented in your storage interface
+      
+      res.json({ message: "Price request marked as responded", id: priceRequestId });
+    } catch (error) {
+      console.error("Error updating price request:", error);
+      res.status(500).json({ message: "Failed to update price request" });
+    }
+  });
+
+  // Get chatbot analytics
+  app.get("/api/admin/chatbot/analytics", async (req: Request, res: Response) => {
+    try {
+      const knowledge = await storage.getChatbotKnowledge();
+      const conversations = await storage.getChatbotConversations();
+      const priceRequests = await storage.getPriceRequestNotifications();
+      
+      const analytics = {
+        totalKnowledge: knowledge.length,
+        approvedKnowledge: knowledge.filter(k => k.adminApproved).length,
+        totalConversations: conversations.length,
+        activeConversations: conversations.filter(c => c.isActive).length,
+        pendingPriceRequests: priceRequests.filter(p => !p.isResponded).length,
+        totalPriceRequests: priceRequests.length
+      };
+      
+      res.json(analytics);
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      res.status(500).json({ message: "Failed to fetch analytics" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

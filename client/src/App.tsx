@@ -23,6 +23,7 @@ import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
+import Admin from "@/pages/Admin";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -126,6 +127,7 @@ function Router() {
         <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
+        <Route path="/admin/chatbot" component={Admin} />
         <Route component={NotFound} />
       </Switch>
     </>

@@ -1,0 +1,47 @@
+STEP 5 — Add Price Inquiry Detection and Owner Notification System
+
+Objective:
+Detect when a user is asking about prices, quotes, cost, or anything that implies a pricing request — and automatically notify the business owner (you) to provide a manual price. Once the price is entered, the AI chatbot should learn and reuse it automatically in future conversations.
+
+⸻
+
+🔹 Step Description (for Replit Developer):
+	1.	Keyword & Intent Detection:
+	•	Integrate logic into the chatbot that actively monitors user messages for price-related intent.
+	•	Keywords to monitor: "prijs", "prijzen", "offerte", "wat kost", "hoeveel kost", "tarief", "kostprijs", "prijsindicatie", "quote", "quotation", "how much", etc.
+	•	This detection should work in all supported languages on the site.
+	2.	Trigger Owner Notification:
+	•	As soon as a pricing-related message is detected, trigger an automated email alert or dashboard notification (choose the system already in use).
+	•	The notification must include:
+	•	The exact user question
+	•	Product or category (if detected)
+	•	Timestamp
+	•	Session or user ID (if available)
+	3.	Temporary AI Response to Customer:
+	•	Respond to the customer with a polite message like:
+“Thanks for your request! We’re checking the price and will reply very soon. Please stay in this chat or leave your email.”
+	4.	Owner Input Panel:
+	•	Build a simple admin panel or popup form where the owner (you) can:
+	•	View unanswered pricing questions
+	•	Type the exact price or response
+	•	Submit it
+	5.	AI Learning Memory:
+	•	The submitted price or reply must be saved in a secure memory so the chatbot can:
+	•	Auto-respond the next time a user asks the same question
+	•	Match similar questions using semantic similarity or keywords
+	6.	Response Delivery to Customer:
+	•	Once the price is entered, the chatbot should:
+	•	Automatically reply to the original user with the custom price
+	•	Mark the inquiry as “resolved”
+	7.	Logs & Review Panel:
+	•	Include a log section where the business owner can review:
+	•	Past price questions
+	•	Given answers
+	•	Whether they were auto-answered or owner-submitted
+
+⸻
+
+🔒 Important for Replit Developer:
+	•	The system must be fully automated after owner submission.
+	•	Prices must be reusable intelligently — based on context, product type, and user question.
+	•	All price logic should respect GDPR (data must not be tied to a person unless consent is given).

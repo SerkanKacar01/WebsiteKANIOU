@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import type { ChatbotConversation, ChatbotMessage, ChatbotKnowledge, Product, Category } from "@shared/schema";
 import { DUTCH_PRODUCT_KNOWLEDGE, getProductKnowledge, compareProducts, searchProducts } from "./productKnowledge";
+import { buildConversationContext, findLearnedResponse, logLearnedResponseUsage, storeConversationContext } from "./conversationMemory";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -26,7 +27,7 @@ export interface ChatbotResponse {
 }
 
 /**
- * Generate AI response for chatbot using OpenAI GPT-4o
+ * Generate AI response for chatbot using OpenAI GPT-4o with enhanced memory
  */
 export async function generateChatbotResponse(
   userMessage: string,
@@ -35,7 +36,35 @@ export async function generateChatbotResponse(
   const startTime = Date.now();
 
   try {
-    // Build context-aware system prompt
+    // First, check for learned responses from previous admin training
+    const conversationContext = await buildConversationContext(context.conversation.sessionId);
+    const learnedResponse = await findLearnedResponse(userMessage, conversationContext, context.language);
+    
+    if (learnedResponse && learnedResponse.confidence > 0.8) {
+      console.log(`🧠 MEMORY MATCH: Using learned response (confidence: ${Math.round(learnedResponse.confidence * 100)}%)`);
+      
+      // Log usage of learned response
+      await logLearnedResponseUsage(0, context.conversation.sessionId, userMessage);
+      
+      // Detect if this is still a pricing request for metadata
+      const requiresPricing = detectPricingRequest(userMessage, context.language);
+      const extractedProducts = extractProductTypes(userMessage, context.products);
+      
+      return {
+        content: learnedResponse.response,
+        requiresPricing,
+        detectedProductTypes: extractedProducts,
+        metadata: {
+          tokensUsed: 0,
+          responseTime: Date.now() - startTime,
+          confidence: learnedResponse.confidence,
+          usedLearnedResponse: true,
+          originalQuestion: learnedResponse.originalQuestion
+        }
+      };
+    }
+
+    // Build context-aware system prompt with conversation memory
     const systemPrompt = buildSystemPrompt(context);
     
     // Build conversation history

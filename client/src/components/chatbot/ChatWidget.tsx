@@ -25,6 +25,17 @@ export function ChatbotWidget() {
   const queryClient = useQueryClient();
   const { language, t } = useLanguage();
 
+  // Check business hours
+  const { data: businessHours } = useQuery({
+    queryKey: ["/api/chatbot/business-hours", language],
+    queryFn: async () => {
+      const response = await fetch(`/api/chatbot/business-hours?language=${language}`);
+      return response.json();
+    },
+    refetchInterval: 60000, // Check every minute
+    staleTime: 30000 // Consider data stale after 30 seconds
+  });
+
   // Get or create conversation
   const conversationMutation = useMutation({
     mutationFn: async () => {
@@ -114,8 +125,18 @@ export function ChatbotWidget() {
         <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl z-50 flex flex-col border-2 border-primary/20 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" title={t("chatbot.online")}></div>
+              <div 
+                className={`w-2 h-2 rounded-full animate-pulse ${
+                  businessHours?.isOpen ? 'bg-green-400' : 'bg-orange-400'
+                }`} 
+                title={businessHours?.isOpen ? t("chatbot.online") : t("chatbot.businessHours.afterHoursNotice")}
+              ></div>
               <CardTitle className="text-sm font-semibold">{t("chatbot.title")}</CardTitle>
+              {!businessHours?.isOpen && (
+                <span className="text-xs opacity-80 hidden sm:inline">
+                  {t("chatbot.businessHours.afterHoursNotice")}
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-1">
               <LanguageSelector />
@@ -144,6 +165,25 @@ export function ChatbotWidget() {
                   {t("chatbot.welcomeMessage")}
                 </div>
               </div>
+
+              {/* Business Hours Notice */}
+              {businessHours && !businessHours.isOpen && (
+                <div className="mb-4">
+                  <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 p-4 rounded-lg text-sm text-orange-900 animate-in fade-in-50 duration-500">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                      <span className="font-medium">{t("chatbot.businessHours.afterHoursNotice")}</span>
+                    </div>
+                    <div className="space-y-2">
+                      <p>{businessHours.message}</p>
+                      <div className="text-xs opacity-80">
+                        <p>{t("chatbot.businessHours.openHours")}</p>
+                        <p>{t("chatbot.businessHours.leaveMessage")}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Conversation Messages */}
               {messagesLoading ? (

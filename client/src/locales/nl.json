@@ -1,0 +1,22 @@
+{
+  "chatbot": {
+    "title": "KANIOU AI Assistent",
+    "welcome": "Welkom bij KANIOU!",
+    "welcomeMessage": "Hallo! Ik ben uw persoonlijke KANIOU assistent. Ik help u graag met vragen over onze premium raamdecoratie, gordijnen, zonwering en meer. Hoe kan ik u vandaag helpen?",
+    "placeholder": "Typ uw bericht hier...",
+    "send": "Versturen",
+    "typing": "Aan het typen...",
+    "close": "Sluiten",
+    "languageSelector": "Taal selecteren",
+    "errorMessage": "Sorry, er is iets misgegaan. Probeer het opnieuw.",
+    "connecting": "Verbinding maken...",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "languages": {
+    "nl": "Nederlands",
+    "fr": "Français", 
+    "tr": "Türkçe",
+    "en": "English"
+  }
+}

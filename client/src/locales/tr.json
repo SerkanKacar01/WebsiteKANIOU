@@ -1,0 +1,22 @@
+{
+  "chatbot": {
+    "title": "KANIOU AI Asistanı",
+    "welcome": "KANIOU'ya Hoş Geldiniz!",
+    "welcomeMessage": "Merhaba! Ben sizin kişisel KANIOU asistanınızım. Premium pencere dekorasyonları, perdeler, güneşlikler ve daha fazlası hakkındaki sorularınızda size yardımcı olmaktan mutluluk duyarım. Bugün size nasıl yardımcı olabilirim?",
+    "placeholder": "Mesajınızı buraya yazın...",
+    "send": "Gönder",
+    "typing": "Yazıyor...",
+    "close": "Kapat",
+    "languageSelector": "Dil seçin",
+    "errorMessage": "Üzgünüm, bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "connecting": "Bağlanıyor...",
+    "online": "Çevrimiçi",
+    "offline": "Çevrimdışı"
+  },
+  "languages": {
+    "nl": "Nederlands",
+    "fr": "Français", 
+    "tr": "Türkçe",
+    "en": "English"
+  }
+}

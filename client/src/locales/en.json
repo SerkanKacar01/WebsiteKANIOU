@@ -1,0 +1,22 @@
+{
+  "chatbot": {
+    "title": "KANIOU AI Assistant",
+    "welcome": "Welcome to KANIOU!",
+    "welcomeMessage": "Hello! I'm your personal KANIOU assistant. I'm here to help you with any questions about our premium window treatments, curtains, blinds, and more. How can I assist you today?",
+    "placeholder": "Type your message here...",
+    "send": "Send",
+    "typing": "Typing...",
+    "close": "Close",
+    "languageSelector": "Select language",
+    "errorMessage": "Sorry, something went wrong. Please try again.",
+    "connecting": "Connecting...",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "languages": {
+    "nl": "Nederlands",
+    "fr": "Français", 
+    "tr": "Türkçe",
+    "en": "English"
+  }
+}

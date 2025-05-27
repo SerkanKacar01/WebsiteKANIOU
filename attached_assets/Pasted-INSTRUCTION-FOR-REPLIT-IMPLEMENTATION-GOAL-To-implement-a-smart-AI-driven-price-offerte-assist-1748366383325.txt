@@ -1,0 +1,81 @@
+INSTRUCTION FOR REPLIT IMPLEMENTATION
+
+⸻
+
+GOAL:
+
+To implement a smart AI-driven price/offerte assistant within the chatbot that:
+	1.	Detects when a customer asks about prices, quotations, or costs.
+	2.	Sends an immediate notification to Serkan (admin) for input.
+	3.	Allows Serkan to input a custom answer for that product/situation.
+	4.	Trains the AI chatbot to automatically respond to similar future questions using that input.
+
+⸻
+
+STEP 1: INTENT DETECTION FOR PRICE/OFFERTE REQUESTS
+	•	Create keyword-based intent detection in the chatbot backend.
+	•	If the user sends a message containing ANY of the following:
+	•	“price”, “cost”, “quote”, “quotation”, “offer”, “how much”
+	•	Dutch variants: “prijs”, “offerte”, “kost”, “hoeveel kost”
+
+Then the chatbot should trigger a fallback flag: price_request_detected = true and execute the next step.
+
+STEP 2: NOTIFICATION TO ADMIN (SERKAN)
+
+If price_request_detected === true:
+	•	Send an email to info@kaniou.be
+	•	Subject: “[Chatbot] New Price Request from Customer”
+	•	Body should include:
+	•	The full message from the user
+	•	Timestamp
+	•	Optional: user’s name/email if known
+	•	A link to respond (can link to a form, or admin panel input field)
+
+STEP 3: ADMIN INPUT PANEL
+
+Create a simple backend route /admin/price-response where Serkan can:
+	•	View the question from the user
+	•	Input a response (price, offer, explanation)
+	•	Link it to a keyword or phrase (e.g. “2m rolgordijnen wit”)
+	•	Submit the response
+
+This input should be:
+	•	Saved to a local knowledge table in the database or JSON file
+	•	Structured as:
+
+{
+  "trigger": "2m rolgordijnen wit",
+  "response": "De prijs voor 2 meter rolgordijnen in wit is €85 inclusief maatwerk, exclusief montage."
+}
+
+STEP 4: AI RESPONSE LEARNING
+
+On every incoming customer message:
+	•	Check knowledge base for any match on keywords in the message
+	•	If a match is found:
+	•	Return the stored response as the chatbot reply
+	•	Do not send a new notification (because response is already known)
+
+STEP 5: LOGGING & REVIEW
+	•	Every time the AI uses a learned answer, save the event in a log:
+
+{
+  "used_response": "2m rolgordijnen wit",
+  "timestamp": "2025-05-27T14:32:00Z",
+  "customer_question": "Hoeveel kost 2 meter wit rolgordijn?"
+}
+
+
+⸻
+
+NOTES
+	•	Everything must be multilingual-ready (EN + NL)
+	•	All texts must be editable by Serkan in future
+	•	Use proper security/authentication for admin access
+	•	Rate-limit notifications to max 3/min to avoid spam
+
+⸻
+
+✅ Confirm completion of each step separately before moving on
+✅ Serkan will test each flow step-by-step and approve
+✅ Do NOT skip any sub-step unless confirmed by Serkan

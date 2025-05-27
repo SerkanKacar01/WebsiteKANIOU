@@ -14,206 +14,227 @@ export async function seedChatbotKnowledge() {
   }
 
   // Product Knowledge - Dutch (Primary)
+  // ROLGORDIJNEN
   const productKnowledge = [
-    // ROLGORDIJNEN
     {
       category: "product",
       topic: "Rolgordijnen - Algemeen",
-      content: "Rolgordijnen zijn praktische en veelzijdige zonweringen die perfect zijn voor moderne interieurs. Ze bieden uitstekende lichtcontrole en zijn verkrijgbaar in vele stijlen, kleuren en materialen. Ideaal voor elk type raam.",
+      content:
+        "Rolgordijnen zijn praktische en veelzijdige zonweringen die perfect zijn voor moderne interieurs. Ze bieden uitstekende lichtcontrole, zijn beschikbaar in verduisterende, lichtdoorlatende en transparante stoffen en verkrijgbaar in veel stijlen, kleuren en materialen. Ideaal voor woonkamers, slaapkamers, kantoren en badkamers.",
       language: "nl",
       priority: 10,
-      adminApproved: true
+      adminApproved: true,
     },
     {
       category: "product",
       topic: "Rolgordijnen - Warmtewering",
-      content: "Voor optimale warmtewering raden wij rolgordijnen met reflecterende achterzijde aan. Deze kaatsen zonnestralen terug en houden uw ruimte tot 7°C koeler. Materialen zoals screen doek en verduisterende stoffen werken het beste.",
+      content:
+        "Voor optimale warmtewering raden wij rolgordijnen met reflecterende achterzijde aan. Deze kaatsen zonnestralen terug en houden uw ruimte tot 7°C koeler. Materialen zoals screen doek en verduisterende stoffen werken het beste.",
       language: "nl",
       priority: 9,
-      adminApproved: true
+      adminApproved: true,
     },
     {
       category: "product",
       topic: "Rolgordijnen - Meten",
-      content: "Voor rolgordijnen: meet de exacte breedte van het raam. Voor op-de-dag montage tel 10-15cm extra breedte toe. Voor hoogte: meet van gewenste montagepunt tot gewenste eindpunt. Altijd in millimeters meten voor perfecte pasvorm.",
+      content:
+        "Voor rolgordijnen: meet de exacte breedte van het raam. Voor op-de-dag montage tel 10-15cm extra breedte toe. Voor hoogte: meet van gewenste montagepunt tot gewenste eindpunt. Altijd in millimeters meten voor perfecte pasvorm.",
       language: "nl",
       priority: 8,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // OVERGORDIJNEN
     {
       category: "product",
       topic: "Overgordijnen - Algemeen",
-      content: "Overgordijnen zijn de finishing touch van elk interieur. Ze bieden privacy, lichtcontrole en thermische isolatie. Verkrijgbaar in talloze stoffen, kleuren en modellen om perfect aan te sluiten bij uw woonstijl.",
+      content:
+        "Overgordijnen zijn de finishing touch van elk interieur. Ze bieden privacy, lichtcontrole en thermische isolatie. Verkrijgbaar in talloze stoffen, kleuren en modellen om perfect aan te sluiten bij uw woonstijl.",
       language: "nl",
       priority: 10,
-      adminApproved: true
+      adminApproved: true,
     },
     {
       category: "product",
       topic: "Overgordijnen - Meten",
-      content: "Voor overgordijnen: meet de breedte van rail of roede en tel 15-20cm toe aan elke zijde voor vollere uitstraling. Hoogte: meet van bovenkant rail tot gewenst eindpunt (vensterbank, onder vensterbank, of vloer). Tel 2-3cm toe voor plooiband.",
+      content:
+        "Voor overgordijnen: meet de breedte van rail of roede en tel 15-20cm toe aan elke zijde voor vollere uitstraling. Hoogte: meet van bovenkant rail tot gewenst eindpunt (vensterbank, onder vensterbank, of vloer). Tel 2-3cm toe voor plooiband.",
       language: "nl",
       priority: 8,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // VITRAGES
     {
       category: "product",
       topic: "Vitrages - Algemeen",
-      content: "Vitrages (inbetweens) zijn lichte, doorschijnende gordijnen die privacy bieden terwijl ze natuurlijk licht doorlaten. Perfect voor daggebruik en als basis in combinatie met overgordijnen.",
+      content:
+        "Vitrages (inbetweens) zijn lichte, doorschijnende gordijnen die privacy bieden terwijl ze natuurlijk licht doorlaten. Perfect voor daggebruik en als basis in combinatie met overgordijnen.",
       language: "nl",
       priority: 9,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // VOUWGORDIJNEN
     {
       category: "product",
       topic: "Vouwgordijnen - Algemeen",
-      content: "Vouwgordijnen (roman blinds) combineren de elegantie van gordijnen met de functionaliteit van zonweringen. Ze vouwen in nette horizontale plooien op en bieden stijlvolle lichtcontrole.",
+      content:
+        "Vouwgordijnen (roman blinds) combineren de elegantie van gordijnen met de functionaliteit van zonweringen. Ze vouwen in nette horizontale plooien op en bieden stijlvolle lichtcontrole.",
       language: "nl",
       priority: 9,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // DUO ROLGORDIJNEN
     {
       category: "product",
       topic: "Duo Rolgordijnen",
-      content: "Duo rolgordijnen bestaan uit twee lagen: een transparante en een verduisterende laag. Door deze te verschuiven kunt u de lichtinval perfect doseren - van vol licht tot complete verduistering.",
+      content:
+        "Duo rolgordijnen bestaan uit twee lagen: een transparante en een verduisterende laag. Door deze te verschuiven kunt u de lichtinval perfect doseren - van vol licht tot complete verduistering.",
       language: "nl",
       priority: 8,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // JALOEZIEËN
     {
       category: "product",
       topic: "Houten Jaloezieën",
-      content: "Houten jaloezieën geven een warme, natuurlijke uitstraling aan uw interieur. Ze bieden uitstekende isolatie en zijn verkrijgbaar in verschillende houtsoorten en kleuren. Ideaal voor klassieke en landelijke interieurs.",
+      content:
+        "Houten jaloezieën geven een warme, natuurlijke uitstraling aan uw interieur. Ze bieden uitstekende isolatie en zijn verkrijgbaar in verschillende houtsoorten en kleuren. Ideaal voor klassieke en landelijke interieurs.",
       language: "nl",
       priority: 8,
-      adminApproved: true
+      adminApproved: true,
     },
     {
       category: "product",
       topic: "Kunststof Jaloezieën",
-      content: "Kunststof jaloezieën zijn praktisch, vochtbestendig en onderhoudsvriendelijk. Perfect voor badkamers en keukens. Verkrijgbaar in vele kleuren en zeer geschikt voor moderne interieurs.",
+      content:
+        "Kunststof jaloezieën zijn praktisch, vochtbestendig en onderhoudsvriendelijk. Perfect voor badkamers en keukens. Verkrijgbaar in vele kleuren en zeer geschikt voor moderne interieurs.",
       language: "nl",
       priority: 7,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // LAMELLEN
     {
       category: "product",
       topic: "Textiel Lamellen",
-      content: "Textiel lamellen (verticale lamellen van stof) bieden elegante lichtcontrole en zijn ideaal voor grote raampartijen. Ze geven een luxe uitstraling en zijn verkrijgbaar in vele dessins en kleuren.",
+      content:
+        "Textiel lamellen (verticale lamellen van stof) bieden elegante lichtcontrole en zijn ideaal voor grote raampartijen. Ze geven een luxe uitstraling en zijn verkrijgbaar in vele dessins en kleuren.",
       language: "nl",
       priority: 7,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // PLISSÉ
     {
       category: "product",
       topic: "Plissé Gordijnen",
-      content: "Plissé gordijnen kenmerken zich door hun zigzag-vouwstructuur. Ze zijn zeer compact, bieden uitstekende isolatie en zijn perfect voor speciale raamvormen zoals driehoekige en ronde ramen.",
+      content:
+        "Plissé gordijnen kenmerken zich door hun zigzag-vouwstructuur. Ze zijn zeer compact, bieden uitstekende isolatie en zijn perfect voor speciale raamvormen zoals driehoekige en ronde ramen.",
       language: "nl",
       priority: 7,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // SHUTTERS
     {
       category: "product",
       topic: "Houten Shutters",
-      content: "Houten shutters zijn een luxe en tijdloze keuze die waarde toevoegt aan uw woning. Ze bieden uitstekende isolatie, privacy en lichtcontrole. Verkrijgbaar in verschillende houtsoorten en afwerkingen.",
+      content:
+        "Houten shutters zijn een luxe en tijdloze keuze die waarde toevoegt aan uw woning. Ze bieden uitstekende isolatie, privacy en lichtcontrole. Verkrijgbaar in verschillende houtsoorten en afwerkingen.",
       language: "nl",
       priority: 8,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // HORREN
     {
       category: "product",
       topic: "Horren - Algemeen",
-      content: "Horren beschermen tegen insecten terwijl ze frisse lucht binnenlaten. Verkrijgbaar als inzethorren, opzethorren en plissé hordeuren. Elke variant heeft specifieke voordelen afhankelijk van uw situatie.",
+      content:
+        "Horren beschermen tegen insecten terwijl ze frisse lucht binnenlaten. Verkrijgbaar als inzethorren, opzethorren en plissé hordeuren. Elke variant heeft specifieke voordelen afhankelijk van uw situatie.",
       language: "nl",
       priority: 6,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // SQUID TEXTIEL FOLIE
     {
       category: "product",
       topic: "Squid Textiel Folie",
-      content: "Squid textiel folie is een innovatieve raamfolie die warmte weerkaatst en energie bespaart. Het heeft een textiel-achtige uitstraling en biedt UV-bescherming terwijl het licht doorlaat.",
+      content:
+        "Squid textiel folie is een innovatieve raamfolie die warmte weerkaatst en energie bespaart. Het heeft een textiel-achtige uitstraling en biedt UV-bescherming terwijl het licht doorlaat.",
       language: "nl",
       priority: 6,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // FAQ - INSTALLATION
     {
       category: "faq",
       topic: "Installatie Service",
-      content: "KANIOU biedt professionele installatie voor alle producten. Onze ervaren monteurs zorgen voor perfect gemonteerde zonweringen. Installatie wordt ingepland na oplevering van uw bestelling.",
+      content:
+        "KANIOU biedt professionele installatie voor alle producten. Onze ervaren monteurs zorgen voor perfect gemonteerde zonweringen. Installatie wordt ingepland na oplevering van uw bestelling.",
       language: "nl",
       priority: 9,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // FAQ - MEASURING
     {
       category: "faq",
       topic: "Opmeetservice",
-      content: "Wij bieden een professionele opmeetservice aan huis. Onze specialist komt langs om exact op te meten en advies te geven over de beste oplossing voor uw ramen. Dit garandeert perfecte pasvorm.",
+      content:
+        "Wij bieden een professionele opmeetservice aan huis. Onze specialist komt langs om exact op te meten en advies te geven over de beste oplossing voor uw ramen. Dit garandeert perfecte pasvorm.",
       language: "nl",
       priority: 9,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // FAQ - GUARANTEES
     {
       category: "faq",
       topic: "Garantie",
-      content: "Alle KANIOU producten komen met uitgebreide garantie. Stoffen hebben 2 jaar garantie, mechanische onderdelen 3 jaar, en motoren 5 jaar. Wij staan achter de kwaliteit van onze producten.",
+      content:
+        "Alle KANIOU producten komen met uitgebreide garantie. Stoffen hebben 2 jaar garantie, mechanische onderdelen 3 jaar, en motoren 5 jaar. Wij staan achter de kwaliteit van onze producten.",
       language: "nl",
       priority: 8,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // FAQ - DELIVERY
     {
       category: "faq",
       topic: "Levering",
-      content: "Standaard levertijd is 2-3 weken na opmeting en bestelling. Spoed leveringen zijn mogelijk tegen meerprijs. Wij leveren door heel Nederland en België.",
+      content:
+        "Standaard levertijd is 2-3 weken na opmeting en bestelling. Spoed leveringen zijn mogelijk tegen meerprijs. Wij leveren door heel Nederland en België.",
       language: "nl",
       priority: 7,
-      adminApproved: true
+      adminApproved: true,
     },
 
     // GENERAL ADVICE
     {
       category: "general",
       topic: "Warmtewering Beste Keuze",
-      content: "Voor optimale warmtewering adviseren wij: 1) Rolgordijnen met reflecterende achterzijde, 2) Screen doek met hoge openness factor, 3) Buitenzonwering waar mogelijk, 4) Lichte kleuren die warmte reflecteren.",
+      content:
+        "Voor optimale warmtewering adviseren wij: 1) Rolgordijnen met reflecterende achterzijde, 2) Screen doek met hoge openness factor, 3) Buitenzonwering waar mogelijk, 4) Lichte kleuren die warmte reflecteren.",
       language: "nl",
       priority: 10,
-      adminApproved: true
+      adminApproved: true,
     },
     {
       category: "general",
       topic: "Privacy en Licht Combinatie",
-      content: "Voor privacy met behoud van licht raden wij aan: duo rolgordijnen, day/night gordijnen, of combinatie van vitrages met overgordijnen. Plissé gordijnen top-down/bottom-up zijn ook ideaal.",
+      content:
+        "Voor privacy met behoud van licht raden wij aan: duo rolgordijnen, day/night gordijnen, of combinatie van vitrages met overgordijnen. Plissé gordijnen top-down/bottom-up zijn ook ideaal.",
       language: "nl",
       priority: 9,
-      adminApproved: true
-    }
+      adminApproved: true,
+    },
   ];
 
   // Insert all knowledge base entries

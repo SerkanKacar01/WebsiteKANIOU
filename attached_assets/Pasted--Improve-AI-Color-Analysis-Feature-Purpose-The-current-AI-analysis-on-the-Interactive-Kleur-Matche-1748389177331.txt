@@ -1,0 +1,33 @@
+ Improve AI Color Analysis Feature
+
+Purpose:
+The current AI analysis on the Interactive Kleur Matcher page does not correctly detect and process the uploaded room photo. It must analyze dominant colors and generate meaningful suggestions for curtain and window covering colors. This feature must function optimally and give accurate results for each uploaded image.
+
+What needs to be done:
+	1.	AI Color Detection Improvement:
+	•	Ensure the uploaded photo is fully processed by a reliable AI model (such as a color clustering or computer vision model) to detect all dominant wall, furniture, and curtain colors.
+	•	The output should list at least 3-5 dominant color tones, named with hex codes and optionally translated to color names (e.g. warm beige, cool gray).
+	2.	Kleuradvies Output:
+	•	Based on the detected dominant tones, generate personalized color advice for the user:
+	•	Suggest matching rolgordijn, jaloezie, or gordijn kleuren from the KANIOU collection.
+	•	Explain why these colors match (e.g. contrast, harmony, light reflection).
+	•	The output must be human-readable, preferably in Dutch (formal tone).
+	3.	Display the Result Clearly:
+	•	Ensure that the results are shown below the photo with:
+	•	a color preview swatch,
+	•	color name,
+	•	hex code,
+	•	suggested product(s) with image thumbnails if available.
+	4.	Improve UX Responsiveness:
+	•	While the photo is being analyzed, show a loading animation or text:
+“AI verwerkt uw foto en analyseert de kleuren. Een moment geduld alstublieft…”
+	•	After the analysis is done, scroll automatically to the results.
+	5.	AI Accuracy Testing:
+	•	Replit should test the function with at least 3 different room photos (light, dark, colorful) to confirm consistent color extraction and matching accuracy.
+	6.	Performance Check:
+	•	Ensure the function does not crash with large photo uploads.
+	•	Implement image compression (if not yet in place) before sending to AI.
+
+Optional Future Steps (not for now, but prepare):
+	•	Add a button to email the kleuradvies to the user.
+	•	Save the kleuradvies result temporarily to session or database.

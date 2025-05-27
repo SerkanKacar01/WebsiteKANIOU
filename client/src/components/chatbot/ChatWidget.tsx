@@ -17,16 +17,13 @@ interface ChatMessage {
   metadata?: any;
 }
 
-interface ChatbotWidgetProps {
-  language?: string;
-}
-
-export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
+export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
+  const { language, t } = useLanguage();
 
   // Get or create conversation
   const conversationMutation = useMutation({
@@ -97,29 +94,7 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
     }
   };
 
-  const getWelcomeMessage = () => {
-    const welcomeMessages = {
-      nl: "Hallo! Ik ben KANIOU's AI-assistent. Hoe kan ik u helpen met uw gordijnen en raambekleding?",
-      en: "Hello! I'm KANIOU's AI assistant. How can I help you with your curtains and window treatments?",
-      fr: "Bonjour! Je suis l'assistant IA de KANIOU. Comment puis-je vous aider avec vos rideaux et habillages de fenêtres?",
-      de: "Hallo! Ich bin KANIOU's KI-Assistent. Wie kann ich Ihnen bei Ihren Vorhängen und Fensterbehandlungen helfen?",
-      tr: "Merhaba! Ben KANIOU'nun AI asistanıyım. Perde ve pencere kaplamalarınızla nasıl yardımcı olabilirim?",
-      ar: "مرحباً! أنا مساعد KANIOU الذكي. كيف يمكنني مساعدتك في الستائر وعلاجات النوافذ؟"
-    };
-    return welcomeMessages[language as keyof typeof welcomeMessages] || welcomeMessages.nl;
-  };
 
-  const getPlaceholderText = () => {
-    const placeholders = {
-      nl: "Typ uw vraag hier...",
-      en: "Type your question here...",
-      fr: "Tapez votre question ici...",
-      de: "Geben Sie Ihre Frage hier ein...",
-      tr: "Sorunuzu buraya yazın...",
-      ar: "اكتب سؤالك هنا..."
-    };
-    return placeholders[language as keyof typeof placeholders] || placeholders.nl;
-  };
 
   return (
     <>
@@ -139,17 +114,21 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
         <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl z-50 flex flex-col border-2 border-primary/20 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <CardTitle className="text-sm font-semibold">KANIOU AI Assistant</CardTitle>
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" title={t("chatbot.online")}></div>
+              <CardTitle className="text-sm font-semibold">{t("chatbot.title")}</CardTitle>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(false)}
-              className="h-7 w-7 text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-1">
+              <LanguageSelector />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-7 w-7 text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
+                aria-label={t("chatbot.close")}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </CardHeader>
           
           <CardContent className="flex flex-col flex-1 p-0">
@@ -160,9 +139,9 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
                 <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-900 animate-in fade-in-50 duration-500">
                   <div className="flex items-center gap-2 mb-1">
                     <MessageCircle className="h-4 w-4 text-blue-600" />
-                    <span className="font-medium">Welkom bij KANIOU!</span>
+                    <span className="font-medium">{t("chatbot.welcome")}</span>
                   </div>
-                  {getWelcomeMessage()}
+                  {t("chatbot.welcomeMessage")}
                 </div>
               </div>
 
@@ -171,7 +150,7 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
                 <div className="flex items-center justify-center py-8">
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="text-sm">Gesprek laden...</span>
+                    <span className="text-sm">{t("chatbot.connecting")}</span>
                   </div>
                 </div>
               ) : (
@@ -209,7 +188,7 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
                   <div className="inline-block bg-white border border-gray-200 p-3 rounded-lg rounded-bl-sm text-sm shadow-sm">
                     <div className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                      <span className="text-gray-600">AI aan het typen...</span>
+                      <span className="text-gray-600">{t("chatbot.typing")}</span>
                       <div className="flex gap-1">
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -229,7 +208,7 @@ export function ChatbotWidget({ language = "nl" }: ChatbotWidgetProps) {
                 <Input
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder={getPlaceholderText()}
+                  placeholder={t("chatbot.placeholder")}
                   disabled={sendMessageMutation.isPending || !conversationMutation.data}
                   className="flex-1 border-gray-300 focus:border-primary bg-white"
                   onKeyDown={(e) => {

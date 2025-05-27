@@ -11,7 +11,13 @@
     "errorMessage": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
     "connecting": "Connexion en cours...",
     "online": "En ligne",
-    "offline": "Hors ligne"
+    "offline": "Hors ligne",
+    "businessHours": {
+      "closed": "Nous sommes actuellement fermés. Notre équipe est disponible du lundi au samedi entre 10h00 et 18h00. Veuillez laisser votre message et nous vous recontacterons dès que possible.",
+      "afterHoursNotice": "🕐 Hors heures d'ouverture",
+      "openHours": "Heures d'ouverture: Lun-Sam 10h00-18h00",
+      "leaveMessage": "Vous pouvez toujours laisser votre message et nous répondrons pendant nos heures d'ouverture."
+    }
   },
   "languages": {
     "nl": "Nederlands",

@@ -748,6 +748,25 @@ To respond, simply reply to this email.
     }
   });
 
+  // Business hours status endpoint
+  app.get("/api/chatbot/business-hours", async (req: Request, res: Response) => {
+    try {
+      const businessStatus = getBusinessStatus();
+      const language = req.query.language as string || 'nl';
+      
+      res.json({
+        isOpen: businessStatus.isOpen,
+        currentTime: businessStatus.currentTime,
+        nextOpenTime: businessStatus.nextOpenTime,
+        timezone: businessStatus.timezone,
+        message: businessStatus.isOpen ? null : getBusinessHoursResponse(language)
+      });
+    } catch (error) {
+      console.error("Error checking business hours:", error);
+      res.status(500).json({ message: "Failed to check business hours" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

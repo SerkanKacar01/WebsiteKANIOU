@@ -1,0 +1,62 @@
+Signup Button with Popup (No Code, Only Description)
+
+Please implement a high-visibility signup feature on my website as follows:
+
+⸻
+
+1. Purpose
+Create a professional and elegant signup system for visitors to register for promotions, exclusive offers, and product updates.
+
+⸻
+
+2. Button Location
+	•	Add a visible button to the top of the website, preferably inside or near the main navigation/header area.
+	•	Text:
+	•	In Dutch: "Acties & Kortingen"
+	•	Or optionally multilingual: "Sign up for Promotions" / "Promotions & Deals"
+	•	Use a design that blends with the site’s theme, but also stands out enough to grab attention (for example, beige, gold, or elegant color accents).
+
+⸻
+
+3. Popup Form Behavior
+	•	When the button is clicked, a modern popup window (modal) should open in the center of the screen.
+	•	The popup must include:
+	•	A title like "Blijf op de hoogte van exclusieve acties!"
+	•	Input field for Name (optional)
+	•	Input field for Email address (required)
+	•	Submit button (clearly styled)
+	•	Close button (X) in the corner
+
+⸻
+
+4. Styling Requirements
+	•	The design must be clean, elegant, and mobile-friendly
+	•	The popup must be:
+	•	Centered
+	•	With a light background (white or soft neutral)
+	•	Subtle drop-shadow
+	•	Use a modern font and proper spacing to ensure legibility and aesthetics.
+
+⸻
+
+5. Submission Handling
+	•	The form submission must send the input (name and email) to a working email address of my choice (e.g., via EmailJS, Formspree, or Replit backend).
+	•	A success message must be shown after submission, saying something like:
+"Bedankt voor je inschrijving! Je ontvangt binnenkort onze aanbiedingen."
+
+⸻
+
+6. Mobile Optimization
+	•	Ensure the button and popup work and display correctly on all screen sizes.
+	•	No overlap with other elements.
+
+⸻
+
+7. Optional Enhancements
+	•	Add a subtle entrance animation for the popup (fade or slide-in).
+	•	Make the popup dismissible by clicking outside it.
+	•	Add a GDPR-compliant checkbox (optional) before the form is submitted.
+
+⸻
+
+Please use the best UX/UI design practices and adjust the style so it fits the overall aesthetic of my brand and website. I want the entire functionality to work without needing to touch code.

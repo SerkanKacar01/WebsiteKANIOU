@@ -11,6 +11,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { ChatbotWidget } from "@/components/chatbot/ChatWidget";
+import { SignupPopup } from "@/components/layout/SignupPopup";
 import Home from "@/pages/Home";
 import ProductDetail from "@/pages/ProductDetail";
 import ProductsPage from "@/pages/ProductsPage";
@@ -154,7 +155,8 @@ function App() {
           </main>
           <Footer />
           <CookieConsentBanner />
-          <ChatbotWidget language={language} />
+          <ChatbotWidget />
+          <SignupPopup />
         </div>
       </TooltipProvider>
     </QueryClientProvider>

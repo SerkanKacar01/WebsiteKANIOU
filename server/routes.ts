@@ -875,6 +875,122 @@ To respond, simply reply to this email.
     }
   });
 
+  // Newsletter subscription endpoints
+  app.post("/api/newsletter/subscribe", formRateLimiter, spamDetectionMiddleware, async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertNewsletterSubscriptionSchema.parse(req.body);
+      
+      // Check if email already exists
+      const existingSubscription = await storage.getNewsletterSubscriptionByEmail(validatedData.email);
+      
+      if (existingSubscription) {
+        if (existingSubscription.isActive) {
+          return res.status(409).json({ 
+            message: "Dit e-mailadres is al ingeschreven voor onze nieuwsbrief.",
+            status: "already_subscribed" 
+          });
+        } else {
+          // Reactivate subscription
+          await storage.unsubscribeFromNewsletter(validatedData.email);
+          const reactivatedSubscription = await storage.createNewsletterSubscription({
+            ...validatedData,
+            isActive: true
+          });
+          
+          // Send welcome email
+          await sendNewsletterWelcomeEmail({
+            name: validatedData.name,
+            email: validatedData.email,
+            language: validatedData.language || "nl"
+          });
+          
+          // Notify admin
+          await sendNewsletterNotificationToAdmin({
+            name: validatedData.name,
+            email: validatedData.email,
+            language: validatedData.language || "nl"
+          });
+          
+          return res.status(201).json({ 
+            message: "Welkom terug! Je bent opnieuw ingeschreven.",
+            subscription: reactivatedSubscription 
+          });
+        }
+      }
+      
+      // Create new subscription
+      const subscription = await storage.createNewsletterSubscription(validatedData);
+      
+      // Send welcome email to subscriber
+      const welcomeEmailSent = await sendNewsletterWelcomeEmail({
+        name: validatedData.name,
+        email: validatedData.email,
+        language: validatedData.language || "nl"
+      });
+      
+      // Send notification to admin
+      const adminNotificationSent = await sendNewsletterNotificationToAdmin({
+        name: validatedData.name,
+        email: validatedData.email,
+        language: validatedData.language || "nl"
+      });
+      
+      console.log(`📧 Newsletter signup: ${validatedData.email}, Welcome email: ${welcomeEmailSent}, Admin notification: ${adminNotificationSent}`);
+      
+      res.status(201).json({ 
+        message: "Bedankt voor je inschrijving! Je ontvangt binnenkort onze aanbiedingen.",
+        subscription: subscription
+      });
+      
+    } catch (error) {
+      console.error("Newsletter subscription error:", error);
+      
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({
+          message: "Ongeldige gegevens",
+          errors: validationError.details
+        });
+      }
+      
+      res.status(500).json({ 
+        message: "Er ging iets mis bij het inschrijven. Probeer het later opnieuw." 
+      });
+    }
+  });
+
+  app.post("/api/newsletter/unsubscribe", async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ message: "E-mailadres is vereist" });
+      }
+      
+      const success = await storage.unsubscribeFromNewsletter(email);
+      
+      if (success) {
+        res.json({ message: "Je bent succesvol uitgeschreven van onze nieuwsbrief." });
+      } else {
+        res.status(404).json({ message: "E-mailadres niet gevonden" });
+      }
+      
+    } catch (error) {
+      console.error("Newsletter unsubscribe error:", error);
+      res.status(500).json({ message: "Er ging iets mis bij het uitschrijven." });
+    }
+  });
+
+  app.get("/api/newsletter/subscribers", async (req: Request, res: Response) => {
+    try {
+      const subscribers = await storage.getActiveNewsletterSubscriptions();
+      res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching newsletter subscribers:", error);
+      res.status(500).json({ message: "Er ging iets mis bij het ophalen van abonnees." });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, CheckCircle } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/hooks/useLanguage";
 import { LanguageSelector } from "./LanguageSelector";
+import { QuickReplyButtons, PRICE_REQUEST_OPTIONS, GENERAL_HELP_OPTIONS } from "./QuickReplyButtons";
+import { LeadCollectionForm } from "./LeadCollectionForm";
+import kaniouLogo from "@/assets/KAN.LOGO.png";
 
 interface ChatMessage {
   id: number;
@@ -17,10 +20,24 @@ interface ChatMessage {
   metadata?: any;
 }
 
+interface ChatState {
+  showQuickReplies: boolean;
+  quickReplyType: 'price_request' | 'general' | null;
+  showLeadForm: boolean;
+  lastAssistantMessage?: ChatMessage;
+  waitingForLeadSubmission: boolean;
+}
+
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const [chatState, setChatState] = useState<ChatState>({
+    showQuickReplies: false,
+    quickReplyType: null,
+    showLeadForm: false,
+    waitingForLeadSubmission: false
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { language, t } = useLanguage();
@@ -62,9 +79,65 @@ export function ChatbotWidget() {
       });
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Refresh messages
       queryClient.invalidateQueries({ queryKey: ["/api/chatbot/conversation", sessionId, "messages"] });
+      
+      // Check if the response indicates price detection
+      if (data.metadata?.priceDetected) {
+        setChatState(prev => ({
+          ...prev,
+          showQuickReplies: true,
+          quickReplyType: 'price_request',
+          lastAssistantMessage: data
+        }));
+      } else {
+        // Reset quick replies for non-price messages
+        setChatState(prev => ({
+          ...prev,
+          showQuickReplies: false,
+          quickReplyType: null
+        }));
+      }
+    }
+  });
+
+  // Submit lead form mutation
+  const submitLeadMutation = useMutation({
+    mutationFn: async (leadData: { name: string; email: string; gdprConsent: boolean }) => {
+      const response = await fetch("/api/chatbot/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          conversationId: sessionId,
+          name: leadData.name,
+          email: leadData.email,
+          gdprConsent: leadData.gdprConsent,
+          language
+        })
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      setChatState(prev => ({
+        ...prev,
+        showLeadForm: false,
+        waitingForLeadSubmission: false,
+        showQuickReplies: false
+      }));
+      
+      // Send a confirmation message
+      const confirmationMessages = {
+        nl: "Bedankt! We hebben uw aanvraag ontvangen. U ontvangt binnen 24 uur een gepersonaliseerde offerte per e-mail.",
+        en: "Thank you! We've received your request. You'll receive a personalized offer within 24 hours via email.",
+        fr: "Merci! Nous avons reçu votre demande. Vous recevrez une offre personnalisée dans les 24 heures par e-mail.",
+        tr: "Teşekkürler! Talebinizi aldık. 24 saat içinde e-posta ile kişiselleştirilmiş bir teklif alacaksınız."
+      };
+      
+      const confirmationText = confirmationMessages[language as keyof typeof confirmationMessages] || confirmationMessages.nl;
+      
+      // Send confirmation as an automated message
+      sendMessageMutation.mutate(confirmationText);
     }
   });
 
@@ -91,12 +164,79 @@ export function ChatbotWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Handle quick reply selection
+  const handleQuickReply = (option: any) => {
+    setChatState(prev => ({ ...prev, showQuickReplies: false }));
+
+    if (option.action === 'request_offer_yes') {
+      // Show follow-up message and lead form
+      const followUpMessages = {
+        nl: "Uitstekend! Ik ga u helpen met het aanvragen van een persoonlijke offerte. Laten we beginnen met enkele gegevens.",
+        en: "Excellent! I'll help you request a personalized offer. Let's start with some details.",
+        fr: "Excellent! Je vais vous aider à demander une offre personnalisée. Commençons par quelques détails.",
+        tr: "Mükemmel! Kişiselleştirilmiş bir teklif talep etmenize yardımcı olacağım. Bazı detaylarla başlayalım."
+      };
+      
+      const followUpText = followUpMessages[language as keyof typeof followUpMessages] || followUpMessages.nl;
+      
+      // Send the follow-up message and show the lead form
+      sendMessageMutation.mutate(followUpText);
+      setChatState(prev => ({ ...prev, showLeadForm: true }));
+      
+    } else if (option.action === 'request_offer_no') {
+      const laterMessages = {
+        nl: "Geen probleem! Als u later vragen heeft over onze producten of prijzen, help ik u graag verder. U kunt ook onze website bekijken voor meer informatie.",
+        en: "No problem! If you have questions about our products or prices later, I'm happy to help. You can also browse our website for more information.",
+        fr: "Pas de problème! Si vous avez des questions sur nos produits ou prix plus tard, je suis là pour vous aider. Vous pouvez aussi parcourir notre site web pour plus d'informations.",
+        tr: "Sorun değil! Daha sonra ürünlerimiz veya fiyatlarımız hakkında sorularınız olursa, size yardımcı olmaktan mutluluk duyarım. Daha fazla bilgi için web sitemize de göz atabilirsiniz."
+      };
+      
+      const laterText = laterMessages[language as keyof typeof laterMessages] || laterMessages.nl;
+      sendMessageMutation.mutate(laterText);
+      
+      // Show general help options
+      setChatState(prev => ({ 
+        ...prev, 
+        showQuickReplies: true, 
+        quickReplyType: 'general' 
+      }));
+      
+    } else {
+      // Handle other actions like navigation
+      sendMessageMutation.mutate(option.text);
+    }
+  };
+
+  // Handle lead form submission
+  const handleLeadSubmit = (leadData: { name: string; email: string; gdprConsent: boolean }) => {
+    setChatState(prev => ({ ...prev, waitingForLeadSubmission: true }));
+    submitLeadMutation.mutate(leadData);
+  };
+
+  // Handle lead form cancellation
+  const handleLeadCancel = () => {
+    setChatState(prev => ({ 
+      ...prev, 
+      showLeadForm: false,
+      showQuickReplies: true,
+      quickReplyType: 'general'
+    }));
+  };
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim() || sendMessageMutation.isPending) return;
 
     const messageText = message.trim();
     setMessage("");
+
+    // Reset chat state when user sends a manual message
+    setChatState(prev => ({
+      ...prev,
+      showQuickReplies: false,
+      quickReplyType: null,
+      showLeadForm: false
+    }));
 
     try {
       await sendMessageMutation.mutateAsync(messageText);
@@ -122,21 +262,33 @@ export function ChatbotWidget() {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl z-50 flex flex-col border-2 border-primary/20 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
-            <div className="flex items-center gap-2">
-              <div 
-                className={`w-2 h-2 rounded-full animate-pulse ${
-                  businessHours?.isOpen ? 'bg-green-400' : 'bg-orange-400'
-                }`} 
-                title={businessHours?.isOpen ? t("chatbot.online") : t("chatbot.businessHours.afterHoursNotice")}
-              ></div>
-              <CardTitle className="text-sm font-semibold">{t("chatbot.title")}</CardTitle>
-              {!businessHours?.isOpen && (
-                <span className="text-xs opacity-80 hidden sm:inline">
-                  {t("chatbot.businessHours.afterHoursNotice")}
-                </span>
-              )}
+        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl z-50 flex flex-col border-2 border-amber-200 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 text-white rounded-t-lg border-b-2 border-amber-300">
+            <div className="flex items-center gap-3">
+              {/* KANIOU Logo */}
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-white rounded-md p-1 shadow-sm">
+                  <img 
+                    src={kaniouLogo} 
+                    alt="KANIOU" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <CardTitle className="text-sm font-bold text-amber-200">KANIOU</CardTitle>
+                  <div className="flex items-center gap-1">
+                    <div 
+                      className={`w-2 h-2 rounded-full animate-pulse ${
+                        businessHours?.isOpen ? 'bg-green-400' : 'bg-orange-400'
+                      }`} 
+                      title={businessHours?.isOpen ? t("chatbot.online") : t("chatbot.businessHours.afterHoursNotice")}
+                    ></div>
+                    <span className="text-xs text-gray-300">
+                      {businessHours?.isOpen ? 'Online' : 'Na openingstijd'}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="flex items-center gap-1">
               <LanguageSelector />
@@ -144,7 +296,7 @@ export function ChatbotWidget() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="h-7 w-7 text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
+                className="h-7 w-7 text-white hover:bg-white/20 transition-colors"
                 aria-label={t("chatbot.close")}
               >
                 <X className="h-4 w-4" />
@@ -235,6 +387,64 @@ export function ChatbotWidget() {
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Quick Reply Buttons */}
+              {chatState.showQuickReplies && chatState.quickReplyType && !chatState.showLeadForm && (
+                <div className="mb-4 text-left animate-in slide-in-from-bottom-2 duration-300">
+                  <div className="max-w-[85%]">
+                    {chatState.quickReplyType === 'price_request' && (
+                      <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <CheckCircle className="h-5 w-5 text-amber-600" />
+                          <span className="font-semibold text-amber-800">
+                            {language === 'nl' ? 'Wilt u een persoonlijke offerte aanvragen?' :
+                             language === 'en' ? 'Would you like to request a personal offer?' :
+                             language === 'fr' ? 'Souhaitez-vous demander une offre personnelle?' :
+                             'Kişisel bir teklif talep etmek ister misiniz?'}
+                          </span>
+                        </div>
+                        <QuickReplyButtons
+                          options={PRICE_REQUEST_OPTIONS(language)}
+                          onSelect={handleQuickReply}
+                          disabled={sendMessageMutation.isPending}
+                        />
+                      </div>
+                    )}
+                    
+                    {chatState.quickReplyType === 'general' && (
+                      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <MessageCircle className="h-5 w-5 text-blue-600" />
+                          <span className="font-semibold text-blue-800">
+                            {language === 'nl' ? 'Kan ik u ergens anders mee helpen?' :
+                             language === 'en' ? 'Can I help you with something else?' :
+                             language === 'fr' ? 'Puis-je vous aider avec autre chose?' :
+                             'Başka bir konuda size yardımcı olabilir miyim?'}
+                          </span>
+                        </div>
+                        <QuickReplyButtons
+                          options={GENERAL_HELP_OPTIONS(language)}
+                          onSelect={handleQuickReply}
+                          disabled={sendMessageMutation.isPending}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Lead Collection Form */}
+              {chatState.showLeadForm && (
+                <div className="mb-4 text-left animate-in slide-in-from-bottom-4 duration-300">
+                  <div className="max-w-[95%]">
+                    <LeadCollectionForm
+                      onSubmit={handleLeadSubmit}
+                      onCancel={handleLeadCancel}
+                      isSubmitting={submitLeadMutation.isPending || chatState.waitingForLeadSubmission}
+                    />
                   </div>
                 </div>
               )}

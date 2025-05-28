@@ -59,21 +59,35 @@ export function SignupPopup() {
   }, []);
 
   const signupMutation = useMutation({
-    mutationFn: (data: SignupFormData) =>
-      apiRequest('/api/newsletter/signup', 'POST', {
-        name: data.name || undefined,
-        email: data.email,
-        language: 'nl' // Default to Dutch as per requirements
-      }),
+    mutationFn: async (data: SignupFormData) => {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        body: JSON.stringify({
+          name: data.name || undefined,
+          email: data.email,
+          language: 'nl'
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to subscribe");
+      }
+      
+      return response.json();
+    },
     onSuccess: () => {
       setShowSuccess(true);
       localStorage.setItem('kaniou-signup-popup-seen', 'completed');
       
-      // Hide success message and close popup after 3 seconds
+      // Hide success message and close popup after 4 seconds
       setTimeout(() => {
         setIsOpen(false);
         setShowSuccess(false);
-      }, 3000);
+      }, 4000);
     },
     onError: (error) => {
       console.error('Signup error:', error);
@@ -116,7 +130,7 @@ export function SignupPopup() {
   if (showSuccess) {
     return (
       <Dialog open={isOpen} onOpenChange={() => {}}>
-        <DialogContent className="sm:max-w-md mx-auto bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200">
+        <DialogContent className="sm:max-w-md mx-auto bg-gradient-to-br from-yellow-100 to-amber-100 border-2 border-yellow-300 shadow-2xl">
           <DialogTitle className="sr-only">Inschrijving succesvol</DialogTitle>
           <DialogDescription className="sr-only">Bevestiging van uw succesvolle inschrijving voor onze nieuwsbrief</DialogDescription>
           <div className="text-center py-8">
@@ -129,7 +143,7 @@ export function SignupPopup() {
               Bedankt voor je inschrijving!
             </h3>
             <p className="text-amber-700">
-              We houden je op de hoogte van onze exclusieve aanbiedingen.
+              We houden je op de hoogte van onze acties.
             </p>
           </div>
         </DialogContent>
@@ -139,7 +153,7 @@ export function SignupPopup() {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-lg mx-auto bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 animate-in fade-in slide-in-from-top-4 duration-300">
+      <DialogContent className="sm:max-w-lg mx-4 sm:mx-auto bg-gradient-to-br from-yellow-100 via-amber-100 to-yellow-200 border-2 border-yellow-400 animate-in fade-in slide-in-from-top-4 duration-300 shadow-2xl max-h-[90vh] overflow-y-auto">
         <DialogTitle className="sr-only">Inschrijven voor aanbiedingen</DialogTitle>
         <DialogDescription className="sr-only">Formulier om u in te schrijven voor exclusieve aanbiedingen en kortingen van KANIOU Zilvernaald</DialogDescription>
         
@@ -154,10 +168,10 @@ export function SignupPopup() {
 
         {/* Header */}
         <div className="text-center mb-6 pt-2">
-          <h2 className="text-2xl font-bold text-amber-900 mb-2">
+          <h2 className="text-2xl font-bold text-yellow-900 mb-2">
             Blijf op de hoogte van acties & kortingen
           </h2>
-          <p className="text-amber-700 text-sm leading-relaxed">
+          <p className="text-yellow-800 text-sm leading-relaxed">
             Schrijf je in en ontvang exclusieve aanbiedingen van KANIOU Zilvernaald.
           </p>
         </div>
@@ -166,7 +180,7 @@ export function SignupPopup() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name field (optional) */}
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-amber-900 font-medium">
+            <Label htmlFor="name" className="text-yellow-900 font-medium">
               Naam (optioneel)
             </Label>
             <Input
@@ -175,13 +189,13 @@ export function SignupPopup() {
               placeholder="Uw naam"
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className="border-amber-200 focus:border-amber-400 focus:ring-amber-400"
+              className="border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500 bg-white/80 backdrop-blur-sm h-12"
             />
           </div>
 
           {/* Email field (required) */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-amber-900 font-medium">
+            <Label htmlFor="email" className="text-yellow-900 font-medium">
               E-mailadres *
             </Label>
             <Input
@@ -190,7 +204,7 @@ export function SignupPopup() {
               placeholder="uw.email@voorbeeld.nl"
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className="border-amber-200 focus:border-amber-400 focus:ring-amber-400"
+              className="border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500 bg-white/80 backdrop-blur-sm h-12"
               required
             />
           </div>
@@ -201,9 +215,9 @@ export function SignupPopup() {
               id="consent"
               checked={formData.consent}
               onCheckedChange={(checked) => handleInputChange('consent', checked as boolean)}
-              className="border-amber-400 data-[state=checked]:bg-amber-600 data-[state=checked]:border-amber-600"
+              className="border-yellow-500 data-[state=checked]:bg-yellow-600 data-[state=checked]:border-yellow-600"
             />
-            <Label htmlFor="consent" className="text-sm text-amber-700 leading-relaxed">
+            <Label htmlFor="consent" className="text-sm text-yellow-800 leading-relaxed">
               Ik ga akkoord met het ontvangen van e-mails
             </Label>
           </div>
@@ -212,14 +226,14 @@ export function SignupPopup() {
           <Button
             type="submit"
             disabled={signupMutation.isPending}
-            className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-[1.02]"
+            className="w-full bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700 text-white font-semibold py-4 h-14 rounded-lg shadow-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-2xl"
           >
             {signupMutation.isPending ? 'Bezig met inschrijven...' : 'Inschrijven'}
           </Button>
         </form>
 
         {/* Footer note */}
-        <p className="text-xs text-amber-600 text-center mt-4 leading-relaxed">
+        <p className="text-xs text-yellow-700 text-center mt-4 leading-relaxed">
           U kunt zich altijd uitschrijven via de link in onze e-mails.
         </p>
       </DialogContent>

@@ -16,9 +16,10 @@ import { useLanguage } from "@/context/LanguageContext";
 interface NewsletterSignupProps {
   children?: React.ReactNode;
   variant?: "default" | "header" | "footer";
+  onModalOpen?: () => void;
 }
 
-const NewsletterSignup = ({ children, variant = "default" }: NewsletterSignupProps) => {
+const NewsletterSignup = ({ children, variant = "default", onModalOpen }: NewsletterSignupProps) => {
   const [open, setOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
@@ -123,8 +124,15 @@ const NewsletterSignup = ({ children, variant = "default" }: NewsletterSignupPro
     </Button>
   );
 
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (newOpen && onModalOpen) {
+      onModalOpen();
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {children || DefaultTrigger}
       </DialogTrigger>

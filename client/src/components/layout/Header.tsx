@@ -220,11 +220,10 @@ const Header = () => {
                   )}
 
                   <div className="mt-4 space-y-3">
-                    <NewsletterSignup variant="default">
+                    <NewsletterSignup variant="default" onModalOpen={handleCloseSheet}>
                       <Button
                         variant="outline"
                         className="w-full border-amber-500 text-amber-600 hover:bg-amber-50"
-                        onClick={handleCloseSheet}
                       >
                         Acties & Kortingen
                       </Button>

@@ -9,7 +9,8 @@ import {
   insertQuoteRequestSchema,
   insertContactSubmissionSchema,
   insertChatbotConversationSchema,
-  insertChatbotMessageSchema
+  insertChatbotMessageSchema,
+  insertNewsletterSubscriptionSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -28,6 +29,7 @@ import {
   checkNotificationRateLimit
 } from "./priceAssistant";
 import { sendPriceRequestNotification } from "./emailService";
+import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {

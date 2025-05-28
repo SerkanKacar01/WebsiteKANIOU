@@ -44,6 +44,9 @@ import {
   priceResponseLogs,
   PriceResponseLog,
   InsertPriceResponseLog,
+  newsletterSubscriptions,
+  NewsletterSubscription,
+  InsertNewsletterSubscription,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -445,6 +448,42 @@ export class DatabaseStorage implements IStorage {
       .values(log)
       .returning();
     return result[0];
+  }
+
+  async getPriceResponseLogsByKnowledgeId(knowledgeId: number): Promise<PriceResponseLog[]> {
+    return await db.select().from(priceResponseLogs).where(eq(priceResponseLogs.knowledgeId, knowledgeId)).orderBy(desc(priceResponseLogs.createdAt));
+  }
+
+  // Newsletter Subscriptions Implementation
+  async createNewsletterSubscription(data: InsertNewsletterSubscription): Promise<NewsletterSubscription> {
+    const [subscription] = await db.insert(newsletterSubscriptions).values(data).returning();
+    return subscription;
+  }
+
+  async getNewsletterSubscriptionByEmail(email: string): Promise<NewsletterSubscription | null> {
+    const [subscription] = await db.select().from(newsletterSubscriptions).where(eq(newsletterSubscriptions.email, email));
+    return subscription || null;
+  }
+
+  async getActiveNewsletterSubscriptions(): Promise<NewsletterSubscription[]> {
+    return await db.select().from(newsletterSubscriptions)
+      .where(eq(newsletterSubscriptions.isActive, true))
+      .orderBy(desc(newsletterSubscriptions.subscribedAt));
+  }
+
+  async unsubscribeFromNewsletter(email: string): Promise<boolean> {
+    try {
+      await db.update(newsletterSubscriptions)
+        .set({ 
+          isActive: false, 
+          unsubscribedAt: new Date() 
+        })
+        .where(eq(newsletterSubscriptions.email, email));
+      return true;
+    } catch (error) {
+      console.error('Error unsubscribing from newsletter:', error);
+      return false;
+    }
   }
 }
 

@@ -1,0 +1,61 @@
+Instruction for Replit – Automatic Signup Popup Banner for New Visitors (No Code)
+
+Please implement an automatic popup banner for new visitors on my website to encourage signups for promotions and exclusive offers.
+
+⸻
+
+🎯 Objective:
+
+Show a popup banner automatically when a visitor opens the website for the first time. This popup must offer the opportunity to sign up for promotions, updates, and discounts.
+
+⸻
+
+📍 Popup Trigger:
+	•	The popup should automatically appear only once per new visitor session.
+	•	Do not show it again on page reload or next visit unless they haven’t interacted or closed it yet.
+	•	Use cookies or localStorage to track if the user has already seen or closed the popup.
+
+⸻
+
+🪟 Popup Design:
+	•	Use a centered modal-style popup banner.
+	•	The banner should include:
+	•	Title: “Blijf op de hoogte van acties & kortingen”
+	•	Small text: “Schrijf je in en ontvang exclusieve aanbiedingen van KANIOU Zilvernaald.”
+	•	Input: Name (optional)
+	•	Input: Email address (required)
+	•	Checkbox (optional): “Ik ga akkoord met het ontvangen van e-mails”
+	•	Submit button: “Inschrijven”
+	•	Close button (X)
+
+⸻
+
+🎨 Design Requirements:
+	•	Elegant, modern, and consistent with the KANIOU Zilvernaald branding.
+	•	Use brand colors like beige, wit, goud, and clean typography.
+	•	Make the popup responsive (mobile-friendly).
+	•	Add a subtle entrance animation (e.g., fade-in or slide-down).
+
+⸻
+
+📤 Form Submission:
+	•	When the form is submitted, send the data (name, email) to:
+	•	An email address or
+	•	A backend system (Formspree, EmailJS, or custom Replit solution)
+	•	After successful submission:
+	•	Show a confirmation message:
+“Bedankt voor je inschrijving! We houden je op de hoogte.”
+	•	Do not show the popup again.
+
+⸻
+
+✅ Additional Behavior:
+	•	If the user closes the popup without signing up:
+	•	Save a flag to not show the popup again immediately.
+	•	Optionally delay the next appearance (e.g. after 7 days).
+	•	Ensure no automatic redirection or reload happens after submit or close.
+	•	Everything must be smooth, professional, and non-intrusive.
+
+⸻
+
+Please use the best UX practices and styling, and fully integrate the system into my website flow without needing any code adjustments from my side.

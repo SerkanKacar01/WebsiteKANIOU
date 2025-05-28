@@ -402,3 +402,37 @@ export type InsertPriceResponseKnowledge = z.infer<typeof insertPriceResponseKno
 
 export type PriceResponseLog = typeof priceResponseLogs.$inferSelect;
 export type InsertPriceResponseLog = z.infer<typeof insertPriceResponseLogSchema>;
+
+// Newsletter Subscriptions
+export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
+  id: serial("id").primaryKey(),
+  name: text("name"),
+  email: text("email").notNull().unique(),
+  language: text("language").default("nl"),
+  isActive: boolean("is_active").default(true),
+  source: text("source").default("website"), // Where they signed up from
+  subscribedAt: timestamp("subscribed_at").defaultNow(),
+  unsubscribedAt: timestamp("unsubscribed_at"),
+});
+
+export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterSubscriptions).omit({
+  id: true,
+  subscribedAt: true,
+  unsubscribedAt: true,
+}).extend({
+  name: z.string()
+    .min(2, "Naam moet minstens 2 karakters bevatten")
+    .max(100, "Naam mag maximaal 100 karakters bevatten")
+    .regex(/^[a-zA-ZÀ-ž\s'-]+$/, "Naam mag alleen letters, spaties, koppeltekens en apostroffen bevatten")
+    .optional(),
+  email: z.string()
+    .email("Gelieve een geldig e-mailadres in te voeren")
+    .max(254, "E-mailadres mag maximaal 254 karakters bevatten"),
+  language: z.string().default("nl"),
+  // Honeypot field for spam protection
+  website: z.string().max(0, "Ongeldige inzending").optional(),
+});
+
+// Newsletter Subscription type definitions
+export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
+export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;

@@ -7,6 +7,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSelector from "./LanguageSelector";
+import NewsletterSignup from "./NewsletterSignup";
 import { kaniouLogo } from "@/assets";
 
 const productCategories = [
@@ -218,16 +219,27 @@ const Header = () => {
                     ),
                   )}
 
-                  <Link href="/quote">
-                    <a className="mt-4">
+                  <div className="mt-4 space-y-3">
+                    <NewsletterSignup variant="default">
                       <Button
-                        className="w-full bg-secondary hover:bg-accent"
+                        variant="outline"
+                        className="w-full border-amber-500 text-amber-600 hover:bg-amber-50"
                         onClick={handleCloseSheet}
                       >
-                        {t("OFFERTE AANVRAGEN")}
+                        Acties & Kortingen
                       </Button>
-                    </a>
-                  </Link>
+                    </NewsletterSignup>
+                    <Link href="/quote">
+                      <a>
+                        <Button
+                          className="w-full bg-secondary hover:bg-accent"
+                          onClick={handleCloseSheet}
+                        >
+                          {t("OFFERTE AANVRAGEN")}
+                        </Button>
+                      </a>
+                    </Link>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
@@ -294,7 +306,8 @@ const Header = () => {
                   </Link>
                 ),
               )}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
+                <NewsletterSignup variant="header" />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">
                     {t("OFFERTE AANVRAGEN")}

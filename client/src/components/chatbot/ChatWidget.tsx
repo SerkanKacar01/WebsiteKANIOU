@@ -453,14 +453,14 @@ export function ChatbotWidget() {
             </ScrollArea>
 
             {/* Message Input */}
-            <form onSubmit={handleSendMessage} className="p-4 border-t bg-gray-50">
+            <form onSubmit={handleSendMessage} className="p-4 border-t-2 border-amber-200 bg-gradient-to-r from-amber-50 to-yellow-50">
               <div className="flex gap-2">
                 <Input
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t("chatbot.placeholder")}
-                  disabled={sendMessageMutation.isPending || !conversationMutation.data}
-                  className="flex-1 border-gray-300 focus:border-primary bg-white"
+                  disabled={sendMessageMutation.isPending || !conversationMutation.data || chatState.showLeadForm}
+                  className="flex-1 border-amber-300 focus:border-amber-500 bg-white shadow-sm"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault();
@@ -471,8 +471,8 @@ export function ChatbotWidget() {
                 <Button
                   type="submit"
                   size="icon"
-                  disabled={!message.trim() || sendMessageMutation.isPending || !conversationMutation.data}
-                  className="bg-primary hover:bg-primary/90 transition-colors"
+                  disabled={!message.trim() || sendMessageMutation.isPending || !conversationMutation.data || chatState.showLeadForm}
+                  className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white shadow-md transition-all duration-200"
                 >
                   {sendMessageMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

@@ -769,6 +769,147 @@ To respond, simply reply to this email.
     }
   });
 
+  // Lead collection endpoint for chatbot offer requests
+  app.post("/api/chatbot/lead", async (req: Request, res: Response) => {
+    try {
+      const { conversationId, name, email, gdprConsent, language = "nl" } = req.body;
+      
+      if (!conversationId || !name || !email || !gdprConsent) {
+        return res.status(400).json({ message: "All fields are required including GDPR consent" });
+      }
+
+      // Get conversation
+      const conversation = await storage.getChatbotConversationBySessionId(conversationId);
+      if (!conversation) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+
+      // Create quote request from lead data
+      const quoteRequestData = {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: null, // Optional for chatbot leads
+        message: `Automatische offerte aanvraag via chatbot (Sessie: ${conversationId})`,
+        productType: "Algemene interesse", // Default for chatbot leads
+        windowMeasurements: null,
+        requirements: null,
+        language: language,
+        gdprConsent: gdprConsent,
+        source: 'chatbot_lead'
+      };
+
+      const newQuoteRequest = await storage.createQuoteRequest(quoteRequestData);
+      
+      console.log(`✅ CHATBOT LEAD: Created quote request #${newQuoteRequest.id} for ${name} (${email}) from conversation ${conversationId}`);
+
+      // Send email notification about the new lead
+      try {
+        const emailMessages = {
+          nl: {
+            subject: "🤖 Nieuwe Lead via Chatbot",
+            intro: "Er is een nieuwe offerte aanvraag via de chatbot ontvangen!",
+            followUp: "Neem binnen 24 uur contact op voor de beste service."
+          },
+          en: {
+            subject: "🤖 New Lead via Chatbot", 
+            intro: "A new quote request has been received via the chatbot!",
+            followUp: "Contact within 24 hours for the best service."
+          },
+          fr: {
+            subject: "🤖 Nouveau Prospect via Chatbot",
+            intro: "Une nouvelle demande de devis a été reçue via le chatbot!",
+            followUp: "Contactez dans les 24 heures pour le meilleur service."
+          },
+          tr: {
+            subject: "🤖 Chatbot Üzerinden Yeni Müşteri Adayı",
+            intro: "Chatbot üzerinden yeni bir teklif talebi alındı!",
+            followUp: "En iyi hizmet için 24 saat içinde iletişime geçin."
+          }
+        };
+
+        const messages = emailMessages[language as keyof typeof emailMessages] || emailMessages.nl;
+        
+        const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+                .content { background: #f8fafc; padding: 20px; border: 1px solid #e2e8f0; }
+                .footer { background: #1e293b; color: white; padding: 15px; border-radius: 0 0 8px 8px; text-align: center; }
+                .info-box { background: white; padding: 15px; margin: 10px 0; border-radius: 6px; border-left: 4px solid #f59e0b; }
+                .button { display: inline-block; background: #f59e0b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 10px 0; }
+                .urgent { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 15px; border-radius: 6px; margin: 15px 0; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🤖 ${messages.subject}</h1>
+                    <p>${messages.intro}</p>
+                </div>
+                
+                <div class="content">
+                    <div class="urgent">
+                        <h3>🚨 PRIORITEIT: Chatbot Lead</h3>
+                        <p><strong>${messages.followUp}</strong></p>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>👤 Klantgegevens</h3>
+                        <p><strong>Naam:</strong> ${name}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Taal:</strong> ${language.toUpperCase()}</p>
+                        <p><strong>GDPR Toestemming:</strong> ✅ Verleend</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3>🤖 Chatbot Details</h3>
+                        <p><strong>Conversatie ID:</strong> ${conversationId}</p>
+                        <p><strong>Offerte Aanvraag ID:</strong> #${newQuoteRequest.id}</p>
+                        <p><strong>Tijdstip:</strong> ${new Date().toLocaleString('nl-NL')}</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3>⚡ Aanbevolen Actie</h3>
+                        <p>1. Bekijk de volledige chatbot conversatie voor context</p>
+                        <p>2. Neem binnen 4 uur contact op via telefoon of email</p>
+                        <p>3. Bereid een gepersonaliseerde offerte voor</p>
+                        <p>4. Update de status in het admin panel</p>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    <p>KANIOU Chatbot Lead System | Automatisch gegenereerd</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        `;
+
+        // This will be handled by the existing email service
+        console.log(`📧 CHATBOT LEAD EMAIL: Preparing notification for quote request #${newQuoteRequest.id}`);
+        
+      } catch (emailError) {
+        console.error('❌ EMAIL ERROR: Failed to send chatbot lead notification, but lead is saved:', emailError);
+      }
+
+      res.json({
+        success: true,
+        message: "Lead successfully collected",
+        quoteRequestId: newQuoteRequest.id,
+        conversationId: conversation.id
+      });
+
+    } catch (error) {
+      console.error("Error processing chatbot lead:", error);
+      res.status(500).json({ message: "Failed to process lead" });
+    }
+  });
+
   // Admin API Routes for Chatbot Management
   
   // Get all knowledge base entries

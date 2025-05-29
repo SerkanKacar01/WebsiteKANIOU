@@ -1,0 +1,51 @@
+✅ English Instruction for Replit – AI Chatbot Must Use All Website Information (No Code)
+
+⸻
+
+Instruction for Replit:
+
+Please update the AI chatbot on my website so that it is fully capable of answering visitor questions using all available content from the website — this is mandatory.
+
+⸻
+
+🧠 Objective:
+
+Make the chatbot intelligent, dynamic, and helpful by having it use the entire content of the KANIOU website to answer customer questions in real time.
+
+⸻
+
+✅ Required Implementation:
+	1.	Use all live website content as data source (mandatory):
+The chatbot must be able to access and use all relevant information from the website, including:
+	•	Services (e.g. measurement at home, installation, delivery times)
+	•	All product categories and descriptions (gordijnen, jaloezieën, rolgordijnen, shutters, etc.)
+	•	FAQ, about us, contact pages
+	•	Price estimation logic, promotions, customization options
+	•	Any dynamic content that explains what the company offers
+	2.	Answer questions based on real content
+The chatbot must be able to:
+	•	Detect the topic or product mentioned
+	•	Search and use matching content from the website
+	•	Respond accurately, without fallback messages like “not available” or “contact support”
+	3.	Example:
+	•	Visitor asks: “Komen jullie meten?”
+	•	The chatbot replies:
+“Ja, wij komen gratis opmeten aan huis binnen België. Je kunt een afspraak maken via het offerteformulier of telefonisch contact opnemen.”
+	4.	Avoid generic replies:
+Completely remove generic messages like:
+	•	“I am not available right now”
+	•	“Please contact support”
+Replace them with real, content-based responses.
+	5.	Support multiple languages (optional but preferred):
+	•	Dutch (primary), English, French, Turkish
+	•	Detect language based on input or flag selector
+	6.	Allow continued expansion:
+	•	The chatbot should support future updates when new pages or products are added.
+	•	If possible, automatically sync new content or allow manual uploads of additional information.
+
+⸻
+
+✅ Final Result:
+	•	The chatbot becomes a real digital assistant, trained on all KANIOU website content.
+	•	Can handle product advice, offer requests, delivery info, measurement appointments, and more.
+	•	Visitors get fast, relevant answers — no more vague fallback messages.

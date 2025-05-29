@@ -76,6 +76,46 @@
   transition: all 0.3s ease-in-out;
 }
 
+/* Chatbot Mobile Optimization */
+@layer utilities {
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+  }
+  
+  .word-break-break-word {
+    word-break: break-word;
+  }
+  
+  .hyphens-auto {
+    hyphens: auto;
+  }
+}
+
+/* Mobile-specific chatbot container fixes */
+@media (max-width: 640px) {
+  .chatbot-container {
+    width: calc(100vw - 1rem) !important;
+    max-width: none !important;
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+    bottom: 0.5rem !important;
+    height: calc(100vh - 1rem) !important;
+    max-height: calc(100vh - 1rem) !important;
+  }
+  
+  .chatbot-message {
+    max-width: 85% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: anywhere !important;
+    hyphens: auto !important;
+  }
+  
+  .chatbot-scroll-area {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}
+
 /* Add Playfair Display and Raleway fonts */
 .font-display {
   font-family: 'Playfair Display', serif;

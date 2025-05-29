@@ -3,6 +3,7 @@ import type { ChatbotConversation, ChatbotMessage, ChatbotKnowledge, Product, Ca
 import { DUTCH_PRODUCT_KNOWLEDGE, getProductKnowledge, compareProducts, searchProducts } from "./productKnowledge";
 import { buildConversationContext, findLearnedResponse, logLearnedResponseUsage, storeConversationContext } from "./conversationMemory";
 import { findRelevantKnowledge, analyzeQuestionIntent, generateKnowledgeResponse } from "./knowledgeRetrieval";
+import { detectUserLanguage, getMultilingualKnowledge, getPricingKeywords, getProductKeywords } from "./languageDetection";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -14,6 +15,7 @@ export interface ChatbotContext {
   categories: Category[];
   knowledgeBase: ChatbotKnowledge[];
   language: string;
+  detectedLanguage?: string;
 }
 
 export interface ChatbotResponse {
@@ -28,7 +30,7 @@ export interface ChatbotResponse {
 }
 
 /**
- * Generate AI response for chatbot using OpenAI GPT-4o with enhanced memory
+ * Generate AI response for chatbot using OpenAI GPT-4o with enhanced memory and automatic language detection
  */
 export async function generateChatbotResponse(
   userMessage: string,
@@ -37,9 +39,19 @@ export async function generateChatbotResponse(
   const startTime = Date.now();
 
   try {
-    // First, check for learned responses from previous admin training
+    // Step 1: Detect user language automatically
+    console.log(`🌐 LANGUAGE DETECTION: Analyzing message language...`);
+    const languageDetection = await detectUserLanguage(userMessage);
+    const responseLanguage = languageDetection.confidence > 0.6 ? languageDetection.detectedLanguage : context.language;
+    
+    console.log(`🌐 DETECTED: ${languageDetection.detectedLanguage} (confidence: ${Math.round(languageDetection.confidence * 100)}%) - Using: ${responseLanguage}`);
+    
+    // Update context with detected language
+    const enhancedContext = { ...context, detectedLanguage: responseLanguage };
+
+    // Step 2: Check for learned responses from previous admin training
     const conversationContext = await buildConversationContext(context.conversation.sessionId);
-    const learnedResponse = await findLearnedResponse(userMessage, conversationContext, context.language);
+    const learnedResponse = await findLearnedResponse(userMessage, conversationContext, responseLanguage);
     
     if (learnedResponse && learnedResponse.confidence > 0.8) {
       console.log(`🧠 MEMORY MATCH: Using learned response (confidence: ${Math.round(learnedResponse.confidence * 100)}%)`);
@@ -48,7 +60,7 @@ export async function generateChatbotResponse(
       await logLearnedResponseUsage(0, context.conversation.sessionId, userMessage);
       
       // Detect if this is still a pricing request for metadata
-      const requiresPricing = detectPricingRequest(userMessage, context.language);
+      const requiresPricing = detectPricingRequest(userMessage, responseLanguage);
       const extractedProducts = extractProductTypes(userMessage, context.products);
       
       return {
@@ -63,8 +75,8 @@ export async function generateChatbotResponse(
       };
     }
 
-    // Build context-aware system prompt with conversation memory
-    const systemPrompt = buildSystemPrompt(context);
+    // Step 3: Build multilingual context-aware system prompt
+    const systemPrompt = buildMultilingualSystemPrompt(enhancedContext, responseLanguage);
     
     // Build conversation history
     const conversationHistory = context.messages.slice(-10).map(msg => ({
@@ -90,7 +102,7 @@ export async function generateChatbotResponse(
     const endTime = Date.now();
 
     return {
-      content: parsedResponse.message || "I apologize, but I'm having trouble processing your request right now. Please try again.",
+      content: parsedResponse.message || getFallbackResponse(userMessage, responseLanguage),
       requiresPricing: parsedResponse.requiresPricing || false,
       detectedProductTypes: parsedResponse.detectedProductTypes || [],
       metadata: {
@@ -117,19 +129,55 @@ export async function generateChatbotResponse(
 }
 
 /**
- * Build comprehensive system prompt for the chatbot
+ * Build comprehensive multilingual system prompt for the chatbot
  */
-function buildSystemPrompt(context: ChatbotContext): string {
-  const { language, products, categories, knowledgeBase } = context;
+function buildMultilingualSystemPrompt(context: ChatbotContext, responseLanguage: string): string {
+  const { products, categories, knowledgeBase } = context;
 
-  const languageInstructions = getLanguageInstructions(language);
-  const productInfo = buildProductKnowledge(products, categories);
+  const languageInstructions = getAdvancedLanguageInstructions(responseLanguage);
+  const productInfo = buildMultilingualProductKnowledge(products, categories, responseLanguage);
   const knowledgeInfo = buildKnowledgeBase(knowledgeBase);
-  const pricingInstructions = getPricingInstructions(language);
+  const pricingInstructions = getMultilingualPricingInstructions(responseLanguage);
 
-  return `Je bent KANIOU's AI-assistent, een expert in gordijnen en raambekleding. ${languageInstructions}
+  const coreInstructions = getCoreInstructions(responseLanguage);
+  const guidelines = getGuidelinesForLanguage(responseLanguage);
 
-BELANGRIJK: Antwoord ALTIJD met een geldig JSON object in dit exacte formaat:
+  return `${languageInstructions}
+
+${coreInstructions}
+
+PRODUCT EXPERTISE:
+${productInfo}
+
+KNOWLEDGE BASE:
+${knowledgeInfo}
+
+${pricingInstructions}
+
+${guidelines}`;
+}
+
+/**
+ * Get advanced language-specific instructions for multilingual AI behavior
+ */
+function getAdvancedLanguageInstructions(language: string): string {
+  const instructions = {
+    nl: "Je bent KANIOU's AI-assistent, een expert in gordijnen en raambekleding. Antwoord ALTIJD in het Nederlands, ongeacht de taal van de vraag.",
+    en: "You are KANIOU's AI assistant, an expert in curtains and window treatments. ALWAYS respond in English, regardless of the language of the question.",
+    fr: "Vous êtes l'assistant IA de KANIOU, un expert en rideaux et habillages de fenêtres. Répondez TOUJOURS en français, quelle que soit la langue de la question.",
+    tr: "KANIOU'nun AI asistanısınız, perde ve pencere kaplamaları konusunda uzmansınız. Sorunun dili ne olursa olsun DAIMA Türkçe yanıt verin.",
+    ar: "أنت مساعد الذكي لشركة كانيو، خبير في الستائر وعلاجات النوافذ. أجب دائماً بالعربية بغض النظر عن لغة السؤال."
+  };
+
+  return instructions[language as keyof typeof instructions] || instructions.nl;
+}
+
+/**
+ * Get core instructions for different languages
+ */
+function getCoreInstructions(language: string): string {
+  const coreText = {
+    nl: `BELANGRIJK: Antwoord ALTIJD met een geldig JSON object in dit exacte formaat:
 {
   "message": "Je hulpzame antwoord hier",
   "requiresPricing": true/false,
@@ -142,24 +190,209 @@ JE ROL:
 - Help klanten de juiste producten kiezen voor hun behoeften
 - Beantwoord vragen over installatie, onderhoud en garanties
 - Detecteer prijsvragen automatisch en zet requiresPricing op true
-- Wees vriendelijk, professioneel en deskundig
+- Wees vriendelijk, professioneel en deskundig`,
 
-PRODUCT KENNIS:
-${productInfo}
+    en: `IMPORTANT: ALWAYS respond with a valid JSON object in this exact format:
+{
+  "message": "Your helpful response here",
+  "requiresPricing": true/false,
+  "detectedProductTypes": ["product1", "product2"],
+  "confidence": 0.8
+}
 
-KENNISBANK:
-${knowledgeInfo}
+YOUR ROLE:
+- Provide expert advice on curtains, blinds and window treatments
+- Help customers choose the right products for their needs
+- Answer questions about installation, maintenance and warranties
+- Automatically detect price inquiries and set requiresPricing to true
+- Be friendly, professional and knowledgeable`,
 
-${pricingInstructions}
+    fr: `IMPORTANT : Répondez TOUJOURS avec un objet JSON valide dans ce format exact :
+{
+  "message": "Votre réponse utile ici",
+  "requiresPricing": true/false,
+  "detectedProductTypes": ["produit1", "produit2"],
+  "confidence": 0.8
+}
 
-RICHTLIJNEN:
+VOTRE RÔLE :
+- Fournir des conseils d'expert sur les rideaux, stores et habillages de fenêtres
+- Aider les clients à choisir les bons produits pour leurs besoins
+- Répondre aux questions sur l'installation, la maintenance et les garanties
+- Détecter automatiquement les demandes de prix et définir requiresPricing sur true
+- Être amical, professionnel et compétent`,
+
+    tr: `ÖNEMLİ: HER ZAMAN bu tam formatta geçerli bir JSON nesnesi ile yanıt verin:
+{
+  "message": "Yardımcı yanıtınız burada",
+  "requiresPricing": true/false,
+  "detectedProductTypes": ["ürün1", "ürün2"],
+  "confidence": 0.8
+}
+
+ROLÜNÜZ:
+- Perde, güneşlik ve pencere kaplamaları konusunda uzman tavsiyeleri verin
+- Müşterilerin ihtiyaçlarına uygun ürünleri seçmelerine yardımcı olun
+- Kurulum, bakım ve garantiler hakkında soruları yanıtlayın
+- Fiyat sorularını otomatik olarak tespit edin ve requiresPricing'i true yapın
+- Dostça, profesyonel ve bilgili olun`
+  };
+
+  return coreText[language as keyof typeof coreText] || coreText.nl;
+}
+
+/**
+ * Get guidelines for specific language
+ */
+function getGuidelinesForLanguage(language: string): string {
+  const guidelines = {
+    nl: `RICHTLIJNEN:
 - Altijd behulpzaam en professioneel zijn
 - Geef specifieke productaanbevelingen waar passend
 - Stel verhelderende vragen om klantbehoeften beter te begrijpen
 - Als je iets specifieks niet weet, geef dat toe en bied aan meer informatie te zoeken
 - Houd antwoorden beknopt maar informatief (max 250 woorden)
 - Gebruik een warme, vriendelijke toon die KANIOU's premium merkimago weergeeft
-- Gebruik alleen echte productinformatie uit de kennisbank, geen verzonnen gegevens`;
+- Gebruik alleen echte productinformatie uit de kennisbank, geen verzonnen gegevens`,
+
+    en: `GUIDELINES:
+- Always be helpful and professional
+- Provide specific product recommendations where appropriate
+- Ask clarifying questions to better understand customer needs
+- If you don't know something specific, admit it and offer to find more information
+- Keep responses concise but informative (max 250 words)
+- Use a warm, friendly tone that reflects KANIOU's premium brand image
+- Only use real product information from the knowledge base, no fabricated data`,
+
+    fr: `DIRECTIVES :
+- Toujours être utile et professionnel
+- Fournir des recommandations de produits spécifiques le cas échéant
+- Poser des questions de clarification pour mieux comprendre les besoins du client
+- Si vous ne savez pas quelque chose de spécifique, admettez-le et proposez de trouver plus d'informations
+- Gardez les réponses concises mais informatives (max 250 mots)
+- Utilisez un ton chaleureux et amical qui reflète l'image de marque premium de KANIOU
+- Utilisez uniquement de vraies informations produit de la base de connaissances, pas de données fabriquées`,
+
+    tr: `KURAL VE İLKELER:
+- Her zaman yardımcı ve profesyonel olun
+- Uygun olan durumlarda özel ürün önerileri sağlayın
+- Müşteri ihtiyaçlarını daha iyi anlamak için açıklayıcı sorular sorun
+- Belirli bir şey bilmiyorsanız, kabul edin ve daha fazla bilgi bulmayı teklif edin
+- Yanıtları kısa ama bilgilendirici tutun (maksimum 250 kelime)
+- KANIOU'nun premium marka imajını yansıtan sıcak, dostça bir ton kullanın
+- Sadece bilgi tabanından gerçek ürün bilgilerini kullanın, uydurma veriler kullanmayın`
+  };
+
+  return guidelines[language as keyof typeof guidelines] || guidelines.nl;
+}
+
+/**
+ * Build multilingual product knowledge
+ */
+function buildMultilingualProductKnowledge(products: Product[], categories: Category[], language: string): string {
+  const multilingualKnowledge = getMultilingualKnowledge();
+  
+  let knowledge = "";
+  
+  // Add language-specific company info
+  if (multilingualKnowledge.company_info[language as keyof typeof multilingualKnowledge.company_info]) {
+    knowledge += multilingualKnowledge.company_info[language as keyof typeof multilingualKnowledge.company_info] + "\n\n";
+  }
+  
+  // Add service information
+  if (multilingualKnowledge.services[language as keyof typeof multilingualKnowledge.services]) {
+    knowledge += multilingualKnowledge.services[language as keyof typeof multilingualKnowledge.services] + "\n\n";
+  }
+
+  // Add comprehensive Dutch product knowledge (always include as base)
+  knowledge += "KANIOU PRODUCT EXPERTISE:\n\n";
+  
+  DUTCH_PRODUCT_KNOWLEDGE.forEach(productInfo => {
+    knowledge += `**${productInfo.name}** (${productInfo.category}):\n`;
+    knowledge += `${productInfo.description}\n\n`;
+    knowledge += `Benefits:\n`;
+    productInfo.benefits.forEach(benefit => {
+      knowledge += `• ${benefit}\n`;
+    });
+    knowledge += `\nFeatures:\n`;
+    productInfo.keyFeatures.forEach(feature => {
+      knowledge += `• ${feature}\n`;
+    });
+    knowledge += `\nIdeal for: ${productInfo.idealFor.join(", ")}\n`;
+    knowledge += `Comparison: ${productInfo.vsOtherProducts}\n`;
+    knowledge += `Materials: ${productInfo.materials.join(", ")}\n\n`;
+    knowledge += "---\n\n";
+  });
+
+  // Add database products if available
+  if (products.length && categories.length) {
+    const categoryMap = new Map(categories.map(cat => [cat.id, cat]));
+    
+    knowledge += "CURRENT PRODUCTS IN OUR COLLECTION:\n\n";
+    
+    categories.forEach(category => {
+      knowledge += `${category.name}:\n`;
+      knowledge += `${category.description}\n`;
+      
+      const categoryProducts = products.filter(p => p.categoryId === category.id);
+      categoryProducts.forEach(product => {
+        knowledge += `- ${product.name}: ${product.description}\n`;
+        if (product.features?.length) {
+          knowledge += `  Features: ${product.features.join(", ")}\n`;
+        }
+        if (product.material) {
+          knowledge += `  Material: ${product.material}\n`;
+        }
+      });
+      knowledge += "\n";
+    });
+  }
+
+  return knowledge;
+}
+
+/**
+ * Get multilingual pricing instructions
+ */
+function getMultilingualPricingInstructions(language: string): string {
+  const multilingualKnowledge = getMultilingualKnowledge();
+  const keywords = getPricingKeywords(language);
+  
+  const instructions = {
+    nl: `PRIJSDETECTIE:
+Als een klant vraagt naar prijzen, kosten, offertes, budget of geld, zet dan "requiresPricing": true en voeg de relevante producttypes toe aan "detectedProductTypes".
+
+PRIJSWOORDEN: ${keywords.join(", ")}
+
+REACTIE BIJ PRIJSVRAAG:
+"${multilingualKnowledge.pricing_response.nl}"`,
+    
+    en: `PRICE DETECTION:
+If a customer asks about prices, costs, quotes, budget or money, set "requiresPricing": true and add relevant product types to "detectedProductTypes".
+
+PRICE KEYWORDS: ${keywords.join(", ")}
+
+PRICE RESPONSE:
+"${multilingualKnowledge.pricing_response.en}"`,
+    
+    fr: `DÉTECTION DE PRIX:
+Si un client demande des prix, coûts, devis, budget ou argent, définissez "requiresPricing": true et ajoutez les types de produits pertinents à "detectedProductTypes".
+
+MOTS-CLÉS DE PRIX: ${keywords.join(", ")}
+
+RÉPONSE DE PRIX:
+"${multilingualKnowledge.pricing_response.fr}"`,
+
+    tr: `FİYAT TESPİTİ:
+Bir müşteri fiyat, maliyet, teklif, bütçe veya para hakkında soru sorarsa, "requiresPricing": true yapın ve ilgili ürün türlerini "detectedProductTypes"a ekleyin.
+
+FİYAT ANAHTAR KELİMELERİ: ${keywords.join(", ")}
+
+FİYAT YANITI:
+"${multilingualKnowledge.pricing_response.tr}"`
+  };
+
+  return instructions[language as keyof typeof instructions] || instructions.nl;
 }
 
 /**
@@ -347,5 +580,5 @@ export function extractProductTypes(message: string, products: Product[]): strin
     }
   });
 
-  return Array.from(new Set(detectedTypes)); // Remove duplicates
+  return [...new Set(detectedTypes)]; // Remove duplicates
 }

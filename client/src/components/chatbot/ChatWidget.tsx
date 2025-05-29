@@ -262,7 +262,7 @@ export function ChatbotWidget() {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl z-50 flex flex-col border-2 border-amber-200 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300">
+        <Card className="fixed bottom-4 right-4 w-[calc(100vw-2rem)] max-w-96 sm:w-96 h-[calc(100vh-2rem)] max-h-[500px] shadow-2xl z-50 flex flex-col border-2 border-amber-200 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300 overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 text-white rounded-t-lg border-b-2 border-amber-300">
             <div className="flex items-center gap-3">
               {/* KANIOU Logo */}
@@ -304,33 +304,35 @@ export function ChatbotWidget() {
             </div>
           </CardHeader>
           
-          <CardContent className="flex flex-col flex-1 p-0">
+          <CardContent className="flex flex-col flex-1 p-0 overflow-hidden">
             {/* Messages Area */}
-            <ScrollArea className="flex-1 p-4">
+            <ScrollArea className="flex-1 px-3 py-4 overflow-y-auto overflow-x-hidden">
               {/* Welcome Message */}
-              <div className="mb-4">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-900 animate-in fade-in-50 duration-500">
+              <div className="mb-4 w-full">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-3 rounded-lg text-sm text-blue-900 animate-in fade-in-50 duration-500 max-w-full break-words">
                   <div className="flex items-center gap-2 mb-1">
-                    <MessageCircle className="h-4 w-4 text-blue-600" />
+                    <MessageCircle className="h-4 w-4 text-blue-600 flex-shrink-0" />
                     <span className="font-medium">{t("chatbot.welcome")}</span>
                   </div>
-                  {t("chatbot.welcomeMessage")}
+                  <div className="break-words overflow-wrap-anywhere">
+                    {t("chatbot.welcomeMessage")}
+                  </div>
                 </div>
               </div>
 
               {/* Business Hours Notice */}
               {businessHours && !businessHours.isOpen && (
-                <div className="mb-4">
-                  <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 p-4 rounded-lg text-sm text-orange-900 animate-in fade-in-50 duration-500">
+                <div className="mb-4 w-full">
+                  <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 p-3 rounded-lg text-sm text-orange-900 animate-in fade-in-50 duration-500 max-w-full break-words">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-                      <span className="font-medium">{t("chatbot.businessHours.afterHoursNotice")}</span>
+                      <div className="w-2 h-2 bg-orange-400 rounded-full flex-shrink-0"></div>
+                      <span className="font-medium break-words">{t("chatbot.businessHours.afterHoursNotice")}</span>
                     </div>
                     <div className="space-y-2">
-                      <p>{businessHours.message}</p>
-                      <div className="text-xs opacity-80">
-                        <p>{t("chatbot.businessHours.openHours")}</p>
-                        <p>{t("chatbot.businessHours.leaveMessage")}</p>
+                      <p className="break-words overflow-wrap-anywhere">{businessHours.message}</p>
+                      <div className="text-xs opacity-80 space-y-1">
+                        <p className="break-words">{t("chatbot.businessHours.openHours")}</p>
+                        <p className="break-words">{t("chatbot.businessHours.leaveMessage")}</p>
                       </div>
                     </div>
                   </div>
@@ -349,18 +351,18 @@ export function ChatbotWidget() {
                 (messages as ChatMessage[]).map((msg: ChatMessage) => (
                   <div
                     key={msg.id}
-                    className={`mb-4 animate-in slide-in-from-bottom-2 duration-300 ${
-                      msg.role === "user" ? "text-right" : "text-left"
+                    className={`mb-3 w-full animate-in slide-in-from-bottom-2 duration-300 ${
+                      msg.role === "user" ? "flex justify-end" : "flex justify-start"
                     }`}
                   >
                     <div
-                      className={`inline-block p-3 rounded-lg text-sm max-w-[85%] shadow-sm ${
+                      className={`p-3 rounded-lg text-sm shadow-sm max-w-[85%] min-w-0 ${
                         msg.role === "user"
                           ? "bg-primary text-primary-foreground rounded-br-sm"
                           : "bg-white border border-gray-200 text-gray-800 rounded-bl-sm"
                       }`}
                     >
-                      <div className="whitespace-pre-wrap break-words">{msg.content}</div>
+                      <div className="break-words overflow-wrap-anywhere whitespace-pre-wrap word-break-break-word hyphens-auto">{msg.content}</div>
                       <div className={`text-xs mt-1 opacity-70 ${
                         msg.role === "user" ? "text-primary-foreground/70" : "text-gray-500"
                       }`}>
@@ -376,12 +378,12 @@ export function ChatbotWidget() {
 
               {/* Loading indicator for AI response */}
               {sendMessageMutation.isPending && (
-                <div className="mb-3 text-left animate-in slide-in-from-bottom-2 duration-300">
-                  <div className="inline-block bg-white border border-gray-200 p-3 rounded-lg rounded-bl-sm text-sm shadow-sm">
+                <div className="mb-3 w-full flex justify-start animate-in slide-in-from-bottom-2 duration-300">
+                  <div className="bg-white border border-gray-200 p-3 rounded-lg rounded-bl-sm text-sm shadow-sm max-w-[85%] min-w-0">
                     <div className="flex items-center gap-2">
-                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                      <span className="text-gray-600">{t("chatbot.typing")}</span>
-                      <div className="flex gap-1">
+                      <Loader2 className="h-4 w-4 animate-spin text-primary flex-shrink-0" />
+                      <span className="text-gray-600 break-words">{t("chatbot.typing")}</span>
+                      <div className="flex gap-1 flex-shrink-0">
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
@@ -393,8 +395,8 @@ export function ChatbotWidget() {
 
               {/* Quick Reply Buttons */}
               {chatState.showQuickReplies && chatState.quickReplyType && !chatState.showLeadForm && (
-                <div className="mb-4 text-left animate-in slide-in-from-bottom-2 duration-300">
-                  <div className="max-w-[85%]">
+                <div className="mb-4 w-full flex justify-start animate-in slide-in-from-bottom-2 duration-300">
+                  <div className="max-w-[85%] min-w-0">
                     {chatState.quickReplyType === 'price_request' && (
                       <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
@@ -453,14 +455,14 @@ export function ChatbotWidget() {
             </ScrollArea>
 
             {/* Message Input */}
-            <form onSubmit={handleSendMessage} className="p-4 border-t-2 border-amber-200 bg-gradient-to-r from-amber-50 to-yellow-50">
-              <div className="flex gap-2">
+            <form onSubmit={handleSendMessage} className="p-3 border-t-2 border-amber-200 bg-gradient-to-r from-amber-50 to-yellow-50 flex-shrink-0">
+              <div className="flex gap-2 w-full">
                 <Input
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t("chatbot.placeholder")}
                   disabled={sendMessageMutation.isPending || !conversationMutation.data || chatState.showLeadForm}
-                  className="flex-1 border-amber-300 focus:border-amber-500 bg-white shadow-sm"
+                  className="flex-1 min-w-0 border-amber-300 focus:border-amber-500 bg-white shadow-sm"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault();
@@ -472,7 +474,7 @@ export function ChatbotWidget() {
                   type="submit"
                   size="icon"
                   disabled={!message.trim() || sendMessageMutation.isPending || !conversationMutation.data || chatState.showLeadForm}
-                  className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white shadow-md transition-all duration-200"
+                  className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white shadow-md transition-all duration-200 flex-shrink-0"
                 >
                   {sendMessageMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

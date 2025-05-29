@@ -58,9 +58,7 @@ export async function generateChatbotResponse(
         metadata: {
           tokensUsed: 0,
           responseTime: Date.now() - startTime,
-          confidence: learnedResponse.confidence,
-          usedLearnedResponse: true,
-          originalQuestion: learnedResponse.originalQuestion
+          confidence: learnedResponse.confidence
         }
       };
     }

@@ -337,13 +337,14 @@ function getNoMatchResponse(intent: QuestionIntent, language: string): string {
       service_inquiry: "Voor informatie over onze services verwijs ik u graag naar onze specialists. Zij kunnen u volledig informeren over onze mogelijkheden.",
       pricing: "Voor een accurate prijsopgave plannen wij graag een gratis opmeetafspraak in. Dan kunnen we u een maatwerkofferte geven.",
       installation: "Voor installatie-advies helpen onze monteurs u graag verder. Wilt u meer specifieke informatie over een bepaald product?",
+      maintenance: "Voor onderhoudstips van uw raambekleding help ik u graag. Over welk type product heeft u vragen?",
       company_info: "KANIOU heeft meer dan 30 jaar ervaring in hoogwaardige raambekleding. Voor meer informatie over ons bedrijf neem gerust contact op.",
       general: "Ik help u graag verder met uw vraag over raambekleding. Kunt u uw vraag misschien wat specifieker stellen?"
     }
   };
   
   const langResponses = responses[language as keyof typeof responses] || responses.nl;
-  return langResponses[intent.type] || langResponses.general;
+  return langResponses[intent.type as keyof typeof langResponses] || langResponses.general;
 }
 
 /**

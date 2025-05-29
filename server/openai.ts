@@ -500,9 +500,14 @@ function buildKnowledgeBase(knowledgeBase: ChatbotKnowledge[]): string {
 
   let knowledge = "ADDITIONAL KNOWLEDGE:\n\n";
   
-  const categories = [...new Set(knowledgeBase.map(kb => kb.category))];
+  const uniqueCategories: string[] = [];
+  knowledgeBase.forEach(kb => {
+    if (!uniqueCategories.includes(kb.category)) {
+      uniqueCategories.push(kb.category);
+    }
+  });
   
-  categories.forEach(category => {
+  uniqueCategories.forEach((category: string) => {
     knowledge += `${category.toUpperCase()}:\n`;
     const categoryKnowledge = knowledgeBase
       .filter(kb => kb.category === category && kb.adminApproved)
@@ -580,5 +585,12 @@ export function extractProductTypes(message: string, products: Product[]): strin
     }
   });
 
-  return [...new Set(detectedTypes)]; // Remove duplicates
+  // Remove duplicates
+  const uniqueTypes: string[] = [];
+  detectedTypes.forEach(type => {
+    if (!uniqueTypes.includes(type)) {
+      uniqueTypes.push(type);
+    }
+  });
+  return uniqueTypes;
 }

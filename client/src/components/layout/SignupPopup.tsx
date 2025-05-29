@@ -25,37 +25,10 @@ export function SignupPopup() {
   });
   const { toast } = useToast();
 
-  // Check if popup should be shown
+  // Disabled automatic popup - using new newsletter popup instead
   useEffect(() => {
-    const checkShowPopup = () => {
-      const hasSeenPopup = localStorage.getItem('kaniou-signup-popup-seen');
-      const hasClosedPopup = localStorage.getItem('kaniou-signup-popup-closed');
-      const lastClosedDate = localStorage.getItem('kaniou-signup-popup-last-closed');
-      
-      // Don't show if user has already signed up or permanently dismissed
-      if (hasSeenPopup === 'completed') {
-        return false;
-      }
-
-      // If user closed without signing up, check if 7 days have passed
-      if (hasClosedPopup === 'true' && lastClosedDate) {
-        const daysSinceClose = (Date.now() - parseInt(lastClosedDate)) / (1000 * 60 * 60 * 24);
-        if (daysSinceClose < 7) {
-          return false;
-        }
-      }
-
-      return true;
-    };
-
-    // Show popup after a short delay for better UX
-    const timer = setTimeout(() => {
-      if (checkShowPopup()) {
-        setIsOpen(true);
-      }
-    }, 3000); // 3 second delay
-
-    return () => clearTimeout(timer);
+    // Mark as seen to prevent future automatic popups
+    localStorage.setItem('kaniou-signup-popup-seen', 'completed');
   }, []);
 
   const signupMutation = useMutation({

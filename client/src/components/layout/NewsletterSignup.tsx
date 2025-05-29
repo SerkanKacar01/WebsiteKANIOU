@@ -136,7 +136,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
       <DialogTrigger asChild>
         {children || DefaultTrigger}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md mx-4 rounded-xl border-0 shadow-2xl bg-[#FAF9F6]">
+      <DialogContent className="sm:max-w-md mx-4 rounded-xl border-0 shadow-2xl bg-[#FDFCF9]">
         <DialogHeader className="text-center space-y-4 pb-2">
           <div className="mx-auto w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center mb-2">
             <Mail className="w-8 h-8 text-white" />
@@ -215,7 +215,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
                 )}
               />
 
-              <div className="flex items-start space-x-3 p-4 bg-[#F5F4F0] rounded-lg border border-neutral-200">
+              <div className="flex items-start space-x-3 p-4 bg-[#F8F7F4] rounded-lg border border-neutral-200">
                 <Checkbox 
                   id="privacy-consent" 
                   className="mt-0.5 border-neutral-400 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500" 

@@ -55,17 +55,13 @@ export function isWithinBusinessHours(config: BusinessHoursConfig = KANIOU_BUSIN
  */
 export function getBusinessHoursResponse(language: string = 'nl'): string {
   const responses = {
-    nl: "We zijn momenteel gesloten. Ons team is beschikbaar van maandag tot zaterdag tussen 10:00 en 18:00. Laat uw bericht achter en wij nemen zo spoedig mogelijk contact met u op.",
+    nl: "We zijn momenteel gesloten. Ons team is beschikbaar van maandag tot zaterdag tussen 10:00 en 18:00. Laat uw bericht achter en wij nemen zo spoedig mogelijk contact met u op tijdens onze openingstijden.",
     
-    en: "We are currently closed. Our team is available from Monday to Saturday between 10:00 and 18:00. Please leave your message, and we will get back to you as soon as possible.",
+    en: "We are currently closed. Our team is available Monday to Saturday between 10:00 and 18:00. Please leave your message and we will contact you as soon as possible during our business hours.",
     
-    fr: "Nous sommes actuellement fermés. Notre équipe est disponible du lundi au samedi entre 10h00 et 18h00. Veuillez laisser votre message et nous vous recontacterons dès que possible.",
+    fr: "Nous sommes actuellement fermés. Notre équipe est disponible du lundi au samedi entre 10h00 et 18h00. Laissez votre message et nous vous recontacterons dès que possible pendant nos heures d'ouverture.",
     
-    de: "Wir sind derzeit geschlossen. Unser Team ist von Montag bis Samstag zwischen 10:00 und 18:00 Uhr verfügbar. Bitte hinterlassen Sie Ihre Nachricht und wir melden uns schnellstmöglich bei Ihnen.",
-    
-    tr: "Şu anda kapalıyız. Ekibimiz Pazartesi'den Cumartesi'ye 10:00-18:00 saatleri arasında hizmetinizdedir. Lütfen mesajınızı bırakın, en kısa sürede size geri döneceğiz.",
-    
-    ar: "نحن مغلقون حاليًا. فريقنا متاح من الاثنين إلى السبت بين الساعة 10:00 و 18:00. يرجى ترك رسالتك وسنعاود الاتصال بك في أقرب وقت ممكن."
+    tr: "Şu anda kapalıyız. Ekibimiz Pazartesi'den Cumartesi'ye 10:00-18:00 saatleri arasında hizmetinizdedir. Lütfen mesajınızı bırakın, çalışma saatlerimizde en kısa sürede size geri döneceğiz."
   };
   
   return responses[language as keyof typeof responses] || responses.nl;

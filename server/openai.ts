@@ -4,6 +4,7 @@ import { DUTCH_PRODUCT_KNOWLEDGE, getProductKnowledge, compareProducts, searchPr
 import { buildConversationContext, findLearnedResponse, logLearnedResponseUsage, storeConversationContext } from "./conversationMemory";
 import { findRelevantKnowledge, analyzeQuestionIntent, generateKnowledgeResponse } from "./knowledgeRetrieval";
 import { detectUserLanguage, getMultilingualKnowledge, getPricingKeywords, getProductKeywords } from "./languageDetection";
+import { getSystemMessage, SYSTEM_MESSAGES, getProductInfo } from "./multilingualResponses";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -162,11 +163,10 @@ ${guidelines}`;
  */
 function getAdvancedLanguageInstructions(language: string): string {
   const instructions = {
-    nl: "Je bent KANIOU's AI-assistent, een expert in gordijnen en raambekleding. Antwoord ALTIJD in het Nederlands, ongeacht de taal van de vraag.",
-    en: "You are KANIOU's AI assistant, an expert in curtains and window treatments. ALWAYS respond in English, regardless of the language of the question.",
-    fr: "Vous êtes l'assistant IA de KANIOU, un expert en rideaux et habillages de fenêtres. Répondez TOUJOURS en français, quelle que soit la langue de la question.",
-    tr: "KANIOU'nun AI asistanısınız, perde ve pencere kaplamaları konusunda uzmansınız. Sorunun dili ne olursa olsun DAIMA Türkçe yanıt verin.",
-    ar: "أنت مساعد الذكي لشركة كانيو، خبير في الستائر وعلاجات النوافذ. أجب دائماً بالعربية بغض النظر عن لغة السؤال."
+    nl: "Je bent KANIOU's AI-assistent, een expert in raamdecoratie. Antwoord ALTIJD in perfect Nederlands, met correcte grammatica en formele toon. Gebruik uitsluitend Nederlandse terminologie en vermijd Engels of andere talen.",
+    en: "You are KANIOU's AI assistant, an expert in window treatments. ALWAYS respond in perfect English, with correct grammar and professional tone. Use only English terminology and avoid mixing with other languages.",
+    fr: "Vous êtes l'assistant IA de KANIOU, expert en décoration de fenêtres. Répondez TOUJOURS en français parfait, avec une grammaire correcte et un ton professionnel. Utilisez uniquement la terminologie française et évitez de mélanger avec d'autres langues.",
+    tr: "KANIOU'nun AI asistanısınız, pencere dekorasyonu uzmanısınız. HER ZAMAN mükemmel Türkçe ile yanıt verin, doğru dilbilgisi ve profesyonel tonla. Sadece Türkçe terminoloji kullanın ve diğer dillerle karıştırmayın."
   };
 
   return instructions[language as keyof typeof instructions] || instructions.nl;
@@ -526,16 +526,7 @@ function buildKnowledgeBase(knowledgeBase: ChatbotKnowledge[]): string {
  * Get fallback response when OpenAI is unavailable
  */
 function getFallbackResponse(userMessage: string, language: string): string {
-  const fallbacks = {
-    nl: "Bedankt voor uw bericht! Ik ben momenteel niet beschikbaar, maar onze experts helpen u graag verder. Neem contact met ons op voor persoonlijke assistentie.",
-    en: "Thank you for your message! I'm currently unavailable, but our experts are happy to help you. Please contact us for personal assistance.",
-    fr: "Merci pour votre message ! Je ne suis pas disponible actuellement, mais nos experts sont heureux de vous aider. Veuillez nous contacter pour une assistance personnalisée.",
-    de: "Vielen Dank für Ihre Nachricht! Ich bin derzeit nicht verfügbar, aber unsere Experten helfen Ihnen gerne weiter. Bitte kontaktieren Sie uns für persönliche Beratung.",
-    tr: "Mesajınız için teşekkür ederim! Şu anda müsait değilim, ancak uzmanlarımız size yardımcı olmaktan mutluluk duyar. Kişisel yardım için lütfen bizimle iletişime geçin.",
-    ar: "شكراً لرسالتك! أنا غير متاح حالياً، لكن خبراؤنا سعداء لمساعدتك. يرجى الاتصال بنا للحصول على المساعدة الشخصية."
-  };
-
-  return fallbacks[language as keyof typeof fallbacks] || fallbacks.nl;
+  return getSystemMessage('errorFallback', language);
 }
 
 /**

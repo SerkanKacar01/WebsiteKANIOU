@@ -136,7 +136,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
       <DialogTrigger asChild>
         {children || DefaultTrigger}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md mx-4 rounded-xl border-0 shadow-2xl bg-gradient-to-b from-white to-neutral-50">
+      <DialogContent className="sm:max-w-md mx-4 rounded-xl border-0 shadow-2xl bg-[#FAF9F6]">
         <DialogHeader className="text-center space-y-4 pb-2">
           <div className="mx-auto w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center mb-2">
             <Mail className="w-8 h-8 text-white" />
@@ -215,7 +215,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
                 )}
               />
 
-              <div className="flex items-start space-x-3 p-4 bg-neutral-50 rounded-lg border border-neutral-200">
+              <div className="flex items-start space-x-3 p-4 bg-[#F5F4F0] rounded-lg border border-neutral-200">
                 <Checkbox 
                   id="privacy-consent" 
                   className="mt-0.5 border-neutral-400 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500" 
@@ -230,11 +230,11 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
               <Button
                 type="submit"
                 disabled={signupMutation.isPending}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium h-12 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                className="w-full bg-[#EAD488] hover:bg-[#E6C973] text-black font-medium h-12 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
               >
                 {signupMutation.isPending ? (
                   <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
                     <span>Inschrijven...</span>
                   </div>
                 ) : (

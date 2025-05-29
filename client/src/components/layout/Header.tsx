@@ -229,14 +229,12 @@ const Header = () => {
                       </Button>
                     </NewsletterSignup>
                     <Link href="/quote">
-                      <a>
-                        <Button
-                          className="w-full bg-secondary hover:bg-accent"
-                          onClick={handleCloseSheet}
-                        >
-                          {t("OFFERTE AANVRAGEN")}
-                        </Button>
-                      </a>
+                      <Button
+                        className="w-full bg-secondary hover:bg-accent"
+                        onClick={handleCloseSheet}
+                      >
+                        {t("OFFERTE AANVRAGEN")}
+                      </Button>
                     </Link>
                   </div>
                 </div>

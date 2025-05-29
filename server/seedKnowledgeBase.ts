@@ -235,6 +235,211 @@ export async function seedChatbotKnowledge() {
       priority: 9,
       adminApproved: true,
     },
+
+    // COMPANY INFORMATION
+    {
+      category: "company",
+      topic: "Over KANIOU",
+      content:
+        "KANIOU zilvernaald is opgericht in 1991 en heeft meer dan 30 jaar ervaring in hoogwaardige raambekleding op maat. Wij zijn een toonaangevende leverancier van premium maatwerkoplossingen voor raamdecoratie in Nederland en België. Ons team van ervaren interieurontwerpers en installateurs werkt met passie, precisie en oog voor detail.",
+      language: "nl",
+      priority: 10,
+      adminApproved: true,
+    },
+    {
+      category: "company",
+      topic: "Onze Waarden",
+      content:
+        "Bij KANIOU hechten wij grote waarde aan: Premium kwaliteit met alleen de beste materialen en vakmanschap, Maatwerkoplossingen volledig afgestemd op uw specificaties, Professionele installatie met gegarandeerd perfect resultaat, en Deskundig advies van onze specialisten in raambekleding.",
+      language: "nl",
+      priority: 9,
+      adminApproved: true,
+    },
+    {
+      category: "company",
+      topic: "Ervaring en Klanten",
+      content:
+        "KANIOU heeft in 30+ jaar meer dan 5000 tevreden klanten geholpen. Wij zijn trots dat wij jaarlijks duizenden klanten mogen begeleiden bij het transformeren van hun leefruimtes, dankzij ons vakmanschap en oog voor verfijnd design.",
+      language: "nl",
+      priority: 8,
+      adminApproved: true,
+    },
+
+    // SERVICES OFFERED
+    {
+      category: "service",
+      topic: "Opmeetservice Details",
+      content:
+        "Ja, wij bieden opmeetservice aan huis. Dit is inbegrepen bij onze maatwerkservice. Onze specialist komt langs om exact op te meten en advies te geven over de beste oplossing voor uw ramen. Dit garandeert perfecte pasvorm en voorkomt meetfouten.",
+      language: "nl",
+      priority: 10,
+      adminApproved: true,
+    },
+    {
+      category: "service",
+      topic: "Installatieservice",
+      content:
+        "Wij bieden professionele installatieservice voor alle producten. Onze ervaren monteurs zorgen voor perfect gemonteerde zonweringen met minimale overlast in uw woning. Installatie wordt ingepland na oplevering van uw bestelling.",
+      language: "nl",
+      priority: 9,
+      adminApproved: true,
+    },
+    {
+      category: "service",
+      topic: "Advies en Begeleiding",
+      content:
+        "Onze specialisten geven persoonlijk advies over de beste raamdecoratiekeuzes voor uw interieur. Wij luisteren aandachtig naar uw wensen en voorkeuren en vertalen die naar oplossingen die verwachtingen overtreffen.",
+      language: "nl",
+      priority: 9,
+      adminApproved: true,
+    },
+
+    // DETAILED MEASURING GUIDES
+    {
+      category: "faq",
+      topic: "Gordijnen Opmeten Gedetailleerd",
+      content:
+        "Voor gordijnen opmeten: 1) Meet breedte van raam of rails, voeg 15-20cm toe aan beide zijden voor vollere uitstraling. 2) Meet vanaf bovenkant rail tot gewenste eindpunt (vensterbank, onder vensterbank, of vloer). 3) Bij railsystemen tel 2-3cm extra hoogte op voor plooiband. 4) Bij roedes meet vanaf bovenkant roede en tel 2-3cm toe voor ringen. Geef altijd exacte maten door - ons team past aan op basis van kopafwerking.",
+      language: "nl",
+      priority: 9,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Zonweringen Opmeten Gedetailleerd",
+      content:
+        "Voor zonweringen opmeten: IN-DE-DAG montage: Meet exacte breedte aan boven-, midden- en onderzijde van raamnis, gebruik kleinste maat. Meet hoogte aan linker-, midden- en rechterzijde, gebruik langste maat. OP-DE-DAG montage: Meet gewenste breedte plus 5-10cm aan beide zijden voor optimale afscherming. Meet hoogte vanaf gewenste beginpunt tot eindpunt. Geef altijd bedieningszijde aan (links/rechts).",
+      language: "nl",
+      priority: 9,
+      adminApproved: true,
+    },
+
+    // INSTALLATION TIPS
+    {
+      category: "faq",
+      topic: "Installatie Tips Gordijnroedes",
+      content:
+        "Voor gordijnroedes installatie: Plaats roedesteunen ongeveer 15cm boven raam en 15-20cm buiten raamopening aan beide zijden. Gebruik geschikte pluggen voor muurtype (gips, beton, baksteen). Controleer waterpas voor definitieve bevestiging.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Installatie Tips Gordijnrails",
+      content:
+        "Voor gordijnrails installatie: Monteer rail ongeveer 10cm boven raam. Plaats bevestigingen om de 50-60cm en zorg voor stevige bevestiging. Controleer soepele werking voor gordijn bevestiging.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Installatie Tips Zonweringen",
+      content:
+        "Voor zonweringen installatie: Markeer beugelpositie en controleer waterpas. Op-de-dag: bevestig beugels op muur/kozijn buiten nis. In-de-dag: bevestig aan binnenzijde raamnis. Test werking voor definitieve bevestiging.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
+
+    // MAINTENANCE INSTRUCTIONS
+    {
+      category: "faq",
+      topic: "Onderhoud Gordijnen",
+      content:
+        "Gordijnen onderhoud: Stofzuig regelmatig met zachte borstel. Meeste gordijnstoffen kunnen in wasmachine op 30°C delicaat programma. Gebruik milde wasmiddel, geen bleek of wasverzachter. Laat aan de lijn drogen en hang direct terug om kreuken te voorkomen.",
+      language: "nl",
+      priority: 6,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Onderhoud Zonweringen",
+      content:
+        "Zonweringen onderhoud: Stofzuig regelmatig of veeg af met droge doek. Bij hardnekkig vuil gebruik lauwe zeepoplossing. Smeer mechanieke delen jaarlijks met druppel olie. Controleer bevestigingen jaarlijks op stevigheid.",
+      language: "nl",
+      priority: 6,
+      adminApproved: true,
+    },
+
+    // SPECIFIC PRODUCT DETAILS
+    {
+      category: "product",
+      topic: "Dakraam Zonweringen",
+      content:
+        "Dakraam zonweringen zijn speciaal ontworpen voor schuine ramen. Verkrijgbaar als plissé, rolgordijnen of duo-systemen. Bieden uitstekende warmtewering en verduistering. Ideaal voor slaapkamers en zolders.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
+    {
+      category: "product",
+      topic: "Duo Plissé",
+      content:
+        "Duo plissé combineert twee plisséstoffen in één systeem: transparant en verduisterend. Perfect voor flexibele lichtcontrole. Zeer compact en geschikt voor alle raamtypes.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
+    {
+      category: "product",
+      topic: "Gordijnrails en Roedes",
+      content:
+        "Gordijnrails voor moderne, strakke uitstraling met onzichtbare ophanging. Gordijnroedes voor klassieke stijl met decoratieve eindkappen. Beide verkrijgbaar in verschillende materialen en afwerkingen.",
+      language: "nl",
+      priority: 8,
+      adminApproved: true,
+    },
+
+    // PRICING AND QUOTES
+    {
+      category: "faq",
+      topic: "Offerte Aanvragen",
+      content:
+        "Voor een offerte kunt u: 1) Online het contactformulier invullen met uw wensen, 2) Bellen voor een telefonisch gesprek, 3) Een opmeetafspraak inplannen voor exact advies en prijzen. Wij maken altijd een vrijblijvende offerte op maat.",
+      language: "nl",
+      priority: 10,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Levertijd en Planning",
+      content:
+        "Standaard levertijd is 2-3 weken na opmeting en definitieve bestelling. Spoed leveringen zijn mogelijk tegen meerprijs. Na bestelling plannen wij de installatie in op een voor u geschikt moment.",
+      language: "nl",
+      priority: 8,
+      adminApproved: true,
+    },
+
+    // COMMON QUESTIONS
+    {
+      category: "faq",
+      topic: "Motorisatie Opties",
+      content:
+        "Veel van onze producten zijn verkrijgbaar met elektrische bediening. Van eenvoudige snoerbediening tot smart home integratie. Vooral handig voor moeilijk bereikbare ramen of grote zonweringen.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Energie Besparing",
+      content:
+        "Juiste raambekleding kan tot 25% energiebesparing opleveren. Isolerende eigenschappen van overgordijnen, shutters en plissé gordijnen helpen warmte binnen te houden in winter en buiten in zomer.",
+      language: "nl",
+      priority: 8,
+      adminApproved: true,
+    },
+    {
+      category: "faq",
+      topic: "Kleuradviezen",
+      content:
+        "Voor warmtewering kies lichte kleuren die warmte reflecteren. Voor gezelligheid warme tinten. Voor moderne uitstraling neutrale kleuren. Wij helpen graag bij het maken van de perfecte kleurkeuze voor uw interieur.",
+      language: "nl",
+      priority: 7,
+      adminApproved: true,
+    },
   ];
 
   // Insert all knowledge base entries

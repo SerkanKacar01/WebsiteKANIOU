@@ -71,16 +71,22 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
       console.error("Newsletter signup error:", error);
       
       // Handle specific error cases
-      if (error.message?.includes("already exists") || error.message?.includes("duplicate")) {
+      if (error.message?.includes("al ingeschreven") || error.message?.includes("already exists") || error.message?.includes("duplicate")) {
         toast({
           title: "E-mailadres al geregistreerd",
           description: "Dit e-mailadres is al ingeschreven voor onze nieuwsbrief.",
           variant: "destructive",
         });
+      } else if (error.message?.includes("rate limit") || error.message?.includes("te veel")) {
+        toast({
+          title: "Te veel pogingen",
+          description: "Wacht even voordat je het opnieuw probeert.",
+          variant: "destructive",
+        });
       } else {
         toast({
-          title: "Er ging iets mis",
-          description: "Probeer het later opnieuw of neem contact met ons op.",
+          title: "Inschrijving mislukt",
+          description: "Controleer je internetverbinding en probeer het opnieuw.",
           variant: "destructive",
         });
       }

@@ -46,16 +46,7 @@ const HeroSection = () => {
                 Vrijblijvend offerte aanvragen
               </Button>
             </Link>
-            <NewsletterSignup variant="default">
-              <Button
-                variant="outline"
-                className="bg-gradient-to-r from-amber-50/90 to-orange-50/90 hover:from-amber-100/95 hover:to-orange-100/95 text-amber-700 border-amber-300 hover:border-amber-400 px-4 sm:px-6 py-2 sm:py-2.5 rounded w-full sm:w-auto mt-2 sm:mt-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
-                title="Meld je aan voor onze nieuwsbrief"
-              >
-                <Gift className="w-4 h-4 mr-2" />
-                Acties & Kortingen
-              </Button>
-            </NewsletterSignup>
+
           </div>
         </div>
       </Container>

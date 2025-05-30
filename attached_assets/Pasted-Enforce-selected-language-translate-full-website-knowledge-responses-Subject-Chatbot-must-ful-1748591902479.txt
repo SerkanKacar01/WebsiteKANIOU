@@ -1,0 +1,40 @@
+Enforce selected language + translate full website knowledge responses
+
+⸻
+
+Subject: Chatbot must fully respect selected language and translate all content-based answers
+
+Dear Replit,
+
+Please update the chatbot behavior so that it strictly follows the user’s selected language via the flag dropdown. This must apply to both interface texts and AI-generated responses using the website content.
+
+⸻
+
+Mandatory behavior:
+	1.	When a user selects a language via the flag (e.g. 🇫🇷), all chatbot communication must occur in that selected language only.
+	•	This includes: welcome message, AI answers, offline messages, fallback replies, button texts, etc.
+	2.	The chatbot must not auto-detect and override the selected language.
+	•	For example: if the flag is set to English 🇬🇧, it must never respond in Dutch or French, even if the question is written in Dutch.
+	3.	The chatbot must use the full website knowledge base (already loaded), and translate all content into the selected language.
+	•	This means: all product information, services, FAQs, instructions, measurement details, delivery times, pricing options, etc.
+	•	These must be dynamically translated or served in the matching language version.
+	4.	No mixed-language output is acceptable.
+	•	The chatbot must respond with full, grammatically correct sentences in the user’s chosen language.
+	•	Do not combine Dutch and French, or French and English, in any response.
+
+⸻
+
+Example (expected result):
+
+Selected language: 🇹🇷 Turkish
+User asks: “Stor perde nedir?”
+Bot replies (in Turkish):
+
+“Stor perde, pencerelerinize modern ve fonksiyonel bir görünüm kazandıran, kumaştan yapılmış düz bir mekanizmalı perde sistemidir. KANIOU’da farklı kumaş türleri, renkler ve mekanizma seçenekleri mevcuttur.”
+
+⸻
+
+Summary:
+	•	The chatbot must lock into the user’s selected language
+	•	All website content used in answers must be fully translated into that language
+	•	All replies, both standard and AI-generated, must be native-quality and consistent with the selected language

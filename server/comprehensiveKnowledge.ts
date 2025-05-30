@@ -10,7 +10,8 @@ import type {
   Category, 
   GalleryItem, 
   Testimonial,
-  QuoteRequest 
+  QuoteRequest,
+  WebsiteContentIndex 
 } from "@shared/schema";
 import { 
   analyzeUserQuestion, 
@@ -18,6 +19,7 @@ import {
   generateOptimizedResponse,
   type FilteredResponse 
 } from "./responseFiltering";
+import { getComprehensiveWebsiteKnowledge } from "./websiteCrawler";
 
 export interface ComprehensiveResponse {
   content: string;
@@ -28,26 +30,53 @@ export interface ComprehensiveResponse {
 }
 
 /**
- * Get ALL website content for chatbot knowledge
+ * Get ALL website content for chatbot knowledge - ENHANCED WITH STEP 1 INDEXING
  */
 export async function buildComprehensiveKnowledge(language: string = 'nl'): Promise<string> {
   try {
-    // Gather ALL data sources in parallel
+    // Gather ALL data sources in parallel INCLUDING indexed website content
     const [
       knowledgeBase,
       products,
       categories,
       galleryItems,
-      testimonials
+      testimonials,
+      websiteContent
     ] = await Promise.all([
       storage.getChatbotKnowledge(),
       storage.getProducts(),
       storage.getCategories(),
       storage.getGalleryItems(),
-      storage.getTestimonials()
+      storage.getTestimonials(),
+      storage.getWebsiteContentIndex(language)
     ]);
 
     let comprehensiveKnowledge = "";
+    
+    // STEP 1: Include comprehensive website content if available
+    if (websiteContent.length > 0) {
+      comprehensiveKnowledge += "=== COMPLETE WEBSITE CONTENT (STEP 1 INDEXED) ===\n";
+      const contentByCategory: Record<string, WebsiteContentIndex[]> = {};
+      
+      websiteContent.forEach(content => {
+        if (!contentByCategory[content.category]) {
+          contentByCategory[content.category] = [];
+        }
+        contentByCategory[content.category].push(content);
+      });
+      
+      Object.entries(contentByCategory).forEach(([category, contents]) => {
+        comprehensiveKnowledge += `\n${category.toUpperCase()} CONTENT:\n`;
+        contents.forEach(content => {
+          comprehensiveKnowledge += `${content.pageTitle}: ${content.bodyContent.substring(0, 800)}\n`;
+          if (content.keywords && Array.isArray(content.keywords)) {
+            comprehensiveKnowledge += `Keywords: ${content.keywords.slice(0, 8).join(', ')}\n`;
+          }
+          comprehensiveKnowledge += "---\n";
+        });
+      });
+      comprehensiveKnowledge += "\n";
+    }
 
     // Language-specific instructions
     const languageInstructions = {

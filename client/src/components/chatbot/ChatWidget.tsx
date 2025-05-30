@@ -252,6 +252,15 @@ export function ChatbotWidget() {
     const messageText = message.trim();
     setMessage("");
 
+    // Check if user provided their name and update preferences
+    const extractedName = extractNameFromMessage(messageText);
+    if (extractedName) {
+      updateUserName(extractedName);
+      // Update the greeting to personalized version
+      const newGreeting = getPersonalizedGreeting(language);
+      setPersonalizedGreeting(newGreeting);
+    }
+
     // Reset chat state when user sends a manual message
     setChatState(prev => ({
       ...prev,
@@ -329,16 +338,37 @@ export function ChatbotWidget() {
           <CardContent className="flex flex-col flex-1 p-0 overflow-hidden">
             {/* Messages Area */}
             <ScrollArea className="flex-1 px-3 py-4 overflow-y-auto overflow-x-hidden">
-              {/* Welcome Message */}
+              {/* Personalized Welcome Message */}
               <div className="mb-4 w-full">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-3 rounded-lg text-sm text-blue-900 animate-in fade-in-50 duration-500 max-w-full break-words">
+                <div className={`p-3 rounded-lg text-sm animate-in fade-in-50 duration-500 max-w-full break-words ${
+                  personalizedGreeting?.isPersonalized 
+                    ? 'bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-900'
+                    : 'bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 text-blue-900'
+                }`}>
                   <div className="flex items-center gap-2 mb-1">
-                    <MessageCircle className="h-4 w-4 text-blue-600 flex-shrink-0" />
-                    <span className="font-medium">{t("chatbot.welcome")}</span>
+                    <MessageCircle className={`h-4 w-4 flex-shrink-0 ${
+                      personalizedGreeting?.isPersonalized ? 'text-green-600' : 'text-blue-600'
+                    }`} />
+                    <span className="font-medium">
+                      {personalizedGreeting?.isPersonalized ? 'Welcome back!' : t("chatbot.welcome")}
+                    </span>
                   </div>
                   <div className="break-words overflow-wrap-anywhere">
-                    {t("chatbot.welcomeMessage")}
+                    {personalizedGreeting?.greeting || t("chatbot.welcomeMessage")}
                   </div>
+                  {personalizedGreeting?.showNamePrompt && !personalizedGreeting?.isPersonalized && (
+                    <div className="mt-2 text-xs opacity-75 break-words">
+                      {(() => {
+                        const namePrompts = {
+                          nl: "Mag ik uw naam weten voor een persoonlijkere ervaring?",
+                          fr: "Puis-je connaître votre nom pour une expérience plus personnalisée?",
+                          en: "May I know your name for a more personalized experience?",
+                          tr: "Daha kişiselleştirilmiş bir deneyim için adınızı öğrenebilir miyim?"
+                        };
+                        return namePrompts[language as keyof typeof namePrompts] || namePrompts.nl;
+                      })()}
+                    </div>
+                  )}
                 </div>
               </div>
 

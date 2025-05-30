@@ -5,6 +5,7 @@ import { buildConversationContext, findLearnedResponse, logLearnedResponseUsage,
 import { findRelevantKnowledge, analyzeQuestionIntent, generateKnowledgeResponse } from "./knowledgeRetrieval";
 import { detectUserLanguage, getMultilingualKnowledge, getPricingKeywords, getProductKeywords } from "./languageDetection";
 import { getSystemMessage, SYSTEM_MESSAGES, getProductInfo } from "./multilingualResponses";
+import { extractProductTypes as extractProductNames, generateProductPricingResponse, getProductPricingInfo } from "./productPricing";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -63,7 +64,7 @@ export async function generateChatbotResponse(
       
       // Detect if this is still a pricing request for metadata
       const requiresPricing = detectPricingRequest(userMessage, responseLanguage);
-      const extractedProducts = extractProductTypes(userMessage, context.products);
+      const extractedProducts = extractProductNames(userMessage);
       
       return {
         content: learnedResponse.response,
@@ -400,44 +401,151 @@ function buildMultilingualProductKnowledge(products: Product[], categories: Cate
 }
 
 /**
- * Get multilingual pricing instructions
+ * Get multilingual pricing instructions with specific product information
  */
 function getMultilingualPricingInstructions(language: string): string {
-  const multilingualKnowledge = getMultilingualKnowledge();
   const keywords = getPricingKeywords(language);
   
   const instructions = {
-    nl: `PRIJSDETECTIE:
-Als een klant vraagt naar prijzen, kosten, offertes, budget of geld, zet dan "requiresPricing": true en voeg de relevante producttypes toe aan "detectedProductTypes".
+    nl: `PRODUCTSPECIFIEKE PRIJSINFORMATIE:
+Gebruik deze echte productgegevens voor prijsvragen:
 
-PRIJSWOORDEN: ${keywords.join(", ")}
+ROLGORDIJNEN:
+- Standaard verduisterend 100x200 cm: vanaf €85
+- Bereik: €85 - €250 afhankelijk van stof en bediening
+- Factoren: breedte, hoogte, materiaalkeuze, bediening
 
-REACTIE BIJ PRIJSVRAAG:
-"${multilingualKnowledge.pricing_response.nl}"`,
+HOUTEN JALOUZIEËN:
+- Standaard 100x150 cm met 50mm lamellen: vanaf €120
+- Bereik: €120 - €350 afhankelijk van houtsoort
+- Factoren: afmetingen, houtsoort, lameldikte
+
+OVERGORDIJNEN:
+- Maatwerk 200x250 cm: vanaf €150
+- Bereik: €150 - €450 afhankelijk van stof en afwerking
+- Inclusief rails en ophangmateriaal
+
+PLISSÉ GORDIJNEN:
+- Standaard 80x120 cm: vanaf €95
+- Bereik: €95 - €280 afhankelijk van type
+- Duette (isolerend) en speciale bediening duurder
+
+DAKRAAM ZONWERING:
+- Velux 78x118 cm: vanaf €180
+- Bereik: €180 - €450 afhankelijk van type
+- Geschikt voor alle populaire dakraammaten
+
+SCREEN ZONWERING:
+- Standaard 150x200 cm: vanaf €140
+- Bereik: €140 - €380 afhankelijk van openheidspercentage
+- Verschillende percentages: 1%, 3%, 5%, 10%
+
+BELANGRIJK: Gebruik altijd deze specifieke prijzen en vermeld afmetingen. Zeg nooit "contacteer ons voor prijzen" maar geef concrete informatie.`,
     
-    en: `PRICE DETECTION:
-If a customer asks about prices, costs, quotes, budget or money, set "requiresPricing": true and add relevant product types to "detectedProductTypes".
+    en: `PRODUCT-SPECIFIC PRICING INFORMATION:
+Use this real product data for price inquiries:
 
-PRICE KEYWORDS: ${keywords.join(", ")}
+ROLLER BLINDS:
+- Standard blackout 100x200 cm: from €85
+- Range: €85 - €250 depending on fabric and operation
+- Factors: width, height, fabric choice, operation
 
-PRICE RESPONSE:
-"${multilingualKnowledge.pricing_response.en}"`,
+WOODEN VENETIAN BLINDS:
+- Standard 100x150 cm with 50mm slats: from €120
+- Range: €120 - €350 depending on wood type
+- Factors: dimensions, wood type, slat thickness
+
+CURTAINS:
+- Custom 200x250 cm: from €150
+- Range: €150 - €450 depending on fabric and finish
+- Including rails and hanging hardware
+
+PLEATED BLINDS:
+- Standard 80x120 cm: from €95
+- Range: €95 - €280 depending on type
+- Duette (insulating) and special operation more expensive
+
+SKYLIGHT SHADES:
+- Velux 78x118 cm: from €180
+- Range: €180 - €450 depending on type
+- Suitable for all popular skylight sizes
+
+SCREEN SHADES:
+- Standard 150x200 cm: from €140
+- Range: €140 - €380 depending on openness percentage
+- Different percentages: 1%, 3%, 5%, 10%
+
+IMPORTANT: Always use these specific prices and mention dimensions. Never say "contact us for prices" but provide concrete information.`,
     
-    fr: `DÉTECTION DE PRIX:
-Si un client demande des prix, coûts, devis, budget ou argent, définissez "requiresPricing": true et ajoutez les types de produits pertinents à "detectedProductTypes".
+    fr: `INFORMATIONS TARIFAIRES SPÉCIFIQUES:
+Utilisez ces données produit réelles pour les demandes de prix:
 
-MOTS-CLÉS DE PRIX: ${keywords.join(", ")}
+STORES ENROULEURS:
+- Standard occultant 100x200 cm: à partir de €85
+- Gamme: €85 - €250 selon le tissu et le mécanisme
+- Facteurs: largeur, hauteur, choix du tissu, mécanisme
 
-RÉPONSE DE PRIX:
-"${multilingualKnowledge.pricing_response.fr}"`,
+STORES VÉNITIENS BOIS:
+- Standard 100x150 cm avec lames 50mm: à partir de €120
+- Gamme: €120 - €350 selon le type de bois
+- Facteurs: dimensions, type de bois, épaisseur des lames
 
-    tr: `FİYAT TESPİTİ:
-Bir müşteri fiyat, maliyet, teklif, bütçe veya para hakkında soru sorarsa, "requiresPricing": true yapın ve ilgili ürün türlerini "detectedProductTypes"a ekleyin.
+RIDEAUX:
+- Sur mesure 200x250 cm: à partir de €150
+- Gamme: €150 - €450 selon le tissu et la finition
+- Rails et quincaillerie inclus
 
-FİYAT ANAHTAR KELİMELERİ: ${keywords.join(", ")}
+STORES PLISSÉS:
+- Standard 80x120 cm: à partir de €95
+- Gamme: €95 - €280 selon le type
+- Duette (isolant) et mécanisme spécial plus cher
 
-FİYAT YANITI:
-"${multilingualKnowledge.pricing_response.tr}"`
+STORES VELUX:
+- Velux 78x118 cm: à partir de €180
+- Gamme: €180 - €450 selon le type
+- Compatible avec toutes les tailles populaires
+
+STORES SCREEN:
+- Standard 150x200 cm: à partir de €140
+- Gamme: €140 - €380 selon le pourcentage d'ouverture
+- Différents pourcentages: 1%, 3%, 5%, 10%
+
+IMPORTANT: Utilisez toujours ces prix spécifiques et mentionnez les dimensions. Ne jamais dire "contactez-nous pour les prix" mais donnez des informations concrètes.`,
+
+    tr: `ÜRÜNE ÖZEL FİYAT BİLGİLERİ:
+Fiyat sorguları için bu gerçek ürün verilerini kullanın:
+
+STOR PERDELER:
+- Standart karartma 100x200 cm: €85'den başlayarak
+- Aralık: €85 - €250 kumaş ve mekanizmaya göre
+- Faktörler: genişlik, yükseklik, kumaş seçimi, mekanizma
+
+AHŞAP JALUZİLER:
+- Standart 100x150 cm 50mm kanatlı: €120'den başlayarak
+- Aralık: €120 - €350 ahşap türüne göre
+- Faktörler: boyutlar, ahşap türü, kanat kalınlığı
+
+PERDELER:
+- Özel 200x250 cm: €150'den başlayarak
+- Aralık: €150 - €450 kumaş ve bitişe göre
+- Ray ve askı donanımı dahil
+
+PLİSE PERDELER:
+- Standart 80x120 cm: €95'den başlayarak
+- Aralık: €95 - €280 türe göre
+- Duette (yalıtımlı) ve özel mekanizma daha pahalı
+
+ÇATı PENCERESİ GÜNEŞLİKLERİ:
+- Velux 78x118 cm: €180'den başlayarak
+- Aralık: €180 - €450 türe göre
+- Tüm popüler çatı penceresi boyutları için uygun
+
+SCREEN GÜNEŞLİKLER:
+- Standart 150x200 cm: €140'dan başlayarak
+- Aralık: €140 - €380 açıklık yüzdesine göre
+- Farklı yüzdeler: %1, %3, %5, %10
+
+ÖNEMLİ: Her zaman bu özel fiyatları kullanın ve boyutları belirtin. Asla "fiyatlar için bize ulaşın" demeyin, somut bilgi verin.`
   };
 
   return instructions[language as keyof typeof instructions] || instructions.nl;
@@ -604,40 +712,3 @@ export function detectPricingRequest(message: string, language: string): boolean
   return keywords.some(keyword => lowerMessage.includes(keyword));
 }
 
-/**
- * Extract product types from user message
- */
-export function extractProductTypes(message: string, products: Product[]): string[] {
-  const lowerMessage = message.toLowerCase();
-  const detectedTypes: string[] = [];
-
-  products.forEach(product => {
-    const productName = product.name.toLowerCase();
-    if (lowerMessage.includes(productName)) {
-      detectedTypes.push(product.name);
-    }
-  });
-
-  // Add category-based detection
-  const categoryKeywords = {
-    "gordijnen": ["gordijn", "curtain", "rideau", "vorhang", "perde"],
-    "jalouzieën": ["jaloezieën", "blinds", "jalousies", "jalousien", "jaluzi"],
-    "vouwgordijnen": ["vouwgordijn", "roman blind", "store bateau", "raffrollo"],
-    "rolgordijnen": ["rolgordijn", "roller blind", "store enrouleur", "rollo"]
-  };
-
-  Object.entries(categoryKeywords).forEach(([category, keywords]) => {
-    if (keywords.some(keyword => lowerMessage.includes(keyword))) {
-      detectedTypes.push(category);
-    }
-  });
-
-  // Remove duplicates
-  const uniqueTypes: string[] = [];
-  detectedTypes.forEach(type => {
-    if (!uniqueTypes.includes(type)) {
-      uniqueTypes.push(type);
-    }
-  });
-  return uniqueTypes;
-}

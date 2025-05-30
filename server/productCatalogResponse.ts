@@ -48,7 +48,7 @@ export function getCompleteProductCatalog(language: string = 'nl'): string {
 
 ✅ **ALLE PRODUCTEN WORDEN OP MAAT GEMAAKT MET GRATIS INMEETSERVICE AAN HUIS!**
 
-Voor een persoonlijke offerte en gratis adviesgesprek kunt u contact opnemen via info@kaniou.com of een afspraak inplannen voor thuismeting.`,
+Voor een persoonlijke offerte en gratis adviesgesprek kunt u contact opnemen via info@kaniou.be of een afspraak inplannen voor thuismeting.`,
 
     fr: `🏠 **GAMME COMPLÈTE DE PRODUITS KANIOU**
 
@@ -93,7 +93,7 @@ Voor een persoonlijke offerte en gratis adviesgesprek kunt u contact opnemen via
 
 ✅ **TOUS LES PRODUITS SONT FABRIQUÉS SUR MESURE AVEC SERVICE DE MESURE GRATUIT À DOMICILE!**
 
-Pour un devis personnalisé et conseil gratuit, contactez info@kaniou.com ou planifiez un rendez-vous pour mesure à domicile.`,
+Pour un devis personnalisé et conseil gratuit, contactez info@kaniou.be ou planifiez un rendez-vous pour mesure à domicile.`,
 
     en: `🏠 **KANIOU COMPLETE PRODUCT RANGE**
 
@@ -138,7 +138,7 @@ Pour un devis personnalisé et conseil gratuit, contactez info@kaniou.com ou pla
 
 ✅ **ALL PRODUCTS ARE MADE-TO-MEASURE WITH FREE HOME MEASUREMENT SERVICE!**
 
-For a personalized quote and free consultation, contact info@kaniou.com or schedule an appointment for home measurement.`,
+For a personalized quote and free consultation, contact info@kaniou.be or schedule an appointment for home measurement.`,
 
     tr: `🏠 **KANIOU KOMPLE ÜRÜN YELPAZESİ**
 
@@ -183,7 +183,7 @@ For a personalized quote and free consultation, contact info@kaniou.com or sched
 
 ✅ **TÜM ÜRÜNLER ÖLÇÜYE ÖZEL YAPILIR VE ÜCRETSİZ EV ÖLÇÜMÜ HİZMETİ SUNULUR!**
 
-Kişiselleştirilmiş teklif ve ücretsiz danışmanlık için info@kaniou.com ile iletişime geçin veya ev ölçümü randevusu planlayın.`
+Kişiselleştirilmiş teklif ve ücretsiz danışmanlık için info@kaniou.be ile iletişime geçin veya ev ölçümü randevusu planlayın.`
   };
 
   return catalog[language as keyof typeof catalog] || catalog.nl;

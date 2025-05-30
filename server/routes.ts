@@ -650,15 +650,15 @@ ${chatSummary}
         </p>
       `;
 
-      // Send email to info@kaniou.com
+      // Send email to info@kaniou.be
       await sendEmail({
-        to: "info@kaniou.com",
+        to: "info@kaniou.be",
         from: emailConfig.senderEmail,
         subject: "Nieuwe offerteaanvraag via chatbot – KANIOU",
         html: emailHtml
       });
 
-      console.log(`📧 QUOTE REQUEST: Email sent to info@kaniou.com for ${name} (${email})`);
+      console.log(`📧 QUOTE REQUEST: Email sent to info@kaniou.be for ${name} (${email})`);
 
       res.json({ 
         success: true, 

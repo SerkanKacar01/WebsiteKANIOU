@@ -619,16 +619,16 @@ export function ChatbotWidget() {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/90 z-50"
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 border-2 border-white z-50 chatbot-button group"
           size="icon"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-6 w-6 text-white transition-transform duration-300 group-hover:scale-110" />
         </Button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-4 right-4 w-[calc(100vw-2rem)] max-w-96 sm:w-96 h-[calc(100vh-2rem)] max-h-[500px] shadow-2xl z-50 flex flex-col border-2 border-amber-200 animate-in slide-in-from-bottom-4 slide-in-from-right-4 duration-300 overflow-hidden">
+        <Card className="fixed bottom-4 right-4 w-[calc(100vw-2rem)] max-w-96 sm:w-96 h-[calc(100vh-2rem)] max-h-[500px] shadow-2xl z-50 flex flex-col border-2 border-amber-200 chatbot-window overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 text-white rounded-t-lg border-b-2 border-amber-300">
             <div className="flex items-center gap-3">
               {/* KANIOU Logo */}
@@ -746,7 +746,7 @@ export function ChatbotWidget() {
                 (messages as ChatMessage[]).map((msg: ChatMessage) => (
                   <div
                     key={msg.id}
-                    className={`mb-3 w-full animate-in slide-in-from-bottom-2 duration-300 ${
+                    className={`mb-3 w-full message-enter ${
                       msg.role === "user" ? "flex justify-end" : "flex justify-start"
                     }`}
                   >

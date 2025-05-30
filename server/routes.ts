@@ -38,6 +38,10 @@ import {
   sendSmartNotification, 
   formatConversationForEmail 
 } from "./smartNotificationTrigger";
+import { 
+  getHumanFollowUpMessage,
+  isAskingForBusinessHours 
+} from "./humanFollowUpMessages";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -578,43 +582,14 @@ To respond, simply reply to this email.
         }
       }
 
-      // Check business hours for regular processing
-      const isOpen = isWithinBusinessHours();
-      const businessStatus = getBusinessStatus();
+      // 24/7 Chatbot Operation - Always Available
+      console.log(`🤖 24/7 CHATBOT: Processing message at any time - Full service available`);
       
       let aiResponse;
       let savedResponse;
 
-      if (!isOpen) {
-        // Outside business hours - provide professional after-hours response
-        const afterHoursMessage = getBusinessHoursResponse(language);
-        
-        console.log(`🕐 AFTER HOURS MESSAGE: ${businessStatus.currentTime} (${businessStatus.timezone}) - Outside business hours MA-ZA 10:00-18:00`);
-        
-        aiResponse = {
-          content: afterHoursMessage,
-          requiresPricing: priceDetection.isPriceRequest,
-          detectedProductTypes: priceDetection.extractedProducts,
-          metadata: {
-            tokensUsed: 0,
-            responseTime: 0,
-            confidence: 1.0,
-            businessHours: false,
-            afterHours: true,
-            priceDetection
-          }
-        };
-
-        // Save after-hours response
-        savedResponse = await storage.createChatbotMessage({
-          conversationId: conversation.id,
-          role: "assistant",
-          content: aiResponse.content,
-          metadata: aiResponse.metadata
-        });
-      } else {
-        // During business hours - check if price request needs special handling
-        if (priceDetection.isPriceRequest) {
+      // Process all requests normally regardless of time
+      if (priceDetection.isPriceRequest) {
           console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
           
           // Generate actual pricing response using product data
@@ -729,7 +704,7 @@ To respond, simply reply to this email.
       }
 
       // Legacy pricing handling (kept for compatibility)
-      if (aiResponse.requiresPricing && aiResponse.detectedProductTypes.length > 0) {
+      if (aiResponse && aiResponse.requiresPricing && aiResponse.detectedProductTypes.length > 0) {
         // Create pricing request record
         await storage.createChatbotPricing({
           productType: aiResponse.detectedProductTypes.join(", "),
@@ -740,7 +715,7 @@ To respond, simply reply to this email.
         console.log(`📋 LEGACY PRICING: Recorded request for: ${aiResponse.detectedProductTypes.join(", ")}`);
       }
 
-      // Smart Email Notification Trigger Analysis
+      // Smart Email Notification Trigger Analysis for 24/7 Operation
       try {
         const conversationMessages = await storage.getChatbotMessagesByConversationId(conversation.id);
         const messageHistory = conversationMessages.map(msg => ({
@@ -759,7 +734,7 @@ To respond, simply reply to this email.
 
         console.log(`🔔 TRIGGER ANALYSIS: Should trigger: ${triggerAnalysis.shouldTrigger}, Reason: ${triggerAnalysis.triggerReason}, Confidence: ${Math.round(triggerAnalysis.confidence * 100)}%`);
 
-        // Send notification if conditions are met
+        // Send notification and add human follow-up message if conditions are met
         if (triggerAnalysis.shouldTrigger) {
           const notificationData = {
             customerQuestion: message,
@@ -779,7 +754,12 @@ To respond, simply reply to this email.
             console.error('Failed to send smart notification:', error);
           });
 
+          // Add human follow-up message to response
+          const followUpMessage = getHumanFollowUpMessage(language);
+          aiResponse.content += `\n\n${followUpMessage.content}`;
+
           console.log(`📧 SMART NOTIFICATION: Triggered for conversation ${conversation.id} - Reason: ${triggerAnalysis.triggerReason}`);
+          console.log(`👤 HUMAN FOLLOW-UP: Added 24-hour response notice in ${language}`);
         }
       } catch (error) {
         console.error('Error in smart notification analysis:', error);

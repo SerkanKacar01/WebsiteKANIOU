@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageCircle, X, Send, Loader2, CheckCircle } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, CheckCircle, Eye } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -570,7 +570,9 @@ export function ChatbotWidget() {
       showQuickReplies: false,
       quickReplyType: null,
       showLeadForm: false,
-      showSmartSuggestions: false
+      showSmartSuggestions: false,
+      showExitPrompt: false,
+      lastActivityTime: Date.now()
     }));
     
     // Update last chat time when user sends a message
@@ -781,6 +783,67 @@ export function ChatbotWidget() {
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                         <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Exit Prompt - Show after inactivity or completion */}
+              {chatState.showExitPrompt && (
+                <div className="mb-4 w-full flex justify-start animate-in slide-in-from-bottom-2 duration-300">
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4 max-w-[85%] min-w-0">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <MessageCircle className="h-4 w-4 text-blue-600" />
+                      </div>
+                      <span className="font-semibold text-blue-800">
+                        {(() => {
+                          const prompts = {
+                            nl: "Wilt u deze chat afsluiten of andere opties bekijken?",
+                            fr: "Souhaitez-vous terminer cette conversation ou voir d'autres options?",
+                            en: "Would you like to end this chat or see more options?",
+                            tr: "Sohbeti sonlandırmak mı istersiniz yoksa başka seçenekleri mi görmek istersiniz?"
+                          };
+                          return prompts[language as keyof typeof prompts] || prompts.nl;
+                        })()}
+                      </span>
+                    </div>
+                    
+                    <div className="flex gap-2 flex-wrap">
+                      <Button
+                        onClick={() => handleExitPromptAction('show_suggestions')}
+                        className="bg-blue-600 hover:bg-blue-700 text-white flex-1 min-w-0"
+                        size="sm"
+                      >
+                        <CheckCircle className="h-4 w-4 mr-1" />
+                        {(() => {
+                          const suggestions = {
+                            nl: "Bekijk suggesties",
+                            fr: "Voir les suggestions",
+                            en: "See suggestions",
+                            tr: "Önerileri gör"
+                          };
+                          return suggestions[language as keyof typeof suggestions] || suggestions.nl;
+                        })()}
+                      </Button>
+                      
+                      <Button
+                        onClick={() => handleExitPromptAction('close_chat')}
+                        variant="outline"
+                        className="border-blue-200 text-blue-700 hover:bg-blue-50 flex-1 min-w-0"
+                        size="sm"
+                      >
+                        <X className="h-4 w-4 mr-1" />
+                        {(() => {
+                          const closings = {
+                            nl: "Sluit chat af",
+                            fr: "Fermer le chat",
+                            en: "Close chat",
+                            tr: "Sohbeti kapat"
+                          };
+                          return closings[language as keyof typeof closings] || closings.nl;
+                        })()}
+                      </Button>
                     </div>
                   </div>
                 </div>

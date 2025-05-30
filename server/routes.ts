@@ -580,16 +580,9 @@ To respond, simply reply to this email.
             metadata: aiResponse.metadata
           });
         }
-      }
-
-      // 24/7 Chatbot Operation - Always Available
-      console.log(`🤖 24/7 CHATBOT: Processing message at any time - Full service available`);
-      
-      let aiResponse;
-      let savedResponse;
-
-      // Process all requests normally regardless of time
-      if (priceDetection.isPriceRequest) {
+      } else {
+        // 24/7 Chatbot Operation - Process all requests normally regardless of time
+        if (priceDetection.isPriceRequest) {
           console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
           
           // Generate actual pricing response using product data
@@ -661,7 +654,7 @@ To respond, simply reply to this email.
           }
         } else {
           // Use comprehensive knowledge system for ALL non-price requests
-          console.log(`✅ BUSINESS HOURS: ${businessStatus.currentTime} (${businessStatus.timezone}) - Using comprehensive knowledge system`);
+          console.log(`🤖 24/7 CHATBOT: Using comprehensive knowledge system`);
           
           // Get conversation context for better responses
           const messages = await storage.getChatbotMessagesByConversationId(conversation.id);

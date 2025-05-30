@@ -30,6 +30,7 @@ import {
 } from "./priceAssistant";
 import { generateProductPricingResponse } from "./productPricing";
 import { sendPriceRequestNotification } from "./emailService";
+import { answerWithComprehensiveKnowledge } from "./comprehensiveKnowledge";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import multer from "multer";
 
@@ -678,33 +679,40 @@ To respond, simply reply to this email.
             console.log(`⏰ RATE LIMITED: Price request notification skipped (max 3 per minute)`);
           }
         } else {
-          // Regular AI response for non-price requests
-          console.log(`✅ BUSINESS HOURS: ${businessStatus.currentTime} (${businessStatus.timezone}) - Normal AI processing`);
+          // Use comprehensive knowledge system for ALL non-price requests
+          console.log(`✅ BUSINESS HOURS: ${businessStatus.currentTime} (${businessStatus.timezone}) - Using comprehensive knowledge system`);
           
-          // Get context for AI response
-          const [messages, products, categories, knowledgeBase] = await Promise.all([
-            storage.getChatbotMessagesByConversationId(conversation.id),
-            storage.getProducts(),
-            storage.getCategories(),
-            storage.getChatbotKnowledge(language)
-          ]);
+          // Get conversation context for better responses
+          const messages = await storage.getChatbotMessagesByConversationId(conversation.id);
+          const conversationContext = messages.map(m => m.content);
 
-          // Generate AI response
-          aiResponse = await generateChatbotResponse(message, {
-            conversation,
-            messages,
-            products,
-            categories,
-            knowledgeBase,
-            language
-          });
+          // Generate response using comprehensive knowledge
+          const comprehensiveResponse = await answerWithComprehensiveKnowledge(
+            message,
+            language,
+            conversationContext
+          );
 
-          // Add business hours metadata
-          aiResponse.metadata.businessHours = true;
-          aiResponse.metadata.afterHours = false;
-          aiResponse.metadata.priceDetection = priceDetection;
+          console.log(`🧠 COMPREHENSIVE RESPONSE: Confidence ${Math.round(comprehensiveResponse.confidence * 100)}% - Sources: ${comprehensiveResponse.sources.join(', ')} - Fallback: ${comprehensiveResponse.usedFallback}`);
 
-          // Save AI response
+          aiResponse = {
+            content: comprehensiveResponse.content,
+            requiresPricing: false,
+            detectedProductTypes: priceDetection.extractedProducts,
+            metadata: {
+              tokensUsed: 0,
+              responseTime: 150,
+              confidence: comprehensiveResponse.confidence,
+              businessHours: true,
+              afterHours: false,
+              priceDetection,
+              sources: comprehensiveResponse.sources,
+              usedFallback: comprehensiveResponse.usedFallback,
+              comprehensiveKnowledge: true
+            }
+          };
+
+          // Save comprehensive knowledge response
           savedResponse = await storage.createChatbotMessage({
             conversationId: conversation.id,
             role: "assistant",

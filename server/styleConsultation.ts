@@ -581,22 +581,22 @@ export function isStyleConsultationRequest(message: string, language: string = '
       'stijladvies', 'interieuradvies', 'raambekleding kiezen', 'wat past bij',
       'welke rolgordijn', 'welke gordijn', 'interieur hulp', 'decoratie advies',
       'raam decoratie', 'stijl consultatie', 'design advies', 'welke past',
-      'help met kiezen', 'advies nodig', 'wat raad je aan'
+      'help met kiezen', 'advies nodig', 'wat raad je aan', 'stijladvies voor mijn raambekleding'
     ],
     fr: [
       'conseil style', 'conseil décoration', 'choisir stores', 'choisir rideaux', 
       'décoration fenêtre', 'aide choix', 'conseil intérieur', 'que recommandez',
-      'quel style', 'consultation design', 'aide décoration'
+      'quel style', 'consultation design', 'aide décoration', 'conseils de style pour mes stores'
     ],
     en: [
       'style advice', 'interior advice', 'choose blinds', 'choose curtains',
       'window decoration', 'help choosing', 'design consultation', 'what recommend',
-      'style consultation', 'interior help', 'decoration advice'
+      'style consultation', 'interior help', 'decoration advice', 'style advice for my window treatments'
     ],
     tr: [
       'stil danışmanlığı', 'iç mekan tavsiye', 'perde seçimi', 'stor seçimi',
       'dekorasyon yardım', 'tasarım danışmanlık', 'ne önerirsin', 'stil yardım',
-      'pencere dekorasyon', 'seçim yardımı'
+      'pencere dekorasyon', 'seçim yardımı', 'perde seçimi için stil tavsiyesi'
     ]
   };
 

@@ -170,9 +170,16 @@ export function ChatbotWidget() {
           language
         })
       });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit quote request');
+      }
+      
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('📧 Quote request submitted successfully:', data);
+      
       setChatState(prev => ({
         ...prev,
         showLeadForm: false,
@@ -182,16 +189,60 @@ export function ChatbotWidget() {
       
       // Send a confirmation message
       const confirmationMessages = {
-        nl: "Bedankt! We hebben uw aanvraag ontvangen. U ontvangt binnen 24 uur een gepersonaliseerde offerte per e-mail.",
-        en: "Thank you! We've received your request. You'll receive a personalized offer within 24 hours via email.",
-        fr: "Merci! Nous avons reçu votre demande. Vous recevrez une offre personnalisée dans les 24 heures par e-mail.",
-        tr: "Teşekkürler! Talebinizi aldık. 24 saat içinde e-posta ile kişiselleştirilmiş bir teklif alacaksınız."
+        nl: "✅ Bedankt! Uw offerteaanvraag is succesvol verzonden naar info@kaniou.com. U ontvangt binnen 24 uur een gepersonaliseerde offerte per e-mail.",
+        en: "✅ Thank you! Your quote request has been successfully sent to info@kaniou.com. You'll receive a personalized offer within 24 hours via email.",
+        fr: "✅ Merci! Votre demande de devis a été envoyée avec succès à info@kaniou.com. Vous recevrez une offre personnalisée dans les 24 heures par e-mail.",
+        tr: "✅ Teşekkürler! Teklif talebiniz info@kaniou.com'a başarıyla gönderildi. 24 saat içinde e-posta ile kişiselleştirilmiş bir teklif alacaksınız."
       };
       
       const confirmationText = confirmationMessages[language as keyof typeof confirmationMessages] || confirmationMessages.nl;
       
-      // Send confirmation as an automated message
-      sendMessageMutation.mutate(confirmationText);
+      // Add confirmation message directly to the chat
+      const confirmationMessage = {
+        id: Date.now(),
+        role: "assistant" as const,
+        content: confirmationText,
+        createdAt: new Date().toISOString(),
+        metadata: { automated: true, success: true }
+      };
+      
+      // Update messages cache directly for immediate display
+      queryClient.setQueryData(["/api/chatbot/conversation", sessionId, "messages"], (oldMessages: any) => [
+        ...(oldMessages || []),
+        confirmationMessage
+      ]);
+    },
+    onError: (error) => {
+      console.error('❌ Quote request failed:', error);
+      
+      setChatState(prev => ({
+        ...prev,
+        waitingForLeadSubmission: false
+      }));
+      
+      // Show error message
+      const errorMessages = {
+        nl: "❌ Er is een fout opgetreden bij het verzenden van uw aanvraag. Probeer het opnieuw of neem direct contact op via info@kaniou.com.",
+        en: "❌ An error occurred while sending your request. Please try again or contact us directly at info@kaniou.com.",
+        fr: "❌ Une erreur s'est produite lors de l'envoi de votre demande. Veuillez réessayer ou nous contacter directement à info@kaniou.com.",
+        tr: "❌ Talebiniz gönderilirken bir hata oluştu. Lütfen tekrar deneyin veya doğrudan info@kaniou.com ile iletişime geçin."
+      };
+      
+      const errorText = errorMessages[language as keyof typeof errorMessages] || errorMessages.nl;
+      
+      // Add error message to chat
+      const errorMessage = {
+        id: Date.now(),
+        role: "assistant" as const,
+        content: errorText,
+        createdAt: new Date().toISOString(),
+        metadata: { automated: true, error: true }
+      };
+      
+      queryClient.setQueryData(["/api/chatbot/conversation", sessionId, "messages"], (oldMessages: any) => [
+        ...(oldMessages || []),
+        errorMessage
+      ]);
     }
   });
 
@@ -281,8 +332,15 @@ export function ChatbotWidget() {
     
     // Handle specific actions
     if (action === 'style_consultation') {
-      // Trigger style consultation flow
-      sendMessageMutation.mutate("Ik wil graag stijladvies voor mijn raambekleding");
+      // Trigger style consultation flow with language-appropriate message
+      const styleMessages = {
+        nl: "Ik wil graag stijladvies voor mijn raambekleding",
+        fr: "J'aimerais des conseils de style pour mes stores",
+        en: "I would like style advice for my window treatments",
+        tr: "Perde seçimi için stil tavsiyesi istiyorum"
+      };
+      const styleText = styleMessages[language as keyof typeof styleMessages] || styleMessages.nl;
+      sendMessageMutation.mutate(styleText);
     } else if (action === 'request_quote') {
       // Trigger quote request flow
       setChatState(prev => ({ ...prev, showLeadForm: true }));

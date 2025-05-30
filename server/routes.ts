@@ -571,6 +571,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Chatbot lead collection endpoint
+  app.post("/api/chatbot/lead", async (req: Request, res: Response) => {
+    try {
+      const { conversationId, name, email, gdprConsent, language } = req.body;
+      
+      if (!conversationId || !name || !email || !gdprConsent) {
+        return res.status(400).json({ 
+          message: "Conversation ID, name, email, and GDPR consent are required" 
+        });
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ 
+          message: "Invalid email format" 
+        });
+      }
+
+      // Get conversation messages for context
+      const conversation = await storage.getChatbotConversationBySessionId(conversationId);
+      let chatSummary = "Geen eerdere berichten beschikbaar";
+      
+      if (conversation) {
+        const messages = await storage.getChatbotMessagesByConversationId(conversation.id);
+        if (messages.length > 0) {
+          chatSummary = messages
+            .slice(-5) // Last 5 messages
+            .map(msg => `${msg.role === 'user' ? 'Klant' : 'Bot'}: ${msg.content}`)
+            .join('\n');
+        }
+      }
+
+      // Create email content
+      const emailHtml = `
+        <h2>Nieuwe offerteaanvraag via chatbot – KANIOU</h2>
+        
+        <h3>Klantgegevens:</h3>
+        <p><strong>Naam:</strong> ${name}</p>
+        <p><strong>E-mail:</strong> ${email}</p>
+        <p><strong>Bevestiging:</strong> ✅ gebruiker gaf toestemming</p>
+        <p><strong>Tijdstip:</strong> ${new Date().toLocaleString('nl-BE', { 
+          timeZone: 'Europe/Brussels',
+          dateStyle: 'full',
+          timeStyle: 'medium'
+        })}</p>
+        <p><strong>Taal:</strong> ${language || 'nl'}</p>
+        
+        <h3>Chat samenvatting:</h3>
+        <div style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; font-family: monospace; white-space: pre-wrap;">
+${chatSummary}
+        </div>
+        
+        <hr>
+        <p style="color: #666; font-size: 12px;">
+          Deze aanvraag werd automatisch gegenereerd door de KANIOU chatbot.
+        </p>
+      `;
+
+      // Send email to info@kaniou.com
+      await sendEmail({
+        to: "info@kaniou.com",
+        from: emailConfig.senderEmail,
+        subject: "Nieuwe offerteaanvraag via chatbot – KANIOU",
+        html: emailHtml
+      });
+
+      console.log(`📧 QUOTE REQUEST: Email sent to info@kaniou.com for ${name} (${email})`);
+
+      res.json({ 
+        success: true, 
+        message: "Quote request submitted successfully" 
+      });
+
+    } catch (error) {
+      console.error("Error processing chatbot lead:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Failed to process quote request" 
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

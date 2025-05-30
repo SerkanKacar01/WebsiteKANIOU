@@ -113,11 +113,16 @@ export function ChatbotWidget() {
       return response.json();
     },
     onSuccess: (data) => {
-      // Refresh messages
+      // Force refresh messages immediately
       queryClient.invalidateQueries({ queryKey: ["/api/chatbot/conversation", sessionId, "messages"] });
       
-      // Check if the response indicates price detection
-      if (data.metadata?.priceDetected) {
+      // Also refetch to ensure immediate update
+      setTimeout(() => {
+        queryClient.refetchQueries({ queryKey: ["/api/chatbot/conversation", sessionId, "messages"] });
+      }, 100);
+      
+      // Check if the response indicates price detection or style consultation
+      if (data.metadata?.priceDetected || data.metadata?.isStyleConsultation) {
         setChatState(prev => ({
           ...prev,
           showQuickReplies: true,
@@ -179,10 +184,14 @@ export function ChatbotWidget() {
     queryKey: ["/api/chatbot/conversation", sessionId, "messages"],
     queryFn: async () => {
       const response = await fetch(`/api/chatbot/conversation/${sessionId}/messages`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch messages');
+      }
       return response.json();
     },
-    enabled: isOpen && !!conversationMutation.data,
-    refetchInterval: false
+    enabled: isOpen,
+    refetchInterval: false,
+    retry: 3
   });
 
   // Monitor for conversation inactivity
@@ -350,6 +359,32 @@ export function ChatbotWidget() {
       await sendMessageMutation.mutateAsync(messageText);
     } catch (error) {
       console.error("Error sending message:", error);
+      
+      // Show error message to user
+      const errorMessages = {
+        nl: "Er is een fout opgetreden bij het versturen van uw bericht. Probeer het opnieuw.",
+        en: "An error occurred while sending your message. Please try again.",
+        fr: "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer.",
+        tr: "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
+      };
+      
+      const errorText = errorMessages[language as keyof typeof errorMessages] || errorMessages.nl;
+      
+      // Add error message to UI manually since backend failed
+      const errorMessage: ChatMessage = {
+        id: Date.now(),
+        role: "assistant",
+        content: errorText,
+        createdAt: new Date().toISOString(),
+        metadata: { error: true }
+      };
+      
+      // Update the messages cache directly
+      queryClient.setQueryData(["/api/chatbot/conversation", sessionId, "messages"], (oldMessages: any) => [
+        ...(oldMessages || []),
+        { id: Date.now() - 1, role: "user", content: messageText, createdAt: new Date().toISOString() },
+        errorMessage
+      ]);
     }
   };
 

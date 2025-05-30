@@ -374,6 +374,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get conversation messages
+  app.get("/api/chatbot/conversation/:sessionId/messages", async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+      
+      if (!sessionId) {
+        return res.status(400).json({ message: "Session ID is required" });
+      }
+
+      // Get or create conversation first
+      let conversation = await storage.getChatbotConversationBySessionId(sessionId);
+      
+      if (!conversation) {
+        // Create conversation if it doesn't exist
+        conversation = await storage.createChatbotConversation({
+          sessionId,
+          language: "nl"
+        });
+        
+        // Return empty messages for new conversation
+        return res.json([]);
+      }
+
+      // Get messages for the conversation
+      const messages = await storage.getChatbotMessagesByConversationId(conversation.id);
+      res.json(messages);
+      
+    } catch (error) {
+      console.error("Error fetching conversation messages:", error);
+      res.status(500).json({ message: "Failed to fetch messages" });
+    }
+  });
+
   // Business hours endpoint - only responds when specifically requested
   app.get("/api/chatbot/business-hours", async (req: Request, res: Response) => {
     try {
@@ -492,7 +525,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       `;
 
       await sendEmail({
-        to: emailConfig.adminEmail,
+        to: emailConfig.notificationEmail,
+        from: emailConfig.senderEmail,
         subject: `Nieuwe Stijl Consultatie Offerte - ${validatedData.customerName}`,
         html: emailHtml
       });

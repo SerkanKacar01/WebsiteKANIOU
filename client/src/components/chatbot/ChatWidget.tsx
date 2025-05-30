@@ -546,6 +546,9 @@ export function ChatbotWidget() {
     // Update last message time for inactivity tracking
     setLastMessageTime(new Date());
 
+    // Award points for chatbot interaction
+    awardPoints('CHATBOT_INTERACTION');
+
     // Check if user provided their name and update preferences
     const extractedName = extractNameFromMessage(messageText);
     if (extractedName) {

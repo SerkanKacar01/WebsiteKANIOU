@@ -1,0 +1,54 @@
+Please perform a complete verification and fix for all chatbot functions on the KANIOU website. Ensure that every single feature is working exactly as intended, and confirm functionality step-by-step:
+
+1. 🔘 Smart Suggestion Buttons
+   - All 6 buttons must appear automatically for new users:
+     - Free Measurement
+     - Style Advice
+     - Quote Request
+     - Product Gallery
+     - Product Info
+     - Window Treatment Help
+   - Buttons must disappear after user types or clicks.
+   - Buttons must reappear for returning users after 24 hours of inactivity.
+   - Test behavior in Dutch, French, English, and Turkish.
+
+2. 📩 Quote Request Flow
+   - All fields (Name, Email, Consent checkbox) must work.
+   - After submission, form must show confirmation and send data to: info@kaniou.com
+   - Form must not get stuck on loading.
+   - Email must include the question context or product type if possible.
+
+3. 🧠 Interior Style Advisor
+   - Chatbot must handle questions like:
+     “What fits best for a modern bedroom with privacy?”
+     “Any suggestions for an industrial kitchen?”
+     “I need blackout curtains for a child’s room”
+   - It must trigger the recommendation logic and respond fully in the selected language.
+
+4. 🌍 Language System
+   - Entire chatbot must remain in selected language.
+   - No fallback to mixed-language messages.
+   - Check every flow in Dutch, French, English, and Turkish.
+
+5. ✅ End Chat Flow
+   - After user finishes conversation, chatbot must offer 2 buttons:
+     - “End Chat” → show thank-you message and close chat.
+     - “Show Options Again” → redisplay the 6 smart suggestions.
+
+6. 📱 Mobile & Desktop Compatibility
+   - All buttons and forms must display correctly on mobile.
+   - No text overflow or layout breaking.
+   - Buttons must have proper padding, sizing and clickable behavior.
+
+7. 📬 Notification Logic
+   - If chatbot cannot answer a question due to missing website info, it must:
+     - Display a polite fallback message
+     - Send the message content to info@kaniou.com
+     - Tag it as “unresolved inquiry”
+
+After completing the fixes and verification, please confirm:
+- That all 7 features above are working correctly
+- That all languages are supported
+- That nothing is broken during user session
+
+Confirm successful completion with screenshots or summary message.

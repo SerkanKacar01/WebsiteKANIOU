@@ -3,9 +3,6 @@
  * Complete website content extraction for chatbot intelligence
  */
 
-const fs = require('fs');
-const path = require('path');
-
 // Since we're using TypeScript modules, we'll create a demonstration with sample data
 // representing the comprehensive website content that would be crawled
 

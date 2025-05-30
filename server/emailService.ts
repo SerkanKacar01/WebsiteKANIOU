@@ -210,6 +210,34 @@ function getLanguageName(languageCode: string): string {
 }
 
 /**
+ * Send general email
+ */
+export async function sendEmail(emailData: { to: string; subject: string; html: string; text?: string }): Promise<boolean> {
+  try {
+    if (!process.env.SENDGRID_API_KEY) {
+      console.log('📧 SendGrid not configured - would send email to:', emailData.to);
+      return false;
+    }
+
+    const msg = {
+      to: emailData.to,
+      from: 'noreply@kaniou.be',
+      subject: emailData.subject,
+      html: emailData.html,
+      text: emailData.text || emailData.html.replace(/<[^>]*>/g, '') // Strip HTML for text version
+    };
+
+    await sgMail.send(msg);
+    console.log(`📧 Email sent to ${emailData.to}`);
+    return true;
+
+  } catch (error) {
+    console.error('❌ Failed to send email:', error);
+    return false;
+  }
+}
+
+/**
  * Send test email to verify configuration
  */
 export async function sendTestEmail(): Promise<boolean> {

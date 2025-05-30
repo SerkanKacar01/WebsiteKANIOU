@@ -674,6 +674,53 @@ ${chatSummary}
     }
   });
 
+  // Chat Escalation API
+  app.post("/api/chatbot/escalate", async (req: Request, res: Response) => {
+    try {
+      const { processEscalation } = await import('./chatEscalation');
+      const { isWithinBusinessHours } = await import('./businessHours');
+      
+      const escalationRequest = {
+        ...req.body,
+        timestamp: new Date().toISOString(),
+        businessHours: isWithinBusinessHours()
+      };
+
+      const result = await processEscalation(escalationRequest);
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Error processing escalation:", error);
+      res.status(500).json({
+        success: false,
+        escalationId: '',
+        estimatedWaitTime: '',
+        supportAgentAvailable: false,
+        nextSteps: ['Probeer later opnieuw of neem direct contact met ons op'],
+        message: 'Er is een fout opgetreden bij het doorverbinden. Probeer het later opnieuw.'
+      });
+    }
+  });
+
+  // Check if escalation should be triggered
+  app.post("/api/chatbot/check-escalation", async (req: Request, res: Response) => {
+    try {
+      const { shouldTriggerEscalation } = await import('./chatEscalation');
+      const { userMessage, conversationHistory, language = 'nl' } = req.body;
+      
+      const result = shouldTriggerEscalation(userMessage, conversationHistory, language);
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Error checking escalation trigger:", error);
+      res.status(500).json({
+        shouldEscalate: false,
+        reason: '',
+        confidence: 0
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -10,6 +10,12 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { LanguageSelector } from "./LanguageSelector";
 import { QuickReplyButtons, PRICE_REQUEST_OPTIONS, GENERAL_HELP_OPTIONS } from "./QuickReplyButtons";
 import { LeadCollectionForm } from "./LeadCollectionForm";
+import { 
+  getPersonalizedGreeting, 
+  saveUserPreferences, 
+  extractNameFromMessage,
+  updateUserName 
+} from "@/utils/userPreferences";
 import kaniouLogo from "@/assets/KAN.LOGO.png";
 
 interface ChatMessage {
@@ -38,9 +44,25 @@ export function ChatbotWidget() {
     showLeadForm: false,
     waitingForLeadSubmission: false
   });
+  const [personalizedGreeting, setPersonalizedGreeting] = useState<{
+    greeting: string;
+    isPersonalized: boolean;
+    showNamePrompt: boolean;
+  } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { language, t } = useLanguage();
+
+  // Initialize personalized greeting when language changes or component mounts
+  useEffect(() => {
+    const greetingData = getPersonalizedGreeting(language);
+    setPersonalizedGreeting(greetingData);
+    
+    // Save user interaction when chatbot opens
+    if (isOpen) {
+      saveUserPreferences({ language });
+    }
+  }, [language, isOpen]);
 
   // Check business hours
   const { data: businessHours } = useQuery({

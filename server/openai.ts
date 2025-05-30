@@ -138,7 +138,7 @@ function buildMultilingualSystemPrompt(context: ChatbotContext, responseLanguage
 
   const languageInstructions = getAdvancedLanguageInstructions(responseLanguage);
   const productInfo = buildMultilingualProductKnowledge(products, categories, responseLanguage);
-  const knowledgeInfo = buildKnowledgeBase(knowledgeBase);
+  const knowledgeInfo = buildKnowledgeBase(knowledgeBase, responseLanguage);
   const pricingInstructions = getMultilingualPricingInstructions(responseLanguage);
 
   const coreInstructions = getCoreInstructions(responseLanguage);
@@ -541,12 +541,20 @@ function buildProductKnowledge(products: Product[], categories: Category[]): str
 /**
  * Build knowledge base from database
  */
-function buildKnowledgeBase(knowledgeBase: ChatbotKnowledge[]): string {
+function buildKnowledgeBase(knowledgeBase: ChatbotKnowledge[], language: string): string {
   if (!knowledgeBase.length) {
     return "Knowledge base is being loaded...";
   }
 
-  let knowledge = "ADDITIONAL KNOWLEDGE:\n\n";
+  const translationInstruction = {
+    nl: "VERTAAL ALLE KENNISBANK INFORMATIE NAAR NEDERLANDS:",
+    en: "TRANSLATE ALL KNOWLEDGE BASE INFORMATION TO ENGLISH:",
+    fr: "TRADUISEZ TOUTES LES INFORMATIONS DE LA BASE DE CONNAISSANCES EN FRANÇAIS :",
+    tr: "TÜM BİLGİ TABANI BİLGİLERİNİ TÜRKÇE'YE ÇEVİRİN:"
+  };
+
+  let knowledge = (translationInstruction[language as keyof typeof translationInstruction] || translationInstruction.nl) + "\n\n";
+  knowledge += "ADDITIONAL KNOWLEDGE (translate all content to selected language):\n\n";
   
   const uniqueCategories: string[] = [];
   knowledgeBase.forEach(kb => {
@@ -562,7 +570,7 @@ function buildKnowledgeBase(knowledgeBase: ChatbotKnowledge[]): string {
       .sort((a, b) => (b.priority || 1) - (a.priority || 1));
     
     categoryKnowledge.forEach(kb => {
-      knowledge += `- ${kb.topic}: ${kb.content}\n`;
+      knowledge += `- ${kb.topic}: ${kb.content} (original language: ${kb.language || 'nl'})\n`;
     });
     knowledge += "\n";
   });
@@ -571,7 +579,7 @@ function buildKnowledgeBase(knowledgeBase: ChatbotKnowledge[]): string {
 }
 
 /**
- * Get fallback response when OpenAI is unavailable
+ * Get fallback response when OpenAI is unavailable - ALWAYS in selected language
  */
 function getFallbackResponse(userMessage: string, language: string): string {
   return getSystemMessage('errorFallback', language);

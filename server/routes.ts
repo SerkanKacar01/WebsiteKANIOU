@@ -10,7 +10,8 @@ import {
   insertContactSubmissionSchema,
   insertChatbotConversationSchema,
   insertChatbotMessageSchema,
-  insertNewsletterSubscriptionSchema
+  insertNewsletterSubscriptionSchema,
+  insertStyleQuoteRequestSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -84,6 +85,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         content: message
       });
 
+      // Check for style consultation request
+      const isStyleRequest = isStyleConsultationRequest(message, language);
+      console.log(`🎨 STYLE CONSULTATION: ${isStyleRequest ? 'YES' : 'NO'} - Request detected`);
+
       // Detect pricing and product requests
       const priceDetection = detectPriceIntent(message, language);
       console.log(`🕵️ PRICE DETECTION: ${priceDetection.isPriceRequest ? 'YES' : 'NO'} - Confidence: ${Math.round(priceDetection.confidence * 100)}% - Products: ${priceDetection.extractedProducts.join(', ') || 'None'}`);
@@ -91,10 +96,132 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // 24/7 Chatbot Operation - Always Available
       console.log(`🤖 24/7 CHATBOT: Processing message at any time - Full service available`);
       
-      let aiResponse;
-      let savedResponse;
+      let aiResponse: any;
+      let savedResponse: any;
       
-      if (priceDetection.isPriceRequest) {
+      // Handle Style Consultation Flow
+      if (isStyleRequest) {
+        console.log(`🎨 STYLE CONSULTATION: Starting consultation flow`);
+        
+        // Check if there's an existing consultation session
+        let consultation = await storage.getStyleConsultationBySessionId(conversationId);
+        
+        if (!consultation) {
+          // Start new consultation
+          consultation = await storage.createStyleConsultation({
+            sessionId: conversationId,
+            conversationId: conversation.id,
+            language,
+            currentStep: "room_type"
+          });
+          
+          const welcomeMessage = getConsultationWelcomeMessage(language);
+          const firstQuestion = getConsultationQuestion("room_type", language);
+          
+          aiResponse = {
+            content: `${welcomeMessage}\n\n${firstQuestion?.question}`,
+            requiresPricing: false,
+            metadata: {
+              consultationStep: "room_type",
+              consultationOptions: firstQuestion?.options,
+              isStyleConsultation: true
+            }
+          };
+        } else {
+          // Continue existing consultation
+          console.log(`🎨 CONTINUING CONSULTATION: Step ${consultation.currentStep}`);
+          
+          // Process the user's answer and move to next step
+          const currentStep = consultation.currentStep;
+          let updates: any = {};
+          
+          switch (currentStep) {
+            case "room_type":
+              updates.roomType = message;
+              updates.currentStep = "primary_goal";
+              break;
+            case "primary_goal":
+              updates.primaryGoal = message;
+              updates.currentStep = "style_preference";
+              break;
+            case "style_preference":
+              updates.stylePreference = message;
+              updates.currentStep = "color_material";
+              break;
+            case "color_material":
+              updates.colorPreferences = [message];
+              updates.currentStep = "budget";
+              break;
+            case "budget":
+              updates.budgetRange = message;
+              updates.currentStep = "recommendations";
+              updates.isCompleted = true;
+              break;
+          }
+          
+          consultation = await storage.updateStyleConsultation(conversationId, updates);
+          
+          if (consultation.currentStep === "recommendations") {
+            // Generate final recommendations
+            const recommendations = generateRecommendations(
+              consultation.roomType || "",
+              consultation.primaryGoal || "",
+              consultation.stylePreference || "",
+              consultation.colorPreferences?.[0],
+              consultation.budgetRange || "",
+              language
+            );
+            
+            // Update consultation with recommendations
+            await storage.updateStyleConsultation(conversationId, {
+              recommendations: recommendations as any
+            });
+            
+            const summaryMessage = generateConsultationSummary(recommendations, consultation.roomType || "", language);
+            
+            aiResponse = {
+              content: summaryMessage,
+              requiresPricing: false,
+              metadata: {
+                consultationCompleted: true,
+                recommendations,
+                isStyleConsultation: true
+              }
+            };
+          } else {
+            // Ask next question
+            const nextQuestion = getConsultationQuestion(consultation.currentStep || "", language);
+            if (nextQuestion) {
+              aiResponse = {
+                content: nextQuestion.question,
+                requiresPricing: false,
+                metadata: {
+                  consultationStep: consultation.currentStep,
+                  consultationOptions: nextQuestion.options,
+                  isStyleConsultation: true
+                }
+              };
+            } else {
+              aiResponse = {
+                content: "Er is een fout opgetreden bij het laden van de volgende vraag.",
+                requiresPricing: false,
+                metadata: {
+                  error: true,
+                  isStyleConsultation: true
+                }
+              };
+            }
+          }
+        }
+        
+        savedResponse = await storage.createChatbotMessage({
+          conversationId: conversation.id,
+          role: "assistant",
+          content: aiResponse.content,
+          metadata: aiResponse.metadata
+        });
+        
+      } else if (priceDetection.isPriceRequest) {
         console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
         
         const priceResponse = generateProductPricingResponse(
@@ -236,8 +363,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Create new conversation
         conversation = await storage.createChatbotConversation({
           sessionId,
-          language: "nl",
-          startedAt: new Date()
+          language: "nl"
         });
       }
 
@@ -324,6 +450,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: false, 
         message: "Internal server error" 
       });
+    }
+  });
+
+  // Style consultation quote request endpoint
+  app.post("/api/style-consultation/quote", async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertStyleQuoteRequestSchema.parse(req.body);
+      
+      // Get the consultation session
+      const consultation = await storage.getStyleConsultationById(validatedData.consultationId);
+      if (!consultation) {
+        return res.status(404).json({ message: "Consultation session not found" });
+      }
+
+      // Create the quote request
+      const quoteRequest = await storage.createStyleQuoteRequest(validatedData);
+      
+      // Send notification email to admin
+      const emailHtml = `
+        <h2>Nieuwe Stijl Consultatie Offerte Aanvraag</h2>
+        <h3>Klantgegevens:</h3>
+        <p><strong>Naam:</strong> ${validatedData.customerName}</p>
+        <p><strong>Email:</strong> ${validatedData.customerEmail}</p>
+        <p><strong>Adres:</strong> ${validatedData.customerAddress || 'Niet opgegeven'}</p>
+        
+        <h3>Consultatie Details:</h3>
+        <p><strong>Ruimte:</strong> ${consultation.roomType}</p>
+        <p><strong>Doel:</strong> ${consultation.primaryGoal}</p>
+        <p><strong>Stijl:</strong> ${consultation.stylePreference}</p>
+        <p><strong>Budget:</strong> ${consultation.budgetRange}</p>
+        
+        <h3>Geselecteerde Aanbevelingen:</h3>
+        <pre>${JSON.stringify(validatedData.selectedRecommendations, null, 2)}</pre>
+        
+        <h3>Metingen:</h3>
+        <p>${validatedData.measurements || 'Niet opgegeven'}</p>
+        
+        <h3>Extra Wensen:</h3>
+        <p>${validatedData.additionalRequirements || 'Geen'}</p>
+      `;
+
+      await sendEmail({
+        to: emailConfig.adminEmail,
+        subject: `Nieuwe Stijl Consultatie Offerte - ${validatedData.customerName}`,
+        html: emailHtml
+      });
+
+      res.json({ 
+        success: true, 
+        message: "Quote request submitted successfully",
+        quoteRequestId: quoteRequest.id
+      });
+
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ message: validationError.message });
+      }
+      
+      console.error("Error creating style consultation quote request:", error);
+      res.status(500).json({ message: "Failed to create quote request" });
+    }
+  });
+
+  // Get style consultation status
+  app.get("/api/style-consultation/status/:sessionId", async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+      const consultation = await storage.getStyleConsultationBySessionId(sessionId);
+      
+      if (!consultation) {
+        return res.status(404).json({ message: "Consultation not found" });
+      }
+
+      res.json({
+        consultation,
+        isCompleted: consultation.isCompleted,
+        currentStep: consultation.currentStep,
+        recommendations: consultation.recommendations
+      });
+
+    } catch (error) {
+      console.error("Error getting consultation status:", error);
+      res.status(500).json({ message: "Failed to get consultation status" });
     }
   });
 

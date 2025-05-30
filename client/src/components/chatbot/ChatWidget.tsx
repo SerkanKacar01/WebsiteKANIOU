@@ -7,6 +7,7 @@ import { MessageCircle, X, Send, Loader2, CheckCircle, Eye } from "lucide-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { LanguageSelector } from "./LanguageSelector";
 import { QuickReplyButtons, PRICE_REQUEST_OPTIONS, GENERAL_HELP_OPTIONS } from "./QuickReplyButtons";
 import { LeadCollectionForm } from "./LeadCollectionForm";
@@ -69,7 +70,8 @@ export function ChatbotWidget() {
   const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const { language, t } = useLanguage();
+  const { language, t, setLanguage } = useLanguage();
+  const { preferences, updateLanguage, updateName, getLanguage, isLoading: preferencesLoading } = useUserPreferences();
 
   // Initialize personalized greeting when language changes or component mounts
   useEffect(() => {

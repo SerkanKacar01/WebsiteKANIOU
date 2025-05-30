@@ -807,6 +807,8 @@ async function seedInitialData(storage: DatabaseStorage) {
   }
 }
 
+
+
 // Initialize the database storage
 export const storage = new DatabaseStorage();
 

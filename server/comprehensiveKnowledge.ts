@@ -14,11 +14,9 @@ import type {
   WebsiteContentIndex 
 } from "@shared/schema";
 import { 
-  analyzeUserQuestion, 
-  filterRelevantContent, 
-  generateOptimizedResponse,
+  generateSmartFilteredResponse,
   type FilteredResponse 
-} from "./responseFiltering";
+} from "./smartResponseFilter";
 import { getComprehensiveWebsiteKnowledge } from "./websiteCrawler";
 
 export interface ComprehensiveResponse {
@@ -278,35 +276,19 @@ export async function answerWithComprehensiveKnowledge(
   conversationContext?: string[]
 ): Promise<ComprehensiveResponse> {
   try {
-    // Build complete knowledge base
-    const fullKnowledge = await buildComprehensiveKnowledge(language);
-    
-    // Analyze user question for optimal response strategy
-    const questionAnalysis = analyzeUserQuestion(question, language);
-    
-    // Filter content to only relevant information
-    const filteredContent = filterRelevantContent(fullKnowledge, questionAnalysis, language);
-    
-    // Generate optimized, focused response
-    const optimizedResponse = generateOptimizedResponse(
-      question, 
-      filteredContent, 
-      questionAnalysis, 
-      language
-    );
+    // Use STEP 2 smart filtering system for precise responses
+    const smartResponse = await generateSmartFilteredResponse(question, language);
     
     return {
-      content: optimizedResponse.content,
-      confidence: optimizedResponse.confidence,
-      sources: optimizedResponse.isRelevant ? 
-        ["knowledge_base", "products", "pricing", "services"] : 
-        ["general_guidance"],
-      language,
-      usedFallback: !optimizedResponse.isRelevant
+      content: smartResponse.content,
+      confidence: smartResponse.confidence,
+      sources: [smartResponse.sourceCategory],
+      language: smartResponse.language,
+      usedFallback: smartResponse.confidence < 0.5
     };
 
   } catch (error) {
-    console.error("Error in comprehensive knowledge system:", error);
+    console.error("Error in STEP 2 smart filtering system:", error);
     return {
       content: getFallbackKnowledge(language),
       confidence: 0.5,
@@ -317,32 +299,7 @@ export async function answerWithComprehensiveKnowledge(
   }
 }
 
-/**
- * Analyze question to determine intent and keywords
- */
-function analyzeQuestion(question: string, language: string) {
-  const lowerQuestion = question.toLowerCase();
-  
-  const intents = {
-    pricing: /\b(prijs|kost|euro|price|cost|tarief|budget)\b/i,
-    product: /\b(rolgordijn|jaloezie|plisse|overgordijn|screen|dakraam|roller|blind|curtain)\b/i,
-    installation: /\b(montage|installatie|install|mount|ophangen)\b/i,
-    measurement: /\b(meten|afmeting|measure|size|opmeten)\b/i,
-    advice: /\b(advies|aanbeveling|advice|recommend|tip)\b/i,
-    service: /\b(service|onderhoud|garantie|warranty|maintenance)\b/i,
-    company: /\b(kaniou|bedrijf|company|over|about)\b/i
-  };
-
-  const detectedIntents = Object.entries(intents)
-    .filter(([_, pattern]) => pattern.test(lowerQuestion))
-    .map(([intent, _]) => intent);
-
-  return {
-    intents: detectedIntents,
-    keywords: extractKeywords(question, language),
-    questionType: determineQuestionType(question, language)
-  };
-}
+// Legacy functions removed - now using STEP 2 smart filtering system
 
 /**
  * Extract relevant content from comprehensive knowledge

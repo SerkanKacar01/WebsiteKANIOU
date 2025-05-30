@@ -47,6 +47,9 @@ import {
   newsletterSubscriptions,
   NewsletterSubscription,
   InsertNewsletterSubscription,
+  websiteContentIndex,
+  WebsiteContentIndex,
+  InsertWebsiteContentIndex,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -112,6 +115,14 @@ export interface IStorage {
   // Chatbot Admin Training
   createChatbotAdminTraining(training: InsertChatbotAdminTraining): Promise<ChatbotAdminTraining>;
   getChatbotAdminTraining(): Promise<ChatbotAdminTraining[]>;
+
+  // Website Content Index
+  createWebsiteContentIndex(content: InsertWebsiteContentIndex): Promise<WebsiteContentIndex>;
+  getWebsiteContentIndex(language?: string, category?: string): Promise<WebsiteContentIndex[]>;
+  getWebsiteContentByUrl(url: string): Promise<WebsiteContentIndex | undefined>;
+  updateWebsiteContentIndex(id: number, updates: Partial<WebsiteContentIndex>): Promise<WebsiteContentIndex>;
+  deleteWebsiteContentIndex(id: number): Promise<void>;
+  searchWebsiteContent(query: string, language?: string): Promise<WebsiteContentIndex[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -484,6 +495,80 @@ export class DatabaseStorage implements IStorage {
       console.error('Error unsubscribing from newsletter:', error);
       return false;
     }
+  }
+
+  // Website Content Index Implementation
+  async createWebsiteContentIndex(content: InsertWebsiteContentIndex): Promise<WebsiteContentIndex> {
+    const [result] = await db.insert(websiteContentIndex).values(content).returning();
+    return result;
+  }
+
+  async getWebsiteContentIndex(language?: string, category?: string): Promise<WebsiteContentIndex[]> {
+    let query = db.select().from(websiteContentIndex).where(eq(websiteContentIndex.isActive, true));
+    
+    if (language && category) {
+      return await db.select().from(websiteContentIndex)
+        .where(and(
+          eq(websiteContentIndex.language, language),
+          eq(websiteContentIndex.category, category),
+          eq(websiteContentIndex.isActive, true)
+        ))
+        .orderBy(desc(websiteContentIndex.lastCrawled));
+    } else if (language) {
+      return await db.select().from(websiteContentIndex)
+        .where(and(
+          eq(websiteContentIndex.language, language),
+          eq(websiteContentIndex.isActive, true)
+        ))
+        .orderBy(desc(websiteContentIndex.lastCrawled));
+    } else if (category) {
+      return await db.select().from(websiteContentIndex)
+        .where(and(
+          eq(websiteContentIndex.category, category),
+          eq(websiteContentIndex.isActive, true)
+        ))
+        .orderBy(desc(websiteContentIndex.lastCrawled));
+    }
+    
+    return await db.select().from(websiteContentIndex)
+      .where(eq(websiteContentIndex.isActive, true))
+      .orderBy(desc(websiteContentIndex.lastCrawled));
+  }
+
+  async getWebsiteContentByUrl(url: string): Promise<WebsiteContentIndex | undefined> {
+    const [result] = await db.select().from(websiteContentIndex)
+      .where(eq(websiteContentIndex.pageUrl, url))
+      .limit(1);
+    return result;
+  }
+
+  async updateWebsiteContentIndex(id: number, updates: Partial<WebsiteContentIndex>): Promise<WebsiteContentIndex> {
+    const [result] = await db.update(websiteContentIndex)
+      .set({ ...updates, lastCrawled: new Date() })
+      .where(eq(websiteContentIndex.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteWebsiteContentIndex(id: number): Promise<void> {
+    await db.delete(websiteContentIndex).where(eq(websiteContentIndex.id, id));
+  }
+
+  async searchWebsiteContent(query: string, language?: string): Promise<WebsiteContentIndex[]> {
+    const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 2);
+    
+    if (language) {
+      return await db.select().from(websiteContentIndex)
+        .where(and(
+          eq(websiteContentIndex.language, language),
+          eq(websiteContentIndex.isActive, true)
+        ))
+        .orderBy(desc(websiteContentIndex.lastCrawled));
+    }
+    
+    return await db.select().from(websiteContentIndex)
+      .where(eq(websiteContentIndex.isActive, true))
+      .orderBy(desc(websiteContentIndex.lastCrawled));
   }
 }
 

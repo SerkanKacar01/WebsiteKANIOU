@@ -436,3 +436,33 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
 // Newsletter Subscription type definitions
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
 export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
+
+// Website Content Index - Full site crawl and knowledge extraction
+export const websiteContentIndex = pgTable("website_content_index", {
+  id: serial("id").primaryKey(),
+  pageUrl: text("page_url").notNull(),
+  pageTitle: text("page_title").notNull(),
+  category: text("category").notNull(), // 'products', 'services', 'pricing', 'installation', 'warranty', 'maintenance', 'company', 'support', 'faq'
+  subCategory: text("sub_category"), // For more granular organization
+  language: text("language").notNull().default("nl"), // 'nl', 'fr', 'en', 'tr'
+  contentType: text("content_type").notNull(), // 'product-description', 'service-info', 'pricing-table', 'faq', 'general-info'
+  headingText: text("heading_text"), // Main headings (H1, H2, H3)
+  bodyContent: text("body_content").notNull(), // Full text content
+  metaDescription: text("meta_description"), // SEO meta description
+  keywords: text("keywords").array(), // Extracted keywords
+  images: jsonb("images"), // Image URLs and alt texts
+  links: jsonb("links"), // Internal and external links
+  structuredData: jsonb("structured_data"), // Any schema.org or structured data
+  lastCrawled: timestamp("last_crawled").defaultNow(),
+  isActive: boolean("is_active").default(true),
+  crawlSource: text("crawl_source").default("manual"), // 'manual', 'automated', 'sitemap'
+});
+
+export const insertWebsiteContentIndexSchema = createInsertSchema(websiteContentIndex).omit({
+  id: true,
+  lastCrawled: true,
+});
+
+// Website Content Index type definitions
+export type WebsiteContentIndex = typeof websiteContentIndex.$inferSelect;
+export type InsertWebsiteContentIndex = z.infer<typeof insertWebsiteContentIndexSchema>;

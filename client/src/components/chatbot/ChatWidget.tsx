@@ -70,8 +70,15 @@ export function ChatbotWidget() {
   const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const { language, t, setLanguage } = useLanguage();
+  const { language, t, changeLanguage } = useLanguage();
   const { preferences, updateLanguage, updateName, getLanguage, isLoading: preferencesLoading } = useUserPreferences();
+
+  // Initialize user's preferred language when preferences load
+  useEffect(() => {
+    if (!preferencesLoading && preferences && preferences.language !== language) {
+      changeLanguage(preferences.language as any);
+    }
+  }, [preferencesLoading, preferences, language, changeLanguage]);
 
   // Initialize personalized greeting when language changes or component mounts
   useEffect(() => {
@@ -81,6 +88,11 @@ export function ChatbotWidget() {
     // Save user interaction when chatbot opens
     if (isOpen) {
       saveUserPreferences({ language });
+      
+      // Update user preferences with current language
+      if (preferences && preferences.language !== language) {
+        updateLanguage(language);
+      }
       
       // Check if smart suggestions should be shown
       const lastChatTime = localStorage.getItem('kaniou_last_chat_time');
@@ -95,7 +107,7 @@ export function ChatbotWidget() {
         showSmartSuggestions: shouldShowSuggestions
       }));
     }
-  }, [language, isOpen]);
+  }, [language, isOpen, preferences, updateLanguage]);
 
   // Check business hours
   const { data: businessHours } = useQuery({

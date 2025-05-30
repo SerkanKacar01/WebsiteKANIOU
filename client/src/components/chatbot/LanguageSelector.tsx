@@ -7,9 +7,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage, type SupportedLanguage } from "@/hooks/useLanguage";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 export function LanguageSelector() {
   const { language, changeLanguage, languageOptions, t } = useLanguage();
+  const { updateLanguage } = useUserPreferences();
+
+  const handleLanguageChange = (newLanguage: SupportedLanguage) => {
+    // Update the current language in the app
+    changeLanguage(newLanguage);
+    
+    // Save the preference to user preferences
+    updateLanguage(newLanguage);
+  };
 
   const currentLanguage = languageOptions.find(lang => lang.code === language);
 
@@ -31,7 +41,7 @@ export function LanguageSelector() {
         {languageOptions.map((option) => (
           <DropdownMenuItem
             key={option.code}
-            onClick={() => changeLanguage(option.code)}
+            onClick={() => handleLanguageChange(option.code)}
             className={`flex items-center gap-2 cursor-pointer ${
               language === option.code ? "bg-accent" : ""
             }`}

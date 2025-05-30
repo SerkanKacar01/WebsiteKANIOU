@@ -90,6 +90,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const isStyleRequest = isStyleConsultationRequest(message, language);
       console.log(`🎨 STYLE CONSULTATION: ${isStyleRequest ? 'YES' : 'NO'} - Request detected`);
 
+      // Check for product catalog questions
+      const { isProductCatalogQuestion, generateProductCatalogResponse } = await import('./productCatalogResponse');
+      const isProductCatalog = isProductCatalogQuestion(message, language);
+
       // Detect pricing and product requests
       const priceDetection = detectPriceIntent(message, language);
       console.log(`🕵️ PRICE DETECTION: ${priceDetection.isPriceRequest ? 'YES' : 'NO'} - Confidence: ${Math.round(priceDetection.confidence * 100)}% - Products: ${priceDetection.extractedProducts.join(', ') || 'None'}`);
@@ -100,8 +104,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let aiResponse: any;
       let savedResponse: any;
       
+      // Handle Product Catalog Questions First
+      if (isProductCatalog) {
+        console.log(`📋 PRODUCT CATALOG: Question detected, providing complete product list`);
+        
+        const catalogResponse = generateProductCatalogResponse(message, language);
+        
+        aiResponse = {
+          content: catalogResponse,
+          requiresPricing: false,
+          metadata: {
+            type: 'product_catalog',
+            comprehensive: true
+          }
+        };
+      }
       // Handle Style Consultation Flow
-      if (isStyleRequest) {
+      else if (isStyleRequest) {
         console.log(`🎨 STYLE CONSULTATION: Starting consultation flow`);
         
         // Check if there's an existing consultation session

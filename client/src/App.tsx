@@ -27,6 +27,7 @@ import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
 import Admin from "@/pages/Admin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
+import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -125,6 +126,7 @@ function Router() {
         <Route path="/customization-wizard" component={CustomizationWizardPage} />
         <Route path="/product-360-demo" component={Product360Demo} />
         <Route path="/rewards" component={RewardsSystem} />
+        <Route path="/recommendations" component={SmartRecommendationEngine} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/cookie-policy" component={CookiePolicyPage} />

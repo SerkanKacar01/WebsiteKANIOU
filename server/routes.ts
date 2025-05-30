@@ -1032,6 +1032,53 @@ To respond, simply reply to this email.
     }
   });
 
+  // Conversation Summary Email endpoint
+  app.post("/api/chatbot/summary/email", async (req: Request, res: Response) => {
+    try {
+      const { email, summary, language } = req.body;
+
+      if (!email || !summary || !language) {
+        return res.status(400).json({ 
+          message: "Email, summary, and language are required" 
+        });
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ 
+          message: "Invalid email format" 
+        });
+      }
+
+      // Send the conversation summary email
+      const emailSent = await sendConversationSummaryEmail({
+        email,
+        summary,
+        language
+      });
+
+      if (emailSent) {
+        res.json({ 
+          success: true, 
+          message: "Conversation summary sent successfully" 
+        });
+      } else {
+        res.status(500).json({ 
+          success: false, 
+          message: "Failed to send conversation summary email" 
+        });
+      }
+
+    } catch (error) {
+      console.error("Error sending conversation summary email:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Internal server error" 
+      });
+    }
+  });
+
   // Newsletter subscription endpoints
   app.post("/api/newsletter/subscribe", formRateLimiter, spamDetectionMiddleware, async (req: Request, res: Response) => {
     try {

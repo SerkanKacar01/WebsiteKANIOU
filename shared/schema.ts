@@ -437,6 +437,121 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
 export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
 
+// Interior Style Consultation Sessions
+export const styleConsultations = pgTable("style_consultations", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull().unique(),
+  conversationId: integer("conversation_id").references(() => chatbotConversations.id, { onDelete: 'cascade' }),
+  currentStep: text("current_step").default("room_type"), // room_type, primary_goal, style_preference, color_material, budget, recommendations
+  roomType: text("room_type"),
+  primaryGoal: text("primary_goal"),
+  stylePreference: text("style_preference"),
+  colorPreferences: text("color_preferences").array(),
+  materialPreferences: text("material_preferences").array(),
+  budgetRange: text("budget_range"),
+  windowSize: text("window_size"),
+  specialRequirements: text("special_requirements"),
+  recommendations: jsonb("recommendations"),
+  language: text("language").default("nl"),
+  isCompleted: boolean("is_completed").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertStyleConsultationSchema = createInsertSchema(styleConsultations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Style Consultation Product Mappings
+export const styleProductMappings = pgTable("style_product_mappings", {
+  id: serial("id").primaryKey(),
+  roomType: text("room_type").notNull(),
+  styleType: text("style_type").notNull(),
+  primaryGoal: text("primary_goal").notNull(),
+  recommendedProducts: text("recommended_products").array().notNull(),
+  productDescriptions: jsonb("product_descriptions").notNull(),
+  priceRanges: jsonb("price_ranges").notNull(),
+  materialSuggestions: text("material_suggestions").array(),
+  colorSuggestions: text("color_suggestions").array(),
+  specialNotes: text("special_notes"),
+  priority: integer("priority").default(1),
+  language: text("language").default("nl"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertStyleProductMappingSchema = createInsertSchema(styleProductMappings).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Style Consultation Quote Requests
+export const styleQuoteRequests = pgTable("style_quote_requests", {
+  id: serial("id").primaryKey(),
+  consultationId: integer("consultation_id").notNull().references(() => styleConsultations.id, { onDelete: 'cascade' }),
+  customerName: text("customer_name").notNull(),
+  customerEmail: text("customer_email").notNull(),
+  customerAddress: text("customer_address"),
+  selectedRecommendations: jsonb("selected_recommendations").notNull(),
+  measurements: text("measurements"),
+  additionalRequirements: text("additional_requirements"),
+  isProcessed: boolean("is_processed").default(false),
+  adminNotes: text("admin_notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  processedAt: timestamp("processed_at"),
+});
+
+export const insertStyleQuoteRequestSchema = createInsertSchema(styleQuoteRequests).omit({
+  id: true,
+  createdAt: true,
+  processedAt: true,
+}).extend({
+  customerName: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  customerEmail: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  customerAddress: z.string()
+    .max(500, "Address must be less than 500 characters")
+    .optional(),
+  measurements: z.string()
+    .max(1000, "Measurements must be less than 1000 characters")
+    .optional(),
+  additionalRequirements: z.string()
+    .max(2000, "Additional requirements must be less than 2000 characters")
+    .optional(),
+});
+
+// Relations for style consultation tables
+export const styleConsultationsRelations = relations(styleConsultations, ({ one, many }) => ({
+  conversation: one(chatbotConversations, {
+    fields: [styleConsultations.conversationId],
+    references: [chatbotConversations.id],
+  }),
+  quoteRequests: many(styleQuoteRequests),
+}));
+
+export const styleQuoteRequestsRelations = relations(styleQuoteRequests, ({ one }) => ({
+  consultation: one(styleConsultations, {
+    fields: [styleQuoteRequests.consultationId],
+    references: [styleConsultations.id],
+  }),
+}));
+
+// Type definitions for style consultation tables
+export type StyleConsultation = typeof styleConsultations.$inferSelect;
+export type InsertStyleConsultation = z.infer<typeof insertStyleConsultationSchema>;
+
+export type StyleProductMapping = typeof styleProductMappings.$inferSelect;
+export type InsertStyleProductMapping = z.infer<typeof insertStyleProductMappingSchema>;
+
+export type StyleQuoteRequest = typeof styleQuoteRequests.$inferSelect;
+export type InsertStyleQuoteRequest = z.infer<typeof insertStyleQuoteRequestSchema>;
+
 // Website Content Index - Full site crawl and knowledge extraction
 export const websiteContentIndex = pgTable("website_content_index", {
   id: serial("id").primaryKey(),

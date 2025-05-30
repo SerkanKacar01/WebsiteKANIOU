@@ -128,6 +128,21 @@ function Router() {
         <Route path="/product-360-demo" component={Product360Demo} />
         <Route path="/rewards" component={RewardsSystem} />
         <Route path="/recommendations" component={SmartRecommendationEngine} />
+        <Route path="/onboarding" component={() => {
+          // Manual onboarding trigger for testing
+          return (
+            <OnboardingWizard 
+              onComplete={() => {
+                localStorage.setItem('kaniou_onboarding_completed', 'true');
+                window.location.href = '/';
+              }}
+              onSkip={() => {
+                localStorage.setItem('kaniou_onboarding_skipped', 'true');
+                window.location.href = '/';
+              }}
+            />
+          );
+        }} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/cookie-policy" component={CookiePolicyPage} />

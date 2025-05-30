@@ -446,7 +446,9 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
-      awardPoints('PRODUCT_VIEW'); // Award points for engagement
+      // Award points for engagement
+      const currentPoints = parseInt(localStorage.getItem('kaniou_user_points') || '0');
+      localStorage.setItem('kaniou_user_points', (currentPoints + 5).toString());
     }
   };
 
@@ -510,7 +512,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsCompleted(true)}
+              onClick={onSkip}
               className="text-muted-foreground"
             >
               Overslaan

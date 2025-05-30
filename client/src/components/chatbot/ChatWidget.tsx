@@ -16,6 +16,13 @@ import {
   extractNameFromMessage,
   updateUserName 
 } from "@/utils/userPreferences";
+import {
+  detectConversationEnd,
+  generateConversationSummary,
+  checkInactivityTimeout,
+  type ConversationSummary as SummaryType
+} from "@/utils/conversationSummary";
+import { ConversationSummaryComponent } from "./ConversationSummary";
 import kaniouLogo from "@/assets/KAN.LOGO.png";
 
 interface ChatMessage {
@@ -49,6 +56,10 @@ export function ChatbotWidget() {
     isPersonalized: boolean;
     showNamePrompt: boolean;
   } | null>(null);
+  const [conversationSummary, setConversationSummary] = useState<SummaryType | null>(null);
+  const [conversationStartTime] = useState(() => new Date());
+  const [lastMessageTime, setLastMessageTime] = useState(new Date());
+  const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { language, t } = useLanguage();
@@ -63,6 +74,49 @@ export function ChatbotWidget() {
       saveUserPreferences({ language });
     }
   }, [language, isOpen]);
+
+  // Monitor for conversation inactivity
+  useEffect(() => {
+    if (!isOpen || conversationSummary) return;
+
+    // Clear existing timer
+    if (inactivityTimer) {
+      clearTimeout(inactivityTimer);
+    }
+
+    // Set new inactivity timer (3 minutes)
+    const timer = setTimeout(() => {
+      if (messages.length > 2) { // Only show summary if there was actual conversation
+        const summary = generateConversationSummary(
+          messages.map(m => ({
+            id: m.id,
+            role: m.role,
+            content: m.content,
+            createdAt: m.createdAt,
+            metadata: m.metadata
+          })),
+          language,
+          conversationStartTime
+        );
+        setConversationSummary(summary);
+      }
+    }, 3 * 60 * 1000); // 3 minutes
+
+    setInactivityTimer(timer);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [lastMessageTime, isOpen, messages, conversationSummary, language, conversationStartTime, inactivityTimer]);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+    };
+  }, [inactivityTimer]);
 
   // Check business hours
   const { data: businessHours } = useQuery({
@@ -252,6 +306,9 @@ export function ChatbotWidget() {
     const messageText = message.trim();
     setMessage("");
 
+    // Update last message time for inactivity tracking
+    setLastMessageTime(new Date());
+
     // Check if user provided their name and update preferences
     const extractedName = extractNameFromMessage(messageText);
     if (extractedName) {
@@ -259,6 +316,26 @@ export function ChatbotWidget() {
       // Update the greeting to personalized version
       const newGreeting = getPersonalizedGreeting(language);
       setPersonalizedGreeting(newGreeting);
+    }
+
+    // Check if conversation is ending
+    const endIndicator = detectConversationEnd(messageText, language);
+    if (endIndicator.isEnding && endIndicator.confidence > 0.6 && messages.length > 2) {
+      // Generate summary after a short delay to allow the final response
+      setTimeout(() => {
+        const summary = generateConversationSummary(
+          messages.map(m => ({
+            id: m.id,
+            role: m.role,
+            content: m.content,
+            createdAt: m.createdAt,
+            metadata: m.metadata
+          })),
+          language,
+          conversationStartTime
+        );
+        setConversationSummary(summary);
+      }, 2000);
     }
 
     // Reset chat state when user sends a manual message

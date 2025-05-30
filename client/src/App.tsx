@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -28,6 +28,7 @@ import Admin from "@/pages/Admin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
 import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
+import { OnboardingWizard } from "@/components/OnboardingWizard";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -143,12 +144,35 @@ function Router() {
 
 function App() {
   const { language } = useLanguage();
+  const [shouldShowOnboarding, setShouldShowOnboarding] = useState(false);
+
+  // Check if user should see onboarding
+  useEffect(() => {
+    const hasCompletedOnboarding = localStorage.getItem('kaniou_onboarding_completed');
+    const hasVisitedBefore = localStorage.getItem('kaniou_has_visited');
+    
+    // Show onboarding for completely new users
+    if (!hasCompletedOnboarding && !hasVisitedBefore) {
+      setShouldShowOnboarding(true);
+      localStorage.setItem('kaniou_has_visited', 'true');
+    }
+  }, []);
 
   // Update language-specific metadata
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   }, [language]);
+
+  const handleOnboardingComplete = () => {
+    setShouldShowOnboarding(false);
+    localStorage.setItem('kaniou_onboarding_completed', 'true');
+  };
+
+  const handleOnboardingSkip = () => {
+    setShouldShowOnboarding(false);
+    localStorage.setItem('kaniou_onboarding_skipped', 'true');
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -162,6 +186,12 @@ function App() {
           <Footer />
           <CookieConsentBanner />
           <ChatbotWidget />
+          {shouldShowOnboarding && (
+            <OnboardingWizard 
+              onComplete={handleOnboardingComplete}
+              onSkip={handleOnboardingSkip}
+            />
+          )}
         </div>
       </TooltipProvider>
     </QueryClientProvider>

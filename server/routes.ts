@@ -18,7 +18,7 @@ import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
 import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
-import { generateChatbotResponse, detectPricingRequest, extractProductTypes } from "./openai";
+import { generateChatbotResponse } from "./openai";
 import { isWithinBusinessHours, getBusinessHoursResponse, getBusinessStatus } from "./businessHours";
 import { 
   detectPriceRequest, 
@@ -28,6 +28,7 @@ import {
   getPriceRequestFallback,
   checkNotificationRateLimit
 } from "./priceAssistant";
+import { generateProductPricingResponse } from "./productPricing";
 import { sendPriceRequestNotification } from "./emailService";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import multer from "multer";
@@ -609,12 +610,18 @@ To respond, simply reply to this email.
         if (priceDetection.isPriceRequest) {
           console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
           
-          // Use price request fallback response
-          const priceResponse = getPriceRequestFallback(language);
+          // Generate actual pricing response using product data
+          const priceResponse = generateProductPricingResponse(
+            priceDetection.extractedProducts, 
+            language, 
+            message
+          );
+          
+          console.log(`💡 PRICING RESPONSE: Generated specific pricing info for detected products`);
           
           aiResponse = {
             content: priceResponse,
-            requiresPricing: true,
+            requiresPricing: false, // Changed to false since we're providing actual pricing
             detectedProductTypes: priceDetection.extractedProducts,
             metadata: {
               tokensUsed: 0,
@@ -623,7 +630,7 @@ To respond, simply reply to this email.
               businessHours: true,
               afterHours: false,
               priceDetection,
-              needsAdminResponse: true
+              pricingProvided: true // Added flag to indicate actual pricing was provided
             }
           };
 

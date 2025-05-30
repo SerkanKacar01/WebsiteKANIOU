@@ -437,6 +437,36 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
 export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
 
+// User Preferences for personalized experience
+export const userPreferences = pgTable("user_preferences", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().unique(), // Session-based or persistent user ID
+  language: text("language").notNull().default("nl"), // User's preferred language
+  name: text("name"), // User's name if provided
+  email: text("email"), // User's email if provided
+  chatHistory: jsonb("chat_history"), // Summarized chat history
+  preferences: jsonb("preferences"), // Additional user preferences
+  lastActive: timestamp("last_active").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertUserPreferencesSchema = createInsertSchema(userPreferences).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  userId: z.string().min(1, "User ID is required"),
+  language: z.enum(["nl", "en", "fr", "tr"], {
+    errorMap: () => ({ message: "Language must be one of: nl, en, fr, tr" })
+  }),
+  name: z.string().min(2).max(100).optional(),
+  email: z.string().email().optional(),
+});
+
+export type UserPreferences = typeof userPreferences.$inferSelect;
+export type InsertUserPreferences = z.infer<typeof insertUserPreferencesSchema>;
+
 // Interior Style Consultation Sessions
 export const styleConsultations = pgTable("style_consultations", {
   id: serial("id").primaryKey(),

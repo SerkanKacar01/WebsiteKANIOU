@@ -47,6 +47,9 @@ import {
   newsletterSubscriptions,
   NewsletterSubscription,
   InsertNewsletterSubscription,
+  userPreferences,
+  UserPreferences,
+  InsertUserPreferences,
   styleConsultations,
   StyleConsultation,
   InsertStyleConsultation,
@@ -143,6 +146,12 @@ export interface IStorage {
   createStyleQuoteRequest(request: InsertStyleQuoteRequest): Promise<StyleQuoteRequest>;
   getStyleQuoteRequestsByConsultation(consultationId: number): Promise<StyleQuoteRequest[]>;
   getUnprocessedStyleQuoteRequests(): Promise<StyleQuoteRequest[]>;
+
+  // User Preferences
+  getUserPreferences(userId: string): Promise<UserPreferences | undefined>;
+  createUserPreferences(preferences: InsertUserPreferences): Promise<UserPreferences>;
+  updateUserPreferences(userId: string, updates: Partial<UserPreferences>): Promise<UserPreferences>;
+  updateUserLanguage(userId: string, language: string): Promise<UserPreferences>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -799,6 +808,53 @@ async function seedInitialData(storage: DatabaseStorage) {
     });
 
     console.log("Initial data seeding complete!");
+  }
+
+  // User Preferences
+  async getUserPreferences(userId: string): Promise<UserPreferences | undefined> {
+    const result = await db
+      .select()
+      .from(userPreferences)
+      .where(eq(userPreferences.userId, userId));
+    return result[0];
+  }
+
+  async createUserPreferences(preferences: InsertUserPreferences): Promise<UserPreferences> {
+    const result = await db
+      .insert(userPreferences)
+      .values({
+        ...preferences,
+        lastActive: new Date(),
+        updatedAt: new Date(),
+      })
+      .returning();
+    return result[0];
+  }
+
+  async updateUserPreferences(userId: string, updates: Partial<UserPreferences>): Promise<UserPreferences> {
+    const result = await db
+      .update(userPreferences)
+      .set({
+        ...updates,
+        lastActive: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(userPreferences.userId, userId))
+      .returning();
+    return result[0];
+  }
+
+  async updateUserLanguage(userId: string, language: string): Promise<UserPreferences> {
+    const result = await db
+      .update(userPreferences)
+      .set({
+        language,
+        lastActive: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(userPreferences.userId, userId))
+      .returning();
+    return result[0];
   }
 }
 

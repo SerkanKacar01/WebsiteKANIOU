@@ -582,6 +582,11 @@ To respond, simply reply to this email.
         }
       } else {
         // 24/7 Chatbot Operation - Process all requests normally regardless of time
+        console.log(`🤖 24/7 CHATBOT: Processing message at any time - Full service available`);
+        
+        let aiResponse;
+        let savedResponse;
+        
         if (priceDetection.isPriceRequest) {
           console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
           
@@ -698,73 +703,74 @@ To respond, simply reply to this email.
 
       // Legacy pricing handling (kept for compatibility)
       if (aiResponse && aiResponse.requiresPricing && aiResponse.detectedProductTypes.length > 0) {
-        // Create pricing request record
-        await storage.createChatbotPricing({
-          productType: aiResponse.detectedProductTypes.join(", "),
-          pricingInfo: { requestedProducts: aiResponse.detectedProductTypes },
-          requestContext: message
-        });
-
-        console.log(`📋 LEGACY PRICING: Recorded request for: ${aiResponse.detectedProductTypes.join(", ")}`);
-      }
-
-      // Smart Email Notification Trigger Analysis for 24/7 Operation
-      try {
-        const conversationMessages = await storage.getChatbotMessagesByConversationId(conversation.id);
-        const messageHistory = conversationMessages.map(msg => ({
-          role: msg.role,
-          content: msg.content,
-          createdAt: msg.createdAt?.toISOString()
-        }));
-
-        // Analyze if notification should be triggered
-        const triggerAnalysis = analyzeTriggerConditions(
-          message,
-          messageHistory,
-          aiResponse.metadata?.confidence || 0.5,
-          language
-        );
-
-        console.log(`🔔 TRIGGER ANALYSIS: Should trigger: ${triggerAnalysis.shouldTrigger}, Reason: ${triggerAnalysis.triggerReason}, Confidence: ${Math.round(triggerAnalysis.confidence * 100)}%`);
-
-        // Send notification and add human follow-up message if conditions are met
-        if (triggerAnalysis.shouldTrigger) {
-          const notificationData = {
-            customerQuestion: message,
-            fullConversation: formatConversationForEmail(messageHistory),
-            language: language,
-            triggerReason: triggerAnalysis.triggerReason,
-            timestamp: new Date().toLocaleString('nl-BE', { 
-              timeZone: 'Europe/Brussels',
-              dateStyle: 'full',
-              timeStyle: 'medium'
-            }),
-            conversationId: conversation.id.toString()
-          };
-
-          // Send notification asynchronously (don't block response)
-          sendSmartNotification(notificationData).catch(error => {
-            console.error('Failed to send smart notification:', error);
+          // Create pricing request record
+          await storage.createChatbotPricing({
+            productType: aiResponse.detectedProductTypes.join(", "),
+            pricingInfo: { requestedProducts: aiResponse.detectedProductTypes },
+            requestContext: message
           });
 
-          // Add human follow-up message to response
-          const followUpMessage = getHumanFollowUpMessage(language);
-          aiResponse.content += `\n\n${followUpMessage.content}`;
-
-          console.log(`📧 SMART NOTIFICATION: Triggered for conversation ${conversation.id} - Reason: ${triggerAnalysis.triggerReason}`);
-          console.log(`👤 HUMAN FOLLOW-UP: Added 24-hour response notice in ${language}`);
+          console.log(`📋 LEGACY PRICING: Recorded request for: ${aiResponse.detectedProductTypes.join(", ")}`);
         }
-      } catch (error) {
-        console.error('Error in smart notification analysis:', error);
-        // Continue with normal response even if notification fails
-      }
 
-      res.json({
-        message: aiResponse.content,
-        messageId: savedResponse.id,
-        requiresPricing: aiResponse.requiresPricing,
-        metadata: aiResponse.metadata
-      });
+        // Smart Email Notification Trigger Analysis for 24/7 Operation
+        try {
+          const conversationMessages = await storage.getChatbotMessagesByConversationId(conversation.id);
+          const messageHistory = conversationMessages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+            createdAt: msg.createdAt?.toISOString()
+          }));
+
+          // Analyze if notification should be triggered
+          const triggerAnalysis = analyzeTriggerConditions(
+            message,
+            messageHistory,
+            aiResponse.metadata?.confidence || 0.5,
+            language
+          );
+
+          console.log(`🔔 TRIGGER ANALYSIS: Should trigger: ${triggerAnalysis.shouldTrigger}, Reason: ${triggerAnalysis.triggerReason}, Confidence: ${Math.round(triggerAnalysis.confidence * 100)}%`);
+
+          // Send notification and add human follow-up message if conditions are met
+          if (triggerAnalysis.shouldTrigger) {
+            const notificationData = {
+              customerQuestion: message,
+              fullConversation: formatConversationForEmail(messageHistory),
+              language: language,
+              triggerReason: triggerAnalysis.triggerReason,
+              timestamp: new Date().toLocaleString('nl-BE', { 
+                timeZone: 'Europe/Brussels',
+                dateStyle: 'full',
+                timeStyle: 'medium'
+              }),
+              conversationId: conversation.id.toString()
+            };
+
+            // Send notification asynchronously (don't block response)
+            sendSmartNotification(notificationData).catch(error => {
+              console.error('Failed to send smart notification:', error);
+            });
+
+            // Add human follow-up message to response
+            const followUpMessage = getHumanFollowUpMessage(language);
+            aiResponse.content += `\n\n${followUpMessage.content}`;
+
+            console.log(`📧 SMART NOTIFICATION: Triggered for conversation ${conversation.id} - Reason: ${triggerAnalysis.triggerReason}`);
+            console.log(`👤 HUMAN FOLLOW-UP: Added 24-hour response notice in ${language}`);
+          }
+        } catch (error) {
+          console.error('Error in smart notification analysis:', error);
+          // Continue with normal response even if notification fails
+        }
+
+        res.json({
+          message: aiResponse.content,
+          messageId: savedResponse.id,
+          requiresPricing: aiResponse.requiresPricing,
+          metadata: aiResponse.metadata
+        });
+      }
 
     } catch (error) {
       console.error("Error processing chatbot message:", error);

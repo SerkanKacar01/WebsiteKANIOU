@@ -42,6 +42,13 @@ import {
   getHumanFollowUpMessage,
   isAskingForBusinessHours 
 } from "./humanFollowUpMessages";
+import { 
+  isStyleConsultationRequest,
+  getConsultationWelcomeMessage,
+  getConsultationQuestion,
+  generateRecommendations,
+  generateConsultationSummary
+} from "./styleConsultation";
 import multer from "multer";
 
 // Type aliases for better code readability

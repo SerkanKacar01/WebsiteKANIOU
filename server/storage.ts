@@ -132,6 +132,17 @@ export interface IStorage {
   updateWebsiteContentIndex(id: number, updates: Partial<WebsiteContentIndex>): Promise<WebsiteContentIndex>;
   deleteWebsiteContentIndex(id: number): Promise<void>;
   searchWebsiteContent(query: string, language?: string): Promise<WebsiteContentIndex[]>;
+
+  // Style Consultations
+  createStyleConsultation(consultation: InsertStyleConsultation): Promise<StyleConsultation>;
+  getStyleConsultationBySessionId(sessionId: string): Promise<StyleConsultation | undefined>;
+  updateStyleConsultation(sessionId: string, updates: Partial<StyleConsultation>): Promise<StyleConsultation>;
+  getStyleConsultationById(id: number): Promise<StyleConsultation | undefined>;
+
+  // Style Quote Requests
+  createStyleQuoteRequest(request: InsertStyleQuoteRequest): Promise<StyleQuoteRequest>;
+  getStyleQuoteRequestsByConsultation(consultationId: number): Promise<StyleQuoteRequest[]>;
+  getUnprocessedStyleQuoteRequests(): Promise<StyleQuoteRequest[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -504,6 +515,46 @@ export class DatabaseStorage implements IStorage {
       console.error('Error unsubscribing from newsletter:', error);
       return false;
     }
+  }
+
+  // Style Consultations Implementation
+  async createStyleConsultation(consultation: InsertStyleConsultation): Promise<StyleConsultation> {
+    const [result] = await db.insert(styleConsultations).values(consultation).returning();
+    return result;
+  }
+
+  async getStyleConsultationBySessionId(sessionId: string): Promise<StyleConsultation | undefined> {
+    const [result] = await db.select().from(styleConsultations).where(eq(styleConsultations.sessionId, sessionId));
+    return result;
+  }
+
+  async updateStyleConsultation(sessionId: string, updates: Partial<StyleConsultation>): Promise<StyleConsultation> {
+    const [result] = await db.update(styleConsultations)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(styleConsultations.sessionId, sessionId))
+      .returning();
+    return result;
+  }
+
+  async getStyleConsultationById(id: number): Promise<StyleConsultation | undefined> {
+    const [result] = await db.select().from(styleConsultations).where(eq(styleConsultations.id, id));
+    return result;
+  }
+
+  // Style Quote Requests Implementation
+  async createStyleQuoteRequest(request: InsertStyleQuoteRequest): Promise<StyleQuoteRequest> {
+    const [result] = await db.insert(styleQuoteRequests).values(request).returning();
+    return result;
+  }
+
+  async getStyleQuoteRequestsByConsultation(consultationId: number): Promise<StyleQuoteRequest[]> {
+    return await db.select().from(styleQuoteRequests).where(eq(styleQuoteRequests.consultationId, consultationId));
+  }
+
+  async getUnprocessedStyleQuoteRequests(): Promise<StyleQuoteRequest[]> {
+    return await db.select().from(styleQuoteRequests)
+      .where(eq(styleQuoteRequests.isProcessed, false))
+      .orderBy(desc(styleQuoteRequests.createdAt));
   }
 
   // Website Content Index Implementation

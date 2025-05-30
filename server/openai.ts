@@ -31,7 +31,8 @@ export interface ChatbotResponse {
 }
 
 /**
- * Generate AI response for chatbot using OpenAI GPT-4o with enhanced memory and automatic language detection
+ * Generate AI response for chatbot using OpenAI GPT-4o with STRICT language enforcement
+ * The chatbot MUST respond in the user's selected language only, never auto-detect or override
  */
 export async function generateChatbotResponse(
   userMessage: string,
@@ -40,14 +41,14 @@ export async function generateChatbotResponse(
   const startTime = Date.now();
 
   try {
-    // Step 1: Detect user language automatically
-    console.log(`🌐 LANGUAGE DETECTION: Analyzing message language...`);
-    const languageDetection = await detectUserLanguage(userMessage);
-    const responseLanguage = languageDetection.confidence > 0.6 ? languageDetection.detectedLanguage : context.language;
+    // ENFORCE SELECTED LANGUAGE: Use only the language chosen by user via flag dropdown
+    // Never auto-detect or override the user's language selection
+    const responseLanguage = context.language;
     
-    console.log(`🌐 DETECTED: ${languageDetection.detectedLanguage} (confidence: ${Math.round(languageDetection.confidence * 100)}%) - Using: ${responseLanguage}`);
+    console.log(`🌐 LANGUAGE ENFORCEMENT: Responding strictly in selected language: ${responseLanguage}`);
+    console.log(`📝 USER MESSAGE: "${userMessage}" - RESPONSE LANGUAGE: ${responseLanguage}`);
     
-    // Update context with detected language
+    // Update context with enforced language
     const enhancedContext = { ...context, detectedLanguage: responseLanguage };
 
     // Step 2: Check for learned responses from previous admin training
@@ -159,14 +160,14 @@ ${guidelines}`;
 }
 
 /**
- * Get advanced language-specific instructions for multilingual AI behavior
+ * Get STRICT language enforcement instructions - NO mixed languages allowed
  */
 function getAdvancedLanguageInstructions(language: string): string {
   const instructions = {
-    nl: "Je bent KANIOU's AI-assistent, een expert in raamdecoratie. Antwoord ALTIJD in perfect Nederlands, met correcte grammatica en formele toon. Gebruik uitsluitend Nederlandse terminologie en vermijd Engels of andere talen.",
-    en: "You are KANIOU's AI assistant, an expert in window treatments. ALWAYS respond in perfect English, with correct grammar and professional tone. Use only English terminology and avoid mixing with other languages.",
-    fr: "Vous êtes l'assistant IA de KANIOU, expert en décoration de fenêtres. Répondez TOUJOURS en français parfait, avec une grammaire correcte et un ton professionnel. Utilisez uniquement la terminologie française et évitez de mélanger avec d'autres langues.",
-    tr: "KANIOU'nun AI asistanısınız, pencere dekorasyonu uzmanısınız. HER ZAMAN mükemmel Türkçe ile yanıt verin, doğru dilbilgisi ve profesyonel tonla. Sadece Türkçe terminoloji kullanın ve diğer dillerle karıştırmayın."
+    nl: "Je bent KANIOU's AI-assistent, een expert in raamdecoratie. KRITIEK BELANGRIJK: Antwoord UITSLUITEND in perfect Nederlands, ongeacht de taal van de vraag. NOOIT andere talen gebruiken. Vertaal alle productinformatie en kennis naar Nederlands. Geef volledige, natuurlijke Nederlandse antwoorden.",
+    en: "You are KANIOU's AI assistant, an expert in window treatments. CRITICALLY IMPORTANT: Respond EXCLUSIVELY in perfect English, regardless of the question's language. NEVER use other languages. Translate all product information and knowledge into English. Provide complete, natural English responses.",
+    fr: "Vous êtes l'assistant IA de KANIOU, expert en décoration de fenêtres. EXTRÊMEMENT IMPORTANT : Répondez EXCLUSIVEMENT en français parfait, quelle que soit la langue de la question. Ne JAMAIS utiliser d'autres langues. Traduisez toutes les informations produit et connaissances en français. Fournissez des réponses françaises complètes et naturelles.",
+    tr: "KANIOU'nun AI asistanısınız, pencere dekorasyonu uzmanısınız. KRİTİK ÖNEM: Sorunun dili ne olursa olsun, SADECE mükemmel Türkçe ile yanıt verin. ASLA diğer dilleri kullanmayın. Tüm ürün bilgilerini ve bilgileri Türkçe'ye çevirin. Tam, doğal Türkçe yanıtlar verin."
   };
 
   return instructions[language as keyof typeof instructions] || instructions.nl;
@@ -177,9 +178,11 @@ function getAdvancedLanguageInstructions(language: string): string {
  */
 function getCoreInstructions(language: string): string {
   const coreText = {
-    nl: `BELANGRIJK: Antwoord ALTIJD met een geldig JSON object in dit exacte formaat:
+    nl: `STRIKT TAALDWANG: Antwoord UITSLUITEND in Nederlands, ongeacht de taal van de vraag. Vertaal ALLE website kennis naar Nederlands.
+
+BELANGRIJK: Antwoord ALTIJD met een geldig JSON object in dit exacte formaat:
 {
-  "message": "Je hulpzame antwoord hier",
+  "message": "Je hulpzame antwoord hier in Nederlands",
   "requiresPricing": true/false,
   "detectedProductTypes": ["product1", "product2"],
   "confidence": 0.8
@@ -187,14 +190,17 @@ function getCoreInstructions(language: string): string {
 
 JE ROL:
 - Geef deskundig advies over gordijnen, zonweringen en raambekleding
+- Vertaal alle productinformatie naar Nederlands
 - Help klanten de juiste producten kiezen voor hun behoeften
 - Beantwoord vragen over installatie, onderhoud en garanties
 - Detecteer prijsvragen automatisch en zet requiresPricing op true
 - Wees vriendelijk, professioneel en deskundig`,
 
-    en: `IMPORTANT: ALWAYS respond with a valid JSON object in this exact format:
+    en: `STRICT LANGUAGE ENFORCEMENT: Respond EXCLUSIVELY in English, regardless of the question's language. Translate ALL website knowledge to English.
+
+IMPORTANT: ALWAYS respond with a valid JSON object in this exact format:
 {
-  "message": "Your helpful response here",
+  "message": "Your helpful response here in English",
   "requiresPricing": true/false,
   "detectedProductTypes": ["product1", "product2"],
   "confidence": 0.8
@@ -202,14 +208,17 @@ JE ROL:
 
 YOUR ROLE:
 - Provide expert advice on curtains, blinds and window treatments
+- Translate all product information to English
 - Help customers choose the right products for their needs
 - Answer questions about installation, maintenance and warranties
 - Automatically detect price inquiries and set requiresPricing to true
 - Be friendly, professional and knowledgeable`,
 
-    fr: `IMPORTANT : Répondez TOUJOURS avec un objet JSON valide dans ce format exact :
+    fr: `APPLICATION STRICTE DE LA LANGUE : Répondez EXCLUSIVEMENT en français, quelle que soit la langue de la question. Traduisez TOUTES les connaissances du site web en français.
+
+IMPORTANT : Répondez TOUJOURS avec un objet JSON valide dans ce format exact :
 {
-  "message": "Votre réponse utile ici",
+  "message": "Votre réponse utile ici en français",
   "requiresPricing": true/false,
   "detectedProductTypes": ["produit1", "produit2"],
   "confidence": 0.8
@@ -217,14 +226,17 @@ YOUR ROLE:
 
 VOTRE RÔLE :
 - Fournir des conseils d'expert sur les rideaux, stores et habillages de fenêtres
+- Traduire toutes les informations produit en français
 - Aider les clients à choisir les bons produits pour leurs besoins
 - Répondre aux questions sur l'installation, la maintenance et les garanties
 - Détecter automatiquement les demandes de prix et définir requiresPricing sur true
 - Être amical, professionnel et compétent`,
 
-    tr: `ÖNEMLİ: HER ZAMAN bu tam formatta geçerli bir JSON nesnesi ile yanıt verin:
+    tr: `SIKI DİL UYGULAMASI: Sorunun dili ne olursa olsun, SADECE Türkçe yanıt verin. TÜM web sitesi bilgisini Türkçe'ye çevirin.
+
+ÖNEMLİ: HER ZAMAN bu tam formatta geçerli bir JSON nesnesi ile yanıt verin:
 {
-  "message": "Yardımcı yanıtınız burada",
+  "message": "Yardımcı yanıtınız burada Türkçe olarak",
   "requiresPricing": true/false,
   "detectedProductTypes": ["ürün1", "ürün2"],
   "confidence": 0.8
@@ -232,6 +244,7 @@ VOTRE RÔLE :
 
 ROLÜNÜZ:
 - Perde, güneşlik ve pencere kaplamaları konusunda uzman tavsiyeleri verin
+- Tüm ürün bilgilerini Türkçe'ye çevirin
 - Müşterilerin ihtiyaçlarına uygun ürünleri seçmelerine yardımcı olun
 - Kurulum, bakım ve garantiler hakkında soruları yanıtlayın
 - Fiyat sorularını otomatik olarak tespit edin ve requiresPricing'i true yapın
@@ -246,7 +259,13 @@ ROLÜNÜZ:
  */
 function getGuidelinesForLanguage(language: string): string {
   const guidelines = {
-    nl: `RICHTLIJNEN:
+    nl: `STRIKTE TAALEISEN:
+- ALLEEN antwoorden in Nederlands, ongeacht de taal van de vraag
+- Vertaal ALLE kennisbank informatie naar natuurlijk Nederlands
+- NOOIT mengen van talen in één antwoord
+- Alle productnamen, kenmerken en beschrijvingen in Nederlands
+
+RICHTLIJNEN:
 - Altijd behulpzaam en professioneel zijn
 - Geef specifieke productaanbevelingen waar passend
 - Stel verhelderende vragen om klantbehoeften beter te begrijpen
@@ -255,7 +274,13 @@ function getGuidelinesForLanguage(language: string): string {
 - Gebruik een warme, vriendelijke toon die KANIOU's premium merkimago weergeeft
 - Gebruik alleen echte productinformatie uit de kennisbank, geen verzonnen gegevens`,
 
-    en: `GUIDELINES:
+    en: `STRICT LANGUAGE REQUIREMENTS:
+- ONLY respond in English, regardless of the question's language
+- Translate ALL knowledge base information to natural English
+- NEVER mix languages in one response
+- All product names, features and descriptions in English
+
+GUIDELINES:
 - Always be helpful and professional
 - Provide specific product recommendations where appropriate
 - Ask clarifying questions to better understand customer needs
@@ -264,7 +289,13 @@ function getGuidelinesForLanguage(language: string): string {
 - Use a warm, friendly tone that reflects KANIOU's premium brand image
 - Only use real product information from the knowledge base, no fabricated data`,
 
-    fr: `DIRECTIVES :
+    fr: `EXIGENCES LINGUISTIQUES STRICTES :
+- Répondre SEULEMENT en français, quelle que soit la langue de la question
+- Traduire TOUTES les informations de la base de connaissances en français naturel
+- Ne JAMAIS mélanger les langues dans une réponse
+- Tous les noms de produits, caractéristiques et descriptions en français
+
+DIRECTIVES :
 - Toujours être utile et professionnel
 - Fournir des recommandations de produits spécifiques le cas échéant
 - Poser des questions de clarification pour mieux comprendre les besoins du client
@@ -273,7 +304,13 @@ function getGuidelinesForLanguage(language: string): string {
 - Utilisez un ton chaleureux et amical qui reflète l'image de marque premium de KANIOU
 - Utilisez uniquement de vraies informations produit de la base de connaissances, pas de données fabriquées`,
 
-    tr: `KURAL VE İLKELER:
+    tr: `SIKI DİL GEREKLİLİKLERİ:
+- Sorunun dili ne olursa olsun SADECE Türkçe yanıt verin
+- TÜM bilgi tabanı bilgilerini doğal Türkçe'ye çevirin
+- Bir yanıtta ASLA dilleri karıştırmayın
+- Tüm ürün adları, özellikler ve açıklamalar Türkçe olarak
+
+KURAL VE İLKELER:
 - Her zaman yardımcı ve profesyonel olun
 - Uygun olan durumlarda özel ürün önerileri sağlayın
 - Müşteri ihtiyaçlarını daha iyi anlamak için açıklayıcı sorular sorun
@@ -287,12 +324,23 @@ function getGuidelinesForLanguage(language: string): string {
 }
 
 /**
- * Build multilingual product knowledge
+ * Build TRANSLATED product knowledge for the selected language
+ * ALL content must be presented in the user's selected language
  */
 function buildMultilingualProductKnowledge(products: Product[], categories: Category[], language: string): string {
   const multilingualKnowledge = getMultilingualKnowledge();
   
   let knowledge = "";
+  
+  // Add translation instruction for AI
+  const translationInstruction = {
+    nl: "VERTAAL ALLE ONDERSTAANDE INFORMATIE NAAR NEDERLANDS:",
+    en: "TRANSLATE ALL INFORMATION BELOW TO ENGLISH:",
+    fr: "TRADUISEZ TOUTES LES INFORMATIONS CI-DESSOUS EN FRANÇAIS :",
+    tr: "AŞAĞIDAKİ TÜM BİLGİLERİ TÜRKÇE'YE ÇEVİRİN:"
+  };
+  
+  knowledge += (translationInstruction[language as keyof typeof translationInstruction] || translationInstruction.nl) + "\n\n";
   
   // Add language-specific company info
   if (multilingualKnowledge.company_info[language as keyof typeof multilingualKnowledge.company_info]) {
@@ -304,8 +352,8 @@ function buildMultilingualProductKnowledge(products: Product[], categories: Cate
     knowledge += multilingualKnowledge.services[language as keyof typeof multilingualKnowledge.services] + "\n\n";
   }
 
-  // Add comprehensive Dutch product knowledge (always include as base)
-  knowledge += "KANIOU PRODUCT EXPERTISE:\n\n";
+  // Add comprehensive product knowledge (to be translated by AI)
+  knowledge += "KANIOU PRODUCT EXPERTISE (translate to selected language):\n\n";
   
   DUTCH_PRODUCT_KNOWLEDGE.forEach(productInfo => {
     knowledge += `**${productInfo.name}** (${productInfo.category}):\n`;

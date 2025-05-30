@@ -18,6 +18,7 @@ import { fromZodError } from "zod-validation-error";
 import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "./services/email";
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
+import { recommendationService } from "./smartRecommendations";
 import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
 import { generateChatbotResponse } from "./openai";
 import { isWithinBusinessHours, getBusinessHoursResponse, getBusinessStatus } from "./businessHours";
@@ -654,7 +655,24 @@ ${chatSummary}
     }
   });
 
-
+  // Smart Product Recommendations API
+  app.get("/api/recommendations", async (req: Request, res: Response) => {
+    try {
+      const userId = req.query.userId as string || 'anonymous';
+      const sessionId = req.query.sessionId as string || `session_${Date.now()}`;
+      
+      const recommendations = await recommendationService.generateRecommendations(userId, sessionId);
+      
+      res.json(recommendations);
+    } catch (error) {
+      console.error("Error generating recommendations:", error);
+      res.status(500).json({ 
+        message: "Failed to generate recommendations",
+        recommendations: [],
+        userBehavior: { totalProducts: 0, analyzedCategories: 0, confidenceScore: 0 }
+      });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

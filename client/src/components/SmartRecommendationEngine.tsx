@@ -53,160 +53,27 @@ export function SmartRecommendationEngine() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'match' | 'price' | 'popularity' | 'rating'>('match');
 
-  // Fetch actual products from the API
-  const { data: products, isLoading: productsLoading } = useQuery({
-    queryKey: ['/api/products'],
+  // Fetch recommendations from the API
+  const { data: recommendationsData, isLoading: recommendationsLoading } = useQuery({
+    queryKey: ['/api/recommendations', preferences?.userId],
     queryFn: async () => {
-      const response = await fetch('/api/products');
+      const userId = preferences?.userId || 'anonymous';
+      const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const response = await fetch(`/api/recommendations?userId=${userId}&sessionId=${sessionId}`);
       return response.json();
     }
   });
 
-  // Generate AI-powered recommendations based on real product data
   const [recommendations, setRecommendations] = useState<RecommendationCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Set recommendations from API data
   useEffect(() => {
-    if (!products || productsLoading) return;
-
-    const generateSmartRecommendations = () => {
-      // Calculate user behavior patterns
-      const userHistory = JSON.parse(localStorage.getItem('kaniou_user_activity') || '[]');
-      const viewedCategories = userHistory.filter((item: any) => item.action === 'PRODUCT_VIEW')
-        .map((item: any) => item.details?.category)
-        .filter(Boolean);
-      
-      const preferredCategories = Array.from(new Set(viewedCategories));
-      const budgetRange = [50, 300]; // Default budget range
-
-      // AI Algorithm 1: Personalized Based on User Behavior
-      const personalizedProducts = products
-        .filter((product: any) => {
-          const inBudget = product.price >= budgetRange[0] && product.price <= budgetRange[1];
-          const categoryMatch = preferredCategories.length === 0 || 
-            preferredCategories.includes(product.category);
-          return inBudget && categoryMatch;
-        })
-        .map((product: any) => ({
-          ...product,
-          matchScore: calculateMatchScore(product, preferences, viewedCategories),
-          reasons: generateReasons(product, preferences, viewedCategories),
-          popularity: Math.floor(Math.random() * 40) + 60, // Simulated popularity
-          userRating: 4.2 + Math.random() * 0.6,
-          trending: Math.random() > 0.7,
-          newArrival: Math.random() > 0.8,
-          tags: generateProductTags(product)
-        }))
-        .sort((a: any, b: any) => b.matchScore - a.matchScore)
-        .slice(0, 3);
-
-      // AI Algorithm 2: Collaborative Filtering (Similar Users)
-      const collaborativeProducts = products
-        .filter((product: any) => !personalizedProducts.find((p: any) => p.id === product.id))
-        .map((product: any) => ({
-          ...product,
-          matchScore: 75 + Math.random() * 20,
-          reasons: ['Populair bij vergelijkbare klanten', 'Hoge tevredenheidsscore', 'Veel positieve reviews'],
-          popularity: Math.floor(Math.random() * 30) + 70,
-          userRating: 4.0 + Math.random() * 0.8,
-          trending: Math.random() > 0.6,
-          newArrival: false,
-          tags: generateProductTags(product)
-        }))
-        .sort((a: any, b: any) => b.popularity - a.popularity)
-        .slice(0, 2);
-
-      // AI Algorithm 3: Trending Products
-      const trendingProducts = products
-        .filter((product: any) => 
-          !personalizedProducts.find((p: any) => p.id === product.id) &&
-          !collaborativeProducts.find((p: any) => p.id === product.id)
-        )
-        .map((product: any) => ({
-          ...product,
-          matchScore: 70 + Math.random() * 15,
-          reasons: ['Trending in 2025', 'Innovatieve technologie', 'Duurzame keuze'],
-          popularity: Math.floor(Math.random() * 25) + 75,
-          userRating: 4.1 + Math.random() * 0.7,
-          trending: true,
-          newArrival: Math.random() > 0.5,
-          tags: generateProductTags(product)
-        }))
-        .slice(0, 2);
-
-      const categories: RecommendationCategory[] = [
-        {
-          title: 'Perfect Match voor Jou',
-          description: 'Op basis van je voorkeuren en gedrag',
-          algorithm: 'personalized' as const,
-          confidence: personalizedProducts.length > 0 ? 94 : 75,
-          products: personalizedProducts
-        },
-        {
-          title: 'Trending bij Anderen',
-          description: 'Populaire keuzes van vergelijkbare klanten',
-          algorithm: 'collaborative' as const,
-          confidence: 87,
-          products: collaborativeProducts
-        },
-        {
-          title: 'Nieuw & Trending',
-          description: 'Nieuwste trends en populaire producten',
-          algorithm: 'trending' as const,
-          confidence: 82,
-          products: trendingProducts
-        }
-      ].filter(category => category.products.length > 0);
-
-      setRecommendations(categories);
+    if (recommendationsData?.recommendations) {
+      setRecommendations(recommendationsData.recommendations);
       setIsLoading(false);
-    };
-
-    setTimeout(generateSmartRecommendations, 1000);
-  }, [products, productsLoading, preferences]);
-
-  const calculateMatchScore = (product: any, userPrefs: any, viewHistory: string[]) => {
-    let score = 60; // Base score
-
-    // Category preference boost
-    if (viewHistory.includes(product.category)) {
-      score += 20;
     }
-
-    // Price preference boost
-    const userBudget = userPrefs?.budget || [50, 300];
-    if (product.price >= userBudget[0] && product.price <= userBudget[1]) {
-      score += 15;
-    }
-
-    // Random personalization factor
-    score += Math.random() * 10;
-
-    return Math.min(Math.round(score), 98);
-  };
-
-  const generateReasons = (product: any, userPrefs: any, viewHistory: string[]) => {
-    const reasons = [];
-    
-    if (viewHistory.includes(product.category)) {
-      reasons.push('Matches je eerder bekeken producten');
-    }
-    
-    const userBudget = userPrefs?.budget || [50, 300];
-    if (product.price >= userBudget[0] && product.price <= userBudget[1]) {
-      reasons.push('Past perfect bij jouw budget');
-    }
-    
-    reasons.push('Hoge kwaliteit-prijs verhouding');
-    reasons.push('Populair in jouw regio');
-    
-    return reasons.slice(0, 3);
-  };
-
-  const generateProductTags = (product: any) => {
-    const allTags = ['modern', 'klassiek', 'duurzaam', 'energiebesparend', 'luxe', 'budgetvriendelijk', 'innovatief', 'populair'];
-    return allTags.sort(() => 0.5 - Math.random()).slice(0, 3);
-  };
+  }, [recommendationsData]);
 
   const handleProductClick = (productId: string) => {
     awardPoints('PRODUCT_VIEW');
@@ -243,7 +110,7 @@ export function SmartRecommendationEngine() {
     return 'text-gray-600 bg-gray-100';
   };
 
-  if (isLoading || productsLoading) {
+  if (isLoading || recommendationsLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">

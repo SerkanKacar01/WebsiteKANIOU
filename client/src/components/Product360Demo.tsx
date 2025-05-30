@@ -11,8 +11,6 @@ import opzethorrenImg from '@/assets/Opzethorren.jpeg';
 import overgordijnenImg from '@/assets/Overgordijnen.jpeg';
 
 export function Product360Demo() {
-  // Using actual product images from the attached assets
-
   const rolgordijnImages = [
     rolgordijnenImg,
     duorolgordijnenImg,

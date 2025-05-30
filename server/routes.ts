@@ -33,6 +33,11 @@ import { sendPriceRequestNotification } from "./emailService";
 import { answerWithComprehensiveKnowledge } from "./comprehensiveKnowledge";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import { sendConversationSummaryEmail } from "./emailSummary";
+import { 
+  analyzeTriggerConditions, 
+  sendSmartNotification, 
+  formatConversationForEmail 
+} from "./smartNotificationTrigger";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -733,6 +738,52 @@ To respond, simply reply to this email.
         });
 
         console.log(`📋 LEGACY PRICING: Recorded request for: ${aiResponse.detectedProductTypes.join(", ")}`);
+      }
+
+      // Smart Email Notification Trigger Analysis
+      try {
+        const conversationMessages = await storage.getChatbotMessagesByConversationId(conversation.id);
+        const messageHistory = conversationMessages.map(msg => ({
+          role: msg.role,
+          content: msg.content,
+          createdAt: msg.createdAt?.toISOString()
+        }));
+
+        // Analyze if notification should be triggered
+        const triggerAnalysis = analyzeTriggerConditions(
+          message,
+          messageHistory,
+          aiResponse.metadata?.confidence || 0.5,
+          language
+        );
+
+        console.log(`🔔 TRIGGER ANALYSIS: Should trigger: ${triggerAnalysis.shouldTrigger}, Reason: ${triggerAnalysis.triggerReason}, Confidence: ${Math.round(triggerAnalysis.confidence * 100)}%`);
+
+        // Send notification if conditions are met
+        if (triggerAnalysis.shouldTrigger) {
+          const notificationData = {
+            customerQuestion: message,
+            fullConversation: formatConversationForEmail(messageHistory),
+            language: language,
+            triggerReason: triggerAnalysis.triggerReason,
+            timestamp: new Date().toLocaleString('nl-BE', { 
+              timeZone: 'Europe/Brussels',
+              dateStyle: 'full',
+              timeStyle: 'medium'
+            }),
+            conversationId: conversation.id.toString()
+          };
+
+          // Send notification asynchronously (don't block response)
+          sendSmartNotification(notificationData).catch(error => {
+            console.error('Failed to send smart notification:', error);
+          });
+
+          console.log(`📧 SMART NOTIFICATION: Triggered for conversation ${conversation.id} - Reason: ${triggerAnalysis.triggerReason}`);
+        }
+      } catch (error) {
+        console.error('Error in smart notification analysis:', error);
+        // Continue with normal response even if notification fails
       }
 
       res.json({

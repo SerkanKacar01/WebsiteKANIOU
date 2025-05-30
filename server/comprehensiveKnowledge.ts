@@ -12,6 +12,12 @@ import type {
   Testimonial,
   QuoteRequest 
 } from "@shared/schema";
+import { 
+  analyzeUserQuestion, 
+  filterRelevantContent, 
+  generateOptimizedResponse,
+  type FilteredResponse 
+} from "./responseFiltering";
 
 export interface ComprehensiveResponse {
   content: string;
@@ -235,7 +241,7 @@ function buildCompanyKnowledge(language: string): string {
 }
 
 /**
- * Enhanced question answering using comprehensive knowledge
+ * Enhanced question answering using comprehensive knowledge with filtering
  */
 export async function answerWithComprehensiveKnowledge(
   question: string,
@@ -246,36 +252,28 @@ export async function answerWithComprehensiveKnowledge(
     // Build complete knowledge base
     const fullKnowledge = await buildComprehensiveKnowledge(language);
     
-    // Advanced question analysis
-    const questionAnalysis = analyzeQuestion(question, language);
+    // Analyze user question for optimal response strategy
+    const questionAnalysis = analyzeUserQuestion(question, language);
     
-    // Search through ALL content for relevant information
-    const relevantContent = extractRelevantContent(question, fullKnowledge, language);
+    // Filter content to only relevant information
+    const filteredContent = filterRelevantContent(fullKnowledge, questionAnalysis, language);
     
-    if (relevantContent.length > 0) {
-      const response = generateIntelligentResponse(
-        question,
-        relevantContent,
-        language,
-        questionAnalysis
-      );
-      
-      return {
-        content: response,
-        confidence: 0.95,
-        sources: ["knowledge_base", "products", "pricing", "services"],
-        language,
-        usedFallback: false
-      };
-    }
-
-    // If no specific content found, provide helpful guidance
+    // Generate optimized, focused response
+    const optimizedResponse = generateOptimizedResponse(
+      question, 
+      filteredContent, 
+      questionAnalysis, 
+      language
+    );
+    
     return {
-      content: generateHelpfulGuidance(question, language),
-      confidence: 0.7,
-      sources: ["general_guidance"],
+      content: optimizedResponse.content,
+      confidence: optimizedResponse.confidence,
+      sources: optimizedResponse.isRelevant ? 
+        ["knowledge_base", "products", "pricing", "services"] : 
+        ["general_guidance"],
       language,
-      usedFallback: true
+      usedFallback: !optimizedResponse.isRelevant
     };
 
   } catch (error) {

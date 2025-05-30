@@ -23,6 +23,7 @@ import {
   type ConversationSummary as SummaryType
 } from "@/utils/conversationSummary";
 import { ConversationSummaryComponent } from "./ConversationSummary";
+import { SmartSuggestionButtons } from "./SmartSuggestionButtons";
 import kaniouLogo from "@/assets/KAN.LOGO.png";
 
 interface ChatMessage {
@@ -39,6 +40,7 @@ interface ChatState {
   showLeadForm: boolean;
   lastAssistantMessage?: ChatMessage;
   waitingForLeadSubmission: boolean;
+  showSmartSuggestions: boolean;
 }
 
 export function ChatbotWidget() {
@@ -49,7 +51,8 @@ export function ChatbotWidget() {
     showQuickReplies: false,
     quickReplyType: null,
     showLeadForm: false,
-    waitingForLeadSubmission: false
+    waitingForLeadSubmission: false,
+    showSmartSuggestions: true
   });
   const [personalizedGreeting, setPersonalizedGreeting] = useState<{
     greeting: string;
@@ -72,6 +75,19 @@ export function ChatbotWidget() {
     // Save user interaction when chatbot opens
     if (isOpen) {
       saveUserPreferences({ language });
+      
+      // Check if smart suggestions should be shown
+      const lastChatTime = localStorage.getItem('kaniou_last_chat_time');
+      const now = new Date().getTime();
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      
+      // Show suggestions if no previous chat or last chat was over 24 hours ago
+      const shouldShowSuggestions = !lastChatTime || (now - parseInt(lastChatTime)) > twentyFourHours;
+      
+      setChatState(prev => ({
+        ...prev,
+        showSmartSuggestions: shouldShowSuggestions
+      }));
     }
   }, [language, isOpen]);
 
@@ -249,6 +265,51 @@ export function ChatbotWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Handle smart suggestion clicks
+  const handleSmartSuggestion = (suggestionText: string, action?: string) => {
+    // Hide suggestions immediately and update last chat time
+    setChatState(prev => ({ 
+      ...prev, 
+      showSmartSuggestions: false,
+      showQuickReplies: false,
+      quickReplyType: null,
+      showLeadForm: false 
+    }));
+    
+    // Update last chat time
+    localStorage.setItem('kaniou_last_chat_time', new Date().getTime().toString());
+    
+    // Handle specific actions
+    if (action === 'style_consultation') {
+      // Trigger style consultation flow
+      sendMessageMutation.mutate("Ik wil graag stijladvies voor mijn raambekleding");
+    } else if (action === 'request_quote') {
+      // Trigger quote request flow
+      setChatState(prev => ({ ...prev, showLeadForm: true }));
+      const quoteMessages = {
+        nl: "Graag help ik u met een offerte! Laten we beginnen met enkele gegevens.",
+        fr: "Je serais ravi de vous aider avec un devis! Commençons par quelques détails.",
+        en: "I'd be happy to help you with a quote! Let's start with some details.",
+        tr: "Bir teklif konusunda size yardımcı olmaktan mutluluk duyarım! Bazı detaylarla başlayalım."
+      };
+      const quoteText = quoteMessages[language as keyof typeof quoteMessages] || quoteMessages.nl;
+      sendMessageMutation.mutate(quoteText);
+    } else if (action === 'view_gallery') {
+      // Navigate to gallery or show gallery info
+      const galleryMessages = {
+        nl: "Bekijk onze uitgebreide galerij met voorbeelden van onze raambekleding projecten op onze website. U vindt daar inspiratie voor uw eigen ruimte!",
+        fr: "Consultez notre galerie complète avec des exemples de nos projets de stores sur notre site web. Vous y trouverez de l'inspiration pour votre propre espace!",
+        en: "Check out our extensive gallery with examples of our window treatment projects on our website. You'll find inspiration for your own space!",
+        tr: "Web sitemizdeki perde projelerimizin örnekleriyle dolu kapsamlı galerimize göz atın. Kendi alanınız için ilham bulacaksınız!"
+      };
+      const galleryText = galleryMessages[language as keyof typeof galleryMessages] || galleryMessages.nl;
+      sendMessageMutation.mutate(galleryText);
+    } else {
+      // For other suggestions, send as regular message
+      sendMessageMutation.mutate(suggestionText);
+    }
+  };
+
   // Handle quick reply selection
   const handleQuickReply = (option: any) => {
     setChatState(prev => ({ ...prev, showQuickReplies: false }));
@@ -352,8 +413,12 @@ export function ChatbotWidget() {
       ...prev,
       showQuickReplies: false,
       quickReplyType: null,
-      showLeadForm: false
+      showLeadForm: false,
+      showSmartSuggestions: false
     }));
+    
+    // Update last chat time when user sends a message
+    localStorage.setItem('kaniou_last_chat_time', new Date().getTime().toString());
 
     try {
       await sendMessageMutation.mutateAsync(messageText);
@@ -501,6 +566,14 @@ export function ChatbotWidget() {
                     </div>
                   </div>
                 </div>
+              )}
+
+              {/* Smart Suggestion Buttons - Show for new users or after 24h inactivity */}
+              {chatState.showSmartSuggestions && messages.length === 0 && !messagesLoading && (
+                <SmartSuggestionButtons
+                  onSuggestionClick={handleSmartSuggestion}
+                  onHide={() => setChatState(prev => ({ ...prev, showSmartSuggestions: false }))}
+                />
               )}
 
               {/* Conversation Messages */}

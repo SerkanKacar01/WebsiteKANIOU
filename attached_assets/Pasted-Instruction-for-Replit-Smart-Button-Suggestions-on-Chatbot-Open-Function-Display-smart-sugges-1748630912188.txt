@@ -1,0 +1,37 @@
+Instruction for Replit – Smart Button Suggestions on Chatbot Open
+
+⸻
+
+Function: Display smart suggestion buttons when a new user opens the chatbot
+
+Purpose:
+Make it easy for new visitors to engage by showing suggestion buttons as soon as they open the chatbot. These allow users to quickly choose actions like “Request free measurement,” “Get style advice,” or “Request a quote.”
+
+⸻
+
+When to display:
+	•	Only shown when the user opens the chatbot for the first time or after being inactive for at least 24 hours.
+	•	The buttons disappear as soon as the user either types a message or clicks one of the buttons.
+
+⸻
+
+What should happen:
+	1.	Display a welcome message like:
+	•	“Welcome to KANIOU! How can we assist you today?”
+	2.	Immediately below the welcome message, display multiple clickable suggestion buttons that represent common actions or questions. Examples:
+	•	Request free measurement
+	•	View product examples / gallery
+	•	Get style advice
+	•	Request a quote
+	•	What kind of products do you offer?
+	•	Help me choose the right window treatment
+	3.	When a user clicks one of the buttons:
+	•	The chatbot should behave as if the user typed that question.
+	•	Immediately respond with a relevant answer pulled from the knowledge base or start the matching flow (e.g., quote form or consultation).
+	4.	These buttons should only appear once per session (not shown again once the user starts interacting).
+	5.	The buttons must be fully multilingual and respect the current language setting (Dutch, French, English, Turkish). Translations should follow the same style as existing system messages.
+	6.	The button layout must be mobile-friendly, spaced clearly, large enough to tap, and vertically stacked for small screens.
+	7.	If the user clicks “Request a quote”:
+	•	Trigger the quote request flow and ask for name, email, product, dimensions, and preferences.
+	8.	If the user clicks “Get style advice”:
+	•	Trigger the AI consultation flow, including room type → style → function → preference → recommendation.

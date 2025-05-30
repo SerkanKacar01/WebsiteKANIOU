@@ -1,0 +1,57 @@
+Instruction for Replit — Chat Completion Flow with Smart Exit Options
+
+Objective: When a customer finishes interacting with the KANIOU chatbot, they should be gently asked if they want to end the conversation or see other helpful options. If they select “See suggestions,” the chatbot should re-display the smart suggestion buttons from the beginning.
+
+⸻
+
+✅ Implementation Requirements:
+
+Trigger Timing:
+	•	The system should detect when the conversation reaches a natural stopping point:
+	•	No user input for 30 seconds after last chatbot message, OR
+	•	If the chatbot responds with a concluding message like:
+“Kan ik u ergens anders mee helpen?” or
+“Heeft u verder nog vragen?”
+
+⸻
+
+🧠 Step-by-Step Flow:
+	1.	Chatbot Completion Detection:
+	•	Monitor if the user stops responding for 30+ seconds
+	•	OR if chatbot ends with a closing line (detect standard closing intent)
+	2.	Auto-Prompt:
+	•	Display the following message in the same language the user was using:
+	•	Dutch:
+“Wilt u deze chat afsluiten of andere opties bekijken?”
+	•	French:
+“Souhaitez-vous terminer cette conversation ou voir d’autres options ?”
+	•	English:
+“Would you like to end this chat or see more options?”
+	•	Turkish:
+“Sohbeti sonlandırmak mı istersiniz yoksa başka seçenekleri mi görmek istersiniz?”
+	3.	Display Buttons:
+	•	Add two buttons under the prompt:
+	•	✅ “Bekijk suggesties” (or its translated version)
+	•	❌ “Sluit chat af” (or its translated version)
+	4.	If user clicks “Bekijk suggesties”:
+	•	Re-trigger the 6 smart suggestion buttons:
+	•	Free measurement
+	•	Style advice
+	•	Quote request
+	•	Product gallery
+	•	Product information
+	•	Window treatment help
+	5.	If user clicks “Sluit chat af”:
+	•	Show a polite thank-you message:
+	•	“Bedankt voor uw bezoek aan KANIOU. We staan altijd voor u klaar!”
+	•	And reset the chatbot state in case the user reopens it later.
+
+⸻
+
+🧪 Final Test Checklist:
+	•	Auto-prompt appears after inactivity or closing message
+	•	Two buttons are translated and rendered correctly
+	•	“Bekijk suggesties” reactivates the main options
+	•	“Sluit chat af” thanks the user and clears session
+	•	Works in all four supported languages
+	•	Mobile responsive with no layout overflow

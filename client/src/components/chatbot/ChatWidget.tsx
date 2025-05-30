@@ -41,6 +41,8 @@ interface ChatState {
   lastAssistantMessage?: ChatMessage;
   waitingForLeadSubmission: boolean;
   showSmartSuggestions: boolean;
+  showExitPrompt: boolean;
+  lastActivityTime: number;
 }
 
 export function ChatbotWidget() {
@@ -52,7 +54,9 @@ export function ChatbotWidget() {
     quickReplyType: null,
     showLeadForm: false,
     waitingForLeadSubmission: false,
-    showSmartSuggestions: true
+    showSmartSuggestions: true,
+    showExitPrompt: false,
+    lastActivityTime: Date.now()
   });
   const [personalizedGreeting, setPersonalizedGreeting] = useState<{
     greeting: string;
@@ -311,6 +315,45 @@ export function ChatbotWidget() {
     }
   }, [isOpen]);
 
+  // Inactivity detection and conversation completion flow
+  useEffect(() => {
+    if (!isOpen || messages.length === 0) return;
+
+    const checkForInactivity = () => {
+      const now = Date.now();
+      const timeSinceLastActivity = now - chatState.lastActivityTime;
+      const lastMessage = messages[messages.length - 1];
+      
+      // Check if 30 seconds have passed since last activity
+      if (timeSinceLastActivity >= 30000 && 
+          lastMessage?.role === 'assistant' && 
+          !chatState.showExitPrompt && 
+          !chatState.showLeadForm &&
+          !chatState.showSmartSuggestions) {
+        
+        // Check if last message indicates conversation completion
+        const completionIndicators = {
+          nl: ['kan ik u ergens anders mee helpen', 'heeft u verder nog vragen', 'nog iets anders', 'anders helpen'],
+          fr: ['puis-je vous aider avec autre chose', 'avez-vous d\'autres questions', 'autre chose'],
+          en: ['can i help you with anything else', 'do you have any other questions', 'anything else'],
+          tr: ['başka bir konuda yardımcı olabilir miyim', 'başka sorunuz var mı']
+        };
+        
+        const indicators = completionIndicators[language as keyof typeof completionIndicators] || completionIndicators.nl;
+        const messageContent = lastMessage.content.toLowerCase();
+        const isCompletionMessage = indicators.some(indicator => messageContent.includes(indicator));
+        
+        // Show exit prompt if it's been 30+ seconds OR if it's a completion message
+        if (isCompletionMessage || timeSinceLastActivity >= 30000) {
+          setChatState(prev => ({ ...prev, showExitPrompt: true }));
+        }
+      }
+    };
+
+    const timer = setInterval(checkForInactivity, 5000); // Check every 5 seconds
+    return () => clearInterval(timer);
+  }, [isOpen, messages, chatState.lastActivityTime, chatState.showExitPrompt, chatState.showLeadForm, chatState.showSmartSuggestions, language]);
+
   // Scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -324,7 +367,9 @@ export function ChatbotWidget() {
       showSmartSuggestions: false,
       showQuickReplies: false,
       quickReplyType: null,
-      showLeadForm: false 
+      showLeadForm: false,
+      showExitPrompt: false,
+      lastActivityTime: Date.now()
     }));
     
     // Update last chat time
@@ -365,6 +410,59 @@ export function ChatbotWidget() {
     } else {
       // For other suggestions, send as regular message
       sendMessageMutation.mutate(suggestionText);
+    }
+  };
+
+  // Handle exit prompt actions
+  const handleExitPromptAction = (action: 'show_suggestions' | 'close_chat') => {
+    setChatState(prev => ({ ...prev, showExitPrompt: false }));
+    
+    if (action === 'show_suggestions') {
+      // Re-show smart suggestion buttons
+      setChatState(prev => ({ 
+        ...prev, 
+        showSmartSuggestions: true,
+        lastActivityTime: Date.now()
+      }));
+    } else if (action === 'close_chat') {
+      // Show thank you message and reset chat
+      const thankYouMessages = {
+        nl: "Bedankt voor uw bezoek aan KANIOU. We staan altijd voor u klaar!",
+        fr: "Merci pour votre visite chez KANIOU. Nous sommes toujours là pour vous!",
+        en: "Thank you for visiting KANIOU. We're always here for you!",
+        tr: "KANIOU'yu ziyaret ettiğiniz için teşekkürler. Her zaman sizin için buradayız!"
+      };
+      
+      const thankYouText = thankYouMessages[language as keyof typeof thankYouMessages] || thankYouMessages.nl;
+      
+      // Add thank you message to chat
+      const thankYouMessage = {
+        id: Date.now(),
+        role: "assistant" as const,
+        content: thankYouText,
+        createdAt: new Date().toISOString(),
+        metadata: { automated: true, closing: true }
+      };
+      
+      queryClient.setQueryData(["/api/chatbot/conversation", sessionId, "messages"], (oldMessages: any) => [
+        ...(oldMessages || []),
+        thankYouMessage
+      ]);
+      
+      // Close chat after a brief delay
+      setTimeout(() => {
+        setIsOpen(false);
+        // Reset chat state for next session
+        setChatState({
+          showQuickReplies: false,
+          quickReplyType: null,
+          showLeadForm: false,
+          waitingForLeadSubmission: false,
+          showSmartSuggestions: true,
+          showExitPrompt: false,
+          lastActivityTime: Date.now()
+        });
+      }, 2000);
     }
   };
 

@@ -75,49 +75,6 @@ export function ChatbotWidget() {
     }
   }, [language, isOpen]);
 
-  // Monitor for conversation inactivity
-  useEffect(() => {
-    if (!isOpen || conversationSummary) return;
-
-    // Clear existing timer
-    if (inactivityTimer) {
-      clearTimeout(inactivityTimer);
-    }
-
-    // Set new inactivity timer (3 minutes)
-    const timer = setTimeout(() => {
-      if (messages.length > 2) { // Only show summary if there was actual conversation
-        const summary = generateConversationSummary(
-          messages.map(m => ({
-            id: m.id,
-            role: m.role,
-            content: m.content,
-            createdAt: m.createdAt,
-            metadata: m.metadata
-          })),
-          language,
-          conversationStartTime
-        );
-        setConversationSummary(summary);
-      }
-    }, 3 * 60 * 1000); // 3 minutes
-
-    setInactivityTimer(timer);
-
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [lastMessageTime, isOpen, messages, conversationSummary, language, conversationStartTime, inactivityTimer]);
-
-  // Clean up timer on unmount
-  useEffect(() => {
-    return () => {
-      if (inactivityTimer) {
-        clearTimeout(inactivityTimer);
-      }
-    };
-  }, [inactivityTimer]);
-
   // Check business hours
   const { data: businessHours } = useQuery({
     queryKey: ["/api/chatbot/business-hours", language],
@@ -228,6 +185,49 @@ export function ChatbotWidget() {
     refetchInterval: false
   });
 
+  // Monitor for conversation inactivity
+  useEffect(() => {
+    if (!isOpen || conversationSummary || messages.length === 0) return;
+
+    // Clear existing timer
+    if (inactivityTimer) {
+      clearTimeout(inactivityTimer);
+    }
+
+    // Set new inactivity timer (3 minutes)
+    const timer = setTimeout(() => {
+      if (messages.length > 2) { // Only show summary if there was actual conversation
+        const summary = generateConversationSummary(
+          messages.map((m: ChatMessage) => ({
+            id: m.id,
+            role: m.role,
+            content: m.content,
+            createdAt: m.createdAt,
+            metadata: m.metadata
+          })),
+          language,
+          conversationStartTime
+        );
+        setConversationSummary(summary);
+      }
+    }, 3 * 60 * 1000); // 3 minutes
+
+    setInactivityTimer(timer);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [lastMessageTime, isOpen, messages, conversationSummary, language, conversationStartTime, inactivityTimer]);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+    };
+  }, [inactivityTimer]);
+
   // Initialize conversation when chat opens
   useEffect(() => {
     if (isOpen && !conversationMutation.data && !conversationMutation.isPending) {
@@ -324,7 +324,7 @@ export function ChatbotWidget() {
       // Generate summary after a short delay to allow the final response
       setTimeout(() => {
         const summary = generateConversationSummary(
-          messages.map(m => ({
+          messages.map((m: ChatMessage) => ({
             id: m.id,
             role: m.role,
             content: m.content,
@@ -578,6 +578,14 @@ export function ChatbotWidget() {
                     />
                   </div>
                 </div>
+              )}
+              
+              {/* Conversation Summary */}
+              {conversationSummary && (
+                <ConversationSummaryComponent
+                  summary={conversationSummary}
+                  onClose={() => setConversationSummary(null)}
+                />
               )}
               
               <div ref={messagesEndRef} />

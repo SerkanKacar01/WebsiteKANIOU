@@ -32,6 +32,7 @@ import { generateProductPricingResponse } from "./productPricing";
 import { sendPriceRequestNotification } from "./emailService";
 import { answerWithComprehensiveKnowledge } from "./comprehensiveKnowledge";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
+import { sendConversationSummaryEmail } from "./emailSummary";
 import multer from "multer";
 
 export async function registerRoutes(app: Express): Promise<Server> {

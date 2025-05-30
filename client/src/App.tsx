@@ -25,6 +25,7 @@ import QuotePage from "@/pages/QuotePage";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
 import Admin from "@/pages/Admin";
+import { Product360Demo } from "@/components/Product360Demo";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -121,6 +122,7 @@ function Router() {
         <Route path="/color-matcher" component={ColorMatcherPage} />
         <Route path="/maatwerk-wizard" component={CustomizationWizardPage} />
         <Route path="/customization-wizard" component={CustomizationWizardPage} />
+        <Route path="/product-360-demo" component={Product360Demo} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/cookie-policy" component={CookiePolicyPage} />

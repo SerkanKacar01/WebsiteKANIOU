@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { useGamification } from "@/hooks/useGamification";
 import { LanguageSelector } from "./LanguageSelector";
 import { QuickReplyButtons, PRICE_REQUEST_OPTIONS, GENERAL_HELP_OPTIONS } from "./QuickReplyButtons";
 import { LeadCollectionForm } from "./LeadCollectionForm";
@@ -72,6 +73,7 @@ export function ChatbotWidget() {
   const queryClient = useQueryClient();
   const { language, t, changeLanguage } = useLanguage();
   const { preferences, updateLanguage, updateName, getLanguage, isLoading: preferencesLoading } = useUserPreferences();
+  const { awardPoints } = useGamification();
 
   // Initialize user's preferred language when preferences load (only once)
   useEffect(() => {

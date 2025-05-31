@@ -1154,6 +1154,39 @@ ${chatSummary}
     }
   });
 
+  // Gallery API endpoints
+  app.get("/api/gallery", async (req: Request, res: Response) => {
+    try {
+      const galleryItems = await storage.getGalleryItems();
+      res.json(galleryItems);
+    } catch (error) {
+      console.error("Error fetching gallery items:", error);
+      res.status(500).json({ message: "Failed to fetch gallery items" });
+    }
+  });
+
+  // Get categories
+  app.get("/api/categories", async (req: Request, res: Response) => {
+    try {
+      const categories = await storage.getCategories();
+      res.json(categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      res.status(500).json({ message: "Failed to fetch categories" });
+    }
+  });
+
+  // Testimonials endpoint
+  app.get("/api/testimonials", async (req: Request, res: Response) => {
+    try {
+      const testimonials = await storage.getTestimonials();
+      res.json(testimonials);
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+      res.status(500).json({ message: "Failed to fetch testimonials" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

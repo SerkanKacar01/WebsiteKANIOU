@@ -207,6 +207,55 @@ export const PreviewCanvas = forwardRef<HTMLCanvasElement, PreviewCanvasProps>((
     ctx.fillRect(area.x, area.y, area.w, area.h);
   };
 
+  const drawPlisseBlinds = (ctx: CanvasRenderingContext2D, area: any) => {
+    // Draw pleated blinds with zigzag pattern
+    const pleats = 16;
+    const pleatWidth = area.w / pleats;
+    
+    ctx.beginPath();
+    ctx.moveTo(area.x, area.y);
+    
+    for (let i = 0; i <= pleats; i++) {
+      const x = area.x + i * pleatWidth;
+      const y = area.y + (i % 2 === 0 ? 0 : 8);
+      ctx.lineTo(x, y);
+    }
+    
+    ctx.lineTo(area.x + area.w, area.y + area.h);
+    ctx.lineTo(area.x, area.y + area.h);
+    ctx.closePath();
+    ctx.fill();
+    
+    // Add pleat lines
+    ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < pleats; i++) {
+      const x = area.x + i * pleatWidth;
+      ctx.beginPath();
+      ctx.moveTo(x, area.y);
+      ctx.lineTo(x, area.y + area.h);
+      ctx.stroke();
+    }
+  };
+
+  const drawDuoRollerBlinds = (ctx: CanvasRenderingContext2D, area: any) => {
+    // Draw dual roller blinds (day/night)
+    const stripHeight = area.h / 8;
+    
+    for (let i = 0; i < 8; i++) {
+      const y = area.y + i * stripHeight;
+      if (i % 2 === 0) {
+        // Transparent strips
+        ctx.globalAlpha = 0.3;
+        ctx.fillRect(area.x, y, area.w, stripHeight);
+        ctx.globalAlpha = 1;
+      } else {
+        // Opaque strips
+        ctx.fillRect(area.x, y, area.w, stripHeight);
+      }
+    }
+  };
+
   return (
     <div ref={containerRef} className="space-y-4">
       <Card className="overflow-hidden">

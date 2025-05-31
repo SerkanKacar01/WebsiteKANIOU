@@ -222,6 +222,12 @@ export interface IStorage {
   getPendingWarrantyReminders(): Promise<WarrantyReminder[]>;
   markWarrantyReminderSent(id: number): Promise<WarrantyReminder>;
 
+  // Inventory Alerts
+  getProductStock(): Promise<ProductStock[]>;
+  createInventoryAlert(alert: InsertInventoryAlert): Promise<InventoryAlert>;
+  getInventoryAlertsByEmail(email: string): Promise<InventoryAlert[]>;
+  deleteInventoryAlert(id: number): Promise<void>;
+
 }
 
 export class DatabaseStorage implements IStorage {

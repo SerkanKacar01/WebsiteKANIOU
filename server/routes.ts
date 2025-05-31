@@ -1187,6 +1187,103 @@ ${chatSummary}
     }
   });
 
+  // Inventory Alerts Routes
+  app.get("/api/inventory/stock", async (req: Request, res: Response) => {
+    try {
+      const stockLevels = await storage.getProductStock();
+      res.json(stockLevels);
+    } catch (error) {
+      console.error("Error fetching stock levels:", error);
+      res.status(500).json({ message: "Failed to fetch stock levels" });
+    }
+  });
+
+  app.post("/api/inventory/alerts", formRateLimiter, async (req: Request, res: Response) => {
+    try {
+      const { email, productType, alertType } = req.body;
+      
+      if (!email || !productType || !alertType) {
+        return res.status(400).json({
+          success: false,
+          message: "Email, product type, and alert type are required"
+        });
+      }
+
+      const alert = await storage.createInventoryAlert({
+        email,
+        productType,
+        alertType,
+        isActive: true
+      });
+
+      console.log(`🔔 New inventory alert created: ${email} for ${productType} (${alertType})`);
+
+      res.json({
+        success: true,
+        alertId: alert.id,
+        message: "Inventory alert created successfully"
+      });
+
+    } catch (error) {
+      console.error("Error creating inventory alert:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to create inventory alert"
+      });
+    }
+  });
+
+  app.get("/api/inventory/alerts/:email", async (req: Request, res: Response) => {
+    try {
+      const { email } = req.params;
+      const alerts = await storage.getInventoryAlertsByEmail(email);
+      res.json(alerts);
+    } catch (error) {
+      console.error("Error fetching user alerts:", error);
+      res.status(500).json({ message: "Failed to fetch user alerts" });
+    }
+  });
+
+  app.delete("/api/inventory/alerts/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteInventoryAlert(id);
+      
+      res.json({
+        success: true,
+        message: "Alert removed successfully"
+      });
+    } catch (error) {
+      console.error("Error removing alert:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to remove alert"
+      });
+    }
+  });
+
+  // Appointment Time Slots Route
+  app.get("/api/appointments/slots/:date", async (req: Request, res: Response) => {
+    try {
+      const { date } = req.params;
+      const slots = await storage.getAvailableTimeSlots(date);
+      
+      // Convert to proper format with availability status
+      const timeSlots = [
+        '09:00', '10:30', '13:00', '14:30', '16:00'
+      ].map(time => ({
+        time,
+        available: slots.includes(time),
+        technicianName: 'Available'
+      }));
+
+      res.json(timeSlots);
+    } catch (error) {
+      console.error("Error fetching time slots:", error);
+      res.status(500).json({ message: "Failed to fetch time slots" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

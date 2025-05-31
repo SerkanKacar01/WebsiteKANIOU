@@ -147,6 +147,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
               isStyleConsultation: true
             }
           };
+
+          savedResponse = await storage.createChatbotMessage({
+            conversationId: conversation.id,
+            role: "assistant",
+            content: aiResponse.content,
+            metadata: aiResponse.metadata
+          });
         } else {
           // Continue existing consultation
           console.log(`🎨 CONTINUING CONSULTATION: Step ${consultation.currentStep}`);
@@ -356,7 +363,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({
         message: aiResponse.content,
-        messageId: savedResponse.id,
+        messageId: savedResponse?.id,
         requiresPricing: aiResponse.requiresPricing,
         metadata: aiResponse.metadata
       });

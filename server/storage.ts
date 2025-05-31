@@ -11,6 +11,9 @@ import {
   testimonials,
   Testimonial,
   InsertTestimonial,
+  smartQuoteRequests,
+  SmartQuoteRequest,
+  InsertSmartQuoteRequest,
   quoteRequests,
   QuoteRequest,
   InsertQuoteRequest,
@@ -97,7 +100,13 @@ export interface IStorage {
   getTestimonialById(id: number): Promise<Testimonial | undefined>;
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
 
-  // Quote Requests
+  // Smart Quote Requests
+  createSmartQuoteRequest(request: InsertSmartQuoteRequest): Promise<SmartQuoteRequest>;
+  getSmartQuoteRequests(): Promise<SmartQuoteRequest[]>;
+  getSmartQuoteRequestById(id: number): Promise<SmartQuoteRequest | undefined>;
+  updateSmartQuoteRequest(id: number, updates: Partial<SmartQuoteRequest>): Promise<SmartQuoteRequest>;
+
+  // Quote Requests (Legacy)
   createQuoteRequest(request: InsertQuoteRequest): Promise<QuoteRequest>;
   getQuoteRequests(): Promise<QuoteRequest[]>;
 
@@ -272,7 +281,37 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  // Quote Requests
+  // Smart Quote Requests
+  async createSmartQuoteRequest(request: InsertSmartQuoteRequest): Promise<SmartQuoteRequest> {
+    const result = await db.insert(smartQuoteRequests).values(request).returning();
+    return result[0];
+  }
+
+  async getSmartQuoteRequests(): Promise<SmartQuoteRequest[]> {
+    return await db
+      .select()
+      .from(smartQuoteRequests)
+      .orderBy(desc(smartQuoteRequests.createdAt));
+  }
+
+  async getSmartQuoteRequestById(id: number): Promise<SmartQuoteRequest | undefined> {
+    const result = await db
+      .select()
+      .from(smartQuoteRequests)
+      .where(eq(smartQuoteRequests.id, id));
+    return result[0];
+  }
+
+  async updateSmartQuoteRequest(id: number, updates: Partial<SmartQuoteRequest>): Promise<SmartQuoteRequest> {
+    const [result] = await db
+      .update(smartQuoteRequests)
+      .set(updates)
+      .where(eq(smartQuoteRequests.id, id))
+      .returning();
+    return result;
+  }
+
+  // Quote Requests (Legacy)
   async createQuoteRequest(request: InsertQuoteRequest): Promise<QuoteRequest> {
     const result = await db.insert(quoteRequests).values(request).returning();
     return result[0];

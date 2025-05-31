@@ -63,7 +63,67 @@ export const insertTestimonialSchema = createInsertSchema(testimonials).omit({
   id: true,
 });
 
-// Quote Requests
+// Smart Quote Requests with Dynamic Pricing
+export const smartQuoteRequests = pgTable("smart_quote_requests", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  roomType: text("room_type").notNull(),
+  productType: text("product_type").notNull(),
+  material: text("material").notNull(),
+  width: doublePrecision("width").notNull(), // in cm
+  height: doublePrecision("height").notNull(), // in cm
+  colorPreference: text("color_preference"),
+  stylePreference: text("style_preference"),
+  installationRequired: boolean("installation_required").default(false),
+  additionalNotes: text("additional_notes"),
+  estimatedPrice: doublePrecision("estimated_price").notNull(),
+  language: text("language").default("nl"),
+  status: text("status").default("pending"), // 'pending', 'quoted', 'confirmed', 'cancelled'
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertSmartQuoteRequestSchema = createInsertSchema(smartQuoteRequests).omit({
+  id: true,
+  createdAt: true,
+  estimatedPrice: true, // Will be calculated automatically
+}).extend({
+  name: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  phone: z.string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(20, "Phone number must be less than 20 characters")
+    .regex(/^[\+]?[0-9\s\-\(\)]+$/, "Phone number can only contain numbers, spaces, +, -, (, )"),
+  roomType: z.string()
+    .min(1, "Room type is required"),
+  productType: z.string()
+    .min(1, "Product type is required"),
+  material: z.string()
+    .min(1, "Material selection is required"),
+  width: z.number()
+    .min(30, "Width must be at least 30cm")
+    .max(500, "Width cannot exceed 500cm"),
+  height: z.number()
+    .min(30, "Height must be at least 30cm")
+    .max(400, "Height cannot exceed 400cm"),
+  colorPreference: z.string().optional(),
+  stylePreference: z.string().optional(),
+  installationRequired: z.boolean().default(false),
+  additionalNotes: z.string()
+    .max(1000, "Additional notes must be less than 1000 characters")
+    .optional(),
+  language: z.string().default("nl"),
+  // Honeypot field for spam protection
+  website: z.string().max(0, "Invalid submission").optional(),
+});
+
+// Keep the old quote requests table for backward compatibility
 export const quoteRequests = pgTable("quote_requests", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -167,6 +227,9 @@ export type InsertGalleryItem = z.infer<typeof insertGalleryItemSchema>;
 
 export type Testimonial = typeof testimonials.$inferSelect;
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
+
+export type SmartQuoteRequest = typeof smartQuoteRequests.$inferSelect;
+export type InsertSmartQuoteRequest = z.infer<typeof insertSmartQuoteRequestSchema>;
 
 export type QuoteRequest = typeof quoteRequests.$inferSelect;
 export type InsertQuoteRequest = z.infer<typeof insertQuoteRequestSchema>;

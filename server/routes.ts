@@ -561,12 +561,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         <p>${validatedData.additionalRequirements || 'Geen'}</p>
       `;
 
-      await sendEmail({
+      const emailSuccess = await sendEmail({
         to: emailConfig.notificationEmail,
         from: emailConfig.senderEmail,
         subject: `Nieuwe Stijl Consultatie Offerte - ${validatedData.customerName}`,
         html: emailHtml
       });
+
+      if (!emailSuccess) {
+        console.error(`❌ STYLE CONSULTATION: Email failed to send to ${emailConfig.notificationEmail} for ${validatedData.customerName}`);
+        throw new Error("Email delivery failed");
+      }
+
+      console.log(`📧 STYLE CONSULTATION: Email successfully delivered to ${emailConfig.notificationEmail} for ${validatedData.customerName}`);
 
       res.json({ 
         success: true, 
@@ -667,15 +674,20 @@ ${chatSummary}
         </p>
       `;
 
-      // Send email to info@kaniou.be
-      await sendEmail({
+      // Send email to info@kaniou.be with enhanced error handling
+      const emailSuccess = await sendEmail({
         to: "info@kaniou.be",
         from: emailConfig.senderEmail,
         subject: "Nieuwe offerteaanvraag via chatbot – KANIOU",
         html: emailHtml
       });
 
-      console.log(`📧 QUOTE REQUEST: Email sent to info@kaniou.be for ${name} (${email})`);
+      if (!emailSuccess) {
+        console.error(`❌ QUOTE REQUEST: Email failed to send to info@kaniou.be for ${name} (${email})`);
+        throw new Error("Email delivery failed");
+      }
+
+      console.log(`📧 QUOTE REQUEST: Email successfully delivered to info@kaniou.be for ${name} (${email})`);
 
       res.json({ 
         success: true, 

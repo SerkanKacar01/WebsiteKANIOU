@@ -61,6 +61,12 @@ import {
   generateRecommendations,
   generateConsultationSummary
 } from "./styleConsultation";
+import {
+  detectProductGalleryRequest,
+  generateProductGalleryResponse,
+  generateCategoryGalleryResponse,
+  detectCategoryRequest
+} from "./productGalleryFlow";
 import multer from "multer";
 
 // Type aliases for better code readability
@@ -103,6 +109,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check for style consultation request
       const isStyleRequest = isStyleConsultationRequest(message, language);
       console.log(`🎨 STYLE CONSULTATION: ${isStyleRequest ? 'YES' : 'NO'} - Request detected`);
+
+      // Check for product gallery request (Step 4 Smart Suggestions)
+      const isProductGalleryRequest = detectProductGalleryRequest(message, language);
+      const specificCategory = detectCategoryRequest(message, language);
+      console.log(`🖼️ PRODUCT GALLERY: ${isProductGalleryRequest ? 'YES' : 'NO'} - Category: ${specificCategory || 'General'}`);
 
       // Check for product catalog questions
       const { isProductCatalogQuestion, generateProductCatalogResponse } = await import('./productCatalogResponse');

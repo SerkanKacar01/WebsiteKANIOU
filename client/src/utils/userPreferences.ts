@@ -87,25 +87,25 @@ export function getPersonalizedGreeting(language: string): {
   const greetings = {
     nl: {
       returning: (name: string) => `Welkom terug ${name}! Fijn om u weer te zien. Hoe kan ik u vandaag helpen?`,
-      returningNoName: "Welkom terug! Fijn om u weer te zien. Hoe kan ik u vandaag helpen?",
+      returningNoName: "Welkom terug bij KANIOU! We staan weer klaar om u te helpen. Wilt u stijladvies, een offerte of onze collectie bekijken?",
       new: "Welkom bij KANIOU! Ik ben hier om u te helpen met al uw vragen over maatwerk raambekleding.",
       namePrompt: "Mag ik uw naam weten voor een persoonlijkere ervaring?"
     },
     fr: {
       returning: (name: string) => `Bon retour ${name}! Ravi de vous revoir. Comment puis-je vous aider aujourd'hui?`,
-      returningNoName: "Bon retour! Ravi de vous revoir. Comment puis-je vous aider aujourd'hui?",
+      returningNoName: "Bienvenue à nouveau chez KANIOU! Nous sommes prêts à vous aider. Souhaitez-vous un conseil déco, un devis ou voir notre collection?",
       new: "Bienvenue chez KANIOU! Je suis là pour vous aider avec toutes vos questions sur nos décorations de fenêtres sur mesure.",
       namePrompt: "Puis-je connaître votre nom pour une expérience plus personnalisée?"
     },
     en: {
       returning: (name: string) => `Welcome back ${name}! Great to see you again. How can I help you today?`,
-      returningNoName: "Welcome back! Great to see you again. How can I help you today?",
+      returningNoName: "Welcome back to KANIOU! We're ready to assist you again. Would you like style advice, a quote, or to view our collection?",
       new: "Welcome to KANIOU! I'm here to help you with all your questions about custom window coverings.",
       namePrompt: "May I know your name for a more personalized experience?"
     },
     tr: {
       returning: (name: string) => `Tekrar hoş geldiniz ${name}! Sizi tekrar görmek harika. Bugün size nasıl yardımcı olabilirim?`,
-      returningNoName: "Tekrar hoş geldiniz! Sizi tekrar görmek harika. Bugün size nasıl yardımcı olabilirim?",
+      returningNoName: "KANIOU'ya tekrar hoş geldiniz! Size tekrar yardımcı olmaya hazırız. Stil önerisi, fiyat teklifi veya koleksiyonumuzu görmek ister misiniz?",
       new: "KANIOU'ya hoş geldiniz! Özel pencere kaplamaları hakkındaki tüm sorularınızda size yardımcı olmak için buradayım.",
       namePrompt: "Daha kişiselleştirilmiş bir deneyim için adınızı öğrenebilir miyim?"
     }
@@ -135,6 +135,29 @@ export function getPersonalizedGreeting(language: string): {
       greeting: langGreetings.new,
       showNamePrompt: true
     };
+  }
+}
+
+/**
+ * Clear corrupted user preferences data
+ */
+export function clearCorruptedPreferences(): void {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const preferences = JSON.parse(stored);
+      // Check for corrupted data patterns
+      if (preferences.corruptedData || 
+          (preferences.name && preferences.name.includes('jullie een galerij')) ||
+          (stored.includes('jullie een galerij'))) {
+        console.log('🧹 Clearing corrupted user preferences data');
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+  } catch (error) {
+    console.warn('Error checking user preferences for corruption:', error);
+    // If there's any error parsing, clear the data
+    localStorage.removeItem(STORAGE_KEY);
   }
 }
 

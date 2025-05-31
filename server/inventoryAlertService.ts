@@ -3,7 +3,7 @@
  * Handles smart inventory notifications and stock management integration
  */
 
-import { storage } from "./storage";
+import { inventoryStorage } from "./inventoryStorage";
 import { sendInventoryAlertEmail } from "./inventoryEmailService";
 import { 
   InventoryAlert, 
@@ -82,7 +82,7 @@ export async function createInventoryAlertSubscription(
 ): Promise<InventoryAlert> {
   try {
     // Check if subscription already exists
-    const existingAlerts = await storage.getInventoryAlertsByProduct(productName, productVariant);
+    const existingAlerts = await inventoryStorage.getInventoryAlertsByProduct(productName, productVariant);
     const alreadySubscribed = existingAlerts.find(alert => 
       alert.email === email && alert.isActive && !alert.notificationSent
     );
@@ -96,14 +96,14 @@ export async function createInventoryAlertSubscription(
       email,
       productName,
       productVariant,
-      language,
+      language: language as "nl" | "fr" | "en" | "tr",
       conversationId,
       userAgent,
       isActive: true,
       notificationSent: false
     };
 
-    const newAlert = await storage.createInventoryAlert(alertData);
+    const newAlert = await inventoryStorage.createInventoryAlert(alertData);
 
     // Send admin notification
     await sendInventoryAlertEmail({
@@ -148,7 +148,7 @@ export async function checkProductAvailability(productName: string, productVaria
   message?: string;
 }> {
   try {
-    const stock = await storage.getProductStock(productName, productVariant);
+    const stock = await inventoryStorage.getProductStock(productName, productVariant);
     
     if (!stock) {
       // Product not in stock system - assume available but unknown stock
@@ -183,7 +183,7 @@ export async function checkProductAvailability(productName: string, productVaria
  */
 export async function notifyProductBackInStock(productName: string, productVariant?: string): Promise<number> {
   try {
-    const alerts = await storage.getInventoryAlertsByProduct(productName, productVariant);
+    const alerts = await inventoryStorage.getInventoryAlertsByProduct(productName, productVariant);
     const activeAlerts = alerts.filter(alert => alert.isActive && !alert.notificationSent);
     
     let notificationsSent = 0;

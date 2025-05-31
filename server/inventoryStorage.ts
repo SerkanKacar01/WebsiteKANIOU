@@ -4,7 +4,7 @@
  */
 
 import { db } from "./db";
-import { eq, desc, and, sql } from "drizzle-orm";
+import { eq, desc, and, sql, isNull } from "drizzle-orm";
 import {
   inventoryAlerts,
   InventoryAlert,
@@ -32,7 +32,7 @@ export class InventoryStorage {
           eq(inventoryAlerts.productName, productName),
           productVariant 
             ? eq(inventoryAlerts.productVariant, productVariant)
-            : eq(inventoryAlerts.productVariant, null)
+            : isNull(inventoryAlerts.productVariant)
         )
       );
   }
@@ -71,7 +71,7 @@ export class InventoryStorage {
           eq(productStock.productName, productName),
           productVariant 
             ? eq(productStock.productVariant, productVariant)
-            : eq(productStock.productVariant, null)
+            : isNull(productStock.productVariant)
         )
       );
     return result;
@@ -90,7 +90,7 @@ export class InventoryStorage {
           eq(productStock.productName, productName),
           productVariant 
             ? eq(productStock.productVariant, productVariant)
-            : eq(productStock.productVariant, null)
+            : isNull(productStock.productVariant)
         )
       )
       .returning();

@@ -561,6 +561,46 @@ export const appointmentBookingsRelations = relations(appointmentBookings, ({ on
 export type AppointmentBooking = typeof appointmentBookings.$inferSelect;
 export type InsertAppointmentBooking = z.infer<typeof insertAppointmentBookingSchema>;
 
+// Virtual Room Preview System
+export const virtualRoomPreviews = pgTable("virtual_room_previews", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  roomImageUrl: text("room_image_url").notNull(), // Original room photo
+  previewImageUrl: text("preview_image_url"), // Generated preview with product
+  productCategory: text("product_category").notNull(),
+  productMaterial: text("product_material"),
+  productColor: text("product_color"),
+  productStyle: text("product_style"),
+  roomType: text("room_type"), // living room, bedroom, kitchen, etc.
+  dimensions: jsonb("dimensions"), // width, height if provided
+  customerEmail: text("customer_email"),
+  customerName: text("customer_name"),
+  language: text("language").default("nl"),
+  isQuoteRequested: boolean("is_quote_requested").default(false),
+  metadata: jsonb("metadata"), // Additional preview settings
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertVirtualRoomPreviewSchema = createInsertSchema(virtualRoomPreviews).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  sessionId: z.string().min(1, "Session ID is required"),
+  roomImageUrl: z.string().url("Valid room image URL required"),
+  productCategory: z.string().min(1, "Product category is required"),
+  productMaterial: z.string().optional(),
+  productColor: z.string().optional(),
+  productStyle: z.string().optional(),
+  roomType: z.string().optional(),
+  customerEmail: z.string().email().optional(),
+  customerName: z.string().min(2).max(100).optional(),
+  language: z.string().default("nl"),
+  isQuoteRequested: z.boolean().default(false),
+});
+
+export type VirtualRoomPreview = typeof virtualRoomPreviews.$inferSelect;
+export type InsertVirtualRoomPreview = z.infer<typeof insertVirtualRoomPreviewSchema>;
+
 export type BusinessHours = typeof businessHours.$inferSelect;
 export type InsertBusinessHours = z.infer<typeof insertBusinessHoursSchema>;
 

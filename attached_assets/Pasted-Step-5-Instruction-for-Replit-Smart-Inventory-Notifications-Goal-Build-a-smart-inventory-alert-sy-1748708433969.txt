@@ -1,0 +1,59 @@
+Step 5 Instruction for Replit: Smart Inventory Notifications
+
+Goal:
+Build a smart inventory alert system that notifies users when specific products or variants become available again, or when limited stock is detected — fully integrated in the KANIOU chatbot and optionally via email.
+
+⸻
+
+🧠 Replit Instruction Text (for developers)
+
+Create a Smart Inventory Alert System integrated with the KANIOU website and chatbot. It must allow users to request notifications for out-of-stock products or receive urgency alerts when stock is low.
+
+⸻
+
+1. Trigger Points
+	•	In the chatbot, after a product is shown as unavailable or temporarily out of stock.
+	•	On product detail pages with low or no availability (optional future upgrade).
+	•	During consultation or quote request flow, if selected variant is not currently available.
+
+⸻
+
+2. Languages
+	•	Must support Dutch, French, English, and Turkish.
+	•	Alerts and chatbot messages must always follow the selected language of the user.
+
+⸻
+
+3. Core Features
+	•	When a product or option is out of stock:
+	•	Show the user a prompt in the chatbot:
+“Would you like to be notified when this becomes available again?”
+	•	Allow the user to enter their email or confirm use of their already known email.
+	•	Store product name, user language, and contact info in a structured list or lightweight database.
+	•	When a product has low stock (optional logic):
+	•	Show urgency prompts like:
+“Only 2 left in stock – order soon!”
+or
+“This item sells out quickly. Want a priority notification?”
+
+⸻
+
+4. Admin Alerts (Optional)
+	•	Notify the admin (info@kaniou.be) when a customer subscribes to an inventory alert.
+	•	Notification includes product name, variant (if any), and user email.
+
+⸻
+
+5. Backend Logic
+	•	Set up a simple backend or webhook that allows marking a product as:
+	•	✅ Back in stock → triggers alert to all waiting users.
+	•	🔴 Limited stock → optionally triggers urgency message to chatbot visitors.
+	•	Users who receive an alert should be tagged as “re-engaged” in analytics or lead systems.
+
+⸻
+
+6. User Experience Flow
+	•	Must be subtle and user-friendly inside the chatbot.
+	•	If a user is already subscribed, don’t show the prompt again.
+	•	Ensure confirmation message after signup like:
+“You’ll be the first to know when this item is back in stock!”

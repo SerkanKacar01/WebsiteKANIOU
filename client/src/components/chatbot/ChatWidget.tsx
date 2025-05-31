@@ -16,7 +16,8 @@ import {
   getPersonalizedGreeting, 
   saveUserPreferences, 
   extractNameFromMessage,
-  updateUserName 
+  updateUserName,
+  clearCorruptedPreferences 
 } from "@/utils/userPreferences";
 import {
   detectConversationEnd,
@@ -84,6 +85,9 @@ export function ChatbotWidget() {
 
   // Initialize personalized greeting when language changes or component mounts
   useEffect(() => {
+    // Clear any corrupted data first
+    clearCorruptedPreferences();
+    
     const greetingData = getPersonalizedGreeting(language);
     setPersonalizedGreeting(greetingData);
     

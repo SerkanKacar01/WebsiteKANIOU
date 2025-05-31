@@ -1,0 +1,67 @@
+Step 6 Instruction for Replit: Loyalty Program & Warranty Reminders
+
+Goal:
+Build an intelligent retention system that increases customer loyalty and long-term satisfaction. The system should include a professional Loyalty Points Program, Warranty Tracking, and Automatic Reminder Notifications. It must work smoothly with the KANIOU chatbot and multilingual experience.
+
+⸻
+
+🧠 Replit Instruction Text (for developers)
+
+Create an AI-supported Loyalty & Warranty Retention System for KANIOU that is integrated into the chatbot and optionally linked to email reminders. The system must be multilingual (Dutch, French, English, Turkish), mobile friendly, and work independently (automated flow — no need for manual backend work).
+
+⸻
+
+1. Loyalty Program
+	•	Customers should automatically collect loyalty points when:
+	•	They make a purchase
+	•	They submit a review
+	•	They refer a friend
+	•	They complete a full quote request
+	•	They subscribe to the newsletter
+	•	Loyalty points must be tracked with basic customer details:
+Name, email, product(s), and total points.
+	•	Rewards Examples:
+	•	€10 discount at 200 points
+	•	Free measurement service at 500 points
+	•	Priority delivery at 800 points
+	•	A chatbot message must inform the user when they:
+	•	Gain points
+	•	Are eligible to redeem a reward
+	•	Request to check their current points balance
+
+⸻
+
+2. Warranty Reminder System
+	•	Each product sold has a standard warranty period (e.g., 2 years).
+	•	When a product is purchased or included in a quote:
+	•	The system should record the date and product.
+	•	Schedule a reminder 30 days before the warranty expires.
+	•	Send an automatic chatbot or email notification like:
+“Your warranty for [Product] is expiring soon. Would you like to extend or upgrade it?”
+	•	The system must support up to 5 products per customer and organize them by purchase date and product type.
+
+⸻
+
+3. Notifications & Triggers
+	•	Automatic chatbot reminders:
+	•	“You’ve earned 50 points! Want to see your rewards?”
+	•	“Your warranty is about to expire. Extend now with a click.”
+	•	“Get double points this month on all wooden blinds.”
+	•	Admin notifications (optional):
+	•	Send an email to info@kaniou.be when a user reaches a major milestone or requests a loyalty reward.
+
+⸻
+
+4. Language Support
+	•	The entire loyalty and warranty experience must work in the selected language of the user (🇳🇱 🇫🇷 🇬🇧 🇹🇷).
+	•	Messages, reminders, and chatbot flows must adapt to the user’s preferred language.
+
+⸻
+
+5. User Experience Requirements
+	•	No login required to participate (points linked to email and name).
+	•	Chatbot must handle:
+	•	Points balance requests
+	•	Reward redemption requests
+	•	Warranty check and expiration date queries
+	•	Clean interface and subtle reminders (not intrusive or spammy).

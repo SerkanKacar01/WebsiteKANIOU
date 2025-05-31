@@ -95,20 +95,29 @@ export function ChatbotWidget() {
     if (isOpen) {
       saveUserPreferences({ language });
       
-      // Check if smart suggestions should be shown
+      // Check if smart suggestions should be shown based on trigger rules
       const lastChatTime = localStorage.getItem('kaniou_last_chat_time');
+      const isNewUser = localStorage.getItem('kaniou_user_visited') === null;
       const now = new Date().getTime();
       const twentyFourHours = 24 * 60 * 60 * 1000;
       
-      // Show suggestions if no previous chat or last chat was over 24 hours ago
-      const shouldShowSuggestions = !lastChatTime || (now - parseInt(lastChatTime)) > twentyFourHours;
+      // Trigger Rules:
+      // 1. New user opening chatbot for the first time
+      // 2. Returning user after 24+ hours of inactivity
+      const shouldShowSuggestions = isNewUser || 
+        (!lastChatTime || (now - parseInt(lastChatTime)) > twentyFourHours);
+      
+      // Mark user as visited if new user
+      if (isNewUser) {
+        localStorage.setItem('kaniou_user_visited', 'true');
+      }
       
       setChatState(prev => ({
         ...prev,
         showSmartSuggestions: shouldShowSuggestions
       }));
     }
-  }, [language, isOpen]); // Remove preferences and updateLanguage from dependencies
+  }, [language, isOpen]);
 
   // Check business hours
   const { data: businessHours } = useQuery({
@@ -501,16 +510,19 @@ export function ChatbotWidget() {
         thankYouMessage
       ]);
       
+      // Update last chat time when closing
+      localStorage.setItem('kaniou_last_chat_time', new Date().getTime().toString());
+      
       // Close chat after a brief delay
       setTimeout(() => {
         setIsOpen(false);
-        // Reset chat state for next session
+        // Reset chat state for next session - don't show suggestions immediately
         setChatState({
           showQuickReplies: false,
           quickReplyType: null,
           showLeadForm: false,
           waitingForLeadSubmission: false,
-          showSmartSuggestions: true,
+          showSmartSuggestions: false, // Don't show until 24h rule triggers
           showExitPrompt: false,
           lastActivityTime: Date.now()
         });
@@ -575,6 +587,20 @@ export function ChatbotWidget() {
       showQuickReplies: true,
       quickReplyType: 'general'
     }));
+  };
+
+  // Handle input change to hide suggestions when user starts typing
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMessage(value);
+    
+    // Hide smart suggestions when user starts typing
+    if (value.trim() && chatState.showSmartSuggestions) {
+      setChatState(prev => ({
+        ...prev,
+        showSmartSuggestions: false
+      }));
+    }
   };
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -983,7 +1009,7 @@ export function ChatbotWidget() {
               <div className="flex gap-2 w-full">
                 <Input
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={handleInputChange}
                   placeholder={t("chatbot.placeholder")}
                   disabled={sendMessageMutation.isPending || !conversationMutation.data || chatState.showLeadForm}
                   className="flex-1 min-w-0 border-amber-300 focus:border-amber-500 bg-white shadow-sm"

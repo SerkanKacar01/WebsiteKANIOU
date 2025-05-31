@@ -153,8 +153,8 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide }: SmartSugge
 
   return (
     <div className="mb-4 w-full animate-in slide-in-from-bottom-4 duration-500">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4">
-        <div className="flex items-center gap-2 mb-3">
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4">
+        <div className="flex items-center gap-2 mb-4">
           <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
           <span className="text-sm font-medium text-blue-900">
             {(() => {
@@ -169,18 +169,19 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide }: SmartSugge
           </span>
         </div>
         
-        <div className="grid gap-2">
+        {/* Grid layout: 2 columns on mobile, 3 on tablet, all on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-2">
           {currentSuggestions.map((suggestion, index) => {
             const IconComponent = suggestion.icon;
             return (
               <Button
                 key={index}
                 variant="outline"
-                className="h-auto p-3 text-left justify-start bg-white hover:bg-blue-50 border-blue-200 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md"
+                className="h-auto p-3 text-left justify-start bg-white hover:bg-blue-50 border-blue-200 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md rounded-full group"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
-                <IconComponent className="h-4 w-4 mr-3 text-blue-600 flex-shrink-0" />
-                <span className="text-sm text-gray-700 break-words flex-1 text-left">
+                <IconComponent className="h-4 w-4 mr-3 text-blue-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                <span className="text-xs sm:text-sm text-gray-700 break-words flex-1 text-left leading-tight">
                   {suggestion.text}
                 </span>
               </Button>
@@ -188,13 +189,13 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide }: SmartSugge
           })}
         </div>
         
-        <div className="mt-3 text-xs text-blue-600 opacity-75 text-center">
+        <div className="mt-4 pt-3 border-t border-blue-200 text-xs text-blue-600 opacity-75 text-center">
           {(() => {
             const hintTexts = {
-              nl: "Klik op een suggestie of typ uw eigen vraag",
-              fr: "Cliquez sur une suggestion ou tapez votre propre question", 
-              en: "Click a suggestion or type your own question",
-              tr: "Bir öneri seçin veya kendi sorunuzu yazın"
+              nl: "💡 Klik op een suggestie of typ uw eigen vraag",
+              fr: "💡 Cliquez sur une suggestion ou tapez votre propre question", 
+              en: "💡 Click a suggestion or type your own question",
+              tr: "💡 Bir öneri seçin veya kendi sorunuzu yazın"
             };
             return hintTexts[language as keyof typeof hintTexts] || hintTexts.nl;
           })()}

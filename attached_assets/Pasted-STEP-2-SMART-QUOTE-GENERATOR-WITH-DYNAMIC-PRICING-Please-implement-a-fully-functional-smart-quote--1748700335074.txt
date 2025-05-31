@@ -1,0 +1,51 @@
+STEP 2: SMART QUOTE GENERATOR WITH DYNAMIC PRICING
+
+Please implement a fully functional smart quote request system on the KANIOU website with the following professional capabilities:
+
+⸻
+
+📌 1. Purpose
+
+Allow customers to request personalized quotes for window treatments based on real dimensions, style, and installation needs — using a dynamic pricing engine.
+
+⸻
+
+🛠️ 2. Features to Include
+	•	Dynamic pricing logic
+– Prices should be automatically calculated based on width, height, product type, complexity, and optional installation
+– Use tiered pricing brackets (e.g. per 10 cm increments)
+– Include material-based variations (e.g. blackout vs. light-filtering, wood vs. aluminum)
+	•	Quote request form
+– Fields: Name, Email, Phone, Room Type, Product Type, Dimensions (width x height), Style Preferences, Color Preferences, Optional Notes
+– Dropdowns for selecting product categories (with real-time price preview)
+– Optional installation checkbox with price adjustment (+€ depending on type)
+	•	Live quote estimate
+– Show a calculated estimated price before submission
+– “This is an estimated price, subject to final confirmation by KANIOU”
+	•	Smart logic
+– Use minimum and maximum size constraints
+– Round up dimensions for pricing tiers (e.g. 122 cm width = priced at 130 cm)
+– Disable incompatible combinations automatically
+	•	Multilingual support
+– The form and pricing interface must support Dutch, French, English, and Turkish
+– All labels, messages, and feedback must auto-adjust to selected language
+	•	Mobile responsiveness
+– Ensure form works perfectly on both desktop and mobile
+– Fields must be easy to use on small screens
+	•	Professional layout
+– Match the style of the KANIOU website
+– Use spacing, gold accent colors, elegant fonts, and modern UI elements
+
+⸻
+
+📧 3. Admin Email Notification
+	•	When a user submits the quote form, send a detailed email to info@kaniou.be
+	•	Email should contain all customer-entered data plus the calculated price
+	•	Subject line: Nieuwe offerteaanvraag van [Customer Name] via KANIOU
+
+⸻
+
+🔐 4. Confirmation to User
+	•	After submission, show a thank you message and confirmation that:
+“Your quote request has been received. You will receive a personalized reply within 24 hours.”
+	•	Send an automated confirmation email to the customer with a copy of their form data and the estimated price

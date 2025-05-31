@@ -283,7 +283,22 @@ export class DatabaseStorage implements IStorage {
 
   // Smart Quote Requests
   async createSmartQuoteRequest(request: InsertSmartQuoteRequest): Promise<SmartQuoteRequest> {
-    const result = await db.insert(smartQuoteRequests).values(request).returning();
+    // Calculate estimated price and add to request
+    const { calculateEstimatedPrice } = await import('./smartQuotePricing');
+    const estimatedPrice = calculateEstimatedPrice(
+      request.productType,
+      request.material,
+      request.width,
+      request.height,
+      request.installationRequired || false
+    );
+    
+    const requestWithPrice = {
+      ...request,
+      estimatedPrice
+    };
+    
+    const result = await db.insert(smartQuoteRequests).values([requestWithPrice]).returning();
     return result[0];
   }
 

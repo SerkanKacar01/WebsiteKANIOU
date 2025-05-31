@@ -6,6 +6,7 @@ import {
   insertProductSchema,
   insertGalleryItemSchema,
   insertTestimonialSchema,
+  insertSmartQuoteRequestSchema,
   insertQuoteRequestSchema,
   insertContactSubmissionSchema,
   insertChatbotConversationSchema,
@@ -971,6 +972,173 @@ ${chatSummary}
       res.status(500).json({
         success: false,
         message: "Failed to update appointment"
+      });
+    }
+  });
+
+  // Smart Quote Generator Routes
+  app.post("/api/smart-quotes", formRateLimiter, async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertSmartQuoteRequestSchema.parse(req.body);
+      
+      // Import pricing functions
+      const { calculateEstimatedPrice, validateDimensions, isMaterialCompatible } = await import('./smartQuotePricing');
+      
+      // Validate dimensions
+      const dimensionValidation = validateDimensions(validatedData.width, validatedData.height);
+      if (!dimensionValidation.valid) {
+        return res.status(400).json({
+          success: false,
+          message: dimensionValidation.error
+        });
+      }
+      
+      // Validate material compatibility
+      if (!isMaterialCompatible(validatedData.productType, validatedData.material)) {
+        return res.status(400).json({
+          success: false,
+          message: "Selected material is not compatible with this product type"
+        });
+      }
+      
+      // Create smart quote request
+      const smartQuote = await storage.createSmartQuoteRequest(validatedData);
+      
+      // Send notification emails
+      const { sendSmartQuoteNotificationToAdmin, sendSmartQuoteConfirmationToCustomer } = await import('./smartQuoteEmailService');
+      
+      const adminEmailSent = await sendSmartQuoteNotificationToAdmin(smartQuote);
+      const customerEmailSent = await sendSmartQuoteConfirmationToCustomer(smartQuote);
+      
+      console.log(`💰 New smart quote created: #${smartQuote.id} - ${smartQuote.productType} (${smartQuote.width}x${smartQuote.height}cm) - €${smartQuote.estimatedPrice}`);
+      
+      res.json({
+        success: true,
+        quoteId: smartQuote.id,
+        estimatedPrice: smartQuote.estimatedPrice,
+        message: "Smart quote request submitted successfully",
+        emailsSent: {
+          admin: adminEmailSent,
+          customer: customerEmailSent
+        }
+      });
+      
+    } catch (error) {
+      console.error("Error creating smart quote:", error);
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({
+          success: false,
+          message: validationError.message
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: "Failed to create smart quote request"
+      });
+    }
+  });
+
+  // Get pricing estimation without creating quote
+  app.post("/api/smart-quotes/estimate", async (req: Request, res: Response) => {
+    try {
+      const { productType, material, width, height, installationRequired } = req.body;
+      
+      if (!productType || !material || !width || !height) {
+        return res.status(400).json({
+          success: false,
+          message: "Product type, material, width, and height are required"
+        });
+      }
+      
+      const { calculateEstimatedPrice, validateDimensions, isMaterialCompatible } = await import('./smartQuotePricing');
+      
+      // Validate dimensions
+      const dimensionValidation = validateDimensions(width, height);
+      if (!dimensionValidation.valid) {
+        return res.status(400).json({
+          success: false,
+          message: dimensionValidation.error
+        });
+      }
+      
+      // Validate material compatibility
+      if (!isMaterialCompatible(productType, material)) {
+        return res.status(400).json({
+          success: false,
+          message: "Selected material is not compatible with this product type"
+        });
+      }
+      
+      const estimatedPrice = calculateEstimatedPrice(
+        productType,
+        material,
+        width,
+        height,
+        installationRequired || false
+      );
+      
+      res.json({
+        success: true,
+        estimatedPrice,
+        dimensions: { width, height },
+        productType,
+        material,
+        installationRequired: installationRequired || false
+      });
+      
+    } catch (error) {
+      console.error("Error calculating price estimate:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to calculate price estimate"
+      });
+    }
+  });
+
+  // Get available product types and materials
+  app.get("/api/smart-quotes/config", async (req: Request, res: Response) => {
+    try {
+      const { getAvailableProductTypes, getAvailableMaterials, PRICING_CONFIG } = await import('./smartQuotePricing');
+      
+      const productTypes = getAvailableProductTypes();
+      const config = Object.entries(PRICING_CONFIG).reduce((acc, [key, value]) => {
+        acc[key] = {
+          name: value.name,
+          materials: getAvailableMaterials(key),
+          installationCost: value.installationCost
+        };
+        return acc;
+      }, {} as Record<string, any>);
+      
+      res.json({
+        success: true,
+        productTypes,
+        config
+      });
+      
+    } catch (error) {
+      console.error("Error getting smart quote config:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to get configuration"
+      });
+    }
+  });
+
+  // Get smart quote requests (admin endpoint)
+  app.get("/api/smart-quotes", async (req: Request, res: Response) => {
+    try {
+      const quotes = await storage.getSmartQuoteRequests();
+      res.json({
+        success: true,
+        quotes
+      });
+    } catch (error) {
+      console.error("Error fetching smart quotes:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch smart quotes"
       });
     }
   });

@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
+import Container from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { 
   Camera, 
@@ -67,26 +67,26 @@ const VirtualRoomPreview = () => {
 
   // Official KANIOU product categories
   const productCategories = [
-    { id: 'overgordijnen', name: t('products.overgordijnen', 'Overgordijnen'), icon: '🪟' },
-    { id: 'vitrages', name: t('products.vitrages', 'Vitrages'), icon: '✨' },
-    { id: 'rolgordijnen', name: t('products.rolgordijnen', 'Rolgordijnen'), icon: '📜' },
-    { id: 'vouwgordijnen', name: t('products.vouwgordijnen', 'Vouwgordijnen'), icon: '🪭' },
-    { id: 'duo-rolgordijnen', name: t('products.duo-rolgordijnen', 'Duo rolgordijnen'), icon: '🔄' },
-    { id: 'textiel-lamellen', name: t('products.textiel-lamellen', 'Textiel lamellen'), icon: '📏' },
-    { id: 'kunststof-lamellen', name: t('products.kunststof-lamellen', 'Kunststof lamellen'), icon: '🏢' },
-    { id: 'houten-jaloezieen', name: t('products.houten-jaloezieen', 'Houten jaloezieën'), icon: '🌳' },
-    { id: 'kunststof-jaloezieen', name: t('products.kunststof-jaloezieen', 'Kunststof jaloezieën'), icon: '🏗️' },
-    { id: 'textiel-raamfolie', name: t('products.textiel-raamfolie', 'Textiel raamfolie'), icon: '🎭' },
-    { id: 'houten-shutters', name: t('products.houten-shutters', 'Houten shutters'), icon: '🚪' },
-    { id: 'inzethorren', name: t('products.inzethorren', 'Inzethorren'), icon: '🦟' },
-    { id: 'opzethorren', name: t('products.opzethorren', 'Opzethorren'), icon: '🛡️' },
-    { id: 'plisse-hordeuren', name: t('products.plisse-hordeuren', 'Plissé hordeuren'), icon: '🚫' },
-    { id: 'plisse', name: t('products.plisse', 'Plissé'), icon: '📐' },
-    { id: 'duo-plisse', name: t('products.duo-plisse', 'Duo plissé'), icon: '🔃' },
-    { id: 'dakraam-zonweringen', name: t('products.dakraam-zonweringen', 'Dakraam zonweringen (Fakro & Velux)'), icon: '☀️' },
-    { id: 'gordijnrails', name: t('products.gordijnrails', 'Gordijnrails'), icon: '🛤️' },
-    { id: 'gordijnroedes', name: t('products.gordijnroedes', 'Gordijnroedes'), icon: '📏' },
-    { id: 'squid-textiel-folie', name: t('products.squid-textiel-folie', 'SQUID textiel folie'), icon: '🦑' }
+    { id: 'overgordijnen', name: 'Overgordijnen', icon: '🪟' },
+    { id: 'vitrages', name: 'Vitrages', icon: '✨' },
+    { id: 'rolgordijnen', name: 'Rolgordijnen', icon: '📜' },
+    { id: 'vouwgordijnen', name: 'Vouwgordijnen', icon: '🪭' },
+    { id: 'duo-rolgordijnen', name: 'Duo rolgordijnen', icon: '🔄' },
+    { id: 'textiel-lamellen', name: 'Textiel lamellen', icon: '📏' },
+    { id: 'kunststof-lamellen', name: 'Kunststof lamellen', icon: '🏢' },
+    { id: 'houten-jaloezieen', name: 'Houten jaloezieën', icon: '🌳' },
+    { id: 'kunststof-jaloezieen', name: 'Kunststof jaloezieën', icon: '🏗️' },
+    { id: 'textiel-raamfolie', name: 'Textiel raamfolie', icon: '🎭' },
+    { id: 'houten-shutters', name: 'Houten shutters', icon: '🚪' },
+    { id: 'inzethorren', name: 'Inzethorren', icon: '🦟' },
+    { id: 'opzethorren', name: 'Opzethorren', icon: '🛡️' },
+    { id: 'plisse-hordeuren', name: 'Plissé hordeuren', icon: '🚫' },
+    { id: 'plisse', name: 'Plissé', icon: '📐' },
+    { id: 'duo-plisse', name: 'Duo plissé', icon: '🔃' },
+    { id: 'dakraam-zonweringen', name: 'Dakraam zonweringen (Fakro & Velux)', icon: '☀️' },
+    { id: 'gordijnrails', name: 'Gordijnrails', icon: '🛤️' },
+    { id: 'gordijnroedes', name: 'Gordijnroedes', icon: '📏' },
+    { id: 'squid-textiel-folie', name: 'SQUID textiel folie', icon: '🦑' }
   ];
 
   const handleImageUpload = useCallback((imageUrl: string) => {
@@ -169,25 +169,25 @@ const VirtualRoomPreview = () => {
   const getStepTitle = () => {
     switch (previewState.step) {
       case 'upload':
-        return t('virtualRoom.uploadStep', 'Upload Room Photo');
+        return 'Upload Room Photo';
       case 'category':
-        return t('virtualRoom.categoryStep', 'Choose Product Category');
+        return 'Choose Product Category';
       case 'customize':
-        return t('virtualRoom.customizeStep', 'Customize Product');
+        return 'Customize Product';
       case 'preview':
-        return t('virtualRoom.previewStep', 'Virtual Preview');
+        return 'Virtual Preview';
       default:
-        return t('virtualRoom.title', 'Virtual Room Preview');
+        return 'Virtual Room Preview';
     }
   };
 
   return (
     <>
       <Helmet>
-        <title>{t('virtualRoom.pageTitle', 'Virtual Room Preview')} | KANIOU</title>
+        <title>Virtual Room Preview | KANIOU</title>
         <meta
           name="description"
-          content={t('virtualRoom.pageDescription', 'Visualize how KANIOU window treatments will look in your room with our AI-powered Virtual Room Preview. Upload a photo or use your camera to see realistic previews.')}
+          content="Visualize how KANIOU window treatments will look in your room with our AI-powered Virtual Room Preview. Upload a photo or use your camera to see realistic previews."
         />
       </Helmet>
 
@@ -195,10 +195,10 @@ const VirtualRoomPreview = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            {t('virtualRoom.title', 'Virtual Room Preview')}
+            Virtual Room Preview
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t('virtualRoom.subtitle', 'See how our premium window treatments will transform your space before you buy. Upload a photo or use your camera for an instant preview.')}
+            See how our premium window treatments will transform your space before you buy. Upload a photo or use your camera for an instant preview.
           </p>
         </div>
 
@@ -256,7 +256,7 @@ const VirtualRoomPreview = () => {
                     size="lg"
                   >
                     <Camera className="mr-2" />
-                    {t('virtualRoom.openCamera', 'Open Camera')}
+                    Open Camera
                   </Button>
                 ) : (
                   <CameraCapture 
@@ -338,7 +338,7 @@ const VirtualRoomPreview = () => {
               {/* Preview Controls */}
               <PreviewControls
                 settings={previewState.previewSettings}
-                onSettingsChange={(settings) => 
+                onSettingsChange={(settings: any) => 
                   setPreviewState(prev => ({
                     ...prev,
                     previewSettings: { ...prev.previewSettings, ...settings }
@@ -350,24 +350,24 @@ const VirtualRoomPreview = () => {
               <div className="flex justify-center space-x-4">
                 <Button onClick={handleDownloadPreview} variant="outline">
                   <Download className="mr-2 w-4 h-4" />
-                  {t('virtualRoom.download', 'Download')}
+                  Download
                 </Button>
                 
                 {navigator.share && (
                   <Button onClick={handleSharePreview} variant="outline">
                     <Share2 className="mr-2 w-4 h-4" />
-                    {t('virtualRoom.share', 'Share')}
+                    Share
                   </Button>
                 )}
 
                 <Button onClick={() => setShowQuoteModal(true)}>
                   <Quote className="mr-2 w-4 h-4" />
-                  {t('virtualRoom.requestQuote', 'Request Quote')}
+                  Request Quote
                 </Button>
 
                 <Button onClick={resetPreview} variant="outline">
                   <RotateCcw className="mr-2 w-4 h-4" />
-                  {t('virtualRoom.startOver', 'Start Over')}
+                  Start Over
                 </Button>
               </div>
             </div>

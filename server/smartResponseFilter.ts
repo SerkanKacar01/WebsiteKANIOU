@@ -107,6 +107,17 @@ function analyzeUserQuestion(question: string, language: string): QuestionAnalys
   } else if (questionLower.includes('contact') || questionLower.includes('bereikbaar')) {
     category = 'support';
     intent = 'contact_inquiry';
+  } else if (questionLower.includes('voorbeeld') || questionLower.includes('foto') || questionLower.includes('plaatje') || 
+             questionLower.includes('example') || questionLower.includes('photo') || questionLower.includes('picture') ||
+             questionLower.includes('image') || questionLower.includes('exemple') || questionLower.includes('galerie') ||
+             questionLower.includes('gallery') || questionLower.includes('galerij') || questionLower.includes('realizat') ||
+             questionLower.includes('project') || questionLower.includes('installat') && questionLower.includes('zie') ||
+             questionLower.includes('toon') || questionLower.includes('laat') && questionLower.includes('zie') ||
+             questionLower.includes('show') || questionLower.includes('see') || questionLower.includes('look') ||
+             questionLower.includes('montrer') || questionLower.includes('voir') || questionLower.includes('göster') ||
+             questionLower.includes('bakın') || questionLower.includes('örnek')) {
+    category = 'gallery';
+    intent = 'visual_examples_request';
   }
   
   // Extract keywords
@@ -203,6 +214,8 @@ function structureResponse(
     structuredContent = formatPricingResponse(filteredContent, analysis);
   } else if (analysis.intent === 'product_inquiry') {
     structuredContent = formatProductResponse(filteredContent, analysis);
+  } else if (analysis.intent === 'visual_examples_request') {
+    structuredContent = formatGalleryResponse(filteredContent, analysis);
   } else {
     structuredContent = formatGeneralResponse(filteredContent, analysis);
   }
@@ -262,6 +275,43 @@ function formatPricingResponse(content: string, analysis: QuestionAnalysis): str
   
   return responses[language as keyof typeof responses] || responses.nl;
 }
+
+/**
+ * Format gallery and visual examples responses
+ */
+function formatGalleryResponse(content: string, analysis: QuestionAnalysis): string {
+  const language = analysis.language;
+  
+  const responses = {
+    nl: `📸 Ja, u kunt onze realisaties bekijken in onze galerij! We hebben prachtige voorbeelden van rolgordijnen, plissé gordijnen, overgordijnen en meer.
+
+🔗 Bekijk onze volledige galerij op de website onder 'Galerij' voor inspiratie en voorbeelden van onze maatwerk installaties.
+
+Wilt u specifieke productvoorbeelden zien of heeft u vragen over een bepaald project?`,
+
+    fr: `📸 Oui, vous pouvez consulter nos réalisations dans notre galerie ! Nous avons de beaux exemples de stores, rideaux plissés, rideaux et plus encore.
+
+🔗 Consultez notre galerie complète sur le site Web sous 'Galerie' pour l'inspiration et des exemples de nos installations sur mesure.
+
+Souhaitez-vous voir des exemples de produits spécifiques ou avez-vous des questions sur un projet particulier ?`,
+
+    en: `📸 Yes, you can view our projects in our gallery! We have beautiful examples of roller blinds, pleated curtains, drapes and more.
+
+🔗 Check our complete gallery on the website under 'Gallery' for inspiration and examples of our custom installations.
+
+Would you like to see specific product examples or do you have questions about a particular project?`,
+
+    tr: `📸 Evet, projelerimizi galerimizde görüntüleyebilirsiniz! Stor perdeler, plise perdeler, drapeler ve daha fazlasının güzel örnekleri var.
+
+🔗 Özel kurulumlarımızın ilhamı ve örnekleri için web sitesindeki 'Galeri' bölümünden tüm galerimizi kontrol edin.
+
+Belirli ürün örnekleri görmek ister misiniz veya belirli bir proje hakkında sorularınız var mı?`
+  };
+  
+  return responses[language as keyof typeof responses] || responses.nl;
+}
+
+
 
 /**
  * Format product-related responses

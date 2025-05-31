@@ -1,10 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import HeroSection from "@/components/home/HeroSection";
+import SmartWelcomeButtons from "@/components/home/SmartWelcomeButtons";
 import FeaturedCategories from "@/components/home/FeaturedCategories";
+import AIStyleGuide from "@/components/home/AIStyleGuide";
 import TestimonialSection from "@/components/home/TestimonialSection";
 import GallerySection from "@/components/home/GallerySection";
 import AboutCompany from "@/components/home/AboutCompany";
 import InteractiveFeaturesSection from "@/components/home/InteractiveFeaturesSection";
+import SmartQuoteModule from "@/components/home/SmartQuoteModule";
+import SmartAppointmentBanner from "@/components/home/SmartAppointmentBanner";
 import QuoteRequestSection from "@/components/home/QuoteRequestSection";
 import ContactSection from "@/components/home/ContactSection";
 
@@ -20,10 +24,14 @@ const Home = () => {
       </Helmet>
       
       <HeroSection />
+      <SmartWelcomeButtons />
       <FeaturedCategories />
+      <AIStyleGuide />
       <InteractiveFeaturesSection />
+      <SmartQuoteModule />
       <TestimonialSection />
       <GallerySection />
+      <SmartAppointmentBanner />
       <AboutCompany />
       <QuoteRequestSection />
       <ContactSection />

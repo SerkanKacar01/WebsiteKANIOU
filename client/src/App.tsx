@@ -22,6 +22,7 @@ import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
+import SmartQuote from "@/pages/SmartQuote";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
 import Admin from "@/pages/Admin";
@@ -121,6 +122,8 @@ function Router() {
         <Route path="/overons" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/quote" component={QuotePage} />
+        <Route path="/smart-quote" component={SmartQuote} />
+        <Route path="/slimme-offerte" component={SmartQuote} />
         <Route path="/kleur-matcher" component={ColorMatcherPage} />
         <Route path="/color-matcher" component={ColorMatcherPage} />
         <Route path="/maatwerk-wizard" component={CustomizationWizardPage} />

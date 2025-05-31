@@ -113,7 +113,7 @@ const SmartQuoteForm = () => {
     
     setIsCalculatingPrice(true);
     try {
-      const response = await apiRequest("POST", "/api/smart-quotes/estimate", {
+      const response: any = await apiRequest("POST", "/api/smart-quotes/estimate", {
         productType,
         material,
         width,
@@ -122,7 +122,13 @@ const SmartQuoteForm = () => {
       });
       
       if (response.success) {
-        setPriceEstimate(response);
+        setPriceEstimate({
+          estimatedPrice: response.estimatedPrice,
+          dimensions: response.dimensions,
+          productType: response.productType,
+          material: response.material,
+          installationRequired: response.installationRequired
+        });
       }
     } catch (error) {
       console.error("Price calculation error:", error);
@@ -138,8 +144,8 @@ const SmartQuoteForm = () => {
       apiRequest("POST", "/api/smart-quotes", data),
     onSuccess: (response) => {
       toast({
-        title: t("smartQuote.form.success"),
-        description: t("smartQuote.form.successMessage"),
+        title: "Bedankt voor uw aanvraag!",
+        description: "U ontvangt binnen 24 uur een gepersonaliseerde offerte per e-mail.",
         variant: "success" as any,
       });
       setShowSuccessMessage(true);
@@ -149,8 +155,8 @@ const SmartQuoteForm = () => {
     },
     onError: (error: any) => {
       toast({
-        title: t("smartQuote.form.error"),
-        description: error.message || t("smartQuote.form.errorMessage"),
+        title: "Er is een fout opgetreden",
+        description: error.message || "Probeer het later opnieuw",
         variant: "destructive",
       });
       setIsSubmitting(false);

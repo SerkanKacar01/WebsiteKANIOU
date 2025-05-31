@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import SmartQuoteForm from "@/components/forms/SmartQuoteForm";
-import { Container } from "@/components/ui/container";
+import Container from "@/components/ui/container";
 
 const SmartQuote = () => {
   const { language } = useLanguage();

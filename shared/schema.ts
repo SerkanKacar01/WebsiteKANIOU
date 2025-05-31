@@ -924,3 +924,186 @@ export type InsertProductStock = z.infer<typeof insertProductStockSchema>;
 
 export type InventoryAlertLog = typeof inventoryAlertLog.$inferSelect;
 export type InsertInventoryAlertLog = z.infer<typeof insertInventoryAlertLogSchema>;
+
+// Loyalty Program Tables
+export const loyaltyCustomers = pgTable("loyalty_customers", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  totalPoints: integer("total_points").default(0),
+  language: text("language").default("nl"),
+  isActive: boolean("is_active").default(true),
+  lastActivity: timestamp("last_activity").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertLoyaltyCustomerSchema = createInsertSchema(loyaltyCustomers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().email("Please enter a valid email address").max(254),
+  language: z.enum(["nl", "fr", "en", "tr"]).default("nl"),
+});
+
+export const loyaltyTransactions = pgTable("loyalty_transactions", {
+  id: serial("id").primaryKey(),
+  customerId: integer("customer_id").notNull().references(() => loyaltyCustomers.id, { onDelete: 'cascade' }),
+  type: text("type").notNull(), // 'purchase', 'review', 'referral', 'quote', 'newsletter'
+  points: integer("points").notNull(),
+  description: text("description").notNull(),
+  relatedId: text("related_id"), // Link to related record (quote ID, product ID, etc.)
+  language: text("language").default("nl"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertLoyaltyTransactionSchema = createInsertSchema(loyaltyTransactions).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  type: z.enum(["purchase", "review", "referral", "quote", "newsletter"]),
+  points: z.number().min(1).max(1000),
+  description: z.string().min(1).max(500),
+});
+
+export const loyaltyRewards = pgTable("loyalty_rewards", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  pointsRequired: integer("points_required").notNull(),
+  rewardValue: doublePrecision("reward_value"), // e.g., €10 discount
+  rewardType: text("reward_type").notNull(), // 'discount', 'service', 'priority'
+  language: text("language").default("nl"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertLoyaltyRewardSchema = createInsertSchema(loyaltyRewards).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  rewardType: z.enum(["discount", "service", "priority"]),
+  pointsRequired: z.number().min(1).max(2000),
+});
+
+export const loyaltyRedemptions = pgTable("loyalty_redemptions", {
+  id: serial("id").primaryKey(),
+  customerId: integer("customer_id").notNull().references(() => loyaltyCustomers.id, { onDelete: 'cascade' }),
+  rewardId: integer("reward_id").notNull().references(() => loyaltyRewards.id, { onDelete: 'cascade' }),
+  pointsUsed: integer("points_used").notNull(),
+  status: text("status").default("pending"), // 'pending', 'approved', 'used', 'expired'
+  redeemedAt: timestamp("redeemed_at").defaultNow(),
+  usedAt: timestamp("used_at"),
+  expiresAt: timestamp("expires_at"),
+});
+
+export const insertLoyaltyRedemptionSchema = createInsertSchema(loyaltyRedemptions).omit({
+  id: true,
+  redeemedAt: true,
+});
+
+// Warranty System Tables
+export const customerWarranties = pgTable("customer_warranties", {
+  id: serial("id").primaryKey(),
+  customerId: integer("customer_id").notNull().references(() => loyaltyCustomers.id, { onDelete: 'cascade' }),
+  productName: text("product_name").notNull(),
+  productType: text("product_type").notNull(),
+  purchaseDate: timestamp("purchase_date").notNull(),
+  warrantyPeriodMonths: integer("warranty_period_months").default(24), // 2 years default
+  warrantyExpiryDate: timestamp("warranty_expiry_date").notNull(),
+  relatedQuoteId: text("related_quote_id"), // Link to quote or purchase
+  status: text("status").default("active"), // 'active', 'expired', 'extended', 'claimed'
+  language: text("language").default("nl"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertCustomerWarrantySchema = createInsertSchema(customerWarranties).omit({
+  id: true,
+  createdAt: true,
+  warrantyExpiryDate: true, // Will be calculated automatically
+}).extend({
+  productName: z.string().min(2).max(200),
+  productType: z.string().min(2).max(100),
+  warrantyPeriodMonths: z.number().min(12).max(120).default(24),
+});
+
+export const warrantyReminders = pgTable("warranty_reminders", {
+  id: serial("id").primaryKey(),
+  warrantyId: integer("warranty_id").notNull().references(() => customerWarranties.id, { onDelete: 'cascade' }),
+  reminderType: text("reminder_type").notNull(), // '30_days', '7_days', 'expired'
+  scheduledDate: timestamp("scheduled_date").notNull(),
+  sentAt: timestamp("sent_at"),
+  method: text("method").default("chatbot"), // 'chatbot', 'email', 'both'
+  language: text("language").default("nl"),
+  status: text("status").default("pending"), // 'pending', 'sent', 'failed'
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertWarrantyReminderSchema = createInsertSchema(warrantyReminders).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  reminderType: z.enum(["30_days", "7_days", "expired"]),
+  method: z.enum(["chatbot", "email", "both"]).default("chatbot"),
+});
+
+// Loyalty Program Relations
+export const loyaltyCustomersRelations = relations(loyaltyCustomers, ({ many }) => ({
+  transactions: many(loyaltyTransactions),
+  redemptions: many(loyaltyRedemptions),
+  warranties: many(customerWarranties),
+}));
+
+export const loyaltyTransactionsRelations = relations(loyaltyTransactions, ({ one }) => ({
+  customer: one(loyaltyCustomers, {
+    fields: [loyaltyTransactions.customerId],
+    references: [loyaltyCustomers.id],
+  }),
+}));
+
+export const loyaltyRedemptionsRelations = relations(loyaltyRedemptions, ({ one }) => ({
+  customer: one(loyaltyCustomers, {
+    fields: [loyaltyRedemptions.customerId],
+    references: [loyaltyCustomers.id],
+  }),
+  reward: one(loyaltyRewards, {
+    fields: [loyaltyRedemptions.rewardId],
+    references: [loyaltyRewards.id],
+  }),
+}));
+
+export const customerWarrantiesRelations = relations(customerWarranties, ({ one, many }) => ({
+  customer: one(loyaltyCustomers, {
+    fields: [customerWarranties.customerId],
+    references: [loyaltyCustomers.id],
+  }),
+  reminders: many(warrantyReminders),
+}));
+
+export const warrantyRemindersRelations = relations(warrantyReminders, ({ one }) => ({
+  warranty: one(customerWarranties, {
+    fields: [warrantyReminders.warrantyId],
+    references: [customerWarranties.id],
+  }),
+}));
+
+// Type definitions for Loyalty & Warranty System
+export type LoyaltyCustomer = typeof loyaltyCustomers.$inferSelect;
+export type InsertLoyaltyCustomer = z.infer<typeof insertLoyaltyCustomerSchema>;
+
+export type LoyaltyTransaction = typeof loyaltyTransactions.$inferSelect;
+export type InsertLoyaltyTransaction = z.infer<typeof insertLoyaltyTransactionSchema>;
+
+export type LoyaltyReward = typeof loyaltyRewards.$inferSelect;
+export type InsertLoyaltyReward = z.infer<typeof insertLoyaltyRewardSchema>;
+
+export type LoyaltyRedemption = typeof loyaltyRedemptions.$inferSelect;
+export type InsertLoyaltyRedemption = z.infer<typeof insertLoyaltyRedemptionSchema>;
+
+export type CustomerWarranty = typeof customerWarranties.$inferSelect;
+export type InsertCustomerWarranty = z.infer<typeof insertCustomerWarrantySchema>;
+
+export type WarrantyReminder = typeof warrantyReminders.$inferSelect;
+export type InsertWarrantyReminder = z.infer<typeof insertWarrantyReminderSchema>;

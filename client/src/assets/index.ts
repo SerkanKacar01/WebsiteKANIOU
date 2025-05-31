@@ -34,6 +34,24 @@ import galleryImage_textiellamellen from './Textiellamellen.jpeg';
 import textiellamellenHeroImage from './textiellamellen-hero.jpeg';
 import galleryImage_vouwgordijnen from './Vouwgordijnen.jpeg';
 import kaniouLogo from './KAN.LOGO.png';
+import galleryImage_IMG9320 from '@assets/IMG_9320.png';
+import galleryImage_IMG9321 from '@assets/IMG_9321.jpeg';
+import galleryImage_IMG9272 from '@assets/IMG_9272.jpeg';
+import galleryImage_IMG9237 from '@assets/IMG_9237.jpeg';
+import galleryImage_IMG9236 from '@assets/IMG_9236.jpeg';
+import galleryImage_IMG9235 from '@assets/IMG_9235.jpeg';
+import galleryImage_IMG9233 from '@assets/IMG_9233.jpeg';
+import galleryImage_IMG9230 from '@assets/IMG_9230.jpeg';
+import galleryImage_IMG9231 from '@assets/IMG_9231.jpeg';
+import galleryImage_IMG9232 from '@assets/IMG_9232.jpeg';
+import galleryImage_IMG9228 from '@assets/IMG_9228.jpeg';
+import galleryImage_IMG9227 from '@assets/IMG_9227.jpeg';
+import galleryImage_IMG9222 from '@assets/IMG_9222.jpeg';
+import galleryImage_IMG9221 from '@assets/IMG_9221.jpeg';
+import galleryImage_IMG9220 from '@assets/IMG_9220.jpeg';
+import galleryImage_IMG9217 from '@assets/IMG_9217.jpeg';
+import galleryImage_IMG9204 from '@assets/IMG_9204.jpeg';
+import galleryImage_IMG9192 from '@assets/IMG_9192.jpeg';
 
 export {
   overgordijnenImage,
@@ -71,5 +89,23 @@ export {
   galleryImage_textiellamellen,
   textiellamellenHeroImage,
   galleryImage_vouwgordijnen,
-  kaniouLogo
+  kaniouLogo,
+  galleryImage_IMG9320,
+  galleryImage_IMG9321,
+  galleryImage_IMG9272,
+  galleryImage_IMG9237,
+  galleryImage_IMG9236,
+  galleryImage_IMG9235,
+  galleryImage_IMG9233,
+  galleryImage_IMG9230,
+  galleryImage_IMG9231,
+  galleryImage_IMG9232,
+  galleryImage_IMG9228,
+  galleryImage_IMG9227,
+  galleryImage_IMG9222,
+  galleryImage_IMG9221,
+  galleryImage_IMG9220,
+  galleryImage_IMG9217,
+  galleryImage_IMG9204,
+  galleryImage_IMG9192
 };

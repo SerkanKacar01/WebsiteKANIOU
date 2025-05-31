@@ -1,201 +1,329 @@
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/hooks/useLanguage";
-import { MessageSquare, Calculator, Palette, FileText, HelpCircle, Home } from "lucide-react";
+import { useState, useEffect } from "react";
+import { 
+  Calendar, 
+  Palette, 
+  FileText, 
+  ImageIcon, 
+  Info, 
+  HelpCircle,
+  Clock
+} from "lucide-react";
 
 interface SmartSuggestionButtonsProps {
   onSuggestionClick: (suggestion: string, action?: string) => void;
   onHide: () => void;
+  sessionId: string;
 }
 
 interface SuggestionButton {
+  id: string;
   text: string;
-  action?: string;
+  action: string;
   icon: React.ComponentType<{ className?: string }>;
+  emoji: string;
 }
 
-export function SmartSuggestionButtons({ onSuggestionClick, onHide }: SmartSuggestionButtonsProps) {
+export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }: SmartSuggestionButtonsProps) {
   const { language } = useLanguage();
+  const [showReminderPrompt, setShowReminderPrompt] = useState(false);
+  const [buttonClickTracking, setButtonClickTracking] = useState<string[]>([]);
 
-  // Multilingual suggestion buttons
-  const suggestions: Record<string, SuggestionButton[]> = {
+  // Step 4: Core Suggestion Buttons - 6 main actions
+  const coreButtons: Record<string, SuggestionButton[]> = {
     nl: [
       {
-        text: "Gratis inmeten aanvragen",
-        action: "request_quote",
-        icon: Calculator
+        id: "free_measurement",
+        text: "🪟 Gratis Inmeten Afspraak",
+        action: "appointment_booking",
+        icon: Calendar,
+        emoji: "🪟"
       },
       {
-        text: "Stijladvies krijgen",
-        action: "style_consultation", 
-        icon: Palette
-      },
-      {
-        text: "Offerte aanvragen",
-        action: "request_quote",
-        icon: FileText
-      },
-      {
-        text: "Productvoorbeelden bekijken",
-        action: "view_gallery",
-        icon: Home
-      },
-      {
-        text: "Wat voor producten bieden jullie aan?",
-        icon: HelpCircle
-      },
-      {
-        text: "Help me de juiste raambekleding te kiezen",
+        id: "style_advice", 
+        text: "🎨 Stijladvies Krijgen",
         action: "style_consultation",
-        icon: MessageSquare
+        icon: Palette,
+        emoji: "🎨"
+      },
+      {
+        id: "request_quote",
+        text: "🧾 Offerte Aanvragen", 
+        action: "quote_request",
+        icon: FileText,
+        emoji: "🧾"
+      },
+      {
+        id: "view_gallery",
+        text: "🖼️ Productgalerij Bekijken",
+        action: "product_gallery",
+        icon: ImageIcon,
+        emoji: "🖼️"
+      },
+      {
+        id: "product_info",
+        text: "📦 Productinformatie",
+        action: "product_information",
+        icon: Info,
+        emoji: "📦"
+      },
+      {
+        id: "help_choosing", 
+        text: "❓ Hulp bij Kiezen?",
+        action: "interactive_qa",
+        icon: HelpCircle,
+        emoji: "❓"
       }
     ],
     fr: [
       {
-        text: "Demander une mesure gratuite",
-        action: "request_quote",
-        icon: Calculator
+        id: "free_measurement",
+        text: "🪟 Rendez-vous Mesure Gratuite",
+        action: "appointment_booking",
+        icon: Calendar,
+        emoji: "🪟"
       },
       {
-        text: "Obtenir des conseils de style",
-        action: "style_consultation",
-        icon: Palette
+        id: "style_advice",
+        text: "🎨 Conseils de Style",
+        action: "style_consultation", 
+        icon: Palette,
+        emoji: "🎨"
       },
       {
-        text: "Demander un devis",
-        action: "request_quote", 
-        icon: FileText
+        id: "request_quote",
+        text: "🧾 Demander un Devis",
+        action: "quote_request",
+        icon: FileText,
+        emoji: "🧾"
       },
       {
-        text: "Voir des exemples de produits",
-        action: "view_gallery",
-        icon: Home
+        id: "view_gallery",
+        text: "🖼️ Voir la Galerie Produits",
+        action: "product_gallery",
+        icon: ImageIcon,
+        emoji: "🖼️"
       },
       {
-        text: "Quels types de produits proposez-vous?",
-        icon: HelpCircle
+        id: "product_info",
+        text: "📦 Informations Produits",
+        action: "product_information",
+        icon: Info,
+        emoji: "📦"
       },
       {
-        text: "Aidez-moi à choisir le bon store",
-        action: "style_consultation",
-        icon: MessageSquare
+        id: "help_choosing",
+        text: "❓ Besoin d'Aide pour Choisir?",
+        action: "interactive_qa",
+        icon: HelpCircle,
+        emoji: "❓"
       }
     ],
     en: [
       {
-        text: "Request free measurement",
-        action: "request_quote",
-        icon: Calculator
+        id: "free_measurement", 
+        text: "🪟 Free Measurement Appointment",
+        action: "appointment_booking",
+        icon: Calendar,
+        emoji: "🪟"
       },
       {
-        text: "Get style advice", 
+        id: "style_advice",
+        text: "🎨 Get Style Advice",
         action: "style_consultation",
-        icon: Palette
+        icon: Palette,
+        emoji: "🎨"
       },
       {
-        text: "Request a quote",
-        action: "request_quote",
-        icon: FileText
+        id: "request_quote",
+        text: "🧾 Request a Quote",
+        action: "quote_request",
+        icon: FileText,
+        emoji: "🧾"
       },
       {
-        text: "View product examples",
-        action: "view_gallery",
-        icon: Home
+        id: "view_gallery",
+        text: "🖼️ View Product Gallery",
+        action: "product_gallery",
+        icon: ImageIcon,
+        emoji: "🖼️"
       },
       {
-        text: "What kind of products do you offer?",
-        icon: HelpCircle
+        id: "product_info",
+        text: "📦 Product Information", 
+        action: "product_information",
+        icon: Info,
+        emoji: "📦"
       },
       {
-        text: "Help me choose the right window treatment",
-        action: "style_consultation",
-        icon: MessageSquare
+        id: "help_choosing",
+        text: "❓ Need Help Choosing?",
+        action: "interactive_qa",
+        icon: HelpCircle,
+        emoji: "❓"
       }
     ],
     tr: [
       {
-        text: "Ücretsiz ölçüm talep et",
-        action: "request_quote",
-        icon: Calculator
+        id: "free_measurement",
+        text: "🪟 Ücretsiz Ölçüm Randevusu",
+        action: "appointment_booking",
+        icon: Calendar,
+        emoji: "🪟"
       },
       {
-        text: "Stil tavsiyesi al",
+        id: "style_advice",
+        text: "🎨 Stil Tavsiyesi Al",
         action: "style_consultation",
-        icon: Palette
+        icon: Palette,
+        emoji: "🎨"
       },
       {
-        text: "Teklif iste",
-        action: "request_quote",
-        icon: FileText
+        id: "request_quote",
+        text: "🧾 Teklif İste",
+        action: "quote_request",
+        icon: FileText,
+        emoji: "🧾"
       },
       {
-        text: "Ürün örneklerini görüntüle",
-        action: "view_gallery", 
-        icon: Home
+        id: "view_gallery",
+        text: "🖼️ Ürün Galerisini Görüntüle",
+        action: "product_gallery", 
+        icon: ImageIcon,
+        emoji: "🖼️"
       },
       {
-        text: "Ne tür ürünler sunuyorsunuz?",
-        icon: HelpCircle
+        id: "product_info",
+        text: "📦 Ürün Bilgileri",
+        action: "product_information",
+        icon: Info,
+        emoji: "📦"
       },
       {
-        text: "Doğru perde seçiminde yardım et",
-        action: "style_consultation",
-        icon: MessageSquare
+        id: "help_choosing",
+        text: "❓ Seçim Konusunda Yardım?",
+        action: "interactive_qa",
+        icon: HelpCircle,
+        emoji: "❓"
       }
     ]
   };
 
-  const currentSuggestions = suggestions[language as keyof typeof suggestions] || suggestions.nl;
+  const currentButtons = coreButtons[language as keyof typeof coreButtons] || coreButtons.nl;
 
-  const handleSuggestionClick = (suggestion: SuggestionButton) => {
-    onHide(); // Hide the suggestions immediately
-    onSuggestionClick(suggestion.text, suggestion.action);
+  // Step 4: Track button clicks for engagement analysis  
+  const handleButtonClick = (button: SuggestionButton) => {
+    // Track which button was clicked
+    const clickData = {
+      buttonId: button.id,
+      sessionId: sessionId,
+      timestamp: new Date().toISOString(),
+      language: language
+    };
+    
+    // Save to session storage for tracking
+    const existingClicks = JSON.parse(sessionStorage.getItem('kaniou_button_clicks') || '[]');
+    existingClicks.push(clickData);
+    sessionStorage.setItem('kaniou_button_clicks', JSON.stringify(existingClicks));
+    
+    // Update local tracking
+    setButtonClickTracking(prev => [...prev, button.id]);
+    
+    // Hide suggestions immediately when user clicks
+    onHide();
+    
+    // Trigger the chatbot action
+    onSuggestionClick(button.text, button.action);
+    
+    // Update last chat time to reset 24-hour timer
+    localStorage.setItem('kaniou_last_chat_time', Date.now().toString());
   };
+
+  // Step 4: Show reminder prompt after 30 seconds if no buttons clicked
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (buttonClickTracking.length === 0) {
+        setShowReminderPrompt(true);
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearTimeout(timer);
+  }, [buttonClickTracking.length]);
 
   return (
     <div className="mb-4 w-full animate-in slide-in-from-bottom-4 duration-500">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4">
+      {/* Main Suggestion Interface */}
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-4">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-          <span className="text-sm font-medium text-blue-900">
+          <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+          <span className="text-sm font-medium text-amber-900">
             {(() => {
               const welcomeTexts = {
-                nl: "Welkom bij KANIOU! Hoe kunnen we u vandaag helpen?",
-                fr: "Bienvenue chez KANIOU! Comment pouvons-nous vous aider aujourd'hui?",
-                en: "Welcome to KANIOU! How can we assist you today?",
-                tr: "KANIOU'ya hoş geldiniz! Bugün size nasıl yardımcı olabiliriz?"
+                nl: "Welkom bij KANIOU! Waarmee kunnen we u helpen?",
+                fr: "Bienvenue chez KANIOU! Comment pouvons-nous vous aider?",
+                en: "Welcome to KANIOU! How can we help you today?",
+                tr: "KANIOU'ya hoş geldiniz! Size nasıl yardımcı olabiliriz?"
               };
               return welcomeTexts[language as keyof typeof welcomeTexts] || welcomeTexts.nl;
             })()}
           </span>
         </div>
         
-        {/* Grid layout: 2 columns on mobile, 3 on tablet, all on desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-2">
-          {currentSuggestions.map((suggestion, index) => {
-            const IconComponent = suggestion.icon;
+        {/* Step 4: Core Suggestion Buttons Grid - Mobile-friendly layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {currentButtons.map((button) => {
+            const IconComponent = button.icon;
             return (
               <Button
-                key={index}
+                key={button.id}
                 variant="outline"
-                className="h-auto p-3 text-left justify-start bg-white hover:bg-blue-50 border-blue-200 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md rounded-full group"
-                onClick={() => handleSuggestionClick(suggestion)}
+                className="h-auto p-4 text-left justify-start bg-white hover:bg-amber-50 border-amber-200 hover:border-amber-300 transition-all duration-200 shadow-sm hover:shadow-md rounded-lg group min-h-[60px]"
+                onClick={() => handleButtonClick(button)}
               >
-                <IconComponent className="h-4 w-4 mr-3 text-blue-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
-                <span className="text-xs sm:text-sm text-gray-700 break-words flex-1 text-left leading-tight">
-                  {suggestion.text}
-                </span>
+                <div className="flex items-center gap-3 w-full">
+                  <div className="flex-shrink-0">
+                    <span className="text-lg">{button.emoji}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm font-medium text-gray-800 break-words leading-tight block">
+                      {button.text}
+                    </span>
+                  </div>
+                  <IconComponent className="h-4 w-4 text-amber-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                </div>
               </Button>
             );
           })}
         </div>
         
-        <div className="mt-4 pt-3 border-t border-blue-200 text-xs text-blue-600 opacity-75 text-center">
+        {/* Step 4: Reminder Prompt after 30 seconds */}
+        {showReminderPrompt && (
+          <div className="mt-4 p-3 bg-amber-100 border border-amber-300 rounded-lg animate-in slide-in-from-top-2 duration-300">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-amber-600" />
+              <span className="text-sm text-amber-800">
+                {(() => {
+                  const reminderTexts = {
+                    nl: "Hulp nodig om te beginnen? Kies een van de opties hierboven of stel uw vraag!",
+                    fr: "Besoin d'aide pour commencer? Choisissez une option ci-dessus ou posez votre question!",
+                    en: "Need help getting started? Choose one of the options above or ask your question!",
+                    tr: "Başlamak için yardıma mı ihtiyacınız var? Yukarıdaki seçeneklerden birini seçin veya sorunuzu sorun!"
+                  };
+                  return reminderTexts[language as keyof typeof reminderTexts] || reminderTexts.nl;
+                })()}
+              </span>
+            </div>
+          </div>
+        )}
+        
+        <div className="mt-4 pt-3 border-t border-amber-200 text-xs text-amber-700 opacity-75 text-center">
           {(() => {
             const hintTexts = {
-              nl: "💡 Klik op een suggestie of typ uw eigen vraag",
-              fr: "💡 Cliquez sur une suggestion ou tapez votre propre question", 
-              en: "💡 Click a suggestion or type your own question",
-              tr: "💡 Bir öneri seçin veya kendi sorunuzu yazın"
+              nl: "Klik op een knop hierboven of begin te typen voor persoonlijke hulp",
+              fr: "Cliquez sur un bouton ci-dessus ou commencez à taper pour une aide personnalisée", 
+              en: "Click a button above or start typing for personalized assistance",
+              tr: "Kişiselleştirilmiş yardım için yukarıdaki bir düğmeye tıklayın veya yazmaya başlayın"
             };
             return hintTexts[language as keyof typeof hintTexts] || hintTexts.nl;
           })()}

@@ -436,41 +436,85 @@ export function ChatbotWidget() {
     // Update last chat time
     localStorage.setItem('kaniou_last_chat_time', new Date().getTime().toString());
     
-    // Handle specific actions
-    if (action === 'style_consultation') {
-      // Trigger style consultation flow with language-appropriate message
-      const styleMessages = {
-        nl: "Ik wil graag stijladvies voor mijn raambekleding",
-        fr: "J'aimerais des conseils de style pour mes stores",
-        en: "I would like style advice for my window treatments",
-        tr: "Perde seçimi için stil tavsiyesi istiyorum"
-      };
-      const styleText = styleMessages[language as keyof typeof styleMessages] || styleMessages.nl;
-      sendMessageMutation.mutate(styleText);
-    } else if (action === 'request_quote') {
-      // Trigger quote request flow
-      setChatState(prev => ({ ...prev, showLeadForm: true }));
-      const quoteMessages = {
-        nl: "Graag help ik u met een offerte! Laten we beginnen met enkele gegevens.",
-        fr: "Je serais ravi de vous aider avec un devis! Commençons par quelques détails.",
-        en: "I'd be happy to help you with a quote! Let's start with some details.",
-        tr: "Bir teklif konusunda size yardımcı olmaktan mutluluk duyarım! Bazı detaylarla başlayalım."
-      };
-      const quoteText = quoteMessages[language as keyof typeof quoteMessages] || quoteMessages.nl;
-      sendMessageMutation.mutate(quoteText);
-    } else if (action === 'view_gallery') {
-      // Navigate to gallery or show gallery info
-      const galleryMessages = {
-        nl: "Bekijk onze uitgebreide galerij met voorbeelden van onze raambekleding projecten op onze website. U vindt daar inspiratie voor uw eigen ruimte!",
-        fr: "Consultez notre galerie complète avec des exemples de nos projets de stores sur notre site web. Vous y trouverez de l'inspiration pour votre propre espace!",
-        en: "Check out our extensive gallery with examples of our window treatment projects on our website. You'll find inspiration for your own space!",
-        tr: "Web sitemizdeki perde projelerimizin örnekleriyle dolu kapsamlı galerimize göz atın. Kendi alanınız için ilham bulacaksınız!"
-      };
-      const galleryText = galleryMessages[language as keyof typeof galleryMessages] || galleryMessages.nl;
-      sendMessageMutation.mutate(galleryText);
-    } else {
-      // For other suggestions, send as regular message
-      sendMessageMutation.mutate(suggestionText);
+    // Handle Step 4: Core Suggestion Button Actions
+    switch (action) {
+      case 'appointment_booking':
+        // 🪟 Free Measurement Appointment - leads to chatbot form
+        const appointmentMessages = {
+          nl: "Ik wil graag een gratis inmeetafspraak bij mij thuis inplannen",
+          fr: "J'aimerais planifier un rendez-vous de mesure gratuit chez moi",
+          en: "I would like to schedule a free measurement appointment at my home",
+          tr: "Evimde ücretsiz bir ölçüm randevusu planlamak istiyorum"
+        };
+        const appointmentText = appointmentMessages[language as keyof typeof appointmentMessages] || appointmentMessages.nl;
+        sendMessageMutation.mutate(appointmentText);
+        break;
+
+      case 'style_consultation':
+        // 🎨 Get Style Advice - triggers AI interior style consultation flow
+        const styleMessages = {
+          nl: "Ik wil graag stijladvies voor mijn raambekleding",
+          fr: "J'aimerais des conseils de style pour mes stores",
+          en: "I would like style advice for my window treatments",
+          tr: "Perde seçimi için stil tavsiyesi istiyorum"
+        };
+        const styleText = styleMessages[language as keyof typeof styleMessages] || styleMessages.nl;
+        sendMessageMutation.mutate(styleText);
+        break;
+
+      case 'quote_request':
+        // 🧾 Request a Quote - opens chatbot quote request wizard
+        setChatState(prev => ({ ...prev, showLeadForm: true }));
+        const quoteMessages = {
+          nl: "Graag help ik u met een offerte! Laten we beginnen met enkele gegevens voor uw persoonlijke offerte.",
+          fr: "Je serais ravi de vous aider avec un devis! Commençons par quelques détails pour votre offre personnalisée.",
+          en: "I'd be happy to help you with a quote! Let's start with some details for your personalized offer.",
+          tr: "Bir teklif konusunda size yardımcı olmaktan mutluluk duyarım! Kişiselleştirilmiş teklifiniz için bazı detaylarla başlayalım."
+        };
+        const quoteText = quoteMessages[language as keyof typeof quoteMessages] || quoteMessages.nl;
+        sendMessageMutation.mutate(quoteText);
+        break;
+
+      case 'product_gallery':
+        // 🖼️ View Product Gallery - opens carousel or image preview
+        const galleryMessages = {
+          nl: "Toon mij de productgalerij met voorbeelden van jullie raambekleding",
+          fr: "Montrez-moi la galerie de produits avec des exemples de vos stores",
+          en: "Show me the product gallery with examples of your window treatments",
+          tr: "Perde örneklerinizle ürün galerisini gösterin"
+        };
+        const galleryText = galleryMessages[language as keyof typeof galleryMessages] || galleryMessages.nl;
+        sendMessageMutation.mutate(galleryText);
+        break;
+
+      case 'product_information':
+        // 📦 Product Information - asks user to select product type for details
+        const productInfoMessages = {
+          nl: "Ik wil meer informatie over jullie producten en hun eigenschappen",
+          fr: "Je voudrais plus d'informations sur vos produits et leurs caractéristiques",
+          en: "I would like more information about your products and their features",
+          tr: "Ürünleriniz ve özellikleri hakkında daha fazla bilgi istiyorum"
+        };
+        const productInfoText = productInfoMessages[language as keyof typeof productInfoMessages] || productInfoMessages.nl;
+        sendMessageMutation.mutate(productInfoText);
+        break;
+
+      case 'interactive_qa':
+        // ❓ Need Help Choosing? - starts interactive Q&A to narrow down options
+        const helpChoosingMessages = {
+          nl: "Help me de juiste raambekleding kiezen op basis van mijn ruimte en stijl",
+          fr: "Aidez-moi à choisir les bons stores en fonction de mon espace et de mon style",
+          en: "Help me choose the right window treatments based on my space and style",
+          tr: "Alanım ve tarzıma göre doğru perde seçiminde bana yardım edin"
+        };
+        const helpText = helpChoosingMessages[language as keyof typeof helpChoosingMessages] || helpChoosingMessages.nl;
+        sendMessageMutation.mutate(helpText);
+        break;
+
+      default:
+        // For other suggestions, send as regular message
+        sendMessageMutation.mutate(suggestionText);
+        break;
     }
   };
 
@@ -817,6 +861,7 @@ export function ChatbotWidget() {
                 <SmartSuggestionButtons
                   onSuggestionClick={handleSmartSuggestion}
                   onHide={() => setChatState(prev => ({ ...prev, showSmartSuggestions: false }))}
+                  sessionId={sessionId}
                 />
               )}
 

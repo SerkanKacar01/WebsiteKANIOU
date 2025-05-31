@@ -11,7 +11,8 @@ import {
   insertChatbotConversationSchema,
   insertChatbotMessageSchema,
   insertNewsletterSubscriptionSchema,
-  insertStyleQuoteRequestSchema
+  insertStyleQuoteRequestSchema,
+  insertAppointmentBookingSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -34,6 +35,7 @@ import { generateProductPricingResponse } from "./productPricing";
 import { sendPriceRequestNotification } from "./emailService";
 import { answerWithComprehensiveKnowledge } from "./comprehensiveKnowledge";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
+import { sendAppointmentNotificationToAdmin, sendAppointmentConfirmationToCustomer } from "./appointmentEmailService";
 import { sendConversationSummaryEmail } from "./emailSummary";
 import { 
   analyzeTriggerConditions, 

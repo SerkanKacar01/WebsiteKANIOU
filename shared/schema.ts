@@ -403,6 +403,104 @@ export type InsertPriceResponseKnowledge = z.infer<typeof insertPriceResponseKno
 export type PriceResponseLog = typeof priceResponseLogs.$inferSelect;
 export type InsertPriceResponseLog = z.infer<typeof insertPriceResponseLogSchema>;
 
+// Appointment Bookings
+export const appointmentBookings = pgTable("appointment_bookings", {
+  id: serial("id").primaryKey(),
+  fullName: text("full_name").notNull(),
+  phone: text("phone").notNull(),
+  email: text("email").notNull(),
+  appointmentType: text("appointment_type").notNull(), // 'measurement', 'design_advice', 'showroom_visit'
+  preferredDate: text("preferred_date").notNull(), // ISO date string
+  preferredTime: text("preferred_time").notNull(), // HH:MM format
+  roomType: text("room_type"),
+  message: text("message"),
+  language: text("language").default("nl"),
+  status: text("status").default("pending"), // 'pending', 'confirmed', 'cancelled', 'completed'
+  urgency: text("urgency").default("medium"), // 'low', 'medium', 'high', 'urgent'
+  isConfirmed: boolean("is_confirmed").default(false),
+  confirmationEmailSent: boolean("confirmation_email_sent").default(false),
+  reminderEmailSent: boolean("reminder_email_sent").default(false),
+  adminNotes: text("admin_notes"),
+  bookedVia: text("booked_via").default("website"), // 'website', 'chatbot', 'phone'
+  sessionId: text("session_id"), // For chatbot bookings
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertAppointmentBookingSchema = createInsertSchema(appointmentBookings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  confirmationEmailSent: true,
+  reminderEmailSent: true,
+}).extend({
+  fullName: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  phone: z.string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(20, "Phone number must be less than 20 characters")
+    .regex(/^[\+]?[0-9\s\-\(\)]+$/, "Phone number can only contain numbers, spaces, +, -, (, )"),
+  appointmentType: z.enum(["measurement", "design_advice", "showroom_visit"], {
+    required_error: "Please select an appointment type"
+  }),
+  preferredDate: z.string()
+    .min(1, "Preferred date is required"),
+  preferredTime: z.string()
+    .min(1, "Preferred time is required")
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Time must be in HH:MM format"),
+  roomType: z.string()
+    .max(100, "Room type must be less than 100 characters")
+    .optional(),
+  message: z.string()
+    .max(1000, "Message must be less than 1000 characters")
+    .optional(),
+  language: z.enum(["nl", "fr", "en", "tr"]).default("nl"),
+  urgency: z.enum(["low", "medium", "high", "urgent"]).default("medium"),
+  bookedVia: z.enum(["website", "chatbot", "phone"]).default("website"),
+  sessionId: z.string().optional(),
+});
+
+// Business Hours Configuration
+export const businessHours = pgTable("business_hours", {
+  id: serial("id").primaryKey(),
+  dayOfWeek: integer("day_of_week").notNull(), // 0=Sunday, 1=Monday, etc.
+  openTime: text("open_time").notNull(), // HH:MM format
+  closeTime: text("close_time").notNull(), // HH:MM format
+  isOpen: boolean("is_open").default(true),
+  maxAppointments: integer("max_appointments").default(8), // Max appointments per day
+  timezone: text("timezone").default("Europe/Brussels"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => ({
+  uniqueDayOfWeek: unique().on(table.dayOfWeek),
+}));
+
+export const insertBusinessHoursSchema = createInsertSchema(businessHours).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Appointment relations
+export const appointmentBookingsRelations = relations(appointmentBookings, ({ one }) => ({
+  conversation: one(chatbotConversations, {
+    fields: [appointmentBookings.sessionId],
+    references: [chatbotConversations.sessionId],
+  }),
+}));
+
+// Type definitions for appointment tables
+export type AppointmentBooking = typeof appointmentBookings.$inferSelect;
+export type InsertAppointmentBooking = z.infer<typeof insertAppointmentBookingSchema>;
+
+export type BusinessHours = typeof businessHours.$inferSelect;
+export type InsertBusinessHours = z.infer<typeof insertBusinessHoursSchema>;
+
 // Newsletter Subscriptions
 export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
   id: serial("id").primaryKey(),

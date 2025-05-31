@@ -1,0 +1,50 @@
+Final Testing Request
+
+Hi Replit Team,
+
+Everything has now been fully implemented for the KANIOU website and chatbot. I kindly request a full system testing of all integrated features to ensure everything is functioning perfectly across all devices and languages.
+
+Please perform the following:
+
+⸻
+
+🔍 Full Testing Checklist
+	1.	Homepage & UI
+	•	Check if the smart suggestion buttons appear correctly for new users (desktop + mobile)
+	•	Verify all homepage call-to-action buttons are working and linked properly
+	•	Confirm multilingual UI consistency (Dutch, French, English, Turkish)
+	2.	Chatbot Core Functions
+	•	Language selection works and locks the conversation in the chosen language
+	•	Chatbot answers using real website knowledge only (not fallback answers)
+	•	Test product-related questions (e.g. “Wat zijn rolgordijnen?”)
+	•	Confirm interior style consultation flow works from start to finish
+	•	Ensure quote requests trigger proper flow and arrive at info@kaniou.be
+	3.	Intelligent Features
+	•	Smart Suggestion Buttons trigger the correct flows:
+	•	Free measurement
+	•	Style advice
+	•	Quote request
+	•	Product gallery
+	•	Product info
+	•	Window treatment help
+	•	Style Consultation chatbot flow is triggered and responds intelligently
+	4.	Notifications & Logic
+	•	Price-related questions are handled instantly by the bot
+	•	Complex/unanswered questions trigger email notification to info@kaniou.be
+	•	If user doesn’t interact for 24 hours, buttons reappear correctly
+	•	After finishing conversation, bot asks if user wants to restart or receive suggestions again
+	5.	Loyalty & Warranty System (Step 6)
+	•	Check if chatbot gives correct follow-up based on product lifespan
+	•	Verify loyalty points system logic and suggestions are in place
+	•	Warranty reminders and optional service follow-ups behave correctly
+
+⸻
+
+📩 Final Request
+
+Once all testing is done, please confirm:
+	•	That everything works as expected
+	•	Or if anything needs fixing/debugging
+	•	Please test both desktop and mobile versions
+
+Thank you very much for your support!

@@ -25,6 +25,7 @@ import QuotePage from "@/pages/QuotePage";
 import SmartQuote from "@/pages/SmartQuote";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
+import VirtualRoomPreview from "@/pages/VirtualRoomPreview";
 import Admin from "@/pages/Admin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
@@ -128,6 +129,8 @@ function Router() {
         <Route path="/color-matcher" component={ColorMatcherPage} />
         <Route path="/maatwerk-wizard" component={CustomizationWizardPage} />
         <Route path="/customization-wizard" component={CustomizationWizardPage} />
+        <Route path="/virtual-room-preview" component={VirtualRoomPreview} />
+        <Route path="/kamer-preview" component={VirtualRoomPreview} />
         <Route path="/product-360-demo" component={Product360Demo} />
         <Route path="/rewards" component={RewardsSystem} />
         <Route path="/recommendations" component={SmartRecommendationEngine} />

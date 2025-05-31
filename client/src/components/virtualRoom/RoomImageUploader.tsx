@@ -23,13 +23,13 @@ export const RoomImageUploader = ({ onImageUpload }: RoomImageUploaderProps) => 
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError(t('virtualRoom.invalidFileType', 'Please select a valid image file'));
+      setError('Please select a valid image file');
       return;
     }
 
     // Validate file size (10MB limit)
     if (file.size > 10 * 1024 * 1024) {
-      setError(t('virtualRoom.fileTooLarge', 'File size must be less than 10MB'));
+      setError('File size must be less than 10MB');
       return;
     }
 
@@ -128,8 +128,8 @@ export const RoomImageUploader = ({ onImageUpload }: RoomImageUploaderProps) => 
                   </div>
                   <div className="mb-2">
                     {uploadProgress < 100 
-                      ? t('virtualRoom.uploading', 'Uploading...')
-                      : t('virtualRoom.uploadComplete', 'Upload Complete!')
+                      ? 'Uploading...'
+                      : 'Upload Complete!'
                     }
                   </div>
                   <Progress value={uploadProgress} className="w-32" />
@@ -151,7 +151,7 @@ export const RoomImageUploader = ({ onImageUpload }: RoomImageUploaderProps) => 
                   setError(null);
                 }}
               >
-                {t('virtualRoom.chooseAnother', 'Choose Another')}
+                Choose Another
               </Button>
             </div>
           )}
@@ -162,13 +162,13 @@ export const RoomImageUploader = ({ onImageUpload }: RoomImageUploaderProps) => 
       <div className="bg-blue-50 p-4 rounded-lg">
         <h4 className="font-medium text-blue-900 mb-2 flex items-center">
           <Image className="mr-2 h-4 w-4" />
-          {t('virtualRoom.photoTips', 'Tips for Best Results')}
+          Tips for Best Results
         </h4>
         <ul className="text-sm text-blue-800 space-y-1">
-          <li>• {t('virtualRoom.tip1', 'Take photos in good lighting')}</li>
-          <li>• {t('virtualRoom.tip2', 'Include the entire window area')}</li>
-          <li>• {t('virtualRoom.tip3', 'Keep the camera level and straight')}</li>
-          <li>• {t('virtualRoom.tip4', 'Avoid shadows and reflections')}</li>
+          <li>• Take photos in good lighting</li>
+          <li>• Include the entire window area</li>
+          <li>• Keep the camera level and straight</li>
+          <li>• Avoid shadows and reflections</li>
         </ul>
       </div>
     </div>

@@ -1,0 +1,47 @@
+Smart Appointment Scheduling System (Instruction for Replit)
+
+Objective:
+Implement an intelligent, multilingual appointment booking system that allows customers to book free or premium consultations (measurement, design advice, showroom visit, etc.) directly via the website, fully integrated with AI features and business logic.
+
+⸻
+
+🔧 Functional Requirements:
+	1.	User Flow:
+	•	Users can click a visible “Book an Appointment” button (homepage header, chatbot, or popup).
+	•	A modern, mobile-friendly appointment form opens with the following:
+	•	Full name
+	•	Phone number
+	•	Email address
+	•	Type of appointment (Measurement, Design Advice, Showroom Visit)
+	•	Preferred date and time
+	•	Room type or purpose
+	•	Optional message
+	•	Language preference
+	2.	Smart Logic:
+	•	Show available slots dynamically based on working hours and team availability.
+	•	Do not allow double bookings.
+	•	Optional: Add AI-powered slot suggestions based on user’s location (if shared), preferred days, or urgency level.
+	3.	Language Support:
+	•	All form labels and success messages must support Dutch, French, English, and Turkish, based on the user’s language preference.
+	4.	AI Chatbot Integration:
+	•	Users can type “I want to book an appointment” or similar in any supported language.
+	•	Chatbot should immediately open the booking form OR collect the data directly through conversation.
+	•	After submission, chatbot confirms the appointment and reminds the customer of their time.
+	5.	Email Notifications:
+	•	All appointments must be sent to info@kaniou.be instantly.
+	•	Email subject: “📅 New Appointment Request from [Name]”
+	•	Email body includes all submitted fields.
+	6.	Confirmation System:
+	•	User receives an on-screen and email confirmation in their selected language.
+	•	Optional: Display a countdown or calendar reminder link (e.g., add to Google Calendar or Apple Calendar).
+	7.	Design Requirements:
+	•	Visually clean layout with KANIOU brand styling (light beige/white background, soft gold button).
+	•	Responsive layout for mobile/tablet/desktop.
+	•	Use subtle animations when opening or submitting the form.
+
+⸻
+
+💡 Bonus Suggestions (Optional for Replit to include):
+	•	Add smart appointment reminders via email 24 hours before the scheduled time.
+	•	Add “priority badges” for high-value appointments like design consultations.
+	•	If possible, integrate weather awareness (e.g., avoid outdoor measurement bookings during heavy rain).

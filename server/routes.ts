@@ -104,23 +104,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let aiResponse: any;
       let savedResponse: any;
       
-      // Handle Product Catalog Questions First
-      if (isProductCatalog) {
-        console.log(`📋 PRODUCT CATALOG: Question detected, providing complete product list`);
-        
-        const catalogResponse = generateProductCatalogResponse(message, language);
-        
-        aiResponse = {
-          content: catalogResponse,
-          requiresPricing: false,
-          metadata: {
-            type: 'product_catalog',
-            comprehensive: true
-          }
-        };
-      }
-      // Handle Style Consultation Flow
-      else if (isStyleRequest) {
+      // Handle Style Consultation Flow FIRST (Highest Priority)
+      if (isStyleRequest) {
         console.log(`🎨 STYLE CONSULTATION: Starting consultation flow`);
         
         // Check if there's an existing consultation session
@@ -248,7 +233,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
           metadata: aiResponse.metadata
         });
         
-      } else if (priceDetection.isPriceRequest) {
+      } 
+      // Handle Product Catalog Questions (Second Priority)
+      else if (isProductCatalog) {
+        console.log(`📋 PRODUCT CATALOG: Question detected, providing complete product list`);
+        
+        const catalogResponse = generateProductCatalogResponse(message, language);
+        
+        aiResponse = {
+          content: catalogResponse,
+          requiresPricing: false,
+          metadata: {
+            type: 'product_catalog',
+            comprehensive: true
+          }
+        };
+
+        savedResponse = await storage.createChatbotMessage({
+          conversationId: conversation.id,
+          role: "assistant",
+          content: aiResponse.content,
+          metadata: aiResponse.metadata
+        });
+        
+      } 
+      // Handle Price Requests (Third Priority)
+      else if (priceDetection.isPriceRequest) {
         console.log(`💰 PRICE REQUEST: High confidence (${Math.round(priceDetection.confidence * 100)}%) - Products: ${priceDetection.extractedProducts.join(', ') || 'General pricing'}`);
         
         const priceResponse = generateProductPricingResponse(

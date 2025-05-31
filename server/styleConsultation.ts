@@ -578,32 +578,113 @@ export function generateConsultationSummary(
 export function isStyleConsultationRequest(message: string, language: string = 'nl'): boolean {
   const consultationKeywords = {
     nl: [
-      'stijladvies', 'interieuradvies', 'raambekleding kiezen', 'wat past bij',
-      'welke rolgordijn', 'welke gordijn', 'interieur hulp', 'decoratie advies',
-      'raam decoratie', 'stijl consultatie', 'design advies', 'welke past',
-      'help met kiezen', 'advies nodig', 'wat raad je aan', 'stijladvies voor mijn raambekleding'
+      // Direct styling requests
+      'stijladvies', 'interieuradvies', 'decoratie advies', 'design advies',
+      'stijl consultatie', 'interieur hulp', 'raam decoratie',
+      
+      // Choosing/selecting help
+      'raambekleding kiezen', 'help met kiezen', 'welke kiezen',
+      'welke rolgordijn', 'welke gordijn', 'welke zonwering', 'welke jaloezie',
+      'wat past bij', 'welke past', 'wat raad je aan', 'wat adviseer je',
+      
+      // Uncertainty/need guidance
+      'weet niet wat', 'geen idee wat', 'help nodig', 'advies nodig',
+      'wat heb ik nodig', 'wat is het beste', 'wat zou je aanraden',
+      'ik twijfel tussen', 'kan niet kiezen', 'hulp bij keuze',
+      
+      // Room-specific requests  
+      'voor mijn woonkamer', 'voor mijn slaapkamer', 'voor mijn keuken',
+      'woonkamer raambekleding', 'slaapkamer gordijnen', 'kantoor zonwering',
+      
+      // Style-specific requests
+      'moderne stijl', 'klassieke stijl', 'welke stijl', 'passende stijl',
+      'bij mijn interieur', 'bij mijn inrichting', 'matching raambekleding'
     ],
     fr: [
-      'conseil style', 'conseil décoration', 'choisir stores', 'choisir rideaux', 
-      'décoration fenêtre', 'aide choix', 'conseil intérieur', 'que recommandez',
-      'quel style', 'consultation design', 'aide décoration', 'conseils de style pour mes stores'
+      // Direct styling requests
+      'conseil style', 'conseil décoration', 'conseil intérieur', 'aide décoration',
+      'consultation design', 'décoration fenêtre', 'aide intérieur',
+      
+      // Choosing/selecting help
+      'choisir stores', 'choisir rideaux', 'aide choix', 'quel choisir',
+      'que recommandez', 'que conseillez', 'quel style', 'lequel prendre',
+      
+      // Uncertainty/need guidance
+      'ne sais pas quoi', 'pas sûr de', 'besoin aide', 'besoin conseil',
+      'que me faut-il', 'que me conseillez', 'hésité entre',
+      'difficile de choisir', 'aide pour choisir',
+      
+      // Room-specific requests
+      'pour mon salon', 'pour ma chambre', 'pour ma cuisine',
+      'salon stores', 'chambre rideaux', 'bureau protection',
+      
+      // Style-specific requests
+      'style moderne', 'style classique', 'quel style', 'style adapté',
+      'avec mon intérieur', 'assortir avec', 'harmoniser avec'
     ],
     en: [
-      'style advice', 'interior advice', 'choose blinds', 'choose curtains',
-      'window decoration', 'help choosing', 'design consultation', 'what recommend',
-      'style consultation', 'interior help', 'decoration advice', 'style advice for my window treatments'
+      // Direct styling requests
+      'style advice', 'interior advice', 'design consultation', 'decoration advice',
+      'window decoration', 'interior help', 'design help', 'styling help',
+      
+      // Choosing/selecting help
+      'choose blinds', 'choose curtains', 'help choosing', 'which should I choose',
+      'what recommend', 'what suggest', 'which style', 'what would you recommend',
+      
+      // Uncertainty/need guidance
+      "don't know what", 'not sure what', 'need help', 'need advice',
+      'what do I need', 'what would be best', 'torn between',
+      "can't decide", 'help me decide', 'guidance needed',
+      
+      // Room-specific requests
+      'for my living room', 'for my bedroom', 'for my kitchen',
+      'living room blinds', 'bedroom curtains', 'office window',
+      
+      // Style-specific requests
+      'modern style', 'classic style', 'what style', 'suitable style',
+      'match my interior', 'goes with my decor', 'complement my room'
     ],
     tr: [
-      'stil danışmanlığı', 'iç mekan tavsiye', 'perde seçimi', 'stor seçimi',
-      'dekorasyon yardım', 'tasarım danışmanlık', 'ne önerirsin', 'stil yardım',
-      'pencere dekorasyon', 'seçim yardımı', 'perde seçimi için stil tavsiyesi'
+      // Direct styling requests
+      'stil danışmanlığı', 'iç mekan tavsiye', 'dekorasyon yardım', 'tasarım danışmanlık',
+      'stil yardım', 'pencere dekorasyon', 'iç mekan yardım',
+      
+      // Choosing/selecting help
+      'perde seçimi', 'stor seçimi', 'seçim yardımı', 'hangisini seçmeli',
+      'ne önerirsin', 'ne tavsiye edersin', 'hangi stil', 'hangisi uygun',
+      
+      // Uncertainty/need guidance
+      'ne almalı', 'emin değilim', 'yardım lazım', 'tavsiye lazım',
+      'ne yapmalı', 'hangisi en iyi', 'kararsızım', 'seçemiyorum',
+      
+      // Room-specific requests
+      'oturma odası için', 'yatak odası için', 'mutfak için',
+      'salon perdesi', 'yatak odası stor', 'ofis güneşlik',
+      
+      // Style-specific requests
+      'modern stil', 'klasik stil', 'hangi stil', 'uygun stil',
+      'dekorasyonuma uygun', 'evime uygun', 'tarzıma uygun'
     ]
   };
 
   const keywords = consultationKeywords[language as keyof typeof consultationKeywords] || consultationKeywords.nl;
   const lowerMessage = message.toLowerCase();
   
-  return keywords.some(keyword => lowerMessage.includes(keyword));
+  // Check for keyword matches
+  const hasKeywordMatch = keywords.some(keyword => lowerMessage.includes(keyword));
+  
+  // Additional pattern matching for common styling requests
+  const stylePatterns = [
+    /\b(what|welke|que|hangi).*\b(should|zou|devrait|meli).*\b(choose|kiezen|choisir|seçmeli)\b/i,
+    /\b(help|hulp|aide|yardım).*\b(choosing|kiezen|choisir|seçim)\b/i,
+    /\b(don't know|weet niet|ne sais pas|bilmiyorum).*\b(what|wat|quoi|ne)\b/i,
+    /\b(living room|woonkamer|salon|oturma odası).*\b(window|raam|fenêtre|pencere)\b/i,
+    /\b(bedroom|slaapkamer|chambre|yatak odası).*\b(curtain|gordijn|rideau|perde)\b/i
+  ];
+  
+  const hasPatternMatch = stylePatterns.some(pattern => pattern.test(lowerMessage));
+  
+  return hasKeywordMatch || hasPatternMatch;
 }
 
 /**

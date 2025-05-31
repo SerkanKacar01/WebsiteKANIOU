@@ -812,3 +812,115 @@ export const insertWebsiteContentIndexSchema = createInsertSchema(websiteContent
 // Website Content Index type definitions
 export type WebsiteContentIndex = typeof websiteContentIndex.$inferSelect;
 export type InsertWebsiteContentIndex = z.infer<typeof insertWebsiteContentIndexSchema>;
+
+// Inventory Alert Subscriptions
+export const inventoryAlerts = pgTable("inventory_alerts", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull(),
+  productName: text("product_name").notNull(),
+  productVariant: text("product_variant"), // Optional variant/size/color
+  language: text("language").default("nl"),
+  isActive: boolean("is_active").default(true),
+  notificationSent: boolean("notification_sent").default(false),
+  conversationId: integer("conversation_id").references(() => chatbotConversations.id, { onDelete: 'set null' }),
+  userAgent: text("user_agent"), // For analytics
+  createdAt: timestamp("created_at").defaultNow(),
+  notifiedAt: timestamp("notified_at"),
+}, (table) => ({
+  // Prevent duplicate subscriptions for same email/product
+  uniqueSubscription: unique().on(table.email, table.productName, table.productVariant),
+}));
+
+export const insertInventoryAlertSchema = createInsertSchema(inventoryAlerts).omit({
+  id: true,
+  createdAt: true,
+  notifiedAt: true,
+}).extend({
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  productName: z.string()
+    .min(1, "Product name is required")
+    .max(200, "Product name must be less than 200 characters"),
+  productVariant: z.string()
+    .max(100, "Product variant must be less than 100 characters")
+    .optional(),
+  language: z.enum(["nl", "fr", "en", "tr"]).default("nl"),
+});
+
+// Product Stock Status for tracking availability
+export const productStock = pgTable("product_stock", {
+  id: serial("id").primaryKey(),
+  productName: text("product_name").notNull(),
+  productVariant: text("product_variant"), // Optional variant
+  stockLevel: integer("stock_level").notNull().default(0),
+  lowStockThreshold: integer("low_stock_threshold").default(5),
+  isAvailable: boolean("is_available").default(true),
+  lastUpdated: timestamp("last_updated").defaultNow(),
+  updatedBy: text("updated_by").default("admin"), // Who updated the stock
+}, (table) => ({
+  // Ensure unique product/variant combinations
+  uniqueProduct: unique().on(table.productName, table.productVariant),
+}));
+
+export const insertProductStockSchema = createInsertSchema(productStock).omit({
+  id: true,
+  lastUpdated: true,
+}).extend({
+  productName: z.string()
+    .min(1, "Product name is required")
+    .max(200, "Product name must be less than 200 characters"),
+  productVariant: z.string()
+    .max(100, "Product variant must be less than 100 characters")
+    .optional(),
+  stockLevel: z.number()
+    .min(0, "Stock level cannot be negative"),
+  lowStockThreshold: z.number()
+    .min(0, "Low stock threshold cannot be negative")
+    .default(5),
+});
+
+// Inventory Alert Log for tracking notifications sent
+export const inventoryAlertLog = pgTable("inventory_alert_log", {
+  id: serial("id").primaryKey(),
+  alertId: integer("alert_id").notNull().references(() => inventoryAlerts.id, { onDelete: 'cascade' }),
+  notificationType: text("notification_type").notNull(), // 'back_in_stock', 'low_stock', 'admin_notification'
+  recipientEmail: text("recipient_email").notNull(),
+  emailSubject: text("email_subject").notNull(),
+  emailContent: text("email_content").notNull(),
+  language: text("language").default("nl"),
+  sentSuccessfully: boolean("sent_successfully").default(false),
+  errorMessage: text("error_message"),
+  sentAt: timestamp("sent_at").defaultNow(),
+});
+
+export const insertInventoryAlertLogSchema = createInsertSchema(inventoryAlertLog).omit({
+  id: true,
+  sentAt: true,
+});
+
+// Relations for inventory alerts
+export const inventoryAlertsRelations = relations(inventoryAlerts, ({ one, many }) => ({
+  conversation: one(chatbotConversations, {
+    fields: [inventoryAlerts.conversationId],
+    references: [chatbotConversations.id],
+  }),
+  logs: many(inventoryAlertLog),
+}));
+
+export const inventoryAlertLogRelations = relations(inventoryAlertLog, ({ one }) => ({
+  alert: one(inventoryAlerts, {
+    fields: [inventoryAlertLog.alertId],
+    references: [inventoryAlerts.id],
+  }),
+}));
+
+// Type definitions for inventory alerts
+export type InventoryAlert = typeof inventoryAlerts.$inferSelect;
+export type InsertInventoryAlert = z.infer<typeof insertInventoryAlertSchema>;
+
+export type ProductStock = typeof productStock.$inferSelect;
+export type InsertProductStock = z.infer<typeof insertProductStockSchema>;
+
+export type InventoryAlertLog = typeof inventoryAlertLog.$inferSelect;
+export type InsertInventoryAlertLog = z.infer<typeof insertInventoryAlertLogSchema>;

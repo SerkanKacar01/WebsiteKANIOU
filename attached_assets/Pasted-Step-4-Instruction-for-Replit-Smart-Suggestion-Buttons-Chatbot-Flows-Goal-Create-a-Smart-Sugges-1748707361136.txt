@@ -1,0 +1,59 @@
+Step 4 Instruction for Replit: Smart Suggestion Buttons + Chatbot Flows
+
+Goal:
+Create a Smart Suggestion System within the existing chatbot on the KANIOU website. The goal is to guide users quickly to the most popular or helpful actions using clickable buttons and follow-up flows.
+
+⸻
+
+🧠 Replit Instruction Text (for developers)
+
+Build an intelligent suggestion button system inside the existing KANIOU chatbot interface with the following functionality:
+
+⸻
+
+1. Trigger Logic
+	•	Display smart suggestion buttons when:
+	•	A user opens the chatbot for the first time.
+	•	A returning user has not interacted for 24 hours.
+	•	A conversation ends or becomes idle.
+	•	Hide buttons immediately if:
+	•	The user starts typing.
+	•	The user clicks any of the buttons.
+
+⸻
+
+2. Languages
+	•	Must support full multilingual text (Dutch, French, English, Turkish).
+	•	Suggestions must be translated accordingly based on selected language.
+	•	All follow-up chatbot conversations should stay in the selected language.
+
+⸻
+
+3. Button Layout & Style
+	•	Mobile-friendly layout with spacing between buttons.
+	•	Buttons must follow KANIOU’s design: soft gold/light beige tones with clean, readable text.
+	•	Use rounded corners, soft shadow, and hover/click animation (mobile tap-friendly).
+
+⸻
+
+4. Core Suggestion Buttons (must be implemented)
+
+Each button must trigger a unique flow within the chatbot:
+	1.	🪟 Free Measurement Appointment
+→ Leads user to chatbot form for scheduling a home visit (name, address, contact, room type).
+	2.	🎨 Get Style Advice
+→ Triggers the full AI interior style consultation flow (already implemented in Step 3).
+	3.	🧾 Request a Quote
+→ Opens chatbot quote request wizard (product, dimensions, budget, contact info). Must send confirmation to info@kaniou.be.
+	4.	🖼️ View Product Gallery
+→ Opens a carousel or image preview of products (by category) inside the chatbot or as an overlay.
+	5.	📦 Product Information
+→ Asks user to select a product type, then shows full details from the knowledge base.
+	6.	❓ Need Help Choosing?
+→ Starts an interactive Q&A that narrows down suitable options based on room, style, and function.
+
+⸻
+
+5. Tracking & Engagement
+	•	Save which buttons are clicked per session in the chatbot history.
+	•	If none are clicked after 30 seconds, show a reminder prompt like “Need help getting started?”

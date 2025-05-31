@@ -1,0 +1,55 @@
+Instruction for Replit: General Implementation Check – KANIOU Smart Features
+
+Dear Replit,
+
+Please review, debug, and confirm the complete implementation of the 6 Smart Business Features discussed and prepared for the KANIOU website. Each of these steps is essential for delivering a high-end, AI-powered customer experience.
+
+🧠 General Request:
+
+Kindly verify which of the following features are currently live and functional, which ones are partially implemented, and which still need to be developed and activated. Please also confirm any frontend/backend issues and finalize anything that is incomplete.
+
+⸻
+
+📦 6 Smart Features – Review and Status Confirmation
+
+1. Dynamic Pricing Intelligence
+	•	Smart product pricing system using KANIOU’s real product data (roller blinds, pleated shades, curtains, etc.)
+	•	Should include responsive pricing ranges based on product size and variant
+	•	Detect if seasonal/competitor-based pricing adjustments are planned or active
+✅ Check: Is the dynamic calculator working across all products?
+
+2. Virtual Room Preview (AR/3D)
+	•	Feature that lets users upload a photo of their room and preview window treatments in real-time
+	•	Includes material, color and product type switching
+✅ Check: Is this available on any product page? If not, please implement or share status.
+
+3. Smart Inventory Alerts
+	•	Notifications for products back in stock or low in stock
+	•	Option to receive alerts or messages when favorite products are limited
+✅ Check: Are these alerts live and functional? If not, please implement.
+
+4. Intelligent Lead Scoring System
+	•	Internal system that analyzes user behavior and interest level
+	•	Should help identify serious buyers (quote requests, room planner users, return visitors)
+✅ Check: Is this working in the background? Please confirm if integrated with the dashboard or CRM.
+
+5. Smart Scheduling System
+	•	Automatic booking tool for measurement appointments or installation visits
+	•	Should factor in location, technician availability, and project complexity
+✅ Check: Is this feature visible on the site? If not, please implement a smart scheduler.
+
+6. Revenue-Generating Features
+	•	Optional: Paid design consultations, home styling services, or subscriptions for premium services
+	•	Smart upselling and offer generation after chatbot conversations
+✅ Check: Are there any such features active or partially live?
+
+⸻
+
+📧 Admin Notifications & Debug
+	•	Please ensure all smart features, buttons, and forms send admin notifications to the correct address: info@kaniou.be
+	•	Fix any forms that are stuck on loading or unresponsive after submission
+	•	If bugs are detected, please debug and re-deploy.
+
+⸻
+
+Please confirm the current status of each feature and finalize or correct what is not yet fully working. This is a priority task to ensure the website functions at full smart capacity.

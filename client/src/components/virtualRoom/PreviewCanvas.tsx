@@ -89,10 +89,8 @@ export const PreviewCanvas = forwardRef<HTMLCanvasElement, PreviewCanvasProps>((
     const opacity = (productSettings.opacity || 80) / 100;
     ctx.globalAlpha = opacity;
 
-    // Simulate window detection by drawing overlay in typical window areas
-    const windowAreas = [
-      { x: width * 0.2, y: height * 0.1, w: width * 0.6, h: height * 0.6 }
-    ];
+    // Enhanced window detection - multiple potential window areas
+    const windowAreas = detectWindowAreas(width, height);
 
     windowAreas.forEach(area => {
       ctx.fillStyle = getProductColor(productSettings.color || 'Wit');
@@ -108,12 +106,36 @@ export const PreviewCanvas = forwardRef<HTMLCanvasElement, PreviewCanvasProps>((
         case 'houten-jaloezieen':
           drawVenetianBlinds(ctx, area);
           break;
+        case 'plisse':
+          drawPlisseBlinds(ctx, area);
+          break;
+        case 'duo-rolgordijnen':
+          drawDuoRollerBlinds(ctx, area);
+          break;
         default:
           drawGenericProduct(ctx, area);
       }
     });
 
     ctx.globalAlpha = 1;
+  };
+
+  const detectWindowAreas = (width: number, height: number) => {
+    // Enhanced AI-like window detection with multiple common window positions
+    const areas = [
+      // Main window (center)
+      { x: width * 0.25, y: height * 0.15, w: width * 0.5, h: height * 0.6 }
+    ];
+
+    // Add side windows if room is wide enough
+    if (width > 800) {
+      areas.push(
+        { x: width * 0.05, y: height * 0.2, w: width * 0.15, h: height * 0.5 },
+        { x: width * 0.8, y: height * 0.2, w: width * 0.15, h: height * 0.5 }
+      );
+    }
+
+    return areas;
   };
 
   const getProductColor = (colorName: string): string => {

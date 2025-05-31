@@ -168,6 +168,18 @@ export function ChatbotWidget() {
           quickReplyType: null
         }));
       }
+
+      // Check if style consultation was completed
+      if (data.metadata?.consultationCompleted) {
+        // Show exit prompt after style consultation completion with a delay
+        setTimeout(() => {
+          setChatState(prev => ({
+            ...prev,
+            showExitPrompt: true,
+            lastActivityTime: Date.now()
+          }));
+        }, 3000); // 3 second delay to let user read the consultation summary
+      }
     }
   });
 
@@ -226,6 +238,15 @@ export function ChatbotWidget() {
         ...(oldMessages || []),
         confirmationMessage
       ]);
+
+      // Show exit prompt after form completion with a short delay
+      setTimeout(() => {
+        setChatState(prev => ({
+          ...prev,
+          showExitPrompt: true,
+          lastActivityTime: Date.now()
+        }));
+      }, 2000); // 2 second delay to let user read confirmation
     },
     onError: (error) => {
       console.error('❌ Quote request failed:', error);
@@ -344,10 +365,26 @@ export function ChatbotWidget() {
         
         // Check if last message indicates conversation completion
         const completionIndicators = {
-          nl: ['kan ik u ergens anders mee helpen', 'heeft u verder nog vragen', 'nog iets anders', 'anders helpen'],
-          fr: ['puis-je vous aider avec autre chose', 'avez-vous d\'autres questions', 'autre chose'],
-          en: ['can i help you with anything else', 'do you have any other questions', 'anything else'],
-          tr: ['başka bir konuda yardımcı olabilir miyim', 'başka sorunuz var mı']
+          nl: [
+            'kan ik u ergens anders mee helpen', 'heeft u verder nog vragen', 'nog iets anders', 'anders helpen',
+            'succesvol verzonden', 'offerte aanvraag', 'binnen 24 uur', 'bedankt voor uw bezoek',
+            'consultatie voltooid', 'aanbevelingen voor u', 'persoonlijke offerte'
+          ],
+          fr: [
+            'puis-je vous aider avec autre chose', 'avez-vous d\'autres questions', 'autre chose',
+            'envoyé avec succès', 'demande de devis', 'dans les 24 heures', 'merci pour votre visite',
+            'consultation terminée', 'recommandations pour vous'
+          ],
+          en: [
+            'can i help you with anything else', 'do you have any other questions', 'anything else',
+            'successfully sent', 'quote request', 'within 24 hours', 'thank you for visiting',
+            'consultation completed', 'recommendations for you', 'personalized offer'
+          ],
+          tr: [
+            'başka bir konuda yardımcı olabilir miyim', 'başka sorunuz var mı',
+            'başarıyla gönderildi', 'teklif talebi', '24 saat içinde', 'ziyaret ettiğiniz için teşekkürler',
+            'danışmanlık tamamlandı', 'size öneriler'
+          ]
         };
         
         const indicators = completionIndicators[language as keyof typeof completionIndicators] || completionIndicators.nl;

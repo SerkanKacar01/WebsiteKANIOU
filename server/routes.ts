@@ -771,6 +771,173 @@ ${chatSummary}
     }
   });
 
+  // Appointment Booking Routes
+  app.post("/api/appointments", formRateLimiter, async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertAppointmentBookingSchema.parse(req.body);
+      
+      // Check for available time slots
+      const availableSlots = await storage.getAvailableTimeSlots(validatedData.preferredDate);
+      if (!availableSlots.includes(validatedData.preferredTime)) {
+        return res.status(400).json({
+          success: false,
+          message: "Selected time slot is not available"
+        });
+      }
+
+      // Create appointment booking
+      const appointment = await storage.createAppointmentBooking(validatedData);
+
+      // Send notification emails
+      const adminEmailSent = await sendAppointmentNotificationToAdmin(appointment);
+      const customerEmailSent = await sendAppointmentConfirmationToCustomer(appointment);
+
+      // Update booking with email status
+      await storage.updateAppointmentBooking(appointment.id, {
+        confirmationEmailSent: customerEmailSent
+      });
+
+      console.log(`📅 New appointment booking created: ${appointment.id} - ${appointment.appointmentType} on ${appointment.preferredDate} at ${appointment.preferredTime}`);
+
+      res.json({
+        success: true,
+        appointmentId: appointment.id,
+        message: "Appointment booking created successfully",
+        emailsSent: {
+          admin: adminEmailSent,
+          customer: customerEmailSent
+        }
+      });
+
+    } catch (error) {
+      console.error("Error creating appointment booking:", error);
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({
+          success: false,
+          message: validationError.message
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: "Failed to create appointment booking"
+      });
+    }
+  });
+
+  app.get("/api/appointments/available-slots/:date", async (req: Request, res: Response) => {
+    try {
+      const { date } = req.params;
+      
+      // Validate date format
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(date)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid date format. Use YYYY-MM-DD"
+        });
+      }
+
+      // Check if date is in the past
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate < today) {
+        return res.status(400).json({
+          success: false,
+          message: "Cannot book appointments for past dates"
+        });
+      }
+
+      // Check if date is a weekend (assuming business operates Mon-Sat)
+      const dayOfWeek = selectedDate.getDay();
+      if (dayOfWeek === 0) { // Sunday
+        return res.json({
+          success: true,
+          availableSlots: [],
+          message: "We are closed on Sundays"
+        });
+      }
+
+      const availableSlots = await storage.getAvailableTimeSlots(date);
+      
+      res.json({
+        success: true,
+        availableSlots,
+        date
+      });
+
+    } catch (error) {
+      console.error("Error fetching available slots:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch available slots"
+      });
+    }
+  });
+
+  app.get("/api/appointments", async (req: Request, res: Response) => {
+    try {
+      const appointments = await storage.getAppointmentBookings();
+      res.json({
+        success: true,
+        appointments
+      });
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch appointments"
+      });
+    }
+  });
+
+  app.get("/api/appointments/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const appointment = await storage.getAppointmentBookingById(id);
+      
+      if (!appointment) {
+        return res.status(404).json({
+          success: false,
+          message: "Appointment not found"
+        });
+      }
+
+      res.json({
+        success: true,
+        appointment
+      });
+    } catch (error) {
+      console.error("Error fetching appointment:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch appointment"
+      });
+    }
+  });
+
+  app.patch("/api/appointments/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      
+      const appointment = await storage.updateAppointmentBooking(id, updates);
+      
+      res.json({
+        success: true,
+        appointment
+      });
+    } catch (error) {
+      console.error("Error updating appointment:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update appointment"
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -30,14 +30,40 @@ export const languageOptions: LanguageOption[] = [
 
 const STORAGE_KEY = "kaniou-chatbot-language";
 
+function detectBrowserLanguage(): SupportedLanguage {
+  const browserLang = navigator.language.toLowerCase();
+  
+  // Check for exact matches first
+  if (browserLang.startsWith('nl')) return 'nl';
+  if (browserLang.startsWith('fr')) return 'fr';
+  if (browserLang.startsWith('en')) return 'en';
+  if (browserLang.startsWith('tr')) return 'tr';
+  
+  // Check navigator.languages array for fallback
+  for (const lang of navigator.languages) {
+    const langCode = lang.toLowerCase();
+    if (langCode.startsWith('fr')) return 'fr';
+    if (langCode.startsWith('en')) return 'en';
+    if (langCode.startsWith('tr')) return 'tr';
+    if (langCode.startsWith('nl')) return 'nl';
+  }
+  
+  // Default to Dutch if no supported language found
+  return 'nl';
+}
+
 export function useLanguage() {
   const [language, setLanguage] = useState<SupportedLanguage>(() => {
-    // Get language from localStorage or default to Dutch
+    // Get language from localStorage first
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored && Object.keys(translations).includes(stored)) {
       return stored as SupportedLanguage;
     }
-    return "nl";
+    
+    // Fall back to browser language detection
+    const browserLanguage = detectBrowserLanguage();
+    localStorage.setItem(STORAGE_KEY, browserLanguage);
+    return browserLanguage;
   });
 
   const changeLanguage = (newLanguage: SupportedLanguage) => {

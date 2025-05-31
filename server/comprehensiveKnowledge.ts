@@ -193,6 +193,14 @@ function buildCompletePricingKnowledge(language: string): string {
       screen: "Screen Zonwering: €140-€380. 150x200cm vanaf €140. Verschillende openheidspercentages (1%/3%/5%/10%) bepalen prijs.",
       dakraam: "Dakraam Zonwering: €180-€450. Standaard Velux 78x118cm vanaf €180. Prijs per raamtype en montagewijze."
     },
+    fr: {
+      rolgordijn: "Stores Enrouleurs: €85-€250. Standard occultant 100x200cm à partir de €85. Prix selon dimensions, choix tissu (basic/premium/designer), commande (cordon/ressort/moteur).",
+      jaloezie: "Stores Vénitiens Bois: €120-€350. 100x150cm avec lames 50mm à partir de €120. Bois premium (bambou/chêne) plus cher. Prix par épaisseur lame et type bois.",
+      overgordijn: "Rideaux: €150-€450. Sur mesure 200x250cm à partir de €150. Tissus luxe, techniques plis et motorisation augmentent prix. Rails inclus.",
+      plisse: "Stores Plissés: €95-€280. 80x120cm à partir de €95. Duette (isolant) et top-down/bottom-up plus cher. Idéal formes fenêtres spéciales.",
+      screen: "Stores Screen: €140-€380. 150x200cm à partir de €140. Différents pourcentages ouverture (1%/3%/5%/10%) déterminent prix.",
+      dakraam: "Protection Velux: €180-€450. Standard Velux 78x118cm à partir de €180. Prix par type fenêtre et méthode installation."
+    },
     en: {
       rolgordijn: "Roller Blinds: €85-€250. Standard blackout 100x200cm from €85. Price depends on dimensions, fabric choice (basic/premium/designer), operation (cord/spring/motor).",
       jaloezie: "Wooden Venetian Blinds: €120-€350. 100x150cm with 50mm slats from €120. Premium woods (bamboo/oak) cost more. Price per slat thickness and wood type.",
@@ -200,6 +208,14 @@ function buildCompletePricingKnowledge(language: string): string {
       plisse: "Pleated Blinds: €95-€280. 80x120cm from €95. Duette (insulating) and top-down/bottom-up more expensive. Ideal for special window shapes.",
       screen: "Screen Shades: €140-€380. 150x200cm from €140. Different openness percentages (1%/3%/5%/10%) determine price.",
       dakraam: "Skylight Shades: €180-€450. Standard Velux 78x118cm from €180. Price per window type and installation method."
+    },
+    tr: {
+      rolgordijn: "Stor Perdeler: €85-€250. Standart karartma 100x200cm €85'den. Fiyat boyut, kumaş seçimi (temel/premium/tasarımcı), işletim (kordon/yay/motor) bağlıdır.",
+      jaloezie: "Ahşap Jaluzi: €120-€350. 50mm kanatlı 100x150cm €120'den. Premium ahşap (bambu/meşe) daha pahalı. Kanat kalınlığı ve ahşap türüne göre fiyat.",
+      overgordijn: "Perdeler: €150-€450. Özel 200x250cm €150'den. Lüks kumaşlar, kıvrım teknikleri ve motorlu sistem fiyatı artırır. Ray dahil.",
+      plisse: "Plise Perdeler: €95-€280. 80x120cm €95'den. Duette (yalıtım) ve yukarı-aşağı daha pahalı. Özel pencere şekilleri için ideal.",
+      screen: "Screen Güneşlik: €140-€380. 150x200cm €140'dan. Farklı açıklık yüzdeleri (1%/3%/5%/10%) fiyatı belirler.",
+      dakraam: "Çatı Penceresi Güneşlik: €180-€450. Standart Velux 78x118cm €180'dan. Pencere tipi ve kurulum yöntemine göre fiyat."
     }
   };
 
@@ -222,6 +238,16 @@ function buildServiceKnowledge(language: string): string {
       "SMART HOME: Integratie met domotica systemen mogelijk",
       "SNELLE LEVERING: Korte levertijden voor standaard producten"
     ],
+    fr: [
+      "MESURE GRATUITE À DOMICILE: Prise de mesures professionnelle de toutes les dimensions",
+      "SERVICE D'INSTALLATION: Installation experte par des installateurs certifiés",
+      "PRODUCTION SUR MESURE: Tous les produits faits sur mesure dans notre propre atelier",
+      "CONSEILS PERSONNALISÉS: Consultation individuelle couleur et style",
+      "GARANTIE: Garantie complète sur tous les produits et l'installation",
+      "ENTRETIEN: Conseils et service pour une utilisation à long terme",
+      "MAISON INTELLIGENTE: Intégration avec systèmes domotiques possible",
+      "LIVRAISON RAPIDE: Délais de livraison courts pour produits standard"
+    ],
     en: [
       "FREE HOME MEASUREMENT: Professional measurement of all dimensions",
       "INSTALLATION SERVICE: Expert installation by certified fitters",
@@ -231,6 +257,16 @@ function buildServiceKnowledge(language: string): string {
       "MAINTENANCE: Tips and service for long-term use",
       "SMART HOME: Integration with home automation systems possible",
       "FAST DELIVERY: Short delivery times for standard products"
+    ],
+    tr: [
+      "ÜCRETSİZ EV ÖLÇÜMÜ: Tüm boyutların profesyonel ölçümü",
+      "KURULUM HİZMETİ: Sertifikalı teknisyenler tarafından uzman kurulum",
+      "ÖZEL ÜRETİM: Tüm ürünler kendi atölyemizde özel yapım",
+      "KİŞİSEL TAVSİYE: Bireysel renk ve stil danışmanlığı",
+      "GARANTİ: Tüm ürünler ve kurulum için kapsamlı garanti",
+      "BAKIM: Uzun süreli kullanım için ipuçları ve hizmet",
+      "AKILLI EV: Ev otomasyonu sistemleri ile entegrasyon mümkün",
+      "HIZLI TESLİMAT: Standart ürünler için kısa teslimat süreleri"
     ]
   };
 
@@ -252,6 +288,15 @@ function buildCompanyKnowledge(language: string): string {
       "Openingstijden: Maandag-Zaterdag 10:00-18:00",
       "Contact: Gratis offerte en adviesgesprek mogelijk"
     ],
+    fr: [
+      "KANIOU - Spécialiste premium en habillage de fenêtres",
+      "Expérience: Années d'expertise en stores sur mesure",
+      "Qualité: Matériaux de haute qualité et savoir-faire expert",
+      "Service: Approche personnelle et excellent suivi",
+      "Couverture: Actif dans toute la Belgique",
+      "Heures d'ouverture: Lundi-Samedi 10h00-18h00",
+      "Contact: Devis gratuit et consultation disponibles"
+    ],
     en: [
       "KANIOU - Premium window treatment specialist", 
       "Experience: Years of expertise in custom window treatments",
@@ -260,6 +305,15 @@ function buildCompanyKnowledge(language: string): string {
       "Coverage: Active throughout Belgium",
       "Opening hours: Monday-Saturday 10:00-18:00",
       "Contact: Free quote and consultation available"
+    ],
+    tr: [
+      "KANIOU - Premium pencere kaplaması uzmanı",
+      "Deneyim: Özel pencere kaplamalarında yıllarca uzmanlık",
+      "Kalite: Yüksek kaliteli malzemeler ve uzman işçilik",
+      "Hizmet: Kişisel yaklaşım ve mükemmel satış sonrası",
+      "Kapsama: Belçika genelinde aktif",
+      "Açılış saatleri: Pazartesi-Cumartesi 10:00-18:00",
+      "İletişim: Ücretsiz teklif ve danışmanlık mevcut"
     ]
   };
 

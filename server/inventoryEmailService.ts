@@ -1,248 +1,210 @@
-/**
- * Inventory Email Service for KANIOU
- * Handles all inventory alert email notifications
- */
-
 import { sendEmail } from "./emailService";
 
-interface InventoryEmailData {
-  type: 'back_in_stock' | 'admin_notification';
+interface InventoryAlert {
+  id: number;
   email: string;
-  productName: string;
-  productVariant?: string | null;
-  customerEmail?: string;
-  language: string;
+  productType: string;
+  alertType: 'out_of_stock' | 'back_in_stock' | 'low_stock';
+  isActive: boolean;
+  createdAt: string;
 }
 
-/**
- * Send inventory alert email notification
- */
-export async function sendInventoryAlertEmail(data: InventoryEmailData): Promise<boolean> {
+interface ProductStock {
+  productType: string;
+  currentStock: number;
+  status: 'in_stock' | 'low_stock' | 'out_of_stock';
+}
+
+export async function sendInventoryAlertToUser(alert: InventoryAlert, stock: ProductStock): Promise<boolean> {
+  const subject = getAlertSubject(alert.alertType, alert.productType);
+  const content = getAlertContent(alert, stock);
+
   try {
-    if (data.type === 'back_in_stock') {
-      return await sendBackInStockNotification(data);
-    } else if (data.type === 'admin_notification') {
-      return await sendAdminInventoryNotification(data);
-    }
-    return false;
+    const success = await sendEmail({
+      to: alert.email,
+      from: 'info@kaniou.be',
+      subject,
+      html: content,
+      text: stripHtml(content)
+    });
+
+    console.log(`📧 Inventory alert sent to ${alert.email} for ${alert.productType} (${alert.alertType}): ${success ? 'Success' : 'Failed'}`);
+    return success;
   } catch (error) {
     console.error('Error sending inventory alert email:', error);
     return false;
   }
 }
 
-/**
- * Send back-in-stock notification to customer
- */
-async function sendBackInStockNotification(data: InventoryEmailData): Promise<boolean> {
-  const productDisplay = data.productVariant 
-    ? `${data.productName} (${data.productVariant})`
-    : data.productName;
-
-  const subjects = {
-    nl: `🎉 Goed nieuws! ${productDisplay} is weer beschikbaar bij KANIOU`,
-    fr: `🎉 Bonne nouvelle ! ${productDisplay} est de nouveau disponible chez KANIOU`,
-    en: `🎉 Great news! ${productDisplay} is back in stock at KANIOU`,
-    tr: `🎉 Müjde! ${productDisplay} KANIOU'da tekrar stokta`
-  };
-
-  const htmlContent = {
-    nl: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 24px;">🎉 Goed nieuws!</h1>
-        </div>
-        
-        <div style="padding: 30px; background-color: #f8f9fa;">
-          <h2 style="color: #333; margin-bottom: 20px;">Je gewenste product is weer beschikbaar!</h2>
-          
-          <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-            <h3 style="color: #667eea; margin: 0 0 10px 0;">${productDisplay}</h3>
-            <p style="color: #666; margin: 0;">Dit product is nu weer op voorraad en beschikbaar voor bestelling.</p>
-          </div>
-          
-          <p style="color: #333; line-height: 1.6;">
-            Geweldig nieuws! Het product waar je naar op zoek was, is nu weer beschikbaar. 
-            Als een van onze gewaardeerde klanten wilde we je als eerste laten weten.
-          </p>
-          
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="https://kaniou.be" style="background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">
-              Bekijk Product
-            </a>
-          </div>
-          
-          <p style="color: #666; font-size: 14px; line-height: 1.6;">
-            Heeft u vragen of wilt u meer informatie? Aarzel niet om contact met ons op te nemen.
-          </p>
-        </div>
-        
-        <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 14px;">
-          <p style="margin: 0;">KANIOU - Uw specialist in raamdecoratie</p>
-          <p style="margin: 5px 0 0 0;">info@kaniou.be | www.kaniou.be</p>
-        </div>
-      </div>
-    `,
-    fr: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 24px;">🎉 Bonne nouvelle !</h1>
-        </div>
-        
-        <div style="padding: 30px; background-color: #f8f9fa;">
-          <h2 style="color: #333; margin-bottom: 20px;">Votre produit souhaité est de nouveau disponible !</h2>
-          
-          <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-            <h3 style="color: #667eea; margin: 0 0 10px 0;">${productDisplay}</h3>
-            <p style="color: #666; margin: 0;">Ce produit est maintenant de nouveau en stock et disponible à la commande.</p>
-          </div>
-          
-          <p style="color: #333; line-height: 1.6;">
-            Excellente nouvelle ! Le produit que vous recherchiez est maintenant de nouveau disponible. 
-            En tant que client privilégié, nous voulions vous en informer en premier.
-          </p>
-          
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="https://kaniou.be" style="background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">
-              Voir le Produit
-            </a>
-          </div>
-          
-          <p style="color: #666; font-size: 14px; line-height: 1.6;">
-            Vous avez des questions ou souhaitez plus d'informations ? N'hésitez pas à nous contacter.
-          </p>
-        </div>
-        
-        <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 14px;">
-          <p style="margin: 0;">KANIOU - Votre spécialiste en décoration de fenêtres</p>
-          <p style="margin: 5px 0 0 0;">info@kaniou.be | www.kaniou.be</p>
-        </div>
-      </div>
-    `,
-    en: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 24px;">🎉 Great news!</h1>
-        </div>
-        
-        <div style="padding: 30px; background-color: #f8f9fa;">
-          <h2 style="color: #333; margin-bottom: 20px;">Your desired product is back in stock!</h2>
-          
-          <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-            <h3 style="color: #667eea; margin: 0 0 10px 0;">${productDisplay}</h3>
-            <p style="color: #666; margin: 0;">This product is now back in stock and available for ordering.</p>
-          </div>
-          
-          <p style="color: #333; line-height: 1.6;">
-            Great news! The product you were looking for is now available again. 
-            As one of our valued customers, we wanted to let you know first.
-          </p>
-          
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="https://kaniou.be" style="background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">
-              View Product
-            </a>
-          </div>
-          
-          <p style="color: #666; font-size: 14px; line-height: 1.6;">
-            Have questions or want more information? Feel free to contact us.
-          </p>
-        </div>
-        
-        <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 14px;">
-          <p style="margin: 0;">KANIOU - Your window decoration specialist</p>
-          <p style="margin: 5px 0 0 0;">info@kaniou.be | www.kaniou.be</p>
-        </div>
-      </div>
-    `,
-    tr: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 24px;">🎉 Müjde!</h1>
-        </div>
-        
-        <div style="padding: 30px; background-color: #f8f9fa;">
-          <h2 style="color: #333; margin-bottom: 20px;">İstediğiniz ürün tekrar stokta!</h2>
-          
-          <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-            <h3 style="color: #667eea; margin: 0 0 10px 0;">${productDisplay}</h3>
-            <p style="color: #666; margin: 0;">Bu ürün şimdi tekrar stokta ve sipariş verebilirsiniz.</p>
-          </div>
-          
-          <p style="color: #333; line-height: 1.6;">
-            Harika haber! Aradığınız ürün şimdi tekrar mevcut. 
-            Değerli müşterilerimizden biri olarak size ilk haber vermek istedik.
-          </p>
-          
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="https://kaniou.be" style="background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">
-              Ürünü Görüntüle
-            </a>
-          </div>
-          
-          <p style="color: #666; font-size: 14px; line-height: 1.6;">
-            Sorularınız mı var veya daha fazla bilgi mi istiyorsunuz? Bizimle iletişime geçmekten çekinmeyin.
-          </p>
-        </div>
-        
-        <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 14px;">
-          <p style="margin: 0;">KANIOU - Pencere dekorasyon uzmanınız</p>
-          <p style="margin: 5px 0 0 0;">info@kaniou.be | www.kaniou.be</p>
-        </div>
-      </div>
-    `
-  };
-
-  const subject = subjects[data.language as keyof typeof subjects] || subjects.nl;
-  const html = htmlContent[data.language as keyof typeof htmlContent] || htmlContent.nl;
-
-  return await sendEmail(data.email, subject, html);
-}
-
-/**
- * Send admin notification about new inventory alert subscription
- */
-async function sendAdminInventoryNotification(data: InventoryEmailData): Promise<boolean> {
-  const productDisplay = data.productVariant 
-    ? `${data.productName} (${data.productVariant})`
-    : data.productName;
-
-  const subject = `📦 Nieuwe voorraadmelding aanvraag - ${productDisplay}`;
-
-  const html = `
+export async function sendInventoryAlertToAdmin(alert: InventoryAlert): Promise<boolean> {
+  const subject = `New Inventory Alert Subscription - ${alert.productType}`;
+  const content = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
-        <h1 style="color: white; margin: 0; font-size: 24px;">📦 Nieuwe Voorraadmelding</h1>
+      <h2>New Inventory Alert Subscription</h2>
+      
+      <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+        <h3>Alert Details</h3>
+        <p><strong>Customer Email:</strong> ${alert.email}</p>
+        <p><strong>Product Type:</strong> ${alert.productType}</p>
+        <p><strong>Alert Type:</strong> ${alert.alertType}</p>
+        <p><strong>Created:</strong> ${new Date(alert.createdAt).toLocaleString('nl-NL')}</p>
       </div>
       
-      <div style="padding: 30px; background-color: #f8f9fa;">
-        <h2 style="color: #333; margin-bottom: 20px;">Klant wil voorraadmelding ontvangen</h2>
-        
-        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0;">
-          <h3 style="color: #667eea; margin: 0 0 15px 0;">Product Details</h3>
-          <p style="margin: 5px 0;"><strong>Product:</strong> ${productDisplay}</p>
-          <p style="margin: 5px 0;"><strong>Klant Email:</strong> ${data.customerEmail}</p>
-          <p style="margin: 5px 0;"><strong>Taal:</strong> ${data.language.toUpperCase()}</p>
-          <p style="margin: 5px 0;"><strong>Datum:</strong> ${new Date().toLocaleString('nl-BE')}</p>
-        </div>
-        
-        <div style="background: #fff3cd; padding: 15px; border-radius: 6px; border-left: 4px solid #ffc107; margin: 20px 0;">
-          <p style="margin: 0; color: #856404;">
-            <strong>Actie vereist:</strong> Wanneer dit product weer op voorraad is, wordt automatisch een e-mail verstuurd naar de klant.
-          </p>
-        </div>
-        
-        <p style="color: #333; line-height: 1.6;">
-          Deze klant heeft zich aangemeld voor voorraadmeldingen. Zorg ervoor dat de voorraadstatus 
-          wordt bijgewerkt wanneer het product weer beschikbaar is.
-        </p>
-      </div>
+      <p>A customer has subscribed to receive notifications about this product's availability.</p>
       
-      <div style="background-color: #333; color: white; padding: 20px; text-align: center; font-size: 14px;">
-        <p style="margin: 0;">KANIOU Inventory Alert System</p>
-      </div>
+      <hr style="margin: 30px 0;">
+      <p style="color: #666; font-size: 12px;">
+        This notification was sent automatically from the KANIOU inventory alert system.
+      </p>
     </div>
   `;
 
-  return await sendEmail(data.email, subject, html);
+  try {
+    const success = await sendEmail({
+      to: 'info@kaniou.be',
+      from: 'info@kaniou.be',
+      subject,
+      html: content,
+      text: stripHtml(content)
+    });
+
+    console.log(`📧 Inventory alert admin notification sent: ${success ? 'Success' : 'Failed'}`);
+    return success;
+  } catch (error) {
+    console.error('Error sending inventory alert admin email:', error);
+    return false;
+  }
+}
+
+function getAlertSubject(alertType: string, productType: string): string {
+  switch (alertType) {
+    case 'back_in_stock':
+      return `🎉 ${productType} is weer op voorraad - KANIOU`;
+    case 'low_stock':
+      return `⚠️ Beperkte voorraad ${productType} - KANIOU`;
+    case 'out_of_stock':
+      return `📦 ${productType} is uitverkocht - KANIOU`;
+    default:
+      return `Voorraad update ${productType} - KANIOU`;
+  }
+}
+
+function getAlertContent(alert: InventoryAlert, stock: ProductStock): string {
+  const productName = translateProductName(alert.productType);
+  
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #1a4d3a; color: white; padding: 20px; text-align: center;">
+        <h1>KANIOU Zilvernaald</h1>
+        <h2>Voorraad Update</h2>
+      </div>
+      
+      <div style="padding: 30px 20px;">
+        ${getAlertMessage(alert.alertType, productName, stock)}
+        
+        <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+          <h3>Product Details</h3>
+          <p><strong>Product:</strong> ${productName}</p>
+          <p><strong>Huidige voorraad:</strong> ${stock.currentStock} stuks</p>
+          <p><strong>Status:</strong> ${getStatusText(stock.status)}</p>
+        </div>
+        
+        ${getCallToAction(alert.alertType)}
+        
+        <hr style="margin: 30px 0;">
+        <p>Wilt u geen voorraadmeldingen meer ontvangen? U kunt uw voorkeuren aanpassen door contact met ons op te nemen.</p>
+        
+        <div style="text-align: center; margin-top: 30px;">
+          <p><strong>KANIOU Zilvernaald</strong></p>
+          <p>info@kaniou.be | www.kaniou.be</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function getAlertMessage(alertType: string, productName: string, stock: ProductStock): string {
+  switch (alertType) {
+    case 'back_in_stock':
+      return `
+        <h3 style="color: #28a745;">🎉 Goed nieuws!</h3>
+        <p>Het product <strong>${productName}</strong> dat u in de gaten hield is weer op voorraad!</p>
+        <p>We hebben momenteel <strong>${stock.currentStock} stuks</strong> beschikbaar.</p>
+      `;
+    case 'low_stock':
+      return `
+        <h3 style="color: #ffc107;">⚠️ Beperkte voorraad</h3>
+        <p>Het product <strong>${productName}</strong> heeft nog maar beperkte voorraad.</p>
+        <p>Er zijn nog slechts <strong>${stock.currentStock} stuks</strong> beschikbaar.</p>
+      `;
+    case 'out_of_stock':
+      return `
+        <h3 style="color: #dc3545;">📦 Uitverkocht</h3>
+        <p>Het product <strong>${productName}</strong> is helaas uitverkocht.</p>
+        <p>We verwachten binnen enkele weken nieuwe voorraad.</p>
+      `;
+    default:
+      return `<p>Er is een update voor het product <strong>${productName}</strong>.</p>`;
+  }
+}
+
+function getCallToAction(alertType: string): string {
+  switch (alertType) {
+    case 'back_in_stock':
+      return `
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://www.kaniou.be" style="background-color: #1a4d3a; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+            Bekijk Product
+          </a>
+        </div>
+        <p>Bestel snel, want op=op!</p>
+      `;
+    case 'low_stock':
+      return `
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://www.kaniou.be" style="background-color: #ffc107; color: black; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+            Bestel Nu
+          </a>
+        </div>
+        <p>Bestel tijdig om teleurstelling te voorkomen!</p>
+      `;
+    case 'out_of_stock':
+      return `
+        <p>Wilt u een offerte aanvragen voor wanneer het product weer beschikbaar is? Neem dan contact met ons op.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://www.kaniou.be/contact" style="background-color: #1a4d3a; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+            Neem Contact Op
+          </a>
+        </div>
+      `;
+    default:
+      return '';
+  }
+}
+
+function translateProductName(productType: string): string {
+  const translations = {
+    'rolgordijnen': 'Rolgordijnen',
+    'plisse': 'Plissé Gordijnen',
+    'overgordijnen': 'Overgordijnen',
+    'houten-jaloezieen': 'Houten Jaloezieën',
+    'kunststof-jaloezieen': 'Kunststof Jaloezieën',
+    'duo-rolgordijnen': 'Duo Rolgordijnen',
+    'vouwgordijnen': 'Vouwgordijnen',
+    'textiel-lamellen': 'Textiel Lamellen'
+  };
+  return translations[productType as keyof typeof translations] || productType;
+}
+
+function getStatusText(status: string): string {
+  switch (status) {
+    case 'in_stock': return 'Op voorraad';
+    case 'low_stock': return 'Beperkte voorraad';
+    case 'out_of_stock': return 'Uitverkocht';
+    default: return 'Onbekend';
+  }
+}
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 }

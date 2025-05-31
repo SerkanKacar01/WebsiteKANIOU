@@ -1216,6 +1216,10 @@ ${chatSummary}
         isActive: true
       });
 
+      // Send admin notification
+      const { sendInventoryAlertToAdmin } = await import('./inventoryEmailService');
+      await sendInventoryAlertToAdmin(alert);
+
       console.log(`🔔 New inventory alert created: ${email} for ${productType} (${alertType})`);
 
       res.json({

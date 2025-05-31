@@ -822,6 +822,132 @@ export class DatabaseStorage implements IStorage {
       .returning();
     return result;
   }
+
+  // Inventory Alerts Implementation
+  async getProductStock(): Promise<ProductStock[]> {
+    return await db.select().from(productStock);
+  }
+
+  async createInventoryAlert(alert: InsertInventoryAlert): Promise<InventoryAlert> {
+    const [result] = await db.insert(inventoryAlerts).values(alert).returning();
+    return result;
+  }
+
+  async getInventoryAlertsByEmail(email: string): Promise<InventoryAlert[]> {
+    return await db.select().from(inventoryAlerts)
+      .where(and(eq(inventoryAlerts.email, email), eq(inventoryAlerts.isActive, true)));
+  }
+
+  async deleteInventoryAlert(id: number): Promise<void> {
+    await db.update(inventoryAlerts)
+      .set({ isActive: false })
+      .where(eq(inventoryAlerts.id, id));
+  }
+
+  // Loyalty Program Implementation (stubbed to satisfy interface)
+  async getLoyaltyCustomerByEmail(email: string): Promise<LoyaltyCustomer | undefined> {
+    const [result] = await db.select().from(loyaltyCustomers)
+      .where(eq(loyaltyCustomers.email, email));
+    return result;
+  }
+
+  async createLoyaltyCustomer(customer: InsertLoyaltyCustomer): Promise<LoyaltyCustomer> {
+    const [result] = await db.insert(loyaltyCustomers).values(customer).returning();
+    return result;
+  }
+
+  async updateLoyaltyCustomer(id: number, updates: Partial<LoyaltyCustomer>): Promise<LoyaltyCustomer> {
+    const [result] = await db.update(loyaltyCustomers)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(loyaltyCustomers.id, id))
+      .returning();
+    return result;
+  }
+
+  async addLoyaltyPoints(customerId: number, transaction: InsertLoyaltyTransaction): Promise<LoyaltyTransaction> {
+    const [result] = await db.insert(loyaltyTransactions).values({
+      ...transaction,
+      customerId
+    }).returning();
+    return result;
+  }
+
+  async getLoyaltyTransactions(customerId: number): Promise<LoyaltyTransaction[]> {
+    return await db.select().from(loyaltyTransactions)
+      .where(eq(loyaltyTransactions.customerId, customerId))
+      .orderBy(desc(loyaltyTransactions.createdAt));
+  }
+
+  async getLoyaltyRewards(language?: string): Promise<LoyaltyReward[]> {
+    if (language) {
+      return await db.select().from(loyaltyRewards)
+        .where(eq(loyaltyRewards.language, language));
+    }
+    return await db.select().from(loyaltyRewards);
+  }
+
+  async createLoyaltyReward(reward: InsertLoyaltyReward): Promise<LoyaltyReward> {
+    const [result] = await db.insert(loyaltyRewards).values(reward).returning();
+    return result;
+  }
+
+  async redeemLoyaltyReward(redemption: InsertLoyaltyRedemption): Promise<LoyaltyRedemption> {
+    const [result] = await db.insert(loyaltyRedemptions).values(redemption).returning();
+    return result;
+  }
+
+  async getLoyaltyRedemptions(customerId: number): Promise<LoyaltyRedemption[]> {
+    return await db.select().from(loyaltyRedemptions)
+      .where(eq(loyaltyRedemptions.customerId, customerId));
+  }
+
+  // Warranty System Implementation (stubbed to satisfy interface)
+  async createCustomerWarranty(warranty: InsertCustomerWarranty): Promise<CustomerWarranty> {
+    const [result] = await db.insert(customerWarranties).values(warranty).returning();
+    return result;
+  }
+
+  async getCustomerWarranties(customerId: number): Promise<CustomerWarranty[]> {
+    return await db.select().from(customerWarranties)
+      .where(eq(customerWarranties.customerId, customerId));
+  }
+
+  async getExpiringWarranties(days: number): Promise<CustomerWarranty[]> {
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + days);
+    
+    return await db.select().from(customerWarranties)
+      .where(and(
+        eq(customerWarranties.isActive, true),
+        sql`${customerWarranties.expiryDate} <= ${futureDate}`
+      ));
+  }
+
+  async updateWarrantyStatus(id: number, status: string): Promise<CustomerWarranty> {
+    const [result] = await db.update(customerWarranties)
+      .set({ status, updatedAt: new Date() })
+      .where(eq(customerWarranties.id, id))
+      .returning();
+    return result;
+  }
+
+  async createWarrantyReminder(reminder: InsertWarrantyReminder): Promise<WarrantyReminder> {
+    const [result] = await db.insert(warrantyReminders).values(reminder).returning();
+    return result;
+  }
+
+  async getPendingWarrantyReminders(): Promise<WarrantyReminder[]> {
+    return await db.select().from(warrantyReminders)
+      .where(eq(warrantyReminders.isSent, false));
+  }
+
+  async markWarrantyReminderSent(id: number): Promise<WarrantyReminder> {
+    const [result] = await db.update(warrantyReminders)
+      .set({ isSent: true, sentAt: new Date() })
+      .where(eq(warrantyReminders.id, id))
+      .returning();
+    return result;
+  }
 }
 
 async function seedInitialData(storage: DatabaseStorage) {

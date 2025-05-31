@@ -55,14 +55,15 @@ export function saveUserPreferences(preferences: Partial<UserPreferences>): void
 }
 
 /**
- * Update user name when provided
+ * Update user name when provided (with proper capitalization)
  */
 export function updateUserName(name: string): void {
+  const capitalizedName = capitalizeName(name);
   const preferences = getUserPreferences();
   if (preferences) {
-    saveUserPreferences({ ...preferences, name });
+    saveUserPreferences({ ...preferences, name: capitalizedName });
   } else {
-    saveUserPreferences({ name, language: 'nl' });
+    saveUserPreferences({ name: capitalizedName, language: 'nl' });
   }
 }
 
@@ -75,7 +76,55 @@ export function isReturningUser(): boolean {
 }
 
 /**
- * Get personalized greeting based on user data
+ * Get time-based greeting for different languages
+ */
+function getTimeBasedGreeting(language: string): string {
+  const hour = new Date().getHours();
+  
+  const timeGreetings = {
+    nl: {
+      morning: "Goedemorgen",      // Before 12:00
+      afternoon: "Goedemiddag",    // 12:00-18:00
+      evening: "Goedenavond"       // After 18:00
+    },
+    en: {
+      morning: "Good morning",
+      afternoon: "Good afternoon", 
+      evening: "Good evening"
+    },
+    fr: {
+      morning: "Bonjour",
+      afternoon: "Bon après-midi",
+      evening: "Bonsoir"
+    },
+    tr: {
+      morning: "Günaydın",
+      afternoon: "Tünaydın",
+      evening: "İyi akşamlar"
+    }
+  };
+
+  const greetings = timeGreetings[language as keyof typeof timeGreetings] || timeGreetings.nl;
+  
+  if (hour < 12) {
+    return greetings.morning;
+  } else if (hour < 18) {
+    return greetings.afternoon;
+  } else {
+    return greetings.evening;
+  }
+}
+
+/**
+ * Capitalize first letter of name properly
+ */
+function capitalizeName(name: string): string {
+  if (!name || name.length === 0) return name;
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+/**
+ * Get personalized greeting based on user data with time-based and properly capitalized names
  */
 export function getPersonalizedGreeting(language: string): {
   isPersonalized: boolean;
@@ -86,25 +135,41 @@ export function getPersonalizedGreeting(language: string): {
   
   const greetings = {
     nl: {
-      returning: (name: string) => `Welkom terug ${name}! Fijn om u weer te zien. Hoe kan ik u vandaag helpen?`,
+      returning: (name: string) => {
+        const timeGreeting = getTimeBasedGreeting('nl');
+        const capitalizedName = capitalizeName(name);
+        return `${timeGreeting} ${capitalizedName}! Fijn om u weer te zien. Hoe kan ik u vandaag helpen?`;
+      },
       returningNoName: "Welkom terug bij KANIOU! We staan weer klaar om u te helpen. Wilt u stijladvies, een offerte of onze collectie bekijken?",
       new: "Welkom bij KANIOU! Ik ben hier om u te helpen met al uw vragen over maatwerk raambekleding.",
       namePrompt: "Mag ik uw naam weten voor een persoonlijkere ervaring?"
     },
     fr: {
-      returning: (name: string) => `Bon retour ${name}! Ravi de vous revoir. Comment puis-je vous aider aujourd'hui?`,
+      returning: (name: string) => {
+        const timeGreeting = getTimeBasedGreeting('fr');
+        const capitalizedName = capitalizeName(name);
+        return `${timeGreeting} ${capitalizedName} ! Ravi de vous revoir. Comment puis-je vous aider aujourd'hui ?`;
+      },
       returningNoName: "Bienvenue à nouveau chez KANIOU! Nous sommes prêts à vous aider. Souhaitez-vous un conseil déco, un devis ou voir notre collection?",
       new: "Bienvenue chez KANIOU! Je suis là pour vous aider avec toutes vos questions sur nos décorations de fenêtres sur mesure.",
       namePrompt: "Puis-je connaître votre nom pour une expérience plus personnalisée?"
     },
     en: {
-      returning: (name: string) => `Welcome back ${name}! Great to see you again. How can I help you today?`,
+      returning: (name: string) => {
+        const timeGreeting = getTimeBasedGreeting('en');
+        const capitalizedName = capitalizeName(name);
+        return `${timeGreeting} ${capitalizedName}! Nice to see you again. How can I assist you today?`;
+      },
       returningNoName: "Welcome back to KANIOU! We're ready to assist you again. Would you like style advice, a quote, or to view our collection?",
       new: "Welcome to KANIOU! I'm here to help you with all your questions about custom window coverings.",
       namePrompt: "May I know your name for a more personalized experience?"
     },
     tr: {
-      returning: (name: string) => `Tekrar hoş geldiniz ${name}! Sizi tekrar görmek harika. Bugün size nasıl yardımcı olabilirim?`,
+      returning: (name: string) => {
+        const timeGreeting = getTimeBasedGreeting('tr');
+        const capitalizedName = capitalizeName(name);
+        return `${timeGreeting} ${capitalizedName}! Sizi tekrar görmek güzel. Size bugün nasıl yardımcı olabilirim?`;
+      },
       returningNoName: "KANIOU'ya tekrar hoş geldiniz! Size tekrar yardımcı olmaya hazırız. Stil önerisi, fiyat teklifi veya koleksiyonumuzu görmek ister misiniz?",
       new: "KANIOU'ya hoş geldiniz! Özel pencere kaplamaları hakkındaki tüm sorularınızda size yardımcı olmak için buradayım.",
       namePrompt: "Daha kişiselleştirilmiş bir deneyim için adınızı öğrenebilir miyim?"

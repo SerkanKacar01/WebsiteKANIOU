@@ -187,8 +187,8 @@ function generateWelcomeEmailHtml(data: NewsletterSignupData): string {
           
           <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
             ${isNL ? 
-              'Je ontvangt deze e-mail omdat je je hebt ingeschreven voor onze nieuwsbrief.' :
-              'You\'re receiving this email because you subscribed to our newsletter.'
+              '🔒 We gebruiken uw e-mailadres alleen voor nieuwsbrieven en respecteren uw privacy. Je ontvangt deze e-mail omdat je je hebt ingeschreven voor onze nieuwsbrief.' :
+              '🔒 We use your email only for newsletters and respect your privacy. You\'re receiving this email because you subscribed to our newsletter.'
             }
             <br>
             <a href="#" style="color: #999;">

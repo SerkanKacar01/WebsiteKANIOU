@@ -214,12 +214,12 @@ export function ChatbotWidget() {
         showQuickReplies: false
       }));
       
-      // Send a confirmation message
+      // Send a confirmation message with privacy disclaimer
       const confirmationMessages = {
-        nl: "✅ Bedankt! Uw offerteaanvraag is succesvol verzonden naar info@kaniou.be. U ontvangt binnen 24 uur een gepersonaliseerde offerte per e-mail.",
-        en: "✅ Thank you! Your quote request has been successfully sent to info@kaniou.be. You'll receive a personalized offer within 24 hours via email.",
-        fr: "✅ Merci! Votre demande de devis a été envoyée avec succès à info@kaniou.be. Vous recevrez une offre personnalisée dans les 24 heures par e-mail.",
-        tr: "✅ Teşekkürler! Teklif talebiniz info@kaniou.be'a başarıyla gönderildi. 24 saat içinde e-posta ile kişiselleştirilmiş bir teklif alacaksınız."
+        nl: "✅ Bedankt! Uw offerteaanvraag is succesvol verzonden naar info@kaniou.be. U ontvangt binnen 24 uur een gepersonaliseerde offerte per e-mail.\n\n🔒 We gebruiken uw e-mailadres alleen voor offertes en respecteren uw privacy.",
+        en: "✅ Thank you! Your quote request has been successfully sent to info@kaniou.be. You'll receive a personalized offer within 24 hours via email.\n\n🔒 We use your email only for quotation purposes and respect your privacy.",
+        fr: "✅ Merci! Votre demande de devis a été envoyée avec succès à info@kaniou.be. Vous recevrez une offre personnalisée dans les 24 heures par e-mail.\n\n🔒 Nous utilisons votre email uniquement pour les devis et respectons votre vie privée.",
+        tr: "✅ Teşekkürler! Teklif talebiniz info@kaniou.be'a başarıyla gönderildi. 24 saat içinde e-posta ile kişiselleştirilmiş bir teklif alacaksınız.\n\n🔒 E-posta adresinizi sadece teklif amaçları için kullanıyor ve gizliliğinize saygı gösteriyoruz."
       };
       
       const confirmationText = confirmationMessages[language as keyof typeof confirmationMessages] || confirmationMessages.nl;

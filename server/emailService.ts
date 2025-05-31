@@ -148,7 +148,7 @@ export async function sendPriceRequestNotification(data: PriceRequestEmailData):
 
     const msg = {
       to: adminEmail,
-      from: 'noreply@kaniou.be', // This should be verified in SendGrid
+      from: 'info@kaniou.be', // Official KANIOU email address
       subject,
       text: textContent,
       html: htmlContent,

@@ -17,13 +17,13 @@ export const emailConfig = {
   contactForm: {
     subjectPrefix: "[Contact Form] ",
     successMessage:
-      "Uw bericht is succesvol ontvangen. Een medewerker van ons team neemt zo spoedig mogelijk contact met u op. Hartelijk dank voor uw interesse in KANIOU Zilvernaald.",
+      "Uw bericht is succesvol ontvangen via info@kaniou.be. Een medewerker van ons team neemt zo spoedig mogelijk contact met u op. We gebruiken uw e-mailadres alleen voor contactdoeleinden en respecteren uw privacy. Hartelijk dank voor uw interesse in KANIOU Zilvernaald.",
   },
 
   // Quote request settings
   quoteForm: {
     subjectPrefix: "[Quote Request] ",
     successMessage:
-      "Uw offerteaanvraag is succesvol ingediend. Ons team zal de gegevens zorgvuldig bekijken en neemt binnenkort contact met u op met een op maat gemaakte prijsofferte.",
+      "Uw offerteaanvraag is succesvol ingediend naar info@kaniou.be. Ons team zal de gegevens zorgvuldig bekijken en neemt binnenkort contact met u op met een op maat gemaakte prijsofferte. We gebruiken uw e-mailadres alleen voor offertes en respecteren uw privacy.",
   },
 };

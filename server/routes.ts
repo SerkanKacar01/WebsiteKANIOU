@@ -36,6 +36,13 @@ import { sendPriceRequestNotification } from "./emailService";
 import { answerWithComprehensiveKnowledge } from "./comprehensiveKnowledge";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import { sendAppointmentNotificationToAdmin, sendAppointmentConfirmationToCustomer } from "./appointmentEmailService";
+import { 
+  detectAppointmentRequest, 
+  generateAppointmentResponse, 
+  processChatbotAppointmentBooking,
+  getAppointmentConfirmationMessage,
+  isAppointmentBookingQuery 
+} from "./appointmentChatbotIntegration";
 import { sendConversationSummaryEmail } from "./emailSummary";
 import { 
   analyzeTriggerConditions, 
@@ -88,6 +95,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         content: message
       });
 
+      // Check for appointment booking request (High Priority)
+      const isAppointmentRequest = detectAppointmentRequest(message, language);
+      console.log(`📅 APPOINTMENT DETECTION: ${isAppointmentRequest ? 'YES' : 'NO'} - Request detected`);
+
       // Check for style consultation request
       const isStyleRequest = isStyleConsultationRequest(message, language);
       console.log(`🎨 STYLE CONSULTATION: ${isStyleRequest ? 'YES' : 'NO'} - Request detected`);
@@ -106,8 +117,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let aiResponse: any;
       let savedResponse: any;
       
-      // Handle Style Consultation Flow FIRST (Highest Priority)
-      if (isStyleRequest) {
+      // Handle Appointment Booking Request FIRST (Highest Priority)
+      if (isAppointmentRequest) {
+        console.log(`📅 APPOINTMENT BOOKING: Processing appointment request`);
+        
+        const appointmentResponse = generateAppointmentResponse('detected', language);
+        
+        aiResponse = {
+          content: appointmentResponse.content,
+          requiresPricing: false,
+          metadata: {
+            ...appointmentResponse.metadata,
+            shouldOpenAppointmentForm: appointmentResponse.shouldOpenForm,
+            sessionId: conversationId
+          }
+        };
+
+        // Save AI response
+        savedResponse = await storage.createChatbotMessage({
+          conversationId: conversation.id,
+          role: "assistant",
+          content: aiResponse.content,
+          metadata: aiResponse.metadata
+        });
+
+        console.log(`📅 APPOINTMENT: Response generated for appointment inquiry`);
+      
+      // Handle Style Consultation Flow (High Priority)
+      } else if (isStyleRequest) {
         console.log(`🎨 STYLE CONSULTATION: Starting consultation flow`);
         
         // Check if there's an existing consultation session

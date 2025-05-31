@@ -26,6 +26,8 @@ import SmartQuote from "@/pages/SmartQuote";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
 import VirtualRoomPreview from "@/pages/VirtualRoomPreview";
+import InventoryAlerts from "@/pages/InventoryAlerts";
+import AppointmentScheduling from "@/pages/AppointmentScheduling";
 import Admin from "@/pages/Admin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
@@ -131,6 +133,10 @@ function Router() {
         <Route path="/customization-wizard" component={CustomizationWizardPage} />
         <Route path="/virtual-room-preview" component={VirtualRoomPreview} />
         <Route path="/kamer-preview" component={VirtualRoomPreview} />
+        <Route path="/inventory-alerts" component={InventoryAlerts} />
+        <Route path="/voorraad-alerts" component={InventoryAlerts} />
+        <Route path="/appointment-scheduling" component={AppointmentScheduling} />
+        <Route path="/afspraak-inplannen" component={AppointmentScheduling} />
         <Route path="/product-360-demo" component={Product360Demo} />
         <Route path="/rewards" component={RewardsSystem} />
         <Route path="/recommendations" component={SmartRecommendationEngine} />

@@ -2,7 +2,7 @@
   "chatbot": {
     "title": "KANIOU AI Asistanı",
     "welcome": "KANIOU'ya Hoş Geldiniz!",
-    "welcomeMessage": "Merhaba! Ben sizin kişisel KANIOU asistanınızım. Premium pencere dekorasyonları, perdeler, güneşlikler ve daha fazlası hakkındaki sorularınızda size yardımcı olmaktan mutluluk duyarım. Bugün size nasıl yardımcı olabilirim?",
+    "welcomeMessage": "KANIOU'ya tekrar hoş geldiniz! Size tekrar yardımcı olmaya hazırız. Stil önerisi, fiyat teklifi veya koleksiyonumuzu görmek ister misiniz?",
     "placeholder": "Mesajınızı buraya yazın...",
     "send": "Gönder",
     "typing": "Yazıyor...",

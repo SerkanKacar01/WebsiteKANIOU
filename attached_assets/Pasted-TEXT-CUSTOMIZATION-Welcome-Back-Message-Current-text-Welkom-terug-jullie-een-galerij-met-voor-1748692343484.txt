@@ -1,0 +1,51 @@
+TEXT CUSTOMIZATION: “Welcome Back” Message
+
+Current text:
+
+“Welkom terug jullie een galerij met voorbee! Fijn om u weer te zien. Hoe kan ik u vandaag helpen?”
+
+🛠 Issues:
+	•	Grammar is incorrect (“jullie een galerij met voorbee” is broken).
+	•	Message is too generic and doesn’t offer real value.
+
+Suggested improved Dutch version (professional and correct):
+
+“Welkom terug bij KANIOU! We staan weer klaar om u te helpen. Wilt u stijladvies, een offerte of onze collectie bekijken?”
+
+Multilingual Versions:
+	•	🇳🇱 Dutch: “Welkom terug bij KANIOU! We staan weer klaar om u te helpen. Wilt u stijladvies, een offerte of onze collectie bekijken?”
+	•	🇬🇧 English: “Welcome back to KANIOU! We’re ready to assist you again. Would you like style advice, a quote, or to view our collection?”
+	•	🇫🇷 French: “Bienvenue à nouveau chez KANIOU ! Nous sommes prêts à vous aider. Souhaitez-vous un conseil déco, un devis ou voir notre collection ?”
+	•	🇹🇷 Turkish: “KANIOU’ya tekrar hoş geldiniz! Size tekrar yardımcı olmaya hazırız. Stil önerisi, fiyat teklifi veya koleksiyonumuzu görmek ister misiniz?”
+
+⸻
+
+✅ VISUAL DESIGN CUSTOMIZATION (Replit Instruction)
+
+Here’s how to update the design to make it more clean and modern:
+
+1. Chatbot Welcome Box Design:
+	•	Add rounded corners to the top container
+	•	Use a subtle drop shadow (e.g., box-shadow: 0 4px 12px rgba(0,0,0,0.15);)
+	•	Use a slightly larger font for the welcome message (e.g., font-size: 1.1rem)
+	•	Add a small KANIOU logo icon left of the message (optional)
+
+2. Color Improvements:
+	•	Background: keep light yellow border but make inner box white
+	•	Highlight bar (top): use brand gold (#e3b84a) with bold dark text
+	•	Typing area: slightly rounded with subtle border (border-radius: 8px)
+
+3. Spacing & Mobile Improvements:
+	•	Add padding between the welcome text and typing box
+	•	Ensure the spacing between message bubbles is minimum 12px
+	•	Improve mobile responsiveness by using max-width: 90vw and padding: 10px
+
+⸻
+
+✅ REPLIT FINAL INSTRUCTION
+
+Please update the chatbot welcome message as defined in all four languages (Dutch, English, French, Turkish) and apply the updated welcome container design with cleaner UI.
+Confirm:
+	•	Translations load properly based on user language
+	•	UI updates render on desktop and mobile
+	•	Spacing, colors, and font sizes follow the latest design recommendations

@@ -724,22 +724,27 @@ export function ChatbotWidget() {
           <CardContent className="flex flex-col flex-1 p-0 overflow-hidden">
             {/* Messages Area */}
             <ScrollArea className="flex-1 px-3 py-4 overflow-y-auto overflow-x-hidden">
-              {/* Personalized Welcome Message */}
-              <div className="mb-4 w-full">
-                <div className={`p-3 rounded-lg text-sm animate-in fade-in-50 duration-500 max-w-full break-words ${
+              {/* Enhanced Welcome Message Container */}
+              <div className="mb-6 w-full">
+                <div className={`chatbot-welcome-container relative p-4 rounded-xl text-sm animate-in fade-in-50 duration-500 max-w-full break-words shadow-lg ${
                   personalizedGreeting?.isPersonalized 
-                    ? 'bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-900'
-                    : 'bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 text-blue-900'
-                }`}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <MessageCircle className={`h-4 w-4 flex-shrink-0 ${
-                      personalizedGreeting?.isPersonalized ? 'text-green-600' : 'text-blue-600'
-                    }`} />
-                    <span className="font-medium">
-                      {personalizedGreeting?.isPersonalized ? 'Welcome back!' : t("chatbot.welcome")}
-                    </span>
+                    ? 'bg-white border-2 border-green-200'
+                    : 'bg-white border-2 border-amber-200'
+                }`} style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
+                  {/* Gold highlight bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-t-xl"></div>
+                  
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-2">
+                      <MessageCircle className={`h-5 w-5 flex-shrink-0 ${
+                        personalizedGreeting?.isPersonalized ? 'text-green-600' : 'text-amber-600'
+                      }`} />
+                      <span className="chatbot-welcome-title font-bold text-lg text-gray-800">
+                        {personalizedGreeting?.isPersonalized ? 'Welcome back!' : t("chatbot.welcome")}
+                      </span>
+                    </div>
                   </div>
-                  <div className="break-words overflow-wrap-anywhere">
+                  <div className="chatbot-welcome-message break-words overflow-wrap-anywhere text-gray-700 leading-relaxed" style={{ fontSize: '1.1rem' }}>
                     {personalizedGreeting?.greeting || t("chatbot.welcomeMessage")}
                   </div>
                   {personalizedGreeting?.showNamePrompt && !personalizedGreeting?.isPersonalized && (

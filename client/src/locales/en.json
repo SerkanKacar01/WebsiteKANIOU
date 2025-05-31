@@ -2,7 +2,7 @@
   "chatbot": {
     "title": "KANIOU AI Assistant",
     "welcome": "Welcome to KANIOU!",
-    "welcomeMessage": "Hello! I'm your personal KANIOU assistant. I'm here to help you with any questions about our premium window treatments, curtains, blinds, and more. How can I assist you today?",
+    "welcomeMessage": "Welcome back to KANIOU! We're ready to assist you again. Would you like style advice, a quote, or to view our collection?",
     "placeholder": "Type your message here...",
     "send": "Send",
     "typing": "Typing...",

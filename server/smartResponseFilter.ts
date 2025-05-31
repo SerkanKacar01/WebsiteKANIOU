@@ -86,6 +86,15 @@ function analyzeUserQuestion(question: string, language: string): QuestionAnalys
   } else if (questionLower.includes('opmeten') || questionLower.includes('meten') || questionLower.includes('mesure')) {
     category = 'services';
     intent = 'service_inquiry';
+  } else if (questionLower.includes('wat voor') && (questionLower.includes('product') || questionLower.includes('raam') || questionLower.includes('window')) ||
+             questionLower.includes('what kind of') && questionLower.includes('window') ||
+             questionLower.includes('what type of') && questionLower.includes('window') ||
+             questionLower.includes('welke') && (questionLower.includes('product') || questionLower.includes('raam') || questionLower.includes('zonwering')) ||
+             questionLower.includes('what do you offer') || questionLower.includes('wat bieden jullie') ||
+             questionLower.includes('window covering') || questionLower.includes('window treatment') ||
+             questionLower.includes('raambekleding') || questionLower.includes('raamdecoratie')) {
+    category = 'product_catalog';
+    intent = 'product_overview_request';
   } else if (questionLower.includes('gordijn') || questionLower.includes('rideau') || questionLower.includes('curtain')) {
     category = 'products';
     intent = 'product_inquiry';
@@ -212,6 +221,8 @@ function structureResponse(
     structuredContent = formatServiceResponse(filteredContent, analysis);
   } else if (analysis.intent === 'pricing_inquiry') {
     structuredContent = formatPricingResponse(filteredContent, analysis);
+  } else if (analysis.intent === 'product_overview_request') {
+    structuredContent = formatProductOverviewResponse(filteredContent, analysis);
   } else if (analysis.intent === 'product_inquiry') {
     structuredContent = formatProductResponse(filteredContent, analysis);
   } else if (analysis.intent === 'visual_examples_request') {
@@ -271,6 +282,57 @@ function formatPricingResponse(content: string, analysis: QuestionAnalysis): str
     fr: "Nos prix commencent à partir de 45€ par mètre pour les rideaux et 85€ par m² pour les stores plissés. Le prix exact dépend du matériau et des dimensions.\n\nSouhaitez-vous demander un devis gratuit?",
     en: "Our prices start from €45 per meter for curtains and €85 per m² for pleated blinds. The exact price depends on material and dimensions.\n\nWould you like to request a free quote?",
     tr: "Fiyatlarımız perdeler için metre başına 45€'dan, plise perdeler için m² başına 85€'dan başlıyor. Kesin fiyat malzeme ve boyutlara bağlıdır.\n\nÜcretsiz teklif almak ister misiniz?"
+  };
+  
+  return responses[language as keyof typeof responses] || responses.nl;
+}
+
+/**
+ * Format product overview responses for general product questions
+ */
+function formatProductOverviewResponse(content: string, analysis: QuestionAnalysis): string {
+  const language = analysis.language;
+  
+  const responses = {
+    nl: `🏠 KANIOU biedt een uitgebreid assortiment raambekleding:
+
+**HOOFDCATEGORIEËN:**
+• Gordijnen & Vitrages (overgordijnen, blackout, decoratief)
+• Zonwering (rolgordijnen, duo-systemen, plissé gordijnen)  
+• Jaloezieën (hout, kunststof, aluminium lamellen)
+• Shutters & Luiken (binnen- en buitentoepassing)
+
+Alle producten worden op maat gemaakt met gratis opmetingservice. Wilt u meer weten over een specifieke categorie?`,
+
+    fr: `🏠 KANIOU propose une gamme complète de traitements de fenêtres:
+
+**CATÉGORIES PRINCIPALES:**
+• Rideaux & Voilages (rideaux décoratifs, occultants)
+• Protection solaire (stores, systèmes jour/nuit, plissés)
+• Stores vénitiens (bois, PVC, lamelles aluminium)
+• Volets & Panneaux (intérieur et extérieur)
+
+Tous les produits sont faits sur mesure avec service de mesure gratuit. Souhaitez-vous en savoir plus sur une catégorie spécifique?`,
+
+    en: `🏠 KANIOU offers a comprehensive range of window treatments:
+
+**MAIN CATEGORIES:**
+• Curtains & Sheers (decorative, blackout, privacy)
+• Blinds & Shades (roller blinds, day/night systems, pleated)
+• Venetian Blinds (wood, plastic, aluminum slats)
+• Shutters & Panels (interior and exterior applications)
+
+All products are custom-made with free measuring service. Would you like to know more about a specific category?`,
+
+    tr: `🏠 KANIOU kapsamlı pencere kaplaması yelpazesi sunar:
+
+**ANA KATEGORİLER:**
+• Perdeler & Tüller (dekoratif, karartıcı, gizlilik)
+• Storlar & Güneşlikler (stor perdeler, gündüz/gece sistemleri, plise)
+• Jaluzi Perdeler (ahşap, plastik, alüminyum lameller)
+• Panjurlar & Paneller (iç ve dış mekan uygulamaları)
+
+Tüm ürünler ücretsiz ölçüm hizmetiyle özel yapılır. Belirli bir kategori hakkında daha fazla bilgi almak ister misiniz?`
   };
   
   return responses[language as keyof typeof responses] || responses.nl;

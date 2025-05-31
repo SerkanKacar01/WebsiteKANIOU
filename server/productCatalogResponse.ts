@@ -198,21 +198,30 @@ export function isProductCatalogQuestion(question: string, language: string = 'n
       'wat voor producten', 'welke producten', 'product assortiment', 'productgamma',
       'wat verkopen jullie', 'wat bieden jullie aan', 'welke raamdecoratie',
       'welke raambekleding', 'wat voor gordijnen', 'soorten gordijnen',
-      'catalogus', 'productlijst', 'overzicht producten', 'alle producten'
+      'catalogus', 'productlijst', 'overzicht producten', 'alle producten',
+      'wat voor soorten', 'wat voor types', 'welke opties', 'welke mogelijkheden',
+      'aanbod', 'wat hebben jullie', 'wat is er', 'welke varianten',
+      'zonwering', 'window covering', 'raam', 'window treatment'
     ],
     fr: [
       'quels produits', 'gamme de produits', 'catalogue produits',
       'que vendez-vous', "qu'offrez-vous", 'types de stores',
-      'sortes de rideaux', 'produits disponibles', 'assortiment'
+      'sortes de rideaux', 'produits disponibles', 'assortiment',
+      'quels types', 'quelles options', 'quelles possibilités',
+      'protection solaire', 'habillage fenêtre'
     ],
     en: [
       'what products', 'product range', 'product catalog', 'what do you sell',
       'what do you offer', 'types of curtains', 'kinds of blinds',
-      'available products', 'window treatment options', 'product list'
+      'available products', 'window treatment options', 'product list',
+      'what kind of', 'what type of', 'what sorts', 'what varieties',
+      'window coverings', 'window treatments', 'window solutions',
+      'what options', 'what choices', 'what do you have'
     ],
     tr: [
       'hangi ürünler', 'ürün yelpazesi', 'ürün kataloğu', 'ne satıyorsunuz',
-      'ne sunuyorsunuz', 'perde çeşitleri', 'stor türleri', 'mevcut ürünler'
+      'ne sunuyorsunuz', 'perde çeşitleri', 'stor türleri', 'mevcut ürünler',
+      'hangi seçenekler', 'ne tür', 'hangi çeşitler', 'pencere kaplamaları'
     ]
   };
 

@@ -184,10 +184,6 @@ const BusinessPage = () => {
                 <Building2 className="mr-2 h-5 w-5" />
                 Verstuur Aanvraag
               </Button>
-              <Button size="lg" variant="outline" onClick={openChatbot}>
-                <MessageSquare className="mr-2 h-5 w-5" />
-                Chat met Ons
-              </Button>
             </div>
           </div>
         </section>

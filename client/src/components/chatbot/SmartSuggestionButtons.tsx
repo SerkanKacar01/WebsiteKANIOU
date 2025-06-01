@@ -281,17 +281,17 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
                 className="h-auto min-h-[60px] md:min-h-[70px] p-3 md:p-5 text-left justify-start bg-white hover:bg-gradient-to-br hover:from-amber-50 hover:to-orange-50 border-amber-200 hover:border-amber-400 transition-all duration-300 shadow-sm hover:shadow-lg rounded-xl group w-full chatbot-suggestion-button"
                 onClick={() => handleButtonClick(button)}
               >
-                <div className="flex items-center gap-3 md:gap-4 w-full">
-                  <div className="flex-shrink-0 flex items-center justify-center">
-                    <span className="text-lg md:text-xl group-hover:scale-110 transition-transform duration-300">{button.emoji}</span>
+                <div className="flex items-center w-full">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex items-center justify-center">
+                    <span className="text-base md:text-lg group-hover:scale-110 transition-transform duration-300">{button.emoji}</span>
                   </div>
-                  <div className="flex-1 min-w-0 flex items-center">
-                    <span className="text-sm md:text-base font-medium text-gray-800 break-words leading-tight block group-hover:text-amber-900 transition-colors duration-300">
-                      {button.text}
+                  <div className="flex-1 min-w-0 px-2 md:px-3">
+                    <span className="text-xs md:text-sm font-medium text-gray-800 group-hover:text-amber-900 transition-colors duration-300 leading-tight">
+                      {button.text.replace(button.emoji, '').trim()}
                     </span>
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center">
-                    <IconComponent className="h-4 w-4 md:h-5 md:w-5 text-amber-600 group-hover:text-amber-700 group-hover:scale-110 transition-all duration-300" />
+                  <div className="flex-shrink-0 w-6 md:w-8 flex items-center justify-center">
+                    <IconComponent className="h-3 w-3 md:h-4 md:w-4 text-amber-600 group-hover:text-amber-700 group-hover:scale-110 transition-all duration-300" />
                   </div>
                 </div>
               </Button>

@@ -172,15 +172,24 @@
   
   .chatbot-suggestion-button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 0;
+    flex: 1;
   }
   
   .chatbot-suggestion-button:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
   }
   
   .chatbot-suggestion-button:active {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
+  }
+  
+  /* Ensure proper text wrapping and spacing */
+  .chatbot-suggestion-button span {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 }
 

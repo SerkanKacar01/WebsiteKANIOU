@@ -13,10 +13,12 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "wouter";
 
 const BusinessPage = () => {
   const { language, t } = useLanguage();
   const [showDealerForm, setShowDealerForm] = useState(false);
+  const [, setLocation] = useLocation();
 
   const scrollToDealerForm = () => {
     setShowDealerForm(true);
@@ -274,13 +276,13 @@ const BusinessPage = () => {
                     <div className="text-center pt-4">
                       <Button
                         onClick={() => {
-                          window.location.href =
-                            "mailto:info@kaniou.be?subject=Dealer Partnership Inquiry";
+                          setLocation("/contact");
+                          window.scrollTo(0, 0);
                         }}
                         className="bg-blue-600 hover:bg-blue-700"
                       >
                         <Mail className="mr-2 h-4 w-4" />
-                        Contact via Email
+                        📧 Contact via Email
                       </Button>
                     </div>
                   </div>

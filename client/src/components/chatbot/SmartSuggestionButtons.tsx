@@ -8,7 +8,8 @@ import {
   ImageIcon, 
   Info, 
   HelpCircle,
-  Clock
+  Clock,
+  Building2
 } from "lucide-react";
 
 interface SmartSuggestionButtonsProps {
@@ -74,6 +75,13 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
         action: "interactive_qa",
         icon: HelpCircle,
         emoji: "❓"
+      },
+      {
+        id: "business_solutions",
+        text: "🏢 Zakelijke Oplossingen",
+        action: "business_solutions",
+        icon: Building2,
+        emoji: "🏢"
       }
     ],
     fr: [

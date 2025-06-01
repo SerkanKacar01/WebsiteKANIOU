@@ -45,6 +45,7 @@ const Header = () => {
   const navItems = [
     { label: t("PRODUCTEN"), href: "/producten", hasDropdown: true },
     { label: t("GALLERIJ"), href: "/gallerij" },
+    { label: "ZAKELIJK", href: "/zakelijk" },
     { label: t("OVER ONS"), href: "/overons" },
     { label: t("CONTACT"), href: "/contact" },
   ];

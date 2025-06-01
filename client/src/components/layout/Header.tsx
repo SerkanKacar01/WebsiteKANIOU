@@ -221,10 +221,6 @@ const Header = () => {
                   )}
 
                   <div className="mt-4 space-y-3">
-                    <AppointmentBookingButton 
-                      variant="default"
-                      className="w-full"
-                    />
                     <NewsletterSignup variant="default" onModalOpen={handleCloseSheet}>
                       <Button
                         variant="outline"
@@ -309,11 +305,6 @@ const Header = () => {
                 ),
               )}
               <div className="flex items-center gap-3">
-                <AppointmentBookingButton 
-                  variant="outline"
-                  size="sm"
-                  className="text-xs px-3 py-1 h-8"
-                />
                 <NewsletterSignup variant="header" />
                 <Link href="/quote">
                   <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">

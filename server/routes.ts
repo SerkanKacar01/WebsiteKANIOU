@@ -1178,49 +1178,7 @@ ${chatSummary}
     }
   });
 
-  // Get appointment bookings with admin view
-  app.get("/api/admin/appointments", async (req: Request, res: Response) => {
-    try {
-      const appointments = await storage.getAppointmentBookings();
-      
-      res.json({
-        success: true,
-        appointments
-      });
-    } catch (error) {
-      console.error("Error fetching appointments:", error);
-      res.status(500).json({
-        success: false,
-        message: "Failed to fetch appointments"
-      });
-    }
-  });
 
-  // Update appointment status
-  app.put("/api/admin/appointments/:id", async (req: Request, res: Response) => {
-    try {
-      const id = parseInt(req.params.id);
-      const { status, adminNotes } = req.body;
-      
-      const appointment = await storage.updateAppointmentBooking(id, {
-        status,
-        adminNotes,
-        isConfirmed: status === 'confirmed'
-      });
-      
-      res.json({
-        success: true,
-        message: "Appointment updated successfully",
-        appointment
-      });
-    } catch (error) {
-      console.error("Error updating appointment:", error);
-      res.status(500).json({
-        success: false,
-        message: "Failed to update appointment"
-      });
-    }
-  });
 
   const httpServer = createServer(app);
   return httpServer;

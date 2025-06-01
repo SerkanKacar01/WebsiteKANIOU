@@ -65,12 +65,7 @@ import {
   websiteContentIndex,
   WebsiteContentIndex,
   InsertWebsiteContentIndex,
-  appointmentBookings,
-  AppointmentBooking,
-  InsertAppointmentBooking,
-  businessHours,
-  BusinessHours,
-  InsertBusinessHours,
+
   inventoryAlerts,
   InventoryAlert,
   InsertInventoryAlert,
@@ -192,18 +187,7 @@ export interface IStorage {
   getStyleQuoteRequestsByConsultation(consultationId: number): Promise<StyleQuoteRequest[]>;
   getUnprocessedStyleQuoteRequests(): Promise<StyleQuoteRequest[]>;
 
-  // Appointment Bookings
-  createAppointmentBooking(booking: InsertAppointmentBooking): Promise<AppointmentBooking>;
-  getAppointmentBookings(): Promise<AppointmentBooking[]>;
-  getAppointmentBookingById(id: number): Promise<AppointmentBooking | undefined>;
-  getAppointmentBookingsByDate(date: string): Promise<AppointmentBooking[]>;
-  updateAppointmentBooking(id: number, updates: Partial<AppointmentBooking>): Promise<AppointmentBooking>;
-  getAvailableTimeSlots(date: string): Promise<string[]>;
 
-  // Business Hours
-  getBusinessHours(): Promise<BusinessHours[]>;
-  createBusinessHours(hours: InsertBusinessHours): Promise<BusinessHours>;
-  updateBusinessHours(id: number, updates: Partial<BusinessHours>): Promise<BusinessHours>;
 
   // Loyalty Program
   getLoyaltyCustomerByEmail(email: string): Promise<LoyaltyCustomer | undefined>;
@@ -774,82 +758,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Appointment Bookings Implementation
-  async createAppointmentBooking(booking: InsertAppointmentBooking): Promise<AppointmentBooking> {
-    const [result] = await db.insert(appointmentBookings).values(booking).returning();
-    return result;
-  }
 
-  async getAppointmentBookings(): Promise<AppointmentBooking[]> {
-    return await db.select().from(appointmentBookings)
-      .orderBy(desc(appointmentBookings.createdAt));
-  }
-
-  async getAppointmentBookingById(id: number): Promise<AppointmentBooking | undefined> {
-    const [result] = await db.select().from(appointmentBookings)
-      .where(eq(appointmentBookings.id, id));
-    return result;
-  }
-
-  async getAppointmentBookingsByDate(date: string): Promise<AppointmentBooking[]> {
-    return await db.select().from(appointmentBookings)
-      .where(eq(appointmentBookings.preferredDate, date))
-      .orderBy(appointmentBookings.preferredTime);
-  }
-
-  async updateAppointmentBooking(id: number, updates: Partial<AppointmentBooking>): Promise<AppointmentBooking> {
-    const [result] = await db.update(appointmentBookings)
-      .set({ ...updates, updatedAt: new Date() })
-      .where(eq(appointmentBookings.id, id))
-      .returning();
-    return result;
-  }
-
-  async getAvailableTimeSlots(date: string): Promise<string[]> {
-    // Check if the entire date is blocked
-    const isBlocked = await this.isDateBlocked(date);
-    if (isBlocked) {
-      const blockedSlots = await this.getBlockedSlotsForDate(date);
-      // If no specific slots are defined, the entire day is blocked
-      if (!blockedSlots || blockedSlots.length === 0) {
-        return [];
-      }
-    }
-
-    const existingBookings = await this.getAppointmentBookingsByDate(date);
-    const bookedTimes = existingBookings.map(booking => booking.preferredTime);
-    
-    // Get blocked time slots for this date
-    const blockedSlots = await this.getBlockedSlotsForDate(date);
-    
-    // Generate available time slots (10:00-18:00, 1-hour intervals)
-    const allSlots = [
-      "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"
-    ];
-    
-    // Filter out booked times and blocked slots
-    return allSlots.filter(slot => 
-      !bookedTimes.includes(slot) && !blockedSlots.includes(slot)
-    );
-  }
-
-  // Business Hours Implementation
-  async getBusinessHours(): Promise<BusinessHours[]> {
-    return await db.select().from(businessHours)
-      .orderBy(businessHours.dayOfWeek);
-  }
-
-  async createBusinessHours(hours: InsertBusinessHours): Promise<BusinessHours> {
-    const [result] = await db.insert(businessHours).values(hours).returning();
-    return result;
-  }
-
-  async updateBusinessHours(id: number, updates: Partial<BusinessHours>): Promise<BusinessHours> {
-    const [result] = await db.update(businessHours)
-      .set({ ...updates, updatedAt: new Date() })
-      .where(eq(businessHours.id, id))
-      .returning();
-    return result;
-  }
 
   // Inventory Alerts Implementation
   async getProductStock(): Promise<ProductStock[]> {

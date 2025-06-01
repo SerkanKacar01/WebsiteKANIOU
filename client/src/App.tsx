@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -67,6 +68,9 @@ import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 function Router() {
   const { t } = useLanguage();
   const [location] = useLocation();
+  
+  // Enable scroll to top on route change
+  useScrollToTop();
 
   // Get page title based on current route
   const getPageTitle = () => {

@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
+import { scrollToTop } from "@/hooks/use-scroll-to-top";
 import LanguageSelector from "./LanguageSelector";
 import NewsletterSignup from "./NewsletterSignup";
 
@@ -92,6 +93,16 @@ const Header = () => {
     setShowMobileSubmenu(false);
   };
 
+  const handleNavClick = () => {
+    scrollToTop('instant');
+    setShowDropdown(false);
+  };
+
+  const handleMobileNavClick = () => {
+    scrollToTop('instant');
+    handleCloseSheet();
+  };
+
   const isActive = (href: string) => {
     if (href === "/" && location === "/") return true;
     if (href !== "/" && location.startsWith(href)) return true;
@@ -116,7 +127,10 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/">
-              <div className="flex items-center cursor-pointer">
+              <div 
+                className="flex items-center cursor-pointer"
+                onClick={() => scrollToTop('instant')}
+              >
                 <img
                   src={kaniouLogo}
                   alt="KANIOU zilvernaald"
@@ -183,7 +197,7 @@ const Header = () => {
                                 <Link href={category.href}>
                                   <div
                                     className="font-body text-sm block py-2.5 text-text-dark hover:text-accent transition-colors cursor-pointer"
-                                    onClick={handleCloseSheet}
+                                    onClick={handleMobileNavClick}
                                   >
                                     {category.label}
                                   </div>
@@ -195,7 +209,7 @@ const Header = () => {
                                 <Link href="/products">
                                   <div
                                     className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
-                                    onClick={handleCloseSheet}
+                                    onClick={handleMobileNavClick}
                                   >
                                     View All Products
                                   </div>

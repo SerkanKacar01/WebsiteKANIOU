@@ -7,7 +7,7 @@ import { Palette, Wand2, ArrowRight, Sparkles, Camera, Settings } from "lucide-r
 
 const InteractiveFeaturesSection = () => {
   return (
-    <section className="py-16 bg-gradient-to-br from-primary/5 via-blue-50/50 to-purple-50/30">
+    <section className="py-16 bg-gradient-to-br from-primary/5 via-secondary/20 to-secondary/30">
       <Container>
         <div className="text-center mb-12">
           <Badge className="mb-4 text-sm px-4 py-2 bg-gradient-to-r from-primary to-primary/80">

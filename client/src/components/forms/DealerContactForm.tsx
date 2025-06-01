@@ -168,7 +168,7 @@ const DealerContactForm = () => {
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl flex items-center justify-center gap-2">
-          <Building2 className="h-6 w-6 text-blue-600" />
+          <Building2 className="h-6 w-6 text-primary" />
           {currentContent.title}
         </CardTitle>
       </CardHeader>

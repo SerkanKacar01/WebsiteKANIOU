@@ -177,7 +177,7 @@ const SmartMeasurementGuide: React.FC<SmartMeasurementGuideProps> = ({
         </div>
         
         {isCalibrating && (
-          <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
+          <div className="absolute inset-0 bg-primary bg-opacity-20 flex items-center justify-center">
             <div className="bg-white rounded-lg p-4 text-center">
               <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-2"></div>
               <p className="text-sm font-medium">Kalibreren...</p>
@@ -192,7 +192,7 @@ const SmartMeasurementGuide: React.FC<SmartMeasurementGuideProps> = ({
           <Button 
             onClick={calibrateReference}
             disabled={isCalibrating}
-            className="bg-blue-500 hover:bg-blue-600"
+            className="bg-primary hover:bg-primary/90"
           >
             {isCalibrating ? (
               <>

@@ -10,7 +10,7 @@ const InteractiveFeaturesSection = () => {
     <section className="py-16 bg-gradient-to-br from-primary/5 via-blue-50/50 to-purple-50/30">
       <Container>
         <div className="text-center mb-12">
-          <Badge className="mb-4 text-sm px-4 py-2 bg-gradient-to-r from-primary to-blue-600">
+          <Badge className="mb-4 text-sm px-4 py-2 bg-gradient-to-r from-primary to-primary/80">
             <Sparkles className="h-4 w-4 mr-2" />
             Nieuw & Innovatief
           </Badge>

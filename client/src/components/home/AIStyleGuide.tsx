@@ -42,17 +42,17 @@ const AIStyleGuide = () => {
       title: "Contemporary Chic",
       description: "Moderne trends gecombineerd met persoonlijke stijl",
       features: ["Duo rolgordijnen", "Textiel lamellen", "Contrasterende kleuren"],
-      color: "from-primary to-blue-600",
-      bgGradient: "from-blue-50 to-indigo-50",
+      color: "from-primary to-primary/80",
+      bgGradient: "from-secondary/20 to-secondary/30",
       icon: TrendingUp
     }
   ];
 
   return (
-    <section className="py-12 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30">
+    <section className="py-12 bg-gradient-to-br from-white via-gray-50/50 to-secondary/20">
       <Container>
         <div className="text-center mb-10">
-          <Badge className="mb-4 text-sm px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white">
+          <Badge className="mb-4 text-sm px-4 py-2 bg-gradient-to-r from-primary to-primary/80 text-white">
             <Brain className="h-4 w-4 mr-2" />
             AI Stijlgids
           </Badge>
@@ -113,7 +113,7 @@ const AIStyleGuide = () => {
 
         <div className="text-center">
           <Link href="/color-matcher">
-            <Button className="bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-white px-8 py-3 rounded-lg text-base font-medium transition-all duration-300 hover:shadow-lg">
+            <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white px-8 py-3 rounded-lg text-base font-medium transition-all duration-300 hover:shadow-lg">
               <Sparkles className="h-5 w-5 mr-2" />
               Start AI Stijlanalyse
               <ArrowRight className="h-5 w-5 ml-2" />

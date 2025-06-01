@@ -33,7 +33,7 @@ const SmartWelcomeButtons = () => {
       description: "Upload foto voor kleuradvies",
       icon: Palette,
       href: "/color-matcher",
-      color: "from-primary to-blue-600",
+      color: "from-primary to-primary/80",
       bgColor: "bg-primary/10"
     },
     {

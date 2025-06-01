@@ -42,17 +42,17 @@ const BusinessPage = () => {
         <meta property="og:description" content="Professionele raambekleding voor bedrijven, projecten en dealers" />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-secondary/30">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-20 px-4">
+        <section className="relative bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white py-20 px-4">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               🏢 Business Solutions for Professionals
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            <p className="text-xl md:text-2xl mb-8 text-white/90">
               Bent u aannemer, architect, interieurdesigner, winkel of projectstudio op zoek naar hoogwaardige raambekleding op maat voor uw klanten?
             </p>
-            <p className="text-lg mb-10 max-w-3xl mx-auto text-blue-50">
+            <p className="text-lg mb-10 max-w-3xl mx-auto text-white/80">
               KANIOU is uw betrouwbare partner voor stijlvolle en functionele oplossingen met professionele voorwaarden.
             </p>
           </div>

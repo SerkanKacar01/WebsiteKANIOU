@@ -38,6 +38,7 @@ import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
+import BusinessPage from "@/pages/BusinessPage";
 
 // Product pages with calculators
 import RolgordijnenPage from "@/pages/products/rolgordijnen";
@@ -75,6 +76,7 @@ function Router() {
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
 
+    if (location === "/zakelijk" || location === "/business") return "Business Solutions" + " | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
     if (location === "/cookie-policy") return "Cookie Policy" + " | " + t("app.title");
     if (location === "/cookie-preferences") return "Cookies beheren" + " | " + t("app.title");
@@ -124,6 +126,8 @@ function Router() {
         <Route path="/about" component={AboutPage} />
         <Route path="/overons" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
+        <Route path="/zakelijk" component={BusinessPage} />
+        <Route path="/business" component={BusinessPage} />
         <Route path="/quote" component={QuotePage} />
         <Route path="/smart-quote" component={SmartQuote} />
         <Route path="/slimme-offerte" component={SmartQuote} />

@@ -1178,7 +1178,92 @@ ${chatSummary}
     }
   });
 
+  // Newsletter Subscription
+  app.post("/api/newsletter/subscribe", formRateLimiter, spamDetectionMiddleware, async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertNewsletterSubscriptionSchema.parse(req.body);
+      
+      // Check if email already exists
+      const existingSubscription = await storage.getNewsletterSubscriptionByEmail(validatedData.email);
+      if (existingSubscription && existingSubscription.isActive) {
+        return res.status(400).json({
+          success: false,
+          message: validatedData.language === "nl" 
+            ? "Dit e-mailadres is al ingeschreven voor onze nieuwsbrief"
+            : validatedData.language === "fr"
+            ? "Cette adresse e-mail est déjà abonnée à notre newsletter"
+            : "This email address is already subscribed to our newsletter"
+        });
+      }
 
+      // Create or reactivate subscription
+      let subscription;
+      if (existingSubscription && !existingSubscription.isActive) {
+        // Reactivate existing subscription
+        subscription = await storage.updateNewsletterSubscription(existingSubscription.id, {
+          isActive: true,
+          name: validatedData.name,
+          language: validatedData.language,
+          unsubscribedAt: null
+        });
+      } else {
+        // Create new subscription
+        subscription = await storage.createNewsletterSubscription(validatedData);
+      }
+
+      // Send welcome email
+      try {
+        await sendNewsletterWelcomeEmail(
+          subscription.email,
+          subscription.name || "",
+          subscription.language || "nl"
+        );
+      } catch (emailError) {
+        console.error("Failed to send welcome email:", emailError);
+        // Don't fail the request if email fails
+      }
+
+      // Send notification to admin
+      try {
+        await sendNewsletterNotificationToAdmin(subscription);
+      } catch (adminEmailError) {
+        console.error("Failed to send admin notification:", adminEmailError);
+        // Don't fail the request if admin email fails
+      }
+
+      res.json({
+        success: true,
+        message: validatedData.language === "nl"
+          ? "Bedankt voor je inschrijving! Je ontvangt binnenkort een bevestigingsmail."
+          : validatedData.language === "fr"
+          ? "Merci pour votre inscription ! Vous recevrez bientôt un e-mail de confirmation."
+          : "Thank you for subscribing! You'll receive a confirmation email soon.",
+        subscription: {
+          email: subscription.email,
+          language: subscription.language
+        }
+      });
+    } catch (error) {
+      console.error("Newsletter subscription error:", error);
+      
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({
+          success: false,
+          message: validationError.message,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: req.body.language === "nl"
+          ? "Er is een fout opgetreden bij het verwerken van je inschrijving"
+          : req.body.language === "fr"
+          ? "Une erreur s'est produite lors du traitement de votre inscription"
+          : "An error occurred while processing your subscription"
+      });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

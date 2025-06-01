@@ -224,6 +224,13 @@ export interface IStorage {
   isDateBlocked(date: string): Promise<boolean>;
   getBlockedSlotsForDate(date: string): Promise<string[]>;
 
+  // Newsletter Subscriptions
+  createNewsletterSubscription(data: InsertNewsletterSubscription): Promise<NewsletterSubscription>;
+  getNewsletterSubscriptionByEmail(email: string): Promise<NewsletterSubscription | null>;
+  getActiveNewsletterSubscriptions(): Promise<NewsletterSubscription[]>;
+  updateNewsletterSubscription(id: number, updates: Partial<NewsletterSubscription>): Promise<NewsletterSubscription>;
+  unsubscribeFromNewsletter(email: string): Promise<boolean>;
+
 }
 
 export class DatabaseStorage implements IStorage {

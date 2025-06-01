@@ -8,7 +8,7 @@ import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSelector from "./LanguageSelector";
 import NewsletterSignup from "./NewsletterSignup";
-import AppointmentBookingButton from "@/components/appointment/AppointmentBookingButton";
+
 import { kaniouLogo } from "@/assets";
 
 const productCategories = [

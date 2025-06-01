@@ -46,15 +46,7 @@ const SmartWelcomeButtons = () => {
       bgColor: "bg-accent/10",
       action: "openChat"
     },
-    {
-      id: "appointment",
-      title: "Afspraak Maken",
-      description: "Plan een gratis adviesgesprek",
-      icon: Calendar,
-      href: "/appointment",
-      color: "from-green-600 to-emerald-500",
-      bgColor: "bg-green-50"
-    }
+
   ];
 
   const handleChatOpen = () => {

@@ -9,7 +9,8 @@ import {
   Info, 
   HelpCircle,
   Clock,
-  Building2
+  Building2,
+  MessageCircle
 } from "lucide-react";
 
 interface SmartSuggestionButtonsProps {
@@ -323,6 +324,42 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
               </Button>
             );
           })}
+        </div>
+
+        {/* WhatsApp Contact Option */}
+        <div className="mt-4 pt-4 border-t border-amber-200">
+          <div className="text-center">
+            <p className="text-xs text-amber-800 mb-3">
+              {(() => {
+                const whatsappTexts = {
+                  nl: "Directe hulp nodig? Neem contact met ons op via WhatsApp",
+                  fr: "Besoin d'aide directe? Contactez-nous via WhatsApp",
+                  en: "Need direct help? Contact us via WhatsApp",
+                  tr: "Doğrudan yardıma mı ihtiyacınız var? WhatsApp ile bize ulaşın"
+                };
+                return whatsappTexts[language as keyof typeof whatsappTexts] || whatsappTexts.nl;
+              })()}
+            </p>
+            <Button
+              variant="outline"
+              className="bg-[#25D366] hover:bg-[#20B358] text-white border-[#25D366] hover:border-[#20B358] transition-all duration-300 shadow-md hover:shadow-lg rounded-lg px-6 py-2"
+              onClick={() => {
+                window.open('https://wa.me/+32467856405', '_blank');
+                onHide();
+              }}
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              {(() => {
+                const whatsappButtonTexts = {
+                  nl: "💬 WhatsApp",
+                  fr: "💬 WhatsApp", 
+                  en: "💬 WhatsApp",
+                  tr: "💬 WhatsApp"
+                };
+                return whatsappButtonTexts[language as keyof typeof whatsappButtonTexts] || whatsappButtonTexts.nl;
+              })()}
+            </Button>
+          </div>
         </div>
         
         {/* Step 4: Reminder Prompt after 30 seconds */}

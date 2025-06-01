@@ -115,7 +115,7 @@ export function SignupPopup() {
             <h3 className="text-xl font-semibold text-amber-900 mb-2">
               Bedankt voor je inschrijving!
             </h3>
-            <p className="text-amber-700">
+            <p className="text-primary">
               We houden je op de hoogte van onze acties.
             </p>
           </div>
@@ -199,7 +199,7 @@ export function SignupPopup() {
           <Button
             type="submit"
             disabled={signupMutation.isPending}
-            className="w-full bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700 text-white font-semibold py-4 h-14 rounded-lg shadow-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-2xl"
+            className="w-full bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-primary text-white font-semibold py-4 h-14 rounded-lg shadow-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-2xl"
           >
             {signupMutation.isPending ? 'Bezig met inschrijven...' : 'Inschrijven'}
           </Button>

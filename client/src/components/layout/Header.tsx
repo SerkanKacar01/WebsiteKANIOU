@@ -225,7 +225,7 @@ const Header = () => {
                     <NewsletterSignup variant="default" onModalOpen={handleCloseSheet}>
                       <Button
                         variant="outline"
-                        className="w-full border-amber-500 text-amber-600 hover:bg-amber-50"
+                        className="w-full border-amber-500 text-primary hover:bg-primary/10"
                       >
                         Acties & Kortingen
                       </Button>

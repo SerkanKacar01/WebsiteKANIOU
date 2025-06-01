@@ -329,7 +329,7 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
         {showReminderPrompt && (
           <div className="mt-4 p-3 bg-amber-100 border border-amber-300 rounded-lg animate-in slide-in-from-top-2 duration-300">
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-amber-600" />
+              <Clock className="h-4 w-4 text-primary" />
               <span className="text-sm text-amber-800">
                 {(() => {
                   const reminderTexts = {
@@ -345,7 +345,7 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
           </div>
         )}
         
-        <div className="mt-4 pt-3 border-t border-amber-200 text-xs text-amber-700 opacity-75 text-center">
+        <div className="mt-4 pt-3 border-t border-amber-200 text-xs text-primary opacity-75 text-center">
           {(() => {
             const hintTexts = {
               nl: "Klik op een knop hierboven of begin te typen voor persoonlijke hulp",

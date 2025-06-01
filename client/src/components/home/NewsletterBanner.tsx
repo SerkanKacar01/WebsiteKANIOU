@@ -109,13 +109,13 @@ const NewsletterBanner = () => {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-md">
-      <Card className="shadow-2xl border-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+      <Card className="shadow-2xl border-2 bg-secondary border-primary">
         <CardContent className="p-6">
           {/* Close Button */}
           <Button
             variant="ghost"
             size="sm"
-            className="absolute top-2 right-2 h-8 w-8 p-0 hover:bg-gray-100"
+            className="absolute top-2 right-2 h-8 w-8 p-0 hover:bg-primary/10"
             onClick={() => setIsDismissed(true)}
             aria-label={content.dismissButton}
           >
@@ -124,7 +124,7 @@ const NewsletterBanner = () => {
 
           {/* Header */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-600 p-2 rounded-full">
+            <div className="bg-primary p-2 rounded-full">
               <Mail className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -192,7 +192,7 @@ const NewsletterBanner = () => {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5"
+              className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2.5"
               disabled={subscribeMutation.isPending}
             >
               {subscribeMutation.isPending ? (

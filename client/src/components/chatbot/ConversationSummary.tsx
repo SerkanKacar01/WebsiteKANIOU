@@ -130,7 +130,7 @@ export function ConversationSummaryComponent({ summary, onClose }: ConversationS
         </div>
 
         {/* Summary Stats */}
-        <div className="flex gap-4 text-sm text-amber-700">
+        <div className="flex gap-4 text-sm text-primary">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
             <span>{text.duration}: {summary.duration}</span>
@@ -156,7 +156,7 @@ export function ConversationSummaryComponent({ summary, onClose }: ConversationS
               <Button
                 onClick={() => setShowEmailForm(true)}
                 size="sm"
-                className="bg-amber-600 hover:bg-amber-700 text-white"
+                className="bg-primary hover:bg-primary text-white"
               >
                 <Mail className="h-4 w-4 mr-1" />
                 {text.yes}
@@ -165,7 +165,7 @@ export function ConversationSummaryComponent({ summary, onClose }: ConversationS
                 onClick={onClose}
                 variant="outline"
                 size="sm"
-                className="border-amber-300 text-amber-700 hover:bg-amber-100"
+                className="border-amber-300 text-primary hover:bg-amber-100"
               >
                 {text.no}
               </Button>
@@ -186,7 +186,7 @@ export function ConversationSummaryComponent({ summary, onClose }: ConversationS
                 type="submit"
                 size="sm"
                 disabled={sendEmailMutation.isPending}
-                className="bg-amber-600 hover:bg-amber-700 text-white"
+                className="bg-primary hover:bg-primary text-white"
               >
                 <Mail className="h-4 w-4 mr-1" />
                 {sendEmailMutation.isPending ? 'Sending...' : text.sendEmail}
@@ -196,7 +196,7 @@ export function ConversationSummaryComponent({ summary, onClose }: ConversationS
                 onClick={() => setShowEmailForm(false)}
                 variant="outline"
                 size="sm"
-                className="border-amber-300 text-amber-700 hover:bg-amber-100"
+                className="border-amber-300 text-primary hover:bg-amber-100"
               >
                 {text.close}
               </Button>

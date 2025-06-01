@@ -174,13 +174,13 @@ const OvergordijnenPage = () => {
             </div>
 
             <div className="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-display text-xl font-semibold mb-4 text-amber-900">
                 Polyester
               </h3>
-              <p className="text-amber-700">
+              <p className="text-primary">
                 Onderhoudsarm en kreukbestendig voor praktisch gebruik.
               </p>
             </div>
@@ -284,7 +284,7 @@ const OvergordijnenPage = () => {
             <div className="bg-white p-8 rounded-lg shadow-sm border border-neutral-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Layers className="w-8 h-8 text-amber-600" />
+                  <Layers className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="font-display text-xl font-semibold mb-2">
                   Wave plooi
@@ -427,7 +427,7 @@ const OvergordijnenPage = () => {
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-sm border border-neutral-200">
-              <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <Home className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-display text-2xl font-semibold mb-4 text-center">

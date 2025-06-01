@@ -114,7 +114,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
 
   const getButtonClassName = () => {
     if (variant === "header") {
-      return "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105";
+      return "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-primary hover:to-orange-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105";
     }
     return "";
   };
@@ -229,7 +229,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
                 />
                 <label htmlFor="privacy-consent" className="text-xs text-neutral-600 leading-relaxed cursor-pointer">
                   Ik ga akkoord met het ontvangen van marketing e-mails van KANIOU en begrijp dat ik me op elk moment kan uitschrijven. 
-                  Meer info in ons <a href="/privacy" className="text-amber-600 hover:text-amber-700 underline">privacybeleid</a>.
+                  Meer info in ons <a href="/privacy" className="text-primary hover:text-primary underline">privacybeleid</a>.
                 </label>
               </div>
 

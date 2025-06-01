@@ -1,0 +1,68 @@
+🔧 GENERAL INSTRUCTION FOR REPLIT — GLOBAL COLOR THEME UPDATE (FOR ENTIRE WEBSITE)
+
+Dear Replit team,
+
+Please apply the following global color theme across the entire KANIOU website. This is a full website-wide design update focused only on the color styling, and must not affect the structure, layout, or content.
+
+⸻
+
+🎨 COLOR THEME TO BE USED EVERYWHERE
+
+1. PRIMARY ACCENT COLOR
+
+This should be used for:
+– All main buttons,
+– Hover effects,
+– Highlights,
+– CTA (Call to Action) elements,
+– Chatbot header or accent areas.
+	•	HEX: #D9C29C
+	•	RGB: rgb(217, 194, 156)
+
+⸻
+
+2. LIGHT BACKGROUND COLOR
+
+Use this as a soft section background in between white sections to create contrast, for example:
+– Under quote forms,
+– In newsletter blocks,
+– Behind feature panels,
+– Or in chatbot suggestion areas.
+	•	HEX: #E8D9B8
+	•	RGB: rgb(232, 217, 184)
+
+⸻
+
+3. TEXT COLOR (IMPORTANT)
+	•	White text (#FFFFFF) must be used on dark or accent backgrounds.
+	•	Use dark grey (#222222) on light backgrounds for readability.
+	•	Please do not change body text size or structure — only color where contrast is needed.
+
+⸻
+
+🔄 WHERE TO APPLY THIS COLOR THEME (ACROSS THE WHOLE WEBSITE)
+
+Please make sure the new colors are applied in all of the following areas:
+	•	✅ Navigation bar buttons and hover effects
+	•	✅ All CTA buttons (e.g. “Vraag offerte aan”, “Gratis advies”, “Bekijk collectie”)
+	•	✅ Newsletter subscription banner
+	•	✅ Homepage suggestion cards or service blocks
+	•	✅ Chatbot suggestion buttons and welcome message
+	•	✅ Background sections in home, product, contact, quote, and business pages
+	•	✅ Any pricing blocks or visual highlights
+	•	✅ Footer background (if previously gray/white, now use light color background with readable text)
+	•	✅ Modal or popup boxes if used
+	•	✅ Cookie banner and alerts
+	•	✅ Contact form buttons or background blocks
+
+⸻
+
+✅ NOTES & CONSTRAINTS
+	•	Do NOT change any layout, spacing, padding, structure, or existing image positions.
+	•	Do NOT remove or hide any content or blocks.
+	•	This is a purely visual style update, not a structural redesign.
+	•	Mobile responsiveness must remain intact after styling.
+
+⸻
+
+Please confirm once everything is updated and let me know if screenshots or live preview is ready.

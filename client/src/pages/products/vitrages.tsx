@@ -104,13 +104,13 @@ const VitragesPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             <div className="bg-gradient-to-br from-amber-50 to-amber-100 p-8 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <Sun className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-display text-xl font-semibold mb-4 text-amber-900">
                 Zachte lichtfiltering
               </h3>
-              <p className="text-amber-700">
+              <p className="text-primary">
                 Zonder het daglicht volledig te blokkeren voor een natuurlijke, warme sfeer.
               </p>
             </div>
@@ -220,7 +220,7 @@ const VitragesPage = () => {
             <div className="bg-white p-8 rounded-lg shadow-sm border border-neutral-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Layers className="w-8 h-8 text-amber-600" />
+                  <Layers className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="font-display text-xl font-semibold mb-2">Wave plooi</h3>
                 <span className="inline-block bg-amber-100 text-amber-800 text-sm font-medium px-3 py-1 rounded-full">Modern</span>

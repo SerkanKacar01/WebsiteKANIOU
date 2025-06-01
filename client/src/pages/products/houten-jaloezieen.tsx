@@ -86,7 +86,7 @@ const HoutenJaloezieen = () => {
                 </Badge>
                 <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                   Houten Jaloezieën
-                  <span className="block text-3xl lg:text-4xl text-amber-700 mt-2">
+                  <span className="block text-3xl lg:text-4xl text-primary mt-2">
                     Natuurlijke Warmte & Tijdloze Luxe
                   </span>
                 </h1>
@@ -101,7 +101,7 @@ const HoutenJaloezieen = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3"
+                  className="bg-primary hover:bg-primary text-white px-8 py-3"
                 >
                   <Mail className="mr-2 h-5 w-5" />
                   Vraag een offerte aan
@@ -109,7 +109,7 @@ const HoutenJaloezieen = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-amber-600 text-amber-700 hover:bg-amber-50 px-8 py-3"
+                  className="border-primary text-primary hover:bg-primary/10 px-8 py-3"
                 >
                   <Phone className="mr-2 h-5 w-5" />
                   Plan een gratis adviesgesprek
@@ -125,7 +125,7 @@ const HoutenJaloezieen = () => {
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
                 <div className="flex items-center gap-2">
-                  <Euro className="h-6 w-6 text-amber-600" />
+                  <Euro className="h-6 w-6 text-primary" />
                   <div>
                     <p className="text-sm text-gray-600">Vanaf</p>
                     <p className="text-xl font-bold text-gray-900">
@@ -181,7 +181,7 @@ const HoutenJaloezieen = () => {
               <CardContent className="p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-amber-100 rounded-lg">
-                    <Wrench className="h-6 w-6 text-amber-600" />
+                    <Wrench className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900">
                     Materialen
@@ -210,7 +210,7 @@ const HoutenJaloezieen = () => {
               <CardContent className="p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-amber-100 rounded-lg">
-                    <Palette className="h-6 w-6 text-amber-600" />
+                    <Palette className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900">
                     Kleuren
@@ -232,7 +232,7 @@ const HoutenJaloezieen = () => {
               <CardContent className="p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-amber-100 rounded-lg">
-                    <Settings className="h-6 w-6 text-amber-600" />
+                    <Settings className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900">
                     Afwerking
@@ -277,7 +277,7 @@ const HoutenJaloezieen = () => {
                         {operation.description}
                       </p>
                     </div>
-                    <Settings className="h-5 w-5 text-amber-600" />
+                    <Settings className="h-5 w-5 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -351,7 +351,7 @@ const HoutenJaloezieen = () => {
           <Card className="max-w-2xl mx-auto border-none shadow-xl">
             <CardContent className="p-8 text-center">
               <div className="mb-6">
-                <div className="text-4xl font-bold text-amber-600 mb-2">
+                <div className="text-4xl font-bold text-primary mb-2">
                   €135
                 </div>
                 <div className="text-lg text-gray-600">per m²</div>
@@ -367,7 +367,7 @@ const HoutenJaloezieen = () => {
       </section>
 
       {/* Personal Advice & CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-amber-600 to-orange-600">
+      <section className="py-16 bg-gradient-to-r from-primary to-orange-600">
         <Container>
           <div className="text-center text-white">
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
@@ -382,7 +382,7 @@ const HoutenJaloezieen = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-white text-amber-600 hover:bg-gray-100 px-8 py-3"
+                className="bg-white text-primary hover:bg-gray-100 px-8 py-3"
               >
                 <Mail className="mr-2 h-5 w-5" />
                 Vraag een offerte aan
@@ -390,7 +390,7 @@ const HoutenJaloezieen = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-white hover:bg-white hover:text-amber-600 px-8 py-3"
+                className="border-white text-white hover:bg-white hover:text-primary px-8 py-3"
               >
                 <Phone className="mr-2 h-5 w-5" />
                 Plan een gratis adviesgesprek

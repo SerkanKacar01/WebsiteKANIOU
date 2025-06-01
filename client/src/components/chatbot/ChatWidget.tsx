@@ -749,7 +749,7 @@ export function ChatbotWidget() {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 border-2 border-white z-50 chatbot-button group"
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-primary hover:to-orange-600 border-2 border-white z-50 chatbot-button group"
           size="icon"
         >
           <MessageCircle className="h-6 w-6 text-white transition-transform duration-300 group-hover:scale-110" />
@@ -816,7 +816,7 @@ export function ChatbotWidget() {
                   <div className="flex items-center gap-3 mb-3">
                     <div className="flex items-center gap-2">
                       <MessageCircle className={`h-5 w-5 flex-shrink-0 ${
-                        personalizedGreeting?.isPersonalized ? 'text-green-600' : 'text-amber-600'
+                        personalizedGreeting?.isPersonalized ? 'text-green-600' : 'text-primary'
                       }`} />
                       <span className="chatbot-welcome-title font-bold text-lg text-gray-800">
                         {personalizedGreeting?.isPersonalized ? 'Welcome back!' : t("chatbot.welcome")}
@@ -992,7 +992,7 @@ export function ChatbotWidget() {
                     {chatState.quickReplyType === 'price_request' && (
                       <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
-                          <CheckCircle className="h-5 w-5 text-amber-600" />
+                          <CheckCircle className="h-5 w-5 text-primary" />
                           <span className="font-semibold text-amber-800">
                             {language === 'nl' ? 'Wilt u een persoonlijke offerte aanvragen?' :
                              language === 'en' ? 'Would you like to request a personal offer?' :
@@ -1074,7 +1074,7 @@ export function ChatbotWidget() {
                   type="submit"
                   size="icon"
                   disabled={!message.trim() || sendMessageMutation.isPending || !conversationMutation.data || chatState.showLeadForm}
-                  className="bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white shadow-md transition-all duration-200 flex-shrink-0"
+                  className="bg-gradient-to-r from-primary to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white shadow-md transition-all duration-200 flex-shrink-0"
                 >
                   {sendMessageMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

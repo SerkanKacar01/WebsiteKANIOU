@@ -75,6 +75,7 @@ function Router() {
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
+    if (location === "/appointment") return "Schedule Appointment | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
     if (location === "/cookie-policy") return "Cookie Policy" + " | " + t("app.title");
     if (location === "/cookie-preferences") return "Cookies beheren" + " | " + t("app.title");
@@ -135,6 +136,7 @@ function Router() {
         <Route path="/kamer-preview" component={VirtualRoomPreview} />
         <Route path="/inventory-alerts" component={InventoryAlerts} />
         <Route path="/voorraad-alerts" component={InventoryAlerts} />
+        <Route path="/appointment" component={AppointmentScheduling} />
         <Route path="/appointment-scheduling" component={AppointmentScheduling} />
         <Route path="/afspraak-inplannen" component={AppointmentScheduling} />
         <Route path="/product-360-demo" component={Product360Demo} />

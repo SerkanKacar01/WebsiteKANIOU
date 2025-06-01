@@ -29,6 +29,7 @@ import VirtualRoomPreview from "@/pages/VirtualRoomPreview";
 import InventoryAlerts from "@/pages/InventoryAlerts";
 import AppointmentScheduling from "@/pages/AppointmentScheduling";
 import Admin from "@/pages/Admin";
+import AppointmentAdmin from "@/pages/AppointmentAdmin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
 import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
@@ -165,6 +166,7 @@ function Router() {
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin/chatbot" component={Admin} />
+        <Route path="/admin/appointments" component={AppointmentAdmin} />
         <Route component={NotFound} />
       </Switch>
     </>

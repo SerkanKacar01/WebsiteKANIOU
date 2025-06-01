@@ -1288,6 +1288,137 @@ ${chatSummary}
     }
   });
 
+  // Availability Management API Routes
+  
+  // Get all blocked dates
+  app.get("/api/admin/blocked-dates", async (req: Request, res: Response) => {
+    try {
+      const blockedDates = await storage.getBlockedDates();
+      res.json({
+        success: true,
+        blockedDates
+      });
+    } catch (error) {
+      console.error("Error fetching blocked dates:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch blocked dates"
+      });
+    }
+  });
+
+  // Create a new blocked date
+  app.post("/api/admin/blocked-dates", async (req: Request, res: Response) => {
+    try {
+      const { date, reason, isRecurring, recurringType, blockedSlots } = req.body;
+      
+      const blockedDate = await storage.createBlockedDate({
+        date,
+        reason,
+        isRecurring: isRecurring || false,
+        recurringType,
+        blockedSlots: blockedSlots || []
+      });
+      
+      res.json({
+        success: true,
+        message: "Date blocked successfully",
+        blockedDate
+      });
+    } catch (error) {
+      console.error("Error creating blocked date:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to block date"
+      });
+    }
+  });
+
+  // Update a blocked date
+  app.put("/api/admin/blocked-dates/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      
+      const updatedBlockedDate = await storage.updateBlockedDate(id, updates);
+      
+      res.json({
+        success: true,
+        message: "Blocked date updated successfully",
+        blockedDate: updatedBlockedDate
+      });
+    } catch (error) {
+      console.error("Error updating blocked date:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update blocked date"
+      });
+    }
+  });
+
+  // Delete a blocked date
+  app.delete("/api/admin/blocked-dates/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteBlockedDate(id);
+      
+      res.json({
+        success: true,
+        message: "Blocked date removed successfully"
+      });
+    } catch (error) {
+      console.error("Error deleting blocked date:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to remove blocked date"
+      });
+    }
+  });
+
+  // Get appointment bookings with admin view
+  app.get("/api/admin/appointments", async (req: Request, res: Response) => {
+    try {
+      const appointments = await storage.getAppointmentBookings();
+      
+      res.json({
+        success: true,
+        appointments
+      });
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch appointments"
+      });
+    }
+  });
+
+  // Update appointment status
+  app.put("/api/admin/appointments/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status, adminNotes } = req.body;
+      
+      const appointment = await storage.updateAppointmentBooking(id, {
+        status,
+        adminNotes,
+        isConfirmed: status === 'confirmed'
+      });
+      
+      res.json({
+        success: true,
+        message: "Appointment updated successfully",
+        appointment
+      });
+    } catch (error) {
+      console.error("Error updating appointment:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update appointment"
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

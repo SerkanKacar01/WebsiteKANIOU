@@ -270,27 +270,29 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
           </span>
         </div>
         
-        {/* Step 4: Core Suggestion Buttons Grid - Mobile-friendly layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {/* Step 4: Core Suggestion Buttons Grid - Responsive layout for all screen sizes */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4 chatbot-suggestion-grid">
           {currentButtons.map((button) => {
             const IconComponent = button.icon;
             return (
               <Button
                 key={button.id}
                 variant="outline"
-                className="h-auto p-4 text-left justify-start bg-white hover:bg-amber-50 border-amber-200 hover:border-amber-300 transition-all duration-200 shadow-sm hover:shadow-md rounded-lg group min-h-[60px]"
+                className="h-auto min-h-[60px] md:min-h-[70px] p-3 md:p-5 text-left justify-start bg-white hover:bg-gradient-to-br hover:from-amber-50 hover:to-orange-50 border-amber-200 hover:border-amber-400 transition-all duration-300 shadow-sm hover:shadow-lg rounded-xl group w-full chatbot-suggestion-button"
                 onClick={() => handleButtonClick(button)}
               >
-                <div className="flex items-center gap-3 w-full">
-                  <div className="flex-shrink-0">
-                    <span className="text-lg">{button.emoji}</span>
+                <div className="flex items-center gap-3 md:gap-4 w-full">
+                  <div className="flex-shrink-0 flex items-center justify-center">
+                    <span className="text-lg md:text-xl group-hover:scale-110 transition-transform duration-300">{button.emoji}</span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-gray-800 break-words leading-tight block">
+                  <div className="flex-1 min-w-0 flex items-center">
+                    <span className="text-sm md:text-base font-medium text-gray-800 break-words leading-tight block group-hover:text-amber-900 transition-colors duration-300">
                       {button.text}
                     </span>
                   </div>
-                  <IconComponent className="h-4 w-4 text-amber-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                  <div className="flex-shrink-0 flex items-center justify-center">
+                    <IconComponent className="h-4 w-4 md:h-5 md:w-5 text-amber-600 group-hover:text-amber-700 group-hover:scale-110 transition-all duration-300" />
+                  </div>
                 </div>
               </Button>
             );

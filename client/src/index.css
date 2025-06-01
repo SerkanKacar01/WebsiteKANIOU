@@ -164,6 +164,26 @@
   animation: gentle-shake 0.5s ease-in-out;
 }
 
+/* Desktop chatbot suggestion buttons enhancements */
+@media (min-width: 768px) {
+  .chatbot-suggestion-grid {
+    gap: 1rem;
+  }
+  
+  .chatbot-suggestion-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .chatbot-suggestion-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15);
+  }
+  
+  .chatbot-suggestion-button:active {
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Mobile-specific chatbot container fixes */
 @media (max-width: 640px) {
   .chatbot-container {

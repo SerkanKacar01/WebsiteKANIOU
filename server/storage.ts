@@ -635,6 +635,14 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(newsletterSubscriptions.subscribedAt));
   }
 
+  async updateNewsletterSubscription(id: number, updates: Partial<NewsletterSubscription>): Promise<NewsletterSubscription> {
+    const [subscription] = await db.update(newsletterSubscriptions)
+      .set(updates)
+      .where(eq(newsletterSubscriptions.id, id))
+      .returning();
+    return subscription;
+  }
+
   async unsubscribeFromNewsletter(email: string): Promise<boolean> {
     try {
       await db.update(newsletterSubscriptions)

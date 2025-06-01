@@ -1213,11 +1213,11 @@ ${chatSummary}
 
       // Send welcome email
       try {
-        await sendNewsletterWelcomeEmail(
-          subscription.email,
-          subscription.name || "",
-          subscription.language || "nl"
-        );
+        await sendNewsletterWelcomeEmail({
+          email: subscription.email,
+          name: subscription.name || "",
+          language: subscription.language || "nl"
+        });
       } catch (emailError) {
         console.error("Failed to send welcome email:", emailError);
         // Don't fail the request if email fails
@@ -1225,7 +1225,11 @@ ${chatSummary}
 
       // Send notification to admin
       try {
-        await sendNewsletterNotificationToAdmin(subscription);
+        await sendNewsletterNotificationToAdmin({
+          email: subscription.email,
+          name: subscription.name || "",
+          language: subscription.language || "nl"
+        });
       } catch (adminEmailError) {
         console.error("Failed to send admin notification:", adminEmailError);
         // Don't fail the request if admin email fails

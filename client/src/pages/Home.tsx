@@ -8,6 +8,7 @@ import GallerySection from "@/components/home/GallerySection";
 import AboutCompany from "@/components/home/AboutCompany";
 import InteractiveFeaturesSection from "@/components/home/InteractiveFeaturesSection";
 import SmartQuoteModule from "@/components/home/SmartQuoteModule";
+import NewsletterBanner from "@/components/home/NewsletterBanner";
 
 import QuoteRequestSection from "@/components/home/QuoteRequestSection";
 import ContactSection from "@/components/home/ContactSection";
@@ -35,6 +36,9 @@ const Home = () => {
       <AboutCompany />
       <QuoteRequestSection />
       <ContactSection />
+      
+      {/* Newsletter Subscription Banner */}
+      <NewsletterBanner />
     </>
   );
 };

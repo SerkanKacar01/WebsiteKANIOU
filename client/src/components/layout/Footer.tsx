@@ -21,7 +21,7 @@ const Footer = () => {
                 {t("zilvernaald").split(" ")[1] || "zilvernaald"}
               </span>
             </h3>
-            <p className="font-body text-neutral-300 mb-6">
+            <p className="font-body text-white mb-6">
               {t("PREMIUM | Gordijnen & Zonweringen")}
             </p>
             <div className="flex space-x-4">
@@ -49,42 +49,42 @@ const Footer = () => {
             <ul className="font-body space-y-2">
               <li>
                 <Link href="/products?category=curtains">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Gordijnen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=blinds">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Zonweringen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=shades">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Vouwgordijnen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=drapes">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("SQUID")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=accessories">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Gordijnrails")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/quote">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Gordijnroedes")}
                   </div>
                 </Link>
@@ -99,42 +99,42 @@ const Footer = () => {
             <ul className="font-body space-y-2">
               <li>
                 <Link href="/about#measure-guide">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Meet instructies")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#installation-guide">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Installatie instructies")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#care-instructions">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Onderhouds instructies")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#return-policy">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Retour beleid")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#warranty">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Garantie voorwaarden")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/about#faq">
-                  <div className="text-neutral-300 hover:text-secondary transition-colors cursor-pointer">
+                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
                     {t("Veelgestelde vragen")}
                   </div>
                 </Link>
@@ -146,7 +146,7 @@ const Footer = () => {
             <h4 className="font-display text-lg font-medium mb-4">
               {t("Nieuwsbrief")}
             </h4>
-            <p className="font-body text-neutral-300 mb-4">
+            <p className="font-body text-white mb-4">
               {t(
                 "Blijf op de hoogte van nieuwe collecties, aanbiedingen en inspiratie voor uw interieur.",
               )}
@@ -169,34 +169,34 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="font-body text-neutral-400 text-sm mb-4 md:mb-0">
+            <p className="font-body text-white text-sm mb-4 md:mb-0">
               {t(
                 "© 2025 KANIOU zilvernaald – Alle rechten voorbehouden.",
               ).replace("{year}", currentYear.toString())}
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy-policy">
-                <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
+                <div className="font-body text-white text-sm hover:text-secondary transition-colors cursor-pointer">
                   Privacy Policy
                 </div>
               </Link>
               <Link href="/cookie-policy">
-                <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
+                <div className="font-body text-white text-sm hover:text-secondary transition-colors cursor-pointer">
                   Cookie Policy
                 </div>
               </Link>
               <Link href="/cookie-preferences">
-                <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
+                <div className="font-body text-white text-sm hover:text-secondary transition-colors cursor-pointer">
                   Cookies beheren
                 </div>
               </Link>
               <Link href="/terms-of-service">
-                <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
+                <div className="font-body text-white text-sm hover:text-secondary transition-colors cursor-pointer">
                   Terms
                 </div>
               </Link>
               <Link href="/disclaimer">
-                <div className="font-body text-neutral-400 text-sm hover:text-secondary transition-colors cursor-pointer">
+                <div className="font-body text-white text-sm hover:text-secondary transition-colors cursor-pointer">
                   Disclaimer
                 </div>
               </Link>

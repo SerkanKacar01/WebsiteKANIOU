@@ -20,6 +20,9 @@ import {
   contactSubmissions,
   ContactSubmission,
   InsertContactSubmission,
+  dealerContactSubmissions,
+  DealerContactSubmission,
+  InsertDealerContact,
   chatbotConversations,
   ChatbotConversation,
   InsertChatbotConversation,
@@ -140,6 +143,12 @@ export interface IStorage {
     submission: InsertContactSubmission,
   ): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+
+  // Dealer Contact Submissions
+  createDealerContact(
+    submission: InsertDealerContact,
+  ): Promise<DealerContactSubmission>;
+  getDealerContacts(): Promise<DealerContactSubmission[]>;
 
   // Chatbot Conversations
   createChatbotConversation(conversation: InsertChatbotConversation): Promise<ChatbotConversation>;
@@ -412,6 +421,24 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(contactSubmissions)
       .orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  // Dealer Contact Submissions
+  async createDealerContact(
+    submission: InsertDealerContact,
+  ): Promise<DealerContactSubmission> {
+    const result = await db
+      .insert(dealerContactSubmissions)
+      .values(submission)
+      .returning();
+    return result[0];
+  }
+
+  async getDealerContacts(): Promise<DealerContactSubmission[]> {
+    return await db
+      .select()
+      .from(dealerContactSubmissions)
+      .orderBy(desc(dealerContactSubmissions.createdAt));
   }
 
   // Chatbot Conversations

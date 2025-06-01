@@ -791,6 +791,57 @@ ${chatSummary}
 
 
 
+  // Dealer Contact Form Route
+  app.post("/api/contact/dealer", formRateLimiter, async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertDealerContactSchema.parse(req.body);
+      
+      // Create dealer contact submission in storage
+      const dealerContact = await storage.createDealerContact(validatedData);
+      
+      // Send email notification
+      const emailHtml = createDealerContactEmailHtml({
+        businessName: validatedData.businessName,
+        contactPerson: validatedData.contactPerson,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        businessType: validatedData.businessType,
+        message: validatedData.message,
+        language: validatedData.language
+      });
+
+      await sendEmail({
+        from: emailConfig.senderEmail,
+        to: emailConfig.notificationEmail,
+        subject: `[Dealer Partnership] ${validatedData.businessName} - ${validatedData.businessType}`,
+        html: emailHtml,
+        text: `New dealer partnership inquiry from ${validatedData.businessName}\n\nContact: ${validatedData.contactPerson}\nEmail: ${validatedData.email}\nPhone: ${validatedData.phone || 'Not provided'}\nBusiness Type: ${validatedData.businessType}\n\nMessage:\n${validatedData.message}`
+      });
+
+      res.json({
+        success: true,
+        message: "Dealer contact form submitted successfully",
+        submissionId: dealerContact.id
+      });
+
+    } catch (error) {
+      console.error("Error processing dealer contact form:", error);
+      
+      if (error instanceof z.ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({
+          success: false,
+          message: validationError.message
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: "Failed to submit dealer contact form"
+      });
+    }
+  });
+
   // Smart Quote Generator Routes
   app.post("/api/smart-quotes", formRateLimiter, async (req: Request, res: Response) => {
     try {

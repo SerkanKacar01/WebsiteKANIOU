@@ -8,7 +8,7 @@ import GallerySection from "@/components/home/GallerySection";
 import AboutCompany from "@/components/home/AboutCompany";
 import InteractiveFeaturesSection from "@/components/home/InteractiveFeaturesSection";
 import SmartQuoteModule from "@/components/home/SmartQuoteModule";
-import SmartAppointmentBanner from "@/components/home/SmartAppointmentBanner";
+
 import QuoteRequestSection from "@/components/home/QuoteRequestSection";
 import ContactSection from "@/components/home/ContactSection";
 
@@ -31,7 +31,7 @@ const Home = () => {
       <SmartQuoteModule />
       <TestimonialSection />
       <GallerySection />
-      <SmartAppointmentBanner />
+
       <AboutCompany />
       <QuoteRequestSection />
       <ContactSection />

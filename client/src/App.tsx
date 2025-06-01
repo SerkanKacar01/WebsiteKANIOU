@@ -27,9 +27,7 @@ import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
 import VirtualRoomPreview from "@/pages/VirtualRoomPreview";
 import InventoryAlerts from "@/pages/InventoryAlerts";
-import AppointmentScheduling from "@/pages/AppointmentScheduling";
 import Admin from "@/pages/Admin";
-import AppointmentAdmin from "@/pages/AppointmentAdmin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
 import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
@@ -76,7 +74,7 @@ function Router() {
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
-    if (location === "/appointment") return "Schedule Appointment | " + t("app.title");
+
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
     if (location === "/cookie-policy") return "Cookie Policy" + " | " + t("app.title");
     if (location === "/cookie-preferences") return "Cookies beheren" + " | " + t("app.title");
@@ -137,9 +135,7 @@ function Router() {
         <Route path="/kamer-preview" component={VirtualRoomPreview} />
         <Route path="/inventory-alerts" component={InventoryAlerts} />
         <Route path="/voorraad-alerts" component={InventoryAlerts} />
-        <Route path="/appointment" component={AppointmentScheduling} />
-        <Route path="/appointment-scheduling" component={AppointmentScheduling} />
-        <Route path="/afspraak-inplannen" component={AppointmentScheduling} />
+
         <Route path="/product-360-demo" component={Product360Demo} />
         <Route path="/rewards" component={RewardsSystem} />
         <Route path="/recommendations" component={SmartRecommendationEngine} />
@@ -166,7 +162,7 @@ function Router() {
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin/chatbot" component={Admin} />
-        <Route path="/admin/appointments" component={AppointmentAdmin} />
+
         <Route component={NotFound} />
       </Switch>
     </>

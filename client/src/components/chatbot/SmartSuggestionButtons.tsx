@@ -126,6 +126,13 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
         action: "interactive_qa",
         icon: HelpCircle,
         emoji: "❓"
+      },
+      {
+        id: "business_solutions",
+        text: "🏢 Solutions Entreprises",
+        action: "business_solutions",
+        icon: Building2,
+        emoji: "🏢"
       }
     ],
     en: [
@@ -170,6 +177,13 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
         action: "interactive_qa",
         icon: HelpCircle,
         emoji: "❓"
+      },
+      {
+        id: "business_solutions",
+        text: "🏢 Business Solutions",
+        action: "business_solutions",
+        icon: Building2,
+        emoji: "🏢"
       }
     ],
     tr: [
@@ -214,6 +228,13 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
         action: "interactive_qa",
         icon: HelpCircle,
         emoji: "❓"
+      },
+      {
+        id: "business_solutions",
+        text: "🏢 İş Çözümleri",
+        action: "business_solutions",
+        icon: Building2,
+        emoji: "🏢"
       }
     ]
   };

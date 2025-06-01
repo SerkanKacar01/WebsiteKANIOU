@@ -511,6 +511,11 @@ export function ChatbotWidget() {
         sendMessageMutation.mutate(helpText);
         break;
 
+      case 'business_solutions':
+        // 🏢 Business Solutions - redirect to business page
+        window.open('/zakelijk', '_blank');
+        break;
+
       default:
         // For other suggestions, send as regular message
         sendMessageMutation.mutate(suggestionText);

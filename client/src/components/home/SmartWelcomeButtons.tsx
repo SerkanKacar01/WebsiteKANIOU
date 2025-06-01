@@ -24,8 +24,8 @@ const SmartWelcomeButtons = () => {
       description: "Direct een prijsindicatie ontvangen",
       icon: Calculator,
       href: "/smart-quote",
-      color: "from-[#d5c096] to-[#c4b183]",
-      bgColor: "bg-[#d5c096]/10"
+      color: "from-primary to-primary/80",
+      bgColor: "bg-primary/10"
     },
     {
       id: "color-match",
@@ -59,7 +59,7 @@ const SmartWelcomeButtons = () => {
     <section className="py-8 bg-gradient-to-br from-gray-50 to-white border-b border-gray-100">
       <Container>
         <div className="text-center mb-6">
-          <Badge className="mb-3 text-sm px-4 py-2 bg-gradient-to-r from-[#d5c096] to-[#c4b183] text-white">
+          <Badge className="mb-3 text-sm px-4 py-2 bg-gradient-to-r from-primary to-primary/80 text-white">
             <Sparkles className="h-4 w-4 mr-2" />
             Slimme Hulptools
           </Badge>

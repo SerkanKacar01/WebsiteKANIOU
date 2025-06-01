@@ -98,6 +98,9 @@ import {
   warrantyReminders,
   WarrantyReminder,
   InsertWarrantyReminder,
+  blockedDates,
+  BlockedDate,
+  InsertBlockedDate,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -227,6 +230,15 @@ export interface IStorage {
   createInventoryAlert(alert: InsertInventoryAlert): Promise<InventoryAlert>;
   getInventoryAlertsByEmail(email: string): Promise<InventoryAlert[]>;
   deleteInventoryAlert(id: number): Promise<void>;
+
+  // Blocked Dates and Availability Management
+  getBlockedDates(): Promise<BlockedDate[]>;
+  getBlockedDatesByRange(startDate: string, endDate: string): Promise<BlockedDate[]>;
+  createBlockedDate(blockedDate: InsertBlockedDate): Promise<BlockedDate>;
+  updateBlockedDate(id: number, updates: Partial<BlockedDate>): Promise<BlockedDate>;
+  deleteBlockedDate(id: number): Promise<void>;
+  isDateBlocked(date: string): Promise<boolean>;
+  getBlockedSlotsForDate(date: string): Promise<string[]>;
 
 }
 
@@ -793,15 +805,31 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAvailableTimeSlots(date: string): Promise<string[]> {
+    // Check if the entire date is blocked
+    const isBlocked = await this.isDateBlocked(date);
+    if (isBlocked) {
+      const blockedSlots = await this.getBlockedSlotsForDate(date);
+      // If no specific slots are defined, the entire day is blocked
+      if (!blockedSlots || blockedSlots.length === 0) {
+        return [];
+      }
+    }
+
     const existingBookings = await this.getAppointmentBookingsByDate(date);
     const bookedTimes = existingBookings.map(booking => booking.preferredTime);
+    
+    // Get blocked time slots for this date
+    const blockedSlots = await this.getBlockedSlotsForDate(date);
     
     // Generate available time slots (10:00-18:00, 1-hour intervals)
     const allSlots = [
       "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"
     ];
     
-    return allSlots.filter(slot => !bookedTimes.includes(slot));
+    // Filter out booked times and blocked slots
+    return allSlots.filter(slot => 
+      !bookedTimes.includes(slot) && !blockedSlots.includes(slot)
+    );
   }
 
   // Business Hours Implementation
@@ -842,6 +870,56 @@ export class DatabaseStorage implements IStorage {
     await db.update(inventoryAlerts)
       .set({ isActive: false })
       .where(eq(inventoryAlerts.id, id));
+  }
+
+  // Blocked Dates and Availability Management Implementation
+  async getBlockedDates(): Promise<BlockedDate[]> {
+    return await db.select().from(blockedDates)
+      .orderBy(blockedDates.date);
+  }
+
+  async getBlockedDatesByRange(startDate: string, endDate: string): Promise<BlockedDate[]> {
+    return await db.select().from(blockedDates)
+      .where(and(
+        sql`${blockedDates.date} >= ${startDate}`,
+        sql`${blockedDates.date} <= ${endDate}`
+      ))
+      .orderBy(blockedDates.date);
+  }
+
+  async createBlockedDate(blockedDate: InsertBlockedDate): Promise<BlockedDate> {
+    const [result] = await db.insert(blockedDates).values(blockedDate).returning();
+    return result;
+  }
+
+  async updateBlockedDate(id: number, updates: Partial<BlockedDate>): Promise<BlockedDate> {
+    const [result] = await db.update(blockedDates)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(blockedDates.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteBlockedDate(id: number): Promise<void> {
+    await db.delete(blockedDates).where(eq(blockedDates.id, id));
+  }
+
+  async isDateBlocked(date: string): Promise<boolean> {
+    const blocked = await db.select().from(blockedDates)
+      .where(eq(blockedDates.date, date));
+    return blocked.length > 0;
+  }
+
+  async getBlockedSlotsForDate(date: string): Promise<string[]> {
+    const blocked = await db.select().from(blockedDates)
+      .where(eq(blockedDates.date, date));
+    
+    if (blocked.length === 0) return [];
+    
+    // If no specific slots are blocked, return empty array (full day available)
+    // If specific slots are blocked, return those slots
+    const blockedSlots = blocked[0].blockedSlots;
+    return blockedSlots || [];
   }
 
   // Loyalty Program Implementation (stubbed to satisfy interface)

@@ -604,6 +604,33 @@ export type InsertVirtualRoomPreview = z.infer<typeof insertVirtualRoomPreviewSc
 export type BusinessHours = typeof businessHours.$inferSelect;
 export type InsertBusinessHours = z.infer<typeof insertBusinessHoursSchema>;
 
+// Blocked Dates and Availability Management
+export const blockedDates = pgTable("blocked_dates", {
+  id: serial("id").primaryKey(),
+  date: text("date").notNull(), // YYYY-MM-DD format
+  reason: text("reason"), // Holiday, vacation, etc.
+  isRecurring: boolean("is_recurring").default(false),
+  recurringType: text("recurring_type"), // 'weekly', 'monthly', 'yearly'
+  blockedSlots: text("blocked_slots").array(), // Specific time slots to block, or empty for full day
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertBlockedDateSchema = createInsertSchema(blockedDates).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  reason: z.string().min(1, "Reason is required").max(200, "Reason must be less than 200 characters"),
+  isRecurring: z.boolean().default(false),
+  recurringType: z.enum(["weekly", "monthly", "yearly"]).optional(),
+  blockedSlots: z.array(z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Time must be in HH:MM format")).optional(),
+});
+
+export type BlockedDate = typeof blockedDates.$inferSelect;
+export type InsertBlockedDate = z.infer<typeof insertBlockedDateSchema>;
+
 // Newsletter Subscriptions
 export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
   id: serial("id").primaryKey(),

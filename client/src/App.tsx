@@ -8,8 +8,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { ChatbotWidget } from "@/components/chatbot/ChatWidget";
 
@@ -213,21 +212,17 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1 pt-16 md:pt-12">
-            <Router />
-          </main>
-          <Footer />
-          <CookieConsentBanner />
-          <ChatbotWidget />
-          {shouldShowOnboarding && (
-            <OnboardingWizard 
-              onComplete={handleOnboardingComplete}
-              onSkip={handleOnboardingSkip}
-            />
-          )}
-        </div>
+        <MobileLayoutWrapper>
+          <Router />
+        </MobileLayoutWrapper>
+        <CookieConsentBanner />
+        <ChatbotWidget />
+        {shouldShowOnboarding && (
+          <OnboardingWizard 
+            onComplete={handleOnboardingComplete}
+            onSkip={handleOnboardingSkip}
+          />
+        )}
       </TooltipProvider>
     </QueryClientProvider>
   );

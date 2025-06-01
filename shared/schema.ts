@@ -195,6 +195,43 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   website: z.string().max(0, "Invalid submission").optional(),
 });
 
+// Dealer Contact Submissions
+export const dealerContactSubmissions = pgTable("dealer_contact_submissions", {
+  id: serial("id").primaryKey(),
+  businessName: text("business_name").notNull(),
+  contactPerson: text("contact_person").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  businessType: text("business_type").notNull(),
+  message: text("message").notNull(),
+  language: text("language").default("nl"),
+  leadType: text("lead_type").default("dealer"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertDealerContactSchema = createInsertSchema(dealerContactSubmissions).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  businessName: z.string()
+    .min(2, "Business name must be at least 2 characters")
+    .max(100, "Business name must be less than 100 characters"),
+  contactPerson: z.string()
+    .min(2, "Contact person must be at least 2 characters")
+    .max(100, "Contact person must be less than 100 characters"),
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  phone: z.string().optional(),
+  businessType: z.string()
+    .min(1, "Please select a business type"),
+  message: z.string()
+    .min(10, "Message must be at least 10 characters")
+    .max(2000, "Message must be less than 2000 characters"),
+  language: z.string().optional(),
+  leadType: z.string().optional(),
+});
+
 // Define relations between tables
 export const categoriesRelations = relations(categories, ({ many }) => ({
   products: many(products),
@@ -236,6 +273,9 @@ export type InsertQuoteRequest = z.infer<typeof insertQuoteRequestSchema>;
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
+
+export type DealerContactSubmission = typeof dealerContactSubmissions.$inferSelect;
+export type InsertDealerContact = z.infer<typeof insertDealerContactSchema>;
 
 // Chatbot Conversations
 export const chatbotConversations = pgTable("chatbot_conversations", {

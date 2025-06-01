@@ -9,6 +9,7 @@ import {
   insertSmartQuoteRequestSchema,
   insertQuoteRequestSchema,
   insertContactSubmissionSchema,
+  insertDealerContactSchema,
   insertChatbotConversationSchema,
   insertChatbotMessageSchema,
   insertNewsletterSubscriptionSchema,
@@ -17,7 +18,7 @@ import {
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
-import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml } from "./services/email";
+import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml, createDealerContactEmailHtml } from "./services/email";
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
 import { recommendationService } from "./smartRecommendations";

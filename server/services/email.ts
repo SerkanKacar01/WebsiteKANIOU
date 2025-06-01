@@ -155,3 +155,60 @@ export function createQuoteRequestEmailHtml(data: {
     </div>
   `;
 }
+
+/**
+ * Creates HTML content for dealer contact form submissions
+ */
+export function createDealerContactEmailHtml(data: {
+  businessName: string;
+  contactPerson: string;
+  email: string;
+  phone?: string;
+  businessType: string;
+  message: string;
+  language?: string;
+}): string {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
+      <!-- Header -->
+      <div style="background-color: #4a6da7; padding: 20px; text-align: center;">
+        <h2 style="color: white; margin: 0; font-size: 22px;">🔗 New Dealer Partnership Inquiry</h2>
+      </div>
+      
+      <!-- Content -->
+      <div style="padding: 20px; background-color: #fff;">
+        <div style="background-color: #f9f9f9; border-left: 4px solid #4a6da7; padding: 15px; margin-bottom: 20px;">
+          <p style="margin: 0 0 5px 0;"><strong>Business Name:</strong> ${data.businessName}</p>
+          <p style="margin: 0 0 5px 0;"><strong>Contact Person:</strong> ${data.contactPerson}</p>
+          <p style="margin: 0 0 5px 0;"><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #4a6da7; text-decoration: none;">${data.email}</a></p>
+          ${data.phone ? `<p style="margin: 0 0 5px 0;"><strong>Phone:</strong> ${data.phone}</p>` : ''}
+          <p style="margin: 0 0 5px 0;"><strong>Business Type:</strong> ${data.businessType}</p>
+          <p style="margin: 0;"><strong>Language:</strong> ${data.language || 'nl'}</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <h3 style="color: #4a6da7; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0;">Partnership Request Details:</h3>
+          <div style="background-color: #f9f9f9; padding: 15px; border-radius: 4px; line-height: 1.6;">
+            <p style="white-space: pre-line; margin: 0;">${data.message}</p>
+          </div>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 15px; background-color: #e8f4f8; border-radius: 4px;">
+          <h4 style="color: #4a6da7; margin-top: 0;">Next Steps:</h4>
+          <ul style="margin: 10px 0; padding-left: 20px;">
+            <li>Review business credentials and partnership requirements</li>
+            <li>Prepare dealer information package</li>
+            <li>Schedule partnership discussion call</li>
+            <li>Send dealer agreement and pricing structure</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; color: #777;">
+        <p style="margin: 0;">This dealer inquiry was submitted on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        <p style="margin: 5px 0 0 0;">Lead Type: Dealer Partnership | Priority: High</p>
+      </div>
+    </div>
+  `;
+}

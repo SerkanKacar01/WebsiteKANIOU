@@ -1,0 +1,59 @@
+GLOBAL COLOR UPDATE (KANIU Website)
+
+Dear Replit team,
+
+I would like to apply a site-wide color adjustment to ensure visual consistency across all components of the KANIOU website. Below are the detailed instructions:
+
+⸻
+
+1. 🎨 PRIMARY ACCENT COLOR (FOR BUTTONS, LINKS, HIGHLIGHTS)
+
+Purpose: Use this for all primary call-to-action buttons such as “Offerte Aanvragen”, highlights, icons, section headers, borders where relevant, and accent areas.
+	•	HEX: #D9C29C
+	•	RGB: rgb(217, 194, 156)
+	•	Usage: Button backgrounds, pricing highlights, icons, header accent bars.
+
+📝 Example elements:
+	•	Button: “OFFERT AANVRAGEN”
+	•	Highlighted info cards
+	•	Navigation hover colors
+
+⸻
+
+2. 🟡 SECONDARY LIGHT BACKGROUND COLOR (FOR BLOCKS & SECTIONS)
+
+Purpose: Use this for subtle backgrounds behind boxes, info sections, comparison blocks, or to soften layout breaks between white and content areas.
+	•	HEX: #E8D9B8
+	•	RGB: rgb(232, 217, 184)
+	•	Usage: Section backgrounds, quote blocks, feature rows, card components.
+
+📝 Example elements:
+	•	Info box backgrounds
+	•	Behind section: “Waarom kiezen voor KANIOU Business?”
+	•	Newsletter CTA section
+
+⸻
+
+3. 🔤 TEXT COLOR
+
+Important: Maintain pure white text (#FFFFFF) or dark grey (#222222) depending on background contrast. Do not change primary text colors unless contrast is impacted.
+
+⸻
+
+4. ✅ GLOBAL IMPLEMENTATION SCOPE
+
+Please apply these color adjustments across the entire website as follows:
+	•	Navigation bar & CTA buttons
+	•	Hero sections & overlays
+	•	Chatbot UI elements (where accent or background applies)
+	•	Newsletter banner
+	•	Form submission buttons
+	•	Section cards, pricing panels, and quote boxes
+
+⸻
+
+5. ⚠️ CLARIFICATIONS
+	•	Please use HEX values for static styling like backgrounds, buttons, borders.
+	•	Use RGB or RGBA if transparency or shadows are involved.
+	•	Make sure color changes are responsive and visible in both desktop and mobile views.
+	•	Keep current layout, spacing, and design structure intact—do not alter structure or remove any content blocks.

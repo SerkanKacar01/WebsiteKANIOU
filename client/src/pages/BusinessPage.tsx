@@ -139,7 +139,7 @@ const BusinessPage = () => {
               <Button 
                 size="lg" 
                 onClick={scrollToDealerForm}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-primary hover:bg-primary/90"
               >
                 <Building2 className="mr-2 h-5 w-5" />
                 Verstuur Aanvraag
@@ -159,7 +159,7 @@ const BusinessPage = () => {
         <Separator className="my-8" />
 
         {/* Dealer Opportunities Section */}
-        <section id="dealer-section" className="py-16 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <section id="dealer-section" className="py-16 px-4 bg-gradient-to-br from-secondary/20 to-secondary/30">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
@@ -172,19 +172,19 @@ const BusinessPage = () => {
                 <h3 className="text-xl font-bold mb-4 text-gray-900">Wij bieden:</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="text-blue-600 text-lg">•</div>
+                    <div className="text-primary text-lg">•</div>
                     <p className="text-gray-700">Dealervoorwaarden & volumekortingen</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-blue-600 text-lg">•</div>
+                    <div className="text-primary text-lg">•</div>
                     <p className="text-gray-700">White-label samenwerking mogelijk</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-blue-600 text-lg">•</div>
+                    <div className="text-primary text-lg">•</div>
                     <p className="text-gray-700">Persoonlijke onboarding ondersteuning</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-blue-600 text-lg">•</div>
+                    <div className="text-primary text-lg">•</div>
                     <p className="text-gray-700">Levering door heel België en Europa</p>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ const BusinessPage = () => {
               <Button 
                 size="lg" 
                 onClick={scrollToDealerForm}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-primary hover:bg-primary/90"
               >
                 👉 Aanmelden als Dealer
                 <ArrowRight className="ml-2 h-5 w-5" />

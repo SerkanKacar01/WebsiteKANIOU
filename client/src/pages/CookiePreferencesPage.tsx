@@ -168,11 +168,11 @@ export default function CookiePreferencesPage() {
           </Card>
 
           {/* Analytics Cookies */}
-          <Card className="border-blue-200">
+          <Card className="border-primary/30">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <BarChart3 className="w-6 h-6 text-blue-600" />
+                  <BarChart3 className="w-6 h-6 text-primary" />
                   <div>
                     <CardTitle className="text-xl text-primary">
                       Analytische cookies
@@ -185,7 +185,7 @@ export default function CookiePreferencesPage() {
                 <Switch 
                   checked={analyticsEnabled}
                   onCheckedChange={setAnalyticsEnabled}
-                  className="data-[state=checked]:bg-blue-600"
+                  className="data-[state=checked]:bg-primary"
                 />
               </div>
             </CardHeader>
@@ -197,9 +197,9 @@ export default function CookiePreferencesPage() {
                 welke content het meest interessant is. Dit helpt ons om de gebruikerservaring 
                 te verbeteren en onze website beter af te stemmen op uw behoeften.
               </p>
-              <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                <h4 className="font-semibold text-blue-800 mb-2">Wat we meten:</h4>
-                <ul className="text-sm text-blue-700 space-y-1">
+              <div className="p-3 bg-secondary/50 rounded-lg border border-primary/30">
+                <h4 className="font-semibold text-primary mb-2">Wat we meten:</h4>
+                <ul className="text-sm text-primary/80 space-y-1">
                   <li>• Aantal bezoekers en paginaweergaven</li>
                   <li>• Tijd doorgebracht op verschillende pagina's</li>
                   <li>• Meest bekeken producten en categorieën</li>

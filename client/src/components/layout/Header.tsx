@@ -227,7 +227,7 @@ const Header = () => {
                               ? "text-accent font-medium"
                               : "text-text-dark"
                           }`}
-                          onClick={handleCloseSheet}
+                          onClick={handleMobileNavClick}
                         >
                           {item.label}
                         </a>
@@ -247,7 +247,7 @@ const Header = () => {
                     <Link href="/quote">
                       <Button
                         className="w-full bg-secondary hover:bg-accent"
-                        onClick={handleCloseSheet}
+                        onClick={handleMobileNavClick}
                       >
                         {t("OFFERTE AANVRAGEN")}
                       </Button>
@@ -287,7 +287,10 @@ const Header = () => {
                             className="dropdown-menu-item"
                           >
                             <Link href={category.href}>
-                              <div className="block px-4 py-2 text-sm text-text-dark hover:text-accent cursor-pointer">
+                              <div 
+                                className="block px-4 py-2 text-sm text-text-dark hover:text-accent cursor-pointer"
+                                onClick={handleNavClick}
+                              >
                                 {category.label}
                               </div>
                             </Link>
@@ -296,7 +299,10 @@ const Header = () => {
                         <div className="border-t border-neutral-200 mt-2 pt-2">
                           <div className="dropdown-menu-item">
                             <Link href="/products">
-                              <div className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer">
+                              <div 
+                                className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer"
+                                onClick={handleNavClick}
+                              >
                                 View All Products
                               </div>
                             </Link>
@@ -313,6 +319,7 @@ const Header = () => {
                           ? "text-accent font-medium"
                           : "text-text-dark hover:text-accent"
                       } transition-colors cursor-pointer`}
+                      onClick={handleNavClick}
                     >
                       {item.label}
                     </div>
@@ -322,7 +329,10 @@ const Header = () => {
               <div className="flex items-center gap-3">
                 <NewsletterSignup variant="header" />
                 <Link href="/quote">
-                  <Button className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8">
+                  <Button 
+                    className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8"
+                    onClick={handleNavClick}
+                  >
                     {t("OFFERTE AANVRAGEN")}
                   </Button>
                 </Link>

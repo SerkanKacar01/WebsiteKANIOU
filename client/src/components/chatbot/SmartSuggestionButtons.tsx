@@ -35,42 +35,42 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
     nl: [
       {
         id: "free_measurement",
-        text: "🪟 Gratis Inmeten Afspraak",
+        text: "🪟 Gratis Inmeten",
         action: "appointment_booking",
         icon: Calendar,
         emoji: "🪟"
       },
       {
         id: "style_advice", 
-        text: "🎨 Stijladvies Krijgen",
+        text: "🎨 Stijladvies",
         action: "style_consultation",
         icon: Palette,
         emoji: "🎨"
       },
       {
         id: "request_quote",
-        text: "🧾 Offerte Aanvragen", 
+        text: "🧾 Offerte", 
         action: "quote_request",
         icon: FileText,
         emoji: "🧾"
       },
       {
         id: "view_gallery",
-        text: "🖼️ Productgalerij Bekijken",
+        text: "🖼️ Galerij",
         action: "product_gallery",
         icon: ImageIcon,
         emoji: "🖼️"
       },
       {
         id: "product_info",
-        text: "📦 Productinformatie",
+        text: "📦 Product Info",
         action: "product_information",
         icon: Info,
         emoji: "📦"
       },
       {
         id: "help_choosing", 
-        text: "❓ Hulp bij Kiezen?",
+        text: "❓ Hulp Kiezen",
         action: "interactive_qa",
         icon: HelpCircle,
         emoji: "❓"
@@ -79,42 +79,42 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
     fr: [
       {
         id: "free_measurement",
-        text: "🪟 Rendez-vous Mesure Gratuite",
+        text: "🪟 Mesure Gratuite",
         action: "appointment_booking",
         icon: Calendar,
         emoji: "🪟"
       },
       {
         id: "style_advice",
-        text: "🎨 Conseils de Style",
+        text: "🎨 Conseils Style",
         action: "style_consultation", 
         icon: Palette,
         emoji: "🎨"
       },
       {
         id: "request_quote",
-        text: "🧾 Demander un Devis",
+        text: "🧾 Devis",
         action: "quote_request",
         icon: FileText,
         emoji: "🧾"
       },
       {
         id: "view_gallery",
-        text: "🖼️ Voir la Galerie Produits",
+        text: "🖼️ Galerie",
         action: "product_gallery",
         icon: ImageIcon,
         emoji: "🖼️"
       },
       {
         id: "product_info",
-        text: "📦 Informations Produits",
+        text: "📦 Info Produit",
         action: "product_information",
         icon: Info,
         emoji: "📦"
       },
       {
         id: "help_choosing",
-        text: "❓ Besoin d'Aide pour Choisir?",
+        text: "❓ Aide Choix",
         action: "interactive_qa",
         icon: HelpCircle,
         emoji: "❓"
@@ -285,8 +285,8 @@ export function SmartSuggestionButtons({ onSuggestionClick, onHide, sessionId }:
                   <div className="flex items-center justify-center">
                     <span className="text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">{button.emoji}</span>
                   </div>
-                  <div className="flex-1 text-center">
-                    <span className="text-sm md:text-base font-medium text-gray-800 group-hover:text-amber-900 transition-colors duration-300 leading-tight block">
+                  <div className="flex-1 text-center px-1">
+                    <span className="text-xs md:text-sm font-semibold text-gray-700 group-hover:text-amber-800 transition-colors duration-300 leading-snug block break-words">
                       {button.text.replace(button.emoji, '').trim()}
                     </span>
                   </div>

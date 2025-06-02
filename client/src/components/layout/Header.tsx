@@ -204,18 +204,7 @@ const Header = () => {
                                 </Link>
                               </div>
                             ))}
-                            <div className="pt-2 mt-2 border-t border-neutral-200">
-                              <div>
-                                <Link href="/products">
-                                  <div
-                                    className="font-body text-sm block py-1.5 text-accent font-medium cursor-pointer"
-                                    onClick={handleMobileNavClick}
-                                  >
-                                    View All Products
-                                  </div>
-                                </Link>
-                              </div>
-                            </div>
+
                           </div>
                         )}
                       </div>
@@ -296,18 +285,7 @@ const Header = () => {
                             </Link>
                           </div>
                         ))}
-                        <div className="border-t border-neutral-200 mt-2 pt-2">
-                          <div className="dropdown-menu-item">
-                            <Link href="/products">
-                              <div 
-                                className="block px-4 py-2 text-sm text-accent font-medium cursor-pointer"
-                                onClick={handleNavClick}
-                              >
-                                View All Products
-                              </div>
-                            </Link>
-                          </div>
-                        </div>
+
                       </div>
                     )}
                   </div>

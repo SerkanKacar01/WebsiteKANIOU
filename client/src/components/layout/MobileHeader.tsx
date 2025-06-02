@@ -180,12 +180,6 @@ const MobileHeader = () => {
                           </div>
                         </div>
                       ))}
-                      
-                      <Link href="/products">
-                        <Button className="w-full bg-secondary hover:bg-accent" onClick={handleNavClick}>
-                          Alle Producten Bekijken
-                        </Button>
-                      </Link>
                     </div>
                   </div>
                 </div>

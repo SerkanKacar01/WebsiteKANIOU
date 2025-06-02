@@ -106,7 +106,6 @@ function Router() {
         <Route path="/products/duo-rolgordijnen" component={DuoRolgordijnen} />
 
         {/* Specific product pages first, then generic routes */}
-        <Route path="/products" component={ProductsPage} />
         <Route path="/price-calculator" component={PriceCalculatorPage} />
         <Route path="/products/textiel-lamellen" component={TextielLamellenPage} />
         <Route path="/products/kunststof-lamellen" component={KunststofLamellenPage} />

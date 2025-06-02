@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Cookie, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCookieConsent } from "@/hooks/useCookieConsent";
@@ -6,9 +6,17 @@ import { CookiePreferencesModal } from "./CookiePreferencesModal";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function CookieConsentBanner() {
-  const { showBanner, acceptAll, declineAll } = useCookieConsent();
+  const { showBanner, acceptAll, declineAll, forceShowBanner } = useCookieConsent();
   const [showPreferences, setShowPreferences] = useState(false);
   const { t } = useLanguage();
+
+  // For testing purposes - force show banner on mount if no consent exists
+  useEffect(() => {
+    const hasConsent = localStorage.getItem('cookie_consent');
+    if (!hasConsent) {
+      forceShowBanner();
+    }
+  }, [forceShowBanner]);
 
   if (!showBanner) return null;
 

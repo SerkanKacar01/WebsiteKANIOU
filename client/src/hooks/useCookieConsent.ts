@@ -33,6 +33,7 @@ export function useCookieConsent() {
         setShowBanner(false);
       } catch (error) {
         console.error('Error parsing stored consent:', error);
+        localStorage.removeItem(STORAGE_KEY);
         setShowBanner(true);
       }
     } else {
@@ -93,6 +94,13 @@ export function useCookieConsent() {
     setShowBanner(true);
   };
 
+  // Force show banner for new visitors or testing
+  const forceShowBanner = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setConsent(defaultConsent);
+    setShowBanner(true);
+  };
+
   return {
     consent,
     showBanner,
@@ -100,6 +108,7 @@ export function useCookieConsent() {
     declineAll,
     acceptCustom,
     resetConsent,
+    forceShowBanner,
     hasConsented: consent.status !== 'pending',
   };
 }

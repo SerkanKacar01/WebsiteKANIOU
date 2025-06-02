@@ -15,24 +15,30 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const ProductsPage = () => {
   const { t, language } = useLanguage();
-  
+
   // Fetch all categories
-  const { data: categories = [], isLoading: categoriesLoading } = useQuery<Category[]>({
+  const { data: categories = [], isLoading: categoriesLoading } = useQuery<
+    Category[]
+  >({
     queryKey: ["/api/categories"],
   });
 
   // Fetch all products to calculate the minimum prices per category
-  const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
+  const { data: products = [], isLoading: productsLoading } = useQuery<
+    Product[]
+  >({
     queryKey: ["/api/products"],
   });
 
   // Calculate the minimum price for each category
   const getMinPriceForCategory = (categoryId: number) => {
-    const categoryProducts = products.filter(product => product.categoryId === categoryId);
-    
+    const categoryProducts = products.filter(
+      (product) => product.categoryId === categoryId,
+    );
+
     if (categoryProducts.length === 0) return null;
-    
-    return Math.min(...categoryProducts.map(product => product.price));
+
+    return Math.min(...categoryProducts.map((product) => product.price));
   };
 
   // Loading states
@@ -50,10 +56,18 @@ const ProductsPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t("products.title")} | Elegant Drapes</title>
-        <meta name="description" content={t("products.subtitle")} />
-        <meta property="og:title" content={`${t("products.title")} | Elegant Drapes`} />
-        <meta property="og:description" content={t("products.subtitle")} />
+        <title>{t("Diverse Raamdecoraties")} | KANIOU</title>
+        <meta name="description" content={t("Diverse Raamdecoraties")} />
+        <meta
+          property="og:title"
+          content={`${t("Diverse Raamdecoraties")} | KANIOU`}
+        />
+        <meta
+          property="og:description"
+          content={t(
+            "Ontdek ons volledige aanbod op maat gemaakte raamdecoratieproducten.",
+          )}
+        />
         <meta property="og:type" content="website" />
       </Helmet>
 
@@ -72,7 +86,9 @@ const ProductsPage = () => {
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <span className="font-semibold">{t("nav.products")}</span>
+              <span className="font-semibold">
+                {t("Diverse raamdecoraties")}
+              </span>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -80,10 +96,12 @@ const ProductsPage = () => {
         {/* Page Title */}
         <div className="text-center mb-12">
           <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-primary mb-4">
-            {t("products.title")}
+            {t("Diverse Raamdecoraties")}
           </h1>
           <p className="font-body text-text-medium max-w-2xl mx-auto">
-            {t("products.subtitle")}
+            {t(
+              "Ontdek ons volledige assortiment aan hoogwaardige, op maat gemaakte raamdecoratieproducten – perfect afgestemd op uw stijl, ruimte en functionaliteit. Of u nu op zoek bent naar verduisterende gordijnen, elegante jaloezieën of innovatieve zonwering, bij KANIOU vindt u de ideale oplossing voor elk interieur.",
+            )}
           </p>
         </div>
 
@@ -92,7 +110,7 @@ const ProductsPage = () => {
           {categories.map((category) => {
             const minPrice = getMinPriceForCategory(category.id);
             const urlPath = category.name.toLowerCase().replace(/\s+/g, "-");
-            
+
             return (
               <Link key={category.id} href={`/products/${urlPath}`}>
                 <div className="group h-full bg-white overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg cursor-pointer">
@@ -110,11 +128,11 @@ const ProductsPage = () => {
                     <p className="font-body text-text-medium text-sm mb-4 line-clamp-2">
                       {category.description}
                     </p>
-                    
+
                     {minPrice && (
                       <p className="font-body text-lg font-semibold text-accent">
-                        <span className="text-sm font-normal">From </span>
-                        €{minPrice.toFixed(2)}
+                        <span className="text-sm font-normal">From </span>€
+                        {minPrice.toFixed(2)}
                         <span className="text-sm font-normal"> per window</span>
                       </p>
                     )}

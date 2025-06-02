@@ -71,8 +71,8 @@ const ProductCategoryPage = () => {
       const urlToCategoryMap: Record<string, string> = {
         overgordijnen: "Curtains",
         vitrages: "Sheer Drapes",
-        rolgordijnen: "Sunblinds",
-        "duo-rolgordijnen": "Sunblinds",
+        rolgordijnen: "Sunblind",
+        "duo-rolgordijnen": "Sunblind",
         "textiel-lamellen": "Curtains",
         "kunststof-lamellen": "Curtains",
         "houten-jaloezieen": "Curtains",

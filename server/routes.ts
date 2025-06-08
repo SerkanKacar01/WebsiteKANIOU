@@ -1321,6 +1321,33 @@ ${chatSummary}
     }
   });
 
+  // Color Matcher API - Room analysis with image upload
+  app.post("/api/color-matcher", upload.single('roomImage'), async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({
+          message: "No image file provided"
+        });
+      }
+
+      // Convert uploaded image to base64
+      const base64Image = convertImageToBase64(req.file.buffer);
+      
+      // Analyze the room image
+      const analysis = await analyzeRoomForColorMatching(base64Image);
+      
+      console.log(`🎨 COLOR MATCHER: Successfully analyzed room image - ${analysis.recommendations.length} recommendations generated`);
+      
+      res.json(analysis);
+      
+    } catch (error) {
+      console.error("Error in color matcher:", error);
+      res.status(500).json({
+        message: "Failed to analyze room image. Please try again."
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

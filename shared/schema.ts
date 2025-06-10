@@ -396,6 +396,81 @@ export const chatbotAdminTrainingRelations = relations(chatbotAdminTraining, ({ 
   }),
 }));
 
+// Fly Screen Orders
+export const flyScreenOrders = pgTable("fly_screen_orders", {
+  id: serial("id").primaryKey(),
+  orderNumber: text("order_number").notNull().unique(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  width: doublePrecision("width").notNull(), // in cm
+  height: doublePrecision("height").notNull(), // in cm
+  frameColor: text("frame_color").notNull(), // white, black, anthracite
+  meshColor: text("mesh_color").notNull(), // grey, black
+  notes: text("notes"),
+  deliveryAddress: text("delivery_address").notNull(),
+  deliveryZipCode: text("delivery_zip_code").notNull(),
+  deliveryCity: text("delivery_city").notNull(),
+  totalPrice: doublePrecision("total_price").notNull(),
+  paymentStatus: text("payment_status").default("pending"), // pending, paid, failed
+  paymentId: text("payment_id"), // Mollie payment ID
+  orderStatus: text("order_status").default("pending"), // pending, confirmed, in_production, shipped, delivered
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertFlyScreenOrderSchema = createInsertSchema(flyScreenOrders).omit({
+  id: true,
+  orderNumber: true,
+  totalPrice: true,
+  paymentStatus: true,
+  paymentId: true,
+  orderStatus: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  firstName: z.string()
+    .min(2, "First name must be at least 2 characters")
+    .max(50, "First name must be less than 50 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "First name can only contain letters, spaces, hyphens, and apostrophes"),
+  lastName: z.string()
+    .min(2, "Last name must be at least 2 characters")
+    .max(50, "Last name must be less than 50 characters")
+    .regex(/^[a-zA-Z\s'-]+$/, "Last name can only contain letters, spaces, hyphens, and apostrophes"),
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  phone: z.string()
+    .max(20, "Phone number must be less than 20 characters")
+    .regex(/^[\+]?[0-9\s\-\(\)]*$/, "Phone number can only contain numbers, spaces, +, -, (, )")
+    .optional(),
+  width: z.number()
+    .min(30, "Width must be at least 30cm")
+    .max(200, "Width cannot exceed 200cm"),
+  height: z.number()
+    .min(30, "Height must be at least 30cm")
+    .max(200, "Height cannot exceed 200cm"),
+  frameColor: z.enum(["white", "black", "anthracite"], {
+    required_error: "Please select a frame color",
+  }),
+  meshColor: z.enum(["grey", "black"], {
+    required_error: "Please select a mesh color",
+  }),
+  notes: z.string()
+    .max(500, "Notes must be less than 500 characters")
+    .optional(),
+  deliveryAddress: z.string()
+    .min(5, "Delivery address must be at least 5 characters")
+    .max(200, "Delivery address must be less than 200 characters"),
+  deliveryZipCode: z.string()
+    .min(4, "Zip code must be at least 4 characters")
+    .max(10, "Zip code must be less than 10 characters"),
+  deliveryCity: z.string()
+    .min(2, "City must be at least 2 characters")
+    .max(100, "City must be less than 100 characters"),
+});
+
 // Chatbot type definitions
 export type ChatbotConversation = typeof chatbotConversations.$inferSelect;
 export type InsertChatbotConversation = z.infer<typeof insertChatbotConversationSchema>;
@@ -414,6 +489,10 @@ export type InsertChatbotFaq = z.infer<typeof insertChatbotFaqSchema>;
 
 export type ChatbotAdminTraining = typeof chatbotAdminTraining.$inferSelect;
 export type InsertChatbotAdminTraining = z.infer<typeof insertChatbotAdminTrainingSchema>;
+
+// Fly Screen Order types
+export type FlyScreenOrder = typeof flyScreenOrders.$inferSelect;
+export type InsertFlyScreenOrder = z.infer<typeof insertFlyScreenOrderSchema>;
 
 // Price Request Notifications
 export const priceRequestNotifications = pgTable("price_request_notifications", {

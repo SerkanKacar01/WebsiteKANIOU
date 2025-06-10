@@ -1,0 +1,89 @@
+📐 4. CUSTOM ORDER FORM
+
+Form must include these fields:
+	•	Width (in cm) – required
+	•	Height (in cm) – required
+	•	Frame Color – dropdown (white, black, anthracite)
+	•	Mesh Color – dropdown (grey, black [+€5])
+	•	Notes (textarea) – optional
+	•	First Name & Last Name
+	•	Email (required)
+	•	Phone (optional)
+	•	Delivery Address: Street, Zip Code, City (required)
+
+⸻
+
+💰 5. PRICE CALCULATION & PAYMENT
+	•	Base price: €49.95 (up to 100x100 cm)
+	•	Extra pricing:
+	•	+€10 per extra 10 cm in width or height
+	•	+€5 for black mesh
+	•	Live total calculation before purchase
+	•	Payment:
+	•	Use Mollie Checkout or redirect to a Mollie payment link
+	•	Button text: “Order & Pay”
+	•	Redirect after payment → Thank You Page
+
+⸻
+
+📧 6. CONFIRMATION & EMAILS
+	•	Thank you page:
+Thanks for your order! You’ll receive a confirmation email shortly.
+	•	Email Notification:
+	•	One email to info@kaniou.be
+	•	One confirmation email to the customer
+	•	Include full order summary and contact info in both
+
+⸻
+
+🗂️ 7. ADDITIONAL PAGE SECTIONS
+
+Why Choose KANIOU?
+	•	30+ years of expertise in window solutions
+	•	100% custom made in Belgium
+	•	Smooth delivery across the country
+
+FAQ Section:
+	•	What’s the difference between opzet and inzet frames?
+	•	How do I measure my window?
+	•	Can I install it myself?
+
+⸻
+
+💬 8. CHAT & SOCIAL INTEGRATION
+	•	AI Chatbot suggestions enabled for this page:
+	•	Sizing questions
+	•	Product fit
+	•	Order help
+	•	Add WhatsApp button + Instagram icon below the form
+	•	Optional: floating WhatsApp icon visible on mobile
+
+⸻
+
+🎨 9. DESIGN SETTINGS
+	•	Buttons:
+	•	Color: #D9C29C (light gold)
+	•	Text: White
+	•	Background Sections:
+	•	Color: #E8D9B8 (soft beige)
+	•	Typography:
+	•	Use white text on gold buttons
+	•	Use black/dark grey on beige backgrounds
+	•	Responsive:
+	•	Optimized for mobile and desktop
+
+⸻
+
+🔍 10. SEO OPTIMIZATION
+	•	SEO Title: “Custom Fly Screen Frame | KANIOU Belgium”
+	•	Meta Description:
+Buy custom-made clamp-fit fly screens online at KANIOU. Hassle-free installation. Delivered to your home.
+
+⸻
+
+📥 11. WHERE TO PLACE ON HOMEPAGE
+
+✅ Best Spot:
+Just under the hero slider → new section block:
+“Featured Products” or “Available to Order”
+Include product image + 1-line description + “View Product” button

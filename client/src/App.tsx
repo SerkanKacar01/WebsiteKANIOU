@@ -45,7 +45,7 @@ import RolgordijnenPage from "@/pages/products/rolgordijnen";
 import OvergordijnenPage from "@/pages/products/overgordijnen";
 import VitragesPage from "@/pages/products/vitrages";
 import DuoRolgordijnen from "@/pages/products/duo-rolgordijnen";
-
+import FlyScreenProduct from "@/pages/FlyScreenProduct";
 
 // All product category pages
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
@@ -104,6 +104,7 @@ function Router() {
         {/* All individual product category pages - must come before generic routes */}
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/duo-rolgordijnen" component={DuoRolgordijnen} />
+        <Route path="/products/fly-screen-clamp-frame" component={FlyScreenProduct} />
 
         {/* Specific product pages first, then generic routes */}
         <Route path="/price-calculator" component={PriceCalculatorPage} />

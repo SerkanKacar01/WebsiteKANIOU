@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Container } from "@/components/layout/Container";
+import Container from "@/components/ui/container";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -59,15 +59,19 @@ export default function FlyScreenProduct() {
   // Calculate price when dimensions or mesh color changes
   const { data: priceData } = useQuery<PriceCalculation>({
     queryKey: ["/api/fly-screen-price", watchedFields[0], watchedFields[1], watchedFields[2]],
-    queryFn: () => apiRequest("/api/fly-screen-price", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        width: watchedFields[0],
-        height: watchedFields[1],
-        meshColor: watchedFields[2]
-      })
-    }),
+    queryFn: async () => {
+      const response = await fetch("/api/fly-screen-price", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          width: watchedFields[0],
+          height: watchedFields[1],
+          meshColor: watchedFields[2]
+        })
+      });
+      if (!response.ok) throw new Error('Failed to calculate price');
+      return response.json();
+    },
     enabled: !!(watchedFields[0] && watchedFields[1]),
   });
 
@@ -78,12 +82,18 @@ export default function FlyScreenProduct() {
   }, [priceData]);
 
   const orderMutation = useMutation({
-    mutationFn: (data: FlyScreenOrderForm) =>
-      apiRequest("/api/fly-screen-orders", {
+    mutationFn: async (data: FlyScreenOrderForm) => {
+      const response = await fetch("/api/fly-screen-orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      }),
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to place order');
+      }
+      return response.json();
+    },
     onSuccess: (response) => {
       toast({
         title: "Bestelling succesvol geplaatst!",

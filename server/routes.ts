@@ -20,6 +20,7 @@ import {
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml, createDealerContactEmailHtml } from "./services/email";
+import { flyScreenStorage } from "./flyScreenStorage";
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
 import { recommendationService } from "./smartRecommendations";
@@ -1411,13 +1412,15 @@ ${chatSummary}
       // Send customer confirmation email
       await sendEmail({
         to: order.email,
+        from: emailConfig.senderEmail,
         subject: `Bevestiging bestelling ${order.orderNumber} - KANIOU`,
         html: customerEmailHtml
       });
 
       // Send admin notification email
       await sendEmail({
-        to: emailConfig.adminEmail,
+        to: emailConfig.notificationEmail,
+        from: emailConfig.senderEmail,
         subject: `Nieuwe vliegengordijn bestelling: ${order.orderNumber}`,
         html: adminEmailHtml
       });

@@ -130,6 +130,12 @@ const MobileHeader = () => {
                 {/* Main Navigation */}
                 <div className="flex-1 overflow-y-auto">
                   <div className="p-4 space-y-4">
+                    <Link href="/producten">
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        🛍️ SHOP
+                      </Button>
+                    </Link>
+                    
                     <Link href="/gallerij">
                       <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
                         📸 {t("GALLERIJ")}
@@ -231,9 +237,9 @@ const MobileHeader = () => {
             </div>
           </Link>
           
-          <Link href="/products">
+          <Link href="/producten">
             <div className={`flex flex-col items-center justify-center space-y-1 h-full ${
-              location.startsWith("/products") ? "text-primary bg-primary/10" : "text-gray-600"
+              location.startsWith("/producten") || location.startsWith("/products") || location.startsWith("/shop") ? "text-primary bg-primary/10" : "text-gray-600"
             }`}>
               <div className="text-lg">🛍️</div>
               <span className="text-xs font-medium">Shop</span>

@@ -21,7 +21,7 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t("PRODUCTEN"), href: "/products/clamp-mounted-fly-screen", hasDropdown: false },
+    { label: "SHOP", href: "/producten" },
     { label: t("GALLERIJ"), href: "/gallerij" },
     { label: "ZAKELIJK", href: "/zakelijk" },
     { label: t("OVER ONS"), href: "/overons" },
@@ -61,7 +61,8 @@ const Header = () => {
 
   const isActive = (href: string) => {
     if (href === "/" && location === "/") return true;
-    if (href !== "/" && location.startsWith(href)) return true;
+    if (href === "/producten" && (location.startsWith("/producten") || location.startsWith("/products") || location.startsWith("/shop"))) return true;
+    if (href !== "/" && href !== "/producten" && location.startsWith(href)) return true;
     return false;
   };
 

@@ -3,42 +3,79 @@ import Container from "@/components/ui/container";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Percent, Clock, Gift, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Clock, Info, Mail } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertNewsletterSubscriptionSchema, type InsertNewsletterSubscription } from "@shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { useEffect } from "react";
 
 const ActiesPage = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
 
-  const currentOffers = [
-    {
-      id: 1,
-      title: "Gratis Montage Service",
-      description: "Bij bestelling van raamdecoratie boven €300",
-      discount: "Gratis",
-      validUntil: "31 December 2024",
-      featured: true,
-      icon: Gift
+  // Scroll to top on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Form for newsletter subscription
+  const form = useForm<InsertNewsletterSubscription>({
+    resolver: zodResolver(insertNewsletterSubscriptionSchema),
+    defaultValues: {
+      email: "",
+      language: "nl",
+      website: "", // Honeypot field
     },
-    {
-      id: 2,
-      title: "20% Korting op Plissé Gordijnen",
-      description: "Alle kleuren en maten beschikbaar",
-      discount: "20%",
-      validUntil: "15 December 2024",
-      featured: false,
-      icon: Percent
+  });
+
+  // Newsletter subscription mutation
+  const newsletterMutation = useMutation({
+    mutationFn: async (data: InsertNewsletterSubscription) => {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to subscribe to newsletter");
+      }
+      
+      return response.json();
     },
-    {
-      id: 3,
-      title: "Seizoenskorting Jaloezieën",
-      description: "Houten en aluminium jaloezieën",
-      discount: "15%",
-      validUntil: "20 December 2024",
-      featured: false,
-      icon: Percent
+    onSuccess: (response) => {
+      toast({
+        title: "Succesvol ingeschreven!",
+        description: "Je ontvangt binnenkort een bevestigingsmail.",
+      });
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["/api/newsletter"] });
+    },
+    onError: (error: any) => {
+      console.error("Newsletter subscription error:", error);
+      toast({
+        title: "Inschrijving mislukt",
+        description: "Er is een fout opgetreden. Probeer het later opnieuw.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onSubmit = (data: InsertNewsletterSubscription) => {
+    // Check honeypot field
+    if (data.website) {
+      return; // Spam submission
     }
-  ];
+    newsletterMutation.mutate(data);
+  };
 
   return (
     <>
@@ -49,87 +86,101 @@ const ActiesPage = () => {
             {/* Hero Section */}
             <div className="text-center mb-12">
               <h1 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
-                Actuele Acties & Kortingen
+                Actuele Promoties & Aanbiedingen
               </h1>
               <p className="text-lg text-text-medium max-w-2xl mx-auto">
-                Profiteer van onze exclusieve aanbiedingen voor premium raamdecoratie. 
-                Beperkte tijd beschikbaar!
+                Momenteel zijn er geen lopende acties, maar houd onze pagina in de gaten voor exclusieve aanbiedingen!
               </p>
             </div>
 
-            {/* Offers Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {currentOffers.map((offer) => {
-                const IconComponent = offer.icon;
-                return (
-                  <Card key={offer.id} className={`relative overflow-hidden ${offer.featured ? 'ring-2 ring-accent shadow-lg' : ''}`}>
-                    {offer.featured && (
-                      <Badge className="absolute top-4 right-4 bg-accent text-white">
-                        <Star className="w-3 h-3 mr-1" />
-                        Populair
-                      </Badge>
-                    )}
-                    <CardHeader>
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-primary/10 rounded-full">
-                          <IconComponent className="w-5 h-5 text-primary" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-xl">{offer.title}</CardTitle>
-                          <div className="flex items-center gap-2 mt-1">
-                            <Badge variant="secondary" className="text-xs">
-                              {offer.discount} Korting
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="mb-4">
-                        {offer.description}
-                      </CardDescription>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-sm text-text-medium">
-                          <Clock className="w-4 h-4" />
-                          Geldig t/m {offer.validUntil}
-                        </div>
-                      </div>
-                      <Button 
-                        className="w-full mt-4 bg-[#D0B378] hover:bg-[#C5A565] text-white"
-                        onClick={() => window.location.href = '/contact'}
-                      >
-                        Profiteer Nu
-                      </Button>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+            {/* No Active Promotions Placeholder */}
+            <div className="flex justify-center mb-12">
+              <Card className="max-w-lg w-full">
+                <CardHeader className="text-center">
+                  <div className="mx-auto mb-4 p-3 bg-[#D9C29C]/10 rounded-full w-fit">
+                    <Clock className="w-8 h-8 text-[#D9C29C]" />
+                  </div>
+                  <CardTitle className="text-xl text-text-dark">
+                    Geen Actieve Kortingen
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-text-medium mb-6">
+                    Er zijn momenteel geen actieve kortingen. Onze aanbiedingen worden regelmatig bijgewerkt.
+                  </p>
+                  <Button 
+                    disabled
+                    className="w-full bg-gray-300 text-gray-500 cursor-not-allowed"
+                  >
+                    Nieuwe acties binnenkort beschikbaar
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Call to Action */}
-            <div className="bg-primary/5 rounded-lg p-8 text-center">
-              <h2 className="text-2xl font-bold text-text-dark mb-4">
-                Mis geen enkele actie!
-              </h2>
-              <p className="text-text-medium mb-6 max-w-xl mx-auto">
-                Schrijf je in voor onze nieuwsbrief en ontvang als eerste bericht over nieuwe acties, 
-                exclusieve kortingen en seizoensaanbiedingen.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg"
-                  className="bg-[#D0B378] hover:bg-[#C5A565] text-white"
-                  onClick={() => window.location.href = '/contact'}
-                >
-                  Nieuwsbrief Aanmelden
-                </Button>
-                <Button 
-                  size="lg"
-                  variant="outline"
-                  onClick={() => window.location.href = '/offerte'}
-                >
-                  Gratis Offerte Aanvragen
-                </Button>
+            {/* Newsletter Subscription Section */}
+            <div className="bg-[#D9C29C]/5 rounded-lg p-8 text-center">
+              <div className="mb-6">
+                <div className="mx-auto mb-4 p-3 bg-[#D9C29C]/20 rounded-full w-fit">
+                  <Mail className="w-8 h-8 text-[#D9C29C]" />
+                </div>
+                <h2 className="text-2xl font-bold text-text-dark mb-4">
+                  Blijf op de Hoogte
+                </h2>
+                <p className="text-text-medium mb-6 max-w-xl mx-auto">
+                  Blijf als eerste op de hoogte van nieuwe promoties en exclusieve kortingen.
+                </p>
+              </div>
+
+              {/* Newsletter Form */}
+              <div className="max-w-md mx-auto">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    {/* Honeypot field - hidden from users */}
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <input
+                          {...field}
+                          type="text"
+                          style={{ display: "none" }}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="sr-only">E-mailadres</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Jouw e-mailadres"
+                              type="email"
+                              className="text-center"
+                              disabled={newsletterMutation.isPending}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full bg-[#D9C29C] hover:bg-[#D0B378] text-white"
+                      disabled={newsletterMutation.isPending}
+                    >
+                      {newsletterMutation.isPending ? "Bezig..." : "Schrijf je in voor de nieuwsbrief"}
+                    </Button>
+                  </form>
+                </Form>
               </div>
             </div>
           </div>

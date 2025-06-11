@@ -184,20 +184,28 @@ const Header = () => {
                   ))}
 
                   <div className="mt-4 space-y-3">
-                    <NewsletterSignup variant="default" onModalOpen={handleCloseSheet}>
+                    <Link href="/acties">
                       <Button
-                        variant="outline"
-                        className="w-full border-amber-500 text-primary hover:bg-primary/10"
-                      >
-                        Acties & Kortingen
-                      </Button>
-                    </NewsletterSignup>
-                    <Link href="/quote">
-                      <Button
-                        className="w-full bg-secondary hover:bg-accent"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
                         onClick={handleMobileNavClick}
                       >
-                        {t("OFFERTE AANVRAGEN")}
+                        Acties
+                      </Button>
+                    </Link>
+                    <Link href="/offerte">
+                      <Button
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
+                        onClick={handleMobileNavClick}
+                      >
+                        Offerte
+                      </Button>
+                    </Link>
+                    <Link href="/shop">
+                      <Button
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
+                        onClick={handleMobileNavClick}
+                      >
+                        Shop
                       </Button>
                     </Link>
                   </div>
@@ -266,13 +274,28 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3">
-                <NewsletterSignup variant="header" />
-                <Link href="/quote">
+                <Link href="/acties">
                   <Button 
-                    className="bg-secondary hover:bg-accent text-xs md:text-xs px-3 py-1 h-8"
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
                     onClick={handleNavClick}
                   >
-                    {t("OFFERTE AANVRAGEN")}
+                    Acties
+                  </Button>
+                </Link>
+                <Link href="/offerte">
+                  <Button 
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
+                    onClick={handleNavClick}
+                  >
+                    Offerte
+                  </Button>
+                </Link>
+                <Link href="/shop">
+                  <Button 
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
+                    onClick={handleNavClick}
+                  >
+                    Shop
                   </Button>
                 </Link>
               </div>

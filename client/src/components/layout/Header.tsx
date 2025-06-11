@@ -21,7 +21,7 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t("PRODUCTEN"), href: "/products/fly-screen-clamp-frame", hasDropdown: false },
+    { label: t("PRODUCTEN"), href: "/products/clamp-mounted-fly-screen", hasDropdown: false },
     { label: t("GALLERIJ"), href: "/gallerij" },
     { label: "ZAKELIJK", href: "/zakelijk" },
     { label: t("OVER ONS"), href: "/overons" },

@@ -108,8 +108,8 @@ const ProductCategoryPage = () => {
         );
         setProducts(categoryProducts);
       } else {
-        // Redirect to products page if category not found
-        setLocation("/products", { replace: true });
+        // Redirect to main product page if category not found
+        setLocation("/products/clamp-mounted-fly-screen", { replace: true });
       }
 
       setLoading(false);

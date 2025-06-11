@@ -48,44 +48,16 @@ const Footer = () => {
             </h4>
             <ul className="font-body space-y-2">
               <li>
-                <Link href="/products?category=curtains">
+                <Link href="/products/clamp-mounted-fly-screen">
                   <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("Gordijnen")}
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=blinds">
-                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("Zonweringen")}
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=shades">
-                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("Vouwgordijnen")}
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=drapes">
-                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("SQUID")}
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=accessories">
-                  <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("Gordijnrails")}
+                    {t("Clamp-Mounted Fly Screen")}
                   </div>
                 </Link>
               </li>
               <li>
                 <Link href="/quote">
                   <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("Gordijnroedes")}
+                    {t("Request Quote")}
                   </div>
                 </Link>
               </li>

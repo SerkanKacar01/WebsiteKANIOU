@@ -14,7 +14,7 @@ import { ChatbotWidget } from "@/components/chatbot/ChatWidget";
 
 import Home from "@/pages/Home";
 import ProductDetail from "@/pages/ProductDetail";
-import ProductsPage from "@/pages/ProductsPage";
+
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
 import GalleryPage from "@/pages/GalleryPage";
@@ -74,7 +74,7 @@ function Router() {
   // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
-    if (location === "/products" || location === "/producten" || location === "/shop") return "Producten" + " | " + t("app.title");
+    if (location === "/products/clamp-mounted-fly-screen") return "Clamp-Mounted Fly Screen" + " | " + t("app.title");
     if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
@@ -97,9 +97,10 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/products" component={ProductsPage} />
-        <Route path="/producten" component={ProductsPage} />
-        <Route path="/shop" component={ProductsPage} />
+        {/* Redirect all product routes to the main product */}
+        <Route path="/products" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
+        <Route path="/producten" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
+        <Route path="/shop" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         {/* Product pages with calculators - specific routes first */}
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         <Route path="/products/overgordijnen" component={OvergordijnenPage} />
@@ -108,7 +109,8 @@ function Router() {
         {/* All individual product category pages - must come before generic routes */}
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/duo-rolgordijnen" component={DuoRolgordijnen} />
-        <Route path="/products/fly-screen-clamp-frame" component={FlyScreenProduct} />
+        <Route path="/products/clamp-mounted-fly-screen" component={FlyScreenProduct} />
+        <Route path="/products/fly-screen-clamp-frame" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
 
         {/* Specific product pages first, then generic routes */}
         <Route path="/price-calculator" component={PriceCalculatorPage} />

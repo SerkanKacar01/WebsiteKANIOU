@@ -14,6 +14,7 @@ const productCategories = [
   { label: "Kunststof jaloezieën", urlPath: "kunststof-jaloezieen" },
   { label: "Textiel raamfolie", urlPath: "textiel-raamfolie" },
   { label: "Houten shutters", urlPath: "houten-shutters" },
+  { label: "Fly Screens", urlPath: "fly-screens" },
   { label: "Inzethorren", urlPath: "inzethorren" },
   { label: "Opzethorren", urlPath: "opzethorren" },
   { label: "Plissé hordeuren", urlPath: "plisse-hordeuren" },

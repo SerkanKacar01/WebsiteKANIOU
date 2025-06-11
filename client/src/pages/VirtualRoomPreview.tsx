@@ -78,6 +78,7 @@ const VirtualRoomPreview = () => {
     { id: 'kunststof-jaloezieen', name: 'Kunststof jaloezieën', icon: '🏗️' },
     { id: 'textiel-raamfolie', name: 'Textiel raamfolie', icon: '🎭' },
     { id: 'houten-shutters', name: 'Houten shutters', icon: '🚪' },
+    { id: 'fly-screens', name: 'Fly Screens', icon: '🪲' },
     { id: 'inzethorren', name: 'Inzethorren', icon: '🦟' },
     { id: 'opzethorren', name: 'Opzethorren', icon: '🛡️' },
     { id: 'plisse-hordeuren', name: 'Plissé hordeuren', icon: '🚫' },

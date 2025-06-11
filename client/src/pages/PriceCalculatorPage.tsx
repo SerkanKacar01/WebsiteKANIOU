@@ -60,6 +60,7 @@ const PriceCalculatorPage = () => {
     { id: "kunststof-jaloezieën", name: "Kunststof jaloezieën" },
     { id: "textiel-raamfolie", name: "Textiel raamfolie" },
     { id: "houten-shutters", name: "Houten shutters" },
+    { id: "fly-screens", name: "Fly Screens" },
     { id: "inzethorren", name: "Inzethorren" },
     { id: "opzethorren", name: "Opzethorren" },
     { id: "plissé-hordeuren", name: "Plissé hordeuren" },

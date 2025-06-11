@@ -40,29 +40,8 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
 
-// Product pages with calculators
-import RolgordijnenPage from "@/pages/products/rolgordijnen";
-import OvergordijnenPage from "@/pages/products/overgordijnen";
-import VitragesPage from "@/pages/products/vitrages";
-import DuoRolgordijnen from "@/pages/products/duo-rolgordijnen";
+// Main product page
 import FlyScreenProduct from "@/pages/FlyScreenProduct";
-
-// All product category pages
-import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
-import TextielLamellenPage from "@/pages/products/textiel-lamellen";
-import KunststofLamellenPage from "@/pages/products/kunststof-lamellen";
-import HoutenJaloezieeenPage from "@/pages/products/houten-jaloezieen";
-import KunststofJaloezieeenPage from "@/pages/products/kunststof-jaloezieen";
-import HoutenShuttersPage from "@/pages/products/houten-shutters";
-import InzethorrenPage from "@/pages/products/inzethorren";
-import OpzethorrenPage from "@/pages/products/opzethorren";
-import PlisseHordeurenPage from "@/pages/products/plisse-hordeuren";
-import PlissePage from "@/pages/products/plisse";
-import DuoPlissePage from "@/pages/products/duo-plisse";
-import DakraamZonweringenPage from "@/pages/products/dakraam-zonweringen";
-import GordijnrailsPage from "@/pages/products/gordijnrails";
-import GordijnroedesPage from "@/pages/products/gordijnroedes";
-import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 
 function Router() {
   const { t } = useLanguage();
@@ -101,35 +80,12 @@ function Router() {
         <Route path="/products" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         <Route path="/producten" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         <Route path="/shop" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
-        {/* Product pages with calculators - specific routes first */}
-        <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
-        <Route path="/products/overgordijnen" component={OvergordijnenPage} />
-        <Route path="/products/vitrages" component={VitragesPage} />
-
-        {/* All individual product category pages - must come before generic routes */}
-        <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
-        <Route path="/products/duo-rolgordijnen" component={DuoRolgordijnen} />
+        {/* Main product page */}
         <Route path="/products/clamp-mounted-fly-screen" component={FlyScreenProduct} />
         <Route path="/products/fly-screen-clamp-frame" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
-
-        {/* Specific product pages first, then generic routes */}
-        <Route path="/price-calculator" component={PriceCalculatorPage} />
-        <Route path="/products/textiel-lamellen" component={TextielLamellenPage} />
-        <Route path="/products/kunststof-lamellen" component={KunststofLamellenPage} />
-        <Route path="/products/houten-jaloezieen" component={HoutenJaloezieeenPage} />
-        <Route path="/products/kunststof-jaloezieen" component={KunststofJaloezieeenPage} />
-        <Route path="/products/textiel-raamfolie" component={ProductCategoryPage} />
-        <Route path="/products/houten-shutters" component={HoutenShuttersPage} />
-        <Route path="/products/inzethorren" component={InzethorrenPage} />
-        <Route path="/products/opzethorren" component={OpzethorrenPage} />
-        <Route path="/products/plisse-hordeuren" component={PlisseHordeurenPage} />
-        <Route path="/products/plisse" component={PlissePage} />
-        <Route path="/products/duo-plisse" component={DuoPlissePage} />
-        <Route path="/products/dakraam-zonwering" component={DakraamZonweringenPage} />
-        <Route path="/products/gordijnrails" component={GordijnrailsPage} />
-        <Route path="/products/gordijnroedes" component={GordijnroedesPage} />
-        <Route path="/products/squid" component={SquidTextielFoliePage} />
-        <Route path="/products/:id(\d+)" component={ProductDetail} />
+        
+        {/* Redirect any other product routes to main product */}
+        <Route path="/products/:any*" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />

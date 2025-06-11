@@ -116,13 +116,13 @@ const ProductCategoryPage = () => {
         console.log("Looking for category:", categoryName);
         console.log("URL category:", category);
         
-        // If no mapping found, redirect
-        setLocation("/products/clamp-mounted-fly-screen", { replace: true });
+        // If no mapping found, redirect to home
+        setLocation("/", { replace: true });
         setLoading(false);
       }
     } else if (!categoriesLoading && !productsLoading && categories.length === 0) {
-      // If no categories loaded at all, redirect
-      setLocation("/products/clamp-mounted-fly-screen", { replace: true });
+      // If no categories loaded at all, redirect to home
+      setLocation("/", { replace: true });
       setLoading(false);
     }
   }, [categories, allProducts, category, setLocation, categoriesLoading, productsLoading]);

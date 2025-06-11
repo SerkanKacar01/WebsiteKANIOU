@@ -48,9 +48,9 @@ const Footer = () => {
             </h4>
             <ul className="font-body space-y-2">
               <li>
-                <Link href="/products/clamp-mounted-fly-screen">
+                <Link href="/products/fly-screens">
                   <div className="text-white hover:text-secondary transition-colors cursor-pointer">
-                    {t("Clamp-Mounted Fly Screen")}
+                    {t("Fly Screens")}
                   </div>
                 </Link>
               </li>

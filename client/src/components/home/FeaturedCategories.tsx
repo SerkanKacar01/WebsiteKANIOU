@@ -97,9 +97,9 @@ const FeaturedCategories = () => {
                   <span>2-year warranty</span>
                 </div>
               </div>
-              <Link href="/products/clamp-mounted-fly-screen">
+              <Link href="/quote">
                 <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                  Shop Fly Screens
+                  Request Quote
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </Button>
               </Link>

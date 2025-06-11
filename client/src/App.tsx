@@ -40,8 +40,7 @@ import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
 
-// Main product page
-import FlyScreenProduct from "@/pages/FlyScreenProduct";
+
 
 function Router() {
   const { t } = useLanguage();
@@ -53,7 +52,7 @@ function Router() {
   // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
-    if (location === "/products/clamp-mounted-fly-screen") return "Clamp-Mounted Fly Screen" + " | " + t("app.title");
+
     if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
@@ -76,19 +75,14 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        {/* Redirect all product routes to the main product */}
-        <Route path="/products" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
-        <Route path="/producten" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
-        <Route path="/shop" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         {/* Product categories */}
+        <Route path="/products" component={() => { window.location.href = '/'; return null; }} />
+        <Route path="/producten" component={() => { window.location.href = '/'; return null; }} />
+        <Route path="/shop" component={() => { window.location.href = '/'; return null; }} />
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
         
-        {/* Main product page */}
-        <Route path="/products/clamp-mounted-fly-screen" component={FlyScreenProduct} />
-        <Route path="/products/fly-screen-clamp-frame" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
-        
-        {/* Redirect any other product routes to main product */}
-        <Route path="/products/:any*" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
+        {/* Redirect any product routes to home page */}
+        <Route path="/products/:any*" component={() => { window.location.href = '/'; return null; }} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />

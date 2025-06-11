@@ -4,11 +4,23 @@ import Container from "@/components/ui/container";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Calculator, Clock, CheckCircle, Phone, Mail } from "lucide-react";
@@ -26,22 +38,22 @@ const OffertePage = () => {
     budget: "",
     message: "",
     urgency: "",
-    newsletter: false
+    newsletter: false,
   });
 
   const productTypes = [
     "Rolgordijnen",
-    "Plissé Gordijnen", 
+    "Plissé Gordijnen",
     "Jaloezieën",
     "Overgordijnen",
     "Fly Screens (Horren)",
     "Combinatie van Producten",
-    "Nog niet zeker"
+    "Nog niet zeker",
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!formData.name || !formData.email || !formData.phone) {
       toast({
@@ -69,14 +81,14 @@ const OffertePage = () => {
       budget: "",
       message: "",
       urgency: "",
-      newsletter: false
+      newsletter: false,
     });
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -92,8 +104,8 @@ const OffertePage = () => {
                 Gratis Offerte Aanvragen
               </h1>
               <p className="text-lg text-text-medium max-w-2xl mx-auto">
-                Ontvang binnen 24 uur uw persoonlijke offerte voor premium raamdecoratie. 
-                Geen verplichtingen, wel deskundig advies.
+                Ontvang binnen 24 uur uw persoonlijke offerte voor premium
+                raamdecoratie. Geen verplichtingen, wel deskundig advies.
               </p>
             </div>
 
@@ -119,7 +131,9 @@ const OffertePage = () => {
                           <Input
                             id="name"
                             value={formData.name}
-                            onChange={(e) => handleInputChange("name", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("name", e.target.value)
+                            }
                             placeholder="Uw volledige naam"
                             required
                           />
@@ -130,7 +144,9 @@ const OffertePage = () => {
                             id="email"
                             type="email"
                             value={formData.email}
-                            onChange={(e) => handleInputChange("email", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("email", e.target.value)
+                            }
                             placeholder="uw.email@example.com"
                             required
                           />
@@ -143,7 +159,9 @@ const OffertePage = () => {
                           <Input
                             id="phone"
                             value={formData.phone}
-                            onChange={(e) => handleInputChange("phone", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("phone", e.target.value)
+                            }
                             placeholder="06-12345678"
                             required
                           />
@@ -153,7 +171,9 @@ const OffertePage = () => {
                           <Input
                             id="address"
                             value={formData.address}
-                            onChange={(e) => handleInputChange("address", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("address", e.target.value)
+                            }
                             placeholder="Straat, nummer, postcode, plaats"
                           />
                         </div>
@@ -162,8 +182,14 @@ const OffertePage = () => {
                       {/* Project Details */}
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="productType">Type Raamdecoratie</Label>
-                          <Select onValueChange={(value) => handleInputChange("productType", value)}>
+                          <Label htmlFor="productType">
+                            Type Raamdecoratie
+                          </Label>
+                          <Select
+                            onValueChange={(value) =>
+                              handleInputChange("productType", value)
+                            }
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Selecteer product type" />
                             </SelectTrigger>
@@ -181,7 +207,9 @@ const OffertePage = () => {
                           <Input
                             id="rooms"
                             value={formData.rooms}
-                            onChange={(e) => handleInputChange("rooms", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("rooms", e.target.value)
+                            }
                             placeholder="Bijv. 5 ramen, 3 kamers"
                           />
                         </div>
@@ -190,31 +218,59 @@ const OffertePage = () => {
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="budget">Indicatief Budget</Label>
-                          <Select onValueChange={(value) => handleInputChange("budget", value)}>
+                          <Select
+                            onValueChange={(value) =>
+                              handleInputChange("budget", value)
+                            }
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Selecteer budget range" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="under-500">Onder €500</SelectItem>
-                              <SelectItem value="500-1000">€500 - €1.000</SelectItem>
-                              <SelectItem value="1000-2500">€1.000 - €2.500</SelectItem>
-                              <SelectItem value="2500-5000">€2.500 - €5.000</SelectItem>
-                              <SelectItem value="over-5000">Boven €5.000</SelectItem>
-                              <SelectItem value="unknown">Nog niet bekend</SelectItem>
+                              <SelectItem value="under-500">
+                                Onder €500
+                              </SelectItem>
+                              <SelectItem value="500-1000">
+                                €500 - €1.000
+                              </SelectItem>
+                              <SelectItem value="1000-2500">
+                                €1.000 - €2.500
+                              </SelectItem>
+                              <SelectItem value="2500-5000">
+                                €2.500 - €5.000
+                              </SelectItem>
+                              <SelectItem value="over-5000">
+                                Boven €5.000
+                              </SelectItem>
+                              <SelectItem value="unknown">
+                                Nog niet bekend
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
                         <div>
                           <Label htmlFor="urgency">Gewenste Termijn</Label>
-                          <Select onValueChange={(value) => handleInputChange("urgency", value)}>
+                          <Select
+                            onValueChange={(value) =>
+                              handleInputChange("urgency", value)
+                            }
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Wanneer wilt u dit realiseren?" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="asap">Zo snel mogelijk</SelectItem>
-                              <SelectItem value="1-month">Binnen 1 maand</SelectItem>
-                              <SelectItem value="3-months">Binnen 3 maanden</SelectItem>
-                              <SelectItem value="6-months">Binnen 6 maanden</SelectItem>
+                              <SelectItem value="asap">
+                                Zo snel mogelijk
+                              </SelectItem>
+                              <SelectItem value="1-month">
+                                Binnen 1 maand
+                              </SelectItem>
+                              <SelectItem value="3-months">
+                                Binnen 3 maanden
+                              </SelectItem>
+                              <SelectItem value="6-months">
+                                Binnen 6 maanden
+                              </SelectItem>
                               <SelectItem value="flexible">Flexibel</SelectItem>
                             </SelectContent>
                           </Select>
@@ -226,7 +282,9 @@ const OffertePage = () => {
                         <Textarea
                           id="message"
                           value={formData.message}
-                          onChange={(e) => handleInputChange("message", e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange("message", e.target.value)
+                          }
                           placeholder="Beschrijf uw wensen, specifieke eisen, of andere relevante informatie..."
                           rows={4}
                         />
@@ -236,15 +294,18 @@ const OffertePage = () => {
                         <Checkbox
                           id="newsletter"
                           checked={formData.newsletter}
-                          onCheckedChange={(checked) => handleInputChange("newsletter", checked as boolean)}
+                          onCheckedChange={(checked) =>
+                            handleInputChange("newsletter", checked as boolean)
+                          }
                         />
                         <Label htmlFor="newsletter" className="text-sm">
-                          Ja, ik wil graag de nieuwsbrief ontvangen met acties en tips
+                          Ja, ik wil graag de nieuwsbrief ontvangen met acties
+                          en tips
                         </Label>
                       </div>
 
-                      <Button 
-                        type="submit" 
+                      <Button
+                        type="submit"
                         className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white"
                         size="lg"
                       >
@@ -269,21 +330,27 @@ const OffertePage = () => {
                       <Clock className="w-5 h-5 text-primary mt-0.5" />
                       <div>
                         <h4 className="font-medium">24-uur Service</h4>
-                        <p className="text-sm text-text-medium">Offerte binnen 24 uur in uw mailbox</p>
+                        <p className="text-sm text-text-medium">
+                          Offerte binnen 24 uur in uw mailbox
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
                       <div>
                         <h4 className="font-medium">Gratis Advies</h4>
-                        <p className="text-sm text-text-medium">Deskundig advies zonder verplichtingen</p>
+                        <p className="text-sm text-text-medium">
+                          Deskundig advies zonder verplichtingen
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <Calculator className="w-5 h-5 text-primary mt-0.5" />
                       <div>
                         <h4 className="font-medium">Maatwerk</h4>
-                        <p className="text-sm text-text-medium">Elke offerte op maat gemaakt</p>
+                        <p className="text-sm text-text-medium">
+                          Elke offerte op maat gemaakt
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -300,21 +367,25 @@ const OffertePage = () => {
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5 text-primary" />
                       <div>
-                        <p className="font-medium">+31 (0)20 123 4567</p>
-                        <p className="text-sm text-text-medium">Ma-Vr: 9:00-17:00</p>
+                        <p className="font-medium">+32 467 85 64 05</p>
+                        <p className="text-sm text-text-medium">
+                          Ma-Vr: 10:00-18:00
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="w-5 h-5 text-primary" />
                       <div>
-                        <p className="font-medium">info@kaniou.nl</p>
-                        <p className="text-sm text-text-medium">24/7 bereikbaar</p>
+                        <p className="font-medium">info@kaniou.be</p>
+                        <p className="text-sm text-text-medium">
+                          24/7 bereikbaar
+                        </p>
                       </div>
                     </div>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full"
-                      onClick={() => window.location.href = '/contact'}
+                      onClick={() => (window.location.href = "/contact")}
                     >
                       Naar Contactpagina
                     </Button>

@@ -1,7 +1,5 @@
 import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -78,116 +76,112 @@ const ActiesPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
-        <Container>
-          <div className="py-12">
-            {/* Hero Section */}
-            <div className="text-center mb-12">
-              <h1 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
-                Actuele Promoties & Aanbiedingen
-              </h1>
-              <p className="text-lg text-text-medium max-w-2xl mx-auto">
-                Momenteel zijn er geen lopende acties, maar houd onze pagina in de gaten voor exclusieve aanbiedingen!
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
+      <Container>
+        <div className="py-12">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
+              Actuele Promoties & Aanbiedingen
+            </h1>
+            <p className="text-lg text-text-medium max-w-2xl mx-auto">
+              Momenteel zijn er geen lopende acties, maar houd onze pagina in de gaten voor exclusieve aanbiedingen!
+            </p>
+          </div>
+
+          {/* No Active Promotions Placeholder */}
+          <div className="flex justify-center mb-12">
+            <Card className="max-w-lg w-full">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 p-3 bg-[#D9C29C]/10 rounded-full w-fit">
+                  <Clock className="w-8 h-8 text-[#D9C29C]" />
+                </div>
+                <CardTitle className="text-xl text-text-dark">
+                  Geen Actieve Kortingen
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-text-medium mb-6">
+                  Er zijn momenteel geen actieve kortingen. Onze aanbiedingen worden regelmatig bijgewerkt.
+                </p>
+                <Button 
+                  disabled
+                  className="w-full bg-gray-300 text-gray-500 cursor-not-allowed"
+                >
+                  Nieuwe acties binnenkort beschikbaar
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Newsletter Subscription Section */}
+          <div className="bg-[#D9C29C]/5 rounded-lg p-8 text-center">
+            <div className="mb-6">
+              <div className="mx-auto mb-4 p-3 bg-[#D9C29C]/20 rounded-full w-fit">
+                <Mail className="w-8 h-8 text-[#D9C29C]" />
+              </div>
+              <h2 className="text-2xl font-bold text-text-dark mb-4">
+                Blijf op de Hoogte
+              </h2>
+              <p className="text-text-medium mb-6 max-w-xl mx-auto">
+                Blijf als eerste op de hoogte van nieuwe promoties en exclusieve kortingen.
               </p>
             </div>
 
-            {/* No Active Promotions Placeholder */}
-            <div className="flex justify-center mb-12">
-              <Card className="max-w-lg w-full">
-                <CardHeader className="text-center">
-                  <div className="mx-auto mb-4 p-3 bg-[#D9C29C]/10 rounded-full w-fit">
-                    <Clock className="w-8 h-8 text-[#D9C29C]" />
-                  </div>
-                  <CardTitle className="text-xl text-text-dark">
-                    Geen Actieve Kortingen
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <p className="text-text-medium mb-6">
-                    Er zijn momenteel geen actieve kortingen. Onze aanbiedingen worden regelmatig bijgewerkt.
-                  </p>
-                  <Button 
-                    disabled
-                    className="w-full bg-gray-300 text-gray-500 cursor-not-allowed"
+            {/* Newsletter Form */}
+            <div className="max-w-md mx-auto">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  {/* Honeypot field - hidden from users */}
+                  <FormField
+                    control={form.control}
+                    name="website"
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        type="text"
+                        style={{ display: "none" }}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="sr-only">E-mailadres</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Jouw e-mailadres"
+                            type="email"
+                            className="text-center"
+                            disabled={newsletterMutation.isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-[#D9C29C] hover:bg-[#D0B378] text-white"
+                    disabled={newsletterMutation.isPending}
                   >
-                    Nieuwe acties binnenkort beschikbaar
+                    {newsletterMutation.isPending ? "Bezig..." : "Schrijf je in voor de nieuwsbrief"}
                   </Button>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Newsletter Subscription Section */}
-            <div className="bg-[#D9C29C]/5 rounded-lg p-8 text-center">
-              <div className="mb-6">
-                <div className="mx-auto mb-4 p-3 bg-[#D9C29C]/20 rounded-full w-fit">
-                  <Mail className="w-8 h-8 text-[#D9C29C]" />
-                </div>
-                <h2 className="text-2xl font-bold text-text-dark mb-4">
-                  Blijf op de Hoogte
-                </h2>
-                <p className="text-text-medium mb-6 max-w-xl mx-auto">
-                  Blijf als eerste op de hoogte van nieuwe promoties en exclusieve kortingen.
-                </p>
-              </div>
-
-              {/* Newsletter Form */}
-              <div className="max-w-md mx-auto">
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    {/* Honeypot field - hidden from users */}
-                    <FormField
-                      control={form.control}
-                      name="website"
-                      render={({ field }) => (
-                        <input
-                          {...field}
-                          type="text"
-                          style={{ display: "none" }}
-                          tabIndex={-1}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="sr-only">E-mailadres</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Jouw e-mailadres"
-                              type="email"
-                              className="text-center"
-                              disabled={newsletterMutation.isPending}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full bg-[#D9C29C] hover:bg-[#D0B378] text-white"
-                      disabled={newsletterMutation.isPending}
-                    >
-                      {newsletterMutation.isPending ? "Bezig..." : "Schrijf je in voor de nieuwsbrief"}
-                    </Button>
-                  </form>
-                </Form>
-              </div>
+                </form>
+              </Form>
             </div>
           </div>
-        </Container>
-      </main>
-      <Footer />
-    </>
+        </div>
+      </Container>
+    </div>
   );
 };
 

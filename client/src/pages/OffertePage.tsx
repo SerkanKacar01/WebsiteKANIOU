@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -93,36 +91,34 @@ const OffertePage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
-        <Container>
-          <div className="py-12">
-            {/* Hero Section */}
-            <div className="text-center mb-12">
-              <h1 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
-                Gratis Offerte Aanvragen
-              </h1>
-              <p className="text-lg text-text-medium max-w-2xl mx-auto">
-                Ontvang binnen 24 uur uw persoonlijke offerte voor premium
-                raamdecoratie. Geen verplichtingen, wel deskundig advies.
-              </p>
-            </div>
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
+      <Container>
+        <div className="py-12">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
+              Gratis Offerte Aanvragen
+            </h1>
+            <p className="text-lg text-text-medium max-w-2xl mx-auto">
+              Ontvang binnen 24 uur uw persoonlijke offerte voor premium
+              raamdecoratie. Geen verplichtingen, wel deskundig advies.
+            </p>
+          </div>
 
-            <div className="grid lg:grid-cols-3 gap-8">
-              {/* Quote Request Form */}
-              <div className="lg:col-span-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Calculator className="w-5 h-5 text-primary" />
-                      Offerte Formulier
-                    </CardTitle>
-                    <CardDescription>
-                      Vul onderstaande gegevens in voor uw persoonlijke offerte
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Quote Request Form */}
+            <div className="lg:col-span-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calculator className="w-5 h-5 text-primary" />
+                    Offerte Formulier
+                  </CardTitle>
+                  <CardDescription>
+                    Vul onderstaande gegevens in voor uw persoonlijke offerte
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Personal Information */}
                       <div className="grid md:grid-cols-2 gap-4">
@@ -393,11 +389,9 @@ const OffertePage = () => {
                 </Card>
               </div>
             </div>
-          </div>
-        </Container>
-      </main>
-      <Footer />
-    </>
+        </div>
+      </Container>
+    </div>
   );
 };
 

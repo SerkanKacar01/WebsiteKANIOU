@@ -70,31 +70,31 @@ const ProductCategoryPage = () => {
       // Find matching category based on URL
       // Map specific URL segments to their corresponding categories
       const urlToCategoryMap: Record<string, string> = {
-        overgordijnen: "Curtains",
-        vitrages: "Sheer Drapes",
-        rolgordijnen: "Sunblind",
-        "duo-rolgordijnen": "Sunblind",
-        "textiel-lamellen": "Curtains",
-        "kunststof-lamellen": "Curtains",
-        "houten-jaloezieen": "Curtains",
-        "kunststof-jaloezieen": "Curtains",
-        "textiel-raamfolie": "SQUID",
-        "houten-shutters": "Curtains",
+        overgordijnen: "Overgordijnen",
+        vitrages: "Vitrages", 
+        rolgordijnen: "Rolgordijnen",
+        "duo-rolgordijnen": "Duo rolgordijnen",
+        "textiel-lamellen": "Textiel lamellen",
+        "kunststof-lamellen": "Kunststof lamellen",
+        "houten-jaloezieen": "Houten jaloezieën",
+        "kunststof-jaloezieen": "Kunststof jaloezieën",
+        "textiel-raamfolie": "Textiel raamfolie",
+        "houten-shutters": "Houten shutters",
         "fly-screens": "Fly Screens",
-        inzethorren: "Insect Screens",
-        opzethorren: "Insect Screens",
-        "plisse-hordeuren": "Insect Screens",
-        plisse: "Roman Blinds",
-        "duo-plisse": "Roman Blinds",
-        "dakraam-zonwering": "Roof Window Shades",
-        gordijnrails: "Curtain Rails",
-        gordijnroedes: "Curtain Rods",
-        horren: "Insect Screens",
-        squid: "SQUID",
+        inzethorren: "Inzethorren",
+        opzethorren: "Opzethorren",
+        "plisse-hordeuren": "Plissé hordeuren",
+        plisse: "Plissé",
+        "duo-plisse": "Duo plissé",
+        "dakraam-zonwering": "Dakraam zonweringen (Fakro, Velux)",
+        gordijnrails: "Gordijnrails",
+        gordijnroedes: "Gordijnroedes",
+        horren: "Horren",
+        squid: "SQUID textiel folie",
       };
 
       // Get the matching category name or default to the first one
-      const categoryName = urlToCategoryMap[category as string] || "";
+      const categoryName = urlToCategoryMap[category as string];
 
       // Find the category object
       const foundCategory = categories.find(
@@ -109,14 +109,23 @@ const ProductCategoryPage = () => {
           (product: Product) => product.categoryId === foundCategory.id,
         );
         setProducts(categoryProducts);
+        setLoading(false);
       } else {
-        // Redirect to main product page if category not found
+        // Try direct search if mapping doesn't work
+        console.log("Available categories:", categories.map(c => c.name));
+        console.log("Looking for category:", categoryName);
+        console.log("URL category:", category);
+        
+        // If no mapping found, redirect
         setLocation("/products/clamp-mounted-fly-screen", { replace: true });
+        setLoading(false);
       }
-
+    } else if (!categoriesLoading && !productsLoading && categories.length === 0) {
+      // If no categories loaded at all, redirect
+      setLocation("/products/clamp-mounted-fly-screen", { replace: true });
       setLoading(false);
     }
-  }, [categories, allProducts, category, setLocation]);
+  }, [categories, allProducts, category, setLocation, categoriesLoading, productsLoading]);
 
   // Loading state
   if (loading || categoriesLoading || productsLoading || !categoryData) {

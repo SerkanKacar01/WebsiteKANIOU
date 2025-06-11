@@ -44,7 +44,7 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t("PRODUCTEN"), href: "/producten", hasDropdown: true },
+    { label: t("PRODUCTEN"), href: "/products", hasDropdown: true },
     { label: t("GALLERIJ"), href: "/gallerij" },
     { label: "ZAKELIJK", href: "/zakelijk" },
     { label: t("OVER ONS"), href: "/overons" },

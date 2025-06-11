@@ -74,6 +74,7 @@ function Router() {
   // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
+    if (location === "/products" || location === "/producten" || location === "/shop") return "Producten" + " | " + t("app.title");
     if (location === "/gallery") return t("gallery.title") + " | " + t("app.title");
     if (location === "/about") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
@@ -96,6 +97,9 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/products" component={ProductsPage} />
+        <Route path="/producten" component={ProductsPage} />
+        <Route path="/shop" component={ProductsPage} />
         {/* Product pages with calculators - specific routes first */}
         <Route path="/products/rolgordijnen" component={RolgordijnenPage} />
         <Route path="/products/overgordijnen" component={OvergordijnenPage} />

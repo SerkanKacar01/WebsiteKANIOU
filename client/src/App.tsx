@@ -80,6 +80,9 @@ function Router() {
         <Route path="/products" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         <Route path="/producten" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
         <Route path="/shop" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />
+        {/* Product categories */}
+        <Route path="/products/fly-screens" component={ProductCategoryPage} />
+        
         {/* Main product page */}
         <Route path="/products/clamp-mounted-fly-screen" component={FlyScreenProduct} />
         <Route path="/products/fly-screen-clamp-frame" component={() => { window.location.href = '/products/clamp-mounted-fly-screen'; return null; }} />

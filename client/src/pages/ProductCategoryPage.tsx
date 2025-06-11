@@ -80,6 +80,7 @@ const ProductCategoryPage = () => {
         "kunststof-jaloezieen": "Curtains",
         "textiel-raamfolie": "SQUID",
         "houten-shutters": "Curtains",
+        "fly-screens": "Fly Screens",
         inzethorren: "Insect Screens",
         opzethorren: "Insect Screens",
         "plisse-hordeuren": "Insect Screens",

@@ -95,17 +95,9 @@ const ProductsPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Shop Premium Raamdecoratie
           </h1>
-          <p className="text-base md:text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Discover our full range of custom-made window treatments and fly screens.
           </p>
-          <div className="flex justify-center">
-            <Link href="/quote">
-              <Button size="lg" className="bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white">
-                Start Shopping
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
 
         {/* Assistance Section - Moved up */}

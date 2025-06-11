@@ -82,9 +82,13 @@ function Router() {
         <Route path="/producten" component={ProductsPage} />
         <Route path="/shop" component={ProductsPage} />
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
+        <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/overgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/plisse" component={ProductCategoryPage} />
+        <Route path="/products/jaloezieen" component={ProductCategoryPage} />
         
-        {/* Redirect any product routes to home page */}
-        <Route path="/products/:any*" component={() => { window.location.href = '/'; return null; }} />
+        {/* Handle all other product category routes */}
+        <Route path="/products/:category" component={ProductCategoryPage} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />

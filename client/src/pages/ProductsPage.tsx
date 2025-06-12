@@ -31,7 +31,7 @@ const ProductsPage = () => {
       name: "Klassieke Houten Jaloezie",
       description: "Tijdloze houten jaloezieën van hoogwaardige kwaliteit. Perfect voor elke ruimte.",
       price: "€89.95",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+      image: "/attached_assets/IMG_9562_1749709398589.jpeg",
       alt: "Klassieke Houten Jaloezie"
     },
     {

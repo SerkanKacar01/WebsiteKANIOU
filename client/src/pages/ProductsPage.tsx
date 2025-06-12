@@ -16,14 +16,18 @@ const ProductsPage = () => {
       id: "jaloezien",
       name: "🪞 Jaloezieën",
       subcategories: [
-        { id: "houten-jaloezien", name: "Houten Jaloezieën" }
+        { id: "houten-jaloezien", name: "Houten Jaloezieën" },
+        { id: "kunststof-jaloezien", name: "Kunststof Jaloezieën" },
+        { id: "aluminium-jaloezien", name: "Aluminium Jaloezieën" }
       ]
     }
   ];
 
-  const houtenJaloezienenProducts = [
+  const allJaloezienenProducts = [
+    // Houten Jaloezieën
     {
       id: 1,
+      category: "houten-jaloezien",
       name: "Klassieke Houten Jaloezie",
       description: "Tijdloze houten jaloezieën van hoogwaardige kwaliteit. Perfect voor elke ruimte.",
       price: "€89.95",
@@ -32,6 +36,7 @@ const ProductsPage = () => {
     },
     {
       id: 2,
+      category: "houten-jaloezien",
       name: "Premium Houten Jaloezie",
       description: "Luxe houten jaloezieën met extra brede lamellen. Duurzaam en stijlvol.",
       price: "€129.95",
@@ -40,11 +45,50 @@ const ProductsPage = () => {
     },
     {
       id: 3,
+      category: "houten-jaloezien",
       name: "Deluxe Houten Jaloezie",
       description: "Exclusieve houten jaloezieën met speciale behandeling. Top kwaliteit en design.",
       price: "€169.95",
       image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop",
       alt: "Deluxe Houten Jaloezie"
+    },
+    // Kunststof Jaloezieën
+    {
+      id: 4,
+      category: "kunststof-jaloezien",
+      name: "Klassieke Kunststof Jaloezie",
+      description: "Duurzame kunststof jaloezieën met uitstekende kwaliteit. Onderhoudsarm en praktisch.",
+      price: "€49.95",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+      alt: "Klassieke Kunststof Jaloezie"
+    },
+    {
+      id: 5,
+      category: "kunststof-jaloezien",
+      name: "Premium Kunststof Jaloezie",
+      description: "Hoogwaardige kunststof jaloezieën met verfijnde afwerking. Ideaal voor vochtige ruimtes.",
+      price: "€69.95",
+      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=300&fit=crop",
+      alt: "Premium Kunststof Jaloezie"
+    },
+    // Aluminium Jaloezieën
+    {
+      id: 6,
+      category: "aluminium-jaloezien",
+      name: "Klassieke Aluminium Jaloezie",
+      description: "Sterke aluminium jaloezieën met moderne uitstraling. Lichtgewicht en duurzaam.",
+      price: "€59.95",
+      image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop",
+      alt: "Klassieke Aluminium Jaloezie"
+    },
+    {
+      id: 7,
+      category: "aluminium-jaloezien",
+      name: "Premium Aluminium Jaloezie",
+      description: "Luxe aluminium jaloezieën met gepoedercoate afwerking. Perfecte lichtregeling.",
+      price: "€79.95",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+      alt: "Premium Aluminium Jaloezie"
     }
   ];
 
@@ -62,12 +106,8 @@ const ProductsPage = () => {
   };
 
   const filteredProducts = selectedCategory 
-    ? houtenJaloezienenProducts.filter(product => {
-        // Filter products based on selected category
-        if (selectedCategory === "houten-jaloezien") return true;
-        return false;
-      })
-    : houtenJaloezienenProducts;
+    ? allJaloezienenProducts.filter(product => product.category === selectedCategory)
+    : allJaloezienenProducts;
 
   return (
     <div className="min-h-screen bg-white">
@@ -160,13 +200,13 @@ const ProductsPage = () => {
                     `Producten: ${categories.find(cat => 
                       cat.subcategories.some(sub => sub.id === selectedCategory)
                     )?.subcategories.find(sub => sub.id === selectedCategory)?.name || 'Geselecteerd'}` :
-                    'Ontdek Onze Premium Houten Jaloezieën'
+                    'Ontdek Onze Premium Jaloezieën'
                   }
                 </h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   {selectedCategory ? 
                     'Gefilterde producten op basis van uw selectie.' :
-                    'Hoogwaardige houten jaloezieën die perfect passen bij elke interieurstijl.'
+                    'Hoogwaardige jaloezieën in hout, kunststof en aluminium die perfect passen bij elke interieurstijl.'
                   }
                 </p>
               </section>

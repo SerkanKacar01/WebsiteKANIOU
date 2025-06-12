@@ -16,64 +16,35 @@ const ProductsPage = () => {
       id: "jaloezien",
       name: "🪞 Jaloezieën",
       subcategories: [
-        { id: "houten-jaloezien", name: "Houten Jaloezieën" },
-        { id: "kunststof-jaloezien", name: "Kunststof Jaloezieën" },
-        { id: "verticale-jaloezien", name: "Verticale Jaloezieën" }
-      ]
-    },
-    {
-      id: "rolgordijnen",
-      name: "☀️ Rolgordijnen",
-      subcategories: [
-        { id: "verduisterend", name: "Verduisterend" },
-        { id: "lichtdoorlatend", name: "Lichtdoorlatend" },
-        { id: "duo-rolgordijnen", name: "Duo Rolgordijnen" }
-      ]
-    },
-    {
-      id: "vitrages",
-      name: "🌫️ Vitrages",
-      subcategories: [
-        { id: "wit-vitrage", name: "Wit Vitrage" },
-        { id: "transparante-vitrages", name: "Transparante Vitrages" },
-        { id: "verduisterende-vitrages", name: "Verduisterende Vitrages" }
-      ]
-    },
-    {
-      id: "vliegengordijnen",
-      name: "🦟 Vliegengordijnen",
-      subcategories: [
-        { id: "standard-fly-screen", name: "Standard Fly Screen" },
-        { id: "magnetic-fly-screen", name: "Magnetic Fly Screen" },
-        { id: "luxury-fly-screen", name: "Luxury Fly Screen" }
+        { id: "houten-jaloezien", name: "Houten Jaloezieën" }
       ]
     }
   ];
 
-  const flyScreenProducts = [
+  const houtenJaloezienenProducts = [
     {
       id: 1,
-      name: "Standard Fly Screen",
-      description: "Perfect fit for PVC or aluminum windows. Installed without drilling.",
-      price: "€29.95",
+      name: "Klassieke Houten Jaloezie",
+      description: "Tijdloze houten jaloezieën van hoogwaardige kwaliteit. Perfect voor elke ruimte.",
+      price: "€89.95",
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-      alt: "Standard Fly Screen"
+      alt: "Klassieke Houten Jaloezie"
     },
     {
       id: 2,
-      name: "Magnetic Fly Screen",
-      description: "Simple magnetic attachment. Reliable and easy to remove.",
-      price: "€39.95",
+      name: "Premium Houten Jaloezie",
+      description: "Luxe houten jaloezieën met extra brede lamellen. Duurzaam en stijlvol.",
+      price: "€129.95",
       image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=300&fit=crop",
-      alt: "Magnetic Fly Screen"
+      alt: "Premium Houten Jaloezie"
     },
     {
       id: 3,
-      name: "Luxury Fly Screen",
-      description: "Sleek design with ultra-thin frame. Premium powder-coated aluminum.",
-      price: "€49.95",
+      name: "Deluxe Houten Jaloezie",
+      description: "Exclusieve houten jaloezieën met speciale behandeling. Top kwaliteit en design.",
+      price: "€169.95",
       image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop",
-      alt: "Luxury Fly Screen"
+      alt: "Deluxe Houten Jaloezie"
     }
   ];
 
@@ -91,14 +62,12 @@ const ProductsPage = () => {
   };
 
   const filteredProducts = selectedCategory 
-    ? flyScreenProducts.filter(product => {
-        // For demo purposes, filter fly screens based on selected category
-        if (selectedCategory === "standard-fly-screen") return product.id === 1;
-        if (selectedCategory === "magnetic-fly-screen") return product.id === 2;
-        if (selectedCategory === "luxury-fly-screen") return product.id === 3;
-        return true;
+    ? houtenJaloezienenProducts.filter(product => {
+        // Filter products based on selected category
+        if (selectedCategory === "houten-jaloezien") return true;
+        return false;
       })
-    : flyScreenProducts;
+    : houtenJaloezienenProducts;
 
   return (
     <div className="min-h-screen bg-white">
@@ -191,13 +160,13 @@ const ProductsPage = () => {
                     `Producten: ${categories.find(cat => 
                       cat.subcategories.some(sub => sub.id === selectedCategory)
                     )?.subcategories.find(sub => sub.id === selectedCategory)?.name || 'Geselecteerd'}` :
-                    'Discover Our Premium Fly Screens'
+                    'Ontdek Onze Premium Houten Jaloezieën'
                   }
                 </h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   {selectedCategory ? 
                     'Gefilterde producten op basis van uw selectie.' :
-                    'High-quality clamp-mounted solutions, made to fit perfectly on your windows.'
+                    'Hoogwaardige houten jaloezieën die perfect passen bij elke interieurstijl.'
                   }
                 </p>
               </section>

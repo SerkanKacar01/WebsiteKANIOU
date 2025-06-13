@@ -2,261 +2,206 @@ import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "wouter";
+import { ArrowRight, Star, Eye, Ruler, Palette, MessageCircle, FileText, Image } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const categories = [
-    {
-      id: "jaloezien",
-      name: "🪞 Jaloezieën",
-      subcategories: [
-        { id: "houten-jaloezien", name: "Houten Jaloezieën" },
-        { id: "kunststof-jaloezien", name: "Kunststof Jaloezieën" },
-        { id: "aluminium-jaloezien", name: "Aluminium Jaloezieën" }
-      ]
-    }
-  ];
-
-  const allJaloezienenProducts = [
-    // Houten Jaloezieën
+  // Product categories data
+  const productCategories = [
     {
       id: 1,
-      category: "houten-jaloezien",
-      name: "Klassieke Houten Jaloezie",
-      description: "Tijdloze houten jaloezieën van hoogwaardige kwaliteit. Perfect voor elke ruimte.",
-      price: "€89.95",
-      image: "/attached_assets/IMG_9562_1749709398589.jpeg",
-      alt: "Klassieke Houten Jaloezie"
+      title: "Vliegengordijnen",
+      subtitle: "Klemgordijnen & Magnetische gordijnen",
+      description: "Premium vliegengordijnen die perfect passen bij elke deuropening. Eenvoudig te installeren zonder boren.",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+      products: [
+        { name: "Klemgordijn", price: "€29,95", variant: "Standaard", popular: true },
+        { name: "Magnetisch Vliegengordijn", price: "€39,95", variant: "Magnetisch", popular: false },
+        { name: "Luxe Klemgordijn", price: "€49,95", variant: "Premium", popular: false }
+      ],
+      href: "/products/fly-screens",
+      badge: "Bestseller"
     },
     {
       id: 2,
-      category: "houten-jaloezien",
-      name: "Premium Houten Jaloezie",
-      description: "Luxe houten jaloezieën met extra brede lamellen. Duurzaam en stijlvol.",
-      price: "€129.95",
-      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=300&fit=crop",
-      alt: "Premium Houten Jaloezie"
+      title: "Raamdecoratie",
+      subtitle: "Gordijnen & Vitragegordunen",
+      description: "Elegante raamdecoratie voor elke kamer. Van moderne tot klassieke stijlen.",
+      image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
+      products: [
+        { name: "Vitrage Gordijn", price: "€24,95", variant: "Wit", popular: false },
+        { name: "Verduisterende Gordijnen", price: "€59,95", variant: "Premium", popular: true },
+        { name: "Transparante Vitrages", price: "€34,95", variant: "Basic", popular: false }
+      ],
+      href: "/products/window-curtains",
+      badge: "Nieuw"
     },
     {
       id: 3,
-      category: "houten-jaloezien",
-      name: "Deluxe Houten Jaloezie",
-      description: "Exclusieve houten jaloezieën met speciale behandeling. Top kwaliteit en design.",
-      price: "€169.95",
-      image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop",
-      alt: "Deluxe Houten Jaloezie"
+      title: "Jalouzieën",
+      subtitle: "Horizontale & Verticale jalouzieën",
+      description: "Stijlvolle jalouzieën voor optimale lichtregeling en privacy. Op maat gemaakt.",
+      image: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&h=300&fit=crop",
+      products: [
+        { name: "Houten Jaloezie", price: "€79,95", variant: "Hout", popular: false },
+        { name: "Aluminium Jaloezie", price: "€49,95", variant: "Aluminium", popular: true },
+        { name: "Verticale Jaloezie", price: "€69,95", variant: "Verticaal", popular: false }
+      ],
+      href: "/products/blinds",
+      badge: "Op maat"
     },
-    // Kunststof Jaloezieën
     {
       id: 4,
-      category: "kunststof-jaloezien",
-      name: "Klassieke Kunststof Jaloezie",
-      description: "Duurzame kunststof jaloezieën met uitstekende kwaliteit. Onderhoudsarm en praktisch.",
-      price: "€49.95",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-      alt: "Klassieke Kunststof Jaloezie"
-    },
-    {
-      id: 5,
-      category: "kunststof-jaloezien",
-      name: "Premium Kunststof Jaloezie",
-      description: "Hoogwaardige kunststof jaloezieën met verfijnde afwerking. Ideaal voor vochtige ruimtes.",
-      price: "€69.95",
-      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=300&fit=crop",
-      alt: "Premium Kunststof Jaloezie"
-    },
-    // Aluminium Jaloezieën
-    {
-      id: 6,
-      category: "aluminium-jaloezien",
-      name: "Klassieke Aluminium Jaloezie",
-      description: "Sterke aluminium jaloezieën met moderne uitstraling. Lichtgewicht en duurzaam.",
-      price: "€59.95",
-      image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop",
-      alt: "Klassieke Aluminium Jaloezie"
-    },
-    {
-      id: 7,
-      category: "aluminium-jaloezien",
-      name: "Premium Aluminium Jaloezie",
-      description: "Luxe aluminium jaloezieën met gepoedercoate afwerking. Perfecte lichtregeling.",
-      price: "€79.95",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-      alt: "Premium Aluminium Jaloezie"
+      title: "Plissé Gordijnen",
+      subtitle: "Moderne plissé oplossingen",
+      description: "Veelzijdige plissé gordijnen die perfect combineren met elke interieurstijl.",
+      image: "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=400&h=300&fit=crop",
+      products: [
+        { name: "Plissé", price: "€45,95", variant: "Transparant", popular: false },
+        { name: "Plissé", price: "€65,95", variant: "Verduisterend", popular: true },
+        { name: "Plissé", price: "€55,95", variant: "Isolerend", popular: false }
+      ],
+      href: "/products/pleated-curtains",
+      badge: "Energie-efficiënt"
     }
   ];
 
-  const toggleCategory = (categoryId: string) => {
-    setExpandedCategories(prev => 
-      prev.includes(categoryId) 
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
-    );
-  };
-
-  const handleSubcategoryClick = (subcategoryId: string) => {
-    setSelectedCategory(subcategoryId);
-    setSidebarOpen(false); // Close mobile sidebar
-  };
-
-  const filteredProducts = selectedCategory 
-    ? allJaloezienenProducts.filter(product => product.category === selectedCategory)
-    : allJaloezienenProducts;
+  const assistanceFeatures = [
+    {
+      icon: <MessageCircle className="h-6 w-6" />,
+      title: "Gratis Advies",
+      description: "Persoonlijk adviesgesprek met onze experts"
+    },
+    {
+      icon: <FileText className="h-6 w-6" />,
+      title: "Gratis Offerte",
+      description: "Op maat gemaakte offerte binnen 24 uur"
+    },
+    {
+      icon: <Image className="h-6 w-6" />,
+      title: "Product Galerij",
+      description: "Inspiratie opdoen met onze uitgebreide galerij"
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Mobile Sidebar Toggle */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
-        <Button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white p-2"
-          size="sm"
-        >
-          {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
-      </div>
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className={`
-          fixed lg:sticky top-0 left-0 h-screen w-80 bg-gray-50 border-r border-gray-200 overflow-y-auto z-40
-          transform transition-transform duration-300 ease-in-out
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        `}>
-          <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">🛍️ Alle Producten</h2>
-            
-            {/* Category Navigation */}
-            <nav className="space-y-2">
-              {categories.map((category) => (
-                <div key={category.id} className="space-y-1">
-                  <button
-                    onClick={() => toggleCategory(category.id)}
-                    className="w-full flex items-center justify-between px-3 py-2 text-left text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-                  >
-                    <span className="font-medium">{category.name}</span>
-                    {expandedCategories.includes(category.id) ? 
-                      <ChevronDown className="h-4 w-4" /> : 
-                      <ChevronRight className="h-4 w-4" />
-                    }
-                  </button>
-                  
-                  {/* Subcategories */}
-                  {expandedCategories.includes(category.id) && (
-                    <div className="ml-4 space-y-1">
-                      {category.subcategories.map((subcategory) => (
-                        <button
-                          key={subcategory.id}
-                          onClick={() => handleSubcategoryClick(subcategory.id)}
-                          className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
-                            selectedCategory === subcategory.id
-                              ? 'bg-[#D9C29C] text-white'
-                              : 'text-gray-600 hover:bg-gray-100'
-                          }`}
-                        >
-                          {subcategory.name}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              
-              {/* Clear Filter Button */}
-              {selectedCategory && (
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  className="w-full mt-4 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-md border border-gray-200"
-                >
-                  Toon Alle Producten
-                </button>
-              )}
-            </nav>
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <Container>
+        {/* Hero Section - Shopping Focused */}
+        <div className="py-8 md:py-12 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Shop Premium Raamdecoratie
+          </h1>
+          <p className="text-base md:text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+            Discover our full range of custom-made window treatments and fly screens.
+          </p>
+          <div className="flex justify-center">
+            <Link href="/quote">
+              <Button size="lg" className="bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white">
+                Start Shopping
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
 
-        {/* Mobile Overlay */}
-        {sidebarOpen && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-
-        {/* Main Content */}
-        <div className="flex-1 lg:ml-0">
-          <Container>
-            <>
-              {/* Shop Header */}
-              <section className="text-center py-12 px-4 lg:px-0">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                  {selectedCategory ? 
-                    `Producten: ${categories.find(cat => 
-                      cat.subcategories.some(sub => sub.id === selectedCategory)
-                    )?.subcategories.find(sub => sub.id === selectedCategory)?.name || 'Geselecteerd'}` :
-                    'Ontdek Onze Premium Jaloezieën'
-                  }
-                </h1>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  {selectedCategory ? 
-                    'Gefilterde producten op basis van uw selectie.' :
-                    'Hoogwaardige jaloezieën in hout, kunststof en aluminium die perfect passen bij elke interieurstijl.'
-                  }
-                </p>
-              </section>
-
-              {/* Product Grid */}
-              <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 px-6 py-10">
-                {filteredProducts.map((product) => (
-                  <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <div className="relative">
-                      <img
-                        src={product.image}
-                        alt={product.alt}
-                        className="w-full h-64 object-cover"
-                      />
-                    </div>
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-xl font-bold text-gray-900">
-                        {product.name}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="pb-4">
-                      <p className="text-gray-600 mb-4">
-                        {product.description}
-                      </p>
-                      <p className="text-2xl font-bold text-gray-900">
-                        {product.price}
-                      </p>
-                    </CardContent>
-                    <CardFooter>
-                      <Button 
-                        className="w-full bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white font-semibold py-3"
-                        size="lg"
-                      >
-                        Buy Now
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </section>
-
-              {/* No Products Message */}
-              {filteredProducts.length === 0 && (
-                <div className="text-center py-20">
-                  <p className="text-gray-500 text-lg">Geen producten gevonden voor deze categorie.</p>
+        {/* Assistance Section - Moved up */}
+        <div className="bg-primary/5 rounded-2xl p-6 md:p-8 mb-12">
+          <h2 className="text-xl md:text-2xl font-bold text-center mb-4">Hulp nodig bij uw keuze?</h2>
+          <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-center text-sm md:text-base">
+            Onze experts helpen u graag bij het vinden van de perfecte raamdecoratie.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
+            {assistanceFeatures.map((feature, index) => (
+              <div key={index} className="text-center">
+                <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-[#D9C29C]/10 rounded-full mb-3 text-[#D9C29C]">
+                  {feature.icon}
                 </div>
-              )}
-            </>
-          </Container>
+                <h3 className="text-base md:text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-gray-600 text-sm">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link href="/contact">
+              <Button size="lg" className="bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white w-full sm:w-auto">
+                Gratis Advies
+              </Button>
+            </Link>
+            <Link href="/quote">
+              <Button size="lg" className="bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white w-full sm:w-auto">
+                Offerte
+              </Button>
+            </Link>
+            <Link href="/gallerij">
+              <Button size="lg" className="bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white w-full sm:w-auto">
+                Galerij
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+
+        {/* Product Categories */}
+        <div className="mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Onze Productcategorieën</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {productCategories.map((category) => (
+              <Card key={category.id} className="overflow-hidden hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                <div className="relative">
+                  <img
+                    src={category.image}
+                    alt={category.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  {category.badge && (
+                    <Badge className="absolute top-4 left-4 bg-[#D9C29C] text-white">
+                      {category.badge}
+                    </Badge>
+                  )}
+                </div>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center justify-between text-lg md:text-xl">
+                    {category.title}
+                    <Star className="h-5 w-5 text-yellow-500" />
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">{category.subtitle}</p>
+                </CardHeader>
+                <CardContent className="pb-4">
+                  <p className="text-gray-700 mb-4 text-sm md:text-base">{category.description}</p>
+                  <div className="space-y-3">
+                    {category.products.map((product, index) => (
+                      <div key={index} className="flex justify-between items-center text-sm border-b border-gray-100 pb-2 last:border-b-0">
+                        <span className={product.popular ? "font-medium text-[#D9C29C]" : "text-gray-600"}>
+                          {product.name}
+                        </span>
+                        <div className="text-right">
+                          <span className="font-semibold text-gray-900">{product.price}</span>
+                          <span className="text-xs text-gray-500 ml-1">({product.variant})</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+                <CardFooter className="pt-2">
+                  <Link href={category.href} className="w-full">
+                    <Button className="w-full bg-[#D9C29C] hover:bg-[#D9C29C]/90 text-white">
+                      Shop Nu
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+      </Container>
+      
+      {/* Footer Separator */}
+      <div className="border-t border-gray-200 mt-12"></div>
     </div>
   );
 };

@@ -21,16 +21,33 @@ const MobileHeader = () => {
     { icon: ShoppingBag, label: "Offerte", href: "/quote", color: "text-orange-600" },
   ];
 
-  // Product categories for mobile menu (matching desktop)
-  const productCategories = [
-    { label: "Overgordijnen", href: "/producten/overgordijnen" },
-    { label: "Vitrages", href: "/producten/vitrages" },
-    { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
-    { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
-    { label: "Jaloezieën", href: "/producten/jaloezieen" },
-    { label: "Shutters", href: "/producten/shutters" },
-    { label: "Plissés & Horren", href: "/producten/plisse-horren" },
-    { label: "SQUID textile foil", href: "/producten/squid" },
+  // Main categories for mobile menu
+  const mobileCategories = [
+    {
+      title: "Populair",
+      items: [
+        { label: "Rolgordijnen", href: "/products/rolgordijnen" },
+        { label: "Overgordijnen", href: "/products/overgordijnen" },
+        { label: "Vouwgordijnen", href: "/products/vouwgordijnen" },
+        { label: "Duo rolgordijnen", href: "/products/duo-rolgordijnen" },
+      ]
+    },
+    {
+      title: "Lamellen & Jaloezieën",
+      items: [
+        { label: "Textiel lamellen", href: "/products/textiel-lamellen" },
+        { label: "Houten jaloezieën", href: "/products/houten-jaloezieen" },
+        { label: "Kunststof lamellen", href: "/products/kunststof-lamellen" },
+      ]
+    },
+    {
+      title: "Zonwering & Horren",
+      items: [
+        { label: "Plissé", href: "/products/plisse" },
+        { label: "Houten shutters", href: "/products/houten-shutters" },
+        { label: "Opzethorren", href: "/products/opzethorren" },
+      ]
+    }
   ];
 
   useEffect(() => {
@@ -113,86 +130,62 @@ const MobileHeader = () => {
                 {/* Main Navigation */}
                 <div className="flex-1 overflow-y-auto">
                   <div className="p-4 space-y-4">
-                    {/* PRODUCTEN section with dropdown items */}
-                    <div className="border-b border-neutral-200 pb-3">
-                      <div className="font-body py-3 text-base font-medium text-text-dark">
-                        PRODUCTEN
-                      </div>
-                      <div className="pl-4 space-y-2">
-                        {productCategories.map((category) => (
-                          <Link key={category.href} href={category.href}>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="w-full justify-start text-left py-2 h-auto text-sm text-text-medium hover:text-accent transition-colors"
-                              onClick={handleNavClick}
-                            >
-                              {category.label}
-                            </Button>
-                          </Link>
-                        ))}
-                        <Link href="/shop">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="w-full justify-start text-left py-2 h-auto text-sm text-accent hover:text-accent-dark transition-colors font-medium"
-                            onClick={handleNavClick}
-                          >
-                            Alle Producten →
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
+                    <Link href="/producten">
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        🛍️ SHOP
+                      </Button>
+                    </Link>
                     
                     <Link href="/gallerij">
-                      <Button variant="ghost" className="w-full justify-start text-left py-3 border-b border-neutral-200" onClick={handleNavClick}>
-                        {t("GALLERIJ")}
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        📸 {t("GALLERIJ")}
                       </Button>
                     </Link>
                     
                     <Link href="/zakelijk">
-                      <Button variant="ghost" className="w-full justify-start text-left py-3 border-b border-neutral-200" onClick={handleNavClick}>
-                        ZAKELIJK
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        🏢 Zakelijk
                       </Button>
                     </Link>
                     
                     <Link href="/overons">
-                      <Button variant="ghost" className="w-full justify-start text-left py-3 border-b border-neutral-200" onClick={handleNavClick}>
-                        {t("OVER ONS")}
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        ℹ️ {t("OVER ONS")}
                       </Button>
                     </Link>
                     
                     <Link href="/contact">
-                      <Button variant="ghost" className="w-full justify-start text-left py-3 border-b border-neutral-200" onClick={handleNavClick}>
-                        {t("CONTACT")}
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        📞 {t("CONTACT")}
                       </Button>
                     </Link>
+                  </div>
 
-                    <div className="mt-4 space-y-3">
-                      <Link href="/acties">
-                        <Button
-                          className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
-                          onClick={handleNavClick}
-                        >
-                          Acties
-                        </Button>
-                      </Link>
-                      <Link href="/offerte">
-                        <Button
-                          className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
-                          onClick={handleNavClick}
-                        >
-                          Offerte
-                        </Button>
-                      </Link>
-                      <Link href="/shop">
-                        <Button
-                          className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
-                          onClick={handleNavClick}
-                        >
-                          Shop
-                        </Button>
-                      </Link>
+                  {/* Product Categories */}
+                  <div className="border-t">
+                    <div className="p-4">
+                      <h3 className="font-semibold text-primary mb-4">Producten</h3>
+                      {mobileCategories.map((category, categoryIndex) => (
+                        <div key={categoryIndex} className="mb-6">
+                          <h4 className="font-medium text-sm text-gray-600 mb-2 uppercase tracking-wide">
+                            {category.title}
+                          </h4>
+                          <div className="space-y-1">
+                            {category.items.map((item, itemIndex) => (
+                              <Link key={itemIndex} href={item.href}>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="w-full justify-start text-left py-2 h-auto"
+                                  onClick={handleNavClick}
+                                >
+                                  {item.label}
+                                </Button>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

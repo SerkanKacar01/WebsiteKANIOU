@@ -1,0 +1,65 @@
+✅ INSTRUCTION: Fix and Complete the “PRODUCTEN” Dropdown Menu
+
+⸻
+
+🛠️ TASK FOR REPLIT:
+
+⸻
+
+1. ✅ FIX MISSING PRODUCT CATEGORIES
+
+Update the “PRODUCTEN” dropdown menu to include all 20 official product categories as defined by the client.
+Each menu item should link to its corresponding informational product page (if it already exists) or to a placeholder.
+
+🗂️ Full Product List (alphabetical with target links):
+	1.	Overgordijnen → /producten/overgordijnen
+	2.	Vitrages → /producten/vitrages
+	3.	Rolgordijnen → /producten/rolgordijnen
+	4.	Duo rolgordijnen → /producten/duo-rolgordijnen
+	5.	Textiel lamellen → /producten/textiel-lamellen
+	6.	Kunststof lamellen → /producten/kunststof-lamellen
+	7.	Houten jaloezieën → /producten/houten-jaloezieen
+	8.	Kunststof jaloezieën → /producten/kunststof-jaloezieen
+	9.	Textiel raamfolie → /producten/textiel-raamfolie
+	10.	Houten shutters → /producten/houten-shutters
+	11.	Inzethorren → /producten/inzethorren
+	12.	Opzethorren → /producten/opzethorren
+	13.	Plissé hordeuren → /producten/plisse-hordeuren
+	14.	Plissé → /producten/plisse
+	15.	Duo plissé → /producten/duo-plisse
+	16.	Duo plissé dakramen → /producten/duo-plisse-dakramen
+	17.	Dakraam zonweringen → /producten/dakraam-zonweringen
+	18.	Gordijnrails → /producten/gordijnrails
+	19.	Gordijnroedes → /producten/gordijnroedes
+	20.	SQUID textile foil → /producten/squid
+
+🔁 Important:
+	•	If an informational product page has already been created (or partially made) in the backend, use that exact path — do not replace it.
+	•	If no page exists yet, link to a temporary placeholder page.
+
+⸻
+
+2. ❌ REMOVE “Alle Producten →” Footer Link
+	•	Completely remove the “Alle Producten →” link from the bottom of the dropdown.
+	•	The list should end with the last product (“SQUID textile foil”) — no extra links, no separators, no extra spacing.
+
+⸻
+
+3. 🎨 DESIGN & LAYOUT REQUIREMENTS
+	•	Ensure the dropdown:
+	•	Is scrollable on smaller screens (if the full list exceeds viewport height).
+	•	Maintains consistent spacing, font size, padding, and hover behavior.
+	•	Uses the current menu style:
+	•	Beige highlight on hover
+	•	Clean white background
+	•	Soft border radius
+	•	Keep all visual behavior identical to current top navigation standards.
+
+⸻
+
+4. 📄 PAGE CONNECTION REQUIREMENT
+
+Important:
+	•	For any item in the dropdown where the informational page has already been made, make sure it is relinked properly in the dropdown.
+	•	These were manually created content pages earlier by the client — do not remove or break them.
+	•	If unsure, check the file structure and use the latest available /producten/* content pages.

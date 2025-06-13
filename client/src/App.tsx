@@ -81,14 +81,38 @@ function Router() {
         <Route path="/products" component={ProductsPage} />
         <Route path="/producten" component={ProductsPage} />
         <Route path="/shop" component={ProductsPage} />
+        
+        {/* All product category routes for both /products/ and /producten/ paths */}
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
         <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
         <Route path="/products/overgordijnen" component={ProductCategoryPage} />
         <Route path="/products/plisse" component={ProductCategoryPage} />
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
         
+        {/* New /producten/ routes for all 20 categories */}
+        <Route path="/producten/overgordijnen" component={ProductCategoryPage} />
+        <Route path="/producten/vitrages" component={ProductCategoryPage} />
+        <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/producten/duo-rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/producten/textiel-lamellen" component={ProductCategoryPage} />
+        <Route path="/producten/kunststof-lamellen" component={ProductCategoryPage} />
+        <Route path="/producten/houten-jaloezieen" component={ProductCategoryPage} />
+        <Route path="/producten/kunststof-jaloezieen" component={ProductCategoryPage} />
+        <Route path="/producten/textiel-raamfolie" component={ProductCategoryPage} />
+        <Route path="/producten/houten-shutters" component={ProductCategoryPage} />
+        <Route path="/producten/inzethorren" component={ProductCategoryPage} />
+        <Route path="/producten/opzethorren" component={ProductCategoryPage} />
+        <Route path="/producten/plisse-hordeuren" component={ProductCategoryPage} />
+        <Route path="/producten/plisse" component={ProductCategoryPage} />
+        <Route path="/producten/duo-plisse" component={ProductCategoryPage} />
+        <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
+        <Route path="/producten/gordijnrails" component={ProductCategoryPage} />
+        <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
+        <Route path="/producten/squid" component={ProductCategoryPage} />
+        
         {/* Handle all other product category routes */}
         <Route path="/products/:category" component={ProductCategoryPage} />
+        <Route path="/producten/:category" component={ProductCategoryPage} />
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />

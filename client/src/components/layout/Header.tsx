@@ -27,13 +27,27 @@ const Header = () => {
   const isMobile = useMobile();
   const { t } = useLanguage();
 
-  // Define product categories for dropdown
+  // Define product categories for dropdown - All 20 official categories
   const productCategories = [
-    { label: "Fly Screens (Opzet-Inzet Horren)", href: "/products/fly-screens" },
-    { label: "Rolgordijnen", href: "/products/rolgordijnen" },
-    { label: "Overgordijnen", href: "/products/overgordijnen" },
-    { label: "Plissé", href: "/products/plisse" },
-    { label: "Jaloezieën", href: "/products/jaloezieen" },
+    { label: "Overgordijnen", href: "/producten/overgordijnen" },
+    { label: "Vitrages", href: "/producten/vitrages" },
+    { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
+    { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
+    { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
+    { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
+    { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
+    { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
+    { label: "Textiel raamfolie", href: "/producten/textiel-raamfolie" },
+    { label: "Houten shutters", href: "/producten/houten-shutters" },
+    { label: "Inzethorren", href: "/producten/inzethorren" },
+    { label: "Opzethorren", href: "/producten/opzethorren" },
+    { label: "Plissé hordeuren", href: "/producten/plisse-hordeuren" },
+    { label: "Plissé", href: "/producten/plisse" },
+    { label: "Duo plissé", href: "/producten/duo-plisse" },
+    { label: "Dakraam zonweringen", href: "/producten/dakraam-zonweringen" },
+    { label: "Gordijnrails", href: "/producten/gordijnrails" },
+    { label: "Gordijnroedes", href: "/producten/gordijnroedes" },
+    { label: "SQUID textile foil", href: "/producten/squid" },
   ];
 
   // Define navigation items
@@ -146,7 +160,7 @@ const Header = () => {
                     }`}>
                       PRODUCTEN
                     </div>
-                    <div className="pl-4 space-y-2">
+                    <div className="pl-4 space-y-2 max-h-64 overflow-y-auto">
                       {productCategories.map((category) => (
                         <Link key={category.href} href={category.href}>
                           <a
@@ -157,14 +171,6 @@ const Header = () => {
                           </a>
                         </Link>
                       ))}
-                      <Link href="/producten">
-                        <a
-                          className="font-body text-sm text-accent hover:text-accent-dark transition-colors cursor-pointer block py-1 font-medium"
-                          onClick={handleMobileNavClick}
-                        >
-                          Alle Producten →
-                        </a>
-                      </Link>
                     </div>
                   </div>
 
@@ -227,7 +233,7 @@ const Header = () => {
                     >
                       PRODUCTEN
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px]">
+                    <NavigationMenuContent className="bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto">
                       <div className="grid gap-2">
                         {productCategories.map((category) => (
                           <NavigationMenuLink key={category.href} asChild>
@@ -241,18 +247,6 @@ const Header = () => {
                             </Link>
                           </NavigationMenuLink>
                         ))}
-                        <div className="border-t border-neutral-200 mt-2 pt-2">
-                          <NavigationMenuLink asChild>
-                            <Link href="/producten">
-                              <a 
-                                className="block px-3 py-2 text-sm text-accent hover:text-accent-dark font-medium rounded-md transition-colors cursor-pointer"
-                                onClick={handleNavClick}
-                              >
-                                Alle Producten →
-                              </a>
-                            </Link>
-                          </NavigationMenuLink>
-                        </div>
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>

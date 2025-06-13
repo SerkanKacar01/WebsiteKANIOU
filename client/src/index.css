@@ -76,25 +76,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* Shop Page Improvements */
-@media (max-width: 768px) {
-  .shop-title {
-    @apply text-2xl;
-  }
-  
-  .shop-section {
-    @apply px-4 py-6;
-  }
-  
-  .shop-card {
-    @apply mx-2;
-  }
-  
-  .shop-spacing {
-    @apply mb-8;
-  }
-}
-
 /* Chatbot Mobile Optimization */
 @layer utilities {
   .overflow-wrap-anywhere {

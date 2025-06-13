@@ -29,11 +29,14 @@ const Header = () => {
 
   // Define product categories for dropdown
   const productCategories = [
-    { label: "Fly Screens (Opzet-Inzet Horren)", href: "/products/fly-screens" },
-    { label: "Rolgordijnen", href: "/products/rolgordijnen" },
-    { label: "Overgordijnen", href: "/products/overgordijnen" },
-    { label: "Plissé", href: "/products/plisse" },
-    { label: "Jaloezieën", href: "/products/jaloezieen" },
+    { label: "Overgordijnen", href: "/producten/overgordijnen" },
+    { label: "Vitrages", href: "/producten/vitrages" },
+    { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
+    { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
+    { label: "Jaloezieën", href: "/producten/jaloezieen" },
+    { label: "Shutters", href: "/producten/shutters" },
+    { label: "Plissés & Horren", href: "/producten/plisse-horren" },
+    { label: "SQUID textile foil", href: "/producten/squid" },
   ];
 
   // Define navigation items

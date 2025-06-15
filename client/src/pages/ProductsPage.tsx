@@ -119,6 +119,147 @@ const ProductsPage = () => {
     setComparisonProducts([]);
   };
 
+  // Size Comparison Overlay Component
+  const SizeComparisonOverlay = () => {
+    if (!showSizeComparison) return null;
+
+    const maxWidth = Math.max(...comparisonProducts.map(p => p.dimensions?.width || 120));
+    const maxHeight = Math.max(...comparisonProducts.map(p => p.dimensions?.height || 150));
+    const scale = Math.min(300 / maxWidth, 200 / maxHeight, 1);
+
+    return (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-auto">
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Afmetingen Vergelijken</h2>
+                <p className="text-gray-600 mt-1">Vergelijk de afmetingen van uw geselecteerde producten</p>
+              </div>
+              <button
+                onClick={closeSizeComparison}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="h-6 w-6 text-gray-500" />
+              </button>
+            </div>
+          </div>
+
+          <div className="p-6">
+            {comparisonProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <Ruler className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500 text-lg mb-2">Geen producten geselecteerd voor vergelijking</p>
+                <p className="text-gray-400 text-sm">Voeg producten toe om hun afmetingen te vergelijken</p>
+              </div>
+            ) : (
+              <div className="space-y-8">
+                {/* Visual Comparison */}
+                <div className="bg-gray-50 rounded-xl p-8">
+                  <h3 className="text-lg font-semibold mb-6 text-center">Visuele Vergelijking</h3>
+                  <div className="flex items-end justify-center gap-8 min-h-[300px]">
+                    {comparisonProducts.map((product, index) => {
+                      const width = (product.dimensions?.width || 120) * scale;
+                      const height = (product.dimensions?.height || 150) * scale;
+                      const colors = ['bg-[#d5c096]', 'bg-blue-400', 'bg-green-400'];
+                      
+                      return (
+                        <div key={product.id} className="flex flex-col items-center">
+                          <div
+                            className={`${colors[index]} border-2 border-white shadow-lg rounded-lg flex items-center justify-center relative`}
+                            style={{ width: `${width}px`, height: `${height}px` }}
+                          >
+                            <div className="text-white text-xs font-medium text-center p-2">
+                              {product.title}
+                            </div>
+                            <button
+                              onClick={() => removeFromComparison(product.id)}
+                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors"
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </div>
+                          <div className="mt-2 text-sm text-gray-600 text-center">
+                            {product.dimensions?.width || 120} × {product.dimensions?.height || 150} cm
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Detailed Comparison Table */}
+                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <h3 className="text-lg font-semibold p-4 bg-gray-50 border-b border-gray-200">Gedetailleerde Afmetingen</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Product</th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Breedte (cm)</th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Hoogte (cm)</th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Dikte (cm)</th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Oppervlak (m²)</th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Actie</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200">
+                        {comparisonProducts.map((product, index) => {
+                          const width = product.dimensions?.width || 120;
+                          const height = product.dimensions?.height || 150;
+                          const depth = product.dimensions?.depth || 2.5;
+                          const area = ((width * height) / 10000).toFixed(2);
+                          
+                          return (
+                            <tr key={product.id} className="hover:bg-gray-50">
+                              <td className="px-4 py-3">
+                                <div className="font-medium text-gray-900">{product.title}</div>
+                                <div className="text-sm text-gray-500">{product.subtitle}</div>
+                              </td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">{width}</td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">{height}</td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">{depth}</td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">{area}</td>
+                              <td className="px-4 py-3 text-center">
+                                <button
+                                  onClick={() => removeFromComparison(product.id)}
+                                  className="text-red-600 hover:text-red-800 transition-colors"
+                                >
+                                  <X className="h-4 w-4" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-center gap-4">
+                  <Button
+                    onClick={clearAllComparisons}
+                    variant="outline"
+                    className="border-gray-300 text-gray-700"
+                  >
+                    Wis alle vergelijkingen
+                  </Button>
+                  <Button
+                    onClick={closeSizeComparison}
+                    className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+                  >
+                    Sluiten
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Product Card Skeleton Component with shimmer effect
   const ProductSkeleton = () => (
     <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
@@ -184,10 +325,11 @@ const ProductsPage = () => {
         description: "Elegante overgordijnen voor optimale privacy en lichtcontrole.",
         image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
         products: [
-          { name: "Verduisterende Gordijnen", price: "€89,95", popular: true },
-          { name: "Semi-transparante Gordijnen", price: "€69,95", popular: false },
-          { name: "Luxe Overgordijnen", price: "€129,95", popular: false }
+          { name: "Verduisterende Gordijnen", price: "€89,95", popular: true, width: 200, height: 250, thickness: 0.8 },
+          { name: "Semi-transparante Gordijnen", price: "€69,95", popular: false, width: 200, height: 250, thickness: 0.5 },
+          { name: "Luxe Overgordijnen", price: "€129,95", popular: false, width: 300, height: 280, thickness: 1.2 }
         ],
+        dimensions: { width: 200, height: 250, depth: 0.8 },
         href: "/products/overgordijnen",
         badge: "Luxe"
       },
@@ -198,10 +340,11 @@ const ProductsPage = () => {
         description: "Subtiele vitrages die licht doorlaten terwijl ze privacy bieden.",
         image: "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=400&h=300&fit=crop",
         products: [
-          { name: "Vitrage Gordijn Wit", price: "€34,95", popular: true },
-          { name: "Vitrage Gordijn Crème", price: "€34,95", popular: false },
-          { name: "Vitrage met Patroon", price: "€44,95", popular: false }
+          { name: "Vitrage Gordijn Wit", price: "€34,95", popular: true, width: 150, height: 200, thickness: 0.3 },
+          { name: "Vitrage Gordijn Crème", price: "€34,95", popular: false, width: 150, height: 200, thickness: 0.3 },
+          { name: "Vitrage met Patroon", price: "€44,95", popular: false, width: 160, height: 210, thickness: 0.4 }
         ],
+        dimensions: { width: 150, height: 200, depth: 0.3 },
         href: "/products/vitrages",
         badge: "Lichtdoorlatend"
       }
@@ -214,10 +357,11 @@ const ProductsPage = () => {
         description: "Stijlvolle plissé gordijnen die perfect passen in moderne interieurs.",
         image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
         products: [
-          { name: "Plissé Transparant", price: "€45,95", popular: false },
-          { name: "Plissé Verduisterend", price: "€65,95", popular: true },
-          { name: "Plissé Isolerend", price: "€55,95", popular: false }
+          { name: "Plissé Transparant", price: "€45,95", popular: false, width: 100, height: 120, thickness: 2.0 },
+          { name: "Plissé Verduisterend", price: "€65,95", popular: true, width: 100, height: 120, thickness: 2.2 },
+          { name: "Plissé Isolerend", price: "€55,95", popular: false, width: 100, height: 120, thickness: 2.8 }
         ],
+        dimensions: { width: 100, height: 120, depth: 2.0 },
         href: "/products/plisse",
         badge: "Energie-efficiënt"
       },
@@ -228,10 +372,11 @@ const ProductsPage = () => {
         description: "Effectieve insectenwering zonder in te boeten op ventilatie en zicht.",
         image: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
         products: [
-          { name: "Opzethor Standaard", price: "€79,95", popular: true },
-          { name: "Opzethor Deluxe", price: "€99,95", popular: false },
-          { name: "Opzethor XXL", price: "€119,95", popular: false }
+          { name: "Opzethor Standaard", price: "€79,95", popular: true, width: 80, height: 100, thickness: 1.5 },
+          { name: "Opzethor Deluxe", price: "€99,95", popular: false, width: 90, height: 120, thickness: 2.0 },
+          { name: "Opzethor XXL", price: "€119,95", popular: false, width: 120, height: 150, thickness: 2.5 }
         ],
+        dimensions: { width: 80, height: 100, depth: 1.5 },
         href: "/products/opzethorren",
         badge: "Nieuw"
       }
@@ -376,64 +521,132 @@ const ProductsPage = () => {
   const groupedProducts = getGroupedProducts();
 
   // Component for rendering product cards
-  const ProductCard = ({ category }: { category: any }) => (
-    <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-      {/* Fixed Height Image Section */}
-      <div className="relative overflow-hidden">
-        <img
-          src={category.image}
-          alt={category.title}
-          className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        {category.badge && (
-          <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
-            {category.badge}
-          </Badge>
-        )}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-      </div>
+  const ProductCard = ({ category }: { category: any }) => {
+    const isInComparison = comparisonProducts.find(p => p.id === category.id);
+    const canAddToComparison = comparisonProducts.length < 3 && !isInComparison;
+    
+    return (
+      <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+        {/* Fixed Height Image Section */}
+        <div className="relative overflow-hidden">
+          <img
+            src={category.image}
+            alt={category.title}
+            className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          {category.badge && (
+            <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+              {category.badge}
+            </Badge>
+          )}
+          
+          {/* Size Comparison Button */}
+          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {isInComparison ? (
+              <Button
+                size="sm"
+                onClick={() => removeFromComparison(category.id)}
+                className="bg-red-500 hover:bg-red-600 text-white shadow-lg"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            ) : canAddToComparison ? (
+              <Button
+                size="sm"
+                onClick={() => addToComparison(category)}
+                className="bg-blue-500 hover:bg-blue-600 text-white shadow-lg"
+              >
+                <Ruler className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                disabled
+                className="bg-gray-400 text-white shadow-lg cursor-not-allowed"
+              >
+                <Ruler className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+          
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+        </div>
 
-      {/* Content Section - Flex Grow */}
-      <div className="flex flex-col flex-grow p-6">
-        {/* Product Title */}
-        <h4 className="text-xl font-bold text-gray-900 mb-2">
-          {category.title}
-        </h4>
-        
-        {/* Short Description */}
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
-          {category.description}
-        </p>
-
-        {/* Prices Section */}
-        <div className="mb-6 flex-grow">
-          <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
-          <div className="space-y-2">
-            {category.products.slice(0, 3).map((product: any, index: number) => (
-              <div key={index} className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">
-                  {product.name}
-                </span>
-                <span className="text-sm font-semibold text-[#d5c096]">
-                  {product.price}
+        {/* Content Section - Flex Grow */}
+        <div className="flex flex-col flex-grow p-6">
+          {/* Product Title */}
+          <div className="flex items-start justify-between mb-2">
+            <h4 className="text-xl font-bold text-gray-900 flex-1">
+              {category.title}
+            </h4>
+            {isInComparison && (
+              <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-700">
+                In vergelijking
+              </Badge>
+            )}
+          </div>
+          
+          {/* Dimensions Info */}
+          {category.dimensions && (
+            <div className="mb-3 text-xs text-gray-500 bg-gray-50 rounded-md p-2">
+              <div className="flex items-center gap-1">
+                <Ruler className="h-3 w-3" />
+                <span>
+                  {category.dimensions.width} × {category.dimensions.height} × {category.dimensions.depth} cm
                 </span>
               </div>
-            ))}
+            </div>
+          )}
+          
+          {/* Short Description */}
+          <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+            {category.description}
+          </p>
+
+          {/* Prices Section */}
+          <div className="mb-6 flex-grow">
+            <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+            <div className="space-y-2">
+              {category.products.slice(0, 3).map((product: any, index: number) => (
+                <div key={index} className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">
+                    {product.name}
+                  </span>
+                  <span className="text-sm font-semibold text-[#d5c096]">
+                    {product.price}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="mt-auto space-y-2">
+            <div className="flex gap-2">
+              <Link href={category.href} className="flex-1">
+                <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+                  Bekijk producten
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              
+              {category.dimensions && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => isInComparison ? removeFromComparison(category.id) : addToComparison(category)}
+                  disabled={!canAddToComparison && !isInComparison}
+                  className="px-3 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
+                >
+                  {isInComparison ? <X className="h-4 w-4" /> : <Ruler className="h-4 w-4" />}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* CTA Button - Always at Bottom */}
-        <div className="mt-auto">
-          <Link href={category.href} className="w-full">
-            <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-              Bekijk producten
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </Card>
-  );
+      </Card>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">

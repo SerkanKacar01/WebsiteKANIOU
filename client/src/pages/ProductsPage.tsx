@@ -927,7 +927,7 @@ const ProductsPage = () => {
 
             <div className="mb-6">
               <h4 className="text-lg font-semibold text-gray-900 mb-4">
-                ✔ Waarom kiezen voor SQUID?
+                Waarom kiezen voor SQUID?
               </h4>
               <ul className="space-y-2 text-gray-600">
                 <li className="flex items-start">
@@ -984,7 +984,7 @@ const ProductsPage = () => {
 
             <div className="mb-6">
               <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                🎨 Verkrijgbaar in 5 tijdloze kleuren:
+                Verkrijgbaar in 5 tijdloze kleuren:
               </h4>
               <div className="flex flex-wrap gap-2 mb-4">
                 {[
@@ -1010,7 +1010,7 @@ const ProductsPage = () => {
 
             <div className="mb-6">
               <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                🛒 Perfect voor:
+                Perfect voor:
               </h4>
               <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                 <div>• Woonkamers & slaapkamers</div>
@@ -1614,7 +1614,6 @@ const ProductsPage = () => {
             {/* Banner 1 - Most Popular */}
             <div className="bg-[#d5c096]/15 border border-[#d5c096]/30 rounded-xl p-6 flex items-center">
               <div className="flex items-center space-x-4 w-full">
-                <div className="text-2xl">🌟</div>
                 <div className="flex-1">
                   <p className="text-gray-800 font-medium text-sm lg:text-base">
                     <span className="font-bold">
@@ -1632,7 +1631,6 @@ const ProductsPage = () => {
             {/* Banner 2 - Special Offer */}
             <div className="bg-[#d5c096]/20 border border-[#d5c096]/40 rounded-xl p-6 flex items-center">
               <div className="flex items-center space-x-4 w-full">
-                <div className="text-2xl">🔥</div>
                 <div className="flex-1">
                   <p className="text-gray-800 font-medium text-sm lg:text-base">
                     <span className="font-bold">Actie:</span>

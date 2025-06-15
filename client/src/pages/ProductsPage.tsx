@@ -1006,6 +1006,47 @@ const ProductsPage = () => {
           </div>
         </div>
       </Container>
+
+      {/* Floating Comparison Panel */}
+      {comparisonProducts.length > 0 && (
+        <div className="fixed bottom-6 right-6 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-40 max-w-sm">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold text-gray-900">Vergelijking ({comparisonProducts.length}/3)</h3>
+            <button
+              onClick={clearAllComparisons}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          
+          <div className="space-y-2 mb-4">
+            {comparisonProducts.map((product) => (
+              <div key={product.id} className="flex items-center justify-between text-sm">
+                <span className="text-gray-700 truncate flex-1">{product.title}</span>
+                <button
+                  onClick={() => removeFromComparison(product.id)}
+                  className="text-red-500 hover:text-red-700 ml-2"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            ))}
+          </div>
+          
+          <Button
+            onClick={openSizeComparison}
+            className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white text-sm"
+            disabled={comparisonProducts.length === 0}
+          >
+            <Maximize2 className="h-4 w-4 mr-2" />
+            Vergelijk Afmetingen
+          </Button>
+        </div>
+      )}
+
+      {/* Size Comparison Overlay */}
+      <SizeComparisonOverlay />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X, Maximize2, Move, RotateCw } from "lucide-react";
+import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X, Maximize2, Move, RotateCw, Sparkles, Heart, ShoppingCart } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
@@ -526,93 +526,160 @@ const ProductsPage = () => {
     const canAddToComparison = comparisonProducts.length < 3 && !isInComparison;
     
     return (
-      <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+      <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-[#d5c096]/20 transition-all duration-500 group flex flex-col h-full hover:-translate-y-2 hover:rotate-1 transform-gpu hover-jello">
         {/* Fixed Height Image Section */}
         <div className="relative overflow-hidden">
           <img
             src={category.image}
             alt={category.title}
-            className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 group-hover:saturate-125 animate-float"
           />
+          
+          {/* Floating Sparkles Animation */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+            <div className="absolute top-6 left-6 animate-sparkle animation-delay-100">
+              <Sparkles className="h-4 w-4 text-[#d5c096]" />
+            </div>
+            <div className="absolute top-12 right-8 animate-sparkle animation-delay-300">
+              <Sparkles className="h-3 w-3 text-yellow-400" />
+            </div>
+            <div className="absolute bottom-16 left-8 animate-sparkle animation-delay-500">
+              <Sparkles className="h-3 w-3 text-blue-400" />
+            </div>
+            <div className="absolute bottom-8 right-6 animate-sparkle animation-delay-700">
+              <Sparkles className="h-4 w-4 text-pink-400" />
+            </div>
+            <div className="absolute top-20 left-1/2 animate-sparkle animation-delay-200">
+              <Sparkles className="h-2 w-2 text-purple-400" />
+            </div>
+            <div className="absolute bottom-20 right-1/3 animate-sparkle animation-delay-600">
+              <Sparkles className="h-3 w-3 text-green-400" />
+            </div>
+          </div>
+          
+          {/* Animated Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#d5c096]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          
+          {/* Badge with Bounce Animation */}
           {category.badge && (
-            <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+            <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg group-hover:animate-heartbeat group-hover:scale-110 transition-transform duration-300 animate-slideInUp">
               {category.badge}
             </Badge>
           )}
           
-          {/* Size Comparison Button */}
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Interactive Action Buttons */}
+          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            {/* Favorite Button */}
+            <Button
+              size="sm"
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm border-none shadow-lg hover:bg-pink-500 hover:text-white transition-all duration-300 hover:scale-110 hover:rotate-12 hover-jello animate-slideInUp animation-delay-100"
+            >
+              <Heart className="h-4 w-4 hover:animate-heartbeat" />
+            </Button>
+            
+            {/* Size Comparison Button */}
             {isInComparison ? (
               <Button
                 size="sm"
                 onClick={() => removeFromComparison(category.id)}
-                className="bg-red-500 hover:bg-red-600 text-white shadow-lg"
+                className="bg-red-500 hover:bg-red-600 text-white shadow-lg hover:scale-110 hover:rotate-12 transition-all duration-300 hover-wiggle animate-slideInUp animation-delay-200"
               >
-                <X className="h-4 w-4" />
+                <X className="h-4 w-4 hover:animate-spin" />
               </Button>
             ) : canAddToComparison ? (
               <Button
                 size="sm"
                 onClick={() => addToComparison(category)}
-                className="bg-blue-500 hover:bg-blue-600 text-white shadow-lg"
+                className="bg-blue-500 hover:bg-blue-600 text-white shadow-lg hover:scale-110 hover:rotate-12 transition-all duration-300 hover-bounce animate-slideInUp animation-delay-200"
               >
-                <Ruler className="h-4 w-4" />
+                <Ruler className="h-4 w-4 hover:animate-wiggle" />
               </Button>
             ) : (
               <Button
                 size="sm"
                 disabled
-                className="bg-gray-400 text-white shadow-lg cursor-not-allowed"
+                className="bg-gray-400 text-white shadow-lg cursor-not-allowed animate-slideInUp animation-delay-200"
               >
                 <Ruler className="h-4 w-4" />
               </Button>
             )}
           </div>
           
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+          {/* Floating Quick View Button */}
+          <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+            <Button
+              size="sm"
+              className="bg-[#d5c096] hover:bg-[#c4b183] text-white shadow-lg hover:scale-110 transition-all duration-300 animate-pulse hover-jello animate-slideInUp animation-delay-400"
+            >
+              <Eye className="h-4 w-4 mr-1 hover:animate-bounce" />
+              Bekijk
+            </Button>
+          </div>
+          
+          {/* Magical Floating Elements */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#d5c096] rounded-full animate-ping animation-delay-300"></div>
+            <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping animation-delay-500"></div>
+            <div className="absolute top-1/2 left-1/3 w-1.5 h-1.5 bg-blue-400 rounded-full animate-ping animation-delay-700"></div>
+          </div>
+          
+          {/* Animated Border Glow */}
+          <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#d5c096]/50 rounded-t-xl transition-all duration-500"></div>
         </div>
 
         {/* Content Section - Flex Grow */}
-        <div className="flex flex-col flex-grow p-6">
-          {/* Product Title */}
+        <div className="flex flex-col flex-grow p-6 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-[#d5c096]/5 transition-all duration-500">
+          {/* Product Title with Wiggle Animation */}
           <div className="flex items-start justify-between mb-2">
-            <h4 className="text-xl font-bold text-gray-900 flex-1">
+            <h4 className="text-xl font-bold text-gray-900 flex-1 group-hover:text-[#d5c096] transition-all duration-300 group-hover:scale-105 transform origin-left">
               {category.title}
             </h4>
             {isInComparison && (
-              <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-700">
+              <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-700 group-hover:animate-pulse group-hover:scale-110 transition-transform duration-300">
                 In vergelijking
               </Badge>
             )}
           </div>
           
-          {/* Dimensions Info */}
+          {/* Animated Subtitle */}
+          <p className="text-sm text-[#d5c096] font-medium mb-2 group-hover:animate-pulse">
+            {category.subtitle}
+          </p>
+          
+          {/* Dimensions Info with Slide Animation */}
           {category.dimensions && (
-            <div className="mb-3 text-xs text-gray-500 bg-gray-50 rounded-md p-2">
+            <div className="mb-3 text-xs text-gray-500 bg-gray-50 rounded-md p-2 group-hover:bg-[#d5c096]/10 group-hover:text-[#d5c096] transition-all duration-300 transform group-hover:scale-105">
               <div className="flex items-center gap-1">
-                <Ruler className="h-3 w-3" />
-                <span>
+                <Ruler className="h-3 w-3 group-hover:animate-spin" />
+                <span className="group-hover:font-medium transition-all duration-300">
                   {category.dimensions.width} × {category.dimensions.height} × {category.dimensions.depth} cm
                 </span>
               </div>
             </div>
           )}
           
-          {/* Short Description */}
-          <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+          {/* Short Description with Fade In */}
+          <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem] group-hover:text-gray-700 transition-colors duration-300">
             {category.description}
           </p>
 
-          {/* Prices Section */}
+          {/* Prices Section with Staggered Animation */}
           <div className="mb-6 flex-grow">
-            <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+            <p className="text-sm font-medium text-gray-700 mb-3 group-hover:text-[#d5c096] transition-colors duration-300">
+              Prijzen vanaf:
+            </p>
             <div className="space-y-2">
               {category.products.slice(0, 3).map((product: any, index: number) => (
-                <div key={index} className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">
+                <div 
+                  key={index} 
+                  className="flex justify-between items-center group-hover:transform group-hover:translate-x-1 transition-all duration-300 hover:bg-[#d5c096]/10 rounded-md p-1 -mx-1"
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <span className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
                     {product.name}
                   </span>
-                  <span className="text-sm font-semibold text-[#d5c096]">
+                  <span className="text-sm font-semibold text-[#d5c096] group-hover:scale-110 transition-transform duration-300">
                     {product.price}
                   </span>
                 </div>
@@ -620,13 +687,17 @@ const ProductsPage = () => {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons with Bounce Effect */}
           <div className="mt-auto space-y-2">
             <div className="flex gap-2">
               <Link href={category.href} className="flex-1">
-                <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                  Bekijk producten
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#d5c096]/30 hover:scale-105 hover:-translate-y-1 group-hover:animate-pulse relative overflow-hidden">
+                  <span className="relative z-10 flex items-center justify-center">
+                    Bekijk producten
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                  {/* Animated Background Shine */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </Button>
               </Link>
               
@@ -636,11 +707,27 @@ const ProductsPage = () => {
                   size="sm"
                   onClick={() => isInComparison ? removeFromComparison(category.id) : addToComparison(category)}
                   disabled={!canAddToComparison && !isInComparison}
-                  className="px-3 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
+                  className="px-3 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10 hover:scale-110 hover:rotate-12 transition-all duration-300"
                 >
-                  {isInComparison ? <X className="h-4 w-4" /> : <Ruler className="h-4 w-4" />}
+                  {isInComparison ? 
+                    <X className="h-4 w-4 hover:animate-spin" /> : 
+                    <Ruler className="h-4 w-4 hover:animate-bounce" />
+                  }
                 </Button>
               )}
+            </div>
+            
+            {/* Fun Interactive Elements */}
+            <div className="flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+              <button className="p-1 rounded-full hover:bg-[#d5c096]/20 transition-all duration-300 hover:scale-125 hover-jello animate-slideInUp animation-delay-100">
+                <Star className="h-3 w-3 text-[#d5c096] hover:text-yellow-500 transition-colors duration-300 hover:animate-spin" />
+              </button>
+              <button className="p-1 rounded-full hover:bg-[#d5c096]/20 transition-all duration-300 hover:scale-125 hover-bounce animate-slideInUp animation-delay-200">
+                <ShoppingCart className="h-3 w-3 text-[#d5c096] hover:text-green-500 transition-colors duration-300 hover:animate-bounce" />
+              </button>
+              <button className="p-1 rounded-full hover:bg-[#d5c096]/20 transition-all duration-300 hover:scale-125 hover-wiggle animate-slideInUp animation-delay-300">
+                <Palette className="h-3 w-3 text-[#d5c096] hover:text-purple-500 transition-colors duration-300 hover:animate-pulse" />
+              </button>
             </div>
           </div>
         </div>

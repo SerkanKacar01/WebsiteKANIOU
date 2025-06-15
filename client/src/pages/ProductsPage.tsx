@@ -97,13 +97,14 @@ const ProductsPage = () => {
     setTimeout(() => setIsFilterLoading(false), 300);
   };
 
-  // Product group filtering
-  const handleProductGroupFilter = (groupId: string) => {
+  // Category button handler with auto-scroll and filtering
+  const handleCategoryButtonClick = (categoryId: string) => {
     setIsFilterLoading(true);
-    setSelectedProductGroup(selectedProductGroup === groupId ? null : groupId);
+    setSelectedCategory(categoryId);
     
-    // Map product groups to categories for filtering
+    // Map specific product groups to existing categories for filtering
     const categoryMapping: { [key: string]: string } = {
+      'alles': 'alles',
       'jaloezien': 'jaloezien',
       'rolgordijnen': 'gordijnen',
       'vitrages': 'gordijnen',
@@ -112,11 +113,16 @@ const ProductsPage = () => {
       'squid': 'accessoires'
     };
     
-    const mappedCategory = categoryMapping[groupId];
-    if (mappedCategory && selectedProductGroup !== groupId) {
-      setSelectedCategory(mappedCategory);
-    } else if (selectedProductGroup === groupId) {
-      setSelectedCategory('alles');
+    const mappedCategory = categoryMapping[categoryId] || categoryId;
+    setSelectedCategory(mappedCategory);
+    
+    // Auto-scroll to product view if user is far down the page
+    const productSection = document.querySelector('.product-grid-section');
+    if (productSection && window.scrollY > 400) {
+      productSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
     }
     
     setTimeout(() => setIsFilterLoading(false), 300);
@@ -855,54 +861,7 @@ const ProductsPage = () => {
                       </Select>
                     </div>
 
-                    {/* Category Filter Dropdown */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <Filter className="h-5 w-5 text-[#d5c096] flex-shrink-0" />
-                        <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                          Categorie:
-                        </label>
-                      </div>
-                      <Select value={selectedCategory} onValueChange={handleCategoryChange}>
-                        <SelectTrigger className={`w-full sm:w-48 h-11 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
-                          isFilterLoading ? 'opacity-70 cursor-wait' : ''
-                        }`}>
-                          <SelectValue placeholder="Selecteer categorie" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="alles">
-                            <div className="flex items-center gap-2">
-                              <span>🏠</span>
-                              <span>Alles</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="jaloezien">
-                            <div className="flex items-center gap-2">
-                              <span>🪟</span>
-                              <span>Jaloezieën</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="gordijnen">
-                            <div className="flex items-center gap-2">
-                              <span>🏠</span>
-                              <span>Gordijnen</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="plisses">
-                            <div className="flex items-center gap-2">
-                              <span>📐</span>
-                              <span>Plissés</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="accessoires">
-                            <div className="flex items-center gap-2">
-                              <span>🔧</span>
-                              <span>Accessoires</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+
                   </div>
                   
                   {/* Right Side: Reset and Save Indicator */}
@@ -942,35 +901,32 @@ const ProductsPage = () => {
             </div>
           </div>
 
-        {/* Dynamic Product Navigation Menu */}
+        {/* Stylish Horizontal Category Button Bar */}
         <div className="mb-8">
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-            <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide">
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                  Productgroepen:
-                </span>
-              </div>
-              <div className="flex gap-2 min-w-max">
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="flex justify-center">
+              <div className="flex gap-3 overflow-x-auto scrollbar-hide smooth-horizontal-scroll max-w-full pb-2">
                 {[
-                  { id: 'jaloezien', label: 'Jaloezieën', icon: '🪟' },
-                  { id: 'rolgordijnen', label: 'Rolgordijnen', icon: '📜' },
-                  { id: 'vitrages', label: 'Vitrages', icon: '🎨' },
-                  { id: 'shutters', label: 'Shutters', icon: '🚪' },
-                  { id: 'plisses', label: 'Plissés & Horren', icon: '📐' },
-                  { id: 'squid', label: 'SQUID textile foil', icon: '✨' }
-                ].map((productGroup) => (
+                  { id: 'alles', label: 'Show All' },
+                  { id: 'jaloezien', label: 'Jaloezieën' },
+                  { id: 'rolgordijnen', label: 'Rolgordijnen' },
+                  { id: 'vitrages', label: 'Vitrages' },
+                  { id: 'shutters', label: 'Shutters' },
+                  { id: 'plisses', label: 'Plissés & Horren' },
+                  { id: 'squid', label: 'SQUID textile foil' }
+                ].map((category) => (
                   <button
-                    key={productGroup.id}
-                    onClick={() => handleProductGroupFilter(productGroup.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap min-h-[44px] ${
-                      selectedProductGroup === productGroup.id
-                        ? 'bg-[#d5c096] text-white shadow-md'
-                        : 'bg-gray-50 text-gray-700 hover:bg-[#d5c096]/10 hover:text-[#d5c096] hover:shadow-sm'
+                    key={category.id}
+                    onClick={() => handleCategoryButtonClick(category.id)}
+                    className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[48px] focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2 ${
+                      selectedCategory === category.id
+                        ? 'bg-[#d5c096] text-white shadow-lg transform scale-105'
+                        : 'bg-gray-50 text-gray-700 hover:bg-[#d5c096]/20 hover:text-[#d5c096] hover:shadow-md hover:transform hover:scale-102'
                     }`}
+                    aria-label={`Filter products by ${category.label}`}
+                    aria-pressed={selectedCategory === category.id}
                   >
-                    <span className="text-base">{productGroup.icon}</span>
-                    <span>{productGroup.label}</span>
+                    {category.label}
                   </button>
                 ))}
               </div>
@@ -979,7 +935,7 @@ const ProductsPage = () => {
         </div>
 
         {/* Product Categories */}
-        <div className="mb-16">
+        <div className="mb-16 product-grid-section">
           <h2 className="text-3xl font-bold text-center mb-12">
             {selectedCategory === "alles" ? "Onze Productcategorieën" : 
              selectedCategory === "jaloezien" ? "Jaloezieën" :

@@ -1,0 +1,72 @@
+✅ INSTRUCTION FOR REPLIT – CLEAR & COMPLETE
+Title: Transform the product category filter into a stylish horizontal button bar at the top of the Shop page.
+
+⸻
+
+1. REMOVE EXISTING CATEGORY ELEMENTS
+	•	Completely remove the “Category: All” dropdown.
+	•	Remove the “Productgroepen” emoji-tag buttons section.
+	•	Ensure there are no leftover gaps, containers, or spacing in their place.
+
+⸻
+
+2. ADD A NEW BUTTON BAR AT THE TOP
+	•	Insert a new horizontal button bar immediately below the main navigation and above the search/sort bar.
+	•	It must span the width of the container and be visually centered.
+
+⸻
+
+3. BUTTON DESIGN SPECIFICATIONS
+	•	Match the visual style of the KANIOU brand:
+	•	Soft beige tones
+	•	Rounded corners
+	•	Clean and calm appearance (no flashy or crowded design)
+	•	Do NOT use emojis or icons in the buttons.
+	•	Use legible font with clear text.
+	•	On hover or selection, the active button should have a visual highlight (e.g. slight shadow, border, or color change).
+
+⸻
+
+4. BUTTON LABELS (IN ORDER)
+	•	Show All (always visible first)
+	•	Jaloezieën
+	•	Rolgordijnen
+	•	Vitrages
+	•	Shutters
+	•	Plissés & Horren
+	•	SQUID textile foil
+
+Each button should filter the products in real-time based on the group.
+
+⸻
+
+5. FUNCTIONAL BEHAVIOR
+	•	When a user clicks a button:
+	•	Products displayed below must update immediately to match the selected category.
+	•	The selected button must show an active visual state.
+	•	Only one button can be active at a time.
+	•	Clicking Show All will reset and show all product categories again.
+	•	On button click, auto-scroll the product view up if user is far down the page.
+
+⸻
+
+6. MOBILE RESPONSIVENESS
+	•	On smaller screens, the button bar must be horizontally scrollable.
+	•	Keep comfortable spacing between buttons.
+	•	Buttons must not shrink too small — ensure they are easily tappable with a finger.
+
+⸻
+
+7. ACCESSIBILITY & INTERACTION
+	•	Buttons must be keyboard-accessible.
+	•	Show visual focus indicators (e.g. outline) when navigating with Tab.
+	•	Add aria-labels or similar where appropriate for screen reader clarity.
+
+⸻
+
+FINAL GOAL
+
+📌 Goal: Create an intuitive, elegant, and conversion-driven navigation to allow users to switch between product groups quickly and visually.
+No dropdowns. No emojis. It must feel modern and premium, matching the KANIOU design.
+
+⸻

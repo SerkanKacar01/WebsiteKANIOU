@@ -558,3 +558,23 @@ html.rtl .right-0 {
 .scrollbar-hide::-webkit-scrollbar { 
   display: none;  /* Safari and Chrome */
 }
+
+/* Enhanced Mobile Scroll Behavior */
+.smooth-horizontal-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+.smooth-horizontal-scroll > * {
+  scroll-snap-align: start;
+}
+
+/* Button hover animations */
+.scale-102:hover {
+  transform: scale(1.02);
+}
+
+.transform {
+  transition: transform 0.2s ease-in-out;
+}

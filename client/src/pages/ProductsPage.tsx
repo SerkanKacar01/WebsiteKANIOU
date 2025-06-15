@@ -13,11 +13,16 @@ const ProductsPage = () => {
   const [selectedSort, setSelectedSort] = useState("meest-gekozen");
   const [selectedCategory, setSelectedCategory] = useState("alles");
   const [showSaveIndicator, setShowSaveIndicator] = useState(false);
+  const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
 
   // Load user preferences from localStorage on component mount
   useEffect(() => {
     const savedSort = localStorage.getItem('kaniou-preferred-sort');
     const savedCategory = localStorage.getItem('kaniou-preferred-category');
+    
+    if (savedSort || savedCategory) {
+      setHasSavedPreferences(true);
+    }
     
     if (savedSort) {
       setSelectedSort(savedSort);
@@ -29,25 +34,34 @@ const ProductsPage = () => {
 
   // Save user preferences to localStorage when they change
   useEffect(() => {
-    localStorage.setItem('kaniou-preferred-sort', selectedSort);
-    setShowSaveIndicator(true);
-    const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
-    return () => clearTimeout(timer);
-  }, [selectedSort]);
+    if (hasSavedPreferences || selectedSort !== "meest-gekozen") {
+      localStorage.setItem('kaniou-preferred-sort', selectedSort);
+      setHasSavedPreferences(true);
+      setShowSaveIndicator(true);
+      const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedSort, hasSavedPreferences]);
 
   useEffect(() => {
-    localStorage.setItem('kaniou-preferred-category', selectedCategory);
-    setShowSaveIndicator(true);
-    const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
-    return () => clearTimeout(timer);
-  }, [selectedCategory]);
+    if (hasSavedPreferences || selectedCategory !== "alles") {
+      localStorage.setItem('kaniou-preferred-category', selectedCategory);
+      setHasSavedPreferences(true);
+      setShowSaveIndicator(true);
+      const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedCategory, hasSavedPreferences]);
 
   // Reset preferences to default
   const resetPreferences = () => {
-    setSelectedSort("meest-gekozen");
-    setSelectedCategory("alles");
-    localStorage.removeItem('kaniou-preferred-sort');
-    localStorage.removeItem('kaniou-preferred-category');
+    if (window.confirm('Weet u zeker dat u uw opgeslagen voorkeuren wilt resetten naar de standaardwaarden?')) {
+      setSelectedSort("meest-gekozen");
+      setSelectedCategory("alles");
+      setHasSavedPreferences(false);
+      localStorage.removeItem('kaniou-preferred-sort');
+      localStorage.removeItem('kaniou-preferred-category');
+    }
   };
 
   // Product categories organized by main groups
@@ -403,16 +417,18 @@ const ProductsPage = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              {/* Reset Preferences Button */}
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={resetPreferences}
-                className="border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096]/50"
-              >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset voorkeuren
-              </Button>
+              {/* Reset Preferences Button - Only show when user has saved preferences */}
+              {hasSavedPreferences && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={resetPreferences}
+                  className="border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096]/50 transition-all duration-200 hover:scale-105"
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset voorkeuren
+                </Button>
+              )}
               
               {/* Preferences Status Indicator */}
               <div className={`flex items-center gap-2 text-xs transition-colors duration-300 ${

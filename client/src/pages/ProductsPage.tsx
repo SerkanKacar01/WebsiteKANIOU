@@ -11,7 +11,12 @@ import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, Rotat
 const ProductsPage = () => {
   const { t } = useLanguage();
   const [selectedSort, setSelectedSort] = useState("meest-gekozen");
-  const [selectedCategory, setSelectedCategory] = useState("alles");
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('kaniou-selected-category') || 'alles';
+    }
+    return 'alles';
+  });
   const [showSaveIndicator, setShowSaveIndicator] = useState(false);
   const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
   const [isFilterLoading, setIsFilterLoading] = useState(false);
@@ -102,19 +107,8 @@ const ProductsPage = () => {
     setIsFilterLoading(true);
     setSelectedCategory(categoryId);
     
-    // Map specific product groups to existing categories for filtering
-    const categoryMapping: { [key: string]: string } = {
-      'alles': 'alles',
-      'jaloezien': 'jaloezien',
-      'rolgordijnen': 'gordijnen',
-      'vitrages': 'gordijnen',
-      'shutters': 'accessoires',
-      'plisses': 'plisses',
-      'squid': 'accessoires'
-    };
-    
-    const mappedCategory = categoryMapping[categoryId] || categoryId;
-    setSelectedCategory(mappedCategory);
+    // Save selected category to localStorage
+    localStorage.setItem('kaniou-selected-category', categoryId);
     
     // Auto-scroll to product view if user is far down the page
     const productSection = document.querySelector('.product-grid-section');
@@ -349,22 +343,24 @@ const ProductsPage = () => {
         badge: "Vochtbestendig"
       }
     ],
-    gordijnen: [
+    rolgordijnen: [
       {
         id: 3,
-        title: "Overgordijnen",
-        subtitle: "Luxe & verduisterend",
-        description: "Elegante overgordijnen voor optimale privacy en lichtcontrole.",
+        title: "Rolgordijnen",
+        subtitle: "Praktisch & stijlvol",
+        description: "Hoogwaardige rolgordijnen voor elke ruimte en smaak.",
         image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
         products: [
-          { name: "Verduisterende Gordijnen", price: "€89,95", popular: true, width: 200, height: 250, thickness: 0.8 },
-          { name: "Semi-transparante Gordijnen", price: "€69,95", popular: false, width: 200, height: 250, thickness: 0.5 },
-          { name: "Luxe Overgordijnen", price: "€129,95", popular: false, width: 300, height: 280, thickness: 1.2 }
+          { name: "Rolgordijn Verduisterend", price: "€89,95", popular: true, width: 200, height: 250, thickness: 0.8 },
+          { name: "Rolgordijn Semi-transparant", price: "€69,95", popular: false, width: 200, height: 250, thickness: 0.5 },
+          { name: "Rolgordijn op Maat", price: "€129,95", popular: false, width: 300, height: 280, thickness: 1.2 }
         ],
         dimensions: { width: 200, height: 250, depth: 0.8 },
-        href: "/products/overgordijnen",
-        badge: "Luxe"
-      },
+        href: "/products/rolgordijnen",
+        badge: "Populair"
+      }
+    ],
+    vitrages: [
       {
         id: 4,
         title: "Vitrages",
@@ -379,6 +375,23 @@ const ProductsPage = () => {
         dimensions: { width: 150, height: 200, depth: 0.3 },
         href: "/products/vitrages",
         badge: "Lichtdoorlatend"
+      }
+    ],
+    shutters: [
+      {
+        id: 8,
+        title: "Shutters",
+        subtitle: "Klassiek & duurzaam",
+        description: "Hoogwaardige shutters voor tijdloze elegantie en lichtcontrole.",
+        image: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
+        products: [
+          { name: "Houten Shutters", price: "€189,95", popular: true, width: 120, height: 200, thickness: 2.5 },
+          { name: "PVC Shutters", price: "€149,95", popular: false, width: 120, height: 200, thickness: 2.0 },
+          { name: "Plantation Shutters", price: "€229,95", popular: false, width: 140, height: 220, thickness: 3.0 }
+        ],
+        dimensions: { width: 120, height: 200, depth: 2.5 },
+        href: "/products/shutters",
+        badge: "Premium"
       }
     ],
     plisses: [
@@ -471,14 +484,20 @@ const ProductsPage = () => {
     if (selectedCategory === "alles") {
       allProducts = [
         ...productCategories.jaloezien,
-        ...productCategories.gordijnen,
+        ...productCategories.rolgordijnen,
+        ...productCategories.vitrages,
+        ...productCategories.shutters,
         ...productCategories.plisses,
         ...productCategories.accessoires
       ];
     } else if (selectedCategory === "jaloezien") {
       allProducts = productCategories.jaloezien;
-    } else if (selectedCategory === "gordijnen") {
-      allProducts = productCategories.gordijnen;
+    } else if (selectedCategory === "rolgordijnen") {
+      allProducts = productCategories.rolgordijnen;
+    } else if (selectedCategory === "vitrages") {
+      allProducts = productCategories.vitrages;
+    } else if (selectedCategory === "shutters") {
+      allProducts = productCategories.shutters;
     } else if (selectedCategory === "plisses") {
       allProducts = productCategories.plisses;
     } else if (selectedCategory === "accessoires") {
@@ -549,7 +568,9 @@ const ProductsPage = () => {
     
     return {
       jaloezien: filteredProducts.filter(p => productCategories.jaloezien.includes(p)),
-      gordijnen: filteredProducts.filter(p => productCategories.gordijnen.includes(p)),
+      rolgordijnen: filteredProducts.filter(p => productCategories.rolgordijnen.includes(p)),
+      vitrages: filteredProducts.filter(p => productCategories.vitrages.includes(p)),
+      shutters: filteredProducts.filter(p => productCategories.shutters.includes(p)),
       plisses: filteredProducts.filter(p => productCategories.plisses.includes(p)),
       accessoires: filteredProducts.filter(p => productCategories.accessoires.includes(p))
     };

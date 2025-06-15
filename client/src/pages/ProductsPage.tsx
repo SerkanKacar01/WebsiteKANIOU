@@ -14,6 +14,7 @@ const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("alles");
   const [showSaveIndicator, setShowSaveIndicator] = useState(false);
   const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
+  const [isFilterLoading, setIsFilterLoading] = useState(false);
 
   // Load user preferences from localStorage on component mount
   useEffect(() => {
@@ -63,6 +64,41 @@ const ProductsPage = () => {
       localStorage.removeItem('kaniou-preferred-category');
     }
   };
+
+  // Handle filter changes with loading state
+  const handleSortChange = (value: string) => {
+    setIsFilterLoading(true);
+    setSelectedSort(value);
+    setTimeout(() => setIsFilterLoading(false), 300);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setIsFilterLoading(true);
+    setSelectedCategory(value);
+    setTimeout(() => setIsFilterLoading(false), 300);
+  };
+
+  // Product Card Skeleton Component
+  const ProductSkeleton = () => (
+    <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse">
+      <CardHeader className="p-0">
+        <div className="relative overflow-hidden rounded-t-lg">
+          <div className="w-full h-64 bg-gray-200"></div>
+        </div>
+      </CardHeader>
+      <CardContent className="p-6">
+        <div className="h-6 bg-gray-200 rounded mb-3"></div>
+        <div className="h-4 bg-gray-200 rounded mb-4 w-3/4"></div>
+        <div className="flex items-center justify-between">
+          <div className="h-6 bg-gray-200 rounded w-20"></div>
+          <div className="h-6 bg-gray-200 rounded w-16"></div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-6 pt-0">
+        <div className="w-full h-10 bg-gray-200 rounded"></div>
+      </CardFooter>
+    </Card>
+  );
 
   // Product categories organized by main groups
   const productCategories = {
@@ -382,7 +418,7 @@ const ProductsPage = () => {
                 <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                   Sorteer op:
                 </label>
-                <Select value={selectedSort} onValueChange={setSelectedSort}>
+                <Select value={selectedSort} onValueChange={handleSortChange}>
                   <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
                     <SelectValue placeholder="Selecteer sortering" />
                   </SelectTrigger>
@@ -401,7 +437,7 @@ const ProductsPage = () => {
                 <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                   Toon categorie:
                 </label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <Select value={selectedCategory} onValueChange={handleCategoryChange}>
                   <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
                     <SelectValue placeholder="Selecteer categorie" />
                   </SelectTrigger>
@@ -464,21 +500,35 @@ const ProductsPage = () => {
           {selectedCategory === "alles" ? (
             // Show all categories with section headers
             <>
-              {groupedProducts.jaloezien.length > 0 && (
+              {isFilterLoading ? (
                 <div className="mb-16">
                   <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
-                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                    <div className="h-8 bg-gray-200 rounded w-32 mr-4 animate-pulse"></div>
+                    <div className="flex-grow h-px bg-gray-200 animate-pulse"></div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    {groupedProducts.jaloezien.map((category) => (
-                      <ProductCard key={category.id} category={category} />
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <ProductSkeleton key={index} />
                     ))}
                   </div>
                 </div>
+              ) : (
+                groupedProducts.jaloezien && groupedProducts.jaloezien.length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center mb-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
+                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                      {groupedProducts.jaloezien.map((category) => (
+                        <ProductCard key={category.id} category={category} />
+                      ))}
+                    </div>
+                  </div>
+                )
               )}
 
-              {groupedProducts.gordijnen.length > 0 && (
+              {!isFilterLoading && groupedProducts.gordijnen && groupedProducts.gordijnen.length > 0 && (
                 <div className="mb-16">
                   <div className="flex items-center mb-8">
                     <h3 className="text-2xl font-bold text-gray-900 mr-4">Gordijnen</h3>

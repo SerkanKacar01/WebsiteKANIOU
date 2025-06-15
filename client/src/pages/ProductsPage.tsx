@@ -9,65 +9,129 @@ import { ArrowRight, Star, Eye, Ruler, Palette } from "lucide-react";
 const ProductsPage = () => {
   const { t } = useLanguage();
 
-  // Product categories data
-  const productCategories = [
-    {
-      id: 1,
-      title: "Vliegengordijnen",
-      subtitle: "Klemgordijnen & Magnetische gordijnen",
-      description: "Premium vliegengordijnen die perfect passen bij elke deuropening. Eenvoudig te installeren zonder boren.",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-      products: [
-        { name: "Klemgordijn Standaard", price: "€29,95", popular: true },
-        { name: "Magnetisch Vliegengordijn", price: "€39,95", popular: false },
-        { name: "Luxe Klemgordijn", price: "€49,95", popular: false }
-      ],
-      href: "/products/fly-screens",
-      badge: "Bestseller"
-    },
-    {
-      id: 2,
-      title: "Raamdecoratie",
-      subtitle: "Gordijnen & Vitragegordunen",
-      description: "Elegante raamdecoratie voor elke kamer. Van moderne tot klassieke stijlen.",
-      image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
-      products: [
-        { name: "Vitrage Gordijn Wit", price: "€24,95", popular: false },
-        { name: "Verduisterende Gordijnen", price: "€59,95", popular: true },
-        { name: "Transparante Vitrages", price: "€34,95", popular: false }
-      ],
-      href: "/products/window-curtains",
-      badge: "Nieuw"
-    },
-    {
-      id: 3,
-      title: "Jalouzieën",
-      subtitle: "Horizontale & Verticale jalouzieën",
-      description: "Stijlvolle jalouzieën voor optimale lichtregeling en privacy. Op maat gemaakt.",
-      image: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&h=300&fit=crop",
-      products: [
-        { name: "Houten Jaloezie", price: "€79,95", popular: false },
-        { name: "Aluminium Jaloezie", price: "€49,95", popular: true },
-        { name: "Verticale Jaloezie", price: "€69,95", popular: false }
-      ],
-      href: "/products/blinds",
-      badge: "Op maat"
-    },
-    {
-      id: 4,
-      title: "Plissé Gordijnen",
-      subtitle: "Moderne plissé oplossingen",
-      description: "Veelzijdige plissé gordijnen die perfect combineren met elke interieurstijl.",
-      image: "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=400&h=300&fit=crop",
-      products: [
-        { name: "Plissé Transparant", price: "€45,95", popular: false },
-        { name: "Plissé Verduisterend", price: "€65,95", popular: true },
-        { name: "Plissé Isolerend", price: "€55,95", popular: false }
-      ],
-      href: "/products/pleated-curtains",
-      badge: "Energie-efficiënt"
-    }
-  ];
+  // Product categories organized by main groups
+  const productCategories = {
+    jaloezien: [
+      {
+        id: 1,
+        title: "Houten Jaloezieën",
+        subtitle: "Natuurlijke warmte & elegantie",
+        description: "Tijdloze houten jaloezieën die warmte en stijl toevoegen aan elke ruimte.",
+        image: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&h=300&fit=crop",
+        products: [
+          { name: "Houten Jaloezie 25mm", price: "€79,95", popular: true },
+          { name: "Houten Jaloezie 35mm", price: "€89,95", popular: false },
+          { name: "Houten Jaloezie 50mm", price: "€99,95", popular: false }
+        ],
+        href: "/products/houten-jaloezieen",
+        badge: "Bestseller"
+      },
+      {
+        id: 2,
+        title: "Kunststof Jaloezieën",
+        subtitle: "Praktisch & vochtbestendig",
+        description: "Onderhoudsvriendelijke kunststof jaloezieën, perfect voor vochtige ruimtes.",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+        products: [
+          { name: "Kunststof Jaloezie 25mm", price: "€49,95", popular: true },
+          { name: "Kunststof Jaloezie 35mm", price: "€59,95", popular: false },
+          { name: "Verticale Jaloezie", price: "€69,95", popular: false }
+        ],
+        href: "/products/kunststof-jaloezieen",
+        badge: "Vochtbestendig"
+      }
+    ],
+    gordijnen: [
+      {
+        id: 3,
+        title: "Overgordijnen",
+        subtitle: "Luxe & verduisterend",
+        description: "Elegante overgordijnen voor optimale privacy en lichtcontrole.",
+        image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
+        products: [
+          { name: "Verduisterende Gordijnen", price: "€89,95", popular: true },
+          { name: "Semi-transparante Gordijnen", price: "€69,95", popular: false },
+          { name: "Luxe Overgordijnen", price: "€129,95", popular: false }
+        ],
+        href: "/products/overgordijnen",
+        badge: "Luxe"
+      },
+      {
+        id: 4,
+        title: "Vitrages",
+        subtitle: "Licht & privacy",
+        description: "Subtiele vitrages die licht doorlaten terwijl ze privacy bieden.",
+        image: "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=400&h=300&fit=crop",
+        products: [
+          { name: "Vitrage Gordijn Wit", price: "€34,95", popular: true },
+          { name: "Vitrage Gordijn Crème", price: "€34,95", popular: false },
+          { name: "Vitrage met Patroon", price: "€44,95", popular: false }
+        ],
+        href: "/products/vitrages",
+        badge: "Lichtdoorlatend"
+      }
+    ],
+    plisses: [
+      {
+        id: 5,
+        title: "Plissé Gordijnen",
+        subtitle: "Modern & veelzijdig",
+        description: "Stijlvolle plissé gordijnen die perfect passen in moderne interieurs.",
+        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+        products: [
+          { name: "Plissé Transparant", price: "€45,95", popular: false },
+          { name: "Plissé Verduisterend", price: "€65,95", popular: true },
+          { name: "Plissé Isolerend", price: "€55,95", popular: false }
+        ],
+        href: "/products/plisse",
+        badge: "Energie-efficiënt"
+      },
+      {
+        id: 6,
+        title: "Opzethorren",
+        subtitle: "Insectenwering & ventilatie",
+        description: "Effectieve insectenwering zonder in te boeten op ventilatie en zicht.",
+        image: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
+        products: [
+          { name: "Opzethor Standaard", price: "€79,95", popular: true },
+          { name: "Opzethor Deluxe", price: "€99,95", popular: false },
+          { name: "Opzethor XXL", price: "€119,95", popular: false }
+        ],
+        href: "/products/opzethorren",
+        badge: "Nieuw"
+      }
+    ],
+    accessoires: [
+      {
+        id: 7,
+        title: "Gordijnroedes",
+        subtitle: "Stijlvolle ophangingen",
+        description: "Hoogwaardige gordijnroedes in verschillende stijlen en materialen.",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+        products: [
+          { name: "Aluminium Roede", price: "€29,95", popular: true },
+          { name: "Houten Roede", price: "€49,95", popular: false },
+          { name: "RVS Roede", price: "€39,95", popular: false }
+        ],
+        href: "/products/gordijnroedes",
+        badge: "Compleet"
+      },
+      {
+        id: 8,
+        title: "Gordijnrails",
+        subtitle: "Functionele railsystemen",
+        description: "Professionele railsystemen voor een strakke en moderne uitstraling.",
+        image: "https://images.unsplash.com/photo-1600210491964-1f36470bc2a7?w=400&h=300&fit=crop",
+        products: [
+          { name: "Enkele Rail", price: "€24,95", popular: true },
+          { name: "Dubbele Rail", price: "€34,95", popular: false },
+          { name: "Elektrische Rail", price: "€149,95", popular: false }
+        ],
+        href: "/products/gordijnrails",
+        badge: "Functioneel"
+      }
+    ]
+  };
 
   const features = [
     {
@@ -131,65 +195,277 @@ const ProductsPage = () => {
         {/* Product Categories */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12">Onze Productcategorieën</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {productCategories.map((category) => (
-              <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-                {/* Fixed Height Image Section */}
-                <div className="relative overflow-hidden">
-                  <img
-                    src={category.image}
-                    alt={category.title}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  {category.badge && (
-                    <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
-                      {category.badge}
-                    </Badge>
-                  )}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-                </div>
+          
+          {/* Jaloezieën Section */}
+          <div className="mb-16">
+            <div className="flex items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
+              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {productCategories.jaloezien.map((category: any) => (
+                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                  {/* Fixed Height Image Section */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {category.badge && (
+                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+                        {category.badge}
+                      </Badge>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                  </div>
 
-                {/* Content Section - Flex Grow */}
-                <div className="flex flex-col flex-grow p-6">
-                  {/* Product Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {category.title}
-                  </h3>
-                  
-                  {/* Short Description */}
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
-                    {category.description}
-                  </p>
+                  {/* Content Section - Flex Grow */}
+                  <div className="flex flex-col flex-grow p-6">
+                    {/* Product Title */}
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      {category.title}
+                    </h4>
+                    
+                    {/* Short Description */}
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+                      {category.description}
+                    </p>
 
-                  {/* Prices Section */}
-                  <div className="mb-6 flex-grow">
-                    <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
-                    <div className="space-y-2">
-                      {category.products.slice(0, 3).map((product, index) => (
-                        <div key={index} className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">
-                            {product.name}
-                          </span>
-                          <span className="text-sm font-semibold text-[#d5c096]">
-                            {product.price}
-                          </span>
-                        </div>
-                      ))}
+                    {/* Prices Section */}
+                    <div className="mb-6 flex-grow">
+                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+                      <div className="space-y-2">
+                        {category.products.slice(0, 3).map((product, index) => (
+                          <div key={index} className="flex justify-between items-center">
+                            <span className="text-sm text-gray-600">
+                              {product.name}
+                            </span>
+                            <span className="text-sm font-semibold text-[#d5c096]">
+                              {product.price}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CTA Button - Always at Bottom */}
+                    <div className="mt-auto">
+                      <Link href={category.href} className="w-full">
+                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+                          Bekijk producten
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
+                </Card>
+              ))}
+            </div>
+          </div>
 
-                  {/* CTA Button - Always at Bottom */}
-                  <div className="mt-auto">
-                    <Link href={category.href} className="w-full">
-                      <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                        Bekijk producten
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+          {/* Gordijnen Section */}
+          <div className="mb-16">
+            <div className="flex items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mr-4">Gordijnen</h3>
+              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {productCategories.gordijnen.map((category: any) => (
+                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                  {/* Fixed Height Image Section */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {category.badge && (
+                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+                        {category.badge}
+                      </Badge>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
                   </div>
-                </div>
-              </Card>
-            ))}
+
+                  {/* Content Section - Flex Grow */}
+                  <div className="flex flex-col flex-grow p-6">
+                    {/* Product Title */}
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      {category.title}
+                    </h4>
+                    
+                    {/* Short Description */}
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+                      {category.description}
+                    </p>
+
+                    {/* Prices Section */}
+                    <div className="mb-6 flex-grow">
+                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+                      <div className="space-y-2">
+                        {category.products.slice(0, 3).map((product, index) => (
+                          <div key={index} className="flex justify-between items-center">
+                            <span className="text-sm text-gray-600">
+                              {product.name}
+                            </span>
+                            <span className="text-sm font-semibold text-[#d5c096]">
+                              {product.price}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CTA Button - Always at Bottom */}
+                    <div className="mt-auto">
+                      <Link href={category.href} className="w-full">
+                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+                          Bekijk producten
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Plissés & Horren Section */}
+          <div className="mb-16">
+            <div className="flex items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mr-4">Plissés & Horren</h3>
+              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {productCategories.plisses.map((category: any) => (
+                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                  {/* Fixed Height Image Section */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {category.badge && (
+                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+                        {category.badge}
+                      </Badge>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                  </div>
+
+                  {/* Content Section - Flex Grow */}
+                  <div className="flex flex-col flex-grow p-6">
+                    {/* Product Title */}
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      {category.title}
+                    </h4>
+                    
+                    {/* Short Description */}
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+                      {category.description}
+                    </p>
+
+                    {/* Prices Section */}
+                    <div className="mb-6 flex-grow">
+                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+                      <div className="space-y-2">
+                        {category.products.slice(0, 3).map((product, index) => (
+                          <div key={index} className="flex justify-between items-center">
+                            <span className="text-sm text-gray-600">
+                              {product.name}
+                            </span>
+                            <span className="text-sm font-semibold text-[#d5c096]">
+                              {product.price}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CTA Button - Always at Bottom */}
+                    <div className="mt-auto">
+                      <Link href={category.href} className="w-full">
+                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+                          Bekijk producten
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Accessoires Section */}
+          <div className="mb-16">
+            <div className="flex items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 mr-4">Accessoires</h3>
+              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {productCategories.accessoires.map((category: any) => (
+                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                  {/* Fixed Height Image Section */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {category.badge && (
+                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+                        {category.badge}
+                      </Badge>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                  </div>
+
+                  {/* Content Section - Flex Grow */}
+                  <div className="flex flex-col flex-grow p-6">
+                    {/* Product Title */}
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      {category.title}
+                    </h4>
+                    
+                    {/* Short Description */}
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+                      {category.description}
+                    </p>
+
+                    {/* Prices Section */}
+                    <div className="mb-6 flex-grow">
+                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+                      <div className="space-y-2">
+                        {category.products.slice(0, 3).map((product, index) => (
+                          <div key={index} className="flex justify-between items-center">
+                            <span className="text-sm text-gray-600">
+                              {product.name}
+                            </span>
+                            <span className="text-sm font-semibold text-[#d5c096]">
+                              {product.price}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CTA Button - Always at Bottom */}
+                    <div className="mt-auto">
+                      <Link href={category.href} className="w-full">
+                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+                          Bekijk producten
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
 

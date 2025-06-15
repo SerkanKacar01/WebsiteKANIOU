@@ -78,24 +78,25 @@ const ProductsPage = () => {
     setTimeout(() => setIsFilterLoading(false), 300);
   };
 
-  // Product Card Skeleton Component
+  // Product Card Skeleton Component with shimmer effect
   const ProductSkeleton = () => (
-    <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 animate-pulse">
+    <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
+      <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
       <CardHeader className="p-0">
         <div className="relative overflow-hidden rounded-t-lg">
-          <div className="w-full h-64 bg-gray-200"></div>
+          <div className="w-full h-64 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse"></div>
         </div>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="h-6 bg-gray-200 rounded mb-3"></div>
-        <div className="h-4 bg-gray-200 rounded mb-4 w-3/4"></div>
+        <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded mb-3 animate-pulse"></div>
+        <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded mb-4 w-3/4 animate-pulse"></div>
         <div className="flex items-center justify-between">
-          <div className="h-6 bg-gray-200 rounded w-20"></div>
-          <div className="h-6 bg-gray-200 rounded w-16"></div>
+          <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-20 animate-pulse"></div>
+          <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-16 animate-pulse"></div>
         </div>
       </CardContent>
       <CardFooter className="p-6 pt-0">
-        <div className="w-full h-10 bg-gray-200 rounded"></div>
+        <div className="w-full h-10 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded animate-pulse"></div>
       </CardFooter>
     </Card>
   );
@@ -419,7 +420,9 @@ const ProductsPage = () => {
                   Sorteer op:
                 </label>
                 <Select value={selectedSort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
+                  <SelectTrigger className={`w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
+                    isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                  }`}>
                     <SelectValue placeholder="Selecteer sortering" />
                   </SelectTrigger>
                   <SelectContent>
@@ -438,7 +441,9 @@ const ProductsPage = () => {
                   Toon categorie:
                 </label>
                 <Select value={selectedCategory} onValueChange={handleCategoryChange}>
-                  <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
+                  <SelectTrigger className={`w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
+                    isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                  }`}>
                     <SelectValue placeholder="Selecteer categorie" />
                   </SelectTrigger>
                   <SelectContent>
@@ -542,7 +547,7 @@ const ProductsPage = () => {
                 </div>
               )}
 
-              {groupedProducts.plisses.length > 0 && (
+              {!isFilterLoading && groupedProducts.plisses && groupedProducts.plisses.length > 0 && (
                 <div className="mb-16">
                   <div className="flex items-center mb-8">
                     <h3 className="text-2xl font-bold text-gray-900 mr-4">Plissés & Horren</h3>
@@ -556,7 +561,7 @@ const ProductsPage = () => {
                 </div>
               )}
 
-              {groupedProducts.accessoires.length > 0 && (
+              {!isFilterLoading && groupedProducts.accessoires && groupedProducts.accessoires.length > 0 && (
                 <div className="mb-16">
                   <div className="flex items-center mb-8">
                     <h3 className="text-2xl font-bold text-gray-900 mr-4">Accessoires</h3>
@@ -572,11 +577,19 @@ const ProductsPage = () => {
             </>
           ) : (
             // Show filtered category products
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {filteredProducts.map((category) => (
-                <ProductCard key={category.id} category={category} />
-              ))}
-            </div>
+            isFilterLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {filteredProducts.map((category) => (
+                  <ProductCard key={category.id} category={category} />
+                ))}
+              </div>
+            )
           )}
 
           {filteredProducts.length === 0 && (

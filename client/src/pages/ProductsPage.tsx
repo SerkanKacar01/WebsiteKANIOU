@@ -151,6 +151,66 @@ const ProductsPage = () => {
     }
   ];
 
+  // Component for rendering product cards
+  const ProductCard = ({ category }: { category: any }) => (
+    <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+      {/* Fixed Height Image Section */}
+      <div className="relative overflow-hidden">
+        <img
+          src={category.image}
+          alt={category.title}
+          className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        {category.badge && (
+          <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
+            {category.badge}
+          </Badge>
+        )}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+      </div>
+
+      {/* Content Section - Flex Grow */}
+      <div className="flex flex-col flex-grow p-6">
+        {/* Product Title */}
+        <h4 className="text-xl font-bold text-gray-900 mb-2">
+          {category.title}
+        </h4>
+        
+        {/* Short Description */}
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+          {category.description}
+        </p>
+
+        {/* Prices Section */}
+        <div className="mb-6 flex-grow">
+          <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+          <div className="space-y-2">
+            {category.products.slice(0, 3).map((product: any, index: number) => (
+              <div key={index} className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">
+                  {product.name}
+                </span>
+                <span className="text-sm font-semibold text-[#d5c096]">
+                  {product.price}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Button - Always at Bottom */}
+        <div className="mt-auto">
+          <Link href={category.href} className="w-full">
+            <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+              Bekijk producten
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </Card>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <Container>
@@ -203,63 +263,8 @@ const ProductsPage = () => {
               <div className="flex-grow h-px bg-[#d5c096]/30"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {productCategories.jaloezien.map((category: any) => (
-                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-                  {/* Fixed Height Image Section */}
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {category.badge && (
-                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
-                        {category.badge}
-                      </Badge>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-                  </div>
-
-                  {/* Content Section - Flex Grow */}
-                  <div className="flex flex-col flex-grow p-6">
-                    {/* Product Title */}
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      {category.title}
-                    </h4>
-                    
-                    {/* Short Description */}
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
-                      {category.description}
-                    </p>
-
-                    {/* Prices Section */}
-                    <div className="mb-6 flex-grow">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
-                      <div className="space-y-2">
-                        {category.products.slice(0, 3).map((product, index) => (
-                          <div key={index} className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              {product.name}
-                            </span>
-                            <span className="text-sm font-semibold text-[#d5c096]">
-                              {product.price}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA Button - Always at Bottom */}
-                    <div className="mt-auto">
-                      <Link href={category.href} className="w-full">
-                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                          Bekijk producten
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </Card>
+              {productCategories.jaloezien.map((category) => (
+                <ProductCard key={category.id} category={category} />
               ))}
             </div>
           </div>
@@ -271,63 +276,8 @@ const ProductsPage = () => {
               <div className="flex-grow h-px bg-[#d5c096]/30"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {productCategories.gordijnen.map((category: any) => (
-                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-                  {/* Fixed Height Image Section */}
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {category.badge && (
-                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
-                        {category.badge}
-                      </Badge>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-                  </div>
-
-                  {/* Content Section - Flex Grow */}
-                  <div className="flex flex-col flex-grow p-6">
-                    {/* Product Title */}
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      {category.title}
-                    </h4>
-                    
-                    {/* Short Description */}
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
-                      {category.description}
-                    </p>
-
-                    {/* Prices Section */}
-                    <div className="mb-6 flex-grow">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
-                      <div className="space-y-2">
-                        {category.products.slice(0, 3).map((product, index) => (
-                          <div key={index} className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              {product.name}
-                            </span>
-                            <span className="text-sm font-semibold text-[#d5c096]">
-                              {product.price}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA Button - Always at Bottom */}
-                    <div className="mt-auto">
-                      <Link href={category.href} className="w-full">
-                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                          Bekijk producten
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </Card>
+              {productCategories.gordijnen.map((category) => (
+                <ProductCard key={category.id} category={category} />
               ))}
             </div>
           </div>
@@ -339,63 +289,8 @@ const ProductsPage = () => {
               <div className="flex-grow h-px bg-[#d5c096]/30"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {productCategories.plisses.map((category: any) => (
-                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-                  {/* Fixed Height Image Section */}
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {category.badge && (
-                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
-                        {category.badge}
-                      </Badge>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-                  </div>
-
-                  {/* Content Section - Flex Grow */}
-                  <div className="flex flex-col flex-grow p-6">
-                    {/* Product Title */}
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      {category.title}
-                    </h4>
-                    
-                    {/* Short Description */}
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
-                      {category.description}
-                    </p>
-
-                    {/* Prices Section */}
-                    <div className="mb-6 flex-grow">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
-                      <div className="space-y-2">
-                        {category.products.slice(0, 3).map((product, index) => (
-                          <div key={index} className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              {product.name}
-                            </span>
-                            <span className="text-sm font-semibold text-[#d5c096]">
-                              {product.price}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA Button - Always at Bottom */}
-                    <div className="mt-auto">
-                      <Link href={category.href} className="w-full">
-                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                          Bekijk producten
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </Card>
+              {productCategories.plisses.map((category) => (
+                <ProductCard key={category.id} category={category} />
               ))}
             </div>
           </div>
@@ -407,63 +302,8 @@ const ProductsPage = () => {
               <div className="flex-grow h-px bg-[#d5c096]/30"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {productCategories.accessoires.map((category: any) => (
-                <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-                  {/* Fixed Height Image Section */}
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {category.badge && (
-                      <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
-                        {category.badge}
-                      </Badge>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-                  </div>
-
-                  {/* Content Section - Flex Grow */}
-                  <div className="flex flex-col flex-grow p-6">
-                    {/* Product Title */}
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      {category.title}
-                    </h4>
-                    
-                    {/* Short Description */}
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
-                      {category.description}
-                    </p>
-
-                    {/* Prices Section */}
-                    <div className="mb-6 flex-grow">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
-                      <div className="space-y-2">
-                        {category.products.slice(0, 3).map((product, index) => (
-                          <div key={index} className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              {product.name}
-                            </span>
-                            <span className="text-sm font-semibold text-[#d5c096]">
-                              {product.price}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA Button - Always at Bottom */}
-                    <div className="mt-auto">
-                      <Link href={category.href} className="w-full">
-                        <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                          Bekijk producten
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </Card>
+              {productCategories.accessoires.map((category) => (
+                <ProductCard key={category.id} category={category} />
               ))}
             </div>
           </div>

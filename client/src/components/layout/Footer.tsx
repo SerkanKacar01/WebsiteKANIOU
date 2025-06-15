@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import Container from "@/components/ui/container";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, Shield, CheckCircle, CreditCard } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { CookieSettings } from "@/components/CookieSettings";
 
@@ -136,6 +136,53 @@ const Footer = () => {
                 <Mail className="h-4 w-4" />
               </Button>
             </form>
+          </div>
+        </div>
+
+        {/* Trust Signals and Payment Methods */}
+        <div className="border-t border-gray-700 pt-8 pb-8">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+            {/* Trust Badges */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex items-center gap-3 bg-white/10 rounded-lg px-4 py-3">
+                <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+                <span className="text-white text-sm font-medium">
+                  100% Tevredenheidsgarantie
+                </span>
+              </div>
+              <div className="flex items-center gap-3 bg-white/10 rounded-lg px-4 py-3">
+                <Shield className="h-5 w-5 text-green-400 flex-shrink-0" />
+                <span className="text-white text-sm font-medium">
+                  Veilige betaling via SSL
+                </span>
+              </div>
+            </div>
+
+            {/* Payment Methods */}
+            <div className="flex flex-col items-center sm:items-end">
+              <p className="text-white text-sm mb-3 font-medium">Betaalmethoden:</p>
+              <div className="flex items-center gap-3">
+                {/* Visa */}
+                <div className="bg-white rounded px-3 py-2 flex items-center justify-center">
+                  <span className="text-blue-600 font-bold text-sm tracking-wider">VISA</span>
+                </div>
+                {/* Mastercard */}
+                <div className="bg-white rounded px-3 py-2 flex items-center justify-center">
+                  <div className="flex">
+                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full -ml-2"></div>
+                  </div>
+                </div>
+                {/* PayPal */}
+                <div className="bg-white rounded px-3 py-2 flex items-center justify-center">
+                  <span className="text-blue-600 font-bold text-sm">PayPal</span>
+                </div>
+                {/* Bancontact */}
+                <div className="bg-white rounded px-3 py-2 flex items-center justify-center">
+                  <span className="text-gray-800 font-bold text-xs">Bancontact</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

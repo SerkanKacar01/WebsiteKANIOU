@@ -294,7 +294,7 @@ const ProductsPage = () => {
 
   // Product Card Skeleton Component with shimmer effect
   const ProductSkeleton = () => (
-    <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
+    <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-[#d5c096]/20 relative overflow-hidden">
       <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
       <CardHeader className="p-0">
         <div className="relative overflow-hidden rounded-t-lg">
@@ -563,13 +563,13 @@ const ProductsPage = () => {
     const canAddToComparison = comparisonProducts.length < 3 && !isInComparison;
     
     return (
-      <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-[#d5c096]/20 transition-all duration-500 group flex flex-col h-full hover:-translate-y-2 hover:rotate-1 transform-gpu hover-jello">
+      <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-[#d5c096]/15 transition-all duration-300 group flex flex-col h-full">
         {/* Fixed Height Image Section */}
         <div className="relative overflow-hidden">
           <img
             src={category.image}
             alt={category.title}
-            className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 group-hover:saturate-125 animate-float"
+            className="w-full h-64 object-cover transition-all duration-300 group-hover:brightness-105"
           />
           
           {/* Floating Sparkles Animation */}
@@ -669,11 +669,11 @@ const ProductsPage = () => {
         <div className="flex flex-col flex-grow p-6 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-[#d5c096]/5 transition-all duration-500">
           {/* Product Title with Wiggle Animation */}
           <div className="flex items-start justify-between mb-2">
-            <h4 className="text-xl font-bold text-gray-900 flex-1 group-hover:text-[#d5c096] transition-all duration-300 group-hover:scale-105 transform origin-left">
+            <h4 className="text-xl font-bold text-gray-900 flex-1 group-hover:text-[#d5c096] transition-colors duration-300">
               {category.title}
             </h4>
             {isInComparison && (
-              <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-700 group-hover:animate-pulse group-hover:scale-110 transition-transform duration-300">
+              <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-700 transition-colors duration-300">
                 In vergelijking
               </Badge>
             )}
@@ -686,9 +686,9 @@ const ProductsPage = () => {
           
           {/* Dimensions Info with Slide Animation */}
           {category.dimensions && (
-            <div className="mb-3 text-xs text-gray-500 bg-gray-50 rounded-md p-2 group-hover:bg-[#d5c096]/10 group-hover:text-[#d5c096] transition-all duration-300 transform group-hover:scale-105">
+            <div className="mb-3 text-xs text-gray-500 bg-gray-50 rounded-md p-2 group-hover:bg-[#d5c096]/10 group-hover:text-[#d5c096] transition-all duration-300">
               <div className="flex items-center gap-1">
-                <Ruler className="h-3 w-3 group-hover:animate-spin" />
+                <Ruler className="h-3 w-3" />
                 <span className="group-hover:font-medium transition-all duration-300">
                   {category.dimensions.width} × {category.dimensions.height} × {category.dimensions.depth} cm
                 </span>

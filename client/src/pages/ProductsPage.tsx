@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X } from "lucide-react";
+import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X, Maximize2, Move, RotateCw } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
@@ -16,6 +16,9 @@ const ProductsPage = () => {
   const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
   const [isFilterLoading, setIsFilterLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSizeComparison, setShowSizeComparison] = useState(false);
+  const [comparisonProducts, setComparisonProducts] = useState<any[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
   // Load user preferences from localStorage on component mount
   useEffect(() => {
@@ -93,6 +96,29 @@ const ProductsPage = () => {
     setTimeout(() => setIsFilterLoading(false), 300);
   };
 
+  // Size comparison functions
+  const addToComparison = (product: any) => {
+    if (comparisonProducts.length < 3 && !comparisonProducts.find(p => p.id === product.id)) {
+      setComparisonProducts([...comparisonProducts, product]);
+    }
+  };
+
+  const removeFromComparison = (productId: number) => {
+    setComparisonProducts(comparisonProducts.filter(p => p.id !== productId));
+  };
+
+  const openSizeComparison = () => {
+    setShowSizeComparison(true);
+  };
+
+  const closeSizeComparison = () => {
+    setShowSizeComparison(false);
+  };
+
+  const clearAllComparisons = () => {
+    setComparisonProducts([]);
+  };
+
   // Product Card Skeleton Component with shimmer effect
   const ProductSkeleton = () => (
     <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
@@ -126,10 +152,11 @@ const ProductsPage = () => {
         description: "Tijdloze houten jaloezieën die warmte en stijl toevoegen aan elke ruimte.",
         image: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&h=300&fit=crop",
         products: [
-          { name: "Houten Jaloezie 25mm", price: "€79,95", popular: true },
-          { name: "Houten Jaloezie 35mm", price: "€89,95", popular: false },
-          { name: "Houten Jaloezie 50mm", price: "€99,95", popular: false }
+          { name: "Houten Jaloezie 25mm", price: "€79,95", popular: true, width: 120, height: 150, thickness: 2.5 },
+          { name: "Houten Jaloezie 35mm", price: "€89,95", popular: false, width: 120, height: 150, thickness: 3.5 },
+          { name: "Houten Jaloezie 50mm", price: "€99,95", popular: false, width: 120, height: 150, thickness: 5.0 }
         ],
+        dimensions: { width: 120, height: 150, depth: 2.5 },
         href: "/products/houten-jaloezieen",
         badge: "Bestseller"
       },
@@ -140,10 +167,11 @@ const ProductsPage = () => {
         description: "Onderhoudsvriendelijke kunststof jaloezieën, perfect voor vochtige ruimtes.",
         image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
         products: [
-          { name: "Kunststof Jaloezie 25mm", price: "€49,95", popular: true },
-          { name: "Kunststof Jaloezie 35mm", price: "€59,95", popular: false },
-          { name: "Verticale Jaloezie", price: "€69,95", popular: false }
+          { name: "Kunststof Jaloezie 25mm", price: "€49,95", popular: true, width: 120, height: 150, thickness: 2.5 },
+          { name: "Kunststof Jaloezie 35mm", price: "€59,95", popular: false, width: 120, height: 150, thickness: 3.5 },
+          { name: "Verticale Jaloezie", price: "€69,95", popular: false, width: 120, height: 180, thickness: 8.9 }
         ],
+        dimensions: { width: 120, height: 150, depth: 2.5 },
         href: "/products/kunststof-jaloezieen",
         badge: "Vochtbestendig"
       }

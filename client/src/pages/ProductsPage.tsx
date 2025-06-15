@@ -19,6 +19,7 @@ const ProductsPage = () => {
   const [showSizeComparison, setShowSizeComparison] = useState(false);
   const [comparisonProducts, setComparisonProducts] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProductGroup, setSelectedProductGroup] = useState<string | null>(null);
 
   // Load user preferences from localStorage on component mount
   useEffect(() => {
@@ -93,6 +94,31 @@ const ProductsPage = () => {
   const clearSearch = () => {
     setSearchQuery("");
     setIsFilterLoading(true);
+    setTimeout(() => setIsFilterLoading(false), 300);
+  };
+
+  // Product group filtering
+  const handleProductGroupFilter = (groupId: string) => {
+    setIsFilterLoading(true);
+    setSelectedProductGroup(selectedProductGroup === groupId ? null : groupId);
+    
+    // Map product groups to categories for filtering
+    const categoryMapping: { [key: string]: string } = {
+      'jaloezien': 'jaloezien',
+      'rolgordijnen': 'gordijnen',
+      'vitrages': 'gordijnen',
+      'shutters': 'accessoires',
+      'plisses': 'plisses',
+      'squid': 'accessoires'
+    };
+    
+    const mappedCategory = categoryMapping[groupId];
+    if (mappedCategory && selectedProductGroup !== groupId) {
+      setSelectedCategory(mappedCategory);
+    } else if (selectedProductGroup === groupId) {
+      setSelectedCategory('alles');
+    }
+    
     setTimeout(() => setIsFilterLoading(false), 300);
   };
 
@@ -915,6 +941,42 @@ const ProductsPage = () => {
               </div>
             </div>
           </div>
+
+        {/* Dynamic Product Navigation Menu */}
+        <div className="mb-8">
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+            <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide">
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Productgroepen:
+                </span>
+              </div>
+              <div className="flex gap-2 min-w-max">
+                {[
+                  { id: 'jaloezien', label: 'Jaloezieën', icon: '🪟' },
+                  { id: 'rolgordijnen', label: 'Rolgordijnen', icon: '📜' },
+                  { id: 'vitrages', label: 'Vitrages', icon: '🎨' },
+                  { id: 'shutters', label: 'Shutters', icon: '🚪' },
+                  { id: 'plisses', label: 'Plissés & Horren', icon: '📐' },
+                  { id: 'squid', label: 'SQUID textile foil', icon: '✨' }
+                ].map((productGroup) => (
+                  <button
+                    key={productGroup.id}
+                    onClick={() => handleProductGroupFilter(productGroup.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap min-h-[44px] ${
+                      selectedProductGroup === productGroup.id
+                        ? 'bg-[#d5c096] text-white shadow-md'
+                        : 'bg-gray-50 text-gray-700 hover:bg-[#d5c096]/10 hover:text-[#d5c096] hover:shadow-sm'
+                    }`}
+                  >
+                    <span className="text-base">{productGroup.icon}</span>
+                    <span>{productGroup.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Product Categories */}
         <div className="mb-16">

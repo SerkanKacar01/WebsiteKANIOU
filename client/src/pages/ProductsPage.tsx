@@ -131,49 +131,63 @@ const ProductsPage = () => {
         {/* Product Categories */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12">Onze Productcategorieën</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             {productCategories.map((category) => (
-              <Card key={category.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
+              <Card key={category.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                {/* Fixed Height Image Section */}
+                <div className="relative overflow-hidden">
                   <img
                     src={category.image}
                     alt={category.title}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   {category.badge && (
-                    <Badge className="absolute top-4 left-4 bg-primary text-white">
+                    <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg">
                       {category.badge}
                     </Badge>
                   )}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
                 </div>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
+
+                {/* Content Section - Flex Grow */}
+                <div className="flex flex-col flex-grow p-6">
+                  {/* Product Title */}
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {category.title}
-                    <Star className="h-5 w-5 text-yellow-500" />
-                  </CardTitle>
-                  <p className="text-sm text-gray-600">{category.subtitle}</p>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 mb-4">{category.description}</p>
-                  <div className="space-y-2">
-                    {category.products.map((product, index) => (
-                      <div key={index} className="flex justify-between items-center text-sm">
-                        <span className={product.popular ? "font-medium text-primary" : "text-gray-600"}>
-                          {product.name}
-                        </span>
-                        <span className="font-semibold">{product.price}</span>
-                      </div>
-                    ))}
+                  </h3>
+                  
+                  {/* Short Description */}
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
+                    {category.description}
+                  </p>
+
+                  {/* Prices Section */}
+                  <div className="mb-6 flex-grow">
+                    <p className="text-sm font-medium text-gray-700 mb-3">Prijzen vanaf:</p>
+                    <div className="space-y-2">
+                      {category.products.slice(0, 3).map((product, index) => (
+                        <div key={index} className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">
+                            {product.name}
+                          </span>
+                          <span className="text-sm font-semibold text-[#d5c096]">
+                            {product.price}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </CardContent>
-                <CardFooter>
-                  <Link href={category.href} className="w-full">
-                    <Button className="w-full" variant="outline">
-                      Bekijk Producten
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </CardFooter>
+
+                  {/* CTA Button - Always at Bottom */}
+                  <div className="mt-auto">
+                    <Link href={category.href} className="w-full">
+                      <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
+                        Bekijk producten
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               </Card>
             ))}
           </div>

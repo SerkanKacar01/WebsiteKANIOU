@@ -361,6 +361,37 @@ const ProductsPage = () => {
           </div>
         </div>
 
+        {/* Promotional Banners */}
+        <div className="mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Banner 1 - Most Popular */}
+            <div className="bg-[#d5c096]/15 border border-[#d5c096]/30 rounded-xl p-6 flex items-center">
+              <div className="flex items-center space-x-4 w-full">
+                <div className="text-2xl">🌟</div>
+                <div className="flex-1">
+                  <p className="text-gray-800 font-medium text-sm lg:text-base">
+                    <span className="font-bold">Meest gekozen van deze maand:</span><br className="sm:hidden" />
+                    <span className="ml-1 sm:ml-0">Houten Jaloezieën - vanaf €89,95</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Banner 2 - Special Offer */}
+            <div className="bg-[#d5c096]/20 border border-[#d5c096]/40 rounded-xl p-6 flex items-center">
+              <div className="flex items-center space-x-4 w-full">
+                <div className="text-2xl">🔥</div>
+                <div className="flex-1">
+                  <p className="text-gray-800 font-medium text-sm lg:text-base">
+                    <span className="font-bold">Actie:</span><br className="sm:hidden" />
+                    <span className="ml-1 sm:ml-0">10% korting op duo plissé t.e.m. 30 juni!</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Call to Action */}
         <div className="bg-primary/5 rounded-2xl p-8 text-center mb-12">
           <h2 className="text-2xl font-bold mb-4">Hulp nodig bij uw keuze?</h2>

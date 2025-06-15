@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X, Maximize2, Move, RotateCw, Sparkles, Heart, ShoppingCart } from "lucide-react";
+import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X, Maximize2, Move, RotateCw, Sparkles, Heart, ShoppingCart, Info } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
@@ -482,6 +482,11 @@ const ProductsPage = () => {
       switch (selectedSort) {
         case "nieuwste":
           return b.id - a.id; // Newer products have higher IDs
+        case "populair":
+          // Sort by popularity based on badges and popular items
+          const popularityScoreA = (a.badge ? 1 : 0) + (a.products.some((p: any) => p.popular) ? 1 : 0);
+          const popularityScoreB = (b.badge ? 1 : 0) + (b.products.some((p: any) => p.popular) ? 1 : 0);
+          return popularityScoreB - popularityScoreA;
         case "prijs-laag-hoog":
           const priceA = parseFloat(a.products[0].price.replace('€', '').replace(',', '.'));
           const priceB = parseFloat(b.products[0].price.replace('€', '').replace(',', '.'));
@@ -776,123 +781,174 @@ const ProductsPage = () => {
           ))}
         </div>
 
-        {/* Filters and Sorting Controls */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              {/* Search Input */}
-              <div className="flex items-center gap-3">
-                <Search className="h-5 w-5 text-[#d5c096]" />
-                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                  Zoeken:
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => handleSearchChange(e.target.value)}
-                    placeholder="Zoek producten..."
-                    className={`w-48 px-3 py-2 border border-[#d5c096]/30 rounded-md focus:border-[#d5c096] focus:ring-[#d5c096]/20 focus:ring-1 outline-none transition-all duration-200 ${
-                      isFilterLoading ? 'opacity-70 cursor-wait' : ''
-                    }`}
-                  />
-                  {searchQuery && (
-                    <button
-                      onClick={clearSearch}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
+        {/* Product Count - More Prominent */}
+        <div className="mb-4">
+          <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+            <div className="text-lg font-bold text-gray-900">
+              {searchQuery.trim() ? (
+                <>
+                  {filteredProducts.length} resultaten voor "{searchQuery}"
+                  {selectedCategory !== "alles" && (
+                    <span className="text-[#d5c096]"> in {
+                      selectedCategory === "jaloezien" ? "Jaloezieën" :
+                      selectedCategory === "gordijnen" ? "Gordijnen" :
+                      selectedCategory === "plisses" ? "Plissés" : "Accessoires"
+                    }</span>
                   )}
+                </>
+              ) : (
+                `${filteredProducts.length} producten gevonden`
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Filters and Sorting Controls - Mobile Optimized */}
+        <div className="mb-8">
+          <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 shadow-sm">
+            {/* Mobile: Stack vertically, Desktop: Horizontal layout */}
+            <div className="space-y-4 md:space-y-0">
+              
+              {/* Top Row: Search (full width on mobile) */}
+              <div className="w-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Search className="h-5 w-5 text-[#d5c096] flex-shrink-0" />
+                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                      Zoeken:
+                    </label>
+                  </div>
+                  <div className="relative w-full sm:w-auto sm:min-w-[250px]">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => handleSearchChange(e.target.value)}
+                      placeholder="Typ productnaam of trefwoord..."
+                      className={`w-full h-11 px-3 py-2 border border-[#d5c096]/30 rounded-md focus:border-[#d5c096] focus:ring-[#d5c096]/20 focus:ring-1 outline-none transition-all duration-200 ${
+                        isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                      }`}
+                    />
+                    {searchQuery && (
+                      <button
+                        onClick={clearSearch}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* Sort Dropdown */}
-              <div className="flex items-center gap-3">
-                <SortAsc className="h-5 w-5 text-[#d5c096]" />
-                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                  Sorteer op:
-                </label>
-                <Select value={selectedSort} onValueChange={handleSortChange}>
-                  <SelectTrigger className={`w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
-                    isFilterLoading ? 'opacity-70 cursor-wait' : ''
-                  }`}>
-                    <SelectValue placeholder="Selecteer sortering" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="meest-gekozen">Meest gekozen</SelectItem>
-                    <SelectItem value="nieuwste">Nieuwste</SelectItem>
-                    <SelectItem value="prijs-laag-hoog">Prijs oplopend</SelectItem>
-                    <SelectItem value="prijs-hoog-laag">Prijs aflopend</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Bottom Row: Sort and Category (side by side on mobile, horizontal on desktop) */}
+              <div className="flex flex-col sm:flex-row gap-4 md:justify-between md:items-center">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Sort Dropdown */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <SortAsc className="h-5 w-5 text-[#d5c096] flex-shrink-0" />
+                      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                        Sorteer op:
+                      </label>
+                    </div>
+                    <Select value={selectedSort} onValueChange={handleSortChange}>
+                      <SelectTrigger className={`w-full sm:w-48 h-11 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
+                        isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                      }`}>
+                        <SelectValue placeholder="Selecteer sortering" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="meest-gekozen">Meest gekozen</SelectItem>
+                        <SelectItem value="nieuwste">Nieuwste producten</SelectItem>
+                        <SelectItem value="populair">Populair</SelectItem>
+                        <SelectItem value="prijs-laag-hoog">Prijs: Laag naar Hoog</SelectItem>
+                        <SelectItem value="prijs-hoog-laag">Prijs: Hoog naar Laag</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              {/* Category Filter Dropdown */}
-              <div className="flex items-center gap-3">
-                <Filter className="h-5 w-5 text-[#d5c096]" />
-                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                  Toon categorie:
-                </label>
-                <Select value={selectedCategory} onValueChange={handleCategoryChange}>
-                  <SelectTrigger className={`w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
-                    isFilterLoading ? 'opacity-70 cursor-wait' : ''
-                  }`}>
-                    <SelectValue placeholder="Selecteer categorie" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="alles">Alles</SelectItem>
-                    <SelectItem value="jaloezien">Jaloezieën</SelectItem>
-                    <SelectItem value="gordijnen">Gordijnen</SelectItem>
-                    <SelectItem value="plisses">Plissés</SelectItem>
-                    <SelectItem value="accessoires">Accessoires</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              {/* Reset Preferences Button - Only show when user has saved preferences */}
-              {hasSavedPreferences && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={resetPreferences}
-                  className="border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096]/50 transition-all duration-200 hover:scale-105"
-                >
-                  <RotateCcw className="h-4 w-4 mr-2" />
-                  Reset voorkeuren
-                </Button>
-              )}
-              
-              {/* Preferences Status Indicator */}
-              <div className={`flex items-center gap-2 text-xs transition-colors duration-300 ${
-                showSaveIndicator ? 'text-[#d5c096]' : 'text-gray-500'
-              }`}>
-                <Settings className={`h-3 w-3 transition-transform duration-300 ${
-                  showSaveIndicator ? 'rotate-45' : ''
-                }`} />
-                <span>
-                  {showSaveIndicator ? 'Voorkeuren opgeslagen!' : 'Voorkeuren automatisch opgeslagen'}
-                </span>
-              </div>
-              
-              {/* Results count */}
-              <div className="text-sm text-gray-500">
-                {searchQuery.trim() ? (
-                  <>
-                    {filteredProducts.length} resultaten voor "{searchQuery}"
-                    {selectedCategory !== "alles" && (
-                      <span className="text-[#d5c096]"> in {
-                        selectedCategory === "jaloezien" ? "Jaloezieën" :
-                        selectedCategory === "gordijnen" ? "Gordijnen" :
-                        selectedCategory === "plisses" ? "Plissés" : "Accessoires"
-                      }</span>
-                    )}
-                  </>
-                ) : (
-                  `${filteredProducts.length} producten gevonden`
-                )}
+                  {/* Category Filter Dropdown */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <Filter className="h-5 w-5 text-[#d5c096] flex-shrink-0" />
+                      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                        Categorie:
+                      </label>
+                    </div>
+                    <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+                      <SelectTrigger className={`w-full sm:w-48 h-11 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
+                        isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                      }`}>
+                        <SelectValue placeholder="Selecteer categorie" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="alles">
+                          <div className="flex items-center gap-2">
+                            <span>🏠</span>
+                            <span>Alles</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="jaloezien">
+                          <div className="flex items-center gap-2">
+                            <span>🪟</span>
+                            <span>Jaloezieën</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="gordijnen">
+                          <div className="flex items-center gap-2">
+                            <span>🏠</span>
+                            <span>Gordijnen</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="plisses">
+                          <div className="flex items-center gap-2">
+                            <span>📐</span>
+                            <span>Plissés</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="accessoires">
+                          <div className="flex items-center gap-2">
+                            <span>🔧</span>
+                            <span>Accessoires</span>
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                
+                {/* Right Side: Reset and Save Indicator */}
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                  {/* Reset Preferences Button with Tooltip */}
+                  {hasSavedPreferences && (
+                    <div className="relative group">
+                      <Button
+                        onClick={resetPreferences}
+                        variant="outline"
+                        size="sm"
+                        className="h-11 border-[#d5c096]/50 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-200"
+                      >
+                        <RotateCcw className="h-4 w-4 mr-2" />
+                        Reset Voorkeuren
+                      </Button>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-[#d5c096] text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+                        Herstel filters naar standaardwaarden
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-[#d5c096]"></div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Save indicator */}
+                  <div className="flex items-center gap-2">
+                    <Settings className="h-4 w-4 text-[#d5c096]" />
+                    <span className={`text-xs transition-colors duration-200 ${
+                      showSaveIndicator ? 'text-[#d5c096] font-medium' : 'text-gray-500'
+                    }`}>
+                      {showSaveIndicator ? 'Voorkeuren opgeslagen!' : 'Voorkeuren automatisch opgeslagen'}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,88 @@
+✅ INSTRUCTION 1: Improve the Placeholder in the Search Field
+
+Goal: Make the search input more user-friendly and intuitive.
+
+What to do:
+	•	Replace the current placeholder "Zoek producten..." with the more helpful and natural Dutch phrase:
+→ "Typ productnaam of trefwoord..."
+	•	Ensure that the styling (font, size, padding) remains consistent with the rest of the input UI.
+
+Expected Result:
+Users understand they can search by product name or keywords.
+
+⸻
+
+✅ INSTRUCTION 2: Refine the Category Dropdown with Icons (Optional but Recommended)
+
+Goal: Make the category filter dropdown more visually appealing.
+
+What to do:
+	•	For each category listed in the dropdown (e.g., Jaloezieën, Rolgordijnen), optionally add a small inline icon to the left (using a simple SVG or emoji).
+	•	Example: 🪟 for window-related items.
+	•	Ensure the icon aligns left and doesn’t disrupt the text or spacing.
+
+Expected Result:
+The dropdown looks more visual, helping users quickly recognize categories.
+
+⸻
+
+✅ INSTRUCTION 3: Verify and Expand Sorting Options
+
+Goal: Provide meaningful and clear sort options to users.
+
+What to do:
+	•	Check the dropdown for sorting (currently: “Meest gekozen”).
+	•	Add or confirm the following options (in Dutch):
+	•	“Meest gekozen”
+	•	“Nieuwste producten”
+	•	“Populair”
+	•	“Prijs: Laag naar Hoog”
+	•	“Prijs: Hoog naar Laag”
+	•	Ensure the logic behind each sorting option functions correctly.
+
+Expected Result:
+Users can sort the product list logically and easily, depending on their preferences.
+
+⸻
+
+✅ INSTRUCTION 4: Add Tooltip to the “Reset Voorkeuren” Button
+
+Goal: Help users understand what the reset button does.
+
+What to do:
+	•	Add a tooltip that appears on hover (desktop) or tap (mobile) with this message:
+→ "Herstel filters naar standaardwaarden"
+	•	Tooltip styling should match your theme (light beige background, soft drop shadow, small text).
+
+Expected Result:
+Users better understand the purpose of the reset button, improving usability.
+
+⸻
+
+✅ INSTRUCTION 5: Improve Visibility of Product Count Text
+
+Goal: Make the “X producten gevonden” line more visible and prominent.
+
+What to do:
+	•	Move the “8 producten gevonden” text to the left or middle of the filter bar.
+	•	Place it near the sorting options or above the entire bar if needed.
+	•	Use slightly larger font and bold (same style as section headers).
+
+Expected Result:
+The number of filtered results is immediately visible and clear to the user.
+
+⸻
+
+✅ INSTRUCTION 6: Optimize the Filter Bar for Mobile Devices
+
+Goal: Make the entire filter bar responsive and mobile-friendly.
+
+What to do:
+	•	On screens narrower than 768px:
+	•	Stack the filters vertically (search on top, sort & category below).
+	•	Keep padding and spacing minimal but readable.
+	•	Ensure that all controls are touch-friendly (tap targets at least 44px tall).
+	•	Add horizontal scroll if needed for overflow.
+
+Expected Result:
+The entire filter bar looks great and functions properly on smartphones and tablets.

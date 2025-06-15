@@ -485,9 +485,7 @@ const ProductsPage = () => {
       allProducts = [
         ...productCategories.jaloezien,
         ...productCategories.rolgordijnen,
-        ...productCategories.vitrages,
         ...productCategories.shutters,
-        ...productCategories.plisses,
         ...productCategories.accessoires
       ];
     } else if (selectedCategory === "jaloezien") {
@@ -569,9 +567,7 @@ const ProductsPage = () => {
     return {
       jaloezien: filteredProducts.filter(p => productCategories.jaloezien.includes(p)),
       rolgordijnen: filteredProducts.filter(p => productCategories.rolgordijnen.includes(p)),
-      vitrages: filteredProducts.filter(p => productCategories.vitrages.includes(p)),
       shutters: filteredProducts.filter(p => productCategories.shutters.includes(p)),
-      plisses: filteredProducts.filter(p => productCategories.plisses.includes(p)),
       accessoires: filteredProducts.filter(p => productCategories.accessoires.includes(p))
     };
   };
@@ -931,9 +927,7 @@ const ProductsPage = () => {
                   { id: 'alles', label: 'Show All' },
                   { id: 'jaloezien', label: 'Jaloezieën' },
                   { id: 'rolgordijnen', label: 'Rolgordijnen' },
-                  { id: 'vitrages', label: 'Vitrages' },
                   { id: 'shutters', label: 'Shutters' },
-                  { id: 'plisses', label: 'Plissés & Horren' },
                   { id: 'squid', label: 'SQUID textile foil' }
                 ].map((category) => (
                   <button

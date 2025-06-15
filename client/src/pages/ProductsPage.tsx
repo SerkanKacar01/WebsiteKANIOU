@@ -3,8 +3,9 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette } from "lucide-react";
+import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
@@ -250,6 +251,57 @@ const ProductsPage = () => {
               <p className="text-gray-600">{feature.description}</p>
             </div>
           ))}
+        </div>
+
+        {/* Filters and Sorting Controls */}
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              {/* Sort Dropdown */}
+              <div className="flex items-center gap-3">
+                <SortAsc className="h-5 w-5 text-[#d5c096]" />
+                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Sorteer op:
+                </label>
+                <Select defaultValue="meest-gekozen">
+                  <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
+                    <SelectValue placeholder="Selecteer sortering" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="meest-gekozen">Meest gekozen</SelectItem>
+                    <SelectItem value="nieuwste">Nieuwste</SelectItem>
+                    <SelectItem value="prijs-laag-hoog">Prijs oplopend</SelectItem>
+                    <SelectItem value="prijs-hoog-laag">Prijs aflopend</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Category Filter Dropdown */}
+              <div className="flex items-center gap-3">
+                <Filter className="h-5 w-5 text-[#d5c096]" />
+                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Toon categorie:
+                </label>
+                <Select defaultValue="alles">
+                  <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
+                    <SelectValue placeholder="Selecteer categorie" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="alles">Alles</SelectItem>
+                    <SelectItem value="jaloezien">Jaloezieën</SelectItem>
+                    <SelectItem value="gordijnen">Gordijnen</SelectItem>
+                    <SelectItem value="plisses">Plissés</SelectItem>
+                    <SelectItem value="accessoires">Accessoires</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            {/* Results count */}
+            <div className="text-sm text-gray-500 mt-2 sm:mt-0">
+              8 producten gevonden
+            </div>
+          </div>
         </div>
 
         {/* Product Categories */}

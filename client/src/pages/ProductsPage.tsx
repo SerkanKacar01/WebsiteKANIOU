@@ -988,23 +988,57 @@ const ProductsPage = () => {
                       <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
                       <div className="flex-grow h-px bg-[#d5c096]/30"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                      {groupedProducts.jaloezien.map((category) => (
-                        <ProductCard key={category.id} category={category} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
+                      {groupedProducts.jaloezien.map((category: any) => (
+                        <div key={category.id} className="product-card">
+                          <ProductCard category={category} />
+                        </div>
                       ))}
                     </div>
                   </div>
                 )
               )}
 
-              {!isFilterLoading && groupedProducts.gordijnen && groupedProducts.gordijnen.length > 0 && (
+              {!isFilterLoading && groupedProducts.rolgordijnen && groupedProducts.rolgordijnen.length > 0 && (
                 <div className="mb-16">
                   <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Gordijnen</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Rolgordijnen</h3>
                     <div className="flex-grow h-px bg-[#d5c096]/30"></div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    {groupedProducts.gordijnen.map((category) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
+                    {groupedProducts.rolgordijnen.map((category: any) => (
+                      <div key={category.id} className="product-card">
+                        <ProductCard category={category} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {!isFilterLoading && groupedProducts.vitrages && groupedProducts.vitrages.length > 0 && (
+                <div className="mb-16">
+                  <div className="flex items-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Vitrages</h3>
+                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
+                    {groupedProducts.vitrages.map((category: any) => (
+                      <div key={category.id} className="product-card">
+                        <ProductCard category={category} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {!isFilterLoading && groupedProducts.shutters && groupedProducts.shutters.length > 0 && (
+                <div className="mb-16">
+                  <div className="flex items-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Shutters</h3>
+                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
+                    {groupedProducts.shutters.map((category: any) => (
                       <ProductCard key={category.id} category={category} />
                     ))}
                   </div>

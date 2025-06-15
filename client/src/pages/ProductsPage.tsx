@@ -2,20 +2,51 @@ import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X, Maximize2, Move, RotateCw, Sparkles, Heart, ShoppingCart, Info } from "lucide-react";
+import {
+  ArrowRight,
+  Star,
+  Eye,
+  Ruler,
+  Palette,
+  Filter,
+  SortAsc,
+  Settings,
+  RotateCcw,
+  Search,
+  X,
+  Maximize2,
+  Move,
+  RotateCw,
+  Sparkles,
+  Heart,
+  ShoppingCart,
+  Info,
+} from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
   const [selectedSort, setSelectedSort] = useState("meest-gekozen");
   const [selectedCategory, setSelectedCategory] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('kaniou-selected-category') || 'alles';
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("kaniou-selected-category") || "alles";
     }
-    return 'alles';
+    return "alles";
   });
   const [showSaveIndicator, setShowSaveIndicator] = useState(false);
   const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
@@ -24,17 +55,19 @@ const ProductsPage = () => {
   const [showSizeComparison, setShowSizeComparison] = useState(false);
   const [comparisonProducts, setComparisonProducts] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [selectedProductGroup, setSelectedProductGroup] = useState<string | null>(null);
+  const [selectedProductGroup, setSelectedProductGroup] = useState<
+    string | null
+  >(null);
 
   // Load user preferences from localStorage on component mount
   useEffect(() => {
-    const savedSort = localStorage.getItem('kaniou-preferred-sort');
-    const savedCategory = localStorage.getItem('kaniou-preferred-category');
-    
+    const savedSort = localStorage.getItem("kaniou-preferred-sort");
+    const savedCategory = localStorage.getItem("kaniou-preferred-category");
+
     if (savedSort || savedCategory) {
       setHasSavedPreferences(true);
     }
-    
+
     if (savedSort) {
       setSelectedSort(savedSort);
     }
@@ -46,7 +79,7 @@ const ProductsPage = () => {
   // Save user preferences to localStorage when they change
   useEffect(() => {
     if (hasSavedPreferences || selectedSort !== "meest-gekozen") {
-      localStorage.setItem('kaniou-preferred-sort', selectedSort);
+      localStorage.setItem("kaniou-preferred-sort", selectedSort);
       setHasSavedPreferences(true);
       setShowSaveIndicator(true);
       const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
@@ -56,7 +89,7 @@ const ProductsPage = () => {
 
   useEffect(() => {
     if (hasSavedPreferences || selectedCategory !== "alles") {
-      localStorage.setItem('kaniou-preferred-category', selectedCategory);
+      localStorage.setItem("kaniou-preferred-category", selectedCategory);
       setHasSavedPreferences(true);
       setShowSaveIndicator(true);
       const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
@@ -66,12 +99,16 @@ const ProductsPage = () => {
 
   // Reset preferences to default
   const resetPreferences = () => {
-    if (window.confirm('Weet u zeker dat u uw opgeslagen voorkeuren wilt resetten naar de standaardwaarden?')) {
+    if (
+      window.confirm(
+        "Weet u zeker dat u uw opgeslagen voorkeuren wilt resetten naar de standaardwaarden?",
+      )
+    ) {
       setSelectedSort("meest-gekozen");
       setSelectedCategory("alles");
       setHasSavedPreferences(false);
-      localStorage.removeItem('kaniou-preferred-sort');
-      localStorage.removeItem('kaniou-preferred-category');
+      localStorage.removeItem("kaniou-preferred-sort");
+      localStorage.removeItem("kaniou-preferred-category");
     }
   };
 
@@ -106,31 +143,34 @@ const ProductsPage = () => {
   const handleCategoryButtonClick = (categoryId: string) => {
     setIsFilterLoading(true);
     setSelectedCategory(categoryId);
-    
+
     // Save selected category to localStorage
-    localStorage.setItem('kaniou-selected-category', categoryId);
-    
+    localStorage.setItem("kaniou-selected-category", categoryId);
+
     // Auto-scroll to product view if user is far down the page
-    const productSection = document.querySelector('.product-grid-section');
+    const productSection = document.querySelector(".product-grid-section");
     if (productSection && window.scrollY > 400) {
-      productSection.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
+      productSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
-    
+
     setTimeout(() => setIsFilterLoading(false), 300);
   };
 
   // Size comparison functions
   const addToComparison = (product: any) => {
-    if (comparisonProducts.length < 3 && !comparisonProducts.find(p => p.id === product.id)) {
+    if (
+      comparisonProducts.length < 3 &&
+      !comparisonProducts.find((p) => p.id === product.id)
+    ) {
       setComparisonProducts([...comparisonProducts, product]);
     }
   };
 
   const removeFromComparison = (productId: number) => {
-    setComparisonProducts(comparisonProducts.filter(p => p.id !== productId));
+    setComparisonProducts(comparisonProducts.filter((p) => p.id !== productId));
   };
 
   const openSizeComparison = () => {
@@ -149,8 +189,12 @@ const ProductsPage = () => {
   const SizeComparisonOverlay = () => {
     if (!showSizeComparison) return null;
 
-    const maxWidth = Math.max(...comparisonProducts.map(p => p.dimensions?.width || 120));
-    const maxHeight = Math.max(...comparisonProducts.map(p => p.dimensions?.height || 150));
+    const maxWidth = Math.max(
+      ...comparisonProducts.map((p) => p.dimensions?.width || 120),
+    );
+    const maxHeight = Math.max(
+      ...comparisonProducts.map((p) => p.dimensions?.height || 150),
+    );
     const scale = Math.min(300 / maxWidth, 200 / maxHeight, 1);
 
     return (
@@ -159,8 +203,12 @@ const ProductsPage = () => {
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Afmetingen Vergelijken</h2>
-                <p className="text-gray-600 mt-1">Vergelijk de afmetingen van uw geselecteerde producten</p>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Afmetingen Vergelijken
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Vergelijk de afmetingen van uw geselecteerde producten
+                </p>
               </div>
               <button
                 onClick={closeSizeComparison}
@@ -175,25 +223,42 @@ const ProductsPage = () => {
             {comparisonProducts.length === 0 ? (
               <div className="text-center py-12">
                 <Ruler className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg mb-2">Geen producten geselecteerd voor vergelijking</p>
-                <p className="text-gray-400 text-sm">Voeg producten toe om hun afmetingen te vergelijken</p>
+                <p className="text-gray-500 text-lg mb-2">
+                  Geen producten geselecteerd voor vergelijking
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Voeg producten toe om hun afmetingen te vergelijken
+                </p>
               </div>
             ) : (
               <div className="space-y-8">
                 {/* Visual Comparison */}
                 <div className="bg-gray-50 rounded-xl p-8">
-                  <h3 className="text-lg font-semibold mb-6 text-center">Visuele Vergelijking</h3>
+                  <h3 className="text-lg font-semibold mb-6 text-center">
+                    Visuele Vergelijking
+                  </h3>
                   <div className="flex items-end justify-center gap-8 min-h-[300px]">
                     {comparisonProducts.map((product, index) => {
                       const width = (product.dimensions?.width || 120) * scale;
-                      const height = (product.dimensions?.height || 150) * scale;
-                      const colors = ['bg-[#d5c096]', 'bg-blue-400', 'bg-green-400'];
-                      
+                      const height =
+                        (product.dimensions?.height || 150) * scale;
+                      const colors = [
+                        "bg-[#d5c096]",
+                        "bg-blue-400",
+                        "bg-green-400",
+                      ];
+
                       return (
-                        <div key={product.id} className="flex flex-col items-center">
+                        <div
+                          key={product.id}
+                          className="flex flex-col items-center"
+                        >
                           <div
                             className={`${colors[index]} border-2 border-white shadow-lg rounded-lg flex items-center justify-center relative`}
-                            style={{ width: `${width}px`, height: `${height}px` }}
+                            style={{
+                              width: `${width}px`,
+                              height: `${height}px`,
+                            }}
                           >
                             <div className="text-white text-xs font-medium text-center p-2">
                               {product.title}
@@ -206,7 +271,8 @@ const ProductsPage = () => {
                             </button>
                           </div>
                           <div className="mt-2 text-sm text-gray-600 text-center">
-                            {product.dimensions?.width || 120} × {product.dimensions?.height || 150} cm
+                            {product.dimensions?.width || 120} ×{" "}
+                            {product.dimensions?.height || 150} cm
                           </div>
                         </div>
                       );
@@ -216,17 +282,31 @@ const ProductsPage = () => {
 
                 {/* Detailed Comparison Table */}
                 <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                  <h3 className="text-lg font-semibold p-4 bg-gray-50 border-b border-gray-200">Gedetailleerde Afmetingen</h3>
+                  <h3 className="text-lg font-semibold p-4 bg-gray-50 border-b border-gray-200">
+                    Gedetailleerde Afmetingen
+                  </h3>
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Product</th>
-                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Breedte (cm)</th>
-                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Hoogte (cm)</th>
-                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Dikte (cm)</th>
-                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Oppervlak (m²)</th>
-                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Actie</th>
+                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">
+                            Product
+                          </th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">
+                            Breedte (cm)
+                          </th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">
+                            Hoogte (cm)
+                          </th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">
+                            Dikte (cm)
+                          </th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">
+                            Oppervlak (m²)
+                          </th>
+                          <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">
+                            Actie
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
@@ -235,20 +315,34 @@ const ProductsPage = () => {
                           const height = product.dimensions?.height || 150;
                           const depth = product.dimensions?.depth || 2.5;
                           const area = ((width * height) / 10000).toFixed(2);
-                          
+
                           return (
                             <tr key={product.id} className="hover:bg-gray-50">
                               <td className="px-4 py-3">
-                                <div className="font-medium text-gray-900">{product.title}</div>
-                                <div className="text-sm text-gray-500">{product.subtitle}</div>
+                                <div className="font-medium text-gray-900">
+                                  {product.title}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {product.subtitle}
+                                </div>
                               </td>
-                              <td className="px-4 py-3 text-center text-sm text-gray-900">{width}</td>
-                              <td className="px-4 py-3 text-center text-sm text-gray-900">{height}</td>
-                              <td className="px-4 py-3 text-center text-sm text-gray-900">{depth}</td>
-                              <td className="px-4 py-3 text-center text-sm text-gray-900">{area}</td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">
+                                {width}
+                              </td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">
+                                {height}
+                              </td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">
+                                {depth}
+                              </td>
+                              <td className="px-4 py-3 text-center text-sm text-gray-900">
+                                {area}
+                              </td>
                               <td className="px-4 py-3 text-center">
                                 <button
-                                  onClick={() => removeFromComparison(product.id)}
+                                  onClick={() =>
+                                    removeFromComparison(product.id)
+                                  }
                                   className="text-red-600 hover:text-red-800 transition-colors"
                                 >
                                   <X className="h-4 w-4" />
@@ -316,32 +410,46 @@ const ProductsPage = () => {
         id: 1,
         title: "Houten Jaloezieën",
         subtitle: "Natuurlijke warmte & elegantie",
-        description: "Tijdloze houten jaloezieën die warmte en stijl toevoegen aan elke ruimte.",
-        image: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&h=300&fit=crop",
+        description:
+          "Tijdloze houten jaloezieën die warmte en stijl toevoegen aan elke ruimte.",
+        image:
+          "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&h=300&fit=crop",
         products: [
-          { name: "Houten Jaloezie 25mm", price: "€79,95", popular: true, width: 120, height: 150, thickness: 2.5 },
-          { name: "Houten Jaloezie 35mm", price: "€89,95", popular: false, width: 120, height: 150, thickness: 3.5 },
-          { name: "Houten Jaloezie 50mm", price: "€99,95", popular: false, width: 120, height: 150, thickness: 5.0 }
+          {
+            name: "Houten Jaloezie 50mm",
+            price: "€ 179",
+            popular: false,
+          },
         ],
-        dimensions: { width: 120, height: 150, depth: 2.5 },
+
         href: "/products/houten-jaloezieen",
-        badge: "Bestseller"
+        badge: "Bestseller",
       },
       {
         id: 2,
         title: "Kunststof Jaloezieën",
         subtitle: "Praktisch & vochtbestendig",
-        description: "Onderhoudsvriendelijke kunststof jaloezieën, perfect voor vochtige ruimtes.",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+        description:
+          "Onderhoudsvriendelijke kunststof jaloezieën, perfect voor vochtige ruimtes.",
+        image:
+          "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
         products: [
-          { name: "Kunststof Jaloezie 25mm", price: "€49,95", popular: true, width: 120, height: 150, thickness: 2.5 },
-          { name: "Kunststof Jaloezie 35mm", price: "€59,95", popular: false, width: 120, height: 150, thickness: 3.5 },
-          { name: "Verticale Jaloezie", price: "€69,95", popular: false, width: 120, height: 180, thickness: 8.9 }
+          {},
+          {
+            name: "Kunststof Jaloezie 35 mm (Basic met Ladderkoord)",
+            price: "v.a € 110",
+            popular: false,
+          },
+          {
+            name: "Kunststof Jaloezie 50 mm (Basic met Ladderkoord)",
+            price: "v.a € 110",
+            popular: false,
+          },
+          {},
         ],
-        dimensions: { width: 120, height: 150, depth: 2.5 },
         href: "/products/kunststof-jaloezieen",
-        badge: "Vochtbestendig"
-      }
+        badge: "Vochtbestendig",
+      },
     ],
     rolgordijnen: [
       {
@@ -349,155 +457,285 @@ const ProductsPage = () => {
         title: "Rolgordijnen",
         subtitle: "Praktisch & stijlvol",
         description: "Hoogwaardige rolgordijnen voor elke ruimte en smaak.",
-        image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
+        image:
+          "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
         products: [
-          { name: "Rolgordijn Verduisterend", price: "€89,95", popular: true, width: 200, height: 250, thickness: 0.8 },
-          { name: "Rolgordijn Semi-transparant", price: "€69,95", popular: false, width: 200, height: 250, thickness: 0.5 },
-          { name: "Rolgordijn op Maat", price: "€129,95", popular: false, width: 300, height: 280, thickness: 1.2 }
+          {
+            name: "Rolgordijn Verduisterend",
+            price: "€89,95",
+            popular: true,
+            width: 200,
+            height: 250,
+            thickness: 0.8,
+          },
+          {
+            name: "Rolgordijn Semi-transparant",
+            price: "€69,95",
+            popular: false,
+            width: 200,
+            height: 250,
+            thickness: 0.5,
+          },
+          {
+            name: "Rolgordijn op Maat",
+            price: "€129,95",
+            popular: false,
+            width: 300,
+            height: 280,
+            thickness: 1.2,
+          },
         ],
         dimensions: { width: 200, height: 250, depth: 0.8 },
         href: "/products/rolgordijnen",
-        badge: "Populair"
-      }
+        badge: "Populair",
+      },
     ],
     vitrages: [
       {
         id: 4,
         title: "Vitrages",
         subtitle: "Licht & privacy",
-        description: "Subtiele vitrages die licht doorlaten terwijl ze privacy bieden.",
-        image: "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=400&h=300&fit=crop",
+        description:
+          "Subtiele vitrages die licht doorlaten terwijl ze privacy bieden.",
+        image:
+          "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=400&h=300&fit=crop",
         products: [
-          { name: "Vitrage Gordijn Wit", price: "€34,95", popular: true, width: 150, height: 200, thickness: 0.3 },
-          { name: "Vitrage Gordijn Crème", price: "€34,95", popular: false, width: 150, height: 200, thickness: 0.3 },
-          { name: "Vitrage met Patroon", price: "€44,95", popular: false, width: 160, height: 210, thickness: 0.4 }
+          {
+            name: "Vitrage Gordijn Wit",
+            price: "€34,95",
+            popular: true,
+            width: 150,
+            height: 200,
+            thickness: 0.3,
+          },
+          {
+            name: "Vitrage Gordijn Crème",
+            price: "€34,95",
+            popular: false,
+            width: 150,
+            height: 200,
+            thickness: 0.3,
+          },
+          {
+            name: "Vitrage met Patroon",
+            price: "€44,95",
+            popular: false,
+            width: 160,
+            height: 210,
+            thickness: 0.4,
+          },
         ],
         dimensions: { width: 150, height: 200, depth: 0.3 },
         href: "/products/vitrages",
-        badge: "Lichtdoorlatend"
-      }
+        badge: "Lichtdoorlatend",
+      },
     ],
     shutters: [
       {
         id: 8,
         title: "Shutters",
         subtitle: "Klassiek & duurzaam",
-        description: "Hoogwaardige shutters voor tijdloze elegantie en lichtcontrole.",
-        image: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
+        description:
+          "Hoogwaardige shutters voor tijdloze elegantie en lichtcontrole.",
+        image:
+          "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
         products: [
-          { name: "Houten Shutters", price: "€189,95", popular: true, width: 120, height: 200, thickness: 2.5 },
-          { name: "PVC Shutters", price: "€149,95", popular: false, width: 120, height: 200, thickness: 2.0 },
-          { name: "Plantation Shutters", price: "€229,95", popular: false, width: 140, height: 220, thickness: 3.0 }
+          {
+            name: "Houten Shutters",
+            price: "€189,95",
+            popular: true,
+            width: 120,
+            height: 200,
+            thickness: 2.5,
+          },
+          {
+            name: "PVC Shutters",
+            price: "€149,95",
+            popular: false,
+            width: 120,
+            height: 200,
+            thickness: 2.0,
+          },
+          {
+            name: "Plantation Shutters",
+            price: "€229,95",
+            popular: false,
+            width: 140,
+            height: 220,
+            thickness: 3.0,
+          },
         ],
         dimensions: { width: 120, height: 200, depth: 2.5 },
         href: "/products/shutters",
-        badge: "Premium"
-      }
+        badge: "Premium",
+      },
     ],
     plisses: [
       {
         id: 5,
         title: "Plissé Gordijnen",
         subtitle: "Modern & veelzijdig",
-        description: "Stijlvolle plissé gordijnen die perfect passen in moderne interieurs.",
-        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+        description:
+          "Stijlvolle plissé gordijnen die perfect passen in moderne interieurs.",
+        image:
+          "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
         products: [
-          { name: "Plissé Transparant", price: "€45,95", popular: false, width: 100, height: 120, thickness: 2.0 },
-          { name: "Plissé Verduisterend", price: "€65,95", popular: true, width: 100, height: 120, thickness: 2.2 },
-          { name: "Plissé Isolerend", price: "€55,95", popular: false, width: 100, height: 120, thickness: 2.8 }
+          {
+            name: "Plissé Transparant",
+            price: "€45,95",
+            popular: false,
+            width: 100,
+            height: 120,
+            thickness: 2.0,
+          },
+          {
+            name: "Plissé Verduisterend",
+            price: "€65,95",
+            popular: true,
+            width: 100,
+            height: 120,
+            thickness: 2.2,
+          },
+          {
+            name: "Plissé Isolerend",
+            price: "€55,95",
+            popular: false,
+            width: 100,
+            height: 120,
+            thickness: 2.8,
+          },
         ],
         dimensions: { width: 100, height: 120, depth: 2.0 },
         href: "/products/plisse",
-        badge: "Energie-efficiënt"
+        badge: "Energie-efficiënt",
       },
       {
         id: 6,
         title: "Opzethorren",
         subtitle: "Insectenwering & ventilatie",
-        description: "Effectieve insectenwering zonder in te boeten op ventilatie en zicht.",
-        image: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
+        description:
+          "Effectieve insectenwering zonder in te boeten op ventilatie en zicht.",
+        image:
+          "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=400&h=300&fit=crop",
         products: [
-          { name: "Opzethor Standaard", price: "€79,95", popular: true, width: 80, height: 100, thickness: 1.5 },
-          { name: "Opzethor Deluxe", price: "€99,95", popular: false, width: 90, height: 120, thickness: 2.0 },
-          { name: "Opzethor XXL", price: "€119,95", popular: false, width: 120, height: 150, thickness: 2.5 }
+          {
+            name: "Opzethor Standaard",
+            price: "€79,95",
+            popular: true,
+            width: 80,
+            height: 100,
+            thickness: 1.5,
+          },
+          {
+            name: "Opzethor Deluxe",
+            price: "€99,95",
+            popular: false,
+            width: 90,
+            height: 120,
+            thickness: 2.0,
+          },
+          {
+            name: "Opzethor XXL",
+            price: "€119,95",
+            popular: false,
+            width: 120,
+            height: 150,
+            thickness: 2.5,
+          },
         ],
         dimensions: { width: 80, height: 100, depth: 1.5 },
         href: "/products/opzethorren",
-        badge: "Nieuw"
-      }
+        badge: "Nieuw",
+      },
+    ],
+    horren: [
+      {
+        id: 9,
+        title: "Horren",
+        subtitle: "Insect protection & fresh air",
+        description: "High-quality insect screens that keep bugs out while letting fresh air in.",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
+        products: [
+          { name: "Inzethorren", price: "€45,95", popular: true, width: 100, height: 120, thickness: 2.0 },
+          { name: "Opzethorren", price: "€55,95", popular: false, width: 100, height: 120, thickness: 2.5 },
+          { name: "Plissé Hordeur", price: "€89,95", popular: false, width: 100, height: 200, thickness: 3.0 }
+        ],
+        dimensions: { width: 100, height: 120, depth: 2.0 },
+        href: "/products/horren",
+        badge: "Essential"
+      },
     ],
     accessoires: [
       {
         id: 7,
         title: "Gordijnroedes",
         subtitle: "Stijlvolle ophangingen",
-        description: "Hoogwaardige gordijnroedes in verschillende stijlen en materialen.",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+        description:
+          "Hoogwaardige gordijnroedes in verschillende stijlen en materialen.",
+        image:
+          "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
         products: [
           { name: "Aluminium Roede", price: "€29,95", popular: true },
           { name: "Houten Roede", price: "€49,95", popular: false },
-          { name: "RVS Roede", price: "€39,95", popular: false }
+          { name: "RVS Roede", price: "€39,95", popular: false },
         ],
         href: "/products/gordijnroedes",
-        badge: "Compleet"
+        badge: "Compleet",
       },
       {
         id: 8,
         title: "Gordijnrails",
         subtitle: "Functionele railsystemen",
-        description: "Professionele railsystemen voor een strakke en moderne uitstraling.",
-        image: "https://images.unsplash.com/photo-1600210491964-1f36470bc2a7?w=400&h=300&fit=crop",
+        description:
+          "Professionele railsystemen voor een strakke en moderne uitstraling.",
+        image:
+          "https://images.unsplash.com/photo-1600210491964-1f36470bc2a7?w=400&h=300&fit=crop",
         products: [
           { name: "Enkele Rail", price: "€24,95", popular: true },
           { name: "Dubbele Rail", price: "€34,95", popular: false },
-          { name: "Elektrische Rail", price: "€149,95", popular: false }
+          { name: "Elektrische Rail", price: "€149,95", popular: false },
         ],
         href: "/products/gordijnrails",
-        badge: "Functioneel"
-      }
-    ]
+        badge: "Functioneel",
+      },
+    ],
   };
 
   const features = [
     {
       icon: <Ruler className="h-6 w-6" />,
       title: "Op Maat Gemaakt",
-      description: "Alle producten worden exact op uw maten geproduceerd"
+      description: "Alle producten worden exact op uw maten geproduceerd",
     },
     {
       icon: <Eye className="h-6 w-6" />,
       title: "Virtuele Preview",
-      description: "Bekijk hoe uw raamdecoratie eruitziet voordat u bestelt"
+      description: "Bekijk hoe uw raamdecoratie eruitziet voordat u bestelt",
     },
     {
       icon: <Palette className="h-6 w-6" />,
       title: "Kleuradvies",
-      description: "Gratis kleuradvies passend bij uw interieur"
-    }
+      description: "Gratis kleuradvies passend bij uw interieur",
+    },
   ];
 
   // Filter and sort products based on selections
   const getFilteredAndSortedProducts = () => {
     let allProducts: any[] = [];
-    
+
     // Flatten all products based on category filter
     if (selectedCategory === "alles") {
       allProducts = [
-        ...productCategories.jaloezien,
-        ...productCategories.rolgordijnen,
-        ...productCategories.shutters,
-        ...productCategories.accessoires
+        ...productCategories.horren,
+        ...productCategories.accessoires,
       ];
-    } else if (selectedCategory === "jaloezien") {
-      allProducts = productCategories.jaloezien;
-    } else if (selectedCategory === "rolgordijnen") {
-      allProducts = productCategories.rolgordijnen;
-    } else if (selectedCategory === "vitrages") {
-      allProducts = productCategories.vitrages;
-    } else if (selectedCategory === "shutters") {
-      allProducts = productCategories.shutters;
-    } else if (selectedCategory === "plisses") {
-      allProducts = productCategories.plisses;
+    } else if (selectedCategory === "horren") {
+      allProducts = productCategories.horren;
+    } else if (selectedCategory === "squid") {
+      allProducts = productCategories.accessoires.filter(item => 
+        item.title.toLowerCase().includes('squid') || 
+        item.subtitle.toLowerCase().includes('squid')
+      );
     } else if (selectedCategory === "accessoires") {
       allProducts = productCategories.accessoires;
     }
@@ -505,24 +743,28 @@ const ProductsPage = () => {
     // Apply search filter if search query exists
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
-      allProducts = allProducts.filter(product => {
+      allProducts = allProducts.filter((product) => {
         // Search in product title
         const titleMatch = product.title.toLowerCase().includes(query);
-        
+
         // Search in product description
-        const descriptionMatch = product.description.toLowerCase().includes(query);
-        
+        const descriptionMatch = product.description
+          .toLowerCase()
+          .includes(query);
+
         // Search in product features
-        const featuresMatch = product.features.some((feature: string) => 
-          feature.toLowerCase().includes(query)
+        const featuresMatch = product.features.some((feature: string) =>
+          feature.toLowerCase().includes(query),
         );
-        
+
         // Search in individual product names within the category
-        const productNamesMatch = product.products.some((prod: any) => 
-          prod.name.toLowerCase().includes(query)
+        const productNamesMatch = product.products.some((prod: any) =>
+          prod.name.toLowerCase().includes(query),
         );
-        
-        return titleMatch || descriptionMatch || featuresMatch || productNamesMatch;
+
+        return (
+          titleMatch || descriptionMatch || featuresMatch || productNamesMatch
+        );
       });
     }
 
@@ -533,16 +775,28 @@ const ProductsPage = () => {
           return b.id - a.id; // Newer products have higher IDs
         case "populair":
           // Sort by popularity based on badges and popular items
-          const popularityScoreA = (a.badge ? 1 : 0) + (a.products.some((p: any) => p.popular) ? 1 : 0);
-          const popularityScoreB = (b.badge ? 1 : 0) + (b.products.some((p: any) => p.popular) ? 1 : 0);
+          const popularityScoreA =
+            (a.badge ? 1 : 0) +
+            (a.products.some((p: any) => p.popular) ? 1 : 0);
+          const popularityScoreB =
+            (b.badge ? 1 : 0) +
+            (b.products.some((p: any) => p.popular) ? 1 : 0);
           return popularityScoreB - popularityScoreA;
         case "prijs-laag-hoog":
-          const priceA = parseFloat(a.products[0].price.replace('€', '').replace(',', '.'));
-          const priceB = parseFloat(b.products[0].price.replace('€', '').replace(',', '.'));
+          const priceA = parseFloat(
+            a.products[0].price.replace("€", "").replace(",", "."),
+          );
+          const priceB = parseFloat(
+            b.products[0].price.replace("€", "").replace(",", "."),
+          );
           return priceA - priceB;
         case "prijs-hoog-laag":
-          const priceA2 = parseFloat(a.products[0].price.replace('€', '').replace(',', '.'));
-          const priceB2 = parseFloat(b.products[0].price.replace('€', '').replace(',', '.'));
+          const priceA2 = parseFloat(
+            a.products[0].price.replace("€", "").replace(",", "."),
+          );
+          const priceB2 = parseFloat(
+            b.products[0].price.replace("€", "").replace(",", "."),
+          );
           return priceB2 - priceA2;
         case "meest-gekozen":
         default:
@@ -563,12 +817,14 @@ const ProductsPage = () => {
     if (selectedCategory !== "alles") {
       return { [selectedCategory]: filteredProducts };
     }
-    
+
     return {
-      jaloezien: filteredProducts.filter(p => productCategories.jaloezien.includes(p)),
-      rolgordijnen: filteredProducts.filter(p => productCategories.rolgordijnen.includes(p)),
-      shutters: filteredProducts.filter(p => productCategories.shutters.includes(p)),
-      accessoires: filteredProducts.filter(p => productCategories.accessoires.includes(p))
+      horren: filteredProducts.filter((p) =>
+        productCategories.horren.includes(p),
+      ),
+      accessoires: filteredProducts.filter((p) =>
+        productCategories.accessoires.includes(p),
+      ),
     };
   };
 
@@ -576,9 +832,9 @@ const ProductsPage = () => {
 
   // Component for rendering product cards
   const ProductCard = ({ category }: { category: any }) => {
-    const isInComparison = comparisonProducts.find(p => p.id === category.id);
+    const isInComparison = comparisonProducts.find((p) => p.id === category.id);
     const canAddToComparison = comparisonProducts.length < 3 && !isInComparison;
-    
+
     return (
       <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-[#d5c096]/15 transition-all duration-300 group flex flex-col h-full">
         {/* Fixed Height Image Section */}
@@ -588,7 +844,7 @@ const ProductsPage = () => {
             alt={category.title}
             className="w-full h-64 object-cover transition-all duration-300 group-hover:brightness-105"
           />
-          
+
           {/* Floating Sparkles Animation */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
             <div className="absolute top-6 left-6 animate-sparkle animation-delay-100">
@@ -610,17 +866,17 @@ const ProductsPage = () => {
               <Sparkles className="h-3 w-3 text-green-400" />
             </div>
           </div>
-          
+
           {/* Animated Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#d5c096]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
+
           {/* Badge with Bounce Animation */}
           {category.badge && (
             <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg transition-all duration-300">
               {category.badge}
             </Badge>
           )}
-          
+
           {/* Interactive Action Buttons */}
           <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             {/* Favorite Button */}
@@ -631,7 +887,7 @@ const ProductsPage = () => {
             >
               <Heart className="h-4 w-4" />
             </Button>
-            
+
             {/* Size Comparison Button */}
             {isInComparison ? (
               <Button
@@ -659,7 +915,7 @@ const ProductsPage = () => {
               </Button>
             )}
           </div>
-          
+
           {/* Floating Quick View Button */}
           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
             <Button
@@ -670,14 +926,14 @@ const ProductsPage = () => {
               Bekijk
             </Button>
           </div>
-          
+
           {/* Magical Floating Elements */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
             <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#d5c096] rounded-full animate-ping animation-delay-300"></div>
             <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping animation-delay-500"></div>
             <div className="absolute top-1/2 left-1/3 w-1.5 h-1.5 bg-blue-400 rounded-full animate-ping animation-delay-700"></div>
           </div>
-          
+
           {/* Animated Border Glow */}
           <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#d5c096]/50 rounded-t-xl transition-all duration-500"></div>
         </div>
@@ -690,29 +946,33 @@ const ProductsPage = () => {
               {category.title}
             </h4>
             {isInComparison && (
-              <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-700 transition-colors duration-300">
+              <Badge
+                variant="secondary"
+                className="ml-2 bg-blue-100 text-blue-700 transition-colors duration-300"
+              >
                 In vergelijking
               </Badge>
             )}
           </div>
-          
+
           {/* Animated Subtitle */}
           <p className="text-sm text-[#d5c096] font-medium mb-2 group-hover:animate-pulse">
             {category.subtitle}
           </p>
-          
+
           {/* Dimensions Info with Slide Animation */}
           {category.dimensions && (
             <div className="mb-3 text-xs text-gray-500 bg-gray-50 rounded-md p-2 group-hover:bg-[#d5c096]/10 group-hover:text-[#d5c096] transition-all duration-300">
               <div className="flex items-center gap-1">
                 <Ruler className="h-3 w-3" />
                 <span className="group-hover:font-medium transition-all duration-300">
-                  {category.dimensions.width} × {category.dimensions.height} × {category.dimensions.depth} cm
+                  {category.dimensions.width} × {category.dimensions.height} ×{" "}
+                  {category.dimensions.depth} cm
                 </span>
               </div>
             </div>
           )}
-          
+
           {/* Short Description with Fade In */}
           <p className="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem] group-hover:text-gray-700 transition-colors duration-300">
             {category.description}
@@ -724,20 +984,22 @@ const ProductsPage = () => {
               Prijzen vanaf:
             </p>
             <div className="space-y-2">
-              {category.products.slice(0, 3).map((product: any, index: number) => (
-                <div 
-                  key={index} 
-                  className="flex justify-between items-center group-hover:transform group-hover:translate-x-1 transition-all duration-300 hover:bg-[#d5c096]/10 rounded-md p-1 -mx-1"
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  <span className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                    {product.name}
-                  </span>
-                  <span className="text-sm font-semibold text-[#d5c096] transition-colors duration-300">
-                    {product.price}
-                  </span>
-                </div>
-              ))}
+              {category.products
+                .slice(0, 3)
+                .map((product: any, index: number) => (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center group-hover:transform group-hover:translate-x-1 transition-all duration-300 hover:bg-[#d5c096]/10 rounded-md p-1 -mx-1"
+                    style={{ transitionDelay: `${index * 100}ms` }}
+                  >
+                    <span className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                      {product.name}
+                    </span>
+                    <span className="text-sm font-semibold text-[#d5c096] transition-colors duration-300">
+                      {product.price}
+                    </span>
+                  </div>
+                ))}
             </div>
           </div>
 
@@ -754,23 +1016,28 @@ const ProductsPage = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </Button>
               </Link>
-              
+
               {category.dimensions && (
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => isInComparison ? removeFromComparison(category.id) : addToComparison(category)}
+                  onClick={() =>
+                    isInComparison
+                      ? removeFromComparison(category.id)
+                      : addToComparison(category)
+                  }
                   disabled={!canAddToComparison && !isInComparison}
                   className="px-3 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10 transition-all duration-300"
                 >
-                  {isInComparison ? 
-                    <X className="h-4 w-4" /> : 
+                  {isInComparison ? (
+                    <X className="h-4 w-4" />
+                  ) : (
                     <Ruler className="h-4 w-4" />
-                  }
+                  )}
                 </Button>
               )}
             </div>
-            
+
             {/* Fun Interactive Elements */}
             <div className="flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
               <button className="p-1 rounded-full hover:bg-[#d5c096]/20 transition-all duration-300 hover:scale-125 hover-jello animate-slideInUp animation-delay-100">
@@ -796,10 +1063,14 @@ const ProductsPage = () => {
           {/* Header Text Section */}
           <div className="text-center mb-8 px-4">
             <h1 className="text-2xl md:text-3xl font-display font-semibold text-gray-900 mb-4">
-              Discover Made-to-Measure Window Treatments with Style and Precision
+              Kwaliteit op Maat voor Elke Woning
             </h1>
             <p className="text-base md:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Choose from our curated selection of premium blinds, curtains, and insect screens — tailored to fit your home perfectly. Browse by product type below and find your ideal solution in just a few clicks.
+              Bij KANIOU vindt u hoogwaardige raamdecoratie die perfect aansluit
+              op uw stijl en wensen. Elke oplossing wordt met zorg samengesteld,
+              volledig op maat en volgens de hoogste afwerkingsnormen. Blader
+              door onze productgroepen en ontdek de ideale combinatie van
+              design, comfort en functionaliteit.
             </p>
           </div>
 
@@ -811,11 +1082,15 @@ const ProductsPage = () => {
                   <>
                     {filteredProducts.length} resultaten voor "{searchQuery}"
                     {selectedCategory !== "alles" && (
-                      <span className="text-[#d5c096]"> in {
-                        selectedCategory === "jaloezien" ? "Jaloezieën" :
-                        selectedCategory === "gordijnen" ? "Gordijnen" :
-                        selectedCategory === "plisses" ? "Plissés" : "Accessoires"
-                      }</span>
+                      <span className="text-[#d5c096]">
+                        {" "}
+                        in{" "}
+                        {selectedCategory === "horren"
+                          ? "Horren"
+                          : selectedCategory === "squid"
+                            ? "SQUID textile foil"
+                            : "Accessoires"}
+                      </span>
                     )}
                   </>
                 ) : (
@@ -830,7 +1105,6 @@ const ProductsPage = () => {
             <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 shadow-sm">
               {/* Mobile: Stack vertically, Desktop: Horizontal layout */}
               <div className="space-y-4 md:space-y-0">
-                
                 {/* Top Row: Search (full width on mobile) */}
                 <div className="w-full">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
@@ -847,7 +1121,7 @@ const ProductsPage = () => {
                         onChange={(e) => handleSearchChange(e.target.value)}
                         placeholder="Typ productnaam of trefwoord..."
                         className={`w-full h-11 px-3 py-2 border border-[#d5c096]/30 rounded-md focus:border-[#d5c096] focus:ring-[#d5c096]/20 focus:ring-1 outline-none transition-all duration-200 ${
-                          isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                          isFilterLoading ? "opacity-70 cursor-wait" : ""
                         }`}
                       />
                       {searchQuery && (
@@ -864,69 +1138,86 @@ const ProductsPage = () => {
 
                 {/* Bottom Row: Sort and Category (side by side on mobile, horizontal on desktop) */}
                 <div className="flex flex-col sm:flex-row gap-4 md:justify-between md:items-center">
-                    {/* Sort Dropdown */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <SortAsc className="h-5 w-5 text-[#d5c096] flex-shrink-0" />
-                        <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                          Sorteer op:
-                        </label>
-                      </div>
-                      <Select value={selectedSort} onValueChange={handleSortChange}>
-                        <SelectTrigger className={`w-full sm:w-48 h-11 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
-                          isFilterLoading ? 'opacity-70 cursor-wait' : ''
-                        }`}>
-                          <SelectValue placeholder="Selecteer sortering" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="meest-gekozen">Meest gekozen</SelectItem>
-                          <SelectItem value="nieuwste">Nieuwste producten</SelectItem>
-                          <SelectItem value="populair">Populair</SelectItem>
-                          <SelectItem value="prijs-laag-hoog">Prijs: Laag naar Hoog</SelectItem>
-                          <SelectItem value="prijs-hoog-laag">Prijs: Hoog naar Laag</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-
-                  </div>
-                  
-                  {/* Right Side: Reset and Save Indicator */}
-                  <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-                    {/* Reset Preferences Button with Tooltip */}
-                    {hasSavedPreferences && (
-                      <div className="relative group">
-                        <Button
-                          onClick={resetPreferences}
-                          variant="outline"
-                          size="sm"
-                          className="h-11 border-[#d5c096]/50 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-200"
-                        >
-                          <RotateCcw className="h-4 w-4 mr-2" />
-                          Reset Voorkeuren
-                        </Button>
-                        {/* Tooltip */}
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-[#d5c096] text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
-                          Herstel filters naar standaardwaarden
-                          <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-[#d5c096]"></div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Save indicator */}
+                  {/* Sort Dropdown */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
                     <div className="flex items-center gap-2">
-                      <Settings className="h-4 w-4 text-[#d5c096]" />
-                      <span className={`text-xs transition-colors duration-200 ${
-                        showSaveIndicator ? 'text-[#d5c096] font-medium' : 'text-gray-500'
-                      }`}>
-                        {showSaveIndicator ? 'Voorkeuren opgeslagen!' : 'Voorkeuren automatisch opgeslagen'}
-                      </span>
+                      <SortAsc className="h-5 w-5 text-[#d5c096] flex-shrink-0" />
+                      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                        Sorteer op:
+                      </label>
                     </div>
+                    <Select
+                      value={selectedSort}
+                      onValueChange={handleSortChange}
+                    >
+                      <SelectTrigger
+                        className={`w-full sm:w-48 h-11 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20 transition-all duration-200 ${
+                          isFilterLoading ? "opacity-70 cursor-wait" : ""
+                        }`}
+                      >
+                        <SelectValue placeholder="Selecteer sortering" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="meest-gekozen">
+                          Meest gekozen
+                        </SelectItem>
+                        <SelectItem value="nieuwste">
+                          Nieuwste producten
+                        </SelectItem>
+                        <SelectItem value="populair">Populair</SelectItem>
+                        <SelectItem value="prijs-laag-hoog">
+                          Prijs: Laag naar Hoog
+                        </SelectItem>
+                        <SelectItem value="prijs-hoog-laag">
+                          Prijs: Hoog naar Laag
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Right Side: Reset and Save Indicator */}
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                  {/* Reset Preferences Button with Tooltip */}
+                  {hasSavedPreferences && (
+                    <div className="relative group">
+                      <Button
+                        onClick={resetPreferences}
+                        variant="outline"
+                        size="sm"
+                        className="h-11 border-[#d5c096]/50 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-200"
+                      >
+                        <RotateCcw className="h-4 w-4 mr-2" />
+                        Reset Voorkeuren
+                      </Button>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-[#d5c096] text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+                        Herstel filters naar standaardwaarden
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-[#d5c096]"></div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Save indicator */}
+                  <div className="flex items-center gap-2">
+                    <Settings className="h-4 w-4 text-[#d5c096]" />
+                    <span
+                      className={`text-xs transition-colors duration-200 ${
+                        showSaveIndicator
+                          ? "text-[#d5c096] font-medium"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {showSaveIndicator
+                        ? "Voorkeuren opgeslagen!"
+                        : "Voorkeuren automatisch opgeslagen"}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
         {/* Stylish Horizontal Category Button Bar */}
         <div className="mb-8">
@@ -934,19 +1225,17 @@ const ProductsPage = () => {
             <div className="flex justify-center">
               <div className="flex gap-3 overflow-x-auto scrollbar-hide smooth-horizontal-scroll max-w-full pb-2">
                 {[
-                  { id: 'alles', label: 'Show All' },
-                  { id: 'jaloezien', label: 'Jaloezieën' },
-                  { id: 'rolgordijnen', label: 'Rolgordijnen' },
-                  { id: 'shutters', label: 'Shutters' },
-                  { id: 'squid', label: 'SQUID textile foil' }
+                  { id: "alles", label: "Show All" },
+                  { id: "horren", label: "Horren" },
+                  { id: "squid", label: "SQUID textile foil" },
                 ].map((category) => (
                   <button
                     key={category.id}
                     onClick={() => handleCategoryButtonClick(category.id)}
                     className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[48px] focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2 ${
                       selectedCategory === category.id
-                        ? 'bg-[#d5c096] text-white shadow-lg transform scale-105'
-                        : 'bg-gray-50 text-gray-700 hover:bg-[#d5c096]/20 hover:text-[#d5c096] hover:shadow-md hover:transform hover:scale-102'
+                        ? "bg-[#d5c096] text-white shadow-lg transform scale-105"
+                        : "bg-gray-50 text-gray-700 hover:bg-[#d5c096]/20 hover:text-[#d5c096] hover:shadow-md hover:transform hover:scale-102"
                     }`}
                     aria-label={`Filter products by ${category.label}`}
                     aria-pressed={selectedCategory === category.id}
@@ -962,16 +1251,23 @@ const ProductsPage = () => {
         {/* Product Categories */}
         <div className="mb-16 product-grid-section">
           <h2 className="text-3xl font-bold text-center mb-12">
-            {selectedCategory === "alles" ? "Onze Productcategorieën" : 
-             selectedCategory === "jaloezien" ? "Jaloezieën" :
-             selectedCategory === "rolgordijnen" ? "Rolgordijnen" :
-             selectedCategory === "vitrages" ? "Vitrages" :
-             selectedCategory === "shutters" ? "Shutters" :
-             selectedCategory === "plisses" ? "Plissés & Horren" :
-             selectedCategory === "accessoires" ? "Accessoires" : "Producten"
-            }
+            {selectedCategory === "alles"
+              ? "Onze Productcategorieën"
+              : selectedCategory === "jaloezien"
+                ? "Jaloezieën"
+                : selectedCategory === "rolgordijnen"
+                  ? "Rolgordijnen"
+                  : selectedCategory === "vitrages"
+                    ? "Vitrages"
+                    : selectedCategory === "shutters"
+                      ? "Shutters"
+                      : selectedCategory === "plisses"
+                        ? "Plissés & Horren"
+                        : selectedCategory === "accessoires"
+                          ? "Accessoires"
+                          : "Producten"}
           </h2>
-          
+
           {selectedCategory === "alles" ? (
             // Show all categories with section headers
             <>
@@ -988,14 +1284,17 @@ const ProductsPage = () => {
                   </div>
                 </div>
               ) : (
-                groupedProducts.jaloezien && groupedProducts.jaloezien.length > 0 && (
+                groupedProducts.horren &&
+                groupedProducts.horren.length > 0 && (
                   <div className="mb-16">
                     <div className="flex items-center mb-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
+                        Horren
+                      </h3>
                       <div className="flex-grow h-px bg-[#d5c096]/30"></div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
-                      {groupedProducts.jaloezien.map((category: any) => (
+                      {groupedProducts.horren.map((category: any) => (
                         <div key={category.id} className="product-card">
                           <ProductCard category={category} />
                         </div>
@@ -1005,101 +1304,39 @@ const ProductsPage = () => {
                 )
               )}
 
-              {!isFilterLoading && groupedProducts.rolgordijnen && groupedProducts.rolgordijnen.length > 0 && (
-                <div className="mb-16">
-                  <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Rolgordijnen</h3>
-                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+              {!isFilterLoading &&
+                groupedProducts.accessoires &&
+                groupedProducts.accessoires.length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center mb-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
+                        Accessoires
+                      </h3>
+                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 product-fade-in">
+                      {groupedProducts.accessoires.map((category: any) => (
+                        <div key={category.id} className="product-card">
+                          <ProductCard category={category} />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
-                    {groupedProducts.rolgordijnen.map((category: any) => (
-                      <div key={category.id} className="product-card">
-                        <ProductCard category={category} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {!isFilterLoading && groupedProducts.vitrages && groupedProducts.vitrages.length > 0 && (
-                <div className="mb-16">
-                  <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Vitrages</h3>
-                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
-                    {groupedProducts.vitrages.map((category: any) => (
-                      <div key={category.id} className="product-card">
-                        <ProductCard category={category} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {!isFilterLoading && groupedProducts.shutters && groupedProducts.shutters.length > 0 && (
-                <div className="mb-16">
-                  <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Shutters</h3>
-                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
-                    {groupedProducts.shutters.map((category: any) => (
-                      <div key={category.id} className="product-card">
-                        <ProductCard category={category} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {!isFilterLoading && groupedProducts.plisses && groupedProducts.plisses.length > 0 && (
-                <div className="mb-16">
-                  <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Plissés & Horren</h3>
-                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
-                    {groupedProducts.plisses.map((category: any) => (
-                      <div key={category.id} className="product-card">
-                        <ProductCard category={category} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {!isFilterLoading && groupedProducts.accessoires && groupedProducts.accessoires.length > 0 && (
-                <div className="mb-16">
-                  <div className="flex items-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Accessoires</h3>
-                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 product-fade-in">
-                    {groupedProducts.accessoires.map((category: any) => (
-                      <div key={category.id} className="product-card">
-                        <ProductCard category={category} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                )}
             </>
+          ) : // Show filtered category products
+          isFilterLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <ProductSkeleton key={index} />
+              ))}
+            </div>
           ) : (
-            // Show filtered category products
-            isFilterLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <ProductSkeleton key={index} />
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {filteredProducts.map((category) => (
-                  <ProductCard key={category.id} category={category} />
-                ))}
-              </div>
-            )
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {filteredProducts.map((category) => (
+                <ProductCard key={category.id} category={category} />
+              ))}
+            </div>
           )}
 
           {!isFilterLoading && filteredProducts.length === 0 && (
@@ -1113,15 +1350,13 @@ const ProductsPage = () => {
                 )}
               </p>
               <p className="text-gray-400 text-sm mb-6">
-                {searchQuery.trim() ? (
-                  "Probeer een andere zoekterm of verander de categorie-instellingen."
-                ) : (
-                  "Pas uw filters aan om meer producten te bekijken."
-                )}
+                {searchQuery.trim()
+                  ? "Probeer een andere zoekterm of verander de categorie-instellingen."
+                  : "Pas uw filters aan om meer producten te bekijken."}
               </p>
               <div className="flex gap-3 justify-center">
                 {searchQuery.trim() && (
-                  <Button 
+                  <Button
                     onClick={clearSearch}
                     variant="outline"
                     className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
@@ -1129,7 +1364,7 @@ const ProductsPage = () => {
                     Wis zoekopdracht
                   </Button>
                 )}
-                <Button 
+                <Button
                   onClick={() => {
                     setSelectedCategory("alles");
                     setSelectedSort("meest-gekozen");
@@ -1153,8 +1388,13 @@ const ProductsPage = () => {
                 <div className="text-2xl">🌟</div>
                 <div className="flex-1">
                   <p className="text-gray-800 font-medium text-sm lg:text-base">
-                    <span className="font-bold">Meest gekozen van deze maand:</span><br className="sm:hidden" />
-                    <span className="ml-1 sm:ml-0">Houten Jaloezieën - vanaf €89,95</span>
+                    <span className="font-bold">
+                      Meest gekozen van deze maand:
+                    </span>
+                    <br className="sm:hidden" />
+                    <span className="ml-1 sm:ml-0">
+                      Houten Jaloezieën - vanaf €89,95
+                    </span>
                   </p>
                 </div>
               </div>
@@ -1166,8 +1406,11 @@ const ProductsPage = () => {
                 <div className="text-2xl">🔥</div>
                 <div className="flex-1">
                   <p className="text-gray-800 font-medium text-sm lg:text-base">
-                    <span className="font-bold">Actie:</span><br className="sm:hidden" />
-                    <span className="ml-1 sm:ml-0">10% korting op duo plissé t.e.m. 30 juni!</span>
+                    <span className="font-bold">Actie:</span>
+                    <br className="sm:hidden" />
+                    <span className="ml-1 sm:ml-0">
+                      10% korting op duo plissé t.e.m. 30 juni!
+                    </span>
                   </p>
                 </div>
               </div>
@@ -1179,14 +1422,13 @@ const ProductsPage = () => {
         <div className="bg-primary/5 rounded-2xl p-8 text-center mb-12">
           <h2 className="text-2xl font-bold mb-4">Hulp nodig bij uw keuze?</h2>
           <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Onze experts helpen u graag bij het vinden van de perfecte raamdecoratie. 
-            Vraag een gratis adviesgesprek aan of laat u inspireren door onze galerij.
+            Onze experts helpen u graag bij het vinden van de perfecte
+            raamdecoratie. Vraag een gratis adviesgesprek aan of laat u
+            inspireren door onze galerij.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <Button size="lg">
-                Gratis Adviesgesprek
-              </Button>
+              <Button size="lg">Gratis Adviesgesprek</Button>
             </Link>
             <Link href="/quote">
               <Button size="lg" variant="outline">
@@ -1201,7 +1443,9 @@ const ProductsPage = () => {
       {comparisonProducts.length > 0 && (
         <div className="fixed bottom-6 right-6 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-40 max-w-sm">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-900">Vergelijking ({comparisonProducts.length}/3)</h3>
+            <h3 className="font-semibold text-gray-900">
+              Vergelijking ({comparisonProducts.length}/3)
+            </h3>
             <button
               onClick={clearAllComparisons}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -1209,11 +1453,16 @@ const ProductsPage = () => {
               <X className="h-4 w-4" />
             </button>
           </div>
-          
+
           <div className="space-y-2 mb-4">
             {comparisonProducts.map((product) => (
-              <div key={product.id} className="flex items-center justify-between text-sm">
-                <span className="text-gray-700 truncate flex-1">{product.title}</span>
+              <div
+                key={product.id}
+                className="flex items-center justify-between text-sm"
+              >
+                <span className="text-gray-700 truncate flex-1">
+                  {product.title}
+                </span>
                 <button
                   onClick={() => removeFromComparison(product.id)}
                   className="text-red-500 hover:text-red-700 ml-2"
@@ -1223,7 +1472,7 @@ const ProductsPage = () => {
               </div>
             ))}
           </div>
-          
+
           <Button
             onClick={openSizeComparison}
             className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white text-sm"

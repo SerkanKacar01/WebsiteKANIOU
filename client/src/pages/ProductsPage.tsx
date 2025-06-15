@@ -870,51 +870,49 @@ const ProductsPage = () => {
           <div className="p-8">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                📌 SQUID Textile Foil — Elegant Privacy with a Natural Look
+                SQUID Textielfolie — Elegante Privacy met een Natuurlijke Uitstraling
               </h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. 
-                It gives your windows a warm, linen-like appearance while maintaining privacy during the day. Unlike traditional film, 
-                Squid is breathable and elegant, and sticks directly to your window — no drilling, no glue, no hassle.
+                SQUID is een zelfklevend transparant textiel dat daglicht doorlaat, maar ongewenste inkijk van buiten blokkeert. Het geeft je ramen een warme, linnenachtige uitstraling en zorgt overdag voor optimale privacy. In tegenstelling tot traditionele raamfolies is SQUID ademend, stijlvol en eenvoudig rechtstreeks op het glas aan te brengen — zonder lijm, zonder boren, zonder gedoe.
               </p>
             </div>
 
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">✔ Why Choose SQUID?</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">✔ Waarom kiezen voor SQUID?</h4>
               <ul className="space-y-2 text-gray-600">
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Stylish and minimalistic:</strong> Subtle linen texture fits all interior styles</span>
+                  <span><strong>• Stijlvol en minimalistisch: </strong> Subtiele linnenstructuur die past bij elk interieur</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Daytime privacy:</strong> Clear view out, but blocks views from outside</span>
+                  <span><strong>• Privacy overdag:</strong> Wel naar buiten kijken, niet naar binnen</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Easy to apply:</strong> Self-adhesive textile — no glue, no drilling</span>
+                  <span><strong>• Eenvoudige montage:</strong> Zelfklevend textiel — geen lijm of gereedschap nodig</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Heat and moisture resistant:</strong> Perfect for kitchens, bathrooms, and skylights</span>
+                  <span><strong>• Hitte- en vochtbestendig:</strong> Geschikt voor badkamers, keukens en dakramen</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Removable:</strong> Can be repositioned or removed cleanly</span>
+                  <span><strong>• Verwijderbaar en herpositioneerbaar:</strong> Laat geen sporen na</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Versatile use:</strong> Ideal for homes, offices, and commercial spaces</span>
+                  <span><strong>• Veelzijdig toepasbaar:</strong> Ideaal voor woningen, kantoren en winkels</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>Custom-fit available:</strong> Tailored to your exact window size</span>
+                  <span><strong>• Perfect op maat leverbaar: </strong> Precies gesneden voor jouw raamafmetingen</span>
                 </li>
               </ul>
             </div>
 
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">🎨 Available in 5 Timeless Colours:</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">🎨 Verkrijgbaar in 5 tijdloze kleuren:</h4>
               <div className="flex flex-wrap gap-2 mb-4">
                 {['Chalk', 'Oak', 'Ash', 'Rock', 'Coal'].map((color) => (
                   <span key={color} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
@@ -925,26 +923,21 @@ const ProductsPage = () => {
             </div>
 
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">🛒 Perfect for:</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">🛒 Perfect voor:</h4>
               <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                <div>• Living rooms & bedrooms</div>
-                <div>• Skylights & roof windows</div>
-                <div>• Bathrooms & kitchens</div>
-                <div>• Storefronts & offices</div>
+                <div>• Woonkamers & slaapkamers</div>
+                <div>• Dakramen & lichtkoepels</div>
+                <div>• Badkamers & keukens</div>
+                <div>• Etalages en kantoorruimtes</div>
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex justify-center">
               <Button
-                className="bg-[#d5c096] hover:bg-[#c4b183] text-white flex-1"
+                className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-3"
+                onClick={() => window.location.href = '/products/squid-textile-foil'}
               >
-                View Details
-              </Button>
-              <Button
-                variant="outline"
-                className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
-              >
-                Request Quote
+                Shop SQUID Now
               </Button>
             </div>
           </div>

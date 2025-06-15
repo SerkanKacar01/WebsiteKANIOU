@@ -599,7 +599,7 @@ const ProductsPage = () => {
           
           {/* Badge with Bounce Animation */}
           {category.badge && (
-            <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg group-hover:animate-heartbeat group-hover:scale-110 transition-transform duration-300 animate-slideInUp">
+            <Badge className="absolute top-4 left-4 bg-[#d5c096] text-white shadow-lg transition-all duration-300">
               {category.badge}
             </Badge>
           )}
@@ -610,9 +610,9 @@ const ProductsPage = () => {
             <Button
               size="sm"
               variant="outline"
-              className="bg-white/90 backdrop-blur-sm border-none shadow-lg hover:bg-pink-500 hover:text-white transition-all duration-300 hover:scale-110 hover:rotate-12 hover-jello animate-slideInUp animation-delay-100"
+              className="bg-white/90 backdrop-blur-sm border-none shadow-lg hover:bg-pink-500 hover:text-white transition-all duration-300"
             >
-              <Heart className="h-4 w-4 hover:animate-heartbeat" />
+              <Heart className="h-4 w-4" />
             </Button>
             
             {/* Size Comparison Button */}
@@ -620,9 +620,9 @@ const ProductsPage = () => {
               <Button
                 size="sm"
                 onClick={() => removeFromComparison(category.id)}
-                className="bg-red-500 hover:bg-red-600 text-white shadow-lg hover:scale-110 hover:rotate-12 transition-all duration-300 hover-wiggle animate-slideInUp animation-delay-200"
+                className="bg-red-500 hover:bg-red-600 text-white shadow-lg transition-all duration-300"
               >
-                <X className="h-4 w-4 hover:animate-spin" />
+                <X className="h-4 w-4" />
               </Button>
             ) : canAddToComparison ? (
               <Button
@@ -716,7 +716,7 @@ const ProductsPage = () => {
                   <span className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
                     {product.name}
                   </span>
-                  <span className="text-sm font-semibold text-[#d5c096] group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-sm font-semibold text-[#d5c096] transition-colors duration-300">
                     {product.price}
                   </span>
                 </div>
@@ -728,7 +728,7 @@ const ProductsPage = () => {
           <div className="mt-auto space-y-2">
             <div className="flex gap-2">
               <Link href={category.href} className="flex-1">
-                <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#d5c096]/30 hover:scale-105 hover:-translate-y-1 group-hover:animate-pulse relative overflow-hidden">
+                <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-medium py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#d5c096]/30 relative overflow-hidden">
                   <span className="relative z-10 flex items-center justify-center">
                     Bekijk producten
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -744,11 +744,11 @@ const ProductsPage = () => {
                   size="sm"
                   onClick={() => isInComparison ? removeFromComparison(category.id) : addToComparison(category)}
                   disabled={!canAddToComparison && !isInComparison}
-                  className="px-3 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10 hover:scale-110 hover:rotate-12 transition-all duration-300"
+                  className="px-3 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10 transition-all duration-300"
                 >
                   {isInComparison ? 
-                    <X className="h-4 w-4 hover:animate-spin" /> : 
-                    <Ruler className="h-4 w-4 hover:animate-bounce" />
+                    <X className="h-4 w-4" /> : 
+                    <Ruler className="h-4 w-4" />
                   }
                 </Button>
               )}

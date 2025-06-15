@@ -671,20 +671,44 @@ const ProductsPage = () => {
             )
           )}
 
-          {filteredProducts.length === 0 && (
+          {!isFilterLoading && filteredProducts.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
-                Geen producten gevonden voor de geselecteerde filters.
+              <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-lg mb-2">
+                {searchQuery.trim() ? (
+                  <>Geen resultaten gevonden voor "{searchQuery}"</>
+                ) : (
+                  "Geen producten gevonden voor de geselecteerde filters."
+                )}
               </p>
-              <Button 
-                onClick={() => {
-                  setSelectedCategory("alles");
-                  setSelectedSort("meest-gekozen");
-                }}
-                className="mt-4 bg-[#d5c096] hover:bg-[#c4b183] text-white"
-              >
-                Reset filters
-              </Button>
+              <p className="text-gray-400 text-sm mb-6">
+                {searchQuery.trim() ? (
+                  "Probeer een andere zoekterm of verander de categorie-instellingen."
+                ) : (
+                  "Pas uw filters aan om meer producten te bekijken."
+                )}
+              </p>
+              <div className="flex gap-3 justify-center">
+                {searchQuery.trim() && (
+                  <Button 
+                    onClick={clearSearch}
+                    variant="outline"
+                    className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
+                  >
+                    Wis zoekopdracht
+                  </Button>
+                )}
+                <Button 
+                  onClick={() => {
+                    setSelectedCategory("alles");
+                    setSelectedSort("meest-gekozen");
+                    setSearchQuery("");
+                  }}
+                  className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+                >
+                  Reset alle filters
+                </Button>
+              </div>
             </div>
           )}
         </div>

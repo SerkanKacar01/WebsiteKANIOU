@@ -960,7 +960,9 @@ const ProductsPage = () => {
           <h2 className="text-3xl font-bold text-center mb-12">
             {selectedCategory === "alles" ? "Onze Productcategorieën" : 
              selectedCategory === "jaloezien" ? "Jaloezieën" :
-             selectedCategory === "gordijnen" ? "Gordijnen" :
+             selectedCategory === "rolgordijnen" ? "Rolgordijnen" :
+             selectedCategory === "vitrages" ? "Vitrages" :
+             selectedCategory === "shutters" ? "Shutters" :
              selectedCategory === "plisses" ? "Plissés & Horren" :
              selectedCategory === "accessoires" ? "Accessoires" : "Producten"
             }
@@ -1039,7 +1041,9 @@ const ProductsPage = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
                     {groupedProducts.shutters.map((category: any) => (
-                      <ProductCard key={category.id} category={category} />
+                      <div key={category.id} className="product-card">
+                        <ProductCard category={category} />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -1051,9 +1055,11 @@ const ProductsPage = () => {
                     <h3 className="text-2xl font-bold text-gray-900 mr-4">Plissés & Horren</h3>
                     <div className="flex-grow h-px bg-[#d5c096]/30"></div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    {groupedProducts.plisses.map((category) => (
-                      <ProductCard key={category.id} category={category} />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
+                    {groupedProducts.plisses.map((category: any) => (
+                      <div key={category.id} className="product-card">
+                        <ProductCard category={category} />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -1065,9 +1071,11 @@ const ProductsPage = () => {
                     <h3 className="text-2xl font-bold text-gray-900 mr-4">Accessoires</h3>
                     <div className="flex-grow h-px bg-[#d5c096]/30"></div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {groupedProducts.accessoires.map((category) => (
-                      <ProductCard key={category.id} category={category} />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 product-fade-in">
+                    {groupedProducts.accessoires.map((category: any) => (
+                      <div key={category.id} className="product-card">
+                        <ProductCard category={category} />
+                      </div>
                     ))}
                   </div>
                 </div>

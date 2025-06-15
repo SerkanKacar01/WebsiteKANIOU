@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw } from "lucide-react";
+import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw, Search, X } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
@@ -15,6 +15,7 @@ const ProductsPage = () => {
   const [showSaveIndicator, setShowSaveIndicator] = useState(false);
   const [hasSavedPreferences, setHasSavedPreferences] = useState(false);
   const [isFilterLoading, setIsFilterLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Load user preferences from localStorage on component mount
   useEffect(() => {
@@ -75,6 +76,20 @@ const ProductsPage = () => {
   const handleCategoryChange = (value: string) => {
     setIsFilterLoading(true);
     setSelectedCategory(value);
+    setTimeout(() => setIsFilterLoading(false), 300);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    if (value.trim()) {
+      setIsFilterLoading(true);
+      setTimeout(() => setIsFilterLoading(false), 300);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+    setIsFilterLoading(true);
     setTimeout(() => setIsFilterLoading(false), 300);
   };
 
@@ -265,6 +280,30 @@ const ProductsPage = () => {
       allProducts = productCategories.accessoires;
     }
 
+    // Apply search filter if search query exists
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      allProducts = allProducts.filter(product => {
+        // Search in product title
+        const titleMatch = product.title.toLowerCase().includes(query);
+        
+        // Search in product description
+        const descriptionMatch = product.description.toLowerCase().includes(query);
+        
+        // Search in product features
+        const featuresMatch = product.features.some((feature: string) => 
+          feature.toLowerCase().includes(query)
+        );
+        
+        // Search in individual product names within the category
+        const productNamesMatch = product.products.some((prod: any) => 
+          prod.name.toLowerCase().includes(query)
+        );
+        
+        return titleMatch || descriptionMatch || featuresMatch || productNamesMatch;
+      });
+    }
+
     // Sort products based on selection
     const sortedProducts = [...allProducts].sort((a, b) => {
       switch (selectedSort) {
@@ -413,6 +452,33 @@ const ProductsPage = () => {
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              {/* Search Input */}
+              <div className="flex items-center gap-3">
+                <Search className="h-5 w-5 text-[#d5c096]" />
+                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Zoeken:
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    placeholder="Zoek producten..."
+                    className={`w-48 px-3 py-2 border border-[#d5c096]/30 rounded-md focus:border-[#d5c096] focus:ring-[#d5c096]/20 focus:ring-1 outline-none transition-all duration-200 ${
+                      isFilterLoading ? 'opacity-70 cursor-wait' : ''
+                    }`}
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={clearSearch}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
               {/* Sort Dropdown */}
               <div className="flex items-center gap-3">
                 <SortAsc className="h-5 w-5 text-[#d5c096]" />
@@ -485,7 +551,20 @@ const ProductsPage = () => {
               
               {/* Results count */}
               <div className="text-sm text-gray-500">
-                {filteredProducts.length} producten gevonden
+                {searchQuery.trim() ? (
+                  <>
+                    {filteredProducts.length} resultaten voor "{searchQuery}"
+                    {selectedCategory !== "alles" && (
+                      <span className="text-[#d5c096]"> in {
+                        selectedCategory === "jaloezien" ? "Jaloezieën" :
+                        selectedCategory === "gordijnen" ? "Gordijnen" :
+                        selectedCategory === "plisses" ? "Plissés" : "Accessoires"
+                      }</span>
+                    )}
+                  </>
+                ) : (
+                  `${filteredProducts.length} producten gevonden`
+                )}
               </div>
             </div>
           </div>

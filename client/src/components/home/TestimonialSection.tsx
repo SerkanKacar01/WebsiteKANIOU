@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Star, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, ExternalLink, Quote } from "lucide-react";
 import { Testimonial } from "@shared/schema";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -48,6 +48,7 @@ const fallbackTestimonials = [
 
 const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsPerSlide, setItemsPerSlide] = useState(1);
   const { t } = useLanguage();
   
   const { data: testimonials = [], isLoading, error } = useQuery<Testimonial[]>({
@@ -57,18 +58,40 @@ const TestimonialSection = () => {
   // Use either database testimonials or our fallback ones if there was an error
   const displayTestimonials = error || testimonials.length === 0 ? fallbackTestimonials : testimonials;
 
+  // Update items per slide based on screen size
+  useEffect(() => {
+    const updateItemsPerSlide = () => {
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth >= 1024) {
+          setItemsPerSlide(3); // Desktop
+        } else if (window.innerWidth >= 768) {
+          setItemsPerSlide(2); // Tablet
+        } else {
+          setItemsPerSlide(1); // Mobile
+        }
+      }
+    };
+
+    updateItemsPerSlide();
+    window.addEventListener('resize', updateItemsPerSlide);
+    return () => window.removeEventListener('resize', updateItemsPerSlide);
+  }, []);
+
+  const maxIndex = Math.max(0, displayTestimonials.length - itemsPerSlide);
+
   const goToPrev = () => {
     if (!displayTestimonials || displayTestimonials.length === 0) return;
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? displayTestimonials.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1));
   };
 
   const goToNext = () => {
     if (!displayTestimonials || displayTestimonials.length === 0) return;
-    setCurrentIndex((prevIndex) =>
-      prevIndex === displayTestimonials.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex((prevIndex) => Math.min(maxIndex, prevIndex + 1));
+  };
+
+  // Get visible testimonials for current slide
+  const getVisibleTestimonials = () => {
+    return displayTestimonials.slice(currentIndex, currentIndex + itemsPerSlide);
   };
 
   const renderStars = (rating: number) => {
@@ -94,70 +117,85 @@ const TestimonialSection = () => {
 
         <div className="relative">
           {isLoading ? (
-            <div className="bg-white p-8 md:p-10 rounded-lg shadow-md animate-pulse">
-              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8 min-h-[200px]">
-                <div className="flex-shrink-0 w-20 h-20 rounded-full bg-neutral-200"></div>
-                <div className="flex-1">
-                  <div className="h-5 bg-neutral-200 rounded w-32 mb-3"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="bg-white p-6 rounded-lg shadow-md animate-pulse">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-neutral-200"></div>
+                    <div className="flex-1">
+                      <div className="h-4 bg-neutral-200 rounded w-24 mb-2"></div>
+                      <div className="h-3 bg-neutral-200 rounded w-16"></div>
+                    </div>
+                  </div>
                   <div className="h-20 bg-neutral-200 rounded mb-4"></div>
-                  <div className="h-5 bg-neutral-200 rounded w-40"></div>
-                  <div className="h-4 bg-neutral-200 rounded w-24 mt-2"></div>
+                  <div className="h-4 bg-neutral-200 rounded w-32"></div>
                 </div>
-              </div>
+              ))}
             </div>
           ) : displayTestimonials.length > 0 ? (
-            <div className="testimonial-slider">
-              <div className="testimonial-slide bg-white p-6 sm:p-8 md:p-10 rounded-lg shadow-md mx-2 sm:mx-4">
-                <div className="flex flex-col md:flex-row md:items-center gap-4 sm:gap-6 md:gap-8">
-                  <div className="flex-shrink-0 mx-auto md:mx-0">
-                    {displayTestimonials[currentIndex].imageUrl ? (
-                      <img
-                        src={displayTestimonials[currentIndex].imageUrl}
-                        alt={displayTestimonials[currentIndex].name}
-                        className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-full border-4 border-secondary"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-secondary flex items-center justify-center text-white text-lg sm:text-xl font-bold border-4 border-secondary">
-                        {displayTestimonials[currentIndex].name
-                          .split(" ")
-                          .map((n: string) => n[0])
-                          .join("")}
+            <div className="testimonial-slider overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {getVisibleTestimonials().map((testimonial, index) => (
+                  <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md relative">
+                    {/* Quotation marks icon */}
+                    <div className="absolute top-4 right-4">
+                      <Quote className="h-6 w-6 text-[#d5c096]/40" />
+                    </div>
+                    
+                    {/* Avatar and basic info */}
+                    <div className="flex items-center gap-4 mb-4">
+                      {testimonial.imageUrl ? (
+                        <img
+                          src={testimonial.imageUrl}
+                          alt={testimonial.name}
+                          className="w-12 h-12 object-cover rounded-full border-2 border-[#d5c096]"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-[#d5c096] flex items-center justify-center text-white text-sm font-bold">
+                          {testimonial.name
+                            .split(" ")
+                            .map((n: string) => n[0])
+                            .join("")}
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="font-bold text-gray-900">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          {testimonial.location}
+                        </p>
                       </div>
-                    )}
-                  </div>
-                  <div>
-                    <div className="flex justify-center md:justify-start text-secondary mb-3">
-                      {renderStars(displayTestimonials[currentIndex].rating)}
                     </div>
-                    <p className="font-body text-text-medium text-sm sm:text-base italic mb-4 text-center md:text-left">
-                      "{displayTestimonials[currentIndex].content}"
+
+                    {/* Star rating */}
+                    <div className="flex text-[#d5c096] mb-3">
+                      {renderStars(testimonial.rating)}
+                    </div>
+
+                    {/* Review text */}
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      "{testimonial.content}"
                     </p>
-                    <div className="text-center md:text-left">
-                      <h4 className="font-display text-base sm:text-lg text-primary font-medium">
-                        {displayTestimonials[currentIndex].name}
-                      </h4>
-                      <p className="font-body text-text-light text-xs sm:text-sm">
-                        {displayTestimonials[currentIndex].location}
-                      </p>
-                    </div>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
           ) : (
             <div className="text-center">{t('common.notFound') || "Geen testimonials gevonden"}</div>
           )}
 
-          {displayTestimonials.length > 1 && (
+          {displayTestimonials.length > itemsPerSlide && (
             <>
               <div className="absolute top-1/2 left-1 sm:left-0 -translate-y-1/2 md:-translate-x-6 z-10">
                 <Button
                   size="icon"
                   variant="outline"
                   onClick={goToPrev}
-                  className="bg-white text-primary hover:text-accent rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow-md"
+                  disabled={currentIndex === 0}
+                  className="bg-white text-[#d5c096] hover:text-[#c4b183] hover:bg-[#d5c096]/10 rounded-full w-10 h-10 flex items-center justify-center shadow-md disabled:opacity-50 disabled:cursor-not-allowed border-[#d5c096]/30"
                 >
-                  <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <ChevronLeft className="h-5 w-5" />
                 </Button>
               </div>
 
@@ -166,12 +204,30 @@ const TestimonialSection = () => {
                   size="icon"
                   variant="outline"
                   onClick={goToNext}
-                  className="bg-white text-primary hover:text-accent rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow-md"
+                  disabled={currentIndex >= maxIndex}
+                  className="bg-white text-[#d5c096] hover:text-[#c4b183] hover:bg-[#d5c096]/10 rounded-full w-10 h-10 flex items-center justify-center shadow-md disabled:opacity-50 disabled:cursor-not-allowed border-[#d5c096]/30"
                 >
-                  <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <ChevronRight className="h-5 w-5" />
                 </Button>
               </div>
             </>
+          )}
+
+          {/* Slide indicators */}
+          {displayTestimonials.length > itemsPerSlide && (
+            <div className="flex justify-center mt-6 space-x-2">
+              {[...Array(Math.ceil(displayTestimonials.length / itemsPerSlide))].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(Math.min(index, maxIndex))}
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                    Math.floor(currentIndex / itemsPerSlide) === index 
+                      ? 'bg-[#d5c096]' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
+            </div>
           )}
         </div>
 

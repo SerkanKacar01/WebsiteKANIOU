@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,8 @@ import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc } from "lucide-r
 
 const ProductsPage = () => {
   const { t } = useLanguage();
+  const [selectedSort, setSelectedSort] = useState("meest-gekozen");
+  const [selectedCategory, setSelectedCategory] = useState("alles");
 
   // Product categories organized by main groups
   const productCategories = {
@@ -152,6 +155,71 @@ const ProductsPage = () => {
     }
   ];
 
+  // Filter and sort products based on selections
+  const getFilteredAndSortedProducts = () => {
+    let allProducts: any[] = [];
+    
+    // Flatten all products based on category filter
+    if (selectedCategory === "alles") {
+      allProducts = [
+        ...productCategories.jaloezien,
+        ...productCategories.gordijnen,
+        ...productCategories.plisses,
+        ...productCategories.accessoires
+      ];
+    } else if (selectedCategory === "jaloezien") {
+      allProducts = productCategories.jaloezien;
+    } else if (selectedCategory === "gordijnen") {
+      allProducts = productCategories.gordijnen;
+    } else if (selectedCategory === "plisses") {
+      allProducts = productCategories.plisses;
+    } else if (selectedCategory === "accessoires") {
+      allProducts = productCategories.accessoires;
+    }
+
+    // Sort products based on selection
+    const sortedProducts = [...allProducts].sort((a, b) => {
+      switch (selectedSort) {
+        case "nieuwste":
+          return b.id - a.id; // Newer products have higher IDs
+        case "prijs-laag-hoog":
+          const priceA = parseFloat(a.products[0].price.replace('€', '').replace(',', '.'));
+          const priceB = parseFloat(b.products[0].price.replace('€', '').replace(',', '.'));
+          return priceA - priceB;
+        case "prijs-hoog-laag":
+          const priceA2 = parseFloat(a.products[0].price.replace('€', '').replace(',', '.'));
+          const priceB2 = parseFloat(b.products[0].price.replace('€', '').replace(',', '.'));
+          return priceB2 - priceA2;
+        case "meest-gekozen":
+        default:
+          // Sort by popularity (products with "popular: true" items first)
+          const popularityA = a.products.some((p: any) => p.popular) ? 1 : 0;
+          const popularityB = b.products.some((p: any) => p.popular) ? 1 : 0;
+          return popularityB - popularityA;
+      }
+    });
+
+    return sortedProducts;
+  };
+
+  const filteredProducts = getFilteredAndSortedProducts();
+
+  // Group filtered products by category for display
+  const getGroupedProducts = () => {
+    if (selectedCategory !== "alles") {
+      return { [selectedCategory]: filteredProducts };
+    }
+    
+    return {
+      jaloezien: filteredProducts.filter(p => productCategories.jaloezien.includes(p)),
+      gordijnen: filteredProducts.filter(p => productCategories.gordijnen.includes(p)),
+      plisses: filteredProducts.filter(p => productCategories.plisses.includes(p)),
+      accessoires: filteredProducts.filter(p => productCategories.accessoires.includes(p))
+    };
+  };
+
+  const groupedProducts = getGroupedProducts();
+
   // Component for rendering product cards
   const ProductCard = ({ category }: { category: any }) => (
     <Card className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
@@ -263,7 +331,7 @@ const ProductsPage = () => {
                 <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                   Sorteer op:
                 </label>
-                <Select defaultValue="meest-gekozen">
+                <Select value={selectedSort} onValueChange={setSelectedSort}>
                   <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
                     <SelectValue placeholder="Selecteer sortering" />
                   </SelectTrigger>
@@ -282,7 +350,7 @@ const ProductsPage = () => {
                 <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                   Toon categorie:
                 </label>
-                <Select defaultValue="alles">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                   <SelectTrigger className="w-48 border-[#d5c096]/30 focus:border-[#d5c096] focus:ring-[#d5c096]/20">
                     <SelectValue placeholder="Selecteer categorie" />
                   </SelectTrigger>
@@ -299,66 +367,106 @@ const ProductsPage = () => {
             
             {/* Results count */}
             <div className="text-sm text-gray-500 mt-2 sm:mt-0">
-              8 producten gevonden
+              {filteredProducts.length} producten gevonden
             </div>
           </div>
         </div>
 
         {/* Product Categories */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Onze Productcategorieën</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            {selectedCategory === "alles" ? "Onze Productcategorieën" : 
+             selectedCategory === "jaloezien" ? "Jaloezieën" :
+             selectedCategory === "gordijnen" ? "Gordijnen" :
+             selectedCategory === "plisses" ? "Plissés & Horren" :
+             selectedCategory === "accessoires" ? "Accessoires" : "Producten"
+            }
+          </h2>
           
-          {/* Jaloezieën Section */}
-          <div className="mb-16">
-            <div className="flex items-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
-              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {productCategories.jaloezien.map((category) => (
-                <ProductCard key={category.id} category={category} />
-              ))}
-            </div>
-          </div>
+          {selectedCategory === "alles" ? (
+            // Show all categories with section headers
+            <>
+              {groupedProducts.jaloezien.length > 0 && (
+                <div className="mb-16">
+                  <div className="flex items-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Jaloezieën</h3>
+                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    {groupedProducts.jaloezien.map((category) => (
+                      <ProductCard key={category.id} category={category} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {/* Gordijnen Section */}
-          <div className="mb-16">
-            <div className="flex items-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mr-4">Gordijnen</h3>
-              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {productCategories.gordijnen.map((category) => (
-                <ProductCard key={category.id} category={category} />
-              ))}
-            </div>
-          </div>
+              {groupedProducts.gordijnen.length > 0 && (
+                <div className="mb-16">
+                  <div className="flex items-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Gordijnen</h3>
+                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    {groupedProducts.gordijnen.map((category) => (
+                      <ProductCard key={category.id} category={category} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {/* Plissés & Horren Section */}
-          <div className="mb-16">
-            <div className="flex items-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mr-4">Plissés & Horren</h3>
-              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {productCategories.plisses.map((category) => (
-                <ProductCard key={category.id} category={category} />
-              ))}
-            </div>
-          </div>
+              {groupedProducts.plisses.length > 0 && (
+                <div className="mb-16">
+                  <div className="flex items-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Plissés & Horren</h3>
+                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    {groupedProducts.plisses.map((category) => (
+                      <ProductCard key={category.id} category={category} />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {/* Accessoires Section */}
-          <div className="mb-16">
-            <div className="flex items-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mr-4">Accessoires</h3>
-              <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-            </div>
+              {groupedProducts.accessoires.length > 0 && (
+                <div className="mb-16">
+                  <div className="flex items-center mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mr-4">Accessoires</h3>
+                    <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {groupedProducts.accessoires.map((category) => (
+                      <ProductCard key={category.id} category={category} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            // Show filtered category products
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {productCategories.accessoires.map((category) => (
+              {filteredProducts.map((category) => (
                 <ProductCard key={category.id} category={category} />
               ))}
             </div>
-          </div>
+          )}
+
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                Geen producten gevonden voor de geselecteerde filters.
+              </p>
+              <Button 
+                onClick={() => {
+                  setSelectedCategory("alles");
+                  setSelectedSort("meest-gekozen");
+                }}
+                className="mt-4 bg-[#d5c096] hover:bg-[#c4b183] text-white"
+              >
+                Reset filters
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Promotional Banners */}

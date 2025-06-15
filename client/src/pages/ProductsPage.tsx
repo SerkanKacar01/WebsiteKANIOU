@@ -628,15 +628,15 @@ const ProductsPage = () => {
               <Button
                 size="sm"
                 onClick={() => addToComparison(category)}
-                className="bg-blue-500 hover:bg-blue-600 text-white shadow-lg hover:scale-110 hover:rotate-12 transition-all duration-300 hover-bounce animate-slideInUp animation-delay-200"
+                className="bg-blue-500 hover:bg-blue-600 text-white shadow-lg transition-all duration-300"
               >
-                <Ruler className="h-4 w-4 hover:animate-wiggle" />
+                <Ruler className="h-4 w-4" />
               </Button>
             ) : (
               <Button
                 size="sm"
                 disabled
-                className="bg-gray-400 text-white shadow-lg cursor-not-allowed animate-slideInUp animation-delay-200"
+                className="bg-gray-400 text-white shadow-lg cursor-not-allowed transition-all duration-300"
               >
                 <Ruler className="h-4 w-4" />
               </Button>
@@ -647,9 +647,9 @@ const ProductsPage = () => {
           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
             <Button
               size="sm"
-              className="bg-[#d5c096] hover:bg-[#c4b183] text-white shadow-lg hover:scale-110 transition-all duration-300 animate-pulse hover-jello animate-slideInUp animation-delay-400"
+              className="bg-[#d5c096] hover:bg-[#c4b183] text-white shadow-lg transition-all duration-300"
             >
-              <Eye className="h-4 w-4 mr-1 hover:animate-bounce" />
+              <Eye className="h-4 w-4 mr-1" />
               Bekijk
             </Button>
           </div>

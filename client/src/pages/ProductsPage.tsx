@@ -1448,6 +1448,12 @@ const ProductsPage = () => {
                 <ProductSkeleton key={index} />
               ))}
             </div>
+          ) : selectedCategory === "squid" ? (
+            <div className="max-w-full">
+              {filteredProducts.map((category) => (
+                <SquidProductCard key={category.id} category={category} />
+              ))}
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredProducts.map((category) => (
@@ -1456,7 +1462,7 @@ const ProductsPage = () => {
             </div>
           )}
 
-          {!isFilterLoading && filteredProducts.length === 0 && (
+          {!isFilterLoading && filteredProducts.length === 0 && selectedCategory !== "squid" && (
             <div className="text-center py-12">
               <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 text-lg mb-2">

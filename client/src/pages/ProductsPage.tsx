@@ -743,68 +743,31 @@ const ProductsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <Container>
-        {/* Hero Section */}
-        <div className="py-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Premium Raamdecoratie
-          </h1>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Ontdek onze collectie van hoogwaardige vliegengordijnen, gordijnen en jalouzieën. 
-            Allemaal op maat gemaakt voor uw perfecte interieur.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/quote">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                Gratis Offerte Aanvragen
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/gallerij">
-              <Button size="lg" variant="outline">
-                Bekijk Galerij
-                <Eye className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <div key={index} className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4 text-primary">
-                {feature.icon}
+        <div className="pt-8">
+          {/* Product Count - More Prominent */}
+          <div className="mb-4">
+            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+              <div className="text-lg font-bold text-gray-900">
+                {searchQuery.trim() ? (
+                  <>
+                    {filteredProducts.length} resultaten voor "{searchQuery}"
+                    {selectedCategory !== "alles" && (
+                      <span className="text-[#d5c096]"> in {
+                        selectedCategory === "jaloezien" ? "Jaloezieën" :
+                        selectedCategory === "gordijnen" ? "Gordijnen" :
+                        selectedCategory === "plisses" ? "Plissés" : "Accessoires"
+                      }</span>
+                    )}
+                  </>
+                ) : (
+                  `${filteredProducts.length} producten gevonden`
+                )}
               </div>
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Product Count - More Prominent */}
-        <div className="mb-4">
-          <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-            <div className="text-lg font-bold text-gray-900">
-              {searchQuery.trim() ? (
-                <>
-                  {filteredProducts.length} resultaten voor "{searchQuery}"
-                  {selectedCategory !== "alles" && (
-                    <span className="text-[#d5c096]"> in {
-                      selectedCategory === "jaloezien" ? "Jaloezieën" :
-                      selectedCategory === "gordijnen" ? "Gordijnen" :
-                      selectedCategory === "plisses" ? "Plissés" : "Accessoires"
-                    }</span>
-                  )}
-                </>
-              ) : (
-                `${filteredProducts.length} producten gevonden`
-              )}
             </div>
           </div>
-        </div>
 
-        {/* Filters and Sorting Controls - Mobile Optimized */}
-        <div className="mb-8">
+          {/* Filters and Sorting Controls - Mobile Optimized */}
+          <div className="mb-8">
           <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 shadow-sm">
             {/* Mobile: Stack vertically, Desktop: Horizontal layout */}
             <div className="space-y-4 md:space-y-0">
@@ -1188,8 +1151,10 @@ const ProductsPage = () => {
         </div>
       )}
 
-      {/* Size Comparison Overlay */}
-      <SizeComparisonOverlay />
+          {/* Size Comparison Overlay */}
+          <SizeComparisonOverlay />
+        </div>
+      </Container>
     </div>
   );
 };

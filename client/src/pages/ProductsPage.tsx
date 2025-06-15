@@ -793,6 +793,16 @@ const ProductsPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <Container>
         <div className="pt-8">
+          {/* Header Text Section */}
+          <div className="text-center mb-8 px-4">
+            <h1 className="text-2xl md:text-3xl font-display font-semibold text-gray-900 mb-4">
+              Discover Made-to-Measure Window Treatments with Style and Precision
+            </h1>
+            <p className="text-base md:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Choose from our curated selection of premium blinds, curtains, and insect screens — tailored to fit your home perfectly. Browse by product type below and find your ideal solution in just a few clicks.
+            </p>
+          </div>
+
           {/* Product Count - More Prominent */}
           <div className="mb-4">
             <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">

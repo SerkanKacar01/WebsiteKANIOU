@@ -1,0 +1,78 @@
+✅ TASK: Finalize Missing Product Pages for “SQUID Textile Foil” and “Horren”
+
+1. ✅ Set Up & Fix the Routing
+	•	Issue: Clicking on SQUID or Horren leads to broken URLs like /producten/squid-textile-foil and /producten/horren.
+	•	Instruction: Ensure both of these routes are defined in the router configuration.
+	•	src/pages/products/squid-textile-foil.tsx
+	•	src/pages/products/horren.tsx
+	•	Fix 404 errors by registering both routes with their correct paths and names in the app’s router.
+
+⸻
+
+2. ✅ SQUID Product Page – Content & Layout
+
+Header:
+
+SQUID Raamfolie — Elegantie en Privacy met een Natuurlijke Look
+
+Description block:
+
+SQUID is een zelfklevende transparante textielfolie die daglicht doorlaat, maar nieuwsgierige blikken van buitenaf tegenhoudt. Het geeft ramen een warme, linnen uitstraling en garandeert overdag privacy. In tegenstelling tot klassieke raamfolie is SQUID ademend, elegant én makkelijk aan te brengen — zonder lijm of boren.
+
+Bullets (Waarom SQUID?):
+	•	Stijlvolle linnenstructuur die past in elk interieur
+	•	Privacy overdag, zicht naar buiten
+	•	Zelfklevend: géén lijm, géén schade
+	•	Hitte- en vochtbestendig — ideaal voor keuken, badkamer & dakramen
+	•	Verwijderbaar en herbruikbaar
+	•	Op maat verkrijgbaar
+
+Colours section:
+
+Beschikbaar in 5 tijdloze kleuren: Chalk, Oak, Ash, Rock, Coal
+
+Perfect voor:
+	•	Woonkamers & slaapkamers
+	•	Badkamers & keukens
+	•	Dakramen & lichtkoepels
+	•	Etalages & kantoorruimtes
+
+📦 Button:
+	•	Replace “View Details” → “Bestel nu SQUID”
+	•	Remove “Request Quote” button entirely
+
+Link destination:
+	•	Button should lead to the detailed SQUID product listing (e.g. /shop?squid=true or a future /producten/squid page).
+
+⸻
+
+3. ✅ Horren Product Page – Content & Fixes
+
+Header:
+
+Horren — Insectenwering & Frisse Lucht
+
+Description block:
+
+Hoogwaardige horren die insecten buiten houden en tegelijkertijd frisse lucht binnenlaten. Perfect geschikt voor elk type raam of deur.
+
+Product types & prices:
+	•	Inzethorren – vanaf €45
+	•	Opzethorren – vanaf €45
+	•	Plissé Hordeur – vanaf €165
+
+📦 Button:
+	•	Replace “Bekijk producten” → “Bekijk alle horren”
+	•	This button must link to a filtered product overview with only horren (e.g. /shop?filter=horren)
+
+⸻
+
+4. ✅ UI Fixes & Polish
+	•	Remove emoji icons from category filter buttons.
+	•	Current category buttons should only include:
+	•	Show All
+	•	Horren
+	•	SQUID textile foil
+	•	Ensure category button styling is:
+	•	Minimalistic and soft, no heavy borders
+	•	With smooth hover effects and no jerky movement

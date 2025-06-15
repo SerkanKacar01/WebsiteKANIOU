@@ -187,42 +187,178 @@ const ProductCategoryPage = () => {
         </Container>
       </div>
 
-      {/* Hero Section */}
-      <div
-        className="relative bg-cover bg-center py-24"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})`,
-        }}
-      >
-        <Container>
-          <div className="max-w-2xl">
-            <h1 className="font-display text-4xl md:text-5xl text-white font-semibold mb-4">
-              {productCategories.find(
-                (pc: { label: string; urlPath: string }) =>
-                  pc.urlPath === category,
-              )?.label || categoryData.name}
-            </h1>
-            <p className="font-body text-white text-lg mb-8">
-              {categoryData.description}
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/quote">
-                <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Request a Quote
-                </Button>
-              </Link>
-              <a href="#products">
-                <Button
-                  variant="outline"
-                  className="bg-white/10 text-white border-white hover:bg-white/20"
-                >
-                  View Products
-                </Button>
-              </a>
+      {/* Custom SQUID Page */}
+      {category === "squid" ? (
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
+          <Container>
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
+                SQUID Raamfolie — Elegantie en Privacy met een Natuurlijke Look
+              </h1>
+              
+              <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <p className="text-lg text-gray-700 leading-relaxed mb-8">
+                  SQUID is een zelfklevende transparante textielfolie die daglicht doorlaat, maar nieuwsgierige blikken van buitenaf tegenhoudt. Het geeft ramen een warme, linnen uitstraling en garandeert overdag privacy. In tegenstelling tot klassieke raamfolie is SQUID ademend, elegant én makkelijk aan te brengen — zonder lijm of boren.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">Waarom SQUID?</h3>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Stijlvolle linnenstructuur die past in elk interieur</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Privacy overdag, zicht naar buiten</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Zelfklevend: géén lijm, géén schade</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Hitte- en vochtbestendig — ideaal voor keuken, badkamer & dakramen</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Verwijderbaar en herbruikbaar</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Op maat verkrijgbaar</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">Perfect voor:</h3>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Woonkamers & slaapkamers</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Badkamers & keukens</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Dakramen & lichtkoepels</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
+                        <span>Etalages & kantoorruimtes</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Beschikbaar in 5 tijdloze kleuren:</h3>
+                  <div className="flex flex-wrap gap-4">
+                    {['Chalk', 'Oak', 'Ash', 'Rock', 'Coal'].map((color) => (
+                      <div key={color} className="bg-white px-4 py-2 rounded-full border border-gray-200 text-gray-700 font-medium">
+                        {color}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <Link href="/producten?filter=squid">
+                    <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg">
+                      Bestel nu SQUID
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </Container>
-      </div>
+          </Container>
+        </div>
+      ) : category === "horren" ? (
+        <div className="bg-gradient-to-br from-green-50 to-emerald-100 py-16">
+          <Container>
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
+                Horren — Insectenwering & Frisse Lucht
+              </h1>
+              
+              <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <p className="text-lg text-gray-700 leading-relaxed mb-8 text-center">
+                  Hoogwaardige horren die insecten buiten houden en tegelijkertijd frisse lucht binnenlaten. Perfect geschikt voor elk type raam of deur.
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-gray-50 rounded-lg p-6 text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Inzethorren</h3>
+                    <p className="text-2xl font-bold text-[#d5c096] mb-4">vanaf €45</p>
+                    <p className="text-gray-600">Eenvoudig te plaatsen zonder boren of schroeven</p>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-6 text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Opzethorren</h3>
+                    <p className="text-2xl font-bold text-[#d5c096] mb-4">vanaf €45</p>
+                    <p className="text-gray-600">Stevige bevestiging op het raamkozijn</p>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-6 text-center">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Plissé Hordeur</h3>
+                    <p className="text-2xl font-bold text-[#d5c096] mb-4">vanaf €165</p>
+                    <p className="text-gray-600">Compacte plooibare oplossing voor deuren</p>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <Link href="/producten?filter=horren">
+                    <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg">
+                      Bekijk alle horren
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </div>
+      ) : (
+        /* Default Hero Section for other categories */
+        <div
+          className="relative bg-cover bg-center py-24"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})`,
+          }}
+        >
+          <Container>
+            <div className="max-w-2xl">
+              <h1 className="font-display text-4xl md:text-5xl text-white font-semibold mb-4">
+                {productCategories.find(
+                  (pc: { label: string; urlPath: string }) =>
+                    pc.urlPath === category,
+                )?.label || categoryData.name}
+              </h1>
+              <p className="font-body text-white text-lg mb-8">
+                {categoryData.description}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/quote">
+                  <Button className="bg-primary hover:bg-primary/90 text-white">
+                    Request a Quote
+                  </Button>
+                </Link>
+                <a href="#products">
+                  <Button
+                    variant="outline"
+                    className="bg-white/10 text-white border-white hover:bg-white/20"
+                  >
+                    View Products
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </Container>
+        </div>
+      )}
 
       {/* Features Section */}
       <div className="py-16 bg-white">

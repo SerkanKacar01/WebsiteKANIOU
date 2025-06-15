@@ -753,7 +753,7 @@ const ProductsPage = () => {
           },
         ],
         dimensions: { width: 100, height: 150, depth: 0.1 },
-        href: "/products/squid-textile-foil",
+        href: "/producten/squid",
         badge: "Premium",
         isSquid: true,
       },
@@ -1021,14 +1021,11 @@ const ProductsPage = () => {
             </div>
 
             <div className="flex justify-center">
-              <Button
-                className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-3"
-                onClick={() =>
-                  (window.location.href = "/products/squid-textile-foil")
-                }
-              >
-                Bestel SQUID nu
-              </Button>
+              <Link href="/producten/squid">
+                <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-3">
+                  Bestel nu SQUID
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -1510,16 +1507,40 @@ const ProductsPage = () => {
                   <div className="mb-16">
                     <div className="flex items-center mb-8">
                       <h3 className="text-2xl font-bold text-gray-900 mr-4">
+                        SQUID Textile Foil
+                      </h3>
+                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                    </div>
+                    <div className="product-fade-in">
+                      {groupedProducts.accessoires
+                        .filter((category: any) => category.isSquid)
+                        .map((category: any) => (
+                          <div key={category.id} className="product-card">
+                            <SquidProductCard category={category} />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
+
+              {!isFilterLoading &&
+                groupedProducts.accessoires &&
+                groupedProducts.accessoires.length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center mb-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
                         Accessoires
                       </h3>
                       <div className="flex-grow h-px bg-[#d5c096]/30"></div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 product-fade-in">
-                      {groupedProducts.accessoires.map((category: any) => (
-                        <div key={category.id} className="product-card">
-                          <ProductCard category={category} />
-                        </div>
-                      ))}
+                      {groupedProducts.accessoires
+                        .filter((category: any) => !category.isSquid)
+                        .map((category: any) => (
+                          <div key={category.id} className="product-card">
+                            <ProductCard category={category} />
+                          </div>
+                        ))}
                     </div>
                   </div>
                 )}

@@ -622,25 +622,15 @@ const ProductsPage = () => {
             name: "Opzethor Standaard",
             price: "€79,95",
             popular: true,
-            width: 80,
-            height: 100,
-            thickness: 1.5,
           },
           {
             name: "Opzethor Deluxe",
             price: "€99,95",
             popular: false,
-            width: 90,
-            height: 120,
-            thickness: 2.0,
           },
           {
             name: "Opzethor XXL",
             price: "€119,95",
-            popular: false,
-            width: 120,
-            height: 150,
-            thickness: 2.5,
           },
         ],
         dimensions: { width: 80, height: 100, depth: 1.5 },
@@ -652,17 +642,31 @@ const ProductsPage = () => {
       {
         id: 9,
         title: "Horren",
-        subtitle: "Insect protection & fresh air",
-        description: "High-quality insect screens that keep bugs out while letting fresh air in.",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
+        subtitle: "Insectenwering & frisse lucht",
+        description:
+          "Hoogwaardige horren die insecten buiten houden en tegelijkertijd frisse lucht binnenlaten.",
+        image:
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
         products: [
-          { name: "Inzethorren", price: "€45,95", popular: true, width: 100, height: 120, thickness: 2.0 },
-          { name: "Opzethorren", price: "€55,95", popular: false, width: 100, height: 120, thickness: 2.5 },
-          { name: "Plissé Hordeur", price: "€89,95", popular: false, width: 100, height: 200, thickness: 3.0 }
+          {
+            name: "Inzethorren",
+            price: " v.a € 45",
+            popular: true,
+          },
+          {
+            name: "Opzethorren",
+            price: "v.a € 45",
+            popular: false,
+          },
+          {
+            name: "Plissé Hordeur",
+            price: "v.a € 165",
+            popular: false,
+          },
         ],
-        dimensions: { width: 100, height: 120, depth: 2.0 },
-        href: "/products/horren",
-        badge: "Essential"
+
+        href: "/producten/horren",
+        badge: "Essential",
       },
     ],
     accessoires: [
@@ -702,19 +706,56 @@ const ProductsPage = () => {
         id: 10,
         title: "SQUID Textile Foil",
         subtitle: "Elegant Privacy with a Natural Look",
-        description: "Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. It gives your windows a warm, linen-like appearance while maintaining privacy during the day.",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
+        description:
+          "Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. It gives your windows a warm, linen-like appearance while maintaining privacy during the day.",
+        image:
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
         products: [
-          { name: "SQUID Chalk", price: "€34,95", popular: true, width: 100, height: 150, thickness: 0.1 },
-          { name: "SQUID Oak", price: "€34,95", popular: true, width: 100, height: 150, thickness: 0.1 },
-          { name: "SQUID Ash", price: "€34,95", popular: false, width: 100, height: 150, thickness: 0.1 },
-          { name: "SQUID Rock", price: "€34,95", popular: false, width: 100, height: 150, thickness: 0.1 },
-          { name: "SQUID Coal", price: "€34,95", popular: false, width: 100, height: 150, thickness: 0.1 }
+          {
+            name: "SQUID Chalk",
+            price: "€34,95",
+            popular: true,
+            width: 100,
+            height: 150,
+            thickness: 0.1,
+          },
+          {
+            name: "SQUID Oak",
+            price: "€34,95",
+            popular: true,
+            width: 100,
+            height: 150,
+            thickness: 0.1,
+          },
+          {
+            name: "SQUID Ash",
+            price: "€34,95",
+            popular: false,
+            width: 100,
+            height: 150,
+            thickness: 0.1,
+          },
+          {
+            name: "SQUID Rock",
+            price: "€34,95",
+            popular: false,
+            width: 100,
+            height: 150,
+            thickness: 0.1,
+          },
+          {
+            name: "SQUID Coal",
+            price: "€34,95",
+            popular: false,
+            width: 100,
+            height: 150,
+            thickness: 0.1,
+          },
         ],
         dimensions: { width: 100, height: 150, depth: 0.1 },
         href: "/products/squid-textile-foil",
         badge: "Premium",
-        isSquid: true
+        isSquid: true,
       },
     ],
   };
@@ -750,8 +791,8 @@ const ProductsPage = () => {
     } else if (selectedCategory === "horren") {
       allProducts = productCategories.horren;
     } else if (selectedCategory === "squid") {
-      allProducts = productCategories.accessoires.filter(item => 
-        item.isSquid === true
+      allProducts = productCategories.accessoires.filter(
+        (item) => item.isSquid === true,
       );
     } else if (selectedCategory === "accessoires") {
       allProducts = productCategories.accessoires;
@@ -870,52 +911,97 @@ const ProductsPage = () => {
           <div className="p-8">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                SQUID Textielfolie — Elegante Privacy met een Natuurlijke Uitstraling
+                SQUID Textielfolie — Elegante Privacy met een Natuurlijke
+                Uitstraling
               </h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                SQUID is een zelfklevend transparant textiel dat daglicht doorlaat, maar ongewenste inkijk van buiten blokkeert. Het geeft je ramen een warme, linnenachtige uitstraling en zorgt overdag voor optimale privacy. In tegenstelling tot traditionele raamfolies is SQUID ademend, stijlvol en eenvoudig rechtstreeks op het glas aan te brengen — zonder lijm, zonder boren, zonder gedoe.
+                SQUID is een zelfklevend transparant textiel dat daglicht
+                doorlaat, maar ongewenste inkijk van buiten blokkeert. Het geeft
+                je ramen een warme, linnenachtige uitstraling en zorgt overdag
+                voor optimale privacy. In tegenstelling tot traditionele
+                raamfolies is SQUID ademend, stijlvol en eenvoudig rechtstreeks
+                op het glas aan te brengen — zonder lijm, zonder boren, zonder
+                gedoe.
               </p>
             </div>
 
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">✔ Waarom kiezen voor SQUID?</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">
+                ✔ Waarom kiezen voor SQUID?
+              </h4>
               <ul className="space-y-2 text-gray-600">
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Stijlvol en minimalistisch: </strong> Subtiele linnenstructuur die past bij elk interieur</span>
+                  <span>
+                    <strong>• Stijlvol en minimalistisch: </strong> Subtiele
+                    linnenstructuur die past bij elk interieur
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Privacy overdag:</strong> Wel naar buiten kijken, niet naar binnen</span>
+                  <span>
+                    <strong>• Privacy overdag:</strong> Wel naar buiten kijken,
+                    niet naar binnen
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Eenvoudige montage:</strong> Zelfklevend textiel — geen lijm of gereedschap nodig</span>
+                  <span>
+                    <strong>• Eenvoudige montage:</strong> Zelfklevend textiel —
+                    geen lijm of gereedschap nodig
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Hitte- en vochtbestendig:</strong> Geschikt voor badkamers, keukens en dakramen</span>
+                  <span>
+                    <strong>• Hitte- en vochtbestendig:</strong> Geschikt voor
+                    badkamers, keukens en dakramen
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Verwijderbaar en herpositioneerbaar:</strong> Laat geen sporen na</span>
+                  <span>
+                    <strong>• Verwijderbaar en herpositioneerbaar:</strong> Laat
+                    geen sporen na
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Veelzijdig toepasbaar:</strong> Ideaal voor woningen, kantoren en winkels</span>
+                  <span>
+                    <strong>• Veelzijdig toepasbaar:</strong> Ideaal voor
+                    woningen, kantoren en winkels
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
-                  <span><strong>• Perfect op maat leverbaar: </strong> Precies gesneden voor jouw raamafmetingen</span>
+                  <span>
+                    <strong>• Perfect op maat leverbaar: </strong> Precies
+                    gesneden voor jouw raamafmetingen
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">🎨 Verkrijgbaar in 5 tijdloze kleuren:</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                🎨 Verkrijgbaar in 5 tijdloze kleuren:
+              </h4>
               <div className="flex flex-wrap gap-2 mb-4">
-                {['Chalk', 'Oak', 'Ash', 'Rock', 'Coal'].map((color) => (
-                  <span key={color} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
+                {[
+                  "Chalk",
+                  "Oak",
+                  "Ash",
+                  "Rock",
+                  "Coal",
+                  "Transparant & Opaque",
+                  "Levertijd 14 werkdagen",
+                  "Standaard breedte 130 cm",
+                  "Min. aankoop >1m",
+                ].map((color) => (
+                  <span
+                    key={color}
+                    className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium"
+                  >
                     {color}
                   </span>
                 ))}
@@ -923,7 +1009,9 @@ const ProductsPage = () => {
             </div>
 
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">🛒 Perfect voor:</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                🛒 Perfect voor:
+              </h4>
               <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                 <div>• Woonkamers & slaapkamers</div>
                 <div>• Dakramen & lichtkoepels</div>
@@ -935,9 +1023,11 @@ const ProductsPage = () => {
             <div className="flex justify-center">
               <Button
                 className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-3"
-                onClick={() => window.location.href = '/products/squid-textile-foil'}
+                onClick={() =>
+                  (window.location.href = "/products/squid-textile-foil")
+                }
               >
-                Shop SQUID Now
+                Bestel SQUID nu
               </Button>
             </div>
           </div>
@@ -1455,44 +1545,46 @@ const ProductsPage = () => {
             </div>
           )}
 
-          {!isFilterLoading && filteredProducts.length === 0 && selectedCategory !== "squid" && (
-            <div className="text-center py-12">
-              <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg mb-2">
-                {searchQuery.trim() ? (
-                  <>Geen resultaten gevonden voor "{searchQuery}"</>
-                ) : (
-                  "Geen producten gevonden voor de geselecteerde filters."
-                )}
-              </p>
-              <p className="text-gray-400 text-sm mb-6">
-                {searchQuery.trim()
-                  ? "Probeer een andere zoekterm of verander de categorie-instellingen."
-                  : "Pas uw filters aan om meer producten te bekijken."}
-              </p>
-              <div className="flex gap-3 justify-center">
-                {searchQuery.trim() && (
+          {!isFilterLoading &&
+            filteredProducts.length === 0 &&
+            selectedCategory !== "squid" && (
+              <div className="text-center py-12">
+                <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500 text-lg mb-2">
+                  {searchQuery.trim() ? (
+                    <>Geen resultaten gevonden voor "{searchQuery}"</>
+                  ) : (
+                    "Geen producten gevonden voor de geselecteerde filters."
+                  )}
+                </p>
+                <p className="text-gray-400 text-sm mb-6">
+                  {searchQuery.trim()
+                    ? "Probeer een andere zoekterm of verander de categorie-instellingen."
+                    : "Pas uw filters aan om meer producten te bekijken."}
+                </p>
+                <div className="flex gap-3 justify-center">
+                  {searchQuery.trim() && (
+                    <Button
+                      onClick={clearSearch}
+                      variant="outline"
+                      className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
+                    >
+                      Wis zoekopdracht
+                    </Button>
+                  )}
                   <Button
-                    onClick={clearSearch}
-                    variant="outline"
-                    className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
+                    onClick={() => {
+                      setSelectedCategory("alles");
+                      setSelectedSort("meest-gekozen");
+                      setSearchQuery("");
+                    }}
+                    className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
                   >
-                    Wis zoekopdracht
+                    Reset alle filters
                   </Button>
-                )}
-                <Button
-                  onClick={() => {
-                    setSelectedCategory("alles");
-                    setSelectedSort("meest-gekozen");
-                    setSearchQuery("");
-                  }}
-                  className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
-                >
-                  Reset alle filters
-                </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
 
         {/* Promotional Banners */}

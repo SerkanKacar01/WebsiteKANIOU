@@ -100,6 +100,7 @@ function Router() {
         <Route path="/producten/kunststof-jaloezieen" component={ProductCategoryPage} />
         <Route path="/producten/textiel-raamfolie" component={ProductCategoryPage} />
         <Route path="/producten/houten-shutters" component={ProductCategoryPage} />
+        <Route path="/producten/horren" component={ProductCategoryPage} />
         <Route path="/producten/inzethorren" component={ProductCategoryPage} />
         <Route path="/producten/opzethorren" component={ProductCategoryPage} />
         <Route path="/producten/plisse-hordeuren" component={ProductCategoryPage} />

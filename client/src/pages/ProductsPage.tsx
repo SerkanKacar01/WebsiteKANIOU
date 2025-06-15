@@ -698,6 +698,24 @@ const ProductsPage = () => {
         href: "/products/gordijnrails",
         badge: "Functioneel",
       },
+      {
+        id: 10,
+        title: "SQUID Textile Foil",
+        subtitle: "Elegant Privacy with a Natural Look",
+        description: "Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. It gives your windows a warm, linen-like appearance while maintaining privacy during the day.",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
+        products: [
+          { name: "SQUID Chalk", price: "€34,95", popular: true, width: 100, height: 150, thickness: 0.1 },
+          { name: "SQUID Oak", price: "€34,95", popular: true, width: 100, height: 150, thickness: 0.1 },
+          { name: "SQUID Ash", price: "€34,95", popular: false, width: 100, height: 150, thickness: 0.1 },
+          { name: "SQUID Rock", price: "€34,95", popular: false, width: 100, height: 150, thickness: 0.1 },
+          { name: "SQUID Coal", price: "€34,95", popular: false, width: 100, height: 150, thickness: 0.1 }
+        ],
+        dimensions: { width: 100, height: 150, depth: 0.1 },
+        href: "/products/squid-textile-foil",
+        badge: "Premium",
+        isSquid: true
+      },
     ],
   };
 
@@ -733,8 +751,7 @@ const ProductsPage = () => {
       allProducts = productCategories.horren;
     } else if (selectedCategory === "squid") {
       allProducts = productCategories.accessoires.filter(item => 
-        item.title.toLowerCase().includes('squid') || 
-        item.subtitle.toLowerCase().includes('squid')
+        item.isSquid === true
       );
     } else if (selectedCategory === "accessoires") {
       allProducts = productCategories.accessoires;
@@ -829,6 +846,112 @@ const ProductsPage = () => {
   };
 
   const groupedProducts = getGroupedProducts();
+
+  // SQUID Specialized Product Card Component
+  const SquidProductCard = ({ category }: { category: any }) => {
+    return (
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-0">
+          {/* Left side: Image */}
+          <div className="relative overflow-hidden">
+            <img
+              src={category.image}
+              alt={category.title}
+              className="w-full h-64 md:h-full object-cover"
+            />
+            <div className="absolute top-4 left-4">
+              <span className="bg-[#d5c096] text-white px-3 py-1 rounded-full text-sm font-medium">
+                {category.badge}
+              </span>
+            </div>
+          </div>
+
+          {/* Right side: Content */}
+          <div className="p-8">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                📌 SQUID Textile Foil — Elegant Privacy with a Natural Look
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. 
+                It gives your windows a warm, linen-like appearance while maintaining privacy during the day. Unlike traditional film, 
+                Squid is breathable and elegant, and sticks directly to your window — no drilling, no glue, no hassle.
+              </p>
+            </div>
+
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">✔ Why Choose SQUID?</h4>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Stylish and minimalistic:</strong> Subtle linen texture fits all interior styles</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Daytime privacy:</strong> Clear view out, but blocks views from outside</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Easy to apply:</strong> Self-adhesive textile — no glue, no drilling</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Heat and moisture resistant:</strong> Perfect for kitchens, bathrooms, and skylights</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Removable:</strong> Can be repositioned or removed cleanly</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Versatile use:</strong> Ideal for homes, offices, and commercial spaces</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#d5c096] mr-2">•</span>
+                  <span><strong>Custom-fit available:</strong> Tailored to your exact window size</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">🎨 Available in 5 Timeless Colours:</h4>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {['Chalk', 'Oak', 'Ash', 'Rock', 'Coal'].map((color) => (
+                  <span key={color} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-medium">
+                    {color}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-3">🛒 Perfect for:</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                <div>• Living rooms & bedrooms</div>
+                <div>• Skylights & roof windows</div>
+                <div>• Bathrooms & kitchens</div>
+                <div>• Storefronts & offices</div>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Button
+                className="bg-[#d5c096] hover:bg-[#c4b183] text-white flex-1"
+              >
+                View Details
+              </Button>
+              <Button
+                variant="outline"
+                className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096]/10"
+              >
+                Request Quote
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   // Component for rendering product cards
   const ProductCard = ({ category }: { category: any }) => {
@@ -1253,19 +1376,13 @@ const ProductsPage = () => {
           <h2 className="text-3xl font-bold text-center mb-12">
             {selectedCategory === "alles"
               ? "Onze Productcategorieën"
-              : selectedCategory === "jaloezien"
-                ? "Jaloezieën"
-                : selectedCategory === "rolgordijnen"
-                  ? "Rolgordijnen"
-                  : selectedCategory === "vitrages"
-                    ? "Vitrages"
-                    : selectedCategory === "shutters"
-                      ? "Shutters"
-                      : selectedCategory === "plisses"
-                        ? "Plissés & Horren"
-                        : selectedCategory === "accessoires"
-                          ? "Accessoires"
-                          : "Producten"}
+              : selectedCategory === "horren"
+                ? "Horren"
+                : selectedCategory === "squid"
+                  ? "SQUID Textile Foil"
+                  : selectedCategory === "accessoires"
+                    ? "Accessoires"
+                    : "Producten"}
           </h2>
 
           {selectedCategory === "alles" ? (

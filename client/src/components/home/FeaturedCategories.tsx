@@ -52,7 +52,7 @@ const FeaturedCategories = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-16 bg-neutral-100">
+    <section id="featured-categories" className="py-16 bg-neutral-100">
       <Container>
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">

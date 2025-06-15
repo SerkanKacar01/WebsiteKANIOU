@@ -3,10 +3,24 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { useLanguage } from "@/context/LanguageContext";
 import NewsletterSignup from "@/components/layout/NewsletterSignup";
-import { Gift } from "lucide-react";
+import { Gift, ArrowDown } from "lucide-react";
 
 const HeroSection = () => {
   const { t } = useLanguage();
+
+  const scrollToProducts = () => {
+    const element = document.getElementById('featured-categories');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToQuote = () => {
+    const element = document.getElementById('quote');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="relative h-[70vh] overflow-hidden">
@@ -29,24 +43,24 @@ const HeroSection = () => {
             Verhef Elke Ruimte met Tijdloze Elegantie
           </h1>
           <p className="font-body text-base sm:text-lg md:text-xl text-white mb-6 sm:mb-8 opacity-90">
-            Premium gordijnen & zonweringen op maat, afgestemd op uw
-            interieurstijl en woonbehoeften.
+            Jaloezieën op maat – stijlvol, functioneel en betaalbaar
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
-            <Link href="/price-calculator">
-              <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded w-full sm:w-auto">
-                Bekijk onze collecties & prijzen
-              </Button>
-            </Link>
-            <Link href="/quote">
-              <Button
-                variant="outline"
-                className="bg-white/80 hover:bg-white text-black px-4 sm:px-6 py-2 sm:py-2.5 rounded w-full sm:w-auto mt-2 sm:mt-0"
-              >
-                Vrijblijvend offerte aanvragen
-              </Button>
-            </Link>
-
+          
+          {/* Dual Call-to-Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 justify-center sm:justify-start">
+            <Button 
+              onClick={scrollToProducts}
+              className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 w-full sm:w-auto"
+            >
+              Bekijk alle producten
+            </Button>
+            <Button
+              onClick={scrollToQuote}
+              variant="outline"
+              className="bg-transparent border-2 border-[#d5c096] text-white hover:bg-[#d5c096] hover:text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 w-full sm:w-auto"
+            >
+              Direct offerte aanvragen
+            </Button>
           </div>
         </div>
       </Container>

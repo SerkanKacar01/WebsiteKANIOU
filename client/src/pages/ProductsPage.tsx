@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -6,12 +6,49 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
-import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc } from "lucide-react";
+import { ArrowRight, Star, Eye, Ruler, Palette, Filter, SortAsc, Settings, RotateCcw } from "lucide-react";
 
 const ProductsPage = () => {
   const { t } = useLanguage();
   const [selectedSort, setSelectedSort] = useState("meest-gekozen");
   const [selectedCategory, setSelectedCategory] = useState("alles");
+  const [showSaveIndicator, setShowSaveIndicator] = useState(false);
+
+  // Load user preferences from localStorage on component mount
+  useEffect(() => {
+    const savedSort = localStorage.getItem('kaniou-preferred-sort');
+    const savedCategory = localStorage.getItem('kaniou-preferred-category');
+    
+    if (savedSort) {
+      setSelectedSort(savedSort);
+    }
+    if (savedCategory) {
+      setSelectedCategory(savedCategory);
+    }
+  }, []);
+
+  // Save user preferences to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem('kaniou-preferred-sort', selectedSort);
+    setShowSaveIndicator(true);
+    const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
+    return () => clearTimeout(timer);
+  }, [selectedSort]);
+
+  useEffect(() => {
+    localStorage.setItem('kaniou-preferred-category', selectedCategory);
+    setShowSaveIndicator(true);
+    const timer = setTimeout(() => setShowSaveIndicator(false), 2000);
+    return () => clearTimeout(timer);
+  }, [selectedCategory]);
+
+  // Reset preferences to default
+  const resetPreferences = () => {
+    setSelectedSort("meest-gekozen");
+    setSelectedCategory("alles");
+    localStorage.removeItem('kaniou-preferred-sort');
+    localStorage.removeItem('kaniou-preferred-category');
+  };
 
   // Product categories organized by main groups
   const productCategories = {
@@ -365,9 +402,34 @@ const ProductsPage = () => {
               </div>
             </div>
             
-            {/* Results count */}
-            <div className="text-sm text-gray-500 mt-2 sm:mt-0">
-              {filteredProducts.length} producten gevonden
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              {/* Reset Preferences Button */}
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={resetPreferences}
+                className="border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096]/50"
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Reset voorkeuren
+              </Button>
+              
+              {/* Preferences Status Indicator */}
+              <div className={`flex items-center gap-2 text-xs transition-colors duration-300 ${
+                showSaveIndicator ? 'text-[#d5c096]' : 'text-gray-500'
+              }`}>
+                <Settings className={`h-3 w-3 transition-transform duration-300 ${
+                  showSaveIndicator ? 'rotate-45' : ''
+                }`} />
+                <span>
+                  {showSaveIndicator ? 'Voorkeuren opgeslagen!' : 'Voorkeuren automatisch opgeslagen'}
+                </span>
+              </div>
+              
+              {/* Results count */}
+              <div className="text-sm text-gray-500">
+                {filteredProducts.length} producten gevonden
+              </div>
             </div>
           </div>
         </div>

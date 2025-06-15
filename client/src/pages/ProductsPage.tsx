@@ -1110,7 +1110,6 @@ const ProductsPage = () => {
             </Link>
           </div>
         </div>
-        </div>
       </Container>
 
       {/* Floating Comparison Panel */}

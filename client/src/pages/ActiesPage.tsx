@@ -3,51 +3,38 @@ import Container from "@/components/ui/container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Percent, Gift, Star, ArrowRight } from "lucide-react";
+import { Gift, Star, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
 const ActiesPage = () => {
   const promotions = [
     {
       id: 1,
-      title: "20% korting op alle rolgordijnen",
-      description: "Profiteer van 20% korting op ons complete assortiment rolgordijnen. Inclusief gratis inmeting en montage.",
-      discount: "20%",
-      validUntil: "31 maart 2024",
+      title: "Premium Rolgordijnen Actie",
+      description: "Ontdek ons complete assortiment rolgordijnen. Inclusief gratis inmeting en montage.",
       category: "Rolgordijnen",
       featured: true,
-      originalPrice: "€299",
-      newPrice: "€239",
       image: "/assets/Rolgordijnen.jpeg"
     },
     {
       id: 2,
-      title: "Gratis montage bij aankoop vanaf €500",
-      description: "Bij elke bestelling vanaf €500 krijg je gratis professionele montage ter waarde van €75.",
-      discount: "Gratis montage",
-      validUntil: "30 april 2024",
+      title: "Gratis montage service",
+      description: "Professionele montage door onze ervaren specialisten.",
       category: "Service",
-      featured: false,
-      value: "€75 besparing"
+      featured: false
     },
     {
       id: 3,
       title: "Combi-deal: Plissé + Horren",
-      description: "Koop een plissé gordijn en krijg 50% korting op een bijpassend hor. Perfecte combinatie voor comfort.",
-      discount: "50%",
-      validUntil: "15 april 2024",
+      description: "Perfecte combinatie van plissé gordijn en bijpassend hor voor optimaal comfort.",
       category: "Combi-deal",
-      featured: true,
-      originalPrice: "€450",
-      newPrice: "€337,50"
+      featured: true
     },
     {
       id: 4,
-      title: "Vroegboek korting 2024",
-      description: "Plan je raamdecoratie voor 2024 en profiteer van 15% vroegboek korting op alle producten.",
-      discount: "15%",
-      validUntil: "31 december 2024",
-      category: "Vroegboek",
+      title: "Premium Raamdecoratie",
+      description: "Plan je raamdecoratie en profiteer van onze premium kwaliteit op alle producten.",
+      category: "Premium",
       featured: false
     }
   ];
@@ -58,7 +45,7 @@ const ActiesPage = () => {
         <title>Acties & Aanbiedingen | KANIOU zilvernaald</title>
         <meta
           name="description"
-          content="Ontdek onze actuele acties en aanbiedingen op premium raamdecoratie. Bespaar op gordijnen, jaloezieen, plissé en horren bij KANIOU zilvernaald."
+          content="Take advantage of our exclusive promotions on premium window coverings. Save on custom curtains, blinds, and insect screens."
         />
       </Helmet>
 
@@ -89,19 +76,13 @@ const ActiesPage = () => {
       <section className="py-16 bg-white">
         <Container>
           <div className="mb-12">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="font-display text-3xl font-bold text-primary mb-4">
-                  Uitgelichte Acties
-                </h2>
-                <p className="text-text-light">
-                  Onze beste aanbiedingen van dit moment
-                </p>
-              </div>
-              <div className="hidden md:flex items-center text-sm text-text-light">
-                <Clock className="h-4 w-4 mr-2" />
-                Geldig tot einde actieperiode
-              </div>
+            <div>
+              <h2 className="font-display text-3xl font-bold text-primary mb-4">
+                Uitgelichte Acties
+              </h2>
+              <p className="text-text-light">
+                Onze beste aanbiedingen van dit moment
+              </p>
             </div>
           </div>
 
@@ -123,38 +104,13 @@ const ActiesPage = () => {
                         {promo.title}
                       </CardTitle>
                     </div>
-                    <div className="text-right ml-4">
-                      <div className="text-3xl font-bold text-secondary">{promo.discount}</div>
-                      <div className="text-sm text-text-light">korting</div>
-                    </div>
                   </div>
                 </CardHeader>
                 
                 <CardContent>
                   <p className="text-text-light mb-6">{promo.description}</p>
                   
-                  {promo.originalPrice && promo.newPrice && (
-                    <div className="bg-neutral-50 rounded-lg p-4 mb-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="text-sm text-text-light line-through">{promo.originalPrice}</div>
-                          <div className="text-2xl font-bold text-secondary">{promo.newPrice}</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-sm text-text-light">Je bespaart</div>
-                          <div className="text-lg font-semibold text-green-600">
-                            €{(parseFloat(promo.originalPrice.replace('€', '')) - parseFloat(promo.newPrice.replace('€', ''))).toFixed(0)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-text-light">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      Geldig tot {promo.validUntil}
-                    </div>
+                  <div className="flex justify-end">
                     <Link href="/offerte">
                       <Button className="bg-secondary hover:bg-secondary/90">
                         Profiteer nu
@@ -185,27 +141,13 @@ const ActiesPage = () => {
                         {promo.title}
                       </CardTitle>
                     </div>
-                    <div className="flex items-center">
-                      <Percent className="h-5 w-5 text-secondary mr-1" />
-                      <span className="text-lg font-bold text-secondary">{promo.discount}</span>
-                    </div>
                   </div>
                 </CardHeader>
                 
                 <CardContent>
                   <p className="text-text-light mb-4">{promo.description}</p>
                   
-                  {promo.value && (
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
-                      <div className="text-sm font-medium text-green-800">{promo.value}</div>
-                    </div>
-                  )}
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-text-light">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      Tot {promo.validUntil}
-                    </div>
+                  <div className="flex justify-end">
                     <Link href="/offerte">
                       <Button variant="outline" size="sm">
                         Meer info
@@ -224,10 +166,10 @@ const ActiesPage = () => {
         <Container>
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="font-display text-3xl font-bold text-primary mb-6">
-              Wil je profiteren van onze acties?
+              Would you like to benefit from our promotions?
             </h2>
             <p className="text-lg text-text-light mb-8">
-              Vraag vandaag nog een vrijblijvende offerte aan en ontdek welke acties van toepassing zijn op jouw situatie.
+              Request a free quote today and discover which promotions apply to your situation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/offerte">

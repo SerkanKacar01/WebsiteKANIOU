@@ -19,6 +19,7 @@ import ProductsPage from "@/pages/ProductsPage";
 
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
+import GordijnrailsConfiguratorPage from "@/pages/GordijnrailsConfiguratorPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
@@ -113,6 +114,7 @@ function Router() {
         <Route path="/producten/duo-plisse" component={ProductCategoryPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={ProductCategoryPage} />
+        <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         

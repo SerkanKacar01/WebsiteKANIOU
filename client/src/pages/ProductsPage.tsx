@@ -695,12 +695,28 @@ const ProductsPage = () => {
         image:
           "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
         products: [
-          { name: "Gordijnrail KS - Wit", price: "v.a. €8,95 per meter", popular: true },
-          { name: "Gordijnrail KS - Zwart", price: "v.a. €8,95 per meter", popular: true },
-          { name: "Gordijnrail DS - Wit", price: "v.a. €8,95 per meter", popular: false },
-          { name: "Gordijnrail DS - Zwart", price: "v.a. €8,95 per meter", popular: false },
+          {
+            name: "Gordijnrail KS - Wit",
+            price: "v.a. € 9,95 per meter",
+            popular: true,
+          },
+          {
+            name: "Gordijnrail KS - Zwart",
+            price: "v.a. € 9,95 per meter",
+            popular: true,
+          },
+          {
+            name: "Gordijnrail DS - Wit",
+            price: "v.a. € 11,95 per meter",
+            popular: false,
+          },
+          {
+            name: "Gordijnrail DS - Zwart",
+            price: "v.a. € 11,95 per meter",
+            popular: false,
+          },
         ],
-        href: "/producten/gordijnrails",
+        href: "/producten/gordijnrails/configurator",
         badge: "Op Maat",
       },
       {
@@ -793,7 +809,7 @@ const ProductsPage = () => {
       allProducts = productCategories.horren;
     } else if (selectedCategory === "gordijnrails") {
       allProducts = productCategories.accessoires.filter(
-        (item) => item.title === "Gordijnrails"
+        (item) => item.title === "Gordijnrails",
       );
     } else if (selectedCategory === "squid") {
       allProducts = productCategories.accessoires.filter(

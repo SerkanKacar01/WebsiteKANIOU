@@ -49,32 +49,45 @@ const QuoteForm = () => {
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteFormSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       phone: "",
       productType: "",
-      dimensions: "",
+      width: "",
+      height: "",
       requirements: "",
       website: "", // Honeypot field
     },
   });
 
   const mutation = useMutation({
-    mutationFn: (data: QuoteFormValues) =>
-      apiRequest("POST", "/api/quote-requests", data),
+    mutationFn: (data: QuoteFormValues) => {
+      // Transform the data to match the backend schema
+      const transformedData = {
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        phone: data.phone,
+        productType: data.productType,
+        dimensions: data.width && data.height ? `${data.width} x ${data.height} cm` : "",
+        requirements: data.requirements || "",
+        website: data.website || "",
+      };
+      return apiRequest("POST", "/api/quote-requests", transformedData);
+    },
     onSuccess: () => {
       toast({
-        title: t("quote.form.success"),
-        description: t("quote.form.successMessage"),
-        variant: "success" as any,
+        title: "Success",
+        description: "Thank you, your quote request has been sent successfully.",
+        variant: "default",
       });
       form.reset();
       setIsSubmitting(false);
     },
     onError: (error) => {
       toast({
-        title: t("quote.form.error"),
-        description: error.message || t("quote.form.errorMessage"),
+        title: "Error",
+        description: error.message || "There was an error sending your request. Please try again.",
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -92,10 +105,24 @@ const QuoteForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
-            name="name"
+            name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Voor - en Achternaam</FormLabel>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
                 <FormControl>
                   <Input placeholder="" {...field} />
                 </FormControl>
@@ -109,7 +136,7 @@ const QuoteForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>E-mail Adres</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="" {...field} />
                 </FormControl>
@@ -123,64 +150,10 @@ const QuoteForm = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Mobiel nummer</FormLabel>
+                <FormLabel>Phone Number</FormLabel>
                 <FormControl>
                   <Input placeholder="" {...field} />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="productType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Kies je raamdecoratie</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecteer" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="curtains">Gordijnen</SelectItem>
-                    <SelectItem value="blinds">Inbetweens</SelectItem>
-                    <SelectItem value="shades">Vouwgordijnen</SelectItem>
-                    <SelectItem value="drapes">Textiel Lamellen</SelectItem>
-                    <SelectItem value="kunststof_lamellen">
-                      Kunststof lamellen
-                    </SelectItem>
-                    <SelectItem value="kunststof_jaloezieen">
-                      Kunststof jaloezieën
-                    </SelectItem>
-                    <SelectItem value="houten_jaloezieen">
-                      Houten jaloezieën
-                    </SelectItem>
-                    <SelectItem value="houten_shutters">Houten shutters</SelectItem>
-                    <SelectItem value="plisse">Plissé</SelectItem>
-                    <SelectItem value="duo_plisse">Duo-Plissé</SelectItem>
-                    <SelectItem value="rolgordijnen">Rolgordijnen</SelectItem>
-                    <SelectItem value="duo_rolgordijnen">
-                      Duo-rolgordijnen
-                    </SelectItem>
-                    <SelectItem value="gordijnrails">Gordijnrails</SelectItem>
-                    <SelectItem value="gordijnroedes">Gordijnroedes</SelectItem>
-                    <SelectItem value="squid">SQUID</SelectItem>
-                    <SelectItem value="inzethorren">Inzethorren</SelectItem>
-                    <SelectItem value="opzethorren">Opzethorren</SelectItem>
-                    <SelectItem value="plisse_hordeuren">
-                      Plissé hordeuren
-                    </SelectItem>
-                    <SelectItem value="dakraam_velux_fakro">
-                      Dakraam Velux/Fakro
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -189,28 +162,98 @@ const QuoteForm = () => {
 
         <FormField
           control={form.control}
-          name="dimensions"
+          name="productType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Afmetingen van het raam (indien bekend)</FormLabel>
-              <FormControl>
-                <Input placeholder="Breedte x Hoogte in cm" {...field} />
-              </FormControl>
+              <FormLabel>Product type (dropdown menu)</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecteer" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="curtains">Gordijnen</SelectItem>
+                  <SelectItem value="blinds">Inbetweens</SelectItem>
+                  <SelectItem value="shades">Vouwgordijnen</SelectItem>
+                  <SelectItem value="drapes">Textiel Lamellen</SelectItem>
+                  <SelectItem value="kunststof_lamellen">
+                    Kunststof lamellen
+                  </SelectItem>
+                  <SelectItem value="kunststof_jaloezieen">
+                    Kunststof jaloezieën
+                  </SelectItem>
+                  <SelectItem value="houten_jaloezieen">
+                    Houten jaloezieën
+                  </SelectItem>
+                  <SelectItem value="houten_shutters">Houten shutters</SelectItem>
+                  <SelectItem value="plisse">Plissé</SelectItem>
+                  <SelectItem value="duo_plisse">Duo-Plissé</SelectItem>
+                  <SelectItem value="rolgordijnen">Rolgordijnen</SelectItem>
+                  <SelectItem value="duo_rolgordijnen">
+                    Duo-rolgordijnen
+                  </SelectItem>
+                  <SelectItem value="gordijnrails">Gordijnrails</SelectItem>
+                  <SelectItem value="gordijnroedes">Gordijnroedes</SelectItem>
+                  <SelectItem value="squid">SQUID</SelectItem>
+                  <SelectItem value="inzethorren">Inzethorren</SelectItem>
+                  <SelectItem value="opzethorren">Opzethorren</SelectItem>
+                  <SelectItem value="plisse_hordeuren">
+                    Plissé hordeuren
+                  </SelectItem>
+                  <SelectItem value="dakraam_velux_fakro">
+                    Dakraam Velux/Fakro
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="width"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Dimensions: Width (cm)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Width in cm" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="height"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Height (cm)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Height in cm" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
           name="requirements"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Aanvullende vereisten</FormLabel>
+              <FormLabel>Optional: Extra notes field</FormLabel>
               <FormControl>
                 <Textarea
                   rows={4}
-                  placeholder="Gelieve eventuele specifieke vereisten of vragen te vermelden…"
+                  placeholder="Please mention any specific requirements or questions..."
                   {...field}
                 />
               </FormControl>
@@ -245,7 +288,7 @@ const QuoteForm = () => {
           className="w-full bg-secondary hover:bg-accent"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Offerteaanvraag verzenden"}
+          {isSubmitting ? "Submitting..." : "Offerte aanvragen"}
         </Button>
       </form>
     </Form>

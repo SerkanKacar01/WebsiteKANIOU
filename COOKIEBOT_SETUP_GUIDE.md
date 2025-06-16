@@ -27,14 +27,16 @@
 1. Go to https://manage.cookiebot.com/
 2. Create account or log in
 3. Add your domain (kaniou.be)
-4. Copy your Domain Group ID
+4. Copy your Domain Group ID from the Implementation section
 
 ### Step 2: Replace Placeholder in HTML
 Replace `YOUR_COOKIEBOT_DOMAIN_GROUP_ID` in `client/index.html` with your actual Domain Group ID:
 
 ```html
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="YOUR_ACTUAL_DOMAIN_GROUP_ID" type="text/javascript" async></script>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="abcd1234-5678-9012-3456-789012345678" type="text/javascript" async></script>
 ```
+
+**IMPORTANT**: The placeholder value will trigger warnings. You must replace it with your actual domain ID.
 
 ### Step 3: Enable Auto-blocking in Cookiebot Dashboard
 1. Log in to https://manage.cookiebot.com/

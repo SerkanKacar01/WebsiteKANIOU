@@ -149,10 +149,18 @@ export function runComplianceCheck(): ComplianceReport {
     recommendations.push('Check DevTools Application > Cookies during testing');
   }
 
+  // Remove duplicate recommendations
+  const uniqueRecommendations: string[] = [];
+  recommendations.forEach(rec => {
+    if (!uniqueRecommendations.includes(rec)) {
+      uniqueRecommendations.push(rec);
+    }
+  });
+
   return {
     overall,
     checks,
-    recommendations: Array.from(new Set(recommendations)) // Remove duplicates
+    recommendations: uniqueRecommendations
   };
 }
 

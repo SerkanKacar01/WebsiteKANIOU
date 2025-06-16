@@ -1634,7 +1634,7 @@ ${chatSummary}
       const items = await storage.getCartItems(sessionId);
 
       const totalAmount = items.reduce((sum, item) => sum + item.totalPrice, 0);
-      const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+      const totalItems = items.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
       res.json({
         success: true,

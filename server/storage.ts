@@ -1008,20 +1008,24 @@ export class DatabaseStorage implements IStorage {
 
   async getPendingWarrantyReminders(): Promise<WarrantyReminder[]> {
     return await db.select().from(warrantyReminders)
-      .where(eq(warrantyReminders.isSent, false));
+      .where(eq(warrantyReminders.status, 'pending'));
   }
 
   async markWarrantyReminderSent(id: number): Promise<WarrantyReminder> {
     const [result] = await db.update(warrantyReminders)
-      .set({ isSent: true, sentAt: new Date() })
+      .set({ status: 'sent', sentAt: new Date() })
       .where(eq(warrantyReminders.id, id))
       .returning();
     return result;
   }
 
   // Payment Orders
-  async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
-    const [result] = await db.insert(paymentOrders).values([order]).returning();
+  async createPaymentOrder(order: Omit<InsertPaymentOrder, 'molliePaymentId'> & { molliePaymentId?: string }): Promise<PaymentOrder> {
+    const orderWithMollieId = {
+      ...order,
+      molliePaymentId: order.molliePaymentId || 'temp-' + Date.now()
+    };
+    const [result] = await db.insert(paymentOrders).values([orderWithMollieId]).returning();
     return result;
   }
 
@@ -1040,7 +1044,7 @@ export class DatabaseStorage implements IStorage {
     mollieStatus?: string;
     status?: string;
   }): Promise<PaymentOrder> {
-    const [result] = await db.insert(paymentOrders).values(data).returning();
+    const [result] = await db.insert(paymentOrders).values([data]).returning();
     return result;
   }
 
@@ -1105,7 +1109,7 @@ export class DatabaseStorage implements IStorage {
         .where(eq(shoppingCartItems.id, id));
       
       if (existing[0]) {
-        const quantity = updates.quantity ?? existing[0].quantity;
+        const quantity = updates.quantity ?? existing[0].quantity ?? 1;
         const unitPrice = updates.unitPrice ?? existing[0].unitPrice;
         updateData.totalPrice = quantity * unitPrice;
       }

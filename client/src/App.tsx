@@ -24,6 +24,8 @@ import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
+import OffertePage from "@/pages/OffertePage";
+import ActiesPage from "@/pages/ActiesPage";
 import SmartQuote from "@/pages/SmartQuote";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
 import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
@@ -60,6 +62,8 @@ function Router() {
     if (location === "/about" || location === "/overons") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
+    if (location === "/offerte") return "Offerte aanvragen" + " | " + t("app.title");
+    if (location === "/acties") return "Acties & Aanbiedingen" + " | " + t("app.title");
 
     if (location === "/zakelijk" || location === "/business") return "Business Solutions" + " | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
@@ -123,6 +127,8 @@ function Router() {
         <Route path="/zakelijk" component={BusinessPage} />
         <Route path="/business" component={BusinessPage} />
         <Route path="/quote" component={QuotePage} />
+        <Route path="/offerte" component={OffertePage} />
+        <Route path="/acties" component={ActiesPage} />
         <Route path="/smart-quote" component={SmartQuote} />
         <Route path="/slimme-offerte" component={SmartQuote} />
         <Route path="/kleur-matcher" component={ColorMatcherPage} />

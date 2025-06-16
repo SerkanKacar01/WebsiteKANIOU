@@ -2,35 +2,11 @@ import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useEffect } from "react";
 
 type SupportedLanguage = 'nl' | 'fr' | 'de' | 'en';
 
 export default function CookiePolicy() {
   const { language } = useLanguage();
-
-  useEffect(() => {
-    // Load Cookiebot Declaration script dynamically
-    const script = document.createElement('script');
-    script.id = 'CookieDeclarationPage';
-    script.src = 'https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/cd.js';
-    script.type = 'text/javascript';
-    script.async = true;
-    
-    // Append to the specific container
-    const container = document.getElementById('cookiebot-declaration-container');
-    if (container) {
-      container.appendChild(script);
-    }
-
-    // Cleanup function to remove script when component unmounts
-    return () => {
-      const scriptToRemove = document.getElementById('CookieDeclarationPage');
-      if (scriptToRemove) {
-        scriptToRemove.remove();
-      }
-    };
-  }, []);
 
   const content: Record<SupportedLanguage, {
     title: string;
@@ -124,6 +100,12 @@ export default function CookiePolicy() {
       <Helmet>
         <title>{t.title} | Kaniou</title>
         <meta name="description" content={t.description} />
+        <script 
+          id="CookieDeclaration" 
+          src="https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/cd.js" 
+          type="text/javascript" 
+          async
+        />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white py-12">
@@ -147,11 +129,13 @@ export default function CookiePolicy() {
                 <p className="text-slate-600 mb-6">
                   {t.cookieDeclarationDesc}
                 </p>
-                {/* Cookiebot Declaration Container */}
-                <div 
-                  id="cookiebot-declaration-container" 
-                  className="min-h-[200px] border rounded-lg p-4 bg-white"
-                ></div>
+                {/* Cookiebot Declaration will appear here automatically */}
+                <div className="min-h-[200px] border rounded-lg p-4 bg-white">
+                  <div className="text-center text-slate-500 py-8">
+                    <p className="mb-2">Cookie Declaration Loading...</p>
+                    <p className="text-sm">The live cookie overview will appear here once the page loads completely.</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 

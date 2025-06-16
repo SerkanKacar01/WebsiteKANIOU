@@ -1467,7 +1467,8 @@ ${chatSummary}
       // Create the full redirect URL
       const baseUrl = req.protocol + '://' + req.get('host');
       const redirectUrl = `${baseUrl}/payment/success`;
-      const webhookUrl = `${baseUrl}/api/payment/webhook`;
+      // Only set webhook URL for production environments
+      const webhookUrl = baseUrl.includes('localhost') ? undefined : `${baseUrl}/api/payment/webhook`;
 
       const paymentData = {
         amount: validatedData.amount,

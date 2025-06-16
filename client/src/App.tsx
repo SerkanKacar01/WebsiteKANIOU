@@ -44,6 +44,7 @@ import DisclaimerPage from "@/pages/DisclaimerPage";
 import CookiePolicy from "@/pages/CookiePolicy";
 import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
+import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 
 
 
@@ -166,6 +167,7 @@ function Router() {
         <Route path="/cookie-preferences" component={CookiePreferencesPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
+        <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin/chatbot" component={Admin} />
 

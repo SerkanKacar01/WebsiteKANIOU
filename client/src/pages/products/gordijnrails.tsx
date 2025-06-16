@@ -14,7 +14,7 @@ const GordijnrailsPage = () => {
         </title>
         <meta
           name="description"
-          content="Gordijnrails vormen de basis van elk gordijnsysteem. Soepele bediening en nette afwerking voor zowel lichte vitrages als zware overgordijnen. Vanaf €14,95 per meter."
+          content="Gordijnrails vormen de basis van elk gordijnsysteem. KS & DS rails op maat vanaf €8,95 per meter. Soepele bediening en nette afwerking voor zowel lichte vitrages als zware overgordijnen."
         />
         <meta
           property="og:title"
@@ -84,6 +84,130 @@ const GordijnrailsPage = () => {
                         </span>
                       </div>
                     </div>
+                  </div>
+                </section>
+
+                {/* Custom Rails Section - NEW */}
+                <section className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl p-8 border-2 border-primary/20">
+                  <div className="text-center mb-8">
+                    <div className="inline-flex items-center gap-3 bg-primary/10 px-4 py-2 rounded-full mb-4">
+                      <Settings className="w-5 h-5 text-primary" />
+                      <span className="text-primary font-medium">Op Maat Gemaakt</span>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-text-dark mb-4">
+                      Gordijnrails KS & DS op Maat
+                    </h2>
+                    <p className="text-lg text-text-light max-w-2xl mx-auto">
+                      Professionele gordijnrails, op maat gezaagd en inclusief accessoires. 
+                      Perfecte pasvorm, optimale kwaliteit en stil glijdend systeem.
+                    </p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-8 mb-8">
+                    {/* KS Rail */}
+                    <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-shadow">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-sm">KS</span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-text-dark">KS Rail</h3>
+                          <p className="text-sm text-text-light">Functioneel & Stil</p>
+                        </div>
+                      </div>
+                      <p className="text-text-medium mb-4">
+                        Populaire keuze voor dagelijks gebruik. Betrouwbaar systeem met 
+                        geruisloze bediening en duurzame aluminium constructie.
+                      </p>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600" />
+                          <span className="text-sm text-text-medium">Stil en soepel glijdend</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600" />
+                          <span className="text-sm text-text-medium">Verkrijgbaar in wit en zwart</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600" />
+                          <span className="text-sm text-text-medium">Inclusief alle accessoires</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* DS Rail */}
+                    <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-shadow">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-sm">DS</span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-text-dark">DS Rail</h3>
+                          <p className="text-sm text-text-light">Modern Design</p>
+                        </div>
+                      </div>
+                      <p className="text-text-medium mb-4">
+                        Stijlvolle uitvoering met moderne esthetiek. Design-gericht systeem 
+                        dat functionaliteit combineert met elegante vormgeving.
+                      </p>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600" />
+                          <span className="text-sm text-text-medium">Modern en strak design</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600" />
+                          <span className="text-sm text-text-medium">Verkrijgbaar in wit en zwart</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600" />
+                          <span className="text-sm text-text-medium">Premium afwerking</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Configuration Options */}
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200">
+                    <h3 className="text-xl font-semibold text-text-dark mb-6 flex items-center gap-2">
+                      <Wrench className="w-5 h-5 text-primary" />
+                      Configuratie Opties
+                    </h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                      <div>
+                        <h4 className="font-medium text-text-dark mb-2">Lengte</h4>
+                        <p className="text-sm text-text-medium">100 - 600 cm<br />Op maat gezaagd</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-text-dark mb-2">Montage</h4>
+                        <p className="text-sm text-text-medium">Plafond of wand<br />Inclusief steunen</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-text-dark mb-2">Bochten</h4>
+                        <p className="text-sm text-text-medium">0, 1 of 2 stuks<br />(optioneel)</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-text-dark mb-2">Kleuren</h4>
+                        <p className="text-sm text-text-medium">Wit of zwart<br />Aluminium profiel</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pricing & CTA */}
+                  <div className="mt-8 text-center">
+                    <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-4">
+                      <Euro className="w-5 h-5 text-primary" />
+                      <span className="text-primary font-semibold">Vanaf €8,95 per meter</span>
+                    </div>
+                    <p className="text-text-medium mb-6">
+                      Inclusief eindstops, steunen en runners. Meerprijs voor extra bochten.
+                    </p>
+                    <Link href="/offerte">
+                      <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-medium px-8 py-4">
+                        Stel jouw rail samen
+                        <Settings className="w-5 h-5 ml-2" />
+                      </Button>
+                    </Link>
                   </div>
                 </section>
 

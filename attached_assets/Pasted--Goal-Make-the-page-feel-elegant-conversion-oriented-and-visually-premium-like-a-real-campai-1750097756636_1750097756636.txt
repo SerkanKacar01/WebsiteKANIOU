@@ -1,0 +1,71 @@
+🎯 Goal:
+
+Make the page feel elegant, conversion-oriented, and visually premium — like a real campaign page from Veneta, Decorette, or Inhuis Plaza.
+
+⸻
+
+✅ INSTRUCTION OVERVIEW FOR REPLIT
+
+1. Full-width Hero Banner (Top Section)
+	•	Add a large hero image in the background (e.g. a stylish living room).
+	•	Use a translucent overlay to keep text readable.
+	•	Heading:
+Acties & Aanbiedingen
+Subheading:
+Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op = Op.
+	•	Button: Bekijk alle promoties (scrolls to content)
+
+⸻
+
+2. Highlight Section – “Uitgelichte Acties”
+	•	Use card layout with light shadows and subtle animations on hover.
+	•	Each card must include:
+	•	Category label (e.g. “Rolgordijnen” or “Combi-deal”)
+	•	Title of the deal (e.g. “Premium Rolgordijnen Actie”)
+	•	Short 1-line description
+	•	Button: Profiteer nu (standard beige with arrow icon)
+	•	Optional: Discount tag or “Nieuw / Topactie” badge
+
+✅ Suggestion for layout:
+	•	2 cards per row on desktop, 1 per row on mobile
+	•	Use consistent padding, rounded corners (e.g. rounded-2xl), and max-width containers
+
+⸻
+
+3. All Deals Section – “Alle Acties”
+	•	Group cards under themes: Service, Premium, Vroegboekkorting etc.
+	•	Same layout as above
+	•	Replace “Meer info” with:
+	•	Lees meer if detailed page exists
+	•	Actie bekijken if action scrolls down or opens modal
+
+⸻
+
+4. Sticky Top Filter Bar (Optional Enhancement)
+
+Let users filter promotions by:
+	•	Producttype (rolgordijn, horren, plissé)
+	•	Doel (privacy, verduisterend, kinderveilig)
+Use styled buttons or subtle dropdowns for filtering.
+
+⸻
+
+5. Final Call-to-Action (Bottom Section)
+
+Use a shaded box like:
+
+Wil je profiteren van onze acties?
+Vraag vrijblijvend een offerte aan en ontdek jouw persoonlijke voordeel.
+
+Add two large buttons:
+	•	Vraag offerte aan
+	•	Bekijk productassortiment
+
+⸻
+
+6. Visual Styling Recommendations
+	•	Font weights: Use medium or bold for titles, light for descriptions
+	•	Icons: Avoid emojis – use line icons like checkmarks, stars or tags (Lucide or Heroicons)
+	•	Colors: Beige, warm gray, soft white. Use your primary color only for highlight buttons.
+	•	Animations: Subtle entrance fade-ins or button ripple effect on hover
+	•	Responsive behavior: On mobile, show one card per row with auto stacking

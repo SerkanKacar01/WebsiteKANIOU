@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X, Mail, Gift, Check } from "lucide-react";
@@ -18,6 +18,43 @@ interface NewsletterSignupProps {
   variant?: "default" | "header" | "footer";
   onModalOpen?: () => void;
 }
+
+// Newsletter popup behavior tracking
+const NEWSLETTER_STORAGE_KEYS = {
+  CLOSED: 'kaniou_newsletter_closed',
+  SUBSCRIBED: 'kaniou_newsletter_subscribed',
+  LAST_SHOWN: 'kaniou_newsletter_last_shown'
+} as const;
+
+const POPUP_COOLDOWN_DAYS = 7;
+
+// Helper functions for localStorage management
+const setNewsletterClosed = () => {
+  const timestamp = Date.now();
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.CLOSED, timestamp.toString());
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.LAST_SHOWN, timestamp.toString());
+};
+
+const setNewsletterSubscribed = () => {
+  const timestamp = Date.now();
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.SUBSCRIBED, timestamp.toString());
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.LAST_SHOWN, timestamp.toString());
+};
+
+const shouldShowNewsletterPopup = (): boolean => {
+  // Check if user has already subscribed
+  const subscribed = localStorage.getItem(NEWSLETTER_STORAGE_KEYS.SUBSCRIBED);
+  if (subscribed) return false;
+
+  // Check if user closed popup recently
+  const closedTimestamp = localStorage.getItem(NEWSLETTER_STORAGE_KEYS.CLOSED);
+  if (closedTimestamp) {
+    const daysSinceClosed = (Date.now() - parseInt(closedTimestamp)) / (1000 * 60 * 60 * 24);
+    if (daysSinceClosed < POPUP_COOLDOWN_DAYS) return false;
+  }
+
+  return true;
+};
 
 const NewsletterSignup = ({ children, variant = "default", onModalOpen }: NewsletterSignupProps) => {
   const [open, setOpen] = useState(false);
@@ -55,6 +92,10 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
     onSuccess: () => {
       setIsSuccess(true);
       form.reset();
+      
+      // Mark as subscribed in localStorage
+      setNewsletterSubscribed();
+      
       toast({
         title: "Bedankt voor je inschrijving!",
         description: "Je ontvangt binnenkort onze aanbiedingen en exclusieve acties.",
@@ -132,6 +173,12 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
+    
+    // If closing the modal and no successful subscription, mark as closed
+    if (!newOpen && !isSuccess) {
+      setNewsletterClosed();
+    }
+    
     if (newOpen && onModalOpen) {
       onModalOpen();
     }

@@ -167,8 +167,8 @@ export class MolliePaymentService {
       if (!order) return;
 
       // Clear customer's shopping cart if session-based
-      if (order.customerDetails?.sessionId) {
-        await storage.clearCart(order.customerDetails.sessionId);
+      if (order.customerDetails && typeof order.customerDetails === 'object' && 'sessionId' in order.customerDetails) {
+        await storage.clearCart(order.customerDetails.sessionId as string);
       }
 
       // Send confirmation email (implement as needed)
@@ -196,7 +196,7 @@ export class MolliePaymentService {
     try {
       const payment = await mollieClient.payments.get(paymentId);
       
-      if (payment.isCancelable()) {
+      if (payment.isCancelable === true) {
         await mollieClient.payments.cancel(paymentId);
         
         // Update order status

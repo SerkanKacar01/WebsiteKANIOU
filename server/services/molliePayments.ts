@@ -49,8 +49,8 @@ export class MolliePaymentService {
       },
     };
 
-    // Add webhook URL if provided
-    if (data.webhookUrl) {
+    // Add webhook URL only for production environments
+    if (data.webhookUrl && !data.webhookUrl.includes('localhost') && !data.redirectUrl.includes('localhost')) {
       paymentParams.webhookUrl = data.webhookUrl;
     }
 

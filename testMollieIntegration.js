@@ -63,6 +63,7 @@ async function testMolliePaymentFlow() {
       customerName: 'Test Customer',
       customerEmail: 'test@example.com',
       redirectUrl: `${baseUrl}/payment/success`,
+      webhookUrl: undefined, // Skip webhook for localhost testing
       productDetails: {
         items: cartData.items.map(item => ({
           name: item.productName,

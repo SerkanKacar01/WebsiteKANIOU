@@ -419,6 +419,92 @@ export type InsertChatbotAdminTraining = z.infer<typeof insertChatbotAdminTraini
 
 
 
+// Payment Orders
+export const paymentOrders = pgTable("payment_orders", {
+  id: serial("id").primaryKey(),
+  molliePaymentId: text("mollie_payment_id").notNull().unique(),
+  customerName: text("customer_name").notNull(),
+  customerEmail: text("customer_email").notNull(),
+  amount: doublePrecision("amount").notNull(),
+  currency: text("currency").default("EUR"),
+  description: text("description").notNull(),
+  status: text("status").default("pending"), // 'pending', 'paid', 'failed', 'cancelled', 'expired'
+  redirectUrl: text("redirect_url").notNull(),
+  webhookUrl: text("webhook_url"),
+  checkoutUrl: text("checkout_url"),
+  productDetails: jsonb("product_details"), // Store product information
+  customerDetails: jsonb("customer_details"), // Store customer address, etc.
+  mollieStatus: text("mollie_status"), // Direct status from Mollie
+  paidAt: timestamp("paid_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertPaymentOrderSchema = createInsertSchema(paymentOrders).omit({
+  id: true,
+  molliePaymentId: true,
+  status: true,
+  checkoutUrl: true,
+  mollieStatus: true,
+  paidAt: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  customerName: z.string()
+    .min(2, "Customer name must be at least 2 characters")
+    .max(100, "Customer name must be less than 100 characters"),
+  customerEmail: z.string()
+    .email("Please enter a valid email address"),
+  amount: z.number()
+    .min(0.01, "Amount must be at least €0.01")
+    .max(10000, "Amount cannot exceed €10,000"),
+  description: z.string()
+    .min(1, "Description is required")
+    .max(200, "Description must be less than 200 characters"),
+  currency: z.string().default("EUR"),
+  redirectUrl: z.string().url("Invalid redirect URL"),
+  webhookUrl: z.string().url("Invalid webhook URL").optional(),
+  productDetails: z.any().optional(),
+  customerDetails: z.any().optional(),
+});
+
+// Shopping Cart Items
+export const shoppingCartItems = pgTable("shopping_cart_items", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  productType: text("product_type").notNull(),
+  productName: text("product_name").notNull(),
+  material: text("material"),
+  color: text("color"),
+  width: doublePrecision("width"), // in cm
+  height: doublePrecision("height"), // in cm
+  quantity: integer("quantity").default(1),
+  unitPrice: doublePrecision("unit_price").notNull(),
+  totalPrice: doublePrecision("total_price").notNull(),
+  customizations: jsonb("customizations"), // Additional customization options
+  imageUrl: text("image_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertShoppingCartItemSchema = createInsertSchema(shoppingCartItems).omit({
+  id: true,
+  totalPrice: true, // Will be calculated automatically
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  sessionId: z.string().min(1, "Session ID is required"),
+  productType: z.string().min(1, "Product type is required"),
+  productName: z.string().min(1, "Product name is required"),
+  quantity: z.number().min(1, "Quantity must be at least 1").max(50, "Quantity cannot exceed 50"),
+  unitPrice: z.number().min(0.01, "Unit price must be at least €0.01"),
+});
+
+// Payment relations
+export const paymentOrdersRelations = relations(paymentOrders, ({ many }) => ({
+  // Future: order items relation
+}));
+
 // Price Request Notifications
 export const priceRequestNotifications = pgTable("price_request_notifications", {
   id: serial("id").primaryKey(),
@@ -759,6 +845,13 @@ export type InsertStyleProductMapping = z.infer<typeof insertStyleProductMapping
 
 export type StyleQuoteRequest = typeof styleQuoteRequests.$inferSelect;
 export type InsertStyleQuoteRequest = z.infer<typeof insertStyleQuoteRequestSchema>;
+
+// Payment and Shopping Cart type definitions
+export type PaymentOrder = typeof paymentOrders.$inferSelect;
+export type InsertPaymentOrder = z.infer<typeof insertPaymentOrderSchema>;
+
+export type ShoppingCartItem = typeof shoppingCartItems.$inferSelect;
+export type InsertShoppingCartItem = z.infer<typeof insertShoppingCartItemSchema>;
 
 // Website Content Index - Full site crawl and knowledge extraction
 export const websiteContentIndex = pgTable("website_content_index", {

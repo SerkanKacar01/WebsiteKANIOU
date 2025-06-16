@@ -62,6 +62,8 @@ import {
   detectCategoryRequest
 } from "./productGalleryFlow";
 import multer from "multer";
+import { molliePaymentService } from "./services/molliePayments";
+import { insertPaymentOrderSchema, insertShoppingCartItemSchema } from "@shared/schema";
 
 
 // Type aliases for better code readability
@@ -1449,6 +1451,282 @@ ${chatSummary}
       res.status(500).json({
         success: false,
         message: 'Failed to check compliance status'
+      });
+    }
+  });
+
+  // ============================================================================
+  // PAYMENT ENDPOINTS - Mollie Integration
+  // ============================================================================
+
+  // Create payment with Mollie
+  app.post("/api/payment/create", async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertPaymentOrderSchema.parse(req.body);
+
+      // Create the full redirect URL
+      const baseUrl = req.protocol + '://' + req.get('host');
+      const redirectUrl = `${baseUrl}/payment/success`;
+      const webhookUrl = `${baseUrl}/api/payment/webhook`;
+
+      const paymentData = {
+        amount: validatedData.amount,
+        currency: validatedData.currency || 'EUR',
+        description: validatedData.description,
+        customerName: validatedData.customerName,
+        customerEmail: validatedData.customerEmail,
+        redirectUrl,
+        webhookUrl,
+        productDetails: validatedData.productDetails,
+        customerDetails: validatedData.customerDetails,
+      };
+
+      const result = await molliePaymentService.createPayment(paymentData);
+
+      res.json({
+        success: true,
+        paymentId: result.paymentId,
+        checkoutUrl: result.checkoutUrl,
+        orderId: result.orderId,
+      });
+
+    } catch (error) {
+      console.error("Payment creation failed:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Validation failed",
+          errors: fromZodError(error).toString(),
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: error instanceof Error ? error.message : "Failed to create payment",
+      });
+    }
+  });
+
+  // Mollie webhook endpoint
+  app.post("/api/payment/webhook", async (req: Request, res: Response) => {
+    try {
+      const paymentId = req.body.id;
+
+      if (!paymentId) {
+        return res.status(400).json({
+          success: false,
+          message: "Payment ID is required",
+        });
+      }
+
+      await molliePaymentService.handleWebhook(paymentId);
+
+      // Mollie expects a 200 status code
+      res.status(200).send("OK");
+
+    } catch (error) {
+      console.error("Webhook processing failed:", error);
+      res.status(500).json({
+        success: false,
+        message: "Webhook processing failed",
+      });
+    }
+  });
+
+  // Get payment status
+  app.get("/api/payment/status/:paymentId", async (req: Request, res: Response) => {
+    try {
+      const { paymentId } = req.params;
+
+      const status = await molliePaymentService.getPaymentStatus(paymentId);
+
+      res.json({
+        success: true,
+        status,
+      });
+
+    } catch (error) {
+      console.error("Failed to get payment status:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve payment status",
+      });
+    }
+  });
+
+  // Get payment order details
+  app.get("/api/payment/order/:orderId", async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+
+      if (isNaN(orderId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid order ID",
+        });
+      }
+
+      const order = await storage.getPaymentOrderById(orderId);
+
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found",
+        });
+      }
+
+      res.json({
+        success: true,
+        order,
+      });
+
+    } catch (error) {
+      console.error("Failed to get order:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve order",
+      });
+    }
+  });
+
+  // ============================================================================
+  // SHOPPING CART ENDPOINTS
+  // ============================================================================
+
+  // Add item to cart
+  app.post("/api/cart/add", async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertShoppingCartItemSchema.parse(req.body);
+
+      const cartItem = await storage.addItemToCart(validatedData);
+
+      res.json({
+        success: true,
+        item: cartItem,
+      });
+
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Validation failed",
+          errors: fromZodError(error).toString(),
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: "Failed to add item to cart",
+      });
+    }
+  });
+
+  // Get cart items
+  app.get("/api/cart/:sessionId", async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+
+      const items = await storage.getCartItems(sessionId);
+
+      const totalAmount = items.reduce((sum, item) => sum + item.totalPrice, 0);
+      const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+
+      res.json({
+        success: true,
+        items,
+        summary: {
+          totalAmount,
+          totalItems,
+          currency: 'EUR',
+        },
+      });
+
+    } catch (error) {
+      console.error("Failed to get cart items:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve cart items",
+      });
+    }
+  });
+
+  // Update cart item
+  app.patch("/api/cart/item/:itemId", async (req: Request, res: Response) => {
+    try {
+      const itemId = parseInt(req.params.itemId);
+      const updates = req.body;
+
+      if (isNaN(itemId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid item ID",
+        });
+      }
+
+      const updatedItem = await storage.updateCartItem(itemId, updates);
+
+      res.json({
+        success: true,
+        item: updatedItem,
+      });
+
+    } catch (error) {
+      console.error("Failed to update cart item:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update cart item",
+      });
+    }
+  });
+
+  // Remove item from cart
+  app.delete("/api/cart/item/:itemId", async (req: Request, res: Response) => {
+    try {
+      const itemId = parseInt(req.params.itemId);
+
+      if (isNaN(itemId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid item ID",
+        });
+      }
+
+      await storage.removeCartItem(itemId);
+
+      res.json({
+        success: true,
+        message: "Item removed from cart",
+      });
+
+    } catch (error) {
+      console.error("Failed to remove cart item:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to remove cart item",
+      });
+    }
+  });
+
+  // Clear cart
+  app.delete("/api/cart/:sessionId", async (req: Request, res: Response) => {
+    try {
+      const { sessionId } = req.params;
+
+      await storage.clearCart(sessionId);
+
+      res.json({
+        success: true,
+        message: "Cart cleared",
+      });
+
+    } catch (error) {
+      console.error("Failed to clear cart:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to clear cart",
       });
     }
   });

@@ -249,8 +249,19 @@ export interface IStorage {
   updateNewsletterSubscription(id: number, updates: Partial<NewsletterSubscription>): Promise<NewsletterSubscription>;
   unsubscribeFromNewsletter(email: string): Promise<boolean>;
 
+  // Payment Orders
+  createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
+  getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
+  getPaymentOrderByMollieId(molliePaymentId: string): Promise<PaymentOrder | undefined>;
+  updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<PaymentOrder>;
+  getPaymentOrdersByCustomerEmail(email: string): Promise<PaymentOrder[]>;
 
-
+  // Shopping Cart
+  addItemToCart(item: InsertShoppingCartItem): Promise<ShoppingCartItem>;
+  getCartItems(sessionId: string): Promise<ShoppingCartItem[]>;
+  updateCartItem(id: number, updates: Partial<ShoppingCartItem>): Promise<ShoppingCartItem>;
+  removeCartItem(id: number): Promise<void>;
+  clearCart(sessionId: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -987,6 +998,96 @@ export class DatabaseStorage implements IStorage {
       .where(eq(warrantyReminders.id, id))
       .returning();
     return result;
+  }
+
+  // Payment Orders
+  async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
+    const result = await db.insert(paymentOrders).values(order).returning();
+    return result[0];
+  }
+
+  async getPaymentOrderById(id: number): Promise<PaymentOrder | undefined> {
+    const result = await db
+      .select()
+      .from(paymentOrders)
+      .where(eq(paymentOrders.id, id));
+    return result[0];
+  }
+
+  async getPaymentOrderByMollieId(molliePaymentId: string): Promise<PaymentOrder | undefined> {
+    const result = await db
+      .select()
+      .from(paymentOrders)
+      .where(eq(paymentOrders.molliePaymentId, molliePaymentId));
+    return result[0];
+  }
+
+  async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<PaymentOrder> {
+    const [result] = await db
+      .update(paymentOrders)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(paymentOrders.id, id))
+      .returning();
+    return result;
+  }
+
+  async getPaymentOrdersByCustomerEmail(email: string): Promise<PaymentOrder[]> {
+    return await db
+      .select()
+      .from(paymentOrders)
+      .where(eq(paymentOrders.customerEmail, email))
+      .orderBy(desc(paymentOrders.createdAt));
+  }
+
+  // Shopping Cart
+  async addItemToCart(item: InsertShoppingCartItem): Promise<ShoppingCartItem> {
+    const totalPrice = item.unitPrice * item.quantity;
+    const result = await db.insert(shoppingCartItems).values({
+      ...item,
+      totalPrice,
+    }).returning();
+    return result[0];
+  }
+
+  async getCartItems(sessionId: string): Promise<ShoppingCartItem[]> {
+    return await db
+      .select()
+      .from(shoppingCartItems)
+      .where(eq(shoppingCartItems.sessionId, sessionId))
+      .orderBy(desc(shoppingCartItems.createdAt));
+  }
+
+  async updateCartItem(id: number, updates: Partial<ShoppingCartItem>): Promise<ShoppingCartItem> {
+    // Recalculate total price if quantity or unit price changed
+    const updateData = { ...updates };
+    if (updates.quantity || updates.unitPrice) {
+      const existing = await db
+        .select()
+        .from(shoppingCartItems)
+        .where(eq(shoppingCartItems.id, id));
+      
+      if (existing[0]) {
+        const quantity = updates.quantity ?? existing[0].quantity;
+        const unitPrice = updates.unitPrice ?? existing[0].unitPrice;
+        updateData.totalPrice = quantity * unitPrice;
+      }
+    }
+    updateData.updatedAt = new Date();
+
+    const [result] = await db
+      .update(shoppingCartItems)
+      .set(updateData)
+      .where(eq(shoppingCartItems.id, id))
+      .returning();
+    return result;
+  }
+
+  async removeCartItem(id: number): Promise<void> {
+    await db.delete(shoppingCartItems).where(eq(shoppingCartItems.id, id));
+  }
+
+  async clearCart(sessionId: string): Promise<void> {
+    await db.delete(shoppingCartItems).where(eq(shoppingCartItems.sessionId, sessionId));
   }
 }
 

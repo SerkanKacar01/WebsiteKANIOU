@@ -3,9 +3,8 @@ import Container from "@/components/ui/container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Gift, Star, ArrowRight, Tag, CheckCircle, Filter, Eye, Shield, Baby } from "lucide-react";
+import { ArrowRight, Tag, CheckCircle, Shield } from "lucide-react";
 import { Link } from "wouter";
-import { useState } from "react";
 
 const ActiesPage = () => {
   const promotion = {
@@ -67,54 +66,49 @@ const ActiesPage = () => {
 
 
       {/* Single Promotion Section */}
-      <section id="promotions-section" className="py-20 bg-white">
+      <section id="promotion-section" className="py-20 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto">
-            {promotions.map((promo) => (
-              <Card 
-                key={promo.id} 
-                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-0"
-              >
-                {/* Badge */}
-                <div className="absolute top-6 left-6 z-10">
-                  <Badge className="bg-secondary text-white font-medium px-3 py-1">
-                    <Tag className="h-3 w-3 mr-1" />
-                    {promo.badge}
-                  </Badge>
+            <Card 
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-0"
+            >
+              {/* Badge */}
+              <div className="absolute top-6 left-6 z-10">
+                <Badge className="bg-secondary text-white font-medium px-3 py-1">
+                  <Tag className="h-3 w-3 mr-1" />
+                  {promotion.badge}
+                </Badge>
+              </div>
+              
+              {/* Discount Badge */}
+              <div className="absolute top-6 right-6 z-10">
+                <Badge className="bg-red-500 text-white font-bold px-3 py-1">
+                  {promotion.discount}
+                </Badge>
+              </div>
+              
+              <CardHeader className="pb-4 pt-16">
+                <Badge variant="outline" className="mb-3 w-fit">{promotion.category}</Badge>
+                <CardTitle className="text-3xl font-bold text-primary mb-3 group-hover:text-secondary transition-colors">
+                  {promotion.title}
+                </CardTitle>
+                <p className="text-text-light text-lg leading-relaxed mb-4">{promotion.description}</p>
+                <div className="flex items-center text-sm text-text-light mb-2">
+                  <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                  {promotion.validUntil}
                 </div>
-                
-                {/* Discount Badge */}
-                {promo.discount && (
-                  <div className="absolute top-6 right-6 z-10">
-                    <Badge className="bg-red-500 text-white font-bold px-3 py-1">
-                      {promo.discount}
-                    </Badge>
-                  </div>
-                )}
-                
-                <CardHeader className="pb-4 pt-16">
-                  <Badge variant="outline" className="mb-3 w-fit">{promo.category}</Badge>
-                  <CardTitle className="text-3xl font-bold text-primary mb-3 group-hover:text-secondary transition-colors">
-                    {promo.title}
-                  </CardTitle>
-                  <p className="text-text-light text-lg leading-relaxed mb-4">{promo.description}</p>
-                  <div className="flex items-center text-sm text-text-light mb-2">
-                    <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                    {promo.validUntil}
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  <div className="flex justify-end">
-                    <Link href={promo.ctaLink}>
-                      <Button className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg">
-                        {promo.ctaText}
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+              </CardHeader>
+              
+              <CardContent className="pt-0">
+                <div className="flex justify-end">
+                  <Link href={promotion.ctaLink}>
+                    <Button className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg">
+                      {promotion.ctaText}
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
 
@@ -128,14 +122,14 @@ const ActiesPage = () => {
             <Card className="border-0 shadow-xl bg-white rounded-2xl overflow-hidden">
               <CardContent className="p-12 text-center">
                 <div className="bg-secondary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="h-10 w-10 text-secondary" />
+                  <Shield className="h-10 w-10 text-secondary" />
                 </div>
                 
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-6">
-                  Wil je profiteren van onze acties?
+                  Wil je profiteren van 20% korting op horren?
                 </h2>
                 <p className="text-xl text-text-light mb-10 max-w-2xl mx-auto leading-relaxed">
-                  Vraag vrijblijvend een offerte aan en ontdek jouw persoonlijke voordeel.
+                  Vraag vrijblijvend een offerte aan voor onze premium horren collectie. Actie geldig tot 31 juli 2025.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -145,9 +139,9 @@ const ActiesPage = () => {
                       <ArrowRight className="h-5 w-5 ml-2" />
                     </Button>
                   </Link>
-                  <Link href="/products">
+                  <Link href="/producten/horren">
                     <Button size="lg" variant="outline" className="font-medium px-8 py-4 text-lg hover:bg-secondary hover:text-white hover:border-secondary">
-                      Bekijk productassortiment
+                      Bekijk horren collectie
                     </Button>
                   </Link>
                 </div>

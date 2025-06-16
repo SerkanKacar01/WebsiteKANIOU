@@ -689,18 +689,19 @@ const ProductsPage = () => {
       {
         id: 8,
         title: "Gordijnrails",
-        subtitle: "Functionele railsystemen",
+        subtitle: "KS & DS profielen (wit of zwart)",
         description:
-          "Professionele railsystemen voor een strakke en moderne uitstraling.",
+          "Functionele of design rails, perfect op maat gemaakt voor elk type gordijn.",
         image:
-          "https://images.unsplash.com/photo-1600210491964-1f36470bc2a7?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
         products: [
-          { name: "Enkele Rail", price: "€24,95", popular: true },
-          { name: "Dubbele Rail", price: "€34,95", popular: false },
-          { name: "Elektrische Rail", price: "€149,95", popular: false },
+          { name: "Gordijnrail KS - Wit", price: "v.a. €8,95 per meter", popular: true },
+          { name: "Gordijnrail KS - Zwart", price: "v.a. €8,95 per meter", popular: true },
+          { name: "Gordijnrail DS - Wit", price: "v.a. €8,95 per meter", popular: false },
+          { name: "Gordijnrail DS - Zwart", price: "v.a. €8,95 per meter", popular: false },
         ],
-        href: "/products/gordijnrails",
-        badge: "Functioneel",
+        href: "/producten/gordijnrails",
+        badge: "Op Maat",
       },
       {
         id: 10,
@@ -790,6 +791,10 @@ const ProductsPage = () => {
       ];
     } else if (selectedCategory === "horren") {
       allProducts = productCategories.horren;
+    } else if (selectedCategory === "gordijnrails") {
+      allProducts = productCategories.accessoires.filter(
+        (item) => item.title === "Gordijnrails"
+      );
     } else if (selectedCategory === "squid") {
       allProducts = productCategories.accessoires.filter(
         (item) => item.isSquid === true,
@@ -1290,9 +1295,11 @@ const ProductsPage = () => {
                         in{" "}
                         {selectedCategory === "horren"
                           ? "Horren"
-                          : selectedCategory === "squid"
-                            ? "SQUID textile foil"
-                            : "Accessoires"}
+                          : selectedCategory === "gordijnrails"
+                            ? "Gordijnrails"
+                            : selectedCategory === "squid"
+                              ? "SQUID textile foil"
+                              : "Accessoires"}
                       </span>
                     )}
                   </>
@@ -1430,6 +1437,7 @@ const ProductsPage = () => {
                 {[
                   { id: "alles", label: "Show All" },
                   { id: "horren", label: "Horren" },
+                  { id: "gordijnrails", label: "Gordijnrails" },
                   { id: "squid", label: "SQUID textile foil" },
                 ].map((category) => (
                   <button
@@ -1458,11 +1466,13 @@ const ProductsPage = () => {
               ? "Onze Productcategorieën"
               : selectedCategory === "horren"
                 ? "Horren"
-                : selectedCategory === "squid"
-                  ? "SQUID Textile Foil"
-                  : selectedCategory === "accessoires"
-                    ? "Accessoires"
-                    : "Producten"}
+                : selectedCategory === "gordijnrails"
+                  ? "Gordijnrails"
+                  : selectedCategory === "squid"
+                    ? "SQUID Textile Foil"
+                    : selectedCategory === "accessoires"
+                      ? "Accessoires"
+                      : "Producten"}
           </h2>
 
           {selectedCategory === "alles" ? (

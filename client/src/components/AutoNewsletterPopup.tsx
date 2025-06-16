@@ -212,27 +212,15 @@ const AutoNewsletterPopup = ({
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="consent"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="border-neutral-400 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel className="text-xs text-neutral-600 leading-relaxed">
-                        Ik ga akkoord met het ontvangen van nieuwsbrieven en promotionele content van KANIOU.
-                      </FormLabel>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
+              <div className="flex items-start space-x-3">
+                <Checkbox
+                  id="consent"
+                  className="border-neutral-400 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 mt-1"
+                />
+                <label htmlFor="consent" className="text-xs text-neutral-600 leading-relaxed">
+                  Ik ga akkoord met het ontvangen van nieuwsbrieven en promotionele content van KANIOU.
+                </label>
+              </div>
 
               <Button
                 type="submit"

@@ -1,9 +1,5 @@
 import Container from "@/components/ui/container";
 import { useLanguage } from "@/context/LanguageContext";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "wouter";
-import { ArrowRight, Shield, Wrench } from "lucide-react";
 
 // Import your new photos
 import img1 from "@assets/IMG_9299.jpg";
@@ -65,58 +61,10 @@ const FeaturedCategories = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {galleryImages.map((image) => (
             <GalleryCard key={image.id} image={image} />
           ))}
-        </div>
-
-        {/* Featured Product Section - Fly Screens */}
-        <div className="bg-gradient-to-r from-primary to-accent rounded-2xl p-8 text-white">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Shield className="h-6 w-6" />
-                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">
-                  Nieuw Product
-                </span>
-              </div>
-              <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">
-                Custom Fly Screen Frames
-              </h3>
-              <p className="text-lg mb-4 opacity-90">
-                Perfect for tilt-and-turn windows – no drilling required
-              </p>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center gap-2 text-sm">
-                  <Wrench className="h-4 w-4" />
-                  <span>Tool-free installation</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Shield className="h-4 w-4" />
-                  <span>2-year warranty</span>
-                </div>
-              </div>
-              <Link href="/quote">
-                <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                  Request Quote
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </Button>
-              </Link>
-            </div>
-            <div className="relative">
-              <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
-                <img 
-                  src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
-                  alt="Fly Screen with Clamp System" 
-                  className="w-full h-64 object-cover rounded-lg shadow-lg"
-                />
-              </div>
-              <div className="absolute -top-4 -right-4 bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold text-sm">
-                Vanaf €49,95
-              </div>
-            </div>
-          </div>
         </div>
       </Container>
     </section>

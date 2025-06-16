@@ -8,9 +8,30 @@ import { useLanguage } from "@/context/LanguageContext";
 export function CookieConsentBanner() {
   const { showBanner, acceptAll, declineAll } = useCookieConsent();
   const [showPreferences, setShowPreferences] = useState(false);
+  const [cookiebotLoaded, setCookiebotLoaded] = useState(false);
   const { t } = useLanguage();
 
-  if (!showBanner) return null;
+  // Check if Cookiebot is loaded and hide custom banner
+  useEffect(() => {
+    const checkCookiebot = () => {
+      if (window.Cookiebot) {
+        setCookiebotLoaded(true);
+      }
+    };
+
+    checkCookiebot();
+    
+    // Poll for Cookiebot
+    const interval = setInterval(checkCookiebot, 500);
+    
+    // Cleanup after 10 seconds
+    setTimeout(() => clearInterval(interval), 10000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Don't show custom banner if Cookiebot is loaded or banner should be hidden
+  if (!showBanner || cookiebotLoaded) return null;
 
   return (
     <>

@@ -49,57 +49,79 @@ export function useCookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Initialize Cookiebot callbacks
+    // Initialize Cookiebot callbacks with error handling
     const initializeCookiebot = () => {
-      if (window.Cookiebot) {
-        // Update our state based on Cookiebot consent
-        const updateConsentFromCookiebot = () => {
-          const cookiebotConsent = window.Cookiebot?.consent;
-          if (cookiebotConsent) {
-            const newConsent: CookieConsentData = {
-              status: 'accepted',
-              essential: cookiebotConsent.necessary,
-              analytics: cookiebotConsent.statistics,
-              marketing: cookiebotConsent.marketing,
-              timestamp: Date.now(),
-            };
-            setConsent(newConsent);
-            setShowBanner(false);
-            
-            // Load scripts based on consent
-            if (cookiebotConsent.statistics && !consent.analytics) {
-              loadAnalytics();
+      try {
+        if (window.Cookiebot) {
+          // Update our state based on Cookiebot consent
+          const updateConsentFromCookiebot = () => {
+            try {
+              const cookiebotConsent = window.Cookiebot?.consent;
+              if (cookiebotConsent) {
+                const newConsent: CookieConsentData = {
+                  status: 'accepted',
+                  essential: cookiebotConsent.necessary,
+                  analytics: cookiebotConsent.statistics,
+                  marketing: cookiebotConsent.marketing,
+                  timestamp: Date.now(),
+                };
+                setConsent(newConsent);
+                setShowBanner(false);
+                
+                // Load scripts based on consent
+                if (cookiebotConsent.statistics && !consent.analytics) {
+                  loadAnalytics();
+                }
+                if (cookiebotConsent.marketing && !consent.marketing) {
+                  loadMarketingScripts();
+                }
+              }
+            } catch (error) {
+              console.warn('Error updating consent from Cookiebot:', error);
             }
-            if (cookiebotConsent.marketing && !consent.marketing) {
-              loadMarketingScripts();
+          };
+
+          // Set up Cookiebot callbacks with error handling
+          window.CookiebotCallback_OnAccept = updateConsentFromCookiebot;
+          window.CookiebotCallback_OnDecline = updateConsentFromCookiebot;
+          window.CookiebotCallback_OnDialogInit = () => {
+            setShowBanner(false); // Hide our custom banner when Cookiebot is active
+          };
+
+          // Initial check
+          updateConsentFromCookiebot();
+        } else {
+          // Fallback to localStorage if Cookiebot is not available
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            try {
+              const parsedConsent = JSON.parse(stored) as CookieConsentData;
+              setConsent(parsedConsent);
+              setShowBanner(false);
+            } catch (error) {
+              console.error('Error parsing stored consent:', error);
+              localStorage.removeItem(STORAGE_KEY);
+              setShowBanner(true);
             }
+          } else {
+            setShowBanner(false); // Let Cookiebot handle the banner
           }
-        };
-
-        // Set up Cookiebot callbacks
-        window.CookiebotCallback_OnAccept = updateConsentFromCookiebot;
-        window.CookiebotCallback_OnDecline = updateConsentFromCookiebot;
-        window.CookiebotCallback_OnDialogInit = () => {
-          setShowBanner(false); // Hide our custom banner when Cookiebot is active
-        };
-
-        // Initial check
-        updateConsentFromCookiebot();
-      } else {
-        // Fallback to localStorage if Cookiebot is not available
+        }
+      } catch (error) {
+        console.warn('Error initializing Cookiebot:', error);
+        // Fallback to localStorage if Cookiebot fails
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
           try {
             const parsedConsent = JSON.parse(stored) as CookieConsentData;
             setConsent(parsedConsent);
             setShowBanner(false);
-          } catch (error) {
-            console.error('Error parsing stored consent:', error);
+          } catch (parseError) {
             localStorage.removeItem(STORAGE_KEY);
             setShowBanner(true);
           }
         } else {
-          setShowBanner(false); // Let Cookiebot handle the banner
+          setShowBanner(true);
         }
       }
     };

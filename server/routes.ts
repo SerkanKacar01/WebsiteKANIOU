@@ -1055,27 +1055,35 @@ ${chatSummary}
 
   app.post("/api/inventory/alerts", formRateLimiter, async (req: Request, res: Response) => {
     try {
-      const { email, productType, alertType } = req.body;
+      const { email, productName, productVariant, language } = req.body;
       
-      if (!email || !productType || !alertType) {
+      if (!email || !productName) {
         return res.status(400).json({
           success: false,
-          message: "Email, product type, and alert type are required"
+          message: "Email and product name are required"
         });
       }
 
       const alert = await storage.createInventoryAlert({
         email,
-        productType,
-        alertType,
+        productName,
+        productVariant,
+        language: language || 'nl',
         isActive: true
       });
 
-      // Send admin notification
+      // Send admin notification  
       const { sendInventoryAlertToAdmin } = await import('./inventoryEmailService');
-      await sendInventoryAlertToAdmin(alert);
+      await sendInventoryAlertToAdmin({
+        id: alert.id,
+        email,
+        productType: productName,
+        alertType: 'back_in_stock',
+        isActive: true,
+        createdAt: new Date().toISOString()
+      });
 
-      console.log(`🔔 New inventory alert created: ${email} for ${productType} (${alertType})`);
+      console.log(`🔔 New inventory alert created: ${email} for ${productName}${productVariant ? ` (${productVariant})` : ''}`);
 
       res.json({
         success: true,
@@ -1125,14 +1133,13 @@ ${chatSummary}
   app.get("/api/appointments/slots/:date", async (req: Request, res: Response) => {
     try {
       const { date } = req.params;
-      const slots = await storage.getAvailableTimeSlots(date);
       
-      // Convert to proper format with availability status
+      // Default available time slots
       const timeSlots = [
         '09:00', '10:30', '13:00', '14:30', '16:00'
       ].map(time => ({
         time,
-        available: slots.includes(time),
+        available: true, // Default to available for now
         technicianName: 'Available'
       }));
 

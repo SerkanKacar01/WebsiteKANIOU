@@ -38,7 +38,7 @@ import { OnboardingWizard } from "@/components/OnboardingWizard";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
-import CookiePolicyPage from "@/pages/CookiePolicyPage";
+import CookiePolicy from "@/pages/CookiePolicy";
 import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
 
@@ -154,7 +154,7 @@ function Router() {
         }} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
-        <Route path="/cookie-policy" component={CookiePolicyPage} />
+        <Route path="/cookie-policy" component={CookiePolicy} />
         <Route path="/cookie-preferences" component={CookiePreferencesPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />

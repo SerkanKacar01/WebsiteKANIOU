@@ -9,10 +9,10 @@ const OffertePage = () => {
   return (
     <>
       <Helmet>
-        <title>Request Your Free Quote | KANIOU zilvernaald</title>
+        <title>Offerte aanvragen | KANIOU zilvernaald</title>
         <meta
           name="description"
-          content="Request a personal quote for premium curtains, blinds and window coverings from KANIOU zilvernaald. Custom solutions tailored to your needs."
+          content="Vraag een persoonlijke offerte aan voor premium gordijnen, jaloezieen en raamdecoratie van KANIOU zilvernaald. Maatwerk oplossingen op maat."
         />
       </Helmet>
 

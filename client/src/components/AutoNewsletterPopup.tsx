@@ -3,65 +3,40 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X, Mail, Gift, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { insertNewsletterSubscriptionSchema, type InsertNewsletterSubscription } from "@shared/schema";
-import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useMutation } from "@tanstack/react-query";
 import { useLanguage } from "@/context/LanguageContext";
-import { setNewsletterClosed, setNewsletterSubscribed } from "@/hooks/useNewsletterPopup";
+import { useNewsletterPopup } from "@/hooks/useNewsletterPopup";
 
-interface NewsletterSignupProps {
-  children?: React.ReactNode;
-  variant?: "default" | "header" | "footer";
-  onModalOpen?: () => void;
+interface AutoNewsletterPopupProps {
+  enableTimeTrigger?: boolean;
+  enableScrollTrigger?: boolean;
+  customDelay?: number;
 }
 
-// Newsletter popup behavior tracking
-const NEWSLETTER_STORAGE_KEYS = {
-  CLOSED: 'kaniou_newsletter_closed',
-  SUBSCRIBED: 'kaniou_newsletter_subscribed',
-  LAST_SHOWN: 'kaniou_newsletter_last_shown'
-} as const;
-
-const POPUP_COOLDOWN_DAYS = 7;
-
-// Helper functions for localStorage management
-const setNewsletterClosed = () => {
-  const timestamp = Date.now();
-  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.CLOSED, timestamp.toString());
-  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.LAST_SHOWN, timestamp.toString());
-};
-
-const setNewsletterSubscribed = () => {
-  const timestamp = Date.now();
-  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.SUBSCRIBED, timestamp.toString());
-  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.LAST_SHOWN, timestamp.toString());
-};
-
-const shouldShowNewsletterPopup = (): boolean => {
-  // Check if user has already subscribed
-  const subscribed = localStorage.getItem(NEWSLETTER_STORAGE_KEYS.SUBSCRIBED);
-  if (subscribed) return false;
-
-  // Check if user closed popup recently
-  const closedTimestamp = localStorage.getItem(NEWSLETTER_STORAGE_KEYS.CLOSED);
-  if (closedTimestamp) {
-    const daysSinceClosed = (Date.now() - parseInt(closedTimestamp)) / (1000 * 60 * 60 * 24);
-    if (daysSinceClosed < POPUP_COOLDOWN_DAYS) return false;
-  }
-
-  return true;
-};
-
-const NewsletterSignup = ({ children, variant = "default", onModalOpen }: NewsletterSignupProps) => {
-  const [open, setOpen] = useState(false);
+const AutoNewsletterPopup = ({
+  enableTimeTrigger = false,
+  enableScrollTrigger = false,
+  customDelay = 30000
+}: AutoNewsletterPopupProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
   const { language } = useLanguage();
+
+  const {
+    shouldShow,
+    closePopup,
+    markSubscribed,
+  } = useNewsletterPopup({
+    enableTimeTrigger,
+    enableScrollTrigger,
+    customDelay
+  });
 
   const form = useForm<InsertNewsletterSubscription>({
     resolver: zodResolver(insertNewsletterSubscriptionSchema),
@@ -95,7 +70,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
       form.reset();
       
       // Mark as subscribed in localStorage
-      setNewsletterSubscribed();
+      markSubscribed();
       
       toast({
         title: "Bedankt voor je inschrijving!",
@@ -105,7 +80,6 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
       
       // Close modal after showing success for 2 seconds
       setTimeout(() => {
-        setOpen(false);
         setIsSuccess(false);
       }, 2500);
     },
@@ -121,14 +95,14 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
         });
       } else if (error.message?.includes("rate limit") || error.message?.includes("te veel")) {
         toast({
-          title: "Te veel pogingen",
-          description: "Wacht even voordat je het opnieuw probeert.",
+          title: "Te veel verzoeken",
+          description: "Probeer het over enkele minuten opnieuw.",
           variant: "destructive",
         });
       } else {
         toast({
           title: "Inschrijving mislukt",
-          description: "Controleer je internetverbinding en probeer het opnieuw.",
+          description: "Er is een fout opgetreden. Probeer het opnieuw.",
           variant: "destructive",
         });
       }
@@ -148,58 +122,28 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
     });
   };
 
-  const getButtonVariant = () => {
-    if (variant === "header") return "default";
-    if (variant === "footer") return "outline";
-    return "default";
-  };
-
-  const getButtonClassName = () => {
-    if (variant === "header") {
-      return "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-primary hover:to-orange-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105";
-    }
-    return "";
-  };
-
-  const DefaultTrigger = (
-    <Button 
-      variant={getButtonVariant()} 
-      className={getButtonClassName()}
-      size={variant === "header" ? "sm" : "default"}
-    >
-      <Gift className="w-4 h-4 mr-2" />
-      Acties & Kortingen
-    </Button>
-  );
-
   const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    
-    // If closing the modal and no successful subscription, mark as closed
     if (!newOpen && !isSuccess) {
-      setNewsletterClosed();
-    }
-    
-    if (newOpen && onModalOpen) {
-      onModalOpen();
+      closePopup();
     }
   };
+
+  if (!shouldShow) {
+    return null;
+  }
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        {children || DefaultTrigger}
-      </DialogTrigger>
+    <Dialog open={shouldShow} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md mx-4 rounded-xl border-0 shadow-2xl bg-[#FDFCF9]">
         <DialogHeader className="text-center space-y-4 pb-2">
           <div className="mx-auto w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center mb-2">
             <Mail className="w-8 h-8 text-white" />
           </div>
           <DialogTitle className="text-2xl font-bold text-neutral-800">
-            Blijf op de hoogte van exclusieve acties!
+            🎁 Exclusieve Aanbiedingen Wachten!
           </DialogTitle>
           <p className="text-neutral-600 text-sm leading-relaxed">
-            Ontvang als eerste onze nieuwste aanbiedingen, kortingen en productnieuws rechtstreeks in je mailbox.
+            Mis geen enkele deal! Ontvang onze nieuwsbrief en krijg direct toegang tot kortingen tot 30% op premium raamdecoratie.
           </p>
         </DialogHeader>
 
@@ -210,7 +154,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
             </div>
             <div className="text-center space-y-2">
               <h3 className="text-xl font-semibold text-green-700">Bedankt voor je inschrijving!</h3>
-              <p className="text-neutral-600">Je ontvangt binnenkort onze aanbiedingen.</p>
+              <p className="text-neutral-600">Je ontvangt binnenkort onze exclusieve aanbiedingen.</p>
             </div>
           </div>
         ) : (
@@ -258,10 +202,9 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="je@email.com"
+                        placeholder="jouw@email.com"
                         {...field}
                         className="border-neutral-300 focus:border-amber-500 focus:ring-amber-500 rounded-lg h-11"
-                        required
                       />
                     </FormControl>
                     <FormMessage />
@@ -269,17 +212,27 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
                 )}
               />
 
-              <div className="flex items-start space-x-3 p-4 bg-[#F8F7F4] rounded-lg border border-neutral-200">
-                <Checkbox 
-                  id="privacy-consent" 
-                  className="mt-0.5 border-neutral-400 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500" 
-                  required 
-                />
-                <label htmlFor="privacy-consent" className="text-xs text-neutral-600 leading-relaxed cursor-pointer">
-                  Ik ga akkoord met het ontvangen van marketing e-mails van KANIOU en begrijp dat ik me op elk moment kan uitschrijven. 
-                  Meer info in ons <a href="/privacy" className="text-primary hover:text-primary underline">privacybeleid</a>.
-                </label>
-              </div>
+              <FormField
+                control={form.control}
+                name="consent"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="border-neutral-400 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel className="text-xs text-neutral-600 leading-relaxed">
+                        Ik ga akkoord met het ontvangen van nieuwsbrieven en promotionele content van KANIOU.
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
 
               <Button
                 type="submit"
@@ -294,7 +247,7 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
                 ) : (
                   <div className="flex items-center space-x-2">
                     <Mail className="w-5 h-5" />
-                    <span>Inschrijven voor aanbiedingen</span>
+                    <span>Ja, ik wil korting ontvangen!</span>
                   </div>
                 )}
               </Button>
@@ -310,4 +263,4 @@ const NewsletterSignup = ({ children, variant = "default", onModalOpen }: Newsle
   );
 };
 
-export default NewsletterSignup;
+export default AutoNewsletterPopup;

@@ -25,10 +25,55 @@ const newsletterSchema = z.object({
 
 type NewsletterFormData = z.infer<typeof newsletterSchema>;
 
+// Newsletter banner tracking - reusing same localStorage keys for consistency
+const NEWSLETTER_STORAGE_KEYS = {
+  CLOSED: 'kaniou_newsletter_closed',
+  SUBSCRIBED: 'kaniou_newsletter_subscribed',
+  LAST_SHOWN: 'kaniou_newsletter_last_shown'
+} as const;
+
+const BANNER_COOLDOWN_DAYS = 7;
+
+// Helper functions for localStorage management
+const setNewsletterClosed = () => {
+  const timestamp = Date.now();
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.CLOSED, timestamp.toString());
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.LAST_SHOWN, timestamp.toString());
+};
+
+const setNewsletterSubscribed = () => {
+  const timestamp = Date.now();
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.SUBSCRIBED, timestamp.toString());
+  localStorage.setItem(NEWSLETTER_STORAGE_KEYS.LAST_SHOWN, timestamp.toString());
+};
+
+const shouldShowNewsletterBanner = (): boolean => {
+  // Check if user has already subscribed
+  const subscribed = localStorage.getItem(NEWSLETTER_STORAGE_KEYS.SUBSCRIBED);
+  if (subscribed) return false;
+
+  // Check if user closed banner recently
+  const closedTimestamp = localStorage.getItem(NEWSLETTER_STORAGE_KEYS.CLOSED);
+  if (closedTimestamp) {
+    const daysSinceClosed = (Date.now() - parseInt(closedTimestamp)) / (1000 * 60 * 60 * 24);
+    if (daysSinceClosed < BANNER_COOLDOWN_DAYS) return false;
+  }
+
+  return true;
+};
+
 const NewsletterBanner = () => {
   const [isDismissed, setIsDismissed] = useState(false);
   const { language } = useLanguage();
   const { toast } = useToast();
+
+  // Check localStorage on component mount
+  useEffect(() => {
+    const shouldShow = shouldShowNewsletterBanner();
+    if (!shouldShow) {
+      setIsDismissed(true);
+    }
+  }, []);
 
   const {
     register,
@@ -46,6 +91,9 @@ const NewsletterBanner = () => {
         language,
       }),
     onSuccess: () => {
+      // Mark as subscribed in localStorage
+      setNewsletterSubscribed();
+      
       toast({
         title: language === "nl" ? "Bedankt voor je inschrijving!" : "Thank you for subscribing!",
         description: language === "nl" 
@@ -67,6 +115,11 @@ const NewsletterBanner = () => {
 
   const onSubmit = (data: NewsletterFormData) => {
     subscribeMutation.mutate(data);
+  };
+
+  const handleDismiss = () => {
+    setNewsletterClosed();
+    setIsDismissed(true);
   };
 
   const getContent = () => {
@@ -116,7 +169,7 @@ const NewsletterBanner = () => {
             variant="ghost"
             size="sm"
             className="absolute top-2 right-2 h-8 w-8 p-0 hover:bg-primary/10"
-            onClick={() => setIsDismissed(true)}
+            onClick={handleDismiss}
             aria-label={content.dismissButton}
           >
             <X className="h-4 w-4" />

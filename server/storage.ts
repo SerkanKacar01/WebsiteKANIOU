@@ -251,6 +251,21 @@ export interface IStorage {
 
   // Payment Orders
   createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
+  createPaymentOrderWithMollieId(data: {
+    molliePaymentId: string;
+    customerName: string;
+    customerEmail: string;
+    amount: number;
+    currency: string;
+    description: string;
+    redirectUrl: string;
+    webhookUrl?: string;
+    checkoutUrl?: string;
+    productDetails?: any;
+    customerDetails?: any;
+    mollieStatus?: string;
+    status?: string;
+  }): Promise<PaymentOrder>;
   getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
   getPaymentOrderByMollieId(molliePaymentId: string): Promise<PaymentOrder | undefined>;
   updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<PaymentOrder>;
@@ -1003,6 +1018,25 @@ export class DatabaseStorage implements IStorage {
   // Payment Orders
   async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
     const result = await db.insert(paymentOrders).values(order).returning();
+    return result[0];
+  }
+
+  async createPaymentOrderWithMollieId(data: {
+    molliePaymentId: string;
+    customerName: string;
+    customerEmail: string;
+    amount: number;
+    currency: string;
+    description: string;
+    redirectUrl: string;
+    webhookUrl?: string;
+    checkoutUrl?: string;
+    productDetails?: any;
+    customerDetails?: any;
+    mollieStatus?: string;
+    status?: string;
+  }): Promise<PaymentOrder> {
+    const result = await db.insert(paymentOrders).values(data).returning();
     return result[0];
   }
 

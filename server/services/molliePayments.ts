@@ -58,8 +58,9 @@ export class MolliePaymentService {
       // Create payment with Mollie
       const payment: Payment = await mollieClient.payments.create(paymentParams);
 
-      // Store payment order in database
-      const orderData: InsertPaymentOrder = {
+      // Store payment order in database - use direct database insert
+      const savedOrder = await storage.createPaymentOrderWithMollieId({
+        molliePaymentId: payment.id,
         customerName: data.customerName,
         customerEmail: data.customerEmail,
         amount: data.amount,
@@ -67,16 +68,9 @@ export class MolliePaymentService {
         description: data.description,
         redirectUrl: data.redirectUrl,
         webhookUrl: data.webhookUrl,
+        checkoutUrl: payment.getCheckoutUrl() || '',
         productDetails: data.productDetails,
         customerDetails: data.customerDetails,
-      };
-
-      const savedOrder = await storage.createPaymentOrder(orderData);
-
-      // Update order with Mollie payment details
-      const updatedOrder = await storage.updatePaymentOrder(savedOrder.id, {
-        molliePaymentId: payment.id,
-        checkoutUrl: payment.getCheckoutUrl() || '',
         mollieStatus: payment.status,
         status: 'pending',
       });
@@ -84,7 +78,7 @@ export class MolliePaymentService {
       return {
         paymentId: payment.id,
         checkoutUrl: payment.getCheckoutUrl() || '',
-        orderId: updatedOrder.id,
+        orderId: savedOrder.id,
       };
     } catch (error) {
       console.error('Mollie payment creation failed:', error);

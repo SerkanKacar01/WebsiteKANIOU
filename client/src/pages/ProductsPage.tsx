@@ -1616,13 +1616,9 @@ const ProductsPage = () => {
               <div className="flex items-center space-x-4 w-full">
                 <div className="flex-1">
                   <p className="text-gray-800 font-medium text-sm lg:text-base">
-                    <span className="font-bold">
-                      Meest gekozen van deze maand:
-                    </span>
+                    <span className="font-bold"></span>
                     <br className="sm:hidden" />
-                    <span className="ml-1 sm:ml-0">
-                      Houten Jaloezieën - vanaf €89,95
-                    </span>
+                    <span className="ml-1 sm:ml-0"></span>
                   </p>
                 </div>
               </div>
@@ -1633,11 +1629,9 @@ const ProductsPage = () => {
               <div className="flex items-center space-x-4 w-full">
                 <div className="flex-1">
                   <p className="text-gray-800 font-medium text-sm lg:text-base">
-                    <span className="font-bold">Actie:</span>
+                    <span className="font-bold"></span>
                     <br className="sm:hidden" />
-                    <span className="ml-1 sm:ml-0">
-                      10% korting op duo plissé t.e.m. 30 juni!
-                    </span>
+                    <span className="ml-1 sm:ml-0"></span>
                   </p>
                 </div>
               </div>

@@ -54,7 +54,8 @@ const OffertePage = () => {
                             Binnen 24 uur contact
                           </h4>
                           <p className="text-sm text-text-light">
-                            Onze experts nemen binnen één werkdag contact met je op
+                            Onze experts nemen binnen één werkdag contact met je
+                            op
                           </p>
                         </div>
                       </li>
@@ -91,13 +92,21 @@ const OffertePage = () => {
                         Direct contact opnemen?
                       </h4>
                       <div className="space-y-2">
-                        <Button variant="outline" className="w-full justify-start" size="sm">
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start"
+                          size="sm"
+                        >
                           <Phone className="h-4 w-4 mr-2" />
-                          +31 (0)13 123 4567
+                          +32 467 85 64 05
                         </Button>
-                        <Button variant="outline" className="w-full justify-start" size="sm">
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start"
+                          size="sm"
+                        >
                           <Mail className="h-4 w-4 mr-2" />
-                          info@kaniou.nl
+                          info@kaniou.be
                         </Button>
                       </div>
                     </div>
@@ -122,10 +131,11 @@ const OffertePage = () => {
                   <CheckCircle className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-display text-xl font-medium text-primary mb-2">
-                  20+ jaar ervaring
+                  30+ jaar ervaring
                 </h3>
                 <p className="text-text-light">
-                  Ruime ervaring in maatwerk raamdecoratie voor particulieren en bedrijven
+                  Ruime ervaring in maatwerk raamdecoratie voor particulieren en
+                  bedrijven
                 </p>
               </div>
               <div className="text-center">
@@ -133,10 +143,10 @@ const OffertePage = () => {
                   <Clock className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-display text-xl font-medium text-primary mb-2">
-                  Snelle levering
+                  Levertijden van 3 tot 4 weken
                 </h3>
                 <p className="text-text-light">
-                  Korte levertijden en professionele montage door eigen monteurs
+                  Korte levertijden en professionele montage door prof. monteur
                 </p>
               </div>
               <div className="text-center">

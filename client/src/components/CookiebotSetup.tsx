@@ -13,6 +13,11 @@ export function CookiebotSetup() {
     // Run compliance check after page load
     const checkCompliance = () => {
       try {
+        // Only run if document is ready and in development
+        if (document.readyState !== 'complete' || process.env.NODE_ENV === 'production') {
+          return;
+        }
+        
         const report = runComplianceCheck();
         setComplianceReport(report);
         
@@ -25,13 +30,24 @@ export function CookiebotSetup() {
       }
     };
 
-    // Initial check after delay
-    setTimeout(checkCompliance, 2000);
+    // Wait for document to be ready
+    if (document.readyState === 'complete') {
+      setTimeout(checkCompliance, 3000);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(checkCompliance, 3000);
+      });
+    }
     
-    // Periodic checks during development
-    const interval = setInterval(checkCompliance, 10000);
+    // Only run periodic checks in development
+    let interval: NodeJS.Timeout;
+    if (process.env.NODE_ENV !== 'production') {
+      interval = setInterval(checkCompliance, 15000);
+    }
     
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, []);
 
   const copyToClipboard = (text: string) => {

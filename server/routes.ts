@@ -14,6 +14,8 @@ import {
   insertChatbotMessageSchema,
   insertNewsletterSubscriptionSchema,
   insertStyleQuoteRequestSchema,
+  insertPaymentOrderSchema,
+  insertShoppingCartItemSchema,
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
@@ -63,7 +65,6 @@ import {
 } from "./productGalleryFlow";
 import multer from "multer";
 import { molliePaymentService } from "./services/molliePayments";
-import { insertPaymentOrderSchema, insertShoppingCartItemSchema } from "@shared/schema";
 
 
 // Type aliases for better code readability

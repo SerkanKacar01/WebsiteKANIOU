@@ -102,12 +102,7 @@ import {
   warrantyReminders,
   WarrantyReminder,
   InsertWarrantyReminder,
-  blockedDates,
-  BlockedDate,
-  InsertBlockedDate,
-  flyScreenOrders,
-  FlyScreenOrder,
-  InsertFlyScreenOrder,
+  // Removed non-existent imports that were causing compilation errors
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -969,7 +964,16 @@ export class DatabaseStorage implements IStorage {
 
   // Warranty System Implementation (stubbed to satisfy interface)
   async createCustomerWarranty(warranty: InsertCustomerWarranty): Promise<CustomerWarranty> {
-    const [result] = await db.insert(customerWarranties).values(warranty).returning();
+    // Calculate warranty expiry date
+    const expiryDate = new Date(warranty.purchaseDate);
+    expiryDate.setMonth(expiryDate.getMonth() + warranty.warrantyPeriodMonths);
+    
+    const warrantyData = {
+      ...warranty,
+      warrantyExpiryDate: expiryDate
+    };
+    
+    const [result] = await db.insert(customerWarranties).values(warrantyData).returning();
     return result;
   }
 
@@ -984,14 +988,14 @@ export class DatabaseStorage implements IStorage {
     
     return await db.select().from(customerWarranties)
       .where(and(
-        eq(customerWarranties.isActive, true),
-        sql`${customerWarranties.expiryDate} <= ${futureDate}`
+        eq(customerWarranties.status, 'active'),
+        sql`${customerWarranties.warrantyExpiryDate} <= ${futureDate}`
       ));
   }
 
   async updateWarrantyStatus(id: number, status: string): Promise<CustomerWarranty> {
     const [result] = await db.update(customerWarranties)
-      .set({ status, updatedAt: new Date() })
+      .set({ status })
       .where(eq(customerWarranties.id, id))
       .returning();
     return result;
@@ -1017,8 +1021,8 @@ export class DatabaseStorage implements IStorage {
 
   // Payment Orders
   async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
-    const result = await db.insert(paymentOrders).values(order).returning();
-    return result[0];
+    const [result] = await db.insert(paymentOrders).values([order]).returning();
+    return result;
   }
 
   async createPaymentOrderWithMollieId(data: {
@@ -1036,8 +1040,8 @@ export class DatabaseStorage implements IStorage {
     mollieStatus?: string;
     status?: string;
   }): Promise<PaymentOrder> {
-    const result = await db.insert(paymentOrders).values(data).returning();
-    return result[0];
+    const [result] = await db.insert(paymentOrders).values(data).returning();
+    return result;
   }
 
   async getPaymentOrderById(id: number): Promise<PaymentOrder | undefined> {

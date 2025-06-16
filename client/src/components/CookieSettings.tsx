@@ -29,6 +29,14 @@ export function CookieSettings({
   const { t } = useLanguage();
 
   const handleSavePreferences = () => {
+    // If Cookiebot is available, use its preference system
+    if (window.Cookiebot) {
+      window.Cookiebot.renew();
+      setOpen(false);
+      return;
+    }
+    
+    // Fallback for development/testing
     acceptCustom(analyticsEnabled, marketingEnabled);
     setOpen(false);
   };

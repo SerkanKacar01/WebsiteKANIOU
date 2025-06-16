@@ -1348,7 +1348,103 @@ ${chatSummary}
     }
   });
 
+  // Cookiebot API Integration
+  app.get("/api/cookiebot/verify", async (req: Request, res: Response) => {
+    try {
+      const cookieHeader = req.headers.cookie || '';
+      const consentMatch = cookieHeader.match(/CookieConsent=([^;]+)/);
+      
+      if (!consentMatch) {
+        return res.json({
+          success: false,
+          message: 'No consent cookie found',
+          consent: {
+            necessary: false,
+            preferences: false,
+            statistics: false,
+            marketing: false
+          }
+        });
+      }
 
+      const consentValue = decodeURIComponent(consentMatch[1]);
+      let consent = {
+        necessary: false,
+        preferences: false,
+        statistics: false,
+        marketing: false
+      };
+
+      try {
+        // Parse Cookiebot consent format
+        const consentObj = JSON.parse(consentValue.replace(/([a-zA-Z]+):/g, '"$1":'));
+        consent = {
+          necessary: consentObj.necessary === true,
+          preferences: consentObj.preferences === true,
+          statistics: consentObj.statistics === true,
+          marketing: consentObj.marketing === true
+        };
+      } catch (parseError) {
+        // Fallback parsing
+        consent = {
+          necessary: consentValue.includes('necessary:true'),
+          preferences: consentValue.includes('preferences:true'),
+          statistics: consentValue.includes('statistics:true'),
+          marketing: consentValue.includes('marketing:true')
+        };
+      }
+
+      res.json({
+        success: true,
+        consent,
+        timestamp: new Date().toISOString(),
+        domainId: '277bd293-9336-4f15-ba87-4c760a56129b'
+      });
+
+    } catch (error) {
+      console.error('Consent verification error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        consent: {
+          necessary: false,
+          preferences: false,
+          statistics: false,
+          marketing: false
+        }
+      });
+    }
+  });
+
+  // Cookiebot compliance status endpoint
+  app.get("/api/cookiebot/compliance-status", async (req: Request, res: Response) => {
+    try {
+      const cookieHeader = req.headers.cookie || '';
+      const hasConsentCookie = cookieHeader.includes('CookieConsent=');
+      
+      const domainId = '277bd293-9336-4f15-ba87-4c760a56129b';
+      const hasApiKey = !!process.env.COOKIEBOT_API_KEY;
+      
+      res.json({
+        success: true,
+        compliance: {
+          cookiebotConfigured: true,
+          domainId,
+          apiKeyPresent: hasApiKey,
+          userHasConsent: hasConsentCookie,
+          gdprCompliant: hasConsentCookie && hasApiKey
+        },
+        timestamp: new Date().toISOString()
+      });
+
+    } catch (error) {
+      console.error('Compliance status error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to check compliance status'
+      });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

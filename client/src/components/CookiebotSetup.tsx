@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { AlertTriangle, CheckCircle, ExternalLink, Copy } from "lucide-react";
+import { AlertTriangle, CheckCircle, ExternalLink, Copy, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { runComplianceCheck, logComplianceReport } from "@/utils/gdprComplianceChecker";
 
 export function CookiebotSetup() {
   const [cookiebotLoaded, setCookiebotLoaded] = useState(false);

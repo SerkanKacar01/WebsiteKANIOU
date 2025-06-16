@@ -10,6 +10,7 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import { CookiebotSetup } from "@/components/CookiebotSetup";
 import { ChatbotWidget } from "@/components/chatbot/ChatWidget";
 
 import Home from "@/pages/Home";
@@ -206,6 +207,7 @@ function App() {
           <Router />
         </MobileLayoutWrapper>
         <CookieConsentBanner />
+        <CookiebotSetup />
         <ChatbotWidget />
         {shouldShowOnboarding && (
           <OnboardingWizard 

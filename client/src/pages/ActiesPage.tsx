@@ -10,18 +10,19 @@ const ActiesPage = () => {
   const promotion = {
     id: 1,
     title: "20% Korting op Alle Horren",
-    description: "Geniet van 20% korting op onze volledige horren collectie. Perfecte pasvorm, optimale bescherming en frisse lucht — nu voordeliger dan ooit.",
+    description:
+      "Geniet van 20% korting op onze volledige horren collectie. Perfecte pasvorm, optimale bescherming en frisse lucht — nu voordeliger dan ooit.",
     category: "Horren",
     badge: "Je bespaart 20%",
     discount: "20% korting",
     validUntil: "Geldig tot 31 juli 2025",
     ctaText: "Profiteer nu →",
-    ctaLink: "/producten/horren"
+    ctaLink: "/producten/horren",
   };
 
   const scrollToPromotion = () => {
-    document.getElementById('promotion-section')?.scrollIntoView({ 
-      behavior: 'smooth' 
+    document.getElementById("promotion-section")?.scrollIntoView({
+      behavior: "smooth",
     });
   };
 
@@ -36,23 +37,22 @@ const ActiesPage = () => {
       </Helmet>
 
       {/* Full-width Hero Banner */}
-      <div 
-        className="relative min-h-[70vh] bg-gradient-to-br from-neutral-800 via-neutral-700 to-neutral-600 flex items-center overflow-hidden"
-      >
+      <div className="relative min-h-[70vh] bg-gradient-to-br from-neutral-800 via-neutral-700 to-neutral-600 flex items-center overflow-hidden">
         {/* Elegant background pattern */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-secondary/20"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1)_0%,transparent_50%)]"></div>
-        
+
         <Container className="relative z-10">
           <div className="max-w-3xl">
             <h1 className="font-display text-5xl md:text-6xl text-white font-bold mb-6 leading-tight">
               Acties & Aanbiedingen
             </h1>
             <p className="font-body text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-              Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op = Op.
+              Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op
+              = Op.
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg"
               onClick={scrollToPromotion}
             >
@@ -63,15 +63,11 @@ const ActiesPage = () => {
         </Container>
       </div>
 
-
-
       {/* Single Promotion Section */}
       <section id="promotion-section" className="py-20 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <Card 
-              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-0"
-            >
+            <Card className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-0">
               {/* Badge */}
               <div className="absolute top-6 left-6 z-10">
                 <Badge className="bg-secondary text-white font-medium px-3 py-1">
@@ -79,26 +75,30 @@ const ActiesPage = () => {
                   {promotion.badge}
                 </Badge>
               </div>
-              
+
               {/* Discount Badge */}
               <div className="absolute top-6 right-6 z-10">
                 <Badge className="bg-red-500 text-white font-bold px-3 py-1">
                   {promotion.discount}
                 </Badge>
               </div>
-              
+
               <CardHeader className="pb-4 pt-16">
-                <Badge variant="outline" className="mb-3 w-fit">{promotion.category}</Badge>
+                <Badge variant="outline" className="mb-3 w-fit">
+                  {promotion.category}
+                </Badge>
                 <CardTitle className="text-3xl font-bold text-primary mb-3 group-hover:text-secondary transition-colors">
                   {promotion.title}
                 </CardTitle>
-                <p className="text-text-light text-lg leading-relaxed mb-4">{promotion.description}</p>
+                <p className="text-text-light text-lg leading-relaxed mb-4">
+                  {promotion.description}
+                </p>
                 <div className="flex items-center text-sm text-text-light mb-2">
                   <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
                   {promotion.validUntil}
                 </div>
               </CardHeader>
-              
+
               <CardContent className="pt-0">
                 <div className="flex justify-end">
                   <Link href={promotion.ctaLink}>
@@ -110,8 +110,6 @@ const ActiesPage = () => {
               </CardContent>
             </Card>
           </div>
-
-
         </Container>
       </section>
 
@@ -124,26 +122,36 @@ const ActiesPage = () => {
                 <div className="bg-secondary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-8">
                   <Shield className="h-10 w-10 text-secondary" />
                 </div>
-                
+
                 <div className="prose prose-lg max-w-none text-center">
                   <p className="text-lg text-text-light leading-relaxed mb-6">
-                    At KANIOU Zilvernaald, we believe in offering premium quality at accessible prices. That's why we're giving a limited-time 20% discount on all insect screens – including inset, surface-mounted, and plissé door screens.
+                    Bij KANIOU Zilvernaald geloven we in premium kwaliteit tegen
+                    betaalbare prijzen. Daarom geven we tijdelijk 20% korting op
+                    alle horren – inclusief inzethorren- opzethorren en
+                    plisséhorren.
                   </p>
-                  
+
                   <p className="text-lg text-text-light leading-relaxed mb-6">
-                    This promotion helps customers protect their homes from insects while enjoying fresh air. All screens are custom-made, with a wide range of colors, finishes, and mounting options.
+                    Met deze actie kunnen klanten hun huis beschermen tegen
+                    insecten en tegelijkertijd genieten van frisse lucht. Alle
+                    horren worden op maat gemaakt en zijn verkrijgbaar in een
+                    breed scala aan kleuren, afwerkingen en
+                    montagemogelijkheden.
                   </p>
-                  
+
                   <p className="text-lg text-text-light leading-relaxed mb-6">
-                    The offer is available to both residential and commercial clients. Installation is available on request, and professional on-site measuring is included in the region.
+                    De aanbieding is beschikbaar voor zowel particuliere als
+                    zakelijke klanten. Installatie is op aanvraag mogelijk en
+                    professionele opmeting op locatie is inbegrepen in de regio.
                   </p>
-                  
+
                   <p className="text-lg font-semibold text-primary mb-6">
-                    🕒 Valid until 31 July 2025.
+                    🕒 Geldig tot 31 juli 2025.
                   </p>
-                  
+
                   <p className="text-lg text-text-light leading-relaxed">
-                    For more information, customers can reach out by phone or use the contact page.
+                    Voor meer informatie kunt u telefonisch contact opnemen of
+                    de contactpagina gebruiken.
                   </p>
                 </div>
               </CardContent>

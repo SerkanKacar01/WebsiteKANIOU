@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
+import gordijnrailsImage from "@assets/Ontwerp zonder titel (4)_1750199510374.png";
 import {
   Card,
   CardContent,
@@ -693,7 +694,7 @@ const ProductsPage = () => {
         description:
           "Functionele of design rails, perfect op maat gemaakt voor elk type gordijn.",
         image:
-          "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+          gordijnrailsImage,
         products: [
           {
             name: "Gordijnrail KS - Wit",

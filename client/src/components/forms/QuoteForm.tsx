@@ -69,7 +69,8 @@ const QuoteForm = () => {
         email: data.email,
         phone: data.phone,
         productType: data.productType,
-        dimensions: data.width && data.height ? `${data.width} x ${data.height} cm` : "",
+        dimensions:
+          data.width && data.height ? `${data.width} x ${data.height} cm` : "",
         requirements: data.requirements || "",
         website: data.website || "",
       };
@@ -78,7 +79,8 @@ const QuoteForm = () => {
     onSuccess: () => {
       toast({
         title: "Success",
-        description: "Thank you, your quote request has been sent successfully.",
+        description:
+          "Thank you, your quote request has been sent successfully.",
         variant: "default",
       });
       form.reset();
@@ -87,7 +89,9 @@ const QuoteForm = () => {
     onError: (error) => {
       toast({
         title: "Error",
-        description: error.message || "There was an error sending your request. Please try again.",
+        description:
+          error.message ||
+          "There was an error sending your request. Please try again.",
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -108,7 +112,7 @@ const QuoteForm = () => {
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>Voornaam</FormLabel>
                 <FormControl>
                   <Input placeholder="" {...field} />
                 </FormControl>
@@ -122,7 +126,7 @@ const QuoteForm = () => {
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel>Achternaam-</FormLabel>
                 <FormControl>
                   <Input placeholder="" {...field} />
                 </FormControl>
@@ -136,7 +140,7 @@ const QuoteForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>E-mail adres</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="" {...field} />
                 </FormControl>
@@ -150,7 +154,7 @@ const QuoteForm = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel>Telefoon nummer</FormLabel>
                 <FormControl>
                   <Input placeholder="" {...field} />
                 </FormControl>
@@ -165,11 +169,8 @@ const QuoteForm = () => {
           name="productType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Product type (dropdown menu)</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
+              <FormLabel>Produkt type (dropdown menu)</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecteer" />
@@ -189,7 +190,9 @@ const QuoteForm = () => {
                   <SelectItem value="houten_jaloezieen">
                     Houten jaloezieën
                   </SelectItem>
-                  <SelectItem value="houten_shutters">Houten shutters</SelectItem>
+                  <SelectItem value="houten_shutters">
+                    Houten shutters
+                  </SelectItem>
                   <SelectItem value="plisse">Plissé</SelectItem>
                   <SelectItem value="duo_plisse">Duo-Plissé</SelectItem>
                   <SelectItem value="rolgordijnen">Rolgordijnen</SelectItem>
@@ -220,9 +223,9 @@ const QuoteForm = () => {
             name="width"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Dimensions: Width (cm)</FormLabel>
+                <FormLabel>Breedte</FormLabel>
                 <FormControl>
-                  <Input placeholder="Width in cm" {...field} />
+                  <Input placeholder="Breedte in cm" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -234,9 +237,9 @@ const QuoteForm = () => {
             name="height"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Height (cm)</FormLabel>
+                <FormLabel>Hoogte </FormLabel>
                 <FormControl>
-                  <Input placeholder="Height in cm" {...field} />
+                  <Input placeholder="Hoogte in cm" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -249,11 +252,11 @@ const QuoteForm = () => {
           name="requirements"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Optional: Extra notes field</FormLabel>
+              <FormLabel>Optioneel voor evt. opmerkingen</FormLabel>
               <FormControl>
                 <Textarea
                   rows={4}
-                  placeholder="Please mention any specific requirements or questions..."
+                  placeholder="Geef aan of u specifieke wensen of vragen heeft..."
                   {...field}
                 />
               </FormControl>
@@ -267,11 +270,18 @@ const QuoteForm = () => {
           control={form.control}
           name="website"
           render={({ field }) => (
-            <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}>
+            <div
+              style={{
+                position: "absolute",
+                left: "-9999px",
+                opacity: 0,
+                pointerEvents: "none",
+              }}
+            >
               <FormItem>
                 <FormLabel>Website</FormLabel>
                 <FormControl>
-                  <Input 
+                  <Input
                     placeholder="Please leave this field empty"
                     tabIndex={-1}
                     autoComplete="off"

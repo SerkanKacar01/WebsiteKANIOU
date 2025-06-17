@@ -4,9 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Tag, CheckCircle, Shield } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 const ActiesPage = () => {
+  const [, setLocation] = useLocation();
+
   const promotion = {
     id: 1,
     title: "20% Korting op Alle Horren",
@@ -17,13 +19,18 @@ const ActiesPage = () => {
     discount: "20% korting",
     validUntil: "Geldig tot 31 juli 2025",
     ctaText: "Profiteer nu →",
-    ctaLink: "/producten/horren",
+    ctaLink: "/contact",
   };
 
   const scrollToPromotion = () => {
     document.getElementById("promotion-section")?.scrollIntoView({
       behavior: "smooth",
     });
+  };
+
+  const handleContactRedirect = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setLocation("/contact");
   };
 
   return (
@@ -101,11 +108,12 @@ const ActiesPage = () => {
 
               <CardContent className="pt-0">
                 <div className="flex justify-end">
-                  <Link href={promotion.ctaLink}>
-                    <Button className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg">
-                      {promotion.ctaText}
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg"
+                    onClick={handleContactRedirect}
+                  >
+                    {promotion.ctaText}
+                  </Button>
                 </div>
               </CardContent>
             </Card>

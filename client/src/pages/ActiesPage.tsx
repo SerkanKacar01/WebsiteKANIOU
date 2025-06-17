@@ -115,35 +115,36 @@ const ActiesPage = () => {
         </Container>
       </section>
 
-      {/* Final Call-to-Action Section */}
+      {/* Information Section */}
       <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100">
         <Container>
           <div className="max-w-4xl mx-auto">
             <Card className="border-0 shadow-xl bg-white rounded-2xl overflow-hidden">
-              <CardContent className="p-12 text-center">
-                <div className="bg-secondary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+              <CardContent className="p-12">
+                <div className="bg-secondary/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-8">
                   <Shield className="h-10 w-10 text-secondary" />
                 </div>
                 
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-6">
-                  Wil je profiteren van 20% korting op horren?
-                </h2>
-                <p className="text-xl text-text-light mb-10 max-w-2xl mx-auto leading-relaxed">
-                  Vraag vrijblijvend een offerte aan voor onze premium horren collectie. Actie geldig tot 31 juli 2025.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link href="/offerte">
-                    <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg">
-                      Vraag offerte aan
-                      <ArrowRight className="h-5 w-5 ml-2" />
-                    </Button>
-                  </Link>
-                  <Link href="/producten/horren">
-                    <Button size="lg" variant="outline" className="font-medium px-8 py-4 text-lg hover:bg-secondary hover:text-white hover:border-secondary">
-                      Bekijk horren collectie
-                    </Button>
-                  </Link>
+                <div className="prose prose-lg max-w-none text-center">
+                  <p className="text-lg text-text-light leading-relaxed mb-6">
+                    At KANIOU Zilvernaald, we believe in offering premium quality at accessible prices. That's why we're giving a limited-time 20% discount on all insect screens – including inset, surface-mounted, and plissé door screens.
+                  </p>
+                  
+                  <p className="text-lg text-text-light leading-relaxed mb-6">
+                    This promotion helps customers protect their homes from insects while enjoying fresh air. All screens are custom-made, with a wide range of colors, finishes, and mounting options.
+                  </p>
+                  
+                  <p className="text-lg text-text-light leading-relaxed mb-6">
+                    The offer is available to both residential and commercial clients. Installation is available on request, and professional on-site measuring is included in the region.
+                  </p>
+                  
+                  <p className="text-lg font-semibold text-primary mb-6">
+                    🕒 Valid until 31 July 2025.
+                  </p>
+                  
+                  <p className="text-lg text-text-light leading-relaxed">
+                    For more information, customers can reach out by phone or use the contact page.
+                  </p>
                 </div>
               </CardContent>
             </Card>

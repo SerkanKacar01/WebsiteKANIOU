@@ -270,28 +270,25 @@ const GordijnrailsConfiguratorPage = () => {
 
   const getAvailableCeilingComponents = (): CeilingComponent[] => [
     {
-      id: "standard-clip",
+      id: "white-clip",
       name: "KS-DS smartklick plafondsteun wit",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      description: "Recommended: 2 clips per meter for safe installation",
       price: 0.50,
-      image: "Scherm­afbeelding 2025-06-18 om 21.24.50_1750275618983.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.24.50_1750276255850.png",
       quantity: 2,
     },
     {
       id: "black-clip",
       name: "KS-DS smartklick plafondsteun zwart",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      description: "Recommended: 2 clips per meter for safe installation",
       price: 0.75,
-      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750275618983.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750276255850.png",
       quantity: 2,
     },
     {
-      id: "double-clip",
+      id: "black-clip-cover",
       name: "KS-DS smartklick plafondsteun incl. afdekkap zwart",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      description: "Recommended: 2 clips per meter for safe installation",
       price: 2.55,
       image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750274629592.png",
       quantity: 2,
@@ -299,8 +296,7 @@ const GordijnrailsConfiguratorPage = () => {
     {
       id: "suspension-adapter",
       name: "Suspension Adapter for System Ceilings",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      description: "Recommended: 2 clips per meter for safe installation",
       price: 1.20,
       image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274629592.png",
       quantity: 2,

@@ -1683,17 +1683,17 @@ const GordijnrailsConfiguratorPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="text-center">
                       <img
-                        src="/images/eindkapje.png"
+                        src="/images/eindkapje-los.png"
                         alt="Eindkapje los"
-                        className="w-full h-24 object-contain bg-white rounded border mb-2"
+                        className="w-full h-32 object-contain bg-white rounded border mb-2"
                       />
                       <p className="text-xs text-gray-500">Eindkapje los</p>
                     </div>
                     <div className="text-center">
                       <img
-                        src="/images/eindkapje.png"
+                        src="/images/eindkapje-gemonteerd.png"
                         alt="Eindkapje gemonteerd"
-                        className="w-full h-24 object-contain bg-white rounded border mb-2"
+                        className="w-full h-32 object-contain bg-white rounded border mb-2"
                       />
                       <p className="text-xs text-gray-500">Eindkapje gemonteerd</p>
                     </div>

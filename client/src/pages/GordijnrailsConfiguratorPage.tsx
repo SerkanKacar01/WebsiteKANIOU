@@ -272,7 +272,7 @@ const GordijnrailsConfiguratorPage = () => {
       name: "Standard Ceiling Clip – White",
       description: "Recommended: 2 clips per meter for safe installation",
       price: 0.50,
-      image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750274055054.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750274629592.png",
       quantity: 2,
     },
     {
@@ -280,7 +280,7 @@ const GordijnrailsConfiguratorPage = () => {
       name: "Transparent Ceiling Clip – Aesthetic Finish",
       description: "Recommended: 2 clips per meter for safe installation",
       price: 0.75,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274629593.png",
       quantity: 2,
     },
     {
@@ -288,7 +288,7 @@ const GordijnrailsConfiguratorPage = () => {
       name: "Double Clip – Extra Strength (for heavy curtains)",
       description: "Recommended: 2 clips per meter for safe installation",
       price: 1.00,
-      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750274629592.png",
       quantity: 2,
     },
     {
@@ -296,7 +296,7 @@ const GordijnrailsConfiguratorPage = () => {
       name: "Suspension Adapter for System Ceilings",
       description: "Recommended: 2 clips per meter for safe installation",
       price: 1.20,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274629592.png",
       quantity: 2,
     },
   ];

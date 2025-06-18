@@ -284,7 +284,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 0.75,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750275618983.png",
       quantity: 2,
     },
     {

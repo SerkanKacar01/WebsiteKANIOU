@@ -53,6 +53,7 @@ interface Configuration {
   profileType: string;
   color: string;
   length: number;
+  customLength?: number;
   quantity: number;
   corners: string;
   curveModel?: CurveModel;
@@ -66,37 +67,37 @@ const curveModels: CurveModel[] = [
     id: "model-a",
     name: "Model A",
     segments: ["A", "B"],
-    price: 3.50,
+    price: 3.5,
   },
   {
     id: "model-b1",
     name: "Model B1",
     segments: ["A", "B", "C"],
-    price: 7.00,
+    price: 7.0,
   },
   {
     id: "model-b2",
     name: "Model B2",
-    segments: ["A", "B", "C"],
-    price: 7.00,
+    segments: ["A", "B"],
+    price: 3.5,
   },
   {
     id: "model-c",
     name: "Model C",
     segments: ["A", "B", "C", "D"],
-    price: 10.50,
+    price: 10.5,
   },
   {
     id: "model-d",
     name: "Model D",
-    segments: ["A", "B", "C", "D", "E"],
-    price: 14.00,
+    segments: ["A", "B", "C"],
+    price: 7.0,
   },
   {
     id: "model-e",
     name: "Model E",
     segments: ["A", "B", "C", "D", "E"],
-    price: 17.50,
+    price: 14.0,
   },
 ];
 
@@ -135,15 +136,17 @@ const GordijnrailsConfiguratorPage = () => {
       id: 4,
       title: "Kies bochten",
       description: "Optioneel",
-      completed: configuration.corners === "none" || 
+      completed:
+        configuration.corners === "none" ||
         configuration.corners === "eigen-model" ||
-        (configuration.corners === "custom" && 
-         !!configuration.curveModel && 
-         !!configuration.curveMeasurements &&
-         configuration.curveModel.segments.every(segment => 
-           !!configuration.curveMeasurements![segment] && 
-           configuration.curveMeasurements![segment] > 0
-         )),
+        (configuration.corners === "custom" &&
+          !!configuration.curveModel &&
+          !!configuration.curveMeasurements &&
+          configuration.curveModel.segments.every(
+            (segment) =>
+              !!configuration.curveMeasurements![segment] &&
+              configuration.curveMeasurements![segment] > 0,
+          )),
     },
     {
       id: 5,
@@ -161,8 +164,9 @@ const GordijnrailsConfiguratorPage = () => {
 
   // Pricing calculations
   const calculatePrice = () => {
+    const effectiveLength = configuration.customLength || configuration.length;
     let basePrice =
-      8.95 * (configuration.length / 100) * configuration.quantity;
+      8.95 * (effectiveLength / 100) * configuration.quantity;
     let extras = 0;
 
     // New curve model pricing
@@ -172,7 +176,7 @@ const GordijnrailsConfiguratorPage = () => {
 
     // Mounting pricing
     if (configuration.mounting === "wall") {
-      const supports = Math.ceil(configuration.length / 100) + 1;
+      const supports = Math.ceil(effectiveLength / 100) + 1;
       extras += supports * 1.5;
     }
 
@@ -380,27 +384,31 @@ const GordijnrailsConfiguratorPage = () => {
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#d5c096] mb-2">
-                    {configuration.length} cm
+                    {configuration.customLength || configuration.length} cm
                   </div>
                   <p className="text-gray-600">
-                    Kies de railmaat die het best past bij uw ruimte.
+                    {configuration.customLength 
+                      ? "Uw exacte maat wordt gebruikt voor de berekening"
+                      : "Kies de railmaat die het best past bij uw ruimte."
+                    }
                   </p>
                 </div>
 
                 <div className="px-4">
                   <Slider
-                    value={[configuration.length]}
-                    onValueChange={([value]) =>
-                      updateConfiguration("length", value)
-                    }
+                    value={[configuration.customLength || configuration.length]}
+                    onValueChange={([value]) => {
+                      updateConfiguration("length", value);
+                      updateConfiguration("customLength", undefined);
+                    }}
                     min={100}
-                    max={600}
+                    max={700}
                     step={10}
                     className="w-full"
                   />
                   <div className="flex justify-between text-sm text-gray-500 mt-2">
                     <span>100 cm</span>
-                    <span>600 cm</span>
+                    <span>700 cm</span>
                   </div>
                 </div>
 
@@ -410,14 +418,17 @@ const GordijnrailsConfiguratorPage = () => {
                       <Button
                         key={length}
                         variant={
-                          configuration.length === length
+                          configuration.length === length && !configuration.customLength
                             ? "default"
                             : "outline"
                         }
                         size="sm"
-                        onClick={() => updateConfiguration("length", length)}
+                        onClick={() => {
+                          updateConfiguration("length", length);
+                          updateConfiguration("customLength", undefined);
+                        }}
                         className={
-                          configuration.length === length
+                          configuration.length === length && !configuration.customLength
                             ? "bg-[#d5c096] hover:bg-[#c4b183]"
                             : ""
                         }
@@ -426,6 +437,57 @@ const GordijnrailsConfiguratorPage = () => {
                       </Button>
                     ),
                   )}
+                </div>
+
+                {/* Custom Length Input */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="text-center mb-4">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                      Of geef je exacte maat op
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Voor een perfecte pasvorm kun je ook je exacte maat invoeren
+                    </p>
+                  </div>
+                  
+                  <div className="max-w-xs mx-auto">
+                    <div className="relative">
+                      <input
+                        type="number"
+                        min="100"
+                        max="700"
+                        step="1"
+                        placeholder="Bijvoorbeeld: 215"
+                        className="w-full px-4 py-3 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
+                        value={configuration.customLength || ""}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value) || 0;
+                          if (value >= 100 && value <= 700) {
+                            updateConfiguration("customLength", value);
+                            updateConfiguration("length", value);
+                          } else if (e.target.value === "") {
+                            updateConfiguration("customLength", undefined);
+                            updateConfiguration("length", 200); // Reset to default
+                          }
+                        }}
+                      />
+                      <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
+                        cm
+                      </span>
+                    </div>
+                    
+                    {configuration.customLength && (configuration.customLength < 100 || configuration.customLength > 700) && (
+                      <p className="text-red-600 text-sm mt-2 text-center">
+                        Lengte moet tussen 100 en 700 cm zijn
+                      </p>
+                    )}
+                    
+                    {configuration.customLength && configuration.customLength >= 100 && configuration.customLength <= 700 && (
+                      <p className="text-green-600 text-sm mt-2 text-center">
+                        ✓ Exacte maat: {configuration.customLength} cm
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -544,7 +606,10 @@ const GordijnrailsConfiguratorPage = () => {
                 <Card className="p-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="eigen-model" id="eigen-model" />
-                    <Label htmlFor="eigen-model" className="flex-1 cursor-pointer">
+                    <Label
+                      htmlFor="eigen-model"
+                      className="flex-1 cursor-pointer"
+                    >
                       <div>
                         <p className="font-medium">Eigen model</p>
                         <p className="text-sm text-gray-600">
@@ -564,9 +629,12 @@ const GordijnrailsConfiguratorPage = () => {
             {configuration.corners === "custom" && (
               <div className="mt-8 space-y-6">
                 <div className="text-center">
-                  <h4 className="text-xl font-semibold mb-2">Selecteer uw curve model</h4>
+                  <h4 className="text-xl font-semibold mb-2">
+                    Selecteer uw curve model
+                  </h4>
                   <p className="text-gray-600">
-                    Kies een model dat past bij uw ruimte en voer de exacte maten in.
+                    Kies een model dat past bij uw ruimte en voer de exacte
+                    maten in.
                   </p>
                 </div>
 
@@ -590,50 +658,52 @@ const GordijnrailsConfiguratorPage = () => {
                         {/* Model Image */}
                         <div className="w-full h-20 mb-3 flex items-center justify-center bg-white rounded border">
                           {model.id === "model-a" && (
-                            <img 
-                              src={modelAImage} 
+                            <img
+                              src={modelAImage}
                               alt="Model A - L-vormige bocht"
                               className="max-w-full max-h-full object-contain"
                             />
                           )}
                           {model.id === "model-b1" && (
-                            <img 
-                              src={modelB1Image} 
+                            <img
+                              src={modelB1Image}
                               alt="Model B1 - U-vormige bocht"
                               className="max-w-full max-h-full object-contain"
                             />
                           )}
                           {model.id === "model-b2" && (
-                            <img 
-                              src={modelB2Image} 
+                            <img
+                              src={modelB2Image}
                               alt="Model B2 - Gebogen bocht"
                               className="max-w-full max-h-full object-contain"
                             />
                           )}
                           {model.id === "model-c" && (
-                            <img 
-                              src={modelCImage} 
+                            <img
+                              src={modelCImage}
                               alt="Model C - Complexe bocht"
                               className="max-w-full max-h-full object-contain"
                             />
                           )}
                           {model.id === "model-d" && (
-                            <img 
-                              src={modelDImage} 
+                            <img
+                              src={modelDImage}
                               alt="Model D - Uitgebreide bocht"
                               className="max-w-full max-h-full object-contain"
                             />
                           )}
                           {model.id === "model-e" && (
-                            <img 
-                              src={modelEImage} 
+                            <img
+                              src={modelEImage}
                               alt="Model E - Dubbele U-bocht"
                               className="max-w-full max-h-full object-contain"
                             />
                           )}
                         </div>
                         <p className="font-medium text-sm">{model.name}</p>
-                        <p className="text-xs text-gray-600">€{model.price.toFixed(2)}</p>
+                        <p className="text-xs text-gray-600">
+                          €{model.price.toFixed(2)}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}
@@ -648,7 +718,10 @@ const GordijnrailsConfiguratorPage = () => {
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                       {configuration.curveModel.segments.map((segment) => (
                         <div key={segment} className="space-y-2">
-                          <Label htmlFor={`segment-${segment}`} className="text-sm font-medium">
+                          <Label
+                            htmlFor={`segment-${segment}`}
+                            className="text-sm font-medium"
+                          >
                             Segment {segment} (cm)
                           </Label>
                           <input
@@ -658,7 +731,9 @@ const GordijnrailsConfiguratorPage = () => {
                             max="600"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
                             placeholder="cm"
-                            value={configuration.curveMeasurements?.[segment] || ""}
+                            value={
+                              configuration.curveMeasurements?.[segment] || ""
+                            }
                             onChange={(e) => {
                               const value = parseInt(e.target.value) || 0;
                               updateConfiguration("curveMeasurements", {
@@ -670,22 +745,23 @@ const GordijnrailsConfiguratorPage = () => {
                         </div>
                       ))}
                     </div>
-                    
+
                     {/* Validation Message */}
-                    {configuration.curveModel && 
-                     !configuration.curveModel.segments.every(segment => 
-                       configuration.curveMeasurements?.[segment] && 
-                       configuration.curveMeasurements[segment] > 0
-                     ) && (
-                      <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                        <p className="text-sm text-yellow-800">
-                          Vul alle vereiste maten in voordat u doorgaat naar de volgende stap.
-                        </p>
-                      </div>
-                    )}
+                    {configuration.curveModel &&
+                      !configuration.curveModel.segments.every(
+                        (segment) =>
+                          configuration.curveMeasurements?.[segment] &&
+                          configuration.curveMeasurements[segment] > 0,
+                      ) && (
+                        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                          <p className="text-sm text-yellow-800">
+                            Vul alle vereiste maten in voordat u doorgaat naar
+                            de volgende stap.
+                          </p>
+                        </div>
+                      )}
                   </div>
                 )}
-
               </div>
             )}
 
@@ -693,7 +769,9 @@ const GordijnrailsConfiguratorPage = () => {
             {configuration.corners === "eigen-model" && (
               <div className="mt-8 space-y-6">
                 <div className="text-center">
-                  <h4 className="text-xl font-semibold mb-2">Eigen model configureren</h4>
+                  <h4 className="text-xl font-semibold mb-2">
+                    Eigen model configureren
+                  </h4>
                   <p className="text-gray-600">
                     Beschrijf uw unieke railform en voer de gewenste maten in.
                   </p>
@@ -718,7 +796,9 @@ const GordijnrailsConfiguratorPage = () => {
                       </Label>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
-                          <Label className="text-xs text-gray-600">Breedte (cm)</Label>
+                          <Label className="text-xs text-gray-600">
+                            Breedte (cm)
+                          </Label>
                           <input
                             type="number"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
@@ -726,7 +806,9 @@ const GordijnrailsConfiguratorPage = () => {
                           />
                         </div>
                         <div>
-                          <Label className="text-xs text-gray-600">Hoogte (cm)</Label>
+                          <Label className="text-xs text-gray-600">
+                            Hoogte (cm)
+                          </Label>
                           <input
                             type="number"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
@@ -734,7 +816,9 @@ const GordijnrailsConfiguratorPage = () => {
                           />
                         </div>
                         <div>
-                          <Label className="text-xs text-gray-600">Diepte (cm)</Label>
+                          <Label className="text-xs text-gray-600">
+                            Diepte (cm)
+                          </Label>
                           <input
                             type="number"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
@@ -742,7 +826,9 @@ const GordijnrailsConfiguratorPage = () => {
                           />
                         </div>
                         <div>
-                          <Label className="text-xs text-gray-600">Extra (cm)</Label>
+                          <Label className="text-xs text-gray-600">
+                            Extra (cm)
+                          </Label>
                           <input
                             type="number"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
@@ -760,8 +846,9 @@ const GordijnrailsConfiguratorPage = () => {
                             Offerte op maat
                           </p>
                           <p className="text-sm text-blue-700 mt-1">
-                            Voor eigen ontwerpen maken wij een persoonlijke offerte op basis van uw specificaties. 
-                            U kunt ook een tekening uploaden tijdens het offerteproces.
+                            Voor eigen ontwerpen maken wij een persoonlijke
+                            offerte op basis van uw specificaties. U kunt ook
+                            een tekening uploaden tijdens het offerteproces.
                           </p>
                         </div>
                       </div>
@@ -1179,11 +1266,14 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                     )}
 
-                    {configuration.length > 0 && (
+                    {(configuration.length > 0 || configuration.customLength) && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Lengte:</span>
                         <span className="font-medium">
-                          {configuration.length} cm
+                          {configuration.customLength || configuration.length} cm
+                          {configuration.customLength && (
+                            <span className="text-xs text-green-600 ml-1">(exact)</span>
+                          )}
                         </span>
                       </div>
                     )}
@@ -1202,7 +1292,8 @@ const GordijnrailsConfiguratorPage = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600">Bochten:</span>
                         <span className="font-medium">
-                          {configuration.corners === "custom" && configuration.curveModel
+                          {configuration.corners === "custom" &&
+                          configuration.curveModel
                             ? `${configuration.curveModel.name} (€${configuration.curveModel.price.toFixed(2)})`
                             : configuration.corners === "custom"
                               ? "Kies een model"
@@ -1213,21 +1304,33 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                     )}
 
-                    {configuration.corners === "custom" && 
-                     configuration.curveModel && 
-                     configuration.curveMeasurements && (
-                      <div className="space-y-1">
-                        <span className="text-gray-600 text-sm">Segmentmaten:</span>
-                        <div className="grid grid-cols-2 gap-1 text-xs">
-                          {configuration.curveModel.segments.map((segment) => (
-                            <div key={segment} className="flex justify-between">
-                              <span>{segment}:</span>
-                              <span>{configuration.curveMeasurements?.[segment] || 0} cm</span>
-                            </div>
-                          ))}
+                    {configuration.corners === "custom" &&
+                      configuration.curveModel &&
+                      configuration.curveMeasurements && (
+                        <div className="space-y-1">
+                          <span className="text-gray-600 text-sm">
+                            Segmentmaten:
+                          </span>
+                          <div className="grid grid-cols-2 gap-1 text-xs">
+                            {configuration.curveModel.segments.map(
+                              (segment) => (
+                                <div
+                                  key={segment}
+                                  className="flex justify-between"
+                                >
+                                  <span>{segment}:</span>
+                                  <span>
+                                    {configuration.curveMeasurements?.[
+                                      segment
+                                    ] || 0}{" "}
+                                    cm
+                                  </span>
+                                </div>
+                              ),
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
                     {configuration.mounting && (
                       <div className="flex justify-between">
@@ -1277,7 +1380,7 @@ const GordijnrailsConfiguratorPage = () => {
                   <CardContent className="space-y-3">
                     <div className="flex justify-between">
                       <span>
-                        Basis rail ({configuration.length} cm ×{" "}
+                        Basis rail ({configuration.customLength || configuration.length} cm ×{" "}
                         {configuration.quantity})
                       </span>
                       <span>€{price.base.toFixed(2)}</span>

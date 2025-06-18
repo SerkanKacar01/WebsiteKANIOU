@@ -525,11 +525,6 @@ const GordijnrailsConfiguratorPage = () => {
         : prev.selectedGlider,
     }));
   };
-      selectedGlider: prev.selectedGlider?.id === gliderId 
-        ? { ...prev.selectedGlider, selectedColor: color }
-        : prev.selectedGlider,
-    }));
-  };;
 
   const toggleAccessory = (accessory: string) => {
     setConfiguration((prev) => ({

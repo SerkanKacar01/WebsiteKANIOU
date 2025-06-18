@@ -365,17 +365,17 @@ const GordijnrailsConfiguratorPage = () => {
   const getAvailableGliders = (): GliderOption[] => [
     {
       id: "ks-silent-gliders",
-      name: "KS Silent Gliders",
-      description: "Silent gliders – for KS profile",
-      price: 6.95,
+      name: "KS geruisloos glijders",
+      description: "Stille glijders – geschikt voor het KS-DS gordijnrails",
+      price: 6.00,
       image: "Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png",
       hasColorOptions: true,
       selectedColor: "white",
     },
     {
       id: "wave-gliders-6cm",
-      name: "Wave Gliders 6cm",
-      description: "For wave curtain style (6cm pitch)",
+      name: "Wave Glijders 6 cm Wit",
+      description: "Voor wave-gordijnplooien met een afstand van 6 cm",
       price: 6.95,
       image: "Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png",
       hasColorOptions: true,
@@ -1492,9 +1492,9 @@ const GordijnrailsConfiguratorPage = () => {
             <div className="space-y-6">
               {/* Glider Selection Section */}
               <div>
-                <h4 className="text-lg font-semibold mb-2">Select Your Glider Type</h4>
+                <h4 className="text-lg font-semibold mb-2">Kies het gewenste type glijders</h4>
                 <p className="text-gray-600 mb-4">
-                  Choose the type of gliders best suited for your curtain style. These are delivered according to your profile, ready to install.
+                  Kies het type glijders dat het best past bij jouw gordijnstijl. De glijders worden afgestemd op het gekozen profiel en gebruiksklaar meegeleverd.
                 </p>
                 
                 <div className="grid gap-4 md:grid-cols-3">
@@ -1515,7 +1515,7 @@ const GordijnrailsConfiguratorPage = () => {
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
                         <label htmlFor="ks-silent-gliders" className="font-medium cursor-pointer">
-                          KS Silent Gliders
+                          KS-DS _Silent Glijders
                         </label>
                       </div>
                       
@@ -1528,26 +1528,26 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                       
                       <p className="text-sm text-gray-600 mb-3">
-                        Silent gliders – for KS profile
+                        Stille glijders – geschikt voor het KS-DS _Gordijn rails
                       </p>
                       
                       {configuration.selectedGlider?.id === "ks-silent-gliders" && (
                         <div className="mb-3">
                           <label className="block text-xs font-medium text-gray-700 mb-1">
-                            Color:
+                            Kleur:
                           </label>
                           <select
                             value={configuration.selectedGlider.selectedColor || "white"}
                             onChange={(e) => updateGliderColor("ks-silent-gliders", e.target.value)}
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
                           >
-                            <option value="white">White</option>
-                            <option value="black">Black</option>
+                            <option value="white">Wit</option>
+                            <option value="black">Zwart</option>
                           </select>
                         </div>
                       )}
                       
-                      <p className="font-medium text-[#d5c096]">€6.95 per rail</p>
+                      <p className="font-medium text-[#d5c096]">€ 3,28 per/strip (10 st.per_strip)</p>
                     </CardContent>
                   </Card>
 
@@ -1568,7 +1568,7 @@ const GordijnrailsConfiguratorPage = () => {
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
                         <label htmlFor="wave-gliders-6cm" className="font-medium cursor-pointer">
-                          Wave Gliders 6cm
+                          Wave Glijders 6 cm Wit
                         </label>
                       </div>
                       
@@ -1581,26 +1581,26 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                       
                       <p className="text-sm text-gray-600 mb-3">
-                        For wave curtain style (6cm pitch)
+                        Voor wave-gordijnplooien met een afstand van 6 cm _ Geschikt voor KS-DS gordijnrails.
                       </p>
                       
                       {configuration.selectedGlider?.id === "wave-gliders-6cm" && (
                         <div className="mb-3">
                           <label className="block text-xs font-medium text-gray-700 mb-1">
-                            Color:
+                            Kleur:
                           </label>
                           <select
                             value={configuration.selectedGlider.selectedColor || "white"}
                             onChange={(e) => updateGliderColor("wave-gliders-6cm", e.target.value)}
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
                           >
-                            <option value="white">White</option>
-                            <option value="black">Black</option>
+                            <option value="white">Wit</option>
+                            <option value="black">Zwart</option>
                           </select>
                         </div>
                       )}
                       
-                      <p className="font-medium text-[#d5c096]">€6.95 per rail</p>
+                      <p className="font-medium text-[#d5c096]">€ 0.50 per/stuk</p>
                     </CardContent>
                   </Card>
 
@@ -1621,66 +1621,88 @@ const GordijnrailsConfiguratorPage = () => {
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
                         <label htmlFor="no-glider" className="font-medium cursor-pointer">
-                          No gliders
+                          Geen glijders
                         </label>
                       </div>
                       
                       <div className="mb-3">
                         <div className="w-full h-24 bg-gray-100 rounded border flex items-center justify-center">
-                          <span className="text-sm text-gray-500">None</span>
+                          <span className="text-sm text-gray-500">n.v.t</span>
                         </div>
                       </div>
                       
                       <p className="text-sm text-gray-600 mb-3">
-                        I will provide my own gliders or install separately
+                        Ik voorzie zelf in glijders of plaats ze afzonderlijk
                       </p>
                       
-                      <p className="font-medium text-green-600">€0.00</p>
+                      <p className="font-medium text-green-600">€ 0.00</p>
                     </CardContent>
                   </Card>
                 </div>
 
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm text-blue-800">
-                    <strong>Advice:</strong> For optimal curtain flow and ease of use, choose the correct glider type. Wave gliders are only recommended for wave-pleated curtains.
+                    <strong>Advies: ( Wave plooi )</strong> Voor een optimale plooiing en soepele werking van de gordijnen, kies je best het juiste type glijder. Wave-glijders worden uitsluitend aanbevolen voor gordijnen met een wave-plooi.
+                  </p>
+                  <p className="text-sm text-blue-800">
+                    <strong>Advies: ( Andere plooi type )</strong> KS-DS glijders worden geleverd per strip van 10 stuks. Wij adviseren 1 strip (10 stuks) per meter rail voor een optimale verdeling en soepele werking van het gordijn.
+                  </p>
+                  <p className="text-sm text-blue-800">
+                    <strong>Advies voor Wave Runners (6 cm):</strong> Voor wavegordijnen adviseren wij 1 glijder per 6 cm. De berekening is eenvoudig: deel de totale railbreedte (in cm) door 6. Zorg er altijd voor dat het resultaat een even getal is, zodat de plooien gelijk verdeeld zijn.
+
+                    Voorbeeld:
+                    Railbreedte = 300 cm → 300 ÷ 6 = 50 glijders
+                    Wij adviseren om voor de zekerheid 2 à 4 extra glijders toe te voegen, dus bestel in dit geval 52 à 54 glijders.
+
+                    Zo ben je zeker van een perfecte afwerking zonder tekort..
                   </p>
                 </div>
               </div>
 
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-4 h-4 border-2 border-[#d5c096] rounded flex items-center justify-center">
-                      {configuration.accessories.includes("endstop") && (
-                        <Check className="h-3 w-3 text-[#d5c096]" />
-                      )}
+              <Card className="p-4 bg-gray-50 border-gray-300">
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Check className="h-5 w-5 text-green-600" />
+                        <p className="font-medium text-gray-900">
+                          Eindstop met eindkapje (Advies: 2 stuks per rail)
+                        </p>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-3">
+                        Voorkomt dat glijders uit de rail lopen. Een essentieel onderdeel dat standaard wordt meegeleverd voor zowel KS als DS rails – voor veiligheid en duurzaamheid.
+                      </p>
                     </div>
-                    <div>
-                      <p className="font-medium">
-                        Eindstop met eindkapje ( Advies: 2 stuks per rail)
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        Zorgt ervoor dat de glijders niet uit de rail lopen. Een
-                        essentieel onderdeel voor veiligheid en duurzaamheid.
-                      </p>
+                    <div className="text-right">
+                      <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+                        Standaard inbegrepen
+                      </span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-medium text-green-600">Standaard</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleAccessory("endstop")}
-                      className={
-                        configuration.accessories.includes("endstop")
-                          ? "bg-[#d5c096]/10 border-[#d5c096]"
-                          : ""
-                      }
-                    >
-                      {configuration.accessories.includes("endstop")
-                        ? "Toegevoegd"
-                        : "Toevoegen"}
-                    </Button>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="text-center">
+                      <img
+                        src="/images/eindkapje.png"
+                        alt="Eindkapje los"
+                        className="w-full h-24 object-contain bg-white rounded border mb-2"
+                      />
+                      <p className="text-xs text-gray-500">Eindkapje los</p>
+                    </div>
+                    <div className="text-center">
+                      <img
+                        src="/images/eindkapje.png"
+                        alt="Eindkapje gemonteerd"
+                        className="w-full h-24 object-contain bg-white rounded border mb-2"
+                      />
+                      <p className="text-xs text-gray-500">Eindkapje gemonteerd</p>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <p className="text-sm text-gray-600 italic">
+                      Wordt standaard meegeleverd bij iedere rail. Voor KS- en DS-profiel.
+                    </p>
                   </div>
                 </div>
               </Card>

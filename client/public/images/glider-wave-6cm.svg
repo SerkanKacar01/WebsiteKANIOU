@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+  <path d="M8 24 Q16 18 24 24 Q32 30 40 24" stroke="#6c757d" stroke-width="3" fill="none"/>
+  <circle cx="12" cy="22" r="2" fill="#495057"/>
+  <circle cx="24" cy="24" r="2" fill="#495057"/>
+  <circle cx="36" cy="22" r="2" fill="#495057"/>
+  <text x="24" y="38" text-anchor="middle" font-family="Arial" font-size="8" fill="#6c757d">Wave 6cm</text>
+</svg>

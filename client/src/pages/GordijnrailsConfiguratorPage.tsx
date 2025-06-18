@@ -366,14 +366,14 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS Silent Gliders",
       description: "Silent gliders – for KS profile",
       price: 6.95,
-      image: "glider-ks-silent.png",
+      image: "glider-ks-silent.svg",
     },
     {
       id: "wave-gliders-6cm",
       name: "Wave Gliders 6cm White",
       description: "For wave curtain style (6cm pitch)",
       price: 6.95,
-      image: "glider-wave-6cm.png",
+      image: "glider-wave-6cm.svg",
     },
   ];
 
@@ -1588,76 +1588,9 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               </Card>
 
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-4 h-4 border-2 border-[#d5c096] rounded flex items-center justify-center">
-                      {configuration.accessories.includes("endcap") && (
-                        <Check className="h-3 w-3 text-[#d5c096]" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-medium">Gordijnglijders</p>
-                      <p className="text-sm text-gray-600">
-                        Zorgt voor een nette en afgewerkte look aan beide
-                        uiteinden van de rail.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium text-green-600">Standaard</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleAccessory("endcap")}
-                      className={
-                        configuration.accessories.includes("endcap")
-                          ? "bg-[#d5c096]/10 border-[#d5c096]"
-                          : ""
-                      }
-                    >
-                      {configuration.accessories.includes("endcap")
-                        ? "Toegevoegd"
-                        : "Toevoegen"}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
 
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-4 h-4 border-2 border-[#d5c096] rounded flex items-center justify-center">
-                      {configuration.accessories.includes("connector") && (
-                        <Check className="h-3 w-3 text-[#d5c096]" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-medium">Overgangsconnector</p>
-                      <p className="text-sm text-gray-600">
-                        Voor het verbinden van meerdere rails
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium text-green-600">Inclusief</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleAccessory("connector")}
-                      className={
-                        configuration.accessories.includes("connector")
-                          ? "bg-[#d5c096]/10 border-[#d5c096]"
-                          : ""
-                      }
-                    >
-                      {configuration.accessories.includes("connector")
-                        ? "Toegevoegd"
-                        : "Toevoegen"}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
+
+
             </div>
           </div>
         );
@@ -1930,6 +1863,15 @@ const GordijnrailsConfiguratorPage = () => {
                           </div>
                         </div>
                       )}
+
+                    {configuration.selectedGlider && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Glijders:</span>
+                        <span className="font-medium">
+                          {configuration.selectedGlider.name}
+                        </span>
+                      </div>
+                    )}
 
                     {configuration.accessories.length > 0 && (
                       <div>

@@ -131,12 +131,12 @@ const GordijnrailsConfiguratorPage = () => {
       description: "Optioneel",
       completed: configuration.corners === "none" || 
         (configuration.corners === "custom" && 
-         configuration.curveModel && 
-         configuration.curveMeasurements &&
+         !!configuration.curveModel && 
+         !!configuration.curveMeasurements &&
          configuration.curveModel.segments.every(segment => 
-           configuration.curveMeasurements![segment] && 
+           !!configuration.curveMeasurements![segment] && 
            configuration.curveMeasurements![segment] > 0
-         )) || false,
+         )),
     },
     {
       id: 5,

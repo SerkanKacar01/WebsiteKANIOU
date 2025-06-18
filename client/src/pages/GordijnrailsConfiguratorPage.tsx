@@ -1530,6 +1530,20 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                     )}
 
+                    {configuration.mounting === "ceiling" && configuration.ceilingComponents.length > 0 && (
+                      <div>
+                        <span className="text-gray-600">Plafond componenten:</span>
+                        <div className="mt-1 space-y-1">
+                          {configuration.ceilingComponents.map((comp) => (
+                            <div key={comp.id} className="flex justify-between text-sm">
+                              <span>{comp.name}</span>
+                              <span>×{comp.quantity}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {configuration.accessories.length > 0 && (
                       <div>
                         <span className="text-gray-600">Accessoires:</span>
@@ -1573,10 +1587,38 @@ const GordijnrailsConfiguratorPage = () => {
 
                     {price.extras > 0 && (
                       <>
-                        <div className="flex justify-between text-sm text-gray-600">
-                          <span>Extra opties</span>
-                          <span>€{price.extras.toFixed(2)}</span>
-                        </div>
+                        {configuration.corners === "custom" && configuration.curveModel && (
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>Curve Model ({configuration.curveModel.name})</span>
+                            <span>€{configuration.curveModel.price.toFixed(2)}</span>
+                          </div>
+                        )}
+                        
+                        {configuration.mounting === "ceiling" && configuration.ceilingComponents.length > 0 && (
+                          <>
+                            {configuration.ceilingComponents.map((comp) => (
+                              <div key={comp.id} className="flex justify-between text-sm text-gray-600">
+                                <span>{comp.name} (×{comp.quantity})</span>
+                                <span>€{(comp.price * comp.quantity).toFixed(2)}</span>
+                              </div>
+                            ))}
+                          </>
+                        )}
+                        
+                        {configuration.mounting === "wall" && (
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>Wall Mounting</span>
+                            <span>€{((Math.ceil((configuration.customLength || configuration.length) / 100) + 1) * 1.5).toFixed(2)}</span>
+                          </div>
+                        )}
+                        
+                        {configuration.accessories.includes("cord") && (
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>Cord Accessories</span>
+                            <span>€6.95</span>
+                          </div>
+                        )}
+                        
                         <Separator />
                       </>
                     )}

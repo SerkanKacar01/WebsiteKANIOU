@@ -67,6 +67,14 @@ interface WallComponent {
   quantity: number;
 }
 
+interface GliderOption {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+}
+
 interface Configuration {
   profileType: string;
   color: string;
@@ -79,6 +87,7 @@ interface Configuration {
   mounting: string;
   ceilingComponents: CeilingComponent[];
   wallComponents: WallComponent[];
+  selectedGlider?: GliderOption;
   accessories: string[];
 }
 
@@ -132,6 +141,7 @@ const GordijnrailsConfiguratorPage = () => {
     mounting: "",
     ceilingComponents: [],
     wallComponents: [],
+    selectedGlider: undefined,
     accessories: [],
   });
 
@@ -214,15 +224,17 @@ const GordijnrailsConfiguratorPage = () => {
     }
 
     // Wall components pricing
-    if (
-      configuration.mounting === "wall" &&
-      configuration.wallComponents
-    ) {
+    if (configuration.mounting === "wall" && configuration.wallComponents) {
       const wallComponentsTotal = configuration.wallComponents.reduce(
         (total, component) => total + component.price * component.quantity,
         0,
       );
       extras += wallComponentsTotal;
+    }
+
+    // Selected glider pricing
+    if (configuration.selectedGlider) {
+      extras += configuration.selectedGlider.price * configuration.quantity;
     }
 
     // Accessories pricing
@@ -297,7 +309,7 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS-DS smartklick plafondsteun wit",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 1.20,
+      price: 1.2,
       image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750277424680.png",
       quantity: 2,
     },
@@ -324,7 +336,7 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS-DS smartklick plafondsteun zwart",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 1.20,
+      price: 1.2,
       image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750277424680.png",
       quantity: 2,
     },
@@ -348,93 +360,102 @@ const GordijnrailsConfiguratorPage = () => {
     },
   ];
 
+  const getAvailableGliders = (): GliderOption[] => [
+    {
+      id: "ks-silent-gliders",
+      name: "KS Silent Gliders",
+      description: "Silent gliders – for KS profile",
+      price: 6.95,
+      image: "glider-ks-silent.png",
+    },
+    {
+      id: "wave-gliders-6cm",
+      name: "Wave Gliders 6cm White",
+      description: "For wave curtain style (6cm pitch)",
+      price: 6.95,
+      image: "glider-wave-6cm.png",
+    },
+  ];
+
   const getAvailableWallComponents = (): WallComponent[] => [
     {
       id: "ks-wall-bracket-white",
-      name: "KS Wall Bracket 12cm (White)",
+      name: "KS-DS basic afstandsteun 35 mm zwart",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.10,
+      price: 1.15,
       image: "Scherm­afbeelding 2025-06-18 om 22.35.11_1750279422495.png",
       quantity: 0,
     },
     {
       id: "ks-wall-bracket-white-short",
-      name: "KS Wall Bracket 12cm (White, Short Arm, incl. Adapter)",
+      name: "KS-DS basic afsandsteun 60 mm wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.50,
+      price: 1.42,
       image: "Scherm­afbeelding 2025-06-18 om 22.35.32_1750279422495.png",
       quantity: 0,
     },
     {
       id: "ks-wall-bracket-white-long",
-      name: "KS Wall Bracket 12cm (White, Long Arm, incl. Adapter)",
+      name: "KS-DS basic afsandsteun 60 mm zwart",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.75,
+      price: 1.42,
       image: "Scherm­afbeelding 2025-06-18 om 22.35.42_1750279422495.png",
       quantity: 0,
     },
     {
       id: "ks-wall-bracket-black",
-      name: "KS Wall Bracket 12cm (Black, incl. Adapter)",
+      name: "KS-DS smartklick afstandsteun 75 mm.+ klem wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.75,
+      price: 3.91,
       image: "Scherm­afbeelding 2025-06-18 om 22.36.15_1750279422494.png",
       quantity: 0,
     },
     {
       id: "ds-wall-bracket-white",
-      name: "DS Wall Bracket 12cm (White)",
+      name: "KS-DS smartklick afstandsteun 100 mm. + klem wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.30,
+      price: 4.36,
       image: "Scherm­afbeelding 2025-06-18 om 22.36.33_1750279422495.png",
       quantity: 0,
     },
     {
       id: "ds-wall-bracket-white-short",
-      name: "DS Wall Bracket 12cm (White, Short Arm)",
+      name: "KS-DS smartklick afstandsteun 125 mm. + klem wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.50,
+      price: 4.5,
       image: "Scherm­afbeelding 2025-06-18 om 22.37.07_1750279422495.png",
       quantity: 0,
     },
     {
       id: "ds-wall-bracket-white-long",
-      name: "DS Wall Bracket 12cm (White, Long Arm)",
+      name: "KS-DS smartklick afstandsteun 150 mm. + klem wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.80,
+      price: 4.73,
       image: "Scherm­afbeelding 2025-06-18 om 22.37.24_1750279422494.png",
       quantity: 0,
     },
     {
       id: "ds-wall-bracket-black",
-      name: "DS Wall Bracket 12cm (Black)",
+      name: "KS-DS smartklick afstandsteun 250 mm. + klem wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.60,
+      price: 8.62,
       image: "Scherm­afbeelding 2025-06-18 om 22.37.38_1750279422494.png",
       quantity: 0,
     },
     {
       id: "ds-wall-bracket-black-adapter",
-      name: "DS Wall Bracket 12cm (Black, Incl. Adapter)",
+      name: "KS-DS smartklick afstandsteun 300 mm. + klem wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.95,
+      price: 8.95,
       image: "Scherm­afbeelding 2025-06-18 om 22.37.55_1750279422494.png",
       quantity: 0,
     },
     {
       id: "ds-wall-bracket-white-adapter",
-      name: "DS Wall Bracket 12cm (White, Incl. Adapter)",
+      name: "KS-DS basic afstandsteun 35 mm wit",
       description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.95,
+      price: 1.15,
       image: "Scherm­afbeelding 2025-06-18 om 22.34.54_1750279422496.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-white-narrow",
-      name: "DS Wall Bracket 12cm (White, Narrow Model)",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.10,
-      image: "Scherm­afbeelding 2025-06-18 om 22.36.33_1750279422495.png",
       quantity: 0,
     },
   ];
@@ -476,6 +497,17 @@ const GordijnrailsConfiguratorPage = () => {
         }
       }
       return prev;
+    });
+  };
+
+  const selectGlider = (gliderId: string | null) => {
+    setConfiguration((prev) => {
+      if (!gliderId) {
+        return { ...prev, selectedGlider: undefined };
+      }
+      
+      const glider = getAvailableGliders().find(g => g.id === gliderId);
+      return { ...prev, selectedGlider: glider };
     });
   };
 
@@ -1310,92 +1342,88 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               </Card>
 
-                {/* Wall Components Selection */}
-                {configuration.mounting === "wall" && (
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <h4 className="text-lg font-semibold mb-4">
-                      Choose Your Wall Mounting Components
-                    </h4>
-                    <div className="grid gap-4">
-                      {getAvailableWallComponents().map((component) => {
-                        const selectedComponent =
-                          configuration.wallComponents.find(
-                            (comp) => comp.id === component.id,
-                          );
-                        const currentQuantity =
-                          selectedComponent?.quantity || 0;
+              {/* Wall Components Selection */}
+              {configuration.mounting === "wall" && (
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <h4 className="text-lg font-semibold mb-4">
+                    Choose Your Wall Mounting Components
+                  </h4>
+                  <div className="grid gap-4">
+                    {getAvailableWallComponents().map((component) => {
+                      const selectedComponent =
+                        configuration.wallComponents.find(
+                          (comp) => comp.id === component.id,
+                        );
+                      const currentQuantity = selectedComponent?.quantity || 0;
 
-                        return (
-                          <Card key={component.id} className="p-4">
-                            <div className="flex gap-4">
-                              <img
-                                src={`/images/${component.image}`}
-                                alt={component.name}
-                                className="w-16 h-16 object-contain rounded border"
-                              />
-                              <div className="flex-1">
-                                <h5 className="font-medium text-gray-900">
-                                  {component.name}
-                                </h5>
-                                <p className="text-sm text-gray-600 mb-2">
-                                  {component.description}
-                                </p>
-                                <p className="text-lg font-semibold text-[#d5c096] mb-3">
-                                  €{component.price.toFixed(2)} per stuk
-                                </p>
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium">
-                                    Quantity:
-                                  </Label>
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    max="20"
-                                    value={currentQuantity}
-                                    onChange={(e) => {
-                                      const quantity =
-                                        parseInt(e.target.value) || 0;
-                                      updateWallComponent(
-                                        component.id,
-                                        quantity,
-                                      );
-                                    }}
-                                    className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
-                                  />
-                                  <span className="text-sm text-gray-500">
-                                    = €
-                                    {(component.price * currentQuantity).toFixed(
-                                      2,
-                                    )}
-                                  </span>
-                                </div>
+                      return (
+                        <Card key={component.id} className="p-4">
+                          <div className="flex gap-4">
+                            <img
+                              src={`/images/${component.image}`}
+                              alt={component.name}
+                              className="w-16 h-16 object-contain rounded border"
+                            />
+                            <div className="flex-1">
+                              <h5 className="font-medium text-gray-900">
+                                {component.name}
+                              </h5>
+                              <p className="text-sm text-gray-600 mb-2">
+                                {component.description}
+                              </p>
+                              <p className="text-lg font-semibold text-[#d5c096] mb-3">
+                                €{component.price.toFixed(2)} per stuk
+                              </p>
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">
+                                  Quantity:
+                                </Label>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  max="20"
+                                  value={currentQuantity}
+                                  onChange={(e) => {
+                                    const quantity =
+                                      parseInt(e.target.value) || 0;
+                                    updateWallComponent(component.id, quantity);
+                                  }}
+                                  className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
+                                />
+                                <span className="text-sm text-gray-500">
+                                  = €
+                                  {(component.price * currentQuantity).toFixed(
+                                    2,
+                                  )}
+                                </span>
                               </div>
                             </div>
-                          </Card>
-                        );
-                      })}
-                    </div>
-
-                    {configuration.wallComponents.length > 0 && (
-                      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium text-green-800">
-                            Wall Components Subtotal:
-                          </span>
-                          <span className="font-bold text-green-800">
-                            €
-                            {configuration.wallComponents
-                              .reduce(
-                                (sum, comp) => sum + comp.price * comp.quantity,
-                                0,
-                              )
-                              .toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                          </div>
+                        </Card>
+                      );
+                    })}
                   </div>
-                )}
+
+                  {configuration.wallComponents.length > 0 && (
+                    <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium text-green-800">
+                          Wall Components Subtotal:
+                        </span>
+                        <span className="font-bold text-green-800">
+                          €
+                          {configuration.wallComponents
+                            .reduce(
+                              (sum, comp) => sum + comp.price * comp.quantity,
+                              0,
+                            )
+                            .toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <Card className="p-4">
                 <div className="flex items-center space-x-2">
@@ -1446,41 +1474,81 @@ const GordijnrailsConfiguratorPage = () => {
               </p>
             </div>
 
-            <div className="space-y-4">
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-4 h-4 border-2 border-[#d5c096] rounded flex items-center justify-center">
-                      {configuration.accessories.includes("cord") && (
-                        <Check className="h-3 w-3 text-[#d5c096]" />
-                      )}
+            <div className="space-y-6">
+              {/* Glider Selection Section */}
+              <div>
+                <h4 className="text-lg font-semibold mb-2">Select Your Glider Type</h4>
+                <p className="text-gray-600 mb-4">
+                  Choose the type of gliders best suited for your curtain style. These are delivered according to your profile, ready to install.
+                </p>
+                
+                <div className="space-y-3">
+                  {getAvailableGliders().map((glider) => (
+                    <Card key={glider.id} className="p-4">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-3">
+                          <input
+                            type="radio"
+                            id={glider.id}
+                            name="glider-selection"
+                            checked={configuration.selectedGlider?.id === glider.id}
+                            onChange={() => selectGlider(glider.id)}
+                            className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
+                          />
+                          <img
+                            src={`/images/${glider.image}`}
+                            alt={glider.name}
+                            className="w-12 h-12 object-contain rounded border"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <label htmlFor={glider.id} className="cursor-pointer">
+                            <h5 className="font-medium text-gray-900">{glider.name}</h5>
+                            <p className="text-sm text-gray-600">{glider.description}</p>
+                          </label>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium text-[#d5c096]">€{glider.price.toFixed(2)} per rail</p>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                  
+                  {/* Option to select none */}
+                  <Card className="p-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="radio"
+                          id="no-glider"
+                          name="glider-selection"
+                          checked={!configuration.selectedGlider}
+                          onChange={() => selectGlider(null)}
+                          className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
+                        />
+                        <div className="w-12 h-12 bg-gray-100 rounded border flex items-center justify-center">
+                          <span className="text-xs text-gray-500">None</span>
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <label htmlFor="no-glider" className="cursor-pointer">
+                          <h5 className="font-medium text-gray-900">No gliders</h5>
+                          <p className="text-sm text-gray-600">I will provide my own gliders or install separately</p>
+                        </label>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium text-green-600">€0.00</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">Glijders kiezen </p>
-                      <p className="text-sm text-gray-600">
-                        Wilt u glijders meebestellen?
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium text-[#d5c096]">+ €6,95</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleAccessory("cord")}
-                      className={
-                        configuration.accessories.includes("cord")
-                          ? "bg-[#d5c096]/10 border-[#d5c096]"
-                          : ""
-                      }
-                    >
-                      {configuration.accessories.includes("cord")
-                        ? "Toegevoegd"
-                        : "Toevoegen"}
-                    </Button>
-                  </div>
+                  </Card>
                 </div>
-              </Card>
+
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    <strong>Advice:</strong> For optimal curtain flow and ease of use, choose the correct glider type. Wave gliders are only recommended for wave-pleated curtains.
+                  </p>
+                </div>
+              </div>
 
               <Card className="p-4">
                 <div className="flex items-center justify-between">
@@ -1956,6 +2024,17 @@ const GordijnrailsConfiguratorPage = () => {
                               ))}
                             </>
                           )}
+
+                        {configuration.selectedGlider && (
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>
+                              {configuration.selectedGlider.name} (×{configuration.quantity})
+                            </span>
+                            <span>
+                              €{(configuration.selectedGlider.price * configuration.quantity).toFixed(2)}
+                            </span>
+                          </div>
+                        )}
 
                         {configuration.accessories.includes("cord") && (
                           <div className="flex justify-between text-sm text-gray-600">

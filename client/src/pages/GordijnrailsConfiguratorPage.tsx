@@ -305,6 +305,24 @@ const GordijnrailsConfiguratorPage = () => {
       image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274629592.png",
       quantity: 2,
     },
+    {
+      id: "white-cover-clip",
+      name: "KS-DS smartklick plafondsteun met afdekkap wit",
+      description:
+        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      price: 2.55,
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      quantity: 2,
+    },
+    {
+      id: "long-white-clip",
+      name: "KS-DS smartklick plafondsteun lang (wit)",
+      description:
+        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      price: 1.10,
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      quantity: 2,
+    },
   ];
 
   const toggleAccessory = (accessory: string) => {

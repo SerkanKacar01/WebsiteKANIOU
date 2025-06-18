@@ -1587,10 +1587,6 @@ const GordijnrailsConfiguratorPage = () => {
                   </div>
                 </div>
               </Card>
-
-
-
-
             </div>
           </div>
         );

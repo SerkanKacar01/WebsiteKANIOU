@@ -1,0 +1,73 @@
+✅ INSTRUCTION FOR REPLIT
+
+Task: Implement 11 selectable wall mounting products (wall brackets) under the Wall Mounting section of the rail configurator. Each product must include:
+• A product image (uploaded by the user).
+• A product title (see below).
+• A short recommendation line (example: “Recommended: 2 brackets per meter for optimal support”).
+• A price per unit (defined individually).
+• An input field for quantity (default = 0).
+• A live subtotal calculation per line (price × quantity).
+• The product’s total must be reflected in the total price summary on the right.
+
+⸻
+
+🔧 Placement Location:
+
+Place these 11 wall bracket options under the Wall Mounting choice (if this option is selected by the user). Do not replace existing entries — only add.
+
+⸻
+
+📦 Wall Bracket Product List (use image files provided by the user): #
+Product Title
+Price/Unit
+Image File Name
+1
+KS Wall Bracket 12cm (White)
+€1.10
+Schermafbeelding 2025-06-18 om 22.35.11.png
+2
+KS Wall Bracket 12cm (White, Short Arm, incl. Adapter)
+€1.50
+Schermafbeelding 2025-06-18 om 22.35.32.png
+3
+KS Wall Bracket 12cm (White, Long Arm, incl. Adapter)
+€1.75
+Schermafbeelding 2025-06-18 om 22.35.42.png
+4
+KS Wall Bracket 12cm (Black, incl. Adapter)
+€1.75
+Schermafbeelding 2025-06-18 om 22.36.15.png
+5
+DS Wall Bracket 12cm (White)
+€1.30
+Schermafbeelding 2025-06-18 om 22.36.33.png
+6
+DS Wall Bracket 12cm (White, Short Arm)
+€1.50
+Schermafbeelding 2025-06-18 om 22.37.07.png
+7
+DS Wall Bracket 12cm (White, Long Arm)
+€1.80
+Schermafbeelding 2025-06-18 om 22.37.24.png
+8
+DS Wall Bracket 12cm (Black)
+€1.60
+Schermafbeelding 2025-06-18 om 22.37.38.png
+9
+DS Wall Bracket 12cm (Black, Incl. Adapter)
+€1.95
+Schermafbeelding 2025-06-18 om 22.37.55.png
+10
+DS Wall Bracket 12cm (White, Incl. Adapter)
+€1.95
+Schermafbeelding 2025-06-18 om 22.40.30.png
+11
+DS Wall Bracket 12cm (White, Narrow Model)
+€1.10
+Schermafbeelding 2025-06-18 om 22.36.33.png ✏️ Additional Notes:
+• Label this subsection clearly with:
+“Choose Your Wall Mounting Components”
+• Under each item, show a recommendation text:
+“Recommended: 2 brackets per meter for stable installation”
+• Total price of selected brackets must be updated in the main price summary.
+• If Wall Mounting is not selected, this section must be hidden or collapsed.

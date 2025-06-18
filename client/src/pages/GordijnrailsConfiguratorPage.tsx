@@ -58,6 +58,15 @@ interface CeilingComponent {
   quantity: number;
 }
 
+interface WallComponent {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
 interface Configuration {
   profileType: string;
   color: string;
@@ -69,6 +78,7 @@ interface Configuration {
   curveMeasurements?: { [key: string]: number };
   mounting: string;
   ceilingComponents: CeilingComponent[];
+  wallComponents: WallComponent[];
   accessories: string[];
 }
 
@@ -121,6 +131,7 @@ const GordijnrailsConfiguratorPage = () => {
     corners: "none",
     mounting: "",
     ceilingComponents: [],
+    wallComponents: [],
     accessories: [],
   });
 
@@ -274,16 +285,16 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS-DS smartklick plafondsteun wit",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 0.50,
+      price: 1.20,
       image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750277424680.png",
       quantity: 2,
     },
     {
       id: "black-clip",
-      name: "KS-DS smartklick plafondsteun zwart",
+      name: "KS-DS plafondsteun met sleuf zwart",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 0.75,
+      price: 0.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750277424680.png",
       quantity: 2,
     },
@@ -292,13 +303,13 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS-DS smartklick plafondsteun incl. afdekkap zwart",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 2.55,
+      price: 1.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750277424680.png",
       quantity: 2,
     },
     {
       id: "suspension-adapter",
-      name: "Suspension Adapter for System Ceilings",
+      name: "KS-DS smartklick plafondsteun zwart",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 1.20,
@@ -310,20 +321,151 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS-DS smartklick plafondsteun met afdekkap wit",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 2.55,
+      price: 1.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750277424680.png",
       quantity: 2,
     },
     {
       id: "long-white-clip",
-      name: "KS-DS smartklick plafondsteun lang (wit)",
+      name: "KS-DS plafondsteun met sleuf wit",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 1.10,
+      price: 0.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.24.50_1750277424680.png",
       quantity: 2,
     },
   ];
+
+  const getAvailableWallComponents = (): WallComponent[] => [
+    {
+      id: "ks-wall-bracket-white",
+      name: "KS Wall Bracket 12cm (White)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.10,
+      image: "Scherm­afbeelding 2025-06-18 om 22.35.11_1750279422495.png",
+      quantity: 0,
+    },
+    {
+      id: "ks-wall-bracket-white-short",
+      name: "KS Wall Bracket 12cm (White, Short Arm, incl. Adapter)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.50,
+      image: "Scherm­afbeelding 2025-06-18 om 22.35.32_1750279422495.png",
+      quantity: 0,
+    },
+    {
+      id: "ks-wall-bracket-white-long",
+      name: "KS Wall Bracket 12cm (White, Long Arm, incl. Adapter)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.75,
+      image: "Scherm­afbeelding 2025-06-18 om 22.35.42_1750279422495.png",
+      quantity: 0,
+    },
+    {
+      id: "ks-wall-bracket-black",
+      name: "KS Wall Bracket 12cm (Black, incl. Adapter)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.75,
+      image: "Scherm­afbeelding 2025-06-18 om 22.36.15_1750279422494.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-white",
+      name: "DS Wall Bracket 12cm (White)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.30,
+      image: "Scherm­afbeelding 2025-06-18 om 22.36.33_1750279422495.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-white-short",
+      name: "DS Wall Bracket 12cm (White, Short Arm)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.50,
+      image: "Scherm­afbeelding 2025-06-18 om 22.37.07_1750279422495.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-white-long",
+      name: "DS Wall Bracket 12cm (White, Long Arm)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.80,
+      image: "Scherm­afbeelding 2025-06-18 om 22.37.24_1750279422494.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-black",
+      name: "DS Wall Bracket 12cm (Black)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.60,
+      image: "Scherm­afbeelding 2025-06-18 om 22.37.38_1750279422494.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-black-adapter",
+      name: "DS Wall Bracket 12cm (Black, Incl. Adapter)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.95,
+      image: "Scherm­afbeelding 2025-06-18 om 22.37.55_1750279422494.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-white-adapter",
+      name: "DS Wall Bracket 12cm (White, Incl. Adapter)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.95,
+      image: "Scherm­afbeelding 2025-06-18 om 22.34.54_1750279422496.png",
+      quantity: 0,
+    },
+    {
+      id: "ds-wall-bracket-white-narrow",
+      name: "DS Wall Bracket 12cm (White, Narrow Model)",
+      description: "Recommended: 2 brackets per meter for stable installation",
+      price: 1.10,
+      image: "Scherm­afbeelding 2025-06-18 om 22.36.33_1750279422495.png",
+      quantity: 0,
+    },
+  ];
+
+  const updateWallComponent = (componentId: string, quantity: number) => {
+    setConfiguration((prev) => {
+      const existingIndex = prev.wallComponents.findIndex(
+        (comp) => comp.id === componentId,
+      );
+
+      if (quantity === 0) {
+        // Remove component if quantity is 0
+        return {
+          ...prev,
+          wallComponents: prev.wallComponents.filter(
+            (comp) => comp.id !== componentId,
+          ),
+        };
+      }
+
+      if (existingIndex >= 0) {
+        // Update existing component
+        const updated = [...prev.wallComponents];
+        updated[existingIndex].quantity = quantity;
+        return { ...prev, wallComponents: updated };
+      } else {
+        // Add new component
+        const newComponent = getAvailableWallComponents().find(
+          (comp) => comp.id === componentId,
+        );
+        if (newComponent) {
+          return {
+            ...prev,
+            wallComponents: [
+              ...prev.wallComponents,
+              { ...newComponent, quantity },
+            ],
+          };
+        }
+      }
+      return prev;
+    });
+  };
 
   const toggleAccessory = (accessory: string) => {
     setConfiguration((prev) => ({
@@ -1005,9 +1147,12 @@ const GordijnrailsConfiguratorPage = () => {
               value={configuration.mounting}
               onValueChange={(value) => {
                 updateConfiguration("mounting", value);
-                // Clear ceiling components when switching away from ceiling mounting
+                // Clear components when switching mounting types
                 if (value !== "ceiling") {
                   updateConfiguration("ceilingComponents", []);
+                }
+                if (value !== "wall") {
+                  updateConfiguration("wallComponents", []);
                 }
               }}
               className="space-y-4"
@@ -1146,7 +1291,7 @@ const GordijnrailsConfiguratorPage = () => {
                         de rail.
                       </p>
                       <p className="text-sm font-medium text-[#d5c096]">
-                        + €{(Math.ceil(configuration.length / 100) + 1) * 1.5}
+                        Componenten selecteerbaar
                       </p>
                     </div>
                   </Label>

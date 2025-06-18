@@ -275,7 +275,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 0.50,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750277424680.png",
       quantity: 2,
     },
     {
@@ -284,7 +284,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 0.75,
-      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750275618983.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750277424680.png",
       quantity: 2,
     },
     {
@@ -293,7 +293,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 2.55,
-      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750274629592.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750277424680.png",
       quantity: 2,
     },
     {
@@ -302,7 +302,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 1.20,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274629592.png",
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750277424680.png",
       quantity: 2,
     },
     {
@@ -311,7 +311,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 2.55,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750277424680.png",
       quantity: 2,
     },
     {
@@ -320,7 +320,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 1.10,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.24.50_1750277424680.png",
       quantity: 2,
     },
   ];

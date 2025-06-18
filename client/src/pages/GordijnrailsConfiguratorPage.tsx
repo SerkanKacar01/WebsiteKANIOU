@@ -36,15 +36,63 @@ interface ConfigStep {
   completed: boolean;
 }
 
+interface CurveModel {
+  id: string;
+  name: string;
+  segments: string[];
+  price: number;
+}
+
 interface Configuration {
   profileType: string;
   color: string;
   length: number;
   quantity: number;
   corners: string;
+  curveModel?: CurveModel;
+  curveMeasurements?: { [key: string]: number };
   mounting: string;
   accessories: string[];
 }
+
+const curveModels: CurveModel[] = [
+  {
+    id: "model-a",
+    name: "Model A",
+    segments: ["A", "B"],
+    price: 3.50, // 1 bend
+  },
+  {
+    id: "model-b1",
+    name: "Model B1",
+    segments: ["A", "B", "C"],
+    price: 7.00, // 2 bends
+  },
+  {
+    id: "model-b2",
+    name: "Model B2",
+    segments: ["A", "B", "C"],
+    price: 7.00, // 2 bends
+  },
+  {
+    id: "model-c",
+    name: "Model C",
+    segments: ["A", "B", "C", "D"],
+    price: 10.50, // 3 bends
+  },
+  {
+    id: "model-d",
+    name: "Model D",
+    segments: ["A", "B", "C", "D", "E"],
+    price: 14.00, // 4 bends
+  },
+  {
+    id: "model-e",
+    name: "Model E",
+    segments: ["A", "B", "C", "D", "E", "F"],
+    price: 17.50, // 5 bends
+  },
+];
 
 const GordijnrailsConfiguratorPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -81,7 +129,14 @@ const GordijnrailsConfiguratorPage = () => {
       id: 4,
       title: "Kies bochten",
       description: "Optioneel",
-      completed: !!configuration.corners,
+      completed: configuration.corners === "none" || 
+        (configuration.corners === "custom" && 
+         configuration.curveModel && 
+         configuration.curveMeasurements &&
+         configuration.curveModel.segments.every(segment => 
+           configuration.curveMeasurements![segment] && 
+           configuration.curveMeasurements![segment] > 0
+         )) || false,
     },
     {
       id: 5,
@@ -103,12 +158,9 @@ const GordijnrailsConfiguratorPage = () => {
       8.95 * (configuration.length / 100) * configuration.quantity;
     let extras = 0;
 
-    // Corner pricing
-    if (
-      configuration.corners === "inner" ||
-      configuration.corners === "outer"
-    ) {
-      extras += 14.95;
+    // New curve model pricing
+    if (configuration.corners === "custom" && configuration.curveModel) {
+      extras += configuration.curveModel.price;
     }
 
     // Mounting pricing
@@ -445,6 +497,7 @@ const GordijnrailsConfiguratorPage = () => {
               className="space-y-4"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* No Curve - Keep and remains default */}
                 <Card className="p-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="none" id="none" />
@@ -462,51 +515,18 @@ const GordijnrailsConfiguratorPage = () => {
                   </div>
                 </Card>
 
-                <Card className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="inner" id="inner" />
-                    <Label htmlFor="inner" className="flex-1 cursor-pointer">
-                      <div>
-                        <p className="font-medium">Binnenbocht 90°</p>
-                        <p className="text-sm text-gray-600">
-                          Voor binnen hoeken
-                        </p>
-                        <p className="text-sm font-medium text-[#d5c096]">
-                          + €14,95
-                        </p>
-                      </div>
-                    </Label>
-                  </div>
-                </Card>
-
-                <Card className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="outer" id="outer" />
-                    <Label htmlFor="outer" className="flex-1 cursor-pointer">
-                      <div>
-                        <p className="font-medium">Buitenbocht 90°</p>
-                        <p className="text-sm text-gray-600">
-                          Voor buiten hoeken
-                        </p>
-                        <p className="text-sm font-medium text-[#d5c096]">
-                          + €14,95
-                        </p>
-                      </div>
-                    </Label>
-                  </div>
-                </Card>
-
+                {/* Custom Bent - New option */}
                 <Card className="p-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="custom" id="custom" />
                     <Label htmlFor="custom" className="flex-1 cursor-pointer">
                       <div>
-                        <p className="font-medium">Op maat gebogen</p>
+                        <p className="font-medium">Custom Bent</p>
                         <p className="text-sm text-gray-600">
                           Speciale bocht op aanvraag
                         </p>
-                        <p className="text-sm font-medium text-blue-600">
-                          Op aanvraag
+                        <p className="text-sm font-medium text-[#d5c096]">
+                          €3,50 per bocht
                         </p>
                       </div>
                     </Label>
@@ -514,6 +534,162 @@ const GordijnrailsConfiguratorPage = () => {
                 </Card>
               </div>
             </RadioGroup>
+
+            {/* Custom Bent Model Selection */}
+            {configuration.corners === "custom" && (
+              <div className="mt-8 space-y-6">
+                <div className="text-center">
+                  <h4 className="text-xl font-semibold mb-2">Selecteer uw curve model</h4>
+                  <p className="text-gray-600">
+                    Kies een model dat past bij uw ruimte en voer de exacte maten in.
+                  </p>
+                </div>
+
+                {/* Curve Models Gallery */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                  {curveModels.map((model) => (
+                    <Card
+                      key={model.id}
+                      className={`cursor-pointer border-2 transition-all hover:shadow-md ${
+                        configuration.curveModel?.id === model.id
+                          ? "border-[#d5c096] bg-[#d5c096]/5"
+                          : "border-gray-200 hover:border-[#d5c096]/50"
+                      }`}
+                      onClick={() => {
+                        updateConfiguration("curveModel", model);
+                        // Reset measurements when changing model
+                        updateConfiguration("curveMeasurements", {});
+                      }}
+                    >
+                      <CardContent className="p-4 text-center">
+                        {/* SVG Preview of Model */}
+                        <div className="w-full h-20 mb-3 flex items-center justify-center bg-gray-50 rounded">
+                          {model.id === "model-a" && (
+                            <svg width="60" height="40" viewBox="0 0 60 40" className="text-gray-700">
+                              <path d="M10,20 L30,20 L50,10" stroke="currentColor" strokeWidth="2" fill="none"/>
+                              <text x="20" y="35" fontSize="8" textAnchor="middle">A</text>
+                              <text x="40" y="25" fontSize="8" textAnchor="middle">B</text>
+                            </svg>
+                          )}
+                          {model.id === "model-b1" && (
+                            <svg width="60" height="40" viewBox="0 0 60 40" className="text-gray-700">
+                              <path d="M10,30 L25,30 L35,15 L50,15" stroke="currentColor" strokeWidth="2" fill="none"/>
+                              <text x="17" y="35" fontSize="8" textAnchor="middle">A</text>
+                              <text x="30" y="35" fontSize="8" textAnchor="middle">B</text>
+                              <text x="42" y="10" fontSize="8" textAnchor="middle">C</text>
+                            </svg>
+                          )}
+                          {model.id === "model-b2" && (
+                            <svg width="60" height="40" viewBox="0 0 60 40" className="text-gray-700">
+                              <path d="M10,20 L30,20 L30,10 L50,10" stroke="currentColor" strokeWidth="2" fill="none"/>
+                              <text x="20" y="35" fontSize="8" textAnchor="middle">A</text>
+                              <text x="30" y="30" fontSize="8" textAnchor="middle">B</text>
+                              <text x="40" y="25" fontSize="8" textAnchor="middle">C</text>
+                            </svg>
+                          )}
+                          {model.id === "model-c" && (
+                            <svg width="60" height="40" viewBox="0 0 60 40" className="text-gray-700">
+                              <path d="M10,30 L20,30 L30,15 L40,15 L50,30" stroke="currentColor" strokeWidth="2" fill="none"/>
+                              <text x="15" y="35" fontSize="8" textAnchor="middle">A</text>
+                              <text x="25" y="35" fontSize="8" textAnchor="middle">B</text>
+                              <text x="35" y="10" fontSize="8" textAnchor="middle">C</text>
+                              <text x="45" y="35" fontSize="8" textAnchor="middle">D</text>
+                            </svg>
+                          )}
+                          {model.id === "model-d" && (
+                            <svg width="60" height="40" viewBox="0 0 60 40" className="text-gray-700">
+                              <path d="M5,30 L15,30 L20,20 L30,20 L35,10 L45,10" stroke="currentColor" strokeWidth="2" fill="none"/>
+                              <text x="10" y="35" fontSize="7" textAnchor="middle">A</text>
+                              <text x="17" y="35" fontSize="7" textAnchor="middle">B</text>
+                              <text x="25" y="35" fontSize="7" textAnchor="middle">C</text>
+                              <text x="32" y="25" fontSize="7" textAnchor="middle">D</text>
+                              <text x="40" y="25" fontSize="7" textAnchor="middle">E</text>
+                            </svg>
+                          )}
+                          {model.id === "model-e" && (
+                            <svg width="60" height="40" viewBox="0 0 60 40" className="text-gray-700">
+                              <path d="M5,30 L12,30 L17,20 L25,20 L30,10 L38,10 L43,20 L50,20" stroke="currentColor" strokeWidth="2" fill="none"/>
+                              <text x="8" y="35" fontSize="6" textAnchor="middle">A</text>
+                              <text x="14" y="35" fontSize="6" textAnchor="middle">B</text>
+                              <text x="21" y="35" fontSize="6" textAnchor="middle">C</text>
+                              <text x="27" y="25" fontSize="6" textAnchor="middle">D</text>
+                              <text x="34" y="25" fontSize="6" textAnchor="middle">E</text>
+                              <text x="46" y="35" fontSize="6" textAnchor="middle">F</text>
+                            </svg>
+                          )}
+                        </div>
+                        <p className="font-medium text-sm">{model.name}</p>
+                        <p className="text-xs text-gray-600">€{model.price.toFixed(2)}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                {/* Measurement Inputs for Selected Model */}
+                {configuration.curveModel && (
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h5 className="font-semibold mb-4 text-center">
+                      Voer de maten in voor {configuration.curveModel.name}
+                    </h5>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                      {configuration.curveModel.segments.map((segment) => (
+                        <div key={segment} className="space-y-2">
+                          <Label htmlFor={`segment-${segment}`} className="text-sm font-medium">
+                            Segment {segment} (cm)
+                          </Label>
+                          <input
+                            id={`segment-${segment}`}
+                            type="number"
+                            min="10"
+                            max="600"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
+                            placeholder="cm"
+                            value={configuration.curveMeasurements?.[segment] || ""}
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value) || 0;
+                              updateConfiguration("curveMeasurements", {
+                                ...configuration.curveMeasurements,
+                                [segment]: value,
+                              });
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Validation Message */}
+                    {configuration.curveModel && 
+                     !configuration.curveModel.segments.every(segment => 
+                       configuration.curveMeasurements?.[segment] && 
+                       configuration.curveMeasurements[segment] > 0
+                     ) && (
+                      <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                        <p className="text-sm text-yellow-800">
+                          Vul alle vereiste maten in voordat u doorgaat naar de volgende stap.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Custom Design Upload Option */}
+                <div className="border-t pt-6">
+                  <Card className="p-4 border-dashed border-2 border-gray-300 hover:border-[#d5c096] transition-colors">
+                    <div className="text-center">
+                      <FileText className="mx-auto h-8 w-8 text-gray-400 mb-2" />
+                      <h5 className="font-semibold mb-2">Eigen ontwerp indienen</h5>
+                      <p className="text-sm text-gray-600 mb-3">
+                        Heeft u een unieke railform in gedachten? Upload uw tekening of 
+                        beschrijf uw indeling tijdens het offerte proces.
+                      </p>
+                      <p className="text-sm font-medium text-blue-600">
+                        Prijs op aanvraag
+                      </p>
+                    </div>
+                  </Card>
+                </div>
+              </div>
+            )}
           </div>
         );
 
@@ -946,14 +1122,28 @@ const GordijnrailsConfiguratorPage = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600">Bochten:</span>
                         <span className="font-medium">
-                          {configuration.corners === "inner"
-                            ? "Binnenbocht 90°"
-                            : configuration.corners === "outer"
-                              ? "Buitenbocht 90°"
-                              : configuration.corners === "custom"
-                                ? "Op maat gebogen"
-                                : "Geen"}
+                          {configuration.corners === "custom" && configuration.curveModel
+                            ? `${configuration.curveModel.name} (€${configuration.curveModel.price.toFixed(2)})`
+                            : configuration.corners === "custom"
+                              ? "Custom Bent - Selecteer model"
+                              : "Op maat gebogen"}
                         </span>
+                      </div>
+                    )}
+
+                    {configuration.corners === "custom" && 
+                     configuration.curveModel && 
+                     configuration.curveMeasurements && (
+                      <div className="space-y-1">
+                        <span className="text-gray-600 text-sm">Segmentmaten:</span>
+                        <div className="grid grid-cols-2 gap-1 text-xs">
+                          {configuration.curveModel.segments.map((segment) => (
+                            <div key={segment} className="flex justify-between">
+                              <span>{segment}:</span>
+                              <span>{configuration.curveMeasurements?.[segment] || 0} cm</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
 

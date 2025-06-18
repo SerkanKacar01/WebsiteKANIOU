@@ -73,6 +73,8 @@ interface GliderOption {
   description: string;
   price: number;
   image: string;
+  hasColorOptions?: boolean;
+  selectedColor?: string;
 }
 
 interface Configuration {
@@ -366,14 +368,18 @@ const GordijnrailsConfiguratorPage = () => {
       name: "KS Silent Gliders",
       description: "Silent gliders – for KS profile",
       price: 6.95,
-      image: "glider-ks-silent.svg",
+      image: "Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png",
+      hasColorOptions: true,
+      selectedColor: "white",
     },
     {
       id: "wave-gliders-6cm",
-      name: "Wave Gliders 6cm White",
+      name: "Wave Gliders 6cm",
       description: "For wave curtain style (6cm pitch)",
       price: 6.95,
-      image: "glider-wave-6cm.svg",
+      image: "Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png",
+      hasColorOptions: true,
+      selectedColor: "white",
     },
   ];
 
@@ -510,6 +516,20 @@ const GordijnrailsConfiguratorPage = () => {
       return { ...prev, selectedGlider: glider };
     });
   };
+
+  const updateGliderColor = (gliderId: string, color: string) => {
+    setConfiguration((prev) => ({
+      ...prev,
+      selectedGlider: prev.selectedGlider?.id === gliderId 
+        ? { ...prev.selectedGlider, selectedColor: color }
+        : prev.selectedGlider,
+    }));
+  };
+      selectedGlider: prev.selectedGlider?.id === gliderId 
+        ? { ...prev.selectedGlider, selectedColor: color }
+        : prev.selectedGlider,
+    }));
+  };;
 
   const toggleAccessory = (accessory: string) => {
     setConfiguration((prev) => ({
@@ -1482,42 +1502,121 @@ const GordijnrailsConfiguratorPage = () => {
                   Choose the type of gliders best suited for your curtain style. These are delivered according to your profile, ready to install.
                 </p>
                 
-                <div className="space-y-3">
-                  {getAvailableGliders().map((glider) => (
-                    <Card key={glider.id} className="p-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex items-center space-x-3">
-                          <input
-                            type="radio"
-                            id={glider.id}
-                            name="glider-selection"
-                            checked={configuration.selectedGlider?.id === glider.id}
-                            onChange={() => selectGlider(glider.id)}
-                            className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
-                          />
-                          <img
-                            src={`/images/${glider.image}`}
-                            alt={glider.name}
-                            className="w-12 h-12 object-contain rounded border"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <label htmlFor={glider.id} className="cursor-pointer">
-                            <h5 className="font-medium text-gray-900">{glider.name}</h5>
-                            <p className="text-sm text-gray-600">{glider.description}</p>
-                          </label>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium text-[#d5c096]">€{glider.price.toFixed(2)} per rail</p>
-                        </div>
+                <div className="grid gap-4 md:grid-cols-3">
+                  {/* KS Silent Gliders */}
+                  <Card className={`cursor-pointer border-2 transition-all ${
+                    configuration.selectedGlider?.id === "ks-silent-gliders" 
+                      ? "border-[#d5c096] bg-[#d5c096]/5" 
+                      : "border-gray-200 hover:border-[#d5c096]/50"
+                  }`}>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <input
+                          type="radio"
+                          id="ks-silent-gliders"
+                          name="glider-selection"
+                          checked={configuration.selectedGlider?.id === "ks-silent-gliders"}
+                          onChange={() => selectGlider("ks-silent-gliders")}
+                          className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
+                        />
+                        <label htmlFor="ks-silent-gliders" className="font-medium cursor-pointer">
+                          KS Silent Gliders
+                        </label>
                       </div>
-                    </Card>
-                  ))}
-                  
-                  {/* Option to select none */}
-                  <Card className="p-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-3">
+                      
+                      <div className="mb-3">
+                        <img
+                          src="/images/Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png"
+                          alt="KS Silent Gliders"
+                          className="w-full h-24 object-contain bg-gray-50 rounded border"
+                        />
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mb-3">
+                        Silent gliders – for KS profile
+                      </p>
+                      
+                      {configuration.selectedGlider?.id === "ks-silent-gliders" && (
+                        <div className="mb-3">
+                          <label className="block text-xs font-medium text-gray-700 mb-1">
+                            Color:
+                          </label>
+                          <select
+                            value={configuration.selectedGlider.selectedColor || "white"}
+                            onChange={(e) => updateGliderColor("ks-silent-gliders", e.target.value)}
+                            className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                          >
+                            <option value="white">White</option>
+                            <option value="black">Black</option>
+                          </select>
+                        </div>
+                      )}
+                      
+                      <p className="font-medium text-[#d5c096]">€6.95 per rail</p>
+                    </CardContent>
+                  </Card>
+
+                  {/* Wave Gliders 6cm */}
+                  <Card className={`cursor-pointer border-2 transition-all ${
+                    configuration.selectedGlider?.id === "wave-gliders-6cm" 
+                      ? "border-[#d5c096] bg-[#d5c096]/5" 
+                      : "border-gray-200 hover:border-[#d5c096]/50"
+                  }`}>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <input
+                          type="radio"
+                          id="wave-gliders-6cm"
+                          name="glider-selection"
+                          checked={configuration.selectedGlider?.id === "wave-gliders-6cm"}
+                          onChange={() => selectGlider("wave-gliders-6cm")}
+                          className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
+                        />
+                        <label htmlFor="wave-gliders-6cm" className="font-medium cursor-pointer">
+                          Wave Gliders 6cm
+                        </label>
+                      </div>
+                      
+                      <div className="mb-3">
+                        <img
+                          src="/images/Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png"
+                          alt="Wave Gliders 6cm"
+                          className="w-full h-24 object-contain bg-gray-50 rounded border"
+                        />
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mb-3">
+                        For wave curtain style (6cm pitch)
+                      </p>
+                      
+                      {configuration.selectedGlider?.id === "wave-gliders-6cm" && (
+                        <div className="mb-3">
+                          <label className="block text-xs font-medium text-gray-700 mb-1">
+                            Color:
+                          </label>
+                          <select
+                            value={configuration.selectedGlider.selectedColor || "white"}
+                            onChange={(e) => updateGliderColor("wave-gliders-6cm", e.target.value)}
+                            className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                          >
+                            <option value="white">White</option>
+                            <option value="black">Black</option>
+                          </select>
+                        </div>
+                      )}
+                      
+                      <p className="font-medium text-[#d5c096]">€6.95 per rail</p>
+                    </CardContent>
+                  </Card>
+
+                  {/* No Gliders Option */}
+                  <Card className={`cursor-pointer border-2 transition-all ${
+                    !configuration.selectedGlider 
+                      ? "border-[#d5c096] bg-[#d5c096]/5" 
+                      : "border-gray-200 hover:border-[#d5c096]/50"
+                  }`}>
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2 mb-3">
                         <input
                           type="radio"
                           id="no-glider"
@@ -1526,20 +1625,23 @@ const GordijnrailsConfiguratorPage = () => {
                           onChange={() => selectGlider(null)}
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
-                        <div className="w-12 h-12 bg-gray-100 rounded border flex items-center justify-center">
-                          <span className="text-xs text-gray-500">None</span>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <label htmlFor="no-glider" className="cursor-pointer">
-                          <h5 className="font-medium text-gray-900">No gliders</h5>
-                          <p className="text-sm text-gray-600">I will provide my own gliders or install separately</p>
+                        <label htmlFor="no-glider" className="font-medium cursor-pointer">
+                          No gliders
                         </label>
                       </div>
-                      <div className="text-right">
-                        <p className="font-medium text-green-600">€0.00</p>
+                      
+                      <div className="mb-3">
+                        <div className="w-full h-24 bg-gray-100 rounded border flex items-center justify-center">
+                          <span className="text-sm text-gray-500">None</span>
+                        </div>
                       </div>
-                    </div>
+                      
+                      <p className="text-sm text-gray-600 mb-3">
+                        I will provide my own gliders or install separately
+                      </p>
+                      
+                      <p className="font-medium text-green-600">€0.00</p>
+                    </CardContent>
                   </Card>
                 </div>
 

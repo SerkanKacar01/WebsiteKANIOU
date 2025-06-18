@@ -1,0 +1,102 @@
+✅ INSTRUCTION — For Replit: Customize Curve Options in Curtain Rail Configurator (Step 4 of 6)
+Goal: Replace the default 90° curve options with visual model-based selections + custom sketch option.
+
+⸻
+
+🛠️ TO BE IMPLEMENTED BY REPLIT DEVELOPMENT TEAM
+
+⸻
+
+1. Remove Existing Options:
+
+Remove the following options from the curve step:
+	•	90° Inside Curve
+	•	90° Outside Curve
+
+These options should no longer appear for the user.
+
+⸻
+
+2. Keep and Rename:
+
+Keep the option:
+
+No Curve – Straight rail without bends
+➤ This should remain selected by default and clearly labeled as Free.
+
+⸻
+
+3. Add New Option:
+
+Introduce a new option labeled:
+
+Custom Bent – Special curve on request
+➤ This will open additional selection when clicked.
+
+⸻
+
+4. When “Custom Bent” is selected, do the following:
+
+a) Show Curve Model Gallery:
+
+Display a visual grid of curve types (like in the example screenshots), including:
+	•	Small preview images of each model.
+	•	Unique identifiers like Model A, Model B1, Model C, etc.
+	•	Clickable thumbnails (only one model can be selected at a time).
+
+b) Selection Interaction:
+
+Once a model is selected:
+	•	Highlight the selected model.
+	•	Below the image, show input fields based on the model’s structure (e.g. A, B, C, D, E lengths in cm).
+
+c) Side Input Fields:
+	•	Display side length input fields for each part of the model.
+	•	Each input must be in centimeters.
+	•	If possible, show a dynamic diagram preview of the selected model with labels.
+
+⸻
+
+5. Add “Custom Design Upload” Option:
+
+Below the models, add a separate selection called:
+
+Submit Your Own Design
+➤ This allows the user to upload their own sketch or provide custom instructions.
+Add info text:
+“Have a unique rail shape in mind? Upload your drawing or describe your layout during the quote process.”
+
+⸻
+
+6. Price Calculation:
+	•	Charge €3.50 per curve (per bend, based on the selected model).
+	•	When a model is selected, automatically calculate the total based on the number of bends and display it in the price summary.
+	•	If “Submit Your Own Design” is chosen → show “Price on request”.
+
+⸻
+
+7. Interface Suggestions:
+	•	Use clear spacing between curve models.
+	•	Add hover tooltips or info icons on each model explaining its layout.
+	•	Add buttons like:
+	•	“Choose this model”
+	•	“Reset / Choose another model”
+
+⸻
+
+8. Input Validation:
+	•	Make all side inputs required before allowing the user to proceed to the next step.
+	•	If not filled: show an error message such as:
+“Please enter all required measurements before continuing.”
+
+⸻
+
+✅ Summary:
+	•	“No curve” stays (free)
+	•	All 90° presets are removed
+	•	“Custom bent” opens a visual selection of coded curve models
+	•	Each model allows the user to input exact measurements
+	•	Users can also choose to upload their own design
+	•	Curves cost €3.50 each
+	•	Selection affects price summary
+	•	UX must remain clean, professional, and mobile friendly

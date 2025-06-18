@@ -690,11 +690,11 @@ const ProductsPage = () => {
       {
         id: 8,
         title: "Gordijnrails",
-        subtitle: "KS & DS profielen (wit of zwart)",
+        subtitle:
+          "KS & DS profielen (verkrijgbaar in wit [ mat ] of zwart [ mat ])",
         description:
-          "Functionele of design rails, perfect op maat gemaakt voor elk type gordijn.",
-        image:
-          gordijnrailsImage,
+          "Onze gordijnrails combineren stijl met functionaliteit en worden op maat gemaakt voor elk type gordijn. Ideaal voor zowel particuliere als zakelijke toepassingen.",
+        image: gordijnrailsImage,
         products: [
           {
             name: "Gordijnrail KS - Wit",

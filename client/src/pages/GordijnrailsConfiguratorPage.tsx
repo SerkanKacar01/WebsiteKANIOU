@@ -176,8 +176,7 @@ const GordijnrailsConfiguratorPage = () => {
   // Pricing calculations
   const calculatePrice = () => {
     const effectiveLength = configuration.customLength || configuration.length;
-    let basePrice =
-      8.95 * (effectiveLength / 100) * configuration.quantity;
+    let basePrice = 8.95 * (effectiveLength / 100) * configuration.quantity;
     let extras = 0;
 
     // New curve model pricing
@@ -192,10 +191,13 @@ const GordijnrailsConfiguratorPage = () => {
     }
 
     // Ceiling components pricing
-    if (configuration.mounting === "ceiling" && configuration.ceilingComponents) {
+    if (
+      configuration.mounting === "ceiling" &&
+      configuration.ceilingComponents
+    ) {
       const ceilingComponentsTotal = configuration.ceilingComponents.reduce(
-        (total, component) => total + (component.price * component.quantity),
-        0
+        (total, component) => total + component.price * component.quantity,
+        0,
       );
       extras += ceilingComponentsTotal;
     }
@@ -229,19 +231,19 @@ const GordijnrailsConfiguratorPage = () => {
   const updateCeilingComponent = (componentId: string, quantity: number) => {
     setConfiguration((prev) => {
       const existingIndex = prev.ceilingComponents.findIndex(
-        (comp) => comp.id === componentId
+        (comp) => comp.id === componentId,
       );
-      
+
       if (quantity === 0) {
         // Remove component if quantity is 0
         return {
           ...prev,
           ceilingComponents: prev.ceilingComponents.filter(
-            (comp) => comp.id !== componentId
+            (comp) => comp.id !== componentId,
           ),
         };
       }
-      
+
       if (existingIndex >= 0) {
         // Update existing component
         const updated = [...prev.ceilingComponents];
@@ -250,7 +252,7 @@ const GordijnrailsConfiguratorPage = () => {
       } else {
         // Add new component
         const newComponent = getAvailableCeilingComponents().find(
-          (comp) => comp.id === componentId
+          (comp) => comp.id === componentId,
         );
         if (newComponent) {
           return {
@@ -269,32 +271,36 @@ const GordijnrailsConfiguratorPage = () => {
   const getAvailableCeilingComponents = (): CeilingComponent[] => [
     {
       id: "standard-clip",
-      name: "Standard Ceiling Clip – White",
-      description: "Recommended: 2 clips per meter for safe installation",
+      name: "KS-DS smartklick plafondsteun wit",
+      description:
+        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 0.50,
-      image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750274629592.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.24.50_1750275618983.png",
       quantity: 2,
     },
     {
-      id: "transparent-clip",
-      name: "Transparent Ceiling Clip – Aesthetic Finish",
-      description: "Recommended: 2 clips per meter for safe installation",
+      id: "black-clip",
+      name: "KS-DS smartklick plafondsteun zwart",
+      description:
+        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 0.75,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274629593.png",
+      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750275618983.png",
       quantity: 2,
     },
     {
       id: "double-clip",
-      name: "Double Clip – Extra Strength (for heavy curtains)",
-      description: "Recommended: 2 clips per meter for safe installation",
-      price: 1.00,
+      name: "KS-DS smartklick plafondsteun incl. afdekkap zwart",
+      description:
+        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+      price: 2.55,
       image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750274629592.png",
       quantity: 2,
     },
     {
       id: "suspension-adapter",
       name: "Suspension Adapter for System Ceilings",
-      description: "Recommended: 2 clips per meter for safe installation",
+      description:
+        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 1.20,
       image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274629592.png",
       quantity: 2,
@@ -482,10 +488,9 @@ const GordijnrailsConfiguratorPage = () => {
                     {configuration.customLength || configuration.length} cm
                   </div>
                   <p className="text-gray-600">
-                    {configuration.customLength 
+                    {configuration.customLength
                       ? "Uw exacte maat wordt gebruikt voor de berekening"
-                      : "Kies de railmaat die het best past bij uw ruimte."
-                    }
+                      : "Kies de railmaat die het best past bij uw ruimte."}
                   </p>
                 </div>
 
@@ -513,7 +518,8 @@ const GordijnrailsConfiguratorPage = () => {
                       <Button
                         key={length}
                         variant={
-                          configuration.length === length && !configuration.customLength
+                          configuration.length === length &&
+                          !configuration.customLength
                             ? "default"
                             : "outline"
                         }
@@ -523,7 +529,8 @@ const GordijnrailsConfiguratorPage = () => {
                           updateConfiguration("customLength", undefined);
                         }}
                         className={
-                          configuration.length === length && !configuration.customLength
+                          configuration.length === length &&
+                          !configuration.customLength
                             ? "bg-[#d5c096] hover:bg-[#c4b183]"
                             : ""
                         }
@@ -541,10 +548,11 @@ const GordijnrailsConfiguratorPage = () => {
                       Of geef je exacte maat op
                     </h4>
                     <p className="text-sm text-gray-600">
-                      Voor een perfecte pasvorm kun je ook je exacte maat invoeren
+                      Voor een perfecte pasvorm kun je ook je exacte maat
+                      invoeren
                     </p>
                   </div>
-                  
+
                   <div className="max-w-xs mx-auto">
                     <div className="relative">
                       <input
@@ -570,18 +578,22 @@ const GordijnrailsConfiguratorPage = () => {
                         cm
                       </span>
                     </div>
-                    
-                    {configuration.customLength && (configuration.customLength < 100 || configuration.customLength > 700) && (
-                      <p className="text-red-600 text-sm mt-2 text-center">
-                        Lengte moet tussen 100 en 700 cm zijn
-                      </p>
-                    )}
-                    
-                    {configuration.customLength && configuration.customLength >= 100 && configuration.customLength <= 700 && (
-                      <p className="text-green-600 text-sm mt-2 text-center">
-                        ✓ Exacte maat: {configuration.customLength} cm
-                      </p>
-                    )}
+
+                    {configuration.customLength &&
+                      (configuration.customLength < 100 ||
+                        configuration.customLength > 700) && (
+                        <p className="text-red-600 text-sm mt-2 text-center">
+                          Lengte moet tussen 100 en 700 cm zijn
+                        </p>
+                      )}
+
+                    {configuration.customLength &&
+                      configuration.customLength >= 100 &&
+                      configuration.customLength <= 700 && (
+                        <p className="text-green-600 text-sm mt-2 text-center">
+                          ✓ Exacte maat: {configuration.customLength} cm
+                        </p>
+                      )}
                   </div>
                 </div>
               </div>
@@ -998,7 +1010,7 @@ const GordijnrailsConfiguratorPage = () => {
                     </div>
                   </Label>
                 </div>
-                
+
                 {/* Ceiling Components Selection */}
                 {configuration.mounting === "ceiling" && (
                   <div className="mt-6 pt-6 border-t border-gray-200">
@@ -1007,11 +1019,13 @@ const GordijnrailsConfiguratorPage = () => {
                     </h4>
                     <div className="grid gap-4">
                       {getAvailableCeilingComponents().map((component) => {
-                        const selectedComponent = configuration.ceilingComponents.find(
-                          (comp) => comp.id === component.id
-                        );
-                        const currentQuantity = selectedComponent?.quantity || 0;
-                        
+                        const selectedComponent =
+                          configuration.ceilingComponents.find(
+                            (comp) => comp.id === component.id,
+                          );
+                        const currentQuantity =
+                          selectedComponent?.quantity || 0;
+
                         return (
                           <Card key={component.id} className="p-4">
                             <div className="flex items-start gap-4">
@@ -1021,11 +1035,13 @@ const GordijnrailsConfiguratorPage = () => {
                                   alt={component.name}
                                   className="w-full h-full object-contain rounded-lg hover:scale-105 transition-transform"
                                   onError={(e) => {
-                                    const img = e.currentTarget as HTMLImageElement;
-                                    const fallback = img.nextElementSibling as HTMLElement;
-                                    img.style.display = 'none';
+                                    const img =
+                                      e.currentTarget as HTMLImageElement;
+                                    const fallback =
+                                      img.nextElementSibling as HTMLElement;
+                                    img.style.display = "none";
                                     if (fallback) {
-                                      fallback.style.display = 'flex';
+                                      fallback.style.display = "flex";
                                     }
                                   }}
                                 />
@@ -1033,7 +1049,7 @@ const GordijnrailsConfiguratorPage = () => {
                                   Component
                                 </div>
                               </div>
-                              
+
                               <div className="flex-1">
                                 <h5 className="font-medium text-gray-900 mb-1">
                                   {component.name}
@@ -1045,7 +1061,7 @@ const GordijnrailsConfiguratorPage = () => {
                                   €{component.price.toFixed(2)} per piece
                                 </p>
                               </div>
-                              
+
                               <div className="flex items-center gap-2">
                                 <Label className="text-sm font-medium">
                                   Quantity:
@@ -1056,13 +1072,20 @@ const GordijnrailsConfiguratorPage = () => {
                                   max="20"
                                   value={currentQuantity}
                                   onChange={(e) => {
-                                    const quantity = parseInt(e.target.value) || 0;
-                                    updateCeilingComponent(component.id, quantity);
+                                    const quantity =
+                                      parseInt(e.target.value) || 0;
+                                    updateCeilingComponent(
+                                      component.id,
+                                      quantity,
+                                    );
                                   }}
                                   className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
                                 />
                                 <span className="text-sm text-gray-500">
-                                  = €{(component.price * currentQuantity).toFixed(2)}
+                                  = €
+                                  {(component.price * currentQuantity).toFixed(
+                                    2,
+                                  )}
                                 </span>
                               </div>
                             </div>
@@ -1070,7 +1093,7 @@ const GordijnrailsConfiguratorPage = () => {
                         );
                       })}
                     </div>
-                    
+
                     {configuration.ceilingComponents.length > 0 && (
                       <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
                         <div className="flex justify-between items-center">
@@ -1078,8 +1101,12 @@ const GordijnrailsConfiguratorPage = () => {
                             Ceiling Components Subtotal:
                           </span>
                           <span className="font-bold text-green-800">
-                            €{configuration.ceilingComponents
-                              .reduce((sum, comp) => sum + (comp.price * comp.quantity), 0)
+                            €
+                            {configuration.ceilingComponents
+                              .reduce(
+                                (sum, comp) => sum + comp.price * comp.quantity,
+                                0,
+                              )
                               .toFixed(2)}
                           </span>
                         </div>
@@ -1451,13 +1478,17 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                     )}
 
-                    {(configuration.length > 0 || configuration.customLength) && (
+                    {(configuration.length > 0 ||
+                      configuration.customLength) && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Lengte:</span>
                         <span className="font-medium">
-                          {configuration.customLength || configuration.length} cm
+                          {configuration.customLength || configuration.length}{" "}
+                          cm
                           {configuration.customLength && (
-                            <span className="text-xs text-green-600 ml-1">(exact)</span>
+                            <span className="text-xs text-green-600 ml-1">
+                              (exact)
+                            </span>
                           )}
                         </span>
                       </div>
@@ -1530,19 +1561,25 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                     )}
 
-                    {configuration.mounting === "ceiling" && configuration.ceilingComponents.length > 0 && (
-                      <div>
-                        <span className="text-gray-600">Plafond componenten:</span>
-                        <div className="mt-1 space-y-1">
-                          {configuration.ceilingComponents.map((comp) => (
-                            <div key={comp.id} className="flex justify-between text-sm">
-                              <span>{comp.name}</span>
-                              <span>×{comp.quantity}</span>
-                            </div>
-                          ))}
+                    {configuration.mounting === "ceiling" &&
+                      configuration.ceilingComponents.length > 0 && (
+                        <div>
+                          <span className="text-gray-600">
+                            Plafond componenten:
+                          </span>
+                          <div className="mt-1 space-y-1">
+                            {configuration.ceilingComponents.map((comp) => (
+                              <div
+                                key={comp.id}
+                                className="flex justify-between text-sm"
+                              >
+                                <span>{comp.name}</span>
+                                <span>×{comp.quantity}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
                     {configuration.accessories.length > 0 && (
                       <div>
@@ -1579,46 +1616,70 @@ const GordijnrailsConfiguratorPage = () => {
                   <CardContent className="space-y-3">
                     <div className="flex justify-between">
                       <span>
-                        Basis rail ({configuration.customLength || configuration.length} cm ×{" "}
-                        {configuration.quantity})
+                        Basis rail (
+                        {configuration.customLength || configuration.length} cm
+                        × {configuration.quantity})
                       </span>
                       <span>€{price.base.toFixed(2)}</span>
                     </div>
 
                     {price.extras > 0 && (
                       <>
-                        {configuration.corners === "custom" && configuration.curveModel && (
-                          <div className="flex justify-between text-sm text-gray-600">
-                            <span>Curve Model ({configuration.curveModel.name})</span>
-                            <span>€{configuration.curveModel.price.toFixed(2)}</span>
-                          </div>
-                        )}
-                        
-                        {configuration.mounting === "ceiling" && configuration.ceilingComponents.length > 0 && (
-                          <>
-                            {configuration.ceilingComponents.map((comp) => (
-                              <div key={comp.id} className="flex justify-between text-sm text-gray-600">
-                                <span>{comp.name} (×{comp.quantity})</span>
-                                <span>€{(comp.price * comp.quantity).toFixed(2)}</span>
-                              </div>
-                            ))}
-                          </>
-                        )}
-                        
+                        {configuration.corners === "custom" &&
+                          configuration.curveModel && (
+                            <div className="flex justify-between text-sm text-gray-600">
+                              <span>
+                                Curve Model ({configuration.curveModel.name})
+                              </span>
+                              <span>
+                                €{configuration.curveModel.price.toFixed(2)}
+                              </span>
+                            </div>
+                          )}
+
+                        {configuration.mounting === "ceiling" &&
+                          configuration.ceilingComponents.length > 0 && (
+                            <>
+                              {configuration.ceilingComponents.map((comp) => (
+                                <div
+                                  key={comp.id}
+                                  className="flex justify-between text-sm text-gray-600"
+                                >
+                                  <span>
+                                    {comp.name} (×{comp.quantity})
+                                  </span>
+                                  <span>
+                                    €{(comp.price * comp.quantity).toFixed(2)}
+                                  </span>
+                                </div>
+                              ))}
+                            </>
+                          )}
+
                         {configuration.mounting === "wall" && (
                           <div className="flex justify-between text-sm text-gray-600">
                             <span>Wall Mounting</span>
-                            <span>€{((Math.ceil((configuration.customLength || configuration.length) / 100) + 1) * 1.5).toFixed(2)}</span>
+                            <span>
+                              €
+                              {(
+                                (Math.ceil(
+                                  (configuration.customLength ||
+                                    configuration.length) / 100,
+                                ) +
+                                  1) *
+                                1.5
+                              ).toFixed(2)}
+                            </span>
                           </div>
                         )}
-                        
+
                         {configuration.accessories.includes("cord") && (
                           <div className="flex justify-between text-sm text-gray-600">
                             <span>Cord Accessories</span>
                             <span>€6.95</span>
                           </div>
                         )}
-                        
+
                         <Separator />
                       </>
                     )}

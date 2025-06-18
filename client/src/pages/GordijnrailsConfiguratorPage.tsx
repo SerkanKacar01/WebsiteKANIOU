@@ -1019,7 +1019,7 @@ const GordijnrailsConfiguratorPage = () => {
                                 <img
                                   src={`/attached_assets/${component.image}`}
                                   alt={component.name}
-                                  className="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform"
+                                  className="w-full h-full object-contain rounded-lg hover:scale-105 transition-transform"
                                   onError={(e) => {
                                     const img = e.currentTarget as HTMLImageElement;
                                     const fallback = img.nextElementSibling as HTMLElement;

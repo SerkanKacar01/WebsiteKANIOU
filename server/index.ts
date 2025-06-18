@@ -7,6 +7,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Serve attached assets statically
+app.use('/attached_assets', express.static('attached_assets'));
+
 // GDPR Cookie Consent Middleware - must be before other middlewares
 app.use(cookieConsentMiddleware);
 

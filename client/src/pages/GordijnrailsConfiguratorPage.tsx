@@ -213,6 +213,18 @@ const GordijnrailsConfiguratorPage = () => {
       extras += ceilingComponentsTotal;
     }
 
+    // Wall components pricing
+    if (
+      configuration.mounting === "wall" &&
+      configuration.wallComponents
+    ) {
+      const wallComponentsTotal = configuration.wallComponents.reduce(
+        (total, component) => total + component.price * component.quantity,
+        0,
+      );
+      extras += wallComponentsTotal;
+    }
+
     // Accessories pricing
     if (configuration.accessories.includes("cord")) {
       extras += 6.95;
@@ -1298,6 +1310,93 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               </Card>
 
+                {/* Wall Components Selection */}
+                {configuration.mounting === "wall" && (
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <h4 className="text-lg font-semibold mb-4">
+                      Choose Your Wall Mounting Components
+                    </h4>
+                    <div className="grid gap-4">
+                      {getAvailableWallComponents().map((component) => {
+                        const selectedComponent =
+                          configuration.wallComponents.find(
+                            (comp) => comp.id === component.id,
+                          );
+                        const currentQuantity =
+                          selectedComponent?.quantity || 0;
+
+                        return (
+                          <Card key={component.id} className="p-4">
+                            <div className="flex gap-4">
+                              <img
+                                src={`/images/${component.image}`}
+                                alt={component.name}
+                                className="w-16 h-16 object-contain rounded border"
+                              />
+                              <div className="flex-1">
+                                <h5 className="font-medium text-gray-900">
+                                  {component.name}
+                                </h5>
+                                <p className="text-sm text-gray-600 mb-2">
+                                  {component.description}
+                                </p>
+                                <p className="text-lg font-semibold text-[#d5c096] mb-3">
+                                  €{component.price.toFixed(2)} per stuk
+                                </p>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium">
+                                    Quantity:
+                                  </Label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="20"
+                                    value={currentQuantity}
+                                    onChange={(e) => {
+                                      const quantity =
+                                        parseInt(e.target.value) || 0;
+                                      updateWallComponent(
+                                        component.id,
+                                        quantity,
+                                      );
+                                    }}
+                                    className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
+                                  />
+                                  <span className="text-sm text-gray-500">
+                                    = €
+                                    {(component.price * currentQuantity).toFixed(
+                                      2,
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </Card>
+                        );
+                      })}
+                    </div>
+
+                    {configuration.wallComponents.length > 0 && (
+                      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-green-800">
+                            Wall Components Subtotal:
+                          </span>
+                          <span className="font-bold text-green-800">
+                            €
+                            {configuration.wallComponents
+                              .reduce(
+                                (sum, comp) => sum + comp.price * comp.quantity,
+                                0,
+                              )
+                              .toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
               <Card className="p-4">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="rail-only" id="rail-only" />
@@ -1744,6 +1843,26 @@ const GordijnrailsConfiguratorPage = () => {
                         </div>
                       )}
 
+                    {configuration.mounting === "wall" &&
+                      configuration.wallComponents.length > 0 && (
+                        <div>
+                          <span className="text-gray-600">
+                            Wand componenten:
+                          </span>
+                          <div className="mt-1 space-y-1">
+                            {configuration.wallComponents.map((comp) => (
+                              <div
+                                key={comp.id}
+                                className="flex justify-between text-sm"
+                              >
+                                <span>{comp.name}</span>
+                                <span>×{comp.quantity}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                     {configuration.accessories.length > 0 && (
                       <div>
                         <span className="text-gray-600">Accessoires:</span>
@@ -1819,22 +1938,24 @@ const GordijnrailsConfiguratorPage = () => {
                             </>
                           )}
 
-                        {configuration.mounting === "wall" && (
-                          <div className="flex justify-between text-sm text-gray-600">
-                            <span>Wall Mounting</span>
-                            <span>
-                              €
-                              {(
-                                (Math.ceil(
-                                  (configuration.customLength ||
-                                    configuration.length) / 100,
-                                ) +
-                                  1) *
-                                1.5
-                              ).toFixed(2)}
-                            </span>
-                          </div>
-                        )}
+                        {configuration.mounting === "wall" &&
+                          configuration.wallComponents.length > 0 && (
+                            <>
+                              {configuration.wallComponents.map((comp) => (
+                                <div
+                                  key={comp.id}
+                                  className="flex justify-between text-sm text-gray-600"
+                                >
+                                  <span>
+                                    {comp.name} (×{comp.quantity})
+                                  </span>
+                                  <span>
+                                    €{(comp.price * comp.quantity).toFixed(2)}
+                                  </span>
+                                </div>
+                              ))}
+                            </>
+                          )}
 
                         {configuration.accessories.includes("cord") && (
                           <div className="flex justify-between text-sm text-gray-600">

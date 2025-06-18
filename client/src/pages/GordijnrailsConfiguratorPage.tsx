@@ -1031,7 +1031,7 @@ const GordijnrailsConfiguratorPage = () => {
                             <div className="flex items-start gap-4">
                               <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <img
-                                  src={`/attached_assets/${component.image}`}
+                                  src={`/attached_assets/${encodeURIComponent(component.image)}`}
                                   alt={component.name}
                                   className="w-full h-full object-contain rounded-lg hover:scale-105 transition-transform"
                                   onError={(e) => {

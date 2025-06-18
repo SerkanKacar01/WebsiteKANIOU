@@ -49,6 +49,15 @@ interface CurveModel {
   price: number;
 }
 
+interface CeilingComponent {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
 interface Configuration {
   profileType: string;
   color: string;
@@ -59,6 +68,7 @@ interface Configuration {
   curveModel?: CurveModel;
   curveMeasurements?: { [key: string]: number };
   mounting: string;
+  ceilingComponents: CeilingComponent[];
   accessories: string[];
 }
 
@@ -110,6 +120,7 @@ const GordijnrailsConfiguratorPage = () => {
     quantity: 1,
     corners: "none",
     mounting: "",
+    ceilingComponents: [],
     accessories: [],
   });
 
@@ -180,6 +191,15 @@ const GordijnrailsConfiguratorPage = () => {
       extras += supports * 1.5;
     }
 
+    // Ceiling components pricing
+    if (configuration.mounting === "ceiling" && configuration.ceilingComponents) {
+      const ceilingComponentsTotal = configuration.ceilingComponents.reduce(
+        (total, component) => total + (component.price * component.quantity),
+        0
+      );
+      extras += ceilingComponentsTotal;
+    }
+
     // Accessories pricing
     if (configuration.accessories.includes("cord")) {
       extras += 6.95;
@@ -205,6 +225,81 @@ const GordijnrailsConfiguratorPage = () => {
   const updateConfiguration = (key: keyof Configuration, value: any) => {
     setConfiguration((prev) => ({ ...prev, [key]: value }));
   };
+
+  const updateCeilingComponent = (componentId: string, quantity: number) => {
+    setConfiguration((prev) => {
+      const existingIndex = prev.ceilingComponents.findIndex(
+        (comp) => comp.id === componentId
+      );
+      
+      if (quantity === 0) {
+        // Remove component if quantity is 0
+        return {
+          ...prev,
+          ceilingComponents: prev.ceilingComponents.filter(
+            (comp) => comp.id !== componentId
+          ),
+        };
+      }
+      
+      if (existingIndex >= 0) {
+        // Update existing component
+        const updated = [...prev.ceilingComponents];
+        updated[existingIndex].quantity = quantity;
+        return { ...prev, ceilingComponents: updated };
+      } else {
+        // Add new component
+        const newComponent = getAvailableCeilingComponents().find(
+          (comp) => comp.id === componentId
+        );
+        if (newComponent) {
+          return {
+            ...prev,
+            ceilingComponents: [
+              ...prev.ceilingComponents,
+              { ...newComponent, quantity },
+            ],
+          };
+        }
+      }
+      return prev;
+    });
+  };
+
+  const getAvailableCeilingComponents = (): CeilingComponent[] => [
+    {
+      id: "standard-clip",
+      name: "Standard Ceiling Clip – White",
+      description: "Recommended: 2 clips per meter for safe installation",
+      price: 0.50,
+      image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750274055054.png",
+      quantity: 2,
+    },
+    {
+      id: "transparent-clip",
+      name: "Transparent Ceiling Clip – Aesthetic Finish",
+      description: "Recommended: 2 clips per meter for safe installation",
+      price: 0.75,
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750274055055.png",
+      quantity: 2,
+    },
+    {
+      id: "double-clip",
+      name: "Double Clip – Extra Strength (for heavy curtains)",
+      description: "Recommended: 2 clips per meter for safe installation",
+      price: 1.00,
+      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750274055055.png",
+      quantity: 2,
+    },
+    {
+      id: "suspension-adapter",
+      name: "Suspension Adapter for System Ceilings",
+      description: "Recommended: 2 clips per meter for safe installation",
+      price: 1.20,
+      image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750274055055.png",
+      quantity: 2,
+    },
+  ];
 
   const toggleAccessory = (accessory: string) => {
     setConfiguration((prev) => ({
@@ -878,7 +973,13 @@ const GordijnrailsConfiguratorPage = () => {
 
             <RadioGroup
               value={configuration.mounting}
-              onValueChange={(value) => updateConfiguration("mounting", value)}
+              onValueChange={(value) => {
+                updateConfiguration("mounting", value);
+                // Clear ceiling components when switching away from ceiling mounting
+                if (value !== "ceiling") {
+                  updateConfiguration("ceilingComponents", []);
+                }
+              }}
               className="space-y-4"
             >
               <Card className="p-4">
@@ -891,17 +992,101 @@ const GordijnrailsConfiguratorPage = () => {
                         Inclusief plafondclips en schroeven van hoge kwaliteit.
                         Geschikt voor directe montage aan het plafond.
                       </p>
-                      <p className="text-sm font-medium text-green-600">
-                        <p className="text-sm font-medium text-[#d5c096]">
-                          + €
-                          {(Math.ceil(configuration.length / 50) + 0.5) * 0.1}
-                        </p>
-                        Advies: Voor een stevige en veilige plaatsing voorzien
-                        wij 2 plafondclips per meter.
+                      <p className="text-sm font-medium text-[#d5c096]">
+                        Componenten selecteerbaar
                       </p>
                     </div>
                   </Label>
                 </div>
+                
+                {/* Ceiling Components Selection */}
+                {configuration.mounting === "ceiling" && (
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <h4 className="text-lg font-semibold mb-4">
+                      Choose Your Ceiling Mounting Components
+                    </h4>
+                    <div className="grid gap-4">
+                      {getAvailableCeilingComponents().map((component) => {
+                        const selectedComponent = configuration.ceilingComponents.find(
+                          (comp) => comp.id === component.id
+                        );
+                        const currentQuantity = selectedComponent?.quantity || 0;
+                        
+                        return (
+                          <Card key={component.id} className="p-4">
+                            <div className="flex items-start gap-4">
+                              <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <img
+                                  src={`/attached_assets/${component.image}`}
+                                  alt={component.name}
+                                  className="w-full h-full object-cover rounded-lg hover:scale-105 transition-transform"
+                                  onError={(e) => {
+                                    const img = e.currentTarget as HTMLImageElement;
+                                    const fallback = img.nextElementSibling as HTMLElement;
+                                    img.style.display = 'none';
+                                    if (fallback) {
+                                      fallback.style.display = 'flex';
+                                    }
+                                  }}
+                                />
+                                <div className="w-full h-full bg-gray-200 rounded-lg items-center justify-center text-gray-500 text-xs hidden">
+                                  Component
+                                </div>
+                              </div>
+                              
+                              <div className="flex-1">
+                                <h5 className="font-medium text-gray-900 mb-1">
+                                  {component.name}
+                                </h5>
+                                <p className="text-sm text-gray-600 mb-2">
+                                  {component.description}
+                                </p>
+                                <p className="text-sm font-medium text-[#d5c096]">
+                                  €{component.price.toFixed(2)} per piece
+                                </p>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">
+                                  Quantity:
+                                </Label>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  max="20"
+                                  value={currentQuantity}
+                                  onChange={(e) => {
+                                    const quantity = parseInt(e.target.value) || 0;
+                                    updateCeilingComponent(component.id, quantity);
+                                  }}
+                                  className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
+                                />
+                                <span className="text-sm text-gray-500">
+                                  = €{(component.price * currentQuantity).toFixed(2)}
+                                </span>
+                              </div>
+                            </div>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                    
+                    {configuration.ceilingComponents.length > 0 && (
+                      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-green-800">
+                            Ceiling Components Subtotal:
+                          </span>
+                          <span className="font-bold text-green-800">
+                            €{configuration.ceilingComponents
+                              .reduce((sum, comp) => sum + (comp.price * comp.quantity), 0)
+                              .toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </Card>
 
               <Card className="p-4">

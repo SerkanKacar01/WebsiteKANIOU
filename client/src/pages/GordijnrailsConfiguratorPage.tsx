@@ -35,7 +35,8 @@ import modelDImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.38_17502
 import modelEImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.50.05_1750271431612.png";
 import ksRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.52_1750370453923.png";
 import ksRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.25.39_1750370453924.png";
-import ksRailBlackPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.25.39_1750370453924.png";
+import ksRailTechnicalImageBlack from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.52_1750371691301.png";
+import ksRailBlackPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 23.18.07_1750371691300.png";
 import dsRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.27.20_1750370855704.png";
 import dsRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.08_1750370855704.png";
 import dsRailTechnicalImageBlack from "@assets/Scherm­afbeelding 2025-06-18 om 00.27.20_1750371210898.png";
@@ -144,7 +145,7 @@ const GordijnrailsConfiguratorPage = () => {
   const [configuration, setConfiguration] = useState<Configuration>({
     profileType: "",
     color: "",
-    length: 200,
+    length: 100,
     quantity: 1,
     corners: "none",
     mounting: "",
@@ -641,7 +642,7 @@ const GordijnrailsConfiguratorPage = () => {
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
                         <div className="w-full sm:w-1/2 max-w-[120px]">
                           <img 
-                            src={ksRailTechnicalImage} 
+                            src={ksRailTechnicalImageBlack} 
                             alt="KS Rail technical drawing - 20mm x 14mm dimensions"
                             className="w-full h-auto object-contain rounded"
                           />
@@ -649,7 +650,7 @@ const GordijnrailsConfiguratorPage = () => {
                         <div className="w-full sm:w-1/2 max-w-[120px]">
                           <img 
                             src={ksRailBlackPhotoImage} 
-                            alt="KS Rail black photo with gliders"
+                            alt="KS Rail black photo perspective view"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>

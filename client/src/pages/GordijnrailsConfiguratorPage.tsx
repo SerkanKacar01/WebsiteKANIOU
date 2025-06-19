@@ -35,6 +35,8 @@ import modelDImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.38_17502
 import modelEImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.50.05_1750271431612.png";
 import ksRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.52_1750370453923.png";
 import ksRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.25.39_1750370453924.png";
+import dsRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.27.20_1750370855704.png";
+import dsRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.08_1750370855704.png";
 import { Link } from "wouter";
 
 interface ConfigStep {
@@ -648,6 +650,24 @@ const GordijnrailsConfiguratorPage = () => {
                     }}
                   >
                     <CardContent className="p-4 text-center">
+                      {/* Dual Image Display */}
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={dsRailTechnicalImage} 
+                            alt="DS Rail profile drawing - 24mm x 12mm dimensions"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={dsRailPhotoImage} 
+                            alt="DS Rail photo with gliders and closed front"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                      </div>
+                      
                       <div className="w-full h-16 bg-white border rounded-lg mb-3 flex items-center justify-center">
                         <div className="w-12 h-3 bg-gray-100 rounded border-2 border-gray-200"></div>
                       </div>

@@ -2304,10 +2304,6 @@ const GordijnrailsConfiguratorPage = () => {
                 {/* Action Buttons */}
                 {currentStep === 6 && (
                   <div className="space-y-3">
-                    <Button className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white">
-                      <ShoppingCart className="h-4 w-4 mr-2" />
-                      Voeg toe aan offerte
-                    </Button>
                     <Button variant="outline" className="w-full">
                       <FileText className="h-4 w-4 mr-2" />
                       Bekijk totaalspecificatie

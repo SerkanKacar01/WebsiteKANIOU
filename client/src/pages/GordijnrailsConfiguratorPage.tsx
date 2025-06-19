@@ -16,6 +16,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Check,
   ArrowRight,
   ArrowLeft,
@@ -26,6 +32,7 @@ import {
   Settings,
   Wrench,
   Package,
+  ChevronDown,
 } from "lucide-react";
 import modelAImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.48.41_1750271431612.png";
 import modelB1Image from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.58_1750271431612.png";
@@ -2291,11 +2298,99 @@ const GordijnrailsConfiguratorPage = () => {
                     Waarom KANIOU?
                   </h4>
                   <ul className="text-sm space-y-1">
-                    <li>✓ Gratis op maat zagen</li>
-                    <li>✓ Professioneel montagemateriaal</li>
-                    <li>✓ 5 jaar garantie</li>
-                    <li>✓ Snelle levering</li>
+                    <li>✓ Vakkundig op maat gezaagd in eigen atelier</li>
+                    <li>✓ Inclusief exclusief, hoogwaardig montagemateriaal</li>
+                    <li>✓ 5 jaar premium garantie op kwaliteit & werking</li>
+                    <li>✓ Snelle, discrete en zorgvuldige levering</li>
                   </ul>
+                </div>
+
+                {/* FAQ Section */}
+                <div className="mt-8">
+                  <h2 className="text-2xl font-bold text-center mb-6">
+                    Veelgestelde vragen over gordijnrails
+                  </h2>
+                  <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger className="text-left">
+                        <strong>1. Welk profiel moet ik kiezen: KS of DS?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Beide profielen zijn van hoge kwaliteit.<br />
+                          – <strong>KS Rail</strong>: Stil, functioneel en geschikt voor een minimalistische afwerking.<br />
+                          – <strong>DS Rail</strong>: Luxueus open profiel, perfect zichtbaar en ideaal voor plafondmontage.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger className="text-left">
+                        <strong>2. Is plafondmontage of wandmontage beter?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Plafondmontage zorgt voor een strakke, onzichtbare afwerking. Wandmontage is geschikt wanneer directe plafondmontage niet mogelijk is of extra ondersteuning vereist is.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-3">
+                      <AccordionTrigger className="text-left">
+                        <strong>3. Hoeveel steunen of clips heb ik nodig?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Wij adviseren gemiddeld 2 steunen per meter voor een veilige en stabiele bevestiging.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-4">
+                      <AccordionTrigger className="text-left">
+                        <strong>4. Hoeveel glijders heb ik nodig?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          <strong>KS glijders:</strong> 10 stuks per meter (1 strip).<br />
+                          <strong>Wave glijders:</strong> Deel de breedte in cm door 6. Voeg voor zekerheid altijd 2–4 extra glijders toe.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-5">
+                      <AccordionTrigger className="text-left">
+                        <strong>5. Kan ik de rail zelf monteren?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Ja, alle rails worden geleverd met professioneel montagemateriaal. De montage is eenvoudig uit te voeren met standaard gereedschap.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-6">
+                      <AccordionTrigger className="text-left">
+                        <strong>6. Kan ik achteraf nog aanpassingen maken?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Ja, het is altijd mogelijk om achteraf accessoires bij te bestellen of aanpassingen te doen. Contacteer onze service voor advies.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-7">
+                      <AccordionTrigger className="text-left">
+                        <strong>7. Is alles echt op maat gemaakt?</strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Absoluut. Iedere rail wordt nauwkeurig op maat gezaagd in ons eigen atelier volgens de door jou ingevoerde afmetingen.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               </div>
             </div>

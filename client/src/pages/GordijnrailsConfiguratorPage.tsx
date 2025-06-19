@@ -214,26 +214,32 @@ const GordijnrailsConfiguratorPage = () => {
   // Pricing calculations
   const calculatePrice = () => {
     const effectiveLength = configuration.customLength || configuration.length;
+    
+    // Round up to nearest 10cm for pricing calculations when using custom length
+    let pricingLength = effectiveLength;
+    if (configuration.customLength) {
+      pricingLength = Math.ceil(effectiveLength / 10) * 10;
+    }
 
     // Different prices for different rail types and colors
     let pricePerMeter = 8.95; // Default price
 
     if (configuration.profileType === "KS") {
       if (configuration.color === "white") {
-        pricePerMeter = 9.95; // KS Rail - Wit
+        pricePerMeter = 8.95; // KS Rail - Wit
       } else if (configuration.color === "black") {
-        pricePerMeter = 9.95; // KS Rail - Zwart
+        pricePerMeter = 8.95; // KS Rail - Zwart
       }
     } else if (configuration.profileType === "DS") {
       if (configuration.color === "white") {
-        pricePerMeter = 11.95; // DS Rail - Wit
+        pricePerMeter = 10.95; // DS Rail - Wit
       } else if (configuration.color === "black") {
-        pricePerMeter = 11.95; // DS Rail - Zwart
+        pricePerMeter = 10.95; // DS Rail - Zwart
       }
     }
 
     let basePrice =
-      pricePerMeter * (effectiveLength / 100) * configuration.quantity;
+      pricePerMeter * (pricingLength / 100) * configuration.quantity;
     let extras = 0;
 
     // New curve model pricing
@@ -878,13 +884,19 @@ const GordijnrailsConfiguratorPage = () => {
                         className="w-full px-4 py-3 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
                         value={configuration.customLength || ""}
                         onChange={(e) => {
-                          const value = parseInt(e.target.value) || 0;
-                          if (value >= 100 && value <= 700) {
-                            updateConfiguration("customLength", value);
-                            updateConfiguration("length", value);
-                          } else if (e.target.value === "") {
+                          const inputValue = e.target.value;
+                          if (inputValue === "") {
                             updateConfiguration("customLength", undefined);
                             updateConfiguration("length", 200); // Reset to default
+                            return;
+                          }
+                          
+                          const value = parseInt(inputValue);
+                          if (!isNaN(value)) {
+                            updateConfiguration("customLength", value);
+                            if (value >= 100 && value <= 700) {
+                              updateConfiguration("length", value);
+                            }
                           }
                         }}
                       />
@@ -897,7 +909,7 @@ const GordijnrailsConfiguratorPage = () => {
                       (configuration.customLength < 100 ||
                         configuration.customLength > 700) && (
                         <p className="text-red-600 text-sm mt-2 text-center">
-                          Lengte moet tussen 100 en 700 cm zijn
+                          Kies een lengte tussen 100 en 700 cm
                         </p>
                       )}
 
@@ -2180,8 +2192,19 @@ const GordijnrailsConfiguratorPage = () => {
                     <div className="flex justify-between">
                       <span>
                         Basis rail (
-                        {configuration.customLength || configuration.length} cm
+                        {(() => {
+                          const effectiveLength = configuration.customLength || configuration.length;
+                          const billingLength = configuration.customLength 
+                            ? Math.ceil(effectiveLength / 10) * 10 
+                            : effectiveLength;
+                          return billingLength;
+                        })()} cm
                         × {configuration.quantity})
+                        {configuration.customLength && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            Exact maat: {configuration.customLength} cm
+                          </div>
+                        )}
                       </span>
                       <span>€{price.base.toFixed(2)}</span>
                     </div>

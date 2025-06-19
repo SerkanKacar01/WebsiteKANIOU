@@ -90,6 +90,7 @@ interface GliderOption {
   image: string;
   hasColorOptions?: boolean;
   selectedColor?: string;
+  quantity: number;
 }
 
 interface Configuration {
@@ -276,7 +277,7 @@ const GordijnrailsConfiguratorPage = () => {
 
     // Selected glider pricing
     if (configuration.selectedGlider) {
-      extras += configuration.selectedGlider.price * configuration.quantity;
+      extras += configuration.selectedGlider.price * configuration.selectedGlider.quantity;
     }
 
     // Accessories pricing
@@ -407,19 +408,21 @@ const GordijnrailsConfiguratorPage = () => {
       id: "ks-silent-gliders",
       name: "KS geruisloos glijders",
       description: "Stille glijders – geschikt voor het KS-DS gordijnrails",
-      price: 6.0,
+      price: 3.28,
       image: "Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png",
       hasColorOptions: true,
       selectedColor: "white",
+      quantity: 1,
     },
     {
       id: "wave-gliders-6cm",
       name: "Wave Glijders 6 cm Wit",
       description: "Voor wave-gordijnplooien met een afstand van 6 cm",
-      price: 6.95,
+      price: 0.50,
       image: "Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png",
       hasColorOptions: true,
       selectedColor: "white",
+      quantity: 12,
     },
   ];
 
@@ -554,6 +557,20 @@ const GordijnrailsConfiguratorPage = () => {
 
       const glider = getAvailableGliders().find((g) => g.id === gliderId);
       return { ...prev, selectedGlider: glider };
+    });
+  };
+
+  const updateGliderQuantity = (quantity: number) => {
+    setConfiguration((prev) => {
+      if (!prev.selectedGlider) return prev;
+      
+      return {
+        ...prev,
+        selectedGlider: {
+          ...prev.selectedGlider,
+          quantity: Math.max(1, quantity),
+        },
+      };
     });
   };
 
@@ -1652,26 +1669,45 @@ const GordijnrailsConfiguratorPage = () => {
 
                       {configuration.selectedGlider?.id ===
                         "ks-silent-gliders" && (
-                        <div className="mb-3">
-                          <label className="block text-xs font-medium text-gray-700 mb-1">
-                            Kleur:
-                          </label>
-                          <select
-                            value={
-                              configuration.selectedGlider.selectedColor ||
-                              "white"
-                            }
-                            onChange={(e) =>
-                              updateGliderColor(
-                                "ks-silent-gliders",
-                                e.target.value,
-                              )
-                            }
-                            className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
-                          >
-                            <option value="white">Wit</option>
-                            <option value="black">Zwart</option>
-                          </select>
+                        <div className="space-y-3 mb-3">
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                              Kleur:
+                            </label>
+                            <select
+                              value={
+                                configuration.selectedGlider.selectedColor ||
+                                "white"
+                              }
+                              onChange={(e) =>
+                                updateGliderColor(
+                                  "ks-silent-gliders",
+                                  e.target.value,
+                                )
+                              }
+                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                            >
+                              <option value="white">Wit</option>
+                              <option value="black">Zwart</option>
+                            </select>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                              Aantal strips:
+                            </label>
+                            <input
+                              type="number"
+                              min="1"
+                              max="20"
+                              value={configuration.selectedGlider.quantity}
+                              onChange={(e) => updateGliderQuantity(parseInt(e.target.value) || 1)}
+                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">
+                              Advies: 1 strip (10 stuks) per meter
+                            </p>
+                          </div>
                         </div>
                       )}
 
@@ -1725,26 +1761,45 @@ const GordijnrailsConfiguratorPage = () => {
 
                       {configuration.selectedGlider?.id ===
                         "wave-gliders-6cm" && (
-                        <div className="mb-3">
-                          <label className="block text-xs font-medium text-gray-700 mb-1">
-                            Kleur:
-                          </label>
-                          <select
-                            value={
-                              configuration.selectedGlider.selectedColor ||
-                              "white"
-                            }
-                            onChange={(e) =>
-                              updateGliderColor(
-                                "wave-gliders-6cm",
-                                e.target.value,
-                              )
-                            }
-                            className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
-                          >
-                            <option value="white">Wit</option>
-                            <option value="black">Zwart</option>
-                          </select>
+                        <div className="space-y-3 mb-3">
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                              Kleur:
+                            </label>
+                            <select
+                              value={
+                                configuration.selectedGlider.selectedColor ||
+                                "white"
+                              }
+                              onChange={(e) =>
+                                updateGliderColor(
+                                  "wave-gliders-6cm",
+                                  e.target.value,
+                                )
+                              }
+                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                            >
+                              <option value="white">Wit</option>
+                              <option value="black">Zwart</option>
+                            </select>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                              Aantal stuks:
+                            </label>
+                            <input
+                              type="number"
+                              min="1"
+                              max="100"
+                              value={configuration.selectedGlider.quantity}
+                              onChange={(e) => updateGliderQuantity(parseInt(e.target.value) || 1)}
+                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">
+                              Advies: Breedte in cm ÷ 6, voeg 2 tot 4 extra stuks toe
+                            </p>
+                          </div>
                         </div>
                       )}
 

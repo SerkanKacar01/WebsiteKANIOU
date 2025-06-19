@@ -203,7 +203,25 @@ const GordijnrailsConfiguratorPage = () => {
   // Pricing calculations
   const calculatePrice = () => {
     const effectiveLength = configuration.customLength || configuration.length;
-    let basePrice = 8.95 * (effectiveLength / 100) * configuration.quantity;
+    
+    // Different prices for different rail types and colors
+    let pricePerMeter = 8.95; // Default price
+    
+    if (configuration.profileType === "KS") {
+      if (configuration.color === "white") {
+        pricePerMeter = 8.95; // KS Rail - Wit
+      } else if (configuration.color === "black") {
+        pricePerMeter = 9.95; // KS Rail - Zwart
+      }
+    } else if (configuration.profileType === "DS") {
+      if (configuration.color === "white") {
+        pricePerMeter = 10.95; // DS Rail - Wit
+      } else if (configuration.color === "black") {
+        pricePerMeter = 11.95; // DS Rail - Zwart
+      }
+    }
+    
+    let basePrice = pricePerMeter * (effectiveLength / 100) * configuration.quantity;
     let extras = 0;
 
     // New curve model pricing

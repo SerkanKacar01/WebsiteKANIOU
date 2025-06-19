@@ -594,9 +594,6 @@ const GordijnrailsConfiguratorPage = () => {
                         </div>
                       </div>
                       
-                      <div className="w-full h-16 bg-white border rounded-lg mb-3 flex items-center justify-center">
-                        <div className="w-12 h-2 bg-gray-100 rounded"></div>
-                      </div>
                       <p className="font-medium">KS Rail - Wit</p>
                       <p className="text-sm text-gray-600">
                         Laag en strak profiel, ideaal voor een minimalistische
@@ -618,9 +615,6 @@ const GordijnrailsConfiguratorPage = () => {
                     }}
                   >
                     <CardContent className="p-4 text-center">
-                      <div className="w-full h-16 bg-gray-800 border rounded-lg mb-3 flex items-center justify-center">
-                        <div className="w-12 h-2 bg-gray-700 rounded"></div>
-                      </div>
                       <p className="font-medium">KS Rail - Zwart</p>
                       <p className="text-sm text-gray-600">
                         Laag en strak profiel, ideaal voor een minimalistische
@@ -668,9 +662,6 @@ const GordijnrailsConfiguratorPage = () => {
                         </div>
                       </div>
                       
-                      <div className="w-full h-16 bg-white border rounded-lg mb-3 flex items-center justify-center">
-                        <div className="w-12 h-3 bg-gray-100 rounded border-2 border-gray-200"></div>
-                      </div>
                       <p className="font-medium">DS Rail - Wit</p>
                       <p className="text-sm text-gray-600">
                         Modern open profiel met een luxe uitstraling. Geschikt
@@ -692,9 +683,6 @@ const GordijnrailsConfiguratorPage = () => {
                     }}
                   >
                     <CardContent className="p-4 text-center">
-                      <div className="w-full h-16 bg-gray-800 border rounded-lg mb-3 flex items-center justify-center">
-                        <div className="w-12 h-3 bg-gray-700 rounded border-2 border-gray-600"></div>
-                      </div>
                       <p className="font-medium">DS Rail - Zwart</p>
                       <p className="text-sm text-gray-600">
                         Modern open profiel met een luxe uitstraling. Geschikt

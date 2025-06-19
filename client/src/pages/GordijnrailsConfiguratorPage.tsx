@@ -22,6 +22,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Check,
   ArrowRight,
   ArrowLeft,
@@ -150,6 +157,7 @@ const curveModels: CurveModel[] = [
 
 const GordijnrailsConfiguratorPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [configuration, setConfiguration] = useState<Configuration>({
     profileType: "",
     color: "",
@@ -215,7 +223,7 @@ const GordijnrailsConfiguratorPage = () => {
   // Pricing calculations
   const calculatePrice = () => {
     const effectiveLength = configuration.customLength || configuration.length;
-    
+
     // Round up to nearest 10cm for pricing calculations when using custom length
     let pricingLength = effectiveLength;
     if (configuration.customLength) {
@@ -227,15 +235,15 @@ const GordijnrailsConfiguratorPage = () => {
 
     if (configuration.profileType === "KS") {
       if (configuration.color === "white") {
-        pricePerMeter = 8.95; // KS Rail - Wit
+        pricePerMeter = 9.95; // KS Rail - Wit
       } else if (configuration.color === "black") {
-        pricePerMeter = 8.95; // KS Rail - Zwart
+        pricePerMeter = 9.95; // KS Rail - Zwart
       }
     } else if (configuration.profileType === "DS") {
       if (configuration.color === "white") {
-        pricePerMeter = 10.95; // DS Rail - Wit
+        pricePerMeter = 11.95; // DS Rail - Wit
       } else if (configuration.color === "black") {
-        pricePerMeter = 10.95; // DS Rail - Zwart
+        pricePerMeter = 11.95; // DS Rail - Zwart
       }
     }
 
@@ -277,7 +285,9 @@ const GordijnrailsConfiguratorPage = () => {
 
     // Selected glider pricing
     if (configuration.selectedGlider) {
-      extras += configuration.selectedGlider.price * configuration.selectedGlider.quantity;
+      extras +=
+        configuration.selectedGlider.price *
+        configuration.selectedGlider.quantity;
     }
 
     // Accessories pricing
@@ -418,7 +428,7 @@ const GordijnrailsConfiguratorPage = () => {
       id: "wave-gliders-6cm",
       name: "Wave Glijders 6 cm Wit",
       description: "Voor wave-gordijnplooien met een afstand van 6 cm",
-      price: 0.50,
+      price: 0.5,
       image: "Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png",
       hasColorOptions: true,
       selectedColor: "white",
@@ -563,7 +573,7 @@ const GordijnrailsConfiguratorPage = () => {
   const updateGliderQuantity = (quantity: number) => {
     setConfiguration((prev) => {
       if (!prev.selectedGlider) return prev;
-      
+
       return {
         ...prev,
         selectedGlider: {
@@ -591,6 +601,95 @@ const GordijnrailsConfiguratorPage = () => {
         ? prev.accessories.filter((a) => a !== accessory)
         : [...prev.accessories, accessory],
     }));
+  };
+
+  const generateSpecificationItems = () => {
+    const items = [];
+    const effectiveLength = configuration.customLength || configuration.length;
+    const pricingLength = configuration.customLength 
+      ? Math.ceil(effectiveLength / 10) * 10 
+      : effectiveLength;
+
+    // Rail pricing
+    let pricePerMeter = 8.95;
+    if (configuration.profileType === "KS") {
+      pricePerMeter = configuration.color === "white" || configuration.color === "black" ? 8.95 : 8.95;
+    } else if (configuration.profileType === "DS") {
+      pricePerMeter = configuration.color === "white" || configuration.color === "black" ? 10.95 : 10.95;
+    }
+
+    const railName = `${configuration.profileType} Rail - ${configuration.color === "white" ? "Wit" : "Zwart"}`;
+    const railPrice = pricePerMeter * (pricingLength / 100) * configuration.quantity;
+
+    items.push({
+      name: railName,
+      description: `${pricingLength} cm × ${configuration.quantity} stuks`,
+      unitPrice: pricePerMeter,
+      quantity: (pricingLength / 100) * configuration.quantity,
+      total: railPrice,
+    });
+
+    // Curve model
+    if (configuration.corners === "custom" && configuration.curveModel) {
+      items.push({
+        name: `Curve Model ${configuration.curveModel.name}`,
+        description: "Op maat gemaakte bocht",
+        unitPrice: configuration.curveModel.price,
+        quantity: 1,
+        total: configuration.curveModel.price,
+      });
+    }
+
+    // Ceiling components
+    if (configuration.mounting === "ceiling" && configuration.ceilingComponents.length > 0) {
+      configuration.ceilingComponents.forEach((comp) => {
+        items.push({
+          name: comp.name,
+          description: "Plafondmontage component",
+          unitPrice: comp.price,
+          quantity: comp.quantity,
+          total: comp.price * comp.quantity,
+        });
+      });
+    }
+
+    // Wall components
+    if (configuration.mounting === "wall" && configuration.wallComponents.length > 0) {
+      configuration.wallComponents.forEach((comp) => {
+        items.push({
+          name: comp.name,
+          description: "Wandmontage component",
+          unitPrice: comp.price,
+          quantity: comp.quantity,
+          total: comp.price * comp.quantity,
+        });
+      });
+    }
+
+    // Gliders
+    if (configuration.selectedGlider) {
+      const unitText = configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks";
+      items.push({
+        name: configuration.selectedGlider.name,
+        description: `${configuration.selectedGlider.selectedColor || "wit"} - ${configuration.selectedGlider.quantity} ${unitText}`,
+        unitPrice: configuration.selectedGlider.price,
+        quantity: configuration.selectedGlider.quantity,
+        total: configuration.selectedGlider.price * configuration.selectedGlider.quantity,
+      });
+    }
+
+    // Accessories
+    if (configuration.accessories.includes("cord")) {
+      items.push({
+        name: "Koordbediening",
+        description: "Bediening accessoire",
+        unitPrice: 6.95,
+        quantity: 1,
+        total: 6.95,
+      });
+    }
+
+    return items;
   };
 
   const renderStep = () => {
@@ -671,21 +770,21 @@ const GordijnrailsConfiguratorPage = () => {
                       {/* Dual Image Display */}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={ksRailTechnicalImageBlack} 
+                          <img
+                            src={ksRailTechnicalImageBlack}
                             alt="KS Rail technical drawing - 20mm x 14mm dimensions"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={ksRailBlackPhotoImage} 
+                          <img
+                            src={ksRailBlackPhotoImage}
                             alt="KS Rail black photo perspective view"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                       </div>
-                      
+
                       <p className="font-medium">KS Rail - Zwart</p>
                       <p className="text-sm text-gray-600">
                         Laag en strak profiel, ideaal voor een minimalistische
@@ -757,21 +856,21 @@ const GordijnrailsConfiguratorPage = () => {
                       {/* Dual Image Display */}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={dsRailTechnicalImageBlack} 
+                          <img
+                            src={dsRailTechnicalImageBlack}
                             alt="DS Rail profile drawing - 24mm x 12mm dimensions"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={dsRailBlackPhotoImage} 
+                          <img
+                            src={dsRailBlackPhotoImage}
                             alt="DS Rail black photo with open profile"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                       </div>
-                      
+
                       <p className="font-medium">DS Rail - Zwart</p>
                       <p className="text-sm text-gray-600">
                         Modern open profiel met een luxe uitstraling. Geschikt
@@ -907,7 +1006,7 @@ const GordijnrailsConfiguratorPage = () => {
                             updateConfiguration("length", 200); // Reset to default
                             return;
                           }
-                          
+
                           const value = parseInt(inputValue);
                           if (!isNaN(value)) {
                             updateConfiguration("customLength", value);
@@ -1692,7 +1791,7 @@ const GordijnrailsConfiguratorPage = () => {
                               <option value="black">Zwart</option>
                             </select>
                           </div>
-                          
+
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
                               Aantal strips:
@@ -1702,7 +1801,11 @@ const GordijnrailsConfiguratorPage = () => {
                               min="1"
                               max="20"
                               value={configuration.selectedGlider.quantity}
-                              onChange={(e) => updateGliderQuantity(parseInt(e.target.value) || 1)}
+                              onChange={(e) =>
+                                updateGliderQuantity(
+                                  parseInt(e.target.value) || 1,
+                                )
+                              }
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
                             />
                             <p className="text-xs text-gray-500 mt-1">
@@ -1785,7 +1888,7 @@ const GordijnrailsConfiguratorPage = () => {
                               <option value="black">Zwart</option>
                             </select>
                           </div>
-                          
+
                           <div>
                             <label className="block text-xs font-medium text-gray-700 mb-1">
                               Aantal stuks:
@@ -1795,11 +1898,16 @@ const GordijnrailsConfiguratorPage = () => {
                               min="1"
                               max="100"
                               value={configuration.selectedGlider.quantity}
-                              onChange={(e) => updateGliderQuantity(parseInt(e.target.value) || 1)}
+                              onChange={(e) =>
+                                updateGliderQuantity(
+                                  parseInt(e.target.value) || 1,
+                                )
+                              }
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
                             />
                             <p className="text-xs text-gray-500 mt-1">
-                              Advies: Breedte in cm ÷ 6, voeg 2 tot 4 extra stuks toe
+                              Advies: Breedte in cm ÷ 6, voeg 2 tot 4 extra
+                              stuks toe
                             </p>
                           </div>
                         </div>
@@ -2251,13 +2359,14 @@ const GordijnrailsConfiguratorPage = () => {
                       <span>
                         Basis rail (
                         {(() => {
-                          const effectiveLength = configuration.customLength || configuration.length;
-                          const billingLength = configuration.customLength 
-                            ? Math.ceil(effectiveLength / 10) * 10 
+                          const effectiveLength =
+                            configuration.customLength || configuration.length;
+                          const billingLength = configuration.customLength
+                            ? Math.ceil(effectiveLength / 10) * 10
                             : effectiveLength;
                           return billingLength;
-                        })()} cm
-                        × {configuration.quantity})
+                        })()}{" "}
+                        cm × {configuration.quantity})
                         {configuration.customLength && (
                           <div className="text-xs text-gray-500 mt-1">
                             Exact maat: {configuration.customLength} cm
@@ -2324,7 +2433,11 @@ const GordijnrailsConfiguratorPage = () => {
                             <span>
                               {configuration.selectedGlider.name} (×
                               {configuration.selectedGlider.quantity}
-                              {configuration.selectedGlider.id === "ks-silent-gliders" ? " strips" : " stuks"})
+                              {configuration.selectedGlider.id ===
+                              "ks-silent-gliders"
+                                ? " strips"
+                                : " stuks"}
+                              )
                             </span>
                             <span>
                               €
@@ -2363,10 +2476,105 @@ const GordijnrailsConfiguratorPage = () => {
                 {/* Action Buttons */}
                 {currentStep === 6 && (
                   <div className="space-y-3">
-                    <Button variant="outline" className="w-full">
-                      <FileText className="h-4 w-4 mr-2" />
-                      Bekijk totaalspecificatie
-                    </Button>
+                    <Dialog open={showSpecificationModal} onOpenChange={setShowSpecificationModal}>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          <FileText className="h-4 w-4 mr-2" />
+                          Bekijk totaalspecificatie
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>Totaalspecificatie van je configuratie</DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <h4 className="font-semibold text-gray-900 mb-2">Configuratie overzicht</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                              <div>
+                                <span className="text-gray-600">Profiel:</span>
+                                <p className="font-medium">{configuration.profileType} - {configuration.color === "white" ? "Wit" : "Zwart"}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-600">Lengte:</span>
+                                <p className="font-medium">
+                                  {configuration.customLength || configuration.length} cm
+                                  {configuration.customLength && " (exact)"}
+                                </p>
+                              </div>
+                              <div>
+                                <span className="text-gray-600">Aantal:</span>
+                                <p className="font-medium">{configuration.quantity} rail{configuration.quantity > 1 ? "s" : ""}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-600">Montage:</span>
+                                <p className="font-medium">
+                                  {configuration.mounting === "ceiling" ? "Plafond" : 
+                                   configuration.mounting === "wall" ? "Wand" : "Niet geselecteerd"}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="border rounded-lg overflow-hidden">
+                            <div className="bg-gray-100 px-4 py-3 border-b">
+                              <h4 className="font-semibold text-gray-900">Gedetailleerde specificatie</h4>
+                            </div>
+                            <div className="overflow-x-auto">
+                              <table className="w-full">
+                                <thead className="bg-gray-50">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beschrijving</th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Eenheidsprijs</th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aantal</th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotaal</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                  {generateSpecificationItems().map((item, index) => (
+                                    <tr key={index} className="hover:bg-gray-50">
+                                      <td className="px-4 py-3 text-sm font-medium text-gray-900">{item.name}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-600">{item.description}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-900 text-right">€{item.unitPrice.toFixed(2)}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-900 text-right">{item.quantity}</td>
+                                      <td className="px-4 py-3 text-sm font-medium text-gray-900 text-right">€{item.total.toFixed(2)}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                                <tfoot className="bg-gray-50">
+                                  <tr>
+                                    <td colSpan={4} className="px-4 py-3 text-sm font-bold text-gray-900 text-right">Totaalprijs (Excl. BTW):</td>
+                                    <td className="px-4 py-3 text-sm font-bold text-[#d5c096] text-right">€{price.total.toFixed(2)}</td>
+                                  </tr>
+                                  <tr>
+                                    <td colSpan={4} className="px-4 py-3 text-sm font-bold text-gray-900 text-right">BTW (21%):</td>
+                                    <td className="px-4 py-3 text-sm font-bold text-gray-900 text-right">€{(price.total * 0.21).toFixed(2)}</td>
+                                  </tr>
+                                  <tr>
+                                    <td colSpan={4} className="px-4 py-3 text-lg font-bold text-gray-900 text-right">Totaal (Incl. BTW):</td>
+                                    <td className="px-4 py-3 text-lg font-bold text-[#d5c096] text-right">€{(price.total * 1.21).toFixed(2)}</td>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div className="flex items-start gap-3">
+                              <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+                              <div>
+                                <p className="text-sm text-blue-800 font-medium">Informatie</p>
+                                <p className="text-sm text-blue-700 mt-1">
+                                  Alle producten worden vakkundig op maat gezaagd in ons eigen atelier. 
+                                  Prijzen zijn exclusief BTW en verzendkosten. Levering binnen 5-7 werkdagen.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 )}
 
@@ -2388,38 +2596,56 @@ const GordijnrailsConfiguratorPage = () => {
                   <h2 className="text-2xl font-bold text-center mb-6">
                     Veelgestelde vragen over gordijnrails
                   </h2>
-                  <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
+                  <Accordion
+                    type="single"
+                    collapsible
+                    defaultValue="item-1"
+                    className="w-full"
+                  >
                     <AccordionItem value="item-1">
                       <AccordionTrigger className="text-left">
-                        <strong>1. Welk profiel moet ik kiezen: KS of DS?</strong>
+                        <strong>
+                          1. Welk profiel moet ik kiezen: KS of DS?
+                        </strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Beide profielen zijn van hoge kwaliteit.<br />
-                          – <strong>KS Rail</strong>: Stil, functioneel en geschikt voor een minimalistische afwerking.<br />
-                          – <strong>DS Rail</strong>: Luxueus open profiel, perfect zichtbaar en ideaal voor plafondmontage.
+                          Beide profielen zijn van hoge kwaliteit.
+                          <br />– <strong>KS Rail</strong>: Stil, functioneel en
+                          geschikt voor een minimalistische afwerking.
+                          <br />– <strong>DS Rail</strong>: Luxueus open
+                          profiel, perfect zichtbaar en ideaal voor
+                          plafondmontage.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-2">
                       <AccordionTrigger className="text-left">
-                        <strong>2. Is plafondmontage of wandmontage beter?</strong>
+                        <strong>
+                          2. Is plafondmontage of wandmontage beter?
+                        </strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Plafondmontage zorgt voor een strakke, onzichtbare afwerking. Wandmontage is geschikt wanneer directe plafondmontage niet mogelijk is of extra ondersteuning vereist is.
+                          Plafondmontage zorgt voor een strakke, onzichtbare
+                          afwerking. Wandmontage is geschikt wanneer directe
+                          plafondmontage niet mogelijk is of extra ondersteuning
+                          vereist is.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-3">
                       <AccordionTrigger className="text-left">
-                        <strong>3. Hoeveel steunen of clips heb ik nodig?</strong>
+                        <strong>
+                          3. Hoeveel steunen of clips heb ik nodig?
+                        </strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Wij adviseren gemiddeld 2 steunen per meter voor een veilige en stabiele bevestiging.
+                          Wij adviseren gemiddeld 2 steunen per meter voor een
+                          veilige en stabiele bevestiging.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -2430,8 +2656,12 @@ const GordijnrailsConfiguratorPage = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          <strong>KS glijders:</strong> 10 stuks per meter (1 strip).<br />
-                          <strong>Wave glijders:</strong> Deel de breedte in cm door 6. Voeg voor zekerheid altijd 2–4 extra glijders toe.
+                          <strong>KS glijders:</strong> 10 stuks per meter (1
+                          strip).
+                          <br />
+                          <strong>Wave glijders:</strong> Deel de breedte in cm
+                          door 6. Voeg voor zekerheid altijd 2–4 extra glijders
+                          toe.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -2442,18 +2672,24 @@ const GordijnrailsConfiguratorPage = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Ja, alle rails worden geleverd met professioneel montagemateriaal. De montage is eenvoudig uit te voeren met standaard gereedschap.
+                          Ja, alle rails worden geleverd met professioneel
+                          montagemateriaal. De montage is eenvoudig uit te
+                          voeren met standaard gereedschap.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-6">
                       <AccordionTrigger className="text-left">
-                        <strong>6. Kan ik achteraf nog aanpassingen maken?</strong>
+                        <strong>
+                          6. Kan ik achteraf nog aanpassingen maken?
+                        </strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Ja, het is altijd mogelijk om achteraf accessoires bij te bestellen of aanpassingen te doen. Contacteer onze service voor advies.
+                          Ja, het is altijd mogelijk om achteraf accessoires bij
+                          te bestellen of aanpassingen te doen. Contacteer onze
+                          service voor advies.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -2464,7 +2700,9 @@ const GordijnrailsConfiguratorPage = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Absoluut. Iedere rail wordt nauwkeurig op maat gezaagd in ons eigen atelier volgens de door jou ingevoerde afmetingen.
+                          Absoluut. Iedere rail wordt nauwkeurig op maat gezaagd
+                          in ons eigen atelier volgens de door jou ingevoerde
+                          afmetingen.
                         </p>
                       </AccordionContent>
                     </AccordionItem>

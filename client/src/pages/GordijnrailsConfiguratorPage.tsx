@@ -158,6 +158,7 @@ const curveModels: CurveModel[] = [
 const GordijnrailsConfiguratorPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
+  const [gliderAdded, setGliderAdded] = useState(false);
   const [configuration, setConfiguration] = useState<Configuration>({
     profileType: "",
     color: "",
@@ -601,6 +602,14 @@ const GordijnrailsConfiguratorPage = () => {
         ? prev.accessories.filter((a) => a !== accessory)
         : [...prev.accessories, accessory],
     }));
+  };
+
+  const confirmGliderSelection = () => {
+    setGliderAdded(true);
+    // Auto-hide the confirmation after 2 seconds
+    setTimeout(() => {
+      setGliderAdded(false);
+    }, 2000);
   };
 
   const generateSpecificationItems = () => {
@@ -1799,7 +1808,7 @@ const GordijnrailsConfiguratorPage = () => {
                             <input
                               type="number"
                               min="1"
-                              max="20"
+                              step="1"
                               value={configuration.selectedGlider.quantity}
                               onChange={(e) =>
                                 updateGliderQuantity(
@@ -1807,6 +1816,7 @@ const GordijnrailsConfiguratorPage = () => {
                                 )
                               }
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                              placeholder="Voer aantal strips in"
                             />
                             <p className="text-xs text-gray-500 mt-1">
                               Advies: 1 strip (10 stuks) per meter
@@ -1815,14 +1825,25 @@ const GordijnrailsConfiguratorPage = () => {
 
                           <Button 
                             size="sm"
-                            className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white mt-3"
+                            className={`w-full mt-3 text-white transition-all ${
+                              gliderAdded 
+                                ? "bg-green-600 hover:bg-green-700" 
+                                : "bg-[#d5c096] hover:bg-[#c4b183]"
+                            }`}
                             onClick={(e) => {
                               e.stopPropagation();
-                              // Glider is already selected and configured
-                              console.log("Glider added:", configuration.selectedGlider);
+                              confirmGliderSelection();
+                              if (configuration.selectedGlider) {
+                                console.log("KS Silent Glijders added:", {
+                                  name: configuration.selectedGlider.name,
+                                  color: configuration.selectedGlider.selectedColor || "white",
+                                  quantity: configuration.selectedGlider.quantity,
+                                  price: configuration.selectedGlider.price * configuration.selectedGlider.quantity
+                                });
+                              }
                             }}
                           >
-                            Toevoegen
+                            {gliderAdded ? "✓ Toegevoegd" : "Toevoegen"}
                           </Button>
                         </div>
                       )}
@@ -1908,7 +1929,7 @@ const GordijnrailsConfiguratorPage = () => {
                             <input
                               type="number"
                               min="1"
-                              max="100"
+                              step="1"
                               value={configuration.selectedGlider.quantity}
                               onChange={(e) =>
                                 updateGliderQuantity(
@@ -1916,6 +1937,7 @@ const GordijnrailsConfiguratorPage = () => {
                                 )
                               }
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                              placeholder="Voer aantal stuks in"
                             />
                             <p className="text-xs text-gray-500 mt-1">
                               Advies: Breedte in cm ÷ 6, voeg 2 tot 4 extra
@@ -1925,14 +1947,25 @@ const GordijnrailsConfiguratorPage = () => {
 
                           <Button 
                             size="sm"
-                            className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white mt-3"
+                            className={`w-full mt-3 text-white transition-all ${
+                              gliderAdded 
+                                ? "bg-green-600 hover:bg-green-700" 
+                                : "bg-[#d5c096] hover:bg-[#c4b183]"
+                            }`}
                             onClick={(e) => {
                               e.stopPropagation();
-                              // Glider is already selected and configured
-                              console.log("Wave glider added:", configuration.selectedGlider);
+                              confirmGliderSelection();
+                              if (configuration.selectedGlider) {
+                                console.log("Wave Glijders added:", {
+                                  name: configuration.selectedGlider.name,
+                                  color: configuration.selectedGlider.selectedColor || "white",
+                                  quantity: configuration.selectedGlider.quantity,
+                                  price: configuration.selectedGlider.price * configuration.selectedGlider.quantity
+                                });
+                              }
                             }}
                           >
-                            Toevoegen
+                            {gliderAdded ? "✓ Toegevoegd" : "Toevoegen"}
                           </Button>
                         </div>
                       )}

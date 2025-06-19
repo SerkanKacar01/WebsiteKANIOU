@@ -33,6 +33,8 @@ import modelB2Image from "@assets/Scherm­afbeelding 2025-06-18 om 19.48.24_1750
 import modelCImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.49.44_1750271431611.png";
 import modelDImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.38_1750271431612.png";
 import modelEImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.50.05_1750271431612.png";
+import ksRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.52_1750370453923.png";
+import ksRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.25.39_1750370453924.png";
 import { Link } from "wouter";
 
 interface ConfigStep {
@@ -572,6 +574,24 @@ const GordijnrailsConfiguratorPage = () => {
                     }}
                   >
                     <CardContent className="p-4 text-center">
+                      {/* Dual Image Display */}
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={ksRailTechnicalImage} 
+                            alt="KS Rail technical drawing - 20mm x 14mm dimensions"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={ksRailPhotoImage} 
+                            alt="KS Rail with gliders real photo"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                      </div>
+                      
                       <div className="w-full h-16 bg-white border rounded-lg mb-3 flex items-center justify-center">
                         <div className="w-12 h-2 bg-gray-100 rounded"></div>
                       </div>

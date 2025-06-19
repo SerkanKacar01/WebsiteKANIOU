@@ -367,7 +367,7 @@ const GordijnrailsConfiguratorPage = () => {
       id: "ks-silent-gliders",
       name: "KS geruisloos glijders",
       description: "Stille glijders – geschikt voor het KS-DS gordijnrails",
-      price: 6.00,
+      price: 6.0,
       image: "Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png",
       hasColorOptions: true,
       selectedColor: "white",
@@ -511,8 +511,8 @@ const GordijnrailsConfiguratorPage = () => {
       if (!gliderId) {
         return { ...prev, selectedGlider: undefined };
       }
-      
-      const glider = getAvailableGliders().find(g => g.id === gliderId);
+
+      const glider = getAvailableGliders().find((g) => g.id === gliderId);
       return { ...prev, selectedGlider: glider };
     });
   };
@@ -520,9 +520,10 @@ const GordijnrailsConfiguratorPage = () => {
   const updateGliderColor = (gliderId: string, color: string) => {
     setConfiguration((prev) => ({
       ...prev,
-      selectedGlider: prev.selectedGlider?.id === gliderId 
-        ? { ...prev.selectedGlider, selectedColor: color }
-        : prev.selectedGlider,
+      selectedGlider:
+        prev.selectedGlider?.id === gliderId
+          ? { ...prev.selectedGlider, selectedColor: color }
+          : prev.selectedGlider,
     }));
   };
 
@@ -1492,33 +1493,45 @@ const GordijnrailsConfiguratorPage = () => {
             <div className="space-y-6">
               {/* Glider Selection Section */}
               <div>
-                <h4 className="text-lg font-semibold mb-2">Kies het gewenste type glijders</h4>
+                <h4 className="text-lg font-semibold mb-2">
+                  Kies het gewenste type glijders
+                </h4>
                 <p className="text-gray-600 mb-4">
-                  Kies het type glijders dat het best past bij jouw gordijnstijl. De glijders worden afgestemd op het gekozen profiel en gebruiksklaar meegeleverd.
+                  Kies het type glijders dat het best past bij jouw
+                  gordijnstijl. De glijders worden afgestemd op het gekozen
+                  profiel en gebruiksklaar meegeleverd.
                 </p>
-                
+
                 <div className="grid gap-4 md:grid-cols-3">
                   {/* KS Silent Gliders */}
-                  <Card className={`cursor-pointer border-2 transition-all ${
-                    configuration.selectedGlider?.id === "ks-silent-gliders" 
-                      ? "border-[#d5c096] bg-[#d5c096]/5" 
-                      : "border-gray-200 hover:border-[#d5c096]/50"
-                  }`}>
+                  <Card
+                    className={`cursor-pointer border-2 transition-all ${
+                      configuration.selectedGlider?.id === "ks-silent-gliders"
+                        ? "border-[#d5c096] bg-[#d5c096]/5"
+                        : "border-gray-200 hover:border-[#d5c096]/50"
+                    }`}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-2 mb-3">
                         <input
                           type="radio"
                           id="ks-silent-gliders"
                           name="glider-selection"
-                          checked={configuration.selectedGlider?.id === "ks-silent-gliders"}
+                          checked={
+                            configuration.selectedGlider?.id ===
+                            "ks-silent-gliders"
+                          }
                           onChange={() => selectGlider("ks-silent-gliders")}
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
-                        <label htmlFor="ks-silent-gliders" className="font-medium cursor-pointer">
+                        <label
+                          htmlFor="ks-silent-gliders"
+                          className="font-medium cursor-pointer"
+                        >
                           KS-DS _Silent Glijders
                         </label>
                       </div>
-                      
+
                       <div className="mb-3">
                         <img
                           src="/images/Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png"
@@ -1526,19 +1539,28 @@ const GordijnrailsConfiguratorPage = () => {
                           className="w-full h-24 object-contain bg-gray-50 rounded border"
                         />
                       </div>
-                      
+
                       <p className="text-sm text-gray-600 mb-3">
                         Stille glijders – geschikt voor het KS-DS _Gordijn rails
                       </p>
-                      
-                      {configuration.selectedGlider?.id === "ks-silent-gliders" && (
+
+                      {configuration.selectedGlider?.id ===
+                        "ks-silent-gliders" && (
                         <div className="mb-3">
                           <label className="block text-xs font-medium text-gray-700 mb-1">
                             Kleur:
                           </label>
                           <select
-                            value={configuration.selectedGlider.selectedColor || "white"}
-                            onChange={(e) => updateGliderColor("ks-silent-gliders", e.target.value)}
+                            value={
+                              configuration.selectedGlider.selectedColor ||
+                              "white"
+                            }
+                            onChange={(e) =>
+                              updateGliderColor(
+                                "ks-silent-gliders",
+                                e.target.value,
+                              )
+                            }
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
                           >
                             <option value="white">Wit</option>
@@ -1546,32 +1568,42 @@ const GordijnrailsConfiguratorPage = () => {
                           </select>
                         </div>
                       )}
-                      
-                      <p className="font-medium text-[#d5c096]">€ 3,28 per/strip (10 st.per_strip)</p>
+
+                      <p className="font-medium text-[#d5c096]">
+                        € 3,28 per/strip (10 st.per_strip)
+                      </p>
                     </CardContent>
                   </Card>
 
                   {/* Wave Gliders 6cm */}
-                  <Card className={`cursor-pointer border-2 transition-all ${
-                    configuration.selectedGlider?.id === "wave-gliders-6cm" 
-                      ? "border-[#d5c096] bg-[#d5c096]/5" 
-                      : "border-gray-200 hover:border-[#d5c096]/50"
-                  }`}>
+                  <Card
+                    className={`cursor-pointer border-2 transition-all ${
+                      configuration.selectedGlider?.id === "wave-gliders-6cm"
+                        ? "border-[#d5c096] bg-[#d5c096]/5"
+                        : "border-gray-200 hover:border-[#d5c096]/50"
+                    }`}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-2 mb-3">
                         <input
                           type="radio"
                           id="wave-gliders-6cm"
                           name="glider-selection"
-                          checked={configuration.selectedGlider?.id === "wave-gliders-6cm"}
+                          checked={
+                            configuration.selectedGlider?.id ===
+                            "wave-gliders-6cm"
+                          }
                           onChange={() => selectGlider("wave-gliders-6cm")}
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
-                        <label htmlFor="wave-gliders-6cm" className="font-medium cursor-pointer">
+                        <label
+                          htmlFor="wave-gliders-6cm"
+                          className="font-medium cursor-pointer"
+                        >
                           Wave Glijders 6 cm Wit
                         </label>
                       </div>
-                      
+
                       <div className="mb-3">
                         <img
                           src="/images/Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png"
@@ -1579,19 +1611,29 @@ const GordijnrailsConfiguratorPage = () => {
                           className="w-full h-24 object-contain bg-gray-50 rounded border"
                         />
                       </div>
-                      
+
                       <p className="text-sm text-gray-600 mb-3">
-                        Voor wave-gordijnplooien met een afstand van 6 cm _ Geschikt voor KS-DS gordijnrails.
+                        Voor wave-gordijnplooien met een afstand van 6 cm _
+                        Geschikt voor KS-DS gordijnrails.
                       </p>
-                      
-                      {configuration.selectedGlider?.id === "wave-gliders-6cm" && (
+
+                      {configuration.selectedGlider?.id ===
+                        "wave-gliders-6cm" && (
                         <div className="mb-3">
                           <label className="block text-xs font-medium text-gray-700 mb-1">
                             Kleur:
                           </label>
                           <select
-                            value={configuration.selectedGlider.selectedColor || "white"}
-                            onChange={(e) => updateGliderColor("wave-gliders-6cm", e.target.value)}
+                            value={
+                              configuration.selectedGlider.selectedColor ||
+                              "white"
+                            }
+                            onChange={(e) =>
+                              updateGliderColor(
+                                "wave-gliders-6cm",
+                                e.target.value,
+                              )
+                            }
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
                           >
                             <option value="white">Wit</option>
@@ -1599,17 +1641,21 @@ const GordijnrailsConfiguratorPage = () => {
                           </select>
                         </div>
                       )}
-                      
-                      <p className="font-medium text-[#d5c096]">€ 0.50 per/stuk</p>
+
+                      <p className="font-medium text-[#d5c096]">
+                        € 0.50 per/stuk
+                      </p>
                     </CardContent>
                   </Card>
 
                   {/* No Gliders Option */}
-                  <Card className={`cursor-pointer border-2 transition-all ${
-                    !configuration.selectedGlider 
-                      ? "border-[#d5c096] bg-[#d5c096]/5" 
-                      : "border-gray-200 hover:border-[#d5c096]/50"
-                  }`}>
+                  <Card
+                    className={`cursor-pointer border-2 transition-all ${
+                      !configuration.selectedGlider
+                        ? "border-[#d5c096] bg-[#d5c096]/5"
+                        : "border-gray-200 hover:border-[#d5c096]/50"
+                    }`}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-2 mb-3">
                         <input
@@ -1620,21 +1666,24 @@ const GordijnrailsConfiguratorPage = () => {
                           onChange={() => selectGlider(null)}
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />
-                        <label htmlFor="no-glider" className="font-medium cursor-pointer">
+                        <label
+                          htmlFor="no-glider"
+                          className="font-medium cursor-pointer"
+                        >
                           Geen glijders
                         </label>
                       </div>
-                      
+
                       <div className="mb-3">
                         <div className="w-full h-24 bg-gray-100 rounded border flex items-center justify-center">
                           <span className="text-sm text-gray-500">n.v.t</span>
                         </div>
                       </div>
-                      
+
                       <p className="text-sm text-gray-600 mb-3">
                         Ik voorzie zelf in glijders of plaats ze afzonderlijk
                       </p>
-                      
+
                       <p className="font-medium text-green-600">€ 0.00</p>
                     </CardContent>
                   </Card>
@@ -1642,19 +1691,27 @@ const GordijnrailsConfiguratorPage = () => {
 
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm text-blue-800">
-                    <strong>Advies: ( Wave plooi )</strong> Voor een optimale plooiing en soepele werking van de gordijnen, kies je best het juiste type glijder. Wave-glijders worden uitsluitend aanbevolen voor gordijnen met een wave-plooi.
+                    <strong>Advies: ( Wave plooi )</strong> Voor een optimale
+                    plooiing en soepele werking van de gordijnen, kies je best
+                    het juiste type glijder. Wave-glijders worden uitsluitend
+                    aanbevolen voor gordijnen met een wave-plooi.
                   </p>
                   <p className="text-sm text-blue-800">
-                    <strong>Advies: ( Andere plooi type )</strong> KS-DS glijders worden geleverd per strip van 10 stuks. Wij adviseren 1 strip (10 stuks) per meter rail voor een optimale verdeling en soepele werking van het gordijn.
+                    <strong>Advies: ( Andere plooi type )</strong> KS-DS
+                    glijders worden geleverd per strip van 10 stuks. Wij
+                    adviseren 1 strip (10 stuks) per meter rail voor een
+                    optimale verdeling en soepele werking van het gordijn.
                   </p>
                   <p className="text-sm text-blue-800">
-                    <strong>Advies voor Wave Runners (6 cm):</strong> Voor wavegordijnen adviseren wij 1 glijder per 6 cm. De berekening is eenvoudig: deel de totale railbreedte (in cm) door 6. Zorg er altijd voor dat het resultaat een even getal is, zodat de plooien gelijk verdeeld zijn.
-
-                    Voorbeeld:
-                    Railbreedte = 300 cm → 300 ÷ 6 = 50 glijders
-                    Wij adviseren om voor de zekerheid 2 à 4 extra glijders toe te voegen, dus bestel in dit geval 52 à 54 glijders.
-
-                    Zo ben je zeker van een perfecte afwerking zonder tekort..
+                    <strong>Advies voor Wave Runners (6 cm):</strong> Voor
+                    wavegordijnen adviseren wij 1 glijder per 6 cm. De
+                    berekening is eenvoudig: deel de totale railbreedte (in cm)
+                    door 6. Zorg er altijd voor dat het resultaat een even getal
+                    is, zodat de plooien gelijk verdeeld zijn. Voorbeeld:
+                    Railbreedte = 300 cm → 300 ÷ 6 = 50 glijders Wij adviseren
+                    om voor de zekerheid 2 à 4 extra glijders toe te voegen, dus
+                    bestel in dit geval 52 à 54 glijders. Zo ben je zeker van
+                    een perfecte afwerking zonder tekort..
                   </p>
                 </div>
               </div>
@@ -1670,7 +1727,9 @@ const GordijnrailsConfiguratorPage = () => {
                         </p>
                       </div>
                       <p className="text-sm text-gray-600 mb-3">
-                        Voorkomt dat glijders uit de rail lopen. Een essentieel onderdeel dat standaard wordt meegeleverd voor zowel KS als DS rails – voor veiligheid en duurzaamheid.
+                        Voorkomt dat glijders uit de rail lopen. Een essentieel
+                        onderdeel dat standaard wordt meegeleverd voor zowel KS
+                        als DS rails – voor veiligheid en duurzaamheid.
                       </p>
                     </div>
                     <div className="text-right">
@@ -1679,7 +1738,7 @@ const GordijnrailsConfiguratorPage = () => {
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="text-center">
                       <img
@@ -1695,13 +1754,16 @@ const GordijnrailsConfiguratorPage = () => {
                         alt="Eindkapje gemonteerd"
                         className="w-full h-32 object-contain bg-white rounded border mb-2"
                       />
-                      <p className="text-xs text-gray-500">Eindkapje gemonteerd</p>
+                      <p className="text-xs text-gray-500">
+                        Eindkapje gemonteerd
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="text-center">
                     <p className="text-sm text-gray-600 italic">
-                      Wordt standaard meegeleverd bij iedere rail. Voor KS- en DS-profiel.
+                      Wordt standaard meegeleverd bij iedere rail. Voor KS- en
+                      DS-profiel.
                     </p>
                   </div>
                 </div>
@@ -2085,10 +2147,15 @@ const GordijnrailsConfiguratorPage = () => {
                         {configuration.selectedGlider && (
                           <div className="flex justify-between text-sm text-gray-600">
                             <span>
-                              {configuration.selectedGlider.name} (×{configuration.quantity})
+                              {configuration.selectedGlider.name} (×
+                              {configuration.quantity})
                             </span>
                             <span>
-                              €{(configuration.selectedGlider.price * configuration.quantity).toFixed(2)}
+                              €
+                              {(
+                                configuration.selectedGlider.price *
+                                configuration.quantity
+                              ).toFixed(2)}
                             </span>
                           </div>
                         )}

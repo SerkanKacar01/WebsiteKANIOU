@@ -35,8 +35,11 @@ import modelDImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.38_17502
 import modelEImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.50.05_1750271431612.png";
 import ksRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.52_1750370453923.png";
 import ksRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.25.39_1750370453924.png";
+import ksRailBlackPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.25.39_1750370453924.png";
 import dsRailTechnicalImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.27.20_1750370855704.png";
 import dsRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.08_1750370855704.png";
+import dsRailTechnicalImageBlack from "@assets/Scherm­afbeelding 2025-06-18 om 00.27.20_1750371210898.png";
+import dsRailBlackPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 23.19.08_1750371210898.png";
 import { Link } from "wouter";
 
 interface ConfigStep {
@@ -203,25 +206,26 @@ const GordijnrailsConfiguratorPage = () => {
   // Pricing calculations
   const calculatePrice = () => {
     const effectiveLength = configuration.customLength || configuration.length;
-    
+
     // Different prices for different rail types and colors
     let pricePerMeter = 8.95; // Default price
-    
+
     if (configuration.profileType === "KS") {
       if (configuration.color === "white") {
-        pricePerMeter = 8.95; // KS Rail - Wit
+        pricePerMeter = 9.95; // KS Rail - Wit
       } else if (configuration.color === "black") {
         pricePerMeter = 9.95; // KS Rail - Zwart
       }
     } else if (configuration.profileType === "DS") {
       if (configuration.color === "white") {
-        pricePerMeter = 10.95; // DS Rail - Wit
+        pricePerMeter = 11.95; // DS Rail - Wit
       } else if (configuration.color === "black") {
         pricePerMeter = 11.95; // DS Rail - Zwart
       }
     }
-    
-    let basePrice = pricePerMeter * (effectiveLength / 100) * configuration.quantity;
+
+    let basePrice =
+      pricePerMeter * (effectiveLength / 100) * configuration.quantity;
     let extras = 0;
 
     // New curve model pricing
@@ -597,21 +601,21 @@ const GordijnrailsConfiguratorPage = () => {
                       {/* Dual Image Display */}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={ksRailTechnicalImage} 
+                          <img
+                            src={ksRailTechnicalImage}
                             alt="KS Rail technical drawing - 20mm x 14mm dimensions"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={ksRailPhotoImage} 
+                          <img
+                            src={ksRailPhotoImage}
                             alt="KS Rail with gliders real photo"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                       </div>
-                      
+
                       <p className="font-medium">KS Rail - Wit</p>
                       <p className="text-sm text-gray-600">
                         Laag en strak profiel, ideaal voor een minimalistische
@@ -633,6 +637,24 @@ const GordijnrailsConfiguratorPage = () => {
                     }}
                   >
                     <CardContent className="p-4 text-center">
+                      {/* Dual Image Display */}
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={ksRailTechnicalImage} 
+                            alt="KS Rail technical drawing - 20mm x 14mm dimensions"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={ksRailBlackPhotoImage} 
+                            alt="KS Rail black photo with gliders"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                      </div>
+                      
                       <p className="font-medium">KS Rail - Zwart</p>
                       <p className="text-sm text-gray-600">
                         Laag en strak profiel, ideaal voor een minimalistische
@@ -665,21 +687,21 @@ const GordijnrailsConfiguratorPage = () => {
                       {/* Dual Image Display */}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={dsRailTechnicalImage} 
+                          <img
+                            src={dsRailTechnicalImage}
                             alt="DS Rail profile drawing - 24mm x 12mm dimensions"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                         <div className="w-full sm:w-1/2 max-w-[120px]">
-                          <img 
-                            src={dsRailPhotoImage} 
+                          <img
+                            src={dsRailPhotoImage}
                             alt="DS Rail photo with gliders and closed front"
                             className="w-full h-auto object-contain rounded"
                           />
                         </div>
                       </div>
-                      
+
                       <p className="font-medium">DS Rail - Wit</p>
                       <p className="text-sm text-gray-600">
                         Modern open profiel met een luxe uitstraling. Geschikt
@@ -701,6 +723,24 @@ const GordijnrailsConfiguratorPage = () => {
                     }}
                   >
                     <CardContent className="p-4 text-center">
+                      {/* Dual Image Display */}
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 justify-center items-center">
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={dsRailTechnicalImageBlack} 
+                            alt="DS Rail profile drawing - 24mm x 12mm dimensions"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                        <div className="w-full sm:w-1/2 max-w-[120px]">
+                          <img 
+                            src={dsRailBlackPhotoImage} 
+                            alt="DS Rail black photo with open profile"
+                            className="w-full h-auto object-contain rounded"
+                          />
+                        </div>
+                      </div>
+                      
                       <p className="font-medium">DS Rail - Zwart</p>
                       <p className="text-sm text-gray-600">
                         Modern open profiel met een luxe uitstraling. Geschikt

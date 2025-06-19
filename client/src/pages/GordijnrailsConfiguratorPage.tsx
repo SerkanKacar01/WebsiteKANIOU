@@ -1633,6 +1633,7 @@ const GordijnrailsConfiguratorPage = () => {
                         ? "border-[#d5c096] bg-[#d5c096]/5"
                         : "border-gray-200 hover:border-[#d5c096]/50"
                     }`}
+                    onClick={() => selectGlider("ks-silent-gliders")}
                   >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-2 mb-3">
@@ -1724,6 +1725,7 @@ const GordijnrailsConfiguratorPage = () => {
                         ? "border-[#d5c096] bg-[#d5c096]/5"
                         : "border-gray-200 hover:border-[#d5c096]/50"
                     }`}
+                    onClick={() => selectGlider("wave-gliders-6cm")}
                   >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-2 mb-3">
@@ -1816,6 +1818,7 @@ const GordijnrailsConfiguratorPage = () => {
                         ? "border-[#d5c096] bg-[#d5c096]/5"
                         : "border-gray-200 hover:border-[#d5c096]/50"
                     }`}
+                    onClick={() => selectGlider(null)}
                   >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-2 mb-3">
@@ -2320,13 +2323,14 @@ const GordijnrailsConfiguratorPage = () => {
                           <div className="flex justify-between text-sm text-gray-600">
                             <span>
                               {configuration.selectedGlider.name} (×
-                              {configuration.quantity})
+                              {configuration.selectedGlider.quantity}
+                              {configuration.selectedGlider.id === "ks-silent-gliders" ? " strips" : " stuks"})
                             </span>
                             <span>
                               €
                               {(
                                 configuration.selectedGlider.price *
-                                configuration.quantity
+                                configuration.selectedGlider.quantity
                               ).toFixed(2)}
                             </span>
                           </div>

@@ -116,6 +116,7 @@ function Router() {
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
+        <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         

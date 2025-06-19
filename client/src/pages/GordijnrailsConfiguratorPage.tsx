@@ -419,11 +419,11 @@ const GordijnrailsConfiguratorPage = () => {
       id: "ks-silent-gliders",
       name: "KS geruisloos glijders",
       description: "Stille glijders – geschikt voor het KS-DS gordijnrails",
-      price: 3.28,
+      price: 2.5,
       image: "Scherm­afbeelding 2025-06-18 om 23.31.38_1750282935889.png",
       hasColorOptions: true,
       selectedColor: "white",
-      quantity: 1,
+      quantity: 0,
     },
     {
       id: "wave-gliders-6cm",
@@ -433,7 +433,7 @@ const GordijnrailsConfiguratorPage = () => {
       image: "Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png",
       hasColorOptions: true,
       selectedColor: "white",
-      quantity: 12,
+      quantity: 0,
     },
   ];
 
@@ -579,7 +579,7 @@ const GordijnrailsConfiguratorPage = () => {
         ...prev,
         selectedGlider: {
           ...prev.selectedGlider,
-          quantity: Math.max(1, quantity),
+          quantity: Math.max(0, quantity),
         },
       };
     });
@@ -615,20 +615,27 @@ const GordijnrailsConfiguratorPage = () => {
   const generateSpecificationItems = () => {
     const items = [];
     const effectiveLength = configuration.customLength || configuration.length;
-    const pricingLength = configuration.customLength 
-      ? Math.ceil(effectiveLength / 10) * 10 
+    const pricingLength = configuration.customLength
+      ? Math.ceil(effectiveLength / 10) * 10
       : effectiveLength;
 
     // Rail pricing
     let pricePerMeter = 8.95;
     if (configuration.profileType === "KS") {
-      pricePerMeter = configuration.color === "white" || configuration.color === "black" ? 8.95 : 8.95;
+      pricePerMeter =
+        configuration.color === "white" || configuration.color === "black"
+          ? 8.95
+          : 8.95;
     } else if (configuration.profileType === "DS") {
-      pricePerMeter = configuration.color === "white" || configuration.color === "black" ? 10.95 : 10.95;
+      pricePerMeter =
+        configuration.color === "white" || configuration.color === "black"
+          ? 10.95
+          : 10.95;
     }
 
     const railName = `${configuration.profileType} Rail - ${configuration.color === "white" ? "Wit" : "Zwart"}`;
-    const railPrice = pricePerMeter * (pricingLength / 100) * configuration.quantity;
+    const railPrice =
+      pricePerMeter * (pricingLength / 100) * configuration.quantity;
 
     items.push({
       name: railName,
@@ -650,7 +657,10 @@ const GordijnrailsConfiguratorPage = () => {
     }
 
     // Ceiling components
-    if (configuration.mounting === "ceiling" && configuration.ceilingComponents.length > 0) {
+    if (
+      configuration.mounting === "ceiling" &&
+      configuration.ceilingComponents.length > 0
+    ) {
       configuration.ceilingComponents.forEach((comp) => {
         items.push({
           name: comp.name,
@@ -663,7 +673,10 @@ const GordijnrailsConfiguratorPage = () => {
     }
 
     // Wall components
-    if (configuration.mounting === "wall" && configuration.wallComponents.length > 0) {
+    if (
+      configuration.mounting === "wall" &&
+      configuration.wallComponents.length > 0
+    ) {
       configuration.wallComponents.forEach((comp) => {
         items.push({
           name: comp.name,
@@ -677,13 +690,18 @@ const GordijnrailsConfiguratorPage = () => {
 
     // Gliders
     if (configuration.selectedGlider) {
-      const unitText = configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks";
+      const unitText =
+        configuration.selectedGlider.id === "ks-silent-gliders"
+          ? "strips"
+          : "stuks";
       items.push({
         name: configuration.selectedGlider.name,
         description: `${configuration.selectedGlider.selectedColor || "wit"} - ${configuration.selectedGlider.quantity} ${unitText}`,
         unitPrice: configuration.selectedGlider.price,
         quantity: configuration.selectedGlider.quantity,
-        total: configuration.selectedGlider.price * configuration.selectedGlider.quantity,
+        total:
+          configuration.selectedGlider.price *
+          configuration.selectedGlider.quantity,
       });
     }
 
@@ -1807,12 +1825,12 @@ const GordijnrailsConfiguratorPage = () => {
                             </label>
                             <input
                               type="number"
-                              min="1"
+                              min="0"
                               step="1"
-                              value={configuration.selectedGlider.quantity}
+                              value={configuration.selectedGlider.quantity || ""}
                               onChange={(e) =>
                                 updateGliderQuantity(
-                                  parseInt(e.target.value) || 1,
+                                  parseInt(e.target.value) || 0,
                                 )
                               }
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
@@ -1823,11 +1841,11 @@ const GordijnrailsConfiguratorPage = () => {
                             </p>
                           </div>
 
-                          <Button 
+                          <Button
                             size="sm"
                             className={`w-full mt-3 text-white transition-all ${
-                              gliderAdded 
-                                ? "bg-green-600 hover:bg-green-700" 
+                              gliderAdded
+                                ? "bg-green-600 hover:bg-green-700"
                                 : "bg-[#d5c096] hover:bg-[#c4b183]"
                             }`}
                             onClick={(e) => {
@@ -1836,9 +1854,14 @@ const GordijnrailsConfiguratorPage = () => {
                               if (configuration.selectedGlider) {
                                 console.log("KS Silent Glijders added:", {
                                   name: configuration.selectedGlider.name,
-                                  color: configuration.selectedGlider.selectedColor || "white",
-                                  quantity: configuration.selectedGlider.quantity,
-                                  price: configuration.selectedGlider.price * configuration.selectedGlider.quantity
+                                  color:
+                                    configuration.selectedGlider
+                                      .selectedColor || "white",
+                                  quantity:
+                                    configuration.selectedGlider.quantity,
+                                  price:
+                                    configuration.selectedGlider.price *
+                                    configuration.selectedGlider.quantity,
                                 });
                               }
                             }}
@@ -1849,7 +1872,7 @@ const GordijnrailsConfiguratorPage = () => {
                       )}
 
                       <p className="font-medium text-[#d5c096]">
-                        € 3,28 per/strip (10 st.per_strip)
+                        € 2,50 per/strip (10 st.per_strip)
                       </p>
                     </CardContent>
                   </Card>
@@ -1928,12 +1951,12 @@ const GordijnrailsConfiguratorPage = () => {
                             </label>
                             <input
                               type="number"
-                              min="1"
+                              min="0"
                               step="1"
-                              value={configuration.selectedGlider.quantity}
+                              value={configuration.selectedGlider.quantity || ""}
                               onChange={(e) =>
                                 updateGliderQuantity(
-                                  parseInt(e.target.value) || 1,
+                                  parseInt(e.target.value) || 0,
                                 )
                               }
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
@@ -1945,11 +1968,11 @@ const GordijnrailsConfiguratorPage = () => {
                             </p>
                           </div>
 
-                          <Button 
+                          <Button
                             size="sm"
                             className={`w-full mt-3 text-white transition-all ${
-                              gliderAdded 
-                                ? "bg-green-600 hover:bg-green-700" 
+                              gliderAdded
+                                ? "bg-green-600 hover:bg-green-700"
                                 : "bg-[#d5c096] hover:bg-[#c4b183]"
                             }`}
                             onClick={(e) => {
@@ -1958,9 +1981,14 @@ const GordijnrailsConfiguratorPage = () => {
                               if (configuration.selectedGlider) {
                                 console.log("Wave Glijders added:", {
                                   name: configuration.selectedGlider.name,
-                                  color: configuration.selectedGlider.selectedColor || "white",
-                                  quantity: configuration.selectedGlider.quantity,
-                                  price: configuration.selectedGlider.price * configuration.selectedGlider.quantity
+                                  color:
+                                    configuration.selectedGlider
+                                      .selectedColor || "white",
+                                  quantity:
+                                    configuration.selectedGlider.quantity,
+                                  price:
+                                    configuration.selectedGlider.price *
+                                    configuration.selectedGlider.quantity,
                                 });
                               }
                             }}
@@ -2375,7 +2403,15 @@ const GordijnrailsConfiguratorPage = () => {
                         <span className="text-gray-600">Glijders:</span>
                         <div className="mt-1">
                           <span className="font-medium">
-                            {configuration.selectedGlider.name} – {configuration.selectedGlider.selectedColor || "wit"} ({configuration.selectedGlider.quantity} {configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks"})
+                            {configuration.selectedGlider.name} –{" "}
+                            {configuration.selectedGlider.selectedColor ||
+                              "wit"}{" "}
+                            ({configuration.selectedGlider.quantity}{" "}
+                            {configuration.selectedGlider.id ===
+                            "ks-silent-gliders"
+                              ? "strips"
+                              : "stuks"}
+                            )
                           </span>
                         </div>
                       </div>
@@ -2491,13 +2527,22 @@ const GordijnrailsConfiguratorPage = () => {
                           <>
                             <div className="text-sm text-gray-600">
                               <span>
-                                {configuration.selectedGlider.name} – {configuration.selectedGlider.selectedColor || "wit"} ({configuration.selectedGlider.quantity} {configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks"})
+                                {configuration.selectedGlider.name} –{" "}
+                                {configuration.selectedGlider.selectedColor ||
+                                  "wit"}{" "}
+                                ({configuration.selectedGlider.quantity}{" "}
+                                {configuration.selectedGlider.id ===
+                                "ks-silent-gliders"
+                                  ? "strips"
+                                  : "stuks"}
+                                )
                               </span>
                             </div>
                             <div className="flex justify-between text-sm text-gray-600 ml-4">
                               <span></span>
                               <span>
-                                +€{(
+                                +€
+                                {(
                                   configuration.selectedGlider.price *
                                   configuration.selectedGlider.quantity
                                 ).toFixed(2)}
@@ -2533,7 +2578,10 @@ const GordijnrailsConfiguratorPage = () => {
                 {/* Action Buttons */}
                 {currentStep === 6 && (
                   <div className="space-y-3">
-                    <Dialog open={showSpecificationModal} onOpenChange={setShowSpecificationModal}>
+                    <Dialog
+                      open={showSpecificationModal}
+                      onOpenChange={setShowSpecificationModal}
+                    >
                       <DialogTrigger asChild>
                         <Button variant="outline" className="w-full">
                           <FileText className="h-4 w-4 mr-2" />
@@ -2542,32 +2590,49 @@ const GordijnrailsConfiguratorPage = () => {
                       </DialogTrigger>
                       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
                         <DialogHeader>
-                          <DialogTitle>Totaalspecificatie van je configuratie</DialogTitle>
+                          <DialogTitle>
+                            Totaalspecificatie van je configuratie
+                          </DialogTitle>
                         </DialogHeader>
                         <div className="space-y-4">
                           <div className="bg-gray-50 rounded-lg p-4">
-                            <h4 className="font-semibold text-gray-900 mb-2">Configuratie overzicht</h4>
+                            <h4 className="font-semibold text-gray-900 mb-2">
+                              Configuratie overzicht
+                            </h4>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                               <div>
                                 <span className="text-gray-600">Profiel:</span>
-                                <p className="font-medium">{configuration.profileType} - {configuration.color === "white" ? "Wit" : "Zwart"}</p>
+                                <p className="font-medium">
+                                  {configuration.profileType} -{" "}
+                                  {configuration.color === "white"
+                                    ? "Wit"
+                                    : "Zwart"}
+                                </p>
                               </div>
                               <div>
                                 <span className="text-gray-600">Lengte:</span>
                                 <p className="font-medium">
-                                  {configuration.customLength || configuration.length} cm
+                                  {configuration.customLength ||
+                                    configuration.length}{" "}
+                                  cm
                                   {configuration.customLength && " (exact)"}
                                 </p>
                               </div>
                               <div>
                                 <span className="text-gray-600">Aantal:</span>
-                                <p className="font-medium">{configuration.quantity} rail{configuration.quantity > 1 ? "s" : ""}</p>
+                                <p className="font-medium">
+                                  {configuration.quantity} rail
+                                  {configuration.quantity > 1 ? "s" : ""}
+                                </p>
                               </div>
                               <div>
                                 <span className="text-gray-600">Montage:</span>
                                 <p className="font-medium">
-                                  {configuration.mounting === "ceiling" ? "Plafond" : 
-                                   configuration.mounting === "wall" ? "Wand" : "Niet geselecteerd"}
+                                  {configuration.mounting === "ceiling"
+                                    ? "Plafond"
+                                    : configuration.mounting === "wall"
+                                      ? "Wand"
+                                      : "Niet geselecteerd"}
                                 </p>
                               </div>
                             </div>
@@ -2575,42 +2640,90 @@ const GordijnrailsConfiguratorPage = () => {
 
                           <div className="border rounded-lg overflow-hidden">
                             <div className="bg-gray-100 px-4 py-3 border-b">
-                              <h4 className="font-semibold text-gray-900">Gedetailleerde specificatie</h4>
+                              <h4 className="font-semibold text-gray-900">
+                                Gedetailleerde specificatie
+                              </h4>
                             </div>
                             <div className="overflow-x-auto">
                               <table className="w-full">
                                 <thead className="bg-gray-50">
                                   <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beschrijving</th>
-                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Eenheidsprijs</th>
-                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aantal</th>
-                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotaal</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Product
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Beschrijving
+                                    </th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Eenheidsprijs
+                                    </th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Aantal
+                                    </th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Subtotaal
+                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                  {generateSpecificationItems().map((item, index) => (
-                                    <tr key={index} className="hover:bg-gray-50">
-                                      <td className="px-4 py-3 text-sm font-medium text-gray-900">{item.name}</td>
-                                      <td className="px-4 py-3 text-sm text-gray-600">{item.description}</td>
-                                      <td className="px-4 py-3 text-sm text-gray-900 text-right">€{item.unitPrice.toFixed(2)}</td>
-                                      <td className="px-4 py-3 text-sm text-gray-900 text-right">{item.quantity}</td>
-                                      <td className="px-4 py-3 text-sm font-medium text-gray-900 text-right">€{item.total.toFixed(2)}</td>
-                                    </tr>
-                                  ))}
+                                  {generateSpecificationItems().map(
+                                    (item, index) => (
+                                      <tr
+                                        key={index}
+                                        className="hover:bg-gray-50"
+                                      >
+                                        <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                                          {item.name}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-600">
+                                          {item.description}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                                          €{item.unitPrice.toFixed(2)}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                                          {item.quantity}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm font-medium text-gray-900 text-right">
+                                          €{item.total.toFixed(2)}
+                                        </td>
+                                      </tr>
+                                    ),
+                                  )}
                                 </tbody>
                                 <tfoot className="bg-gray-50">
                                   <tr>
-                                    <td colSpan={4} className="px-4 py-3 text-sm font-bold text-gray-900 text-right">Totaalprijs (Excl. BTW):</td>
-                                    <td className="px-4 py-3 text-sm font-bold text-[#d5c096] text-right">€{price.total.toFixed(2)}</td>
+                                    <td
+                                      colSpan={4}
+                                      className="px-4 py-3 text-sm font-bold text-gray-900 text-right"
+                                    >
+                                      Totaalprijs (Excl. BTW):
+                                    </td>
+                                    <td className="px-4 py-3 text-sm font-bold text-[#d5c096] text-right">
+                                      €{price.total.toFixed(2)}
+                                    </td>
                                   </tr>
                                   <tr>
-                                    <td colSpan={4} className="px-4 py-3 text-sm font-bold text-gray-900 text-right">BTW (21%):</td>
-                                    <td className="px-4 py-3 text-sm font-bold text-gray-900 text-right">€{(price.total * 0.21).toFixed(2)}</td>
+                                    <td
+                                      colSpan={4}
+                                      className="px-4 py-3 text-sm font-bold text-gray-900 text-right"
+                                    >
+                                      BTW (21%):
+                                    </td>
+                                    <td className="px-4 py-3 text-sm font-bold text-gray-900 text-right">
+                                      €{(price.total * 0.21).toFixed(2)}
+                                    </td>
                                   </tr>
                                   <tr>
-                                    <td colSpan={4} className="px-4 py-3 text-lg font-bold text-gray-900 text-right">Totaal (Incl. BTW):</td>
-                                    <td className="px-4 py-3 text-lg font-bold text-[#d5c096] text-right">€{(price.total * 1.21).toFixed(2)}</td>
+                                    <td
+                                      colSpan={4}
+                                      className="px-4 py-3 text-lg font-bold text-gray-900 text-right"
+                                    >
+                                      Totaal (Incl. BTW):
+                                    </td>
+                                    <td className="px-4 py-3 text-lg font-bold text-[#d5c096] text-right">
+                                      €{(price.total * 1.21).toFixed(2)}
+                                    </td>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -2621,10 +2734,14 @@ const GordijnrailsConfiguratorPage = () => {
                             <div className="flex items-start gap-3">
                               <Info className="h-5 w-5 text-blue-600 mt-0.5" />
                               <div>
-                                <p className="text-sm text-blue-800 font-medium">Informatie</p>
+                                <p className="text-sm text-blue-800 font-medium">
+                                  Informatie
+                                </p>
                                 <p className="text-sm text-blue-700 mt-1">
-                                  Alle producten worden vakkundig op maat gezaagd in ons eigen atelier. 
-                                  Prijzen zijn exclusief BTW en verzendkosten. Levering binnen 5-7 werkdagen.
+                                  Alle producten worden vakkundig op maat
+                                  gezaagd in ons eigen atelier. Prijzen zijn
+                                  exclusief BTW en verzendkosten. Levering
+                                  binnen 5-7 werkdagen.
                                 </p>
                               </div>
                             </div>

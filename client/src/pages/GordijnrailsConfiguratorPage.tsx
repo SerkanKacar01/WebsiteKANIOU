@@ -1812,6 +1812,18 @@ const GordijnrailsConfiguratorPage = () => {
                               Advies: 1 strip (10 stuks) per meter
                             </p>
                           </div>
+
+                          <Button 
+                            size="sm"
+                            className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white mt-3"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // Glider is already selected and configured
+                              console.log("Glider added:", configuration.selectedGlider);
+                            }}
+                          >
+                            Toevoegen
+                          </Button>
                         </div>
                       )}
 
@@ -1910,6 +1922,18 @@ const GordijnrailsConfiguratorPage = () => {
                               stuks toe
                             </p>
                           </div>
+
+                          <Button 
+                            size="sm"
+                            className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white mt-3"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // Glider is already selected and configured
+                              console.log("Wave glider added:", configuration.selectedGlider);
+                            }}
+                          >
+                            Toevoegen
+                          </Button>
                         </div>
                       )}
 
@@ -2314,11 +2338,13 @@ const GordijnrailsConfiguratorPage = () => {
                       )}
 
                     {configuration.selectedGlider && (
-                      <div className="flex justify-between">
+                      <div>
                         <span className="text-gray-600">Glijders:</span>
-                        <span className="font-medium">
-                          {configuration.selectedGlider.name}
-                        </span>
+                        <div className="mt-1">
+                          <span className="font-medium">
+                            {configuration.selectedGlider.name} – {configuration.selectedGlider.selectedColor || "wit"} ({configuration.selectedGlider.quantity} {configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks"})
+                          </span>
+                        </div>
                       </div>
                     )}
 
@@ -2429,24 +2455,22 @@ const GordijnrailsConfiguratorPage = () => {
                           )}
 
                         {configuration.selectedGlider && (
-                          <div className="flex justify-between text-sm text-gray-600">
-                            <span>
-                              {configuration.selectedGlider.name} (×
-                              {configuration.selectedGlider.quantity}
-                              {configuration.selectedGlider.id ===
-                              "ks-silent-gliders"
-                                ? " strips"
-                                : " stuks"}
-                              )
-                            </span>
-                            <span>
-                              €
-                              {(
-                                configuration.selectedGlider.price *
-                                configuration.selectedGlider.quantity
-                              ).toFixed(2)}
-                            </span>
-                          </div>
+                          <>
+                            <div className="text-sm text-gray-600">
+                              <span>
+                                {configuration.selectedGlider.name} – {configuration.selectedGlider.selectedColor || "wit"} ({configuration.selectedGlider.quantity} {configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks"})
+                              </span>
+                            </div>
+                            <div className="flex justify-between text-sm text-gray-600 ml-4">
+                              <span></span>
+                              <span>
+                                +€{(
+                                  configuration.selectedGlider.price *
+                                  configuration.selectedGlider.quantity
+                                ).toFixed(2)}
+                              </span>
+                            </div>
+                          </>
                         )}
 
                         {configuration.accessories.includes("cord") && (

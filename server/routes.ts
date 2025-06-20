@@ -1382,7 +1382,7 @@ ${chatSummary}
         webhookUrl: process.env.NODE_ENV === "production" ? `${process.env.WEBHOOK_BASE_URL}/api/webhook-payment` : undefined,
         productDetails,
         customerDetails: {
-          sessionId: req.sessionID || Date.now().toString()
+          sessionId: req.headers['x-session-id'] as string || Date.now().toString()
         }
       });
 

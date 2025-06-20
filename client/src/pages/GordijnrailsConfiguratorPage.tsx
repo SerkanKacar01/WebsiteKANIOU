@@ -615,6 +615,47 @@ const GordijnrailsConfiguratorPage = () => {
     }, 2000);
   };
 
+  const handleMolliePayment = async () => {
+    setIsProcessingPayment(true);
+    
+    try {
+      const paymentData = {
+        amount: price.total.toFixed(2),
+        description: "Gordijnrails configuratie - KANIOU",
+        customerName: "Klant", // Can be extended to collect customer info
+        customerEmail: "noreply@kaniou.be", // Can be extended to collect customer info
+        productDetails: {
+          configuration,
+          specificationItems: generateSpecificationItems(),
+          totalPrice: price.total
+        }
+      };
+
+      const response = await fetch('/api/create-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-session-id': Date.now().toString()
+        },
+        body: JSON.stringify(paymentData)
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.checkoutUrl) {
+        // Redirect to Mollie checkout
+        window.location.href = result.checkoutUrl;
+      } else {
+        throw new Error(result.message || 'Payment creation failed');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Er is een fout opgetreden bij het verwerken van de betaling. Probeer het opnieuw.');
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
   const generateSpecificationItems = () => {
     const items = [];
     const effectiveLength = configuration.customLength || configuration.length;
@@ -2585,6 +2626,25 @@ const GordijnrailsConfiguratorPage = () => {
                 {/* Action Buttons */}
                 {currentStep === 6 && (
                   <div className="space-y-3">
+                    {/* Mollie Payment Button */}
+                    <Button 
+                      onClick={handleMolliePayment}
+                      disabled={isProcessingPayment}
+                      className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-semibold py-3"
+                    >
+                      {isProcessingPayment ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Bezig met betaling...
+                        </>
+                      ) : (
+                        <>
+                          <CreditCard className="h-4 w-4 mr-2" />
+                          Betaal veilig via Mollie
+                        </>
+                      )}
+                    </Button>
+                    
                     <Dialog
                       open={showSpecificationModal}
                       onOpenChange={setShowSpecificationModal}

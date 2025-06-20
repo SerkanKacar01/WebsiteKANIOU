@@ -70,17 +70,11 @@ const ProductsPage = () => {
         setSelectedCategory("squid");
         setIsFilterLoading(true);
         
-        // Scroll to SQUID configurator after products load
+        // Scroll to SQUID section after products load
         setTimeout(() => {
-          const configuratorSection = document.querySelector("[data-squid-configurator]");
           const squidSection = document.querySelector("[data-squid-section]");
           
-          if (configuratorSection) {
-            configuratorSection.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          } else if (squidSection) {
+          if (squidSection) {
             squidSection.scrollIntoView({
               behavior: "smooth",
               block: "start",
@@ -1074,7 +1068,7 @@ const ProductsPage = () => {
             </div>
 
             <div className="flex justify-center">
-              <Link href="/producten?filter=squid">
+              <Link href="/shop/squid-samenstellen">
                 <Button 
                   className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-3 transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2"
                   aria-label="Bestellen SQUID textielfolie - Ga naar productconfigurator"
@@ -1618,78 +1612,6 @@ const ProductsPage = () => {
               {filteredProducts.map((category) => (
                 <SquidProductCard key={category.id} category={category} />
               ))}
-              
-              {/* SQUID Configurator Section */}
-              <div className="mt-12 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8" data-squid-configurator>
-                <h3 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-                  SQUID Configurator
-                </h3>
-                <p className="text-lg text-gray-700 text-center mb-8">
-                  Configureer uw SQUID textielfolie op maat voor de perfecte pasvorm
-                </p>
-                
-                <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6">
-                  <div className="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Breedte (cm)
-                      </label>
-                      <input
-                        type="number"
-                        min="10"
-                        max="300"
-                        placeholder="Bijv. 120"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Hoogte (cm)
-                      </label>
-                      <input
-                        type="number"
-                        min="10"
-                        max="500"
-                        placeholder="Bijv. 150"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Kleur selecteren
-                    </label>
-                    <div className="grid grid-cols-3 gap-3">
-                      {['Chalk', 'Oak', 'Ash', 'Rock', 'Coal', 'Bone'].map((color) => (
-                        <button
-                          key={color}
-                          className="p-3 border border-gray-200 rounded-lg hover:border-[#d5c096] hover:bg-[#d5c096]/10 transition-all duration-200 text-sm font-medium"
-                        >
-                          {color}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="bg-[#d5c096]/10 rounded-lg p-4 mb-4">
-                      <p className="text-lg font-semibold text-gray-900">
-                        Geschatte prijs: €73 - €95
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        Exacte prijs wordt berekend na maatvoering
-                      </p>
-                    </div>
-                    
-                    <Link href="/offerte">
-                      <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-3 text-lg font-semibold">
-                        Vraag Offerte Aan
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

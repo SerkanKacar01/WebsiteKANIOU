@@ -20,6 +20,7 @@ import ProductsPage from "@/pages/ProductsPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
 import GordijnrailsConfiguratorPage from "@/pages/GordijnrailsConfiguratorPage";
+import SquidConfiguratorPage from "@/pages/SquidConfiguratorPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
@@ -120,6 +121,8 @@ function Router() {
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
+        <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />
+        <Route path="/squid-configurator" component={SquidConfiguratorPage} />
         
         {/* Handle all other product category routes */}
         <Route path="/products/:category" component={ProductCategoryPage} />

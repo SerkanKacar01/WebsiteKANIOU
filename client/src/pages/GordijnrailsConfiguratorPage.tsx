@@ -631,7 +631,7 @@ const GordijnrailsConfiguratorPage = () => {
         }
       };
 
-      const response = await fetch('/api/payment/create', {
+      const response = await fetch('/api/create-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

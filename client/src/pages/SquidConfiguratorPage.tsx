@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -44,12 +44,6 @@ const transparencyOptions = [
     priceMultiplier: 1.0,
   },
   {
-    id: "semi-opaque",
-    name: "Semi-Opaque",
-    description: "Balans tussen licht en privacy",
-    priceMultiplier: 1.1,
-  },
-  {
     id: "opaque",
     name: "Opaque",
     description: "Maximum privacy, beperkt licht",
@@ -57,13 +51,22 @@ const transparencyOptions = [
   },
 ];
 
-const colorOptions = [
-  { id: "chalk", name: "Chalk", hex: "#F5F5F0", priceMultiplier: 1.0 },
-  { id: "oak", name: "Oak", hex: "#D2B48C", priceMultiplier: 1.0 },
-  { id: "ash", name: "Ash", hex: "#B2BEB5", priceMultiplier: 1.0 },
-  { id: "rock", name: "Rock", hex: "#696969", priceMultiplier: 1.05 },
-  { id: "coal", name: "Coal", hex: "#36454F", priceMultiplier: 1.05 },
-  { id: "bone", name: "Bone", hex: "#F9F6EE", priceMultiplier: 1.0 },
+const transparentColorOptions = [
+  { id: "coal", name: "Coal", hex: "#36454F" },
+  { id: "rock", name: "Rock", hex: "#696969" },
+  { id: "oak", name: "Oak", hex: "#D2B48C" },
+  { id: "ash", name: "Ash", hex: "#B2BEB5" },
+  { id: "bone", name: "Bone", hex: "#F9F6EE" },
+  { id: "chalk", name: "Chalk", hex: "#F5F5F0" },
+];
+
+const opaqueColorOptions = [
+  { id: "caviar", name: "Caviar", hex: "#1C1C1C" },
+  { id: "iron", name: "Iron", hex: "#4A4A4A" },
+  { id: "sand", name: "Sand", hex: "#C2B280" },
+  { id: "mist", name: "Mist", hex: "#D3D3D3" },
+  { id: "cream", name: "Cream", hex: "#FDF6E3" },
+  { id: "snow", name: "Snow", hex: "#FFFAFA" },
 ];
 
 const SquidConfiguratorPage = () => {
@@ -114,15 +117,21 @@ const SquidConfiguratorPage = () => {
     },
   ];
 
+  const getAvailableColors = () => {
+    if (configuration.transparencyType === "transparent") {
+      return transparentColorOptions;
+    } else if (configuration.transparencyType === "opaque") {
+      return opaqueColorOptions;
+    }
+    return [];
+  };
+
   const calculatePrice = () => {
     const transparencyOption = transparencyOptions.find(t => t.id === configuration.transparencyType);
-    const colorOption = colorOptions.find(c => c.id === configuration.color);
-    
     const transparencyMultiplier = transparencyOption?.priceMultiplier || 1.0;
-    const colorMultiplier = colorOption?.priceMultiplier || 1.0;
     
     const basePrice = BASE_PRICE_PER_METER * configuration.length;
-    const adjustedPrice = basePrice * transparencyMultiplier * colorMultiplier;
+    const adjustedPrice = basePrice * transparencyMultiplier;
     
     return adjustedPrice * configuration.quantity;
   };
@@ -272,6 +281,9 @@ const SquidConfiguratorPage = () => {
                     {currentStep === 2 && (
                       <div>
                         <h3 className="text-lg font-semibold mb-4">Kies kleur</h3>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Beschikbare kleuren voor {configuration.transparencyType === "transparent" ? "Transparant" : "Opaque"}:
+                        </p>
                         <RadioGroup
                           value={configuration.color}
                           onValueChange={(value) =>
@@ -279,7 +291,7 @@ const SquidConfiguratorPage = () => {
                           }
                         >
                           <div className="grid grid-cols-2 gap-4">
-                            {colorOptions.map((color) => (
+                            {getAvailableColors().map((color) => (
                               <div key={color.id} className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50">
                                 <RadioGroupItem value={color.id} id={color.id} />
                                 <Label htmlFor={color.id} className="flex-1 cursor-pointer">
@@ -290,9 +302,6 @@ const SquidConfiguratorPage = () => {
                                     ></div>
                                     <div>
                                       <p className="font-medium">{color.name}</p>
-                                      <p className="text-sm text-[#d5c096] font-medium">
-                                        {color.priceMultiplier === 1.0 ? "Standaardprijs" : `+${((color.priceMultiplier - 1) * 100).toFixed(0)}%`}
-                                      </p>
                                     </div>
                                   </div>
                                 </Label>
@@ -398,7 +407,7 @@ const SquidConfiguratorPage = () => {
                               <div className="flex justify-between">
                                 <span>Kleur:</span>
                                 <span className="font-medium">
-                                  {colorOptions.find(c => c.id === configuration.color)?.name}
+                                  {getAvailableColors().find(c => c.id === configuration.color)?.name}
                                 </span>
                               </div>
                               <div className="flex justify-between">
@@ -503,11 +512,9 @@ const SquidConfiguratorPage = () => {
                         )}
                         {configuration.color && (
                           <div className="flex justify-between text-sm">
-                            <span>Kleur toeslag:</span>
+                            <span>Kleur:</span>
                             <span>
-                              {colorOptions.find(c => c.id === configuration.color)?.priceMultiplier === 1.0 
-                                ? "€0" 
-                                : `+${((colorOptions.find(c => c.id === configuration.color)?.priceMultiplier || 1) - 1) * 100}%`}
+                              {getAvailableColors().find(c => c.id === configuration.color)?.name || "Niet geselecteerd"}
                             </span>
                           </div>
                         )}

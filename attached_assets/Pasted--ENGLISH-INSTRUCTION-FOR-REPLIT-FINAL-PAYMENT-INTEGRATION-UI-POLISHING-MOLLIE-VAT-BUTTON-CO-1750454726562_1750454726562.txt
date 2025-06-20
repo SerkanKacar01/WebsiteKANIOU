@@ -1,0 +1,67 @@
+✅ ENGLISH INSTRUCTION FOR REPLIT – FINAL PAYMENT INTEGRATION + UI POLISHING (MOLLIE, VAT, BUTTON, COOKIES)
+
+⸻
+
+🧾 1. Mollie Payment Integration (with LIVE API key)
+
+Purpose: Create a fully functional payment flow using Mollie, with correct VAT display, safe redirect after payment, and confirmation.
+
+Instructions:
+	1.	Setup backend route /api/create-payment that:
+	•	Uses the LIVE Mollie API key (provided by the user).
+	•	Sends amount (incl. 21% VAT), description, redirect URL, and webhook.
+	•	Returns the payment URL for redirect.
+	2.	Connect payment button (“Betaal veilig via Mollie”) to:
+	•	Send selected product configuration (from the page) to /api/create-payment.
+	•	Redirect user to Mollie checkout on success.
+	3.	After successful payment, redirect to:
+	•	/bedankt page that thanks the user and confirms payment.
+	4.	Webhook endpoint /api/payment-status should:
+	•	Verify payment via Mollie API.
+	•	Optionally save order in a database or send confirmation email.
+
+⸻
+
+💶 2. VAT Handling and Price Display (Dutch)
+
+Purpose: Show total price including VAT (21%), with clear split in summary.
+
+Instructions:
+	•	In the price summary (sidebar):
+	•	Show:
+	•	“Totaalprijs: €XX.XX (incl. 21% BTW)”
+	•	“Inclusief btw-bedrag: €YY.YY” below the total
+	•	Remove any text like “Excl. BTW”
+
+Calculation:
+	•	Total excl. VAT → subtotal
+	•	VAT = subtotal × 0.21
+	•	Total incl. VAT = subtotal + VAT
+
+Dutch content for summary: Totaalprijs: €62,65 (incl. 21% BTW)
+Inclusief btw-bedrag: €10,87 🧼 3. Final UI Adjustments on Last Step
+
+Instructions:
+	1.	Remove the “Volgende” button (not needed after step 6 is complete).
+	2.	Style the payment button Betaal veilig via Mollie:
+	•	Background color: #cc0000 (dieprood)
+	•	Text color: #ffffff (wit)
+	•	Font-size: 18px
+	•	Padding: 14px 32px
+	•	Border-radius: 6px
+	•	Add text below:
+“Je wordt veilig doorgestuurd naar onze betaalpartner Mollie” in lichtgrijs
+
+Dutch version of button: Betaal veilig via Mollie Text under the button (Dutch): Je wordt veilig doorgestuurd naar onze betaalpartner Mollie. 🍪 4. Fix Cookiebot Banner + Declaration
+
+Issue: The declaration script currently renders visibly on the page, which looks unprofessional.
+
+Instructions for Replit:
+	•	Banner Script must be inside <head> before any other script: <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="277bd293-9336-4f15-ba87-4c760a56129b" data-blockingmode="auto" type="text/javascript"></script> 	•	Declaration Script must go where the cookie declaration needs to appear, such as on the privacy policy page only, not on every page: <script id="CookieDeclaration" src="https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/od.js" type="text/javascript" async></script> 	•	Fix: Ensure it is not inside the footer of all pages.
+	•	Tip: Only render the declaration script if URL includes /privacy, /cookies, or /beleid. 📌 RECAP (WHAT REPLIT MUST DELIVER)
+	•	✅ Mollie LIVE payment flow
+	•	✅ Correct VAT display with 21% included
+	•	✅ Red payment button with proper design + extra info
+	•	✅ Removal of “Volgende” on final step
+	•	✅ Cookiebot banner OK, declaration shown only where needed
+	•	✅ All content in Dutch; only backend routing and scripts in EN

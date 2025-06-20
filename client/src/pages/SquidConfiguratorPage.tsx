@@ -84,6 +84,26 @@ const SquidConfiguratorPage = () => {
 
   const BASE_PRICE_PER_METER = 73; // Base price per running meter
 
+  const getAvailableColors = () => {
+    if (configuration.transparencyType === "transparent") {
+      return transparentColorOptions;
+    } else if (configuration.transparencyType === "opaque") {
+      return opaqueColorOptions;
+    }
+    return [];
+  };
+
+  // Reset color selection when transparency type changes
+  useEffect(() => {
+    if (configuration.transparencyType && configuration.color) {
+      const availableColors = getAvailableColors();
+      const isColorAvailable = availableColors.some(color => color.id === configuration.color);
+      if (!isColorAvailable) {
+        setConfiguration(prev => ({ ...prev, color: "" }));
+      }
+    }
+  }, [configuration.transparencyType]);
+
   const steps: ConfigStep[] = [
     {
       id: 1,
@@ -116,15 +136,6 @@ const SquidConfiguratorPage = () => {
       completed: false,
     },
   ];
-
-  const getAvailableColors = () => {
-    if (configuration.transparencyType === "transparent") {
-      return transparentColorOptions;
-    } else if (configuration.transparencyType === "opaque") {
-      return opaqueColorOptions;
-    }
-    return [];
-  };
 
   const calculatePrice = () => {
     const transparencyOption = transparencyOptions.find(t => t.id === configuration.transparencyType);

@@ -933,17 +933,15 @@ const ProductsPage = () => {
           <div className="p-8">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                SQUID Textielfolie — Elegante Privacy met een Natuurlijke
-                Uitstraling
+                SQUID Textielfolie – Discrete Privacy met Elegantie
               </h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                SQUID is een zelfklevend transparant textiel dat daglicht
-                doorlaat, maar ongewenste inkijk van buiten blokkeert. Het geeft
-                je ramen een warme, linnenachtige uitstraling en zorgt overdag
-                voor optimale privacy. In tegenstelling tot traditionele
-                raamfolies is SQUID ademend, stijlvol en eenvoudig rechtstreeks
-                op het glas aan te brengen — zonder lijm, zonder boren, zonder
-                gedoe.
+                Breng stijl, comfort en privacy samen in één oplossing met SQUID
+                – de zelfklevende textielfolie die zicht blokkeert van buitenaf,
+                maar daglicht perfect doorlaat. Deze innovatieve raamfolie heeft
+                een warme, linnenachtige uitstraling en is geschikt voor elk
+                interieur. Geen lijm, geen gereedschap – gewoon elegantie,
+                eenvoud en effectiviteit.
               </p>
             </div>
 
@@ -955,28 +953,28 @@ const ProductsPage = () => {
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
-                    <strong>• Stijlvol en minimalistisch: </strong> Subtiele
-                    linnenstructuur die past bij elk interieur
+                    <strong>• Stijlvol en minimalistisch: </strong> Past perfect
+                    bij moderne en klassieke interieurs
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
-                    <strong>• Privacy overdag:</strong> Wel naar buiten kijken,
-                    niet naar binnen
+                    <strong>• Privacy overdag:</strong>Geniet van het daglicht
+                    zonder inkijk
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
-                    <strong>• Eenvoudige montage:</strong> Zelfklevend textiel —
-                    geen lijm of gereedschap nodig
+                    <strong>• Eenvoudige montage:</strong> Zelfklevend textiel
+                    zonder boren of lijm
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
-                    <strong>• Hitte- en vochtbestendig:</strong> Geschikt voor
+                    <strong>• Hitte- en vochtbestendig:</strong> Ideaal voor
                     badkamers, keukens en dakramen
                   </span>
                 </li>
@@ -984,21 +982,21 @@ const ProductsPage = () => {
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
                     <strong>• Verwijderbaar en herpositioneerbaar:</strong> Laat
-                    geen sporen na
+                    geen lijmsporen achter
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
-                    <strong>• Veelzijdig toepasbaar:</strong> Ideaal voor
-                    woningen, kantoren en winkels
+                    <strong>• Veelzijdig toepasbaar:</strong> Woningen,
+                    kantoren, vitrines & showrooms
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#d5c096] mr-2">•</span>
                   <span>
-                    <strong>• Perfect op maat leverbaar: </strong> Precies
-                    gesneden voor jouw raamafmetingen
+                    <strong>• Perfect op maat leverbaar: </strong> Gesneden
+                    volgens jouw exacte raamafmetingen
                   </span>
                 </li>
               </ul>
@@ -1017,8 +1015,9 @@ const ProductsPage = () => {
                   "Coal",
                   "Transparant & Opaque",
                   "Levertijd 14 werkdagen",
-                  "Standaard breedte 130 cm",
+                  "Standaard breedte 137 cm",
                   "Min. aankoop >1m",
+                  
                 ].map((color) => (
                   <span
                     key={color}

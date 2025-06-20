@@ -193,12 +193,13 @@ const ProductCategoryPage = () => {
           <Container>
             <div className="max-w-4xl mx-auto">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
-                SQUID Raamfolie — Elegantie en Privacy met een Natuurlijke Look
+                SQUID Textielfolie – Discrete Privacy met Elegantie
               </h1>
               
               <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
                 <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                  SQUID is een zelfklevende transparante textielfolie die daglicht doorlaat, maar nieuwsgierige blikken van buitenaf tegenhoudt. Het geeft ramen een warme, linnen uitstraling en garandeert overdag privacy. In tegenstelling tot klassieke raamfolie is SQUID ademend, elegant én makkelijk aan te brengen — zonder lijm of boren.
+                  Breng stijl, comfort en privacy samen in één oplossing met SQUID – de zelfklevende textielfolie die zicht blokkeert van buitenaf, maar daglicht perfect doorlaat. Deze innovatieve raamfolie heeft een warme, linnenachtige uitstraling en is geschikt voor elk interieur. Geen lijm, geen gereedschap – gewoon elegantie, eenvoud en effectiviteit.
+
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-8 mb-8">

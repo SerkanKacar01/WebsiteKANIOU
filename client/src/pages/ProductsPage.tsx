@@ -67,21 +67,27 @@ const ProductsPage = () => {
       const filterParam = urlParams.get("filter");
       
       if (filterParam === "squid") {
-        setSelectedCategory("accessoires");
-        setSearchQuery("SQUID");
+        setSelectedCategory("squid");
         setIsFilterLoading(true);
         
-        // Scroll to SQUID section after a short delay
+        // Scroll to SQUID configurator after products load
         setTimeout(() => {
+          const configuratorSection = document.querySelector("[data-squid-configurator]");
           const squidSection = document.querySelector("[data-squid-section]");
-          if (squidSection) {
+          
+          if (configuratorSection) {
+            configuratorSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          } else if (squidSection) {
             squidSection.scrollIntoView({
               behavior: "smooth",
               block: "start",
             });
           }
           setIsFilterLoading(false);
-        }, 500);
+        }, 800);
       }
     }
   }, []);

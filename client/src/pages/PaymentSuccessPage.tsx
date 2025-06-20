@@ -125,7 +125,7 @@ const PaymentSuccessPage = () => {
     }
   };
 
-  const currentContent = content[t.language as keyof typeof content] || content.nl;
+  const currentContent = content['nl'];
 
   if (loading) {
     return (

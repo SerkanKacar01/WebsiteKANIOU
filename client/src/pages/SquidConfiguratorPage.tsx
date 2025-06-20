@@ -125,12 +125,6 @@ const SquidConfiguratorPage = () => {
     },
     {
       id: 4,
-      title: "Aantal rollen",
-      description: "Hoeveel rollen wilt u bestellen",
-      completed: configuration.quantity > 0,
-    },
-    {
-      id: 5,
       title: "Bestelling afronden",
       description: "Toevoegen aan winkelwagen",
       completed: false,
@@ -143,7 +137,7 @@ const SquidConfiguratorPage = () => {
     
     // Convert cm to meters for calculation
     const lengthInMeters = configuration.length / 100;
-    const totalPrice = pricePerMeter * lengthInMeters * configuration.quantity;
+    const totalPrice = pricePerMeter * lengthInMeters;
     
     return Math.round(totalPrice * 100) / 100; // Round to 2 decimal places
   };
@@ -169,7 +163,7 @@ const SquidConfiguratorPage = () => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Here you would normally add to cart and redirect to checkout
-    alert(`SQUID textielfolie toegevoegd aan winkelwagen!\n\nDetails:\n- Type: ${configuration.transparencyType}\n- Kleur: ${configuration.color}\n- Lengte: ${configuration.length}m\n- Aantal: ${configuration.quantity}\n- Totaalprijs: €${calculatePrice().toFixed(2)}`);
+    alert(`SQUID textielfolie toegevoegd aan winkelwagen!\n\nDetails:\n- Type: ${configuration.transparencyType}\n- Kleur: ${configuration.color}\n- Lengte: ${configuration.length}cm\n- Totaalprijs: €${calculatePrice().toFixed(2)}`);
     
     setIsProcessingPayment(false);
   };
@@ -182,8 +176,6 @@ const SquidConfiguratorPage = () => {
         return !!configuration.color;
       case 3:
         return configuration.length > 0;
-      case 4:
-        return configuration.quantity > 0;
       default:
         return false;
     }
@@ -369,44 +361,6 @@ const SquidConfiguratorPage = () => {
 
                     {currentStep === 4 && (
                       <div>
-                        <h3 className="text-lg font-semibold mb-4">Aantal rollen</h3>
-                        <div className="space-y-4">
-                          <div>
-                            <Label htmlFor="quantity" className="text-sm font-medium">
-                              Hoeveel rollen wilt u bestellen?
-                            </Label>
-                            <div className="mt-2">
-                              <Input
-                                id="quantity"
-                                type="number"
-                                min="1"
-                                max="10"
-                                value={configuration.quantity}
-                                onChange={(e) =>
-                                  setConfiguration({
-                                    ...configuration,
-                                    quantity: Math.max(1, parseInt(e.target.value) || 1),
-                                  })
-                                }
-                                className="text-lg font-medium"
-                              />
-                            </div>
-                          </div>
-                          <div className="bg-yellow-50 p-4 rounded-lg">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Info className="h-4 w-4 text-yellow-600" />
-                              <p className="text-sm font-medium text-yellow-900">Maatwerk informatie</p>
-                            </div>
-                            <p className="text-sm text-yellow-700">
-                              Elke rol wordt op maat gesneden volgens jouw opgegeven lengte
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {currentStep === 5 && (
-                      <div>
                         <h3 className="text-lg font-semibold mb-4">Bestelling afronden</h3>
                         <div className="space-y-6">
                           <div className="bg-gray-50 p-4 rounded-lg">
@@ -427,10 +381,6 @@ const SquidConfiguratorPage = () => {
                               <div className="flex justify-between">
                                 <span>Lengte:</span>
                                 <span className="font-medium">{configuration.length}cm ({(configuration.length / 100).toFixed(2)}m)</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span>Aantal rollen:</span>
-                                <span className="font-medium">{configuration.quantity}</span>
                               </div>
                             </div>
                           </div>
@@ -509,10 +459,6 @@ const SquidConfiguratorPage = () => {
                         <div className="flex justify-between text-sm">
                           <span>Lengte:</span>
                           <span>{configuration.length}m</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span>Aantal rollen:</span>
-                          <span>{configuration.quantity}</span>
                         </div>
                         {configuration.transparencyType && (
                           <div className="flex justify-between text-sm">

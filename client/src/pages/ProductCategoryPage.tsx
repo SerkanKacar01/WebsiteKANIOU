@@ -269,7 +269,10 @@ const ProductCategoryPage = () => {
 
                 <div className="text-center">
                   <Link href="/producten?filter=squid">
-                    <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg">
+                    <Button 
+                      className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2"
+                      aria-label="Bestellen SQUID textielfolie - Ga naar productconfigurator"
+                    >
                       Bestel nu SQUID
                     </Button>
                   </Link>

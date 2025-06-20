@@ -9,6 +9,19 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Check,
   ArrowRight,
   ArrowLeft,
@@ -18,6 +31,7 @@ import {
   Package,
   CreditCard,
   Loader2,
+  FileText,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -72,6 +86,7 @@ const opaqueColorOptions = [
 const SquidConfiguratorPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const configuratorRef = useRef<HTMLDivElement>(null);
   
   const [configuration, setConfiguration] = useState<SquidConfiguration>({
@@ -156,16 +171,40 @@ const SquidConfiguratorPage = () => {
     }
   };
 
-  const handleAddToCart = async () => {
+  const handleMolliePayment = async () => {
     setIsProcessingPayment(true);
     
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Here you would normally add to cart and redirect to checkout
-    alert(`SQUID textielfolie toegevoegd aan winkelwagen!\n\nDetails:\n- Type: ${configuration.transparencyType}\n- Kleur: ${configuration.color}\n- Lengte: ${configuration.length}cm\n- Totaalprijs: €${calculatePrice().toFixed(2)}`);
-    
-    setIsProcessingPayment(false);
+    try {
+      const response = await fetch('/api/mollie/create-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: calculatePrice(),
+          description: `SQUID Textielfolie - ${configuration.transparencyType} ${configuration.color} (${configuration.length}cm)`,
+          redirectUrl: `${window.location.origin}/payment/success`,
+          webhookUrl: `${window.location.origin}/api/mollie/webhook`,
+          metadata: {
+            productType: 'squid',
+            configuration: JSON.stringify(configuration),
+          },
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Redirect to Mollie checkout
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error('Payment creation failed');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Er is een fout opgetreden bij het aanmaken van de betaling. Probeer het opnieuw.');
+    } finally {
+      setIsProcessingPayment(false);
+    }
   };
 
   const canProceedToNext = () => {
@@ -367,7 +406,7 @@ const SquidConfiguratorPage = () => {
                             <h4 className="font-medium mb-3">Uw configuratie:</h4>
                             <div className="space-y-2 text-sm">
                               <div className="flex justify-between">
-                                <span>Transparantie:</span>
+                                <span>Type:</span>
                                 <span className="font-medium">
                                   {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name}
                                 </span>
@@ -382,26 +421,12 @@ const SquidConfiguratorPage = () => {
                                 <span>Lengte:</span>
                                 <span className="font-medium">{configuration.length}cm ({(configuration.length / 100).toFixed(2)}m)</span>
                               </div>
+                              <div className="flex justify-between">
+                                <span>Breedte:</span>
+                                <span className="font-medium">137cm (standaard)</span>
+                              </div>
                             </div>
                           </div>
-                          
-                          <Button
-                            onClick={handleAddToCart}
-                            disabled={isProcessingPayment}
-                            className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white py-3 text-lg font-semibold"
-                          >
-                            {isProcessingPayment ? (
-                              <>
-                                <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                                Toevoegen aan winkelwagen...
-                              </>
-                            ) : (
-                              <>
-                                <ShoppingCart className="h-5 w-5 mr-2" />
-                                Voeg toe aan winkelwagen
-                              </>
-                            )}
-                          </Button>
                         </div>
                       </div>
                     )}
@@ -440,58 +465,341 @@ const SquidConfiguratorPage = () => {
                 </Card>
               </div>
 
-              {/* Price Summary */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-8">
-                  <Card className="bg-white shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <CreditCard className="h-5 w-5 text-[#d5c096]" />
-                        Prijsoverzicht
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Basisprijs per meter:</span>
-                          <span>€{BASE_PRICE_PER_METER}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span>Lengte:</span>
-                          <span>{configuration.length}m</span>
-                        </div>
-                        {configuration.transparencyType && (
-                          <div className="flex justify-between text-sm">
-                            <span>Type:</span>
-                            <span>
-                              {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name}
-                              {transparencyOptions.find(t => t.id === configuration.transparencyType)?.basePrice === 83.40 && " (+€10.40/m)"}
-                            </span>
+              {/* Summary & Pricing */}
+              <div className="space-y-6">
+                {/* Configuration Summary */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Package className="h-5 w-5" />
+                      Jouw Configuratie
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {configuration.transparencyType && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Type:</span>
+                        <span className="font-medium">
+                          {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name}
+                        </span>
+                      </div>
+                    )}
+
+                    {configuration.color && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Kleur:</span>
+                        <span className="font-medium">
+                          {getAvailableColors().find(c => c.id === configuration.color)?.name}
+                        </span>
+                      </div>
+                    )}
+
+                    {configuration.length > 0 && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Lengte:</span>
+                        <span className="font-medium">
+                          {configuration.length} cm ({(configuration.length / 100).toFixed(2)}m)
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Breedte:</span>
+                      <span className="font-medium">137 cm (standaard)</span>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Pricing */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Prijsoverzicht</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex justify-between">
+                      <span>
+                        SQUID textielfolie ({(configuration.length / 100).toFixed(2)}m × 137cm)
+                      </span>
+                      <span>€{calculatePrice().toFixed(2)}</span>
+                    </div>
+
+                    <Separator />
+
+                    <div className="flex justify-between text-lg font-bold">
+                      <span>Totaalprijs: €{calculatePrice().toFixed(2)} (incl. 21% BTW)</span>
+                      <span className="text-[#d5c096]">
+                        €{calculatePrice().toFixed(2)}
+                      </span>
+                    </div>
+                    
+                    <p className="text-xs text-gray-500">
+                      Inclusief btw-bedrag: €{(calculatePrice() * 0.21 / 1.21).toFixed(2)} • Levertijd: ±14 werkdagen
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Action Buttons */}
+                {currentStep === 4 && (
+                  <div className="space-y-3">
+                    {/* Mollie Payment Button */}
+                    <Button 
+                      onClick={handleMolliePayment}
+                      disabled={isProcessingPayment}
+                      className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white font-semibold text-lg py-4 px-8 rounded-md"
+                    >
+                      {isProcessingPayment ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Bezig met betaling...
+                        </>
+                      ) : (
+                        <>
+                          <CreditCard className="h-4 w-4 mr-2" />
+                          Betaal veilig via Mollie
+                        </>
+                      )}
+                    </Button>
+                    <p className="text-xs text-gray-500 text-center">
+                      Je wordt veilig doorgestuurd naar onze betaalpartner Mollie
+                    </p>
+                    
+                    <Dialog
+                      open={showSpecificationModal}
+                      onOpenChange={setShowSpecificationModal}
+                    >
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          <FileText className="h-4 w-4 mr-2" />
+                          Bekijk totaalspecificatie
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>
+                            Totaalspecificatie van je SQUID configuratie
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <h4 className="font-semibold text-gray-900 mb-2">
+                              Configuratie overzicht
+                            </h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                              <div>
+                                <span className="text-gray-600">Type:</span>
+                                <p className="font-medium">
+                                  {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name || "Niet geselecteerd"}
+                                </p>
+                              </div>
+                              <div>
+                                <span className="text-gray-600">Kleur:</span>
+                                <p className="font-medium">
+                                  {getAvailableColors().find(c => c.id === configuration.color)?.name || "Niet geselecteerd"}
+                                </p>
+                              </div>
+                              <div>
+                                <span className="text-gray-600">Lengte:</span>
+                                <p className="font-medium">
+                                  {configuration.length} cm ({(configuration.length / 100).toFixed(2)}m)
+                                </p>
+                              </div>
+                              <div>
+                                <span className="text-gray-600">Breedte:</span>
+                                <p className="font-medium">137 cm (standaard)</p>
+                              </div>
+                            </div>
                           </div>
-                        )}
-                        {configuration.color && (
-                          <div className="flex justify-between text-sm">
-                            <span>Kleur:</span>
-                            <span>
-                              {getAvailableColors().find(c => c.id === configuration.color)?.name || "Niet geselecteerd"}
-                            </span>
+
+                          <div className="border rounded-lg overflow-hidden">
+                            <div className="bg-gray-100 px-4 py-3 border-b">
+                              <h4 className="font-semibold text-gray-900">
+                                Gedetailleerde specificatie
+                              </h4>
+                            </div>
+                            <div className="overflow-x-auto">
+                              <table className="w-full">
+                                <thead className="bg-gray-50">
+                                  <tr>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Product
+                                    </th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Beschrijving
+                                    </th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Eenheidsprijs
+                                    </th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Oppervlakte
+                                    </th>
+                                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                      Subtotaal
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                  <tr className="hover:bg-gray-50">
+                                    <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                                      SQUID Textielfolie
+                                    </td>
+                                    <td className="px-4 py-3 text-sm text-gray-600">
+                                      {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name} - {getAvailableColors().find(c => c.id === configuration.color)?.name}
+                                    </td>
+                                    <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                                      €{(transparencyOptions.find(t => t.id === configuration.transparencyType)?.basePrice || 73).toFixed(2)}/m²
+                                    </td>
+                                    <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                                      {((configuration.length * 137) / 10000).toFixed(2)} m²
+                                    </td>
+                                    <td className="px-4 py-3 text-sm font-medium text-gray-900 text-right">
+                                      €{calculatePrice().toFixed(2)}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                <tfoot className="bg-gray-50">
+                                  <tr>
+                                    <td
+                                      colSpan={4}
+                                      className="px-4 py-3 text-sm font-bold text-gray-900 text-right"
+                                    >
+                                      Subtotaal (incl. 21% BTW):
+                                    </td>
+                                    <td className="px-4 py-3 text-sm font-bold text-[#d5c096] text-right">
+                                      €{calculatePrice().toFixed(2)}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td
+                                      colSpan={4}
+                                      className="px-4 py-3 text-sm font-bold text-gray-600 text-right"
+                                    >
+                                      Inclusief btw-bedrag:
+                                    </td>
+                                    <td className="px-4 py-3 text-sm font-bold text-gray-600 text-right">
+                                      €{(calculatePrice() * 0.21 / 1.21).toFixed(2)}
+                                    </td>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                      
-                      <Separator />
-                      
-                      <div className="flex justify-between font-bold text-lg">
-                        <span>Totaalprijs:</span>
-                        <span className="text-[#d5c096]">€{calculatePrice().toFixed(2)}</span>
-                      </div>
-                      
-                      <div className="text-xs text-gray-500 space-y-1">
-                        <p>• Prijzen zijn inclusief BTW</p>
-                        <p>• Gratis verzending vanaf €100 · Levertijd: ±14 werkdagen</p>
-                      </div>
-                    </CardContent>
-                  </Card>
+
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div className="flex items-start gap-3">
+                              <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+                              <div>
+                                <p className="text-sm text-blue-800 font-medium">
+                                  Informatie
+                                </p>
+                                <p className="text-sm text-blue-700 mt-1">
+                                  SQUID textielfolie wordt vakkundig op maat gesneden in ons eigen atelier. 
+                                  Prijzen zijn inclusief BTW. Levering binnen 14 werkdagen.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                )}
+
+                {/* Info Box */}
+                <div className="bg-[#d5c096]/10 border border-[#d5c096]/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-[#d5c096] mb-2">
+                    Waarom KANIOU?
+                  </h4>
+                  <ul className="text-sm space-y-1">
+                    <li>✓ Vakkundig op maat gemaakt in eigen atelier</li>
+                    <li>✓ Exclusief, hoogwaardig montagemateriaal</li>
+                    <li>✓ 5 jaar garantie op kwaliteit & vakmanschap</li>
+                    <li>✓ Snelle, discrete en zorgvuldige levering</li>
+                  </ul>
+                </div>
+
+                {/* FAQ Section */}
+                <div className="mt-8">
+                  <h2 className="text-2xl font-bold text-center mb-6">
+                    Veelgestelde vragen over SQUID
+                  </h2>
+                  <Accordion
+                    type="single"
+                    collapsible
+                    defaultValue="item-1"
+                    className="w-full"
+                  >
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger className="text-left">
+                        <strong>
+                          1. Wat is het verschil tussen transparant en opaque?
+                        </strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          <strong>Transparant:</strong> Laat meer licht door en biedt minimale privacy - ideaal voor ruimtes waar je veel daglicht wilt behouden.
+                          <br />
+                          <strong>Opaque:</strong> Maximale privacy met beperkte lichtinval - perfect voor slaapkamers of kantoorruimtes waar volledige privacy gewenst is.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger className="text-left">
+                        <strong>
+                          2. Hoe breng ik SQUID textielfolie aan?
+                        </strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          SQUID is zelfklevend en heel eenvoudig aan te brengen. Maak het raam schoon, 
+                          verwijder de beschermfolie en plak het textiel vanaf één hoek aan. 
+                          Strijk luchtbellen weg met een zachte doek.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-3">
+                      <AccordionTrigger className="text-left">
+                        <strong>
+                          3. Is SQUID geschikt voor alle raamtypes?
+                        </strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Ja, SQUID is geschikt voor alle gladde glasoppervlakken, inclusief dakramen, 
+                          badkamerramen en keukenramen. Het textiel is hitte- en vochtbestendig.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-4">
+                      <AccordionTrigger className="text-left">
+                        <strong>
+                          4. Kan ik SQUID weer verwijderen zonder schade?
+                        </strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          Absoluut! SQUID laat zich eenvoudig verwijderen zonder lijmresten 
+                          of schade aan het raam. Het textiel is zelfs herbruikbaar.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-5">
+                      <AccordionTrigger className="text-left">
+                        <strong>
+                          5. Welke afmetingen zijn mogelijk?
+                        </strong>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p>
+                          SQUID heeft een standaard rolbreedte van 137cm. De lengte is vrij te kiezen 
+                          vanaf 100cm. Voor specifieke maatwerk wensen kunt u contact met ons opnemen.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               </div>
             </div>

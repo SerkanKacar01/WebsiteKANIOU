@@ -709,14 +709,14 @@ const GordijnrailsConfiguratorPage = () => {
     }
 
     const railName = `${configuration.profileType} Rail - ${configuration.color === "white" ? "Wit" : "Zwart"}`;
-    const railPrice =
-      pricePerMeter * (pricingLength / 100) * configuration.quantity;
+    const totalRails = configuration.quantity + configuration.extraRails;
+    const railPrice = pricePerMeter * (pricingLength / 100) * totalRails;
 
     items.push({
       name: railName,
-      description: `${pricingLength} cm × ${configuration.quantity} stuks`,
+      description: `${pricingLength} cm × ${totalRails} stuks${configuration.extraRails > 0 ? ` (${configuration.quantity} basis + ${configuration.extraRails} extra)` : ''}`,
       unitPrice: pricePerMeter,
-      quantity: (pricingLength / 100) * configuration.quantity,
+      quantity: (pricingLength / 100) * totalRails,
       total: railPrice,
     });
 
@@ -2424,6 +2424,9 @@ const GordijnrailsConfiguratorPage = () => {
                         <span className="font-medium">
                           {configuration.quantity} rail
                           {configuration.quantity > 1 ? "s" : ""}
+                          {configuration.extraRails > 0 && (
+                            <span> + {configuration.extraRails} extra rail{configuration.extraRails > 1 ? "s" : ""}</span>
+                          )}
                         </span>
                       </div>
                     )}
@@ -2588,14 +2591,24 @@ const GordijnrailsConfiguratorPage = () => {
                             : effectiveLength;
                           return billingLength;
                         })()}{" "}
-                        cm × {configuration.quantity})
+                        cm × {configuration.quantity + configuration.extraRails})
                         {configuration.customLength && (
                           <div className="text-xs text-gray-500 mt-1">
                             Exact maat: {configuration.customLength} cm
                           </div>
                         )}
                       </span>
-                      <span>€{price.base.toFixed(2)}</span>
+                      <span>€{(price.base + (configuration.extraRails > 0 ? (() => {
+                        const effectiveLength = configuration.customLength || configuration.length;
+                        const pricingLength = configuration.customLength ? Math.ceil(effectiveLength / 10) * 10 : effectiveLength;
+                        let pricePerMeter = 8.95;
+                        if (configuration.profileType === "KS") {
+                          pricePerMeter = 9.95;
+                        } else if (configuration.profileType === "DS") {
+                          pricePerMeter = 11.95;
+                        }
+                        return pricePerMeter * (pricingLength / 100) * configuration.extraRails;
+                      })() : 0)).toFixed(2)}</span>
                     </div>
 
                     {price.extras > 0 && (

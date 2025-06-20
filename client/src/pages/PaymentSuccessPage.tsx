@@ -53,7 +53,7 @@ const PaymentSuccessPage = () => {
   const content = {
     nl: {
       title: "Betaling Succesvol!",
-      subtitle: "Bedankt voor uw bestelling",
+      subtitle: "Bedankt voor je bestelling! Je configuratie en betaling zijn succesvol ontvangen.",
       orderNumber: "Bestelnummer",
       amount: "Bedrag",
       status: "Status",
@@ -67,7 +67,7 @@ const PaymentSuccessPage = () => {
       homeBtn: "Naar Homepage",
       loading: "Laden...",
       orderNotFound: "Bestelling niet gevonden",
-      thankYou: "Hartelijk dank voor uw vertrouwen in onze diensten!"
+      thankYou: "Bedankt voor je bestelling! Je configuratie en betaling zijn succesvol ontvangen."
     },
     en: {
       title: "Payment Successful!",

@@ -621,7 +621,7 @@ const GordijnrailsConfiguratorPage = () => {
     try {
       const paymentData = {
         amount: price.total.toFixed(2),
-        description: "Gordijnrails configuratie - KANIOU",
+        description: "Offerte betaling KANIOU – inclusief 21% BTW",
         customerName: "Klant", // Can be extended to collect customer info
         customerEmail: "noreply@kaniou.be", // Can be extended to collect customer info
         productDetails: {
@@ -631,7 +631,7 @@ const GordijnrailsConfiguratorPage = () => {
         }
       };
 
-      const response = await fetch('/api/create-payment', {
+      const response = await fetch('/api/payment/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -2618,7 +2618,11 @@ const GordijnrailsConfiguratorPage = () => {
                     </div>
 
                     <p className="text-xs text-gray-500">
-                      Excl. BTW en verzendkosten
+                      Incl. 21% BTW en excl. verzendkosten
+                    </p>
+                    
+                    <p className="text-xs text-gray-400">
+                      Inclusief btw-bedrag: €{(price.total * 0.21 / 1.21).toFixed(2)}
                     </p>
                   </CardContent>
                 </Card>
@@ -2764,7 +2768,7 @@ const GordijnrailsConfiguratorPage = () => {
                                       colSpan={4}
                                       className="px-4 py-3 text-sm font-bold text-gray-900 text-right"
                                     >
-                                      Totaalprijs (Excl. BTW):
+                                      Subtotaal (incl. 21% BTW):
                                     </td>
                                     <td className="px-4 py-3 text-sm font-bold text-[#d5c096] text-right">
                                       €{price.total.toFixed(2)}
@@ -2773,23 +2777,12 @@ const GordijnrailsConfiguratorPage = () => {
                                   <tr>
                                     <td
                                       colSpan={4}
-                                      className="px-4 py-3 text-sm font-bold text-gray-900 text-right"
+                                      className="px-4 py-3 text-sm font-bold text-gray-600 text-right"
                                     >
-                                      BTW (21%):
+                                      Inclusief btw-bedrag:
                                     </td>
-                                    <td className="px-4 py-3 text-sm font-bold text-gray-900 text-right">
-                                      €{(price.total * 0.21).toFixed(2)}
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td
-                                      colSpan={4}
-                                      className="px-4 py-3 text-lg font-bold text-gray-900 text-right"
-                                    >
-                                      Totaal (Incl. BTW):
-                                    </td>
-                                    <td className="px-4 py-3 text-lg font-bold text-[#d5c096] text-right">
-                                      €{(price.total * 1.21).toFixed(2)}
+                                    <td className="px-4 py-3 text-sm font-bold text-gray-600 text-right">
+                                      €{(price.total * 0.21 / 1.21).toFixed(2)}
                                     </td>
                                   </tr>
                                 </tfoot>

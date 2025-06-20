@@ -40,6 +40,8 @@ import {
   Wrench,
   Package,
   ChevronDown,
+  CreditCard,
+  Loader2,
 } from "lucide-react";
 import modelAImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.48.41_1750271431612.png";
 import modelB1Image from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.58_1750271431612.png";
@@ -159,6 +161,7 @@ const GordijnrailsConfiguratorPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [gliderAdded, setGliderAdded] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [configuration, setConfiguration] = useState<Configuration>({
     profileType: "",
     color: "",

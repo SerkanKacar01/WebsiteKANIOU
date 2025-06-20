@@ -1358,6 +1358,88 @@ ${chatSummary}
     }
   });
 
+  // Mollie Payment Integration - Create Payment
+  app.post("/api/create-payment", async (req: Request, res: Response) => {
+    try {
+      const { amount, description, customerName, customerEmail, productDetails } = req.body;
+
+      // Validate required fields
+      if (!amount || !description) {
+        return res.status(400).json({
+          success: false,
+          message: "Missing required payment details"
+        });
+      }
+
+      // Create payment with Mollie
+      const paymentResult = await molliePaymentService.createPayment({
+        amount: parseFloat(amount),
+        currency: "EUR",
+        description: description,
+        customerName: customerName || "Klant",
+        customerEmail: customerEmail || "noreply@kaniou.be",
+        redirectUrl: "https://kaniou.be/bedankt",
+        webhookUrl: process.env.NODE_ENV === "production" ? `${process.env.WEBHOOK_BASE_URL}/api/webhook-payment` : undefined,
+        productDetails,
+        customerDetails: {
+          sessionId: req.sessionID || Date.now().toString()
+        }
+      });
+
+      res.json({
+        success: true,
+        paymentId: paymentResult.paymentId,
+        checkoutUrl: paymentResult.checkoutUrl,
+        orderId: paymentResult.orderId
+      });
+
+    } catch (error) {
+      console.error("Payment creation failed:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to create payment. Please try again."
+      });
+    }
+  });
+
+  // Mollie Webhook Handler
+  app.post("/api/webhook-payment", async (req: Request, res: Response) => {
+    try {
+      const { id: paymentId } = req.body;
+
+      if (!paymentId) {
+        return res.status(400).send("Missing payment ID");
+      }
+
+      // Process webhook
+      await molliePaymentService.handleWebhook(paymentId);
+
+      res.status(200).send("OK");
+    } catch (error) {
+      console.error("Webhook processing failed:", error);
+      res.status(500).send("Webhook processing failed");
+    }
+  });
+
+  // Get Payment Status
+  app.get("/api/payment-status/:paymentId", async (req: Request, res: Response) => {
+    try {
+      const { paymentId } = req.params;
+      const status = await molliePaymentService.getPaymentStatus(paymentId);
+      
+      res.json({
+        success: true,
+        ...status
+      });
+    } catch (error) {
+      console.error("Failed to get payment status:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve payment status"
+      });
+    }
+  });
+
   // Cookiebot API Integration
   app.get("/api/cookiebot/verify", async (req: Request, res: Response) => {
     try {

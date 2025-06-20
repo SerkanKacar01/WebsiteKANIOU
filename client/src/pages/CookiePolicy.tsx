@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { CookiebotDeclaration } from "@/components/CookiebotDeclaration";
 
 type SupportedLanguage = 'nl' | 'fr' | 'de' | 'en';
 
@@ -196,6 +197,17 @@ export default function CookiePolicy() {
                     <p className="text-slate-700">{t.marketing}</p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+            
+            {/* Cookiebot Declaration - shows detailed cookie information */}
+            <Card className="mt-8">
+              <CardHeader>
+                <CardTitle>{t.cookieDeclaration}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-slate-600 mb-4">{t.cookieDeclarationDesc}</p>
+                <CookiebotDeclaration />
               </CardContent>
             </Card>
           </div>

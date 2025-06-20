@@ -1,0 +1,52 @@
+✅ ENGLISH INSTRUCTION FOR REPLIT – INTEGRATE MOLLIE PAYMENT CHECKOUT (LIVE)
+
+Dear Replit support,
+
+Please follow the instructions below to add a full working Mollie payment system to our existing project WebsiteKANIOU, specifically on the last page of the configurator:
+
+⸻
+
+🔧 BACKEND – STEP 1: Install Mollie
+	1.	Install the official Mollie Node.js SDK: npm install @mollie/api-client 🔐 BACKEND – STEP 2: Create a secure route to generate payments
+	2.	In the backend, create a new route called /create-payment using Express, that does the following:
+
+	•	Uses our LIVE API key:
+live_xxxxxxxxxxxxxxxxxxxxxxxxxx (← please insert this in the correct secure location)
+	•	Accepts a POST request with:
+	•	amount (float or string with 2 decimals)
+	•	description (e.g. “Gordijnrails offerte”)
+	•	redirectUrl (after successful payment)
+	•	Creates a Mollie payment with these values and returns payment.getCheckoutUrl() to the frontend.
+	•	Example redirect URL:
+https://kaniou.be/bedankt
+
+⸻
+
+🎯 FRONTEND – STEP 3: Add “Pay Now” button
+
+On the last step of the configurator, after the total price and configuration is shown, please add a button: <button class="btn btn-primary">Pay securely via Mollie</button> Clicking this button should:
+	•	Call the /create-payment backend route via fetch() with amount + redirect info.
+	•	Redirect the customer to the Mollie checkout page via window.location.href = paymentUrl.
+
+The amount should match the total shown in the summary (Prijs Overzicht).  📜 OPTIONAL – STEP 4: Add a webhook (optional now)
+
+If possible, you can also implement a /webhook-payment route for future tracking of payment status. For now, it’s not required.
+
+⸻
+
+✅ FINAL GOALS
+	•	Fully working live checkout via Mollie.
+	•	Based on live API key.
+	•	Payment summary must be passed correctly.
+	•	After payment, redirect to:
+https://kaniou.be/bedankt
+
+⸻
+
+Let me know if any adjustments are needed. Thank you!
+
+— Serkan from KANIOU
+Project: WebsiteKANIOU
+Platform: Replit
+API key available ✅
+Ready for live launch ✅

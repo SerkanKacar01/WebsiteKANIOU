@@ -1827,7 +1827,9 @@ const GordijnrailsConfiguratorPage = () => {
                               type="number"
                               min="0"
                               step="1"
-                              value={configuration.selectedGlider.quantity || ""}
+                              value={
+                                configuration.selectedGlider.quantity || ""
+                              }
                               onChange={(e) =>
                                 updateGliderQuantity(
                                   parseInt(e.target.value) || 0,
@@ -1953,7 +1955,9 @@ const GordijnrailsConfiguratorPage = () => {
                               type="number"
                               min="0"
                               step="1"
-                              value={configuration.selectedGlider.quantity || ""}
+                              value={
+                                configuration.selectedGlider.quantity || ""
+                              }
                               onChange={(e) =>
                                 updateGliderQuantity(
                                   parseInt(e.target.value) || 0,

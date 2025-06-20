@@ -14,6 +14,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
   Accordion,
@@ -108,6 +109,7 @@ interface Configuration {
   length: number;
   customLength?: number;
   quantity: number;
+  extraRails: number;
   corners: string;
   curveModel?: CurveModel;
   curveMeasurements?: { [key: string]: number };
@@ -168,6 +170,7 @@ const GordijnrailsConfiguratorPage = () => {
     color: "",
     length: 100,
     quantity: 1,
+    extraRails: 0,
     corners: "none",
     mounting: "",
     ceilingComponents: [],
@@ -255,6 +258,11 @@ const GordijnrailsConfiguratorPage = () => {
     let basePrice =
       pricePerMeter * (pricingLength / 100) * configuration.quantity;
     let extras = 0;
+
+    // Extra rails pricing
+    if (configuration.extraRails > 0) {
+      extras += pricePerMeter * (pricingLength / 100) * configuration.extraRails;
+    }
 
     // New curve model pricing
     if (configuration.corners === "custom" && configuration.curveModel) {
@@ -1186,6 +1194,51 @@ const GordijnrailsConfiguratorPage = () => {
                 Totale raillengte:{" "}
                 {configuration.quantity * configuration.length} cm
               </p>
+            </div>
+
+            {/* Extra Rails Input Field */}
+            <div className="max-w-sm mx-auto space-y-3">
+              <div className="text-center">
+                <Label htmlFor="extraRails" className="text-base font-medium">
+                  Extra rails bestellen (optioneel):
+                </Label>
+                <p className="text-sm text-gray-600 mt-1">
+                  Aantal extra rails bovenop de standaard keuze
+                </p>
+              </div>
+              
+              <div className="relative">
+                <Input
+                  id="extraRails"
+                  type="number"
+                  min="0"
+                  max="99"
+                  value={configuration.extraRails.toString()}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value) || 0;
+                    if (value >= 0 && value <= 99) {
+                      updateConfiguration("extraRails", value);
+                    }
+                  }}
+                  className="h-12 text-lg text-center"
+                  placeholder="0"
+                />
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
+                  rails
+                </span>
+              </div>
+
+              <div className="text-center text-sm text-blue-600 bg-blue-50 p-3 rounded-lg">
+                <p>
+                  <strong>Advies:</strong> meestal 1 rail per raam, maar u kunt extra rails bestellen voor meerdere ruimtes.
+                </p>
+              </div>
+
+              {configuration.extraRails > 0 && (
+                <div className="text-center text-sm text-green-600 bg-green-50 p-2 rounded">
+                  ✓ {configuration.extraRails} extra rail{configuration.extraRails > 1 ? "s" : ""} toegevoegd
+                </div>
+              )}
             </div>
           </div>
         );

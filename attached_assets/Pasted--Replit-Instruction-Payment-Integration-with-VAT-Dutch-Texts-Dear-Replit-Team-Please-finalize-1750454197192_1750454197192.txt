@@ -1,0 +1,58 @@
+✅ Replit Instruction: Payment Integration with VAT + Dutch Texts
+
+Dear Replit Team,
+
+Please finalize the KANIOU configurator with the following updates. All instructions below are final and must be executed exactly as described. No coding is provided by the client — you are responsible for the full implementation.
+
+⸻
+
+🧾 STEP 1 – Display all prices including 21% VAT
+	•	Update the “Prijsoverzicht” (Price Overview) component so that all displayed prices include 21% VAT.
+	•	Replace this line:
+“Excl. BTW en verzendkosten”
+
+With the following Dutch text:
+“Incl. 21% BTW en excl. verzendkosten”
+	•	Below the total price (bold), add this VAT line in smaller font:
+“Inclusief btw-bedrag: €X,XX”
+(Calculate 21% VAT from the total price — not on top, it is already included.)
+
+⸻
+
+🧾 STEP 2 – Totaalspecificatie button must work
+	•	When users click the button Bekijk totaalspecificatie, show a full order breakdown with prices including VAT.
+	•	At the bottom of the breakdown, add the following lines (example below with placeholders): Subtotaal (incl. 21% BTW): €53,13  
+Inclusief btw-bedrag: €9,22   	•	These lines must appear at the bottom of the list, clearly styled and aligned.
+
+⸻
+
+🧾 STEP 3 – Mollie Payment Integration (LIVE API)
+	•	After the user confirms the configuration, direct them to a Mollie payment page.
+	•	Use the LIVE Mollie API key (already available).
+	•	Total price passed to Mollie must be the final price including 21% VAT.
+	•	Set the description in Mollie to:
+“Offerte betaling KANIOU – inclusief 21% BTW”
+	•	After successful payment:
+	•	Show a confirmation screen with full order summary.
+	•	Add this Dutch message on the confirmation screen:
+“Bedankt voor je bestelling! Je configuratie en betaling zijn succesvol ontvangen.”
+
+⸻
+
+🔒 STEP 4 – Legal & Tax Compliance
+	•	VAT (21%) must be calculated as part of the total (reverse calculation from total).
+	•	Do not add VAT separately on top — all frontend prices are already VAT-inclusive.
+	•	Make sure the confirmation, preview, and invoice parts clearly mention VAT included. ✅ Required Dutch Texts (copy exactly) Location
+Text to insert
+Under total price
+Incl. 21% BTW en excl. verzendkosten
+Below total price
+Inclusief btw-bedrag: €X,XX
+Confirmation screen
+Bedankt voor je bestelling! Je configuratie en betaling zijn succesvol ontvangen.
+Mollie description
+Offerte betaling KANIOU – inclusief 21% BTW
+Totaalspecificatie summary
+Subtotaal (incl. 21% BTW): €X,XX + Inclusief btw-bedrag: €X,XX 🔚 Final Note
+
+All values and amounts should be dynamically generated based on the user’s configuration. The price logic is already functional — you now need to integrate the payment system and ensure VAT is legally shown in all required places.

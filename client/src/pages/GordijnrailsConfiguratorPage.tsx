@@ -2294,13 +2294,15 @@ const GordijnrailsConfiguratorPage = () => {
               <div className="lg:col-span-2">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 scroll-indicator" key={`header-${currentStep}`}>
                       <Settings className="h-5 w-5" />
                       Stap {currentStep} van 6
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {renderStep()}
+                    <div className="step-transition" key={currentStep}>
+                      {renderStep()}
+                    </div>
 
                     {/* Navigation Buttons */}
                     <div className="flex justify-between mt-8 pt-6 border-t">

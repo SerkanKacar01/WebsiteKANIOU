@@ -130,7 +130,7 @@ const CustomizationWizard = () => {
       <Card className="mb-8">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
-            <CardTitle className="text-2xl">Stap {currentStep + 1} van {STEPS.length}</CardTitle>
+            <CardTitle className="text-2xl scroll-indicator" key={`wizard-header-${currentStep}`}>Stap {currentStep + 1} van {STEPS.length}</CardTitle>
             <Badge variant="outline" className="text-sm">
               {Math.round(progressPercentage)}% voltooid
             </Badge>
@@ -178,7 +178,9 @@ const CustomizationWizard = () => {
       {/* Current Step Content */}
       <Card className="mb-8">
         <CardContent className="p-8">
-          {renderStep()}
+          <div className="step-transition" key={currentStep}>
+            {renderStep()}
+          </div>
         </CardContent>
       </Card>
 

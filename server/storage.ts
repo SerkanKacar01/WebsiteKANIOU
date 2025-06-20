@@ -277,7 +277,12 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   // Categories
   async getCategories(): Promise<Category[]> {
-    return await db.select().from(categories);
+    try {
+      return await db.select().from(categories);
+    } catch (error) {
+      console.error("Database connection failed for categories, using fallback:", error);
+      return [];
+    }
   }
 
   async getCategoryById(id: number): Promise<Category | undefined> {
@@ -324,7 +329,12 @@ export class DatabaseStorage implements IStorage {
 
   // Gallery
   async getGalleryItems(): Promise<GalleryItem[]> {
-    return await db.select().from(galleryItems);
+    try {
+      return await db.select().from(galleryItems);
+    } catch (error) {
+      console.error("Database connection failed for gallery items, using fallback:", error);
+      return [];
+    }
   }
 
   async getGalleryItemById(id: number): Promise<GalleryItem | undefined> {
@@ -358,7 +368,12 @@ export class DatabaseStorage implements IStorage {
 
   // Testimonials
   async getTestimonials(): Promise<Testimonial[]> {
-    return await db.select().from(testimonials);
+    try {
+      return await db.select().from(testimonials);
+    } catch (error) {
+      console.error("Database connection failed for testimonials, using fallback:", error);
+      return [];
+    }
   }
 
   async getTestimonialById(id: number): Promise<Testimonial | undefined> {
@@ -519,18 +534,23 @@ export class DatabaseStorage implements IStorage {
 
   // Chatbot Knowledge
   async getChatbotKnowledge(language?: string): Promise<ChatbotKnowledge[]> {
-    if (language) {
+    try {
+      if (language) {
+        return await db
+          .select()
+          .from(chatbotKnowledge)
+          .where(eq(chatbotKnowledge.language, language))
+          .orderBy(desc(chatbotKnowledge.priority));
+      }
+      
       return await db
         .select()
         .from(chatbotKnowledge)
-        .where(eq(chatbotKnowledge.language, language))
         .orderBy(desc(chatbotKnowledge.priority));
+    } catch (error) {
+      console.error("Database connection failed for chatbot knowledge, using fallback:", error);
+      return [];
     }
-    
-    return await db
-      .select()
-      .from(chatbotKnowledge)
-      .orderBy(desc(chatbotKnowledge.priority));
   }
 
   async createChatbotKnowledge(knowledge: InsertChatbotKnowledge): Promise<ChatbotKnowledge> {

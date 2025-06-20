@@ -164,6 +164,7 @@ const GordijnrailsConfiguratorPage = () => {
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [gliderAdded, setGliderAdded] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [showRailLimitWarning, setShowRailLimitWarning] = useState(false);
   const configuratorRef = useRef<HTMLDivElement>(null);
   const [configuration, setConfiguration] = useState<Configuration>({
     profileType: "",
@@ -1215,7 +1216,21 @@ const GordijnrailsConfiguratorPage = () => {
                   max="99"
                   value={configuration.extraRails.toString()}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value) || 0;
+                    const inputValue = e.target.value;
+                    const value = parseInt(inputValue) || 0;
+                    
+                    // Show warning if value exceeds 99
+                    if (value > 99) {
+                      setShowRailLimitWarning(true);
+                      // Hide warning after 3 seconds
+                      setTimeout(() => {
+                        setShowRailLimitWarning(false);
+                      }, 3000);
+                    } else {
+                      setShowRailLimitWarning(false);
+                    }
+                    
+                    // Only update state if within valid range
                     if (value >= 0 && value <= 99) {
                       updateConfiguration("extraRails", value);
                     }
@@ -1227,6 +1242,13 @@ const GordijnrailsConfiguratorPage = () => {
                   rails
                 </span>
               </div>
+              
+              {/* Warning for exceeding 99 */}
+              {showRailLimitWarning && (
+                <div className="text-center text-sm text-red-600 bg-red-50 p-2 rounded border border-red-200">
+                  ⚠️ Maximaal 99 extra rails per bestelling toegestaan.
+                </div>
+              )}
 
               <div className="text-center text-sm text-blue-600 bg-blue-50 p-3 rounded-lg">
                 <p>

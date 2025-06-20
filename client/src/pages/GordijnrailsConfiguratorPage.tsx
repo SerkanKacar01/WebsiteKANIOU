@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -162,6 +162,7 @@ const GordijnrailsConfiguratorPage = () => {
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [gliderAdded, setGliderAdded] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const configuratorRef = useRef<HTMLDivElement>(null);
   const [configuration, setConfiguration] = useState<Configuration>({
     profileType: "",
     color: "",
@@ -308,12 +309,34 @@ const GordijnrailsConfiguratorPage = () => {
 
   const price = calculatePrice();
 
+  // Utility function to scroll to configurator section smoothly
+  const scrollToConfigurator = () => {
+    if (configuratorRef.current) {
+      configuratorRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
   const nextStep = () => {
-    if (currentStep < 6) setCurrentStep(currentStep + 1);
+    if (currentStep < 6) {
+      setCurrentStep(currentStep + 1);
+      // Add small delay to ensure DOM update, then scroll
+      setTimeout(() => {
+        scrollToConfigurator();
+      }, 100);
+    }
   };
 
   const prevStep = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      // Add small delay to ensure DOM update, then scroll
+      setTimeout(() => {
+        scrollToConfigurator();
+      }, 100);
+    }
   };
 
   const updateConfiguration = (key: keyof Configuration, value: any) => {
@@ -2266,7 +2289,7 @@ const GordijnrailsConfiguratorPage = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" ref={configuratorRef}>
               {/* Configuration Steps */}
               <div className="lg:col-span-2">
                 <Card>

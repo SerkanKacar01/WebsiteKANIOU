@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -42,20 +42,39 @@ const CustomizationWizard = () => {
     features: [],
     colors: []
   });
+  const wizardRef = useRef<HTMLDivElement>(null);
 
   const updateWizardData = (updates: Partial<WizardData>) => {
     setWizardData(prev => ({ ...prev, ...updates }));
   };
 
+  // Utility function to scroll to wizard section smoothly
+  const scrollToWizard = () => {
+    if (wizardRef.current) {
+      wizardRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
   const nextStep = () => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
+      // Add small delay to ensure DOM update, then scroll
+      setTimeout(() => {
+        scrollToWizard();
+      }, 100);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+      // Add small delay to ensure DOM update, then scroll
+      setTimeout(() => {
+        scrollToWizard();
+      }, 100);
     }
   };
 
@@ -106,7 +125,7 @@ const CustomizationWizard = () => {
   const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto" ref={wizardRef}>
       {/* Progress Header */}
       <Card className="mb-8">
         <CardHeader className="pb-4">

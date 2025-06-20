@@ -395,11 +395,10 @@ const SquidConfiguratorPage = () => {
                           <div className="bg-yellow-50 p-4 rounded-lg">
                             <div className="flex items-center gap-2 mb-2">
                               <Info className="h-4 w-4 text-yellow-600" />
-                              <p className="text-sm font-medium text-yellow-900">Levertijd</p>
+                              <p className="text-sm font-medium text-yellow-900">Maatwerk informatie</p>
                             </div>
                             <p className="text-sm text-yellow-700">
-                              Standaard levertijd: 14 werkdagen<br />
-                              Voor grotere bestellingen: mogelijk iets langer
+                              Elke rol wordt op maat gesneden volgens jouw opgegeven lengte
                             </p>
                           </div>
                         </div>
@@ -426,8 +425,8 @@ const SquidConfiguratorPage = () => {
                                 </span>
                               </div>
                               <div className="flex justify-between">
-                                <span>Afmetingen:</span>
-                                <span className="font-medium">{configuration.length}m × 137cm</span>
+                                <span>Lengte:</span>
+                                <span className="font-medium">{configuration.length}cm ({(configuration.length / 100).toFixed(2)}m)</span>
                               </div>
                               <div className="flex justify-between">
                                 <span>Aantal rollen:</span>
@@ -449,7 +448,7 @@ const SquidConfiguratorPage = () => {
                             ) : (
                               <>
                                 <ShoppingCart className="h-5 w-5 mr-2" />
-                                Toevoegen aan winkelwagen - €{calculatePrice().toFixed(2)}
+                                Voeg toe aan winkelwagen
                               </>
                             )}
                           </Button>
@@ -543,8 +542,7 @@ const SquidConfiguratorPage = () => {
                       
                       <div className="text-xs text-gray-500 space-y-1">
                         <p>• Prijzen zijn inclusief BTW</p>
-                        <p>• Gratis verzending vanaf €100</p>
-                        <p>• 14 werkdagen levertijd</p>
+                        <p>• Gratis verzending vanaf €100 · Levertijd: ±14 werkdagen</p>
                       </div>
                     </CardContent>
                   </Card>

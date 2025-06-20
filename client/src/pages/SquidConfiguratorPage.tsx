@@ -41,13 +41,13 @@ const transparencyOptions = [
     id: "transparent",
     name: "Transparant",
     description: "Laat meer licht door, minimale privacy",
-    priceMultiplier: 1.0,
+    basePrice: 73, // €73 per meter
   },
   {
     id: "opaque",
     name: "Opaque",
-    description: "Maximum privacy, beperkt licht",
-    priceMultiplier: 1.2,
+    description: "Maximale privacy, beperkt lichtinval",
+    basePrice: 83.40, // €73 + €10.40 surcharge per meter
   },
 ];
 
@@ -77,7 +77,7 @@ const SquidConfiguratorPage = () => {
   const [configuration, setConfiguration] = useState<SquidConfiguration>({
     transparencyType: "",
     color: "",
-    length: 1,
+    length: 100, // Default 100cm (minimum)
     quantity: 1,
     width: 137, // Fixed width
   });
@@ -120,8 +120,8 @@ const SquidConfiguratorPage = () => {
     {
       id: 3,
       title: "Bepaal lengte",
-      description: "Strekkende meters (breedte: 137cm)",
-      completed: configuration.length > 0,
+      description: "Geef de gewenste lengte in (cm)",
+      completed: configuration.length >= 100,
     },
     {
       id: 4,
@@ -139,12 +139,13 @@ const SquidConfiguratorPage = () => {
 
   const calculatePrice = () => {
     const transparencyOption = transparencyOptions.find(t => t.id === configuration.transparencyType);
-    const transparencyMultiplier = transparencyOption?.priceMultiplier || 1.0;
+    const pricePerMeter = transparencyOption?.basePrice || 73;
     
-    const basePrice = BASE_PRICE_PER_METER * configuration.length;
-    const adjustedPrice = basePrice * transparencyMultiplier;
+    // Convert cm to meters for calculation
+    const lengthInMeters = configuration.length / 100;
+    const totalPrice = pricePerMeter * lengthInMeters * configuration.quantity;
     
-    return adjustedPrice * configuration.quantity;
+    return Math.round(totalPrice * 100) / 100; // Round to 2 decimal places
   };
 
   const nextStep = () => {
@@ -279,7 +280,7 @@ const SquidConfiguratorPage = () => {
                                   <p className="font-medium">{option.name}</p>
                                   <p className="text-sm text-gray-500">{option.description}</p>
                                   <p className="text-sm text-[#d5c096] font-medium">
-                                    {option.priceMultiplier === 1.0 ? "Standaardprijs" : `+${((option.priceMultiplier - 1) * 100).toFixed(0)}%`}
+                                    {option.basePrice === 73 ? "€73/meter" : `€${option.basePrice}/meter (+€10.40)`}
                                   </p>
                                 </div>
                               </Label>
@@ -329,23 +330,25 @@ const SquidConfiguratorPage = () => {
                         <div className="space-y-4">
                           <div>
                             <Label htmlFor="length" className="text-sm font-medium">
-                              Lengte in strekkende meters
+                              Geef de gewenste lengte in (cm)
                             </Label>
-                            <div className="mt-2">
+                            <div className="mt-2 flex items-center space-x-2">
                               <Input
                                 id="length"
                                 type="number"
-                                min="1"
-                                max="50"
+                                min="100"
+                                max="500"
+                                step="1"
                                 value={configuration.length}
                                 onChange={(e) =>
                                   setConfiguration({
                                     ...configuration,
-                                    length: Math.max(1, parseInt(e.target.value) || 1),
+                                    length: Math.max(100, Math.min(500, parseInt(e.target.value) || 100)),
                                   })
                                 }
                                 className="text-lg font-medium"
                               />
+                              <span className="text-sm text-gray-600 font-medium">cm</span>
                             </div>
                           </div>
                           <div className="bg-blue-50 p-4 rounded-lg">
@@ -354,9 +357,10 @@ const SquidConfiguratorPage = () => {
                               <p className="text-sm font-medium text-blue-900">Productspecificaties</p>
                             </div>
                             <p className="text-sm text-blue-700">
-                              • Standaard breedte: 137 cm (vast)<br />
-                              • Lengte: {configuration.length} meter(s)<br />
-                              • Totale oppervlakte: {(configuration.length * 1.37).toFixed(2)} m²
+                              • Standaard breedte: 137 cm (vaste rolbreedte)<br />
+                              • Minimale afname: 100 cm<br />
+                              • Prijs wordt per strekkende meter berekend<br />
+                              • Totale oppervlakte = lengte × 137 cm
                             </p>
                           </div>
                         </div>
@@ -513,11 +517,10 @@ const SquidConfiguratorPage = () => {
                         </div>
                         {configuration.transparencyType && (
                           <div className="flex justify-between text-sm">
-                            <span>Transparantie toeslag:</span>
+                            <span>Type:</span>
                             <span>
-                              {transparencyOptions.find(t => t.id === configuration.transparencyType)?.priceMultiplier === 1.0 
-                                ? "€0" 
-                                : `+${((transparencyOptions.find(t => t.id === configuration.transparencyType)?.priceMultiplier || 1) - 1) * 100}%`}
+                              {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name}
+                              {transparencyOptions.find(t => t.id === configuration.transparencyType)?.basePrice === 83.40 && " (+€10.40/m)"}
                             </span>
                           </div>
                         )}

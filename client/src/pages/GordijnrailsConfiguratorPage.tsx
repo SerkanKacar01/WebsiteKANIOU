@@ -2289,14 +2289,15 @@ const GordijnrailsConfiguratorPage = () => {
                         <ArrowLeft className="h-4 w-4 mr-2" />
                         Vorige
                       </Button>
-                      <Button
-                        onClick={nextStep}
-                        disabled={currentStep === 6}
-                        className="bg-[#d5c096] hover:bg-[#c4b183]"
-                      >
-                        Volgende
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
+                      {currentStep < 6 && (
+                        <Button
+                          onClick={nextStep}
+                          className="bg-[#d5c096] hover:bg-[#c4b183]"
+                        >
+                          Volgende
+                          <ArrowRight className="h-4 w-4 ml-2" />
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -2611,17 +2612,13 @@ const GordijnrailsConfiguratorPage = () => {
                     )}
 
                     <div className="flex justify-between text-lg font-bold">
-                      <span>Totaalprijs</span>
+                      <span>Totaalprijs: €{price.total.toFixed(2)} (incl. 21% BTW)</span>
                       <span className="text-[#d5c096]">
                         €{price.total.toFixed(2)}
                       </span>
                     </div>
-
-                    <p className="text-xs text-gray-500">
-                      Incl. 21% BTW en excl. verzendkosten
-                    </p>
                     
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-500">
                       Inclusief btw-bedrag: €{(price.total * 0.21 / 1.21).toFixed(2)}
                     </p>
                   </CardContent>
@@ -2634,7 +2631,7 @@ const GordijnrailsConfiguratorPage = () => {
                     <Button 
                       onClick={handleMolliePayment}
                       disabled={isProcessingPayment}
-                      className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white font-semibold py-3"
+                      className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white font-semibold text-lg py-4 px-8 rounded-md"
                     >
                       {isProcessingPayment ? (
                         <>
@@ -2648,6 +2645,9 @@ const GordijnrailsConfiguratorPage = () => {
                         </>
                       )}
                     </Button>
+                    <p className="text-xs text-gray-500 text-center">
+                      Je wordt veilig doorgestuurd naar onze betaalpartner Mollie
+                    </p>
                     
                     <Dialog
                       open={showSpecificationModal}

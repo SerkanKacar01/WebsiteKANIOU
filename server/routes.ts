@@ -1371,6 +1371,11 @@ ${chatSummary}
         });
       }
 
+      // Create the full redirect URL
+      const baseUrl = req.protocol + '://' + req.get('host');
+      const redirectUrl = `${baseUrl}/bedankt`;
+      const webhookUrl = baseUrl.includes('localhost') ? undefined : `${baseUrl}/api/payment-status`;
+
       // Create payment with Mollie
       const paymentResult = await molliePaymentService.createPayment({
         amount: parseFloat(amount),
@@ -1378,13 +1383,15 @@ ${chatSummary}
         description: description,
         customerName: customerName || "Klant",
         customerEmail: customerEmail || "noreply@kaniou.be",
-        redirectUrl: "https://kaniou.be/bedankt",
-        webhookUrl: process.env.NODE_ENV === "production" ? `${process.env.WEBHOOK_BASE_URL}/api/webhook-payment` : undefined,
+        redirectUrl,
+        webhookUrl,
         productDetails,
         customerDetails: {
           sessionId: req.headers['x-session-id'] as string || Date.now().toString()
         }
       });
+
+      console.log(`💳 MOLLIE: Payment created successfully - ID: ${paymentResult.paymentId}, Amount: €${amount}`);
 
       res.json({
         success: true,
@@ -1403,7 +1410,7 @@ ${chatSummary}
   });
 
   // Mollie Webhook Handler
-  app.post("/api/webhook-payment", async (req: Request, res: Response) => {
+  app.post("/api/payment-status", async (req: Request, res: Response) => {
     try {
       const { id: paymentId } = req.body;
 
@@ -1411,9 +1418,12 @@ ${chatSummary}
         return res.status(400).send("Missing payment ID");
       }
 
+      console.log(`🔔 MOLLIE WEBHOOK: Processing payment status for ID: ${paymentId}`);
+
       // Process webhook
       await molliePaymentService.handleWebhook(paymentId);
 
+      console.log(`✅ MOLLIE WEBHOOK: Successfully processed payment ${paymentId}`);
       res.status(200).send("OK");
     } catch (error) {
       console.error("Webhook processing failed:", error);

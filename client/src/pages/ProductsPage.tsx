@@ -666,6 +666,7 @@ const ProductsPage = () => {
       },
     ],
     // TEMPORARILY REMOVED - horren section can be restored later by Serkan
+    horren: [] as any[], // Empty array to maintain type compatibility
     // horren: [
     //   {
     //     id: 9,
@@ -830,12 +831,11 @@ const ProductsPage = () => {
     // Flatten all products based on category filter
     if (selectedCategory === "alles") {
       allProducts = [
-        // horren temporarily removed
+        // horren temporarily excluded
         ...productCategories.accessoires,
       ];
     } else if (selectedCategory === "horren") {
-      // horren temporarily removed - show accessories instead
-      allProducts = productCategories.accessoires;
+      allProducts = []; // Empty - horren temporarily hidden
     } else if (selectedCategory === "gordijnrails") {
       allProducts = productCategories.accessoires.filter(
         (item) => item.title === "Gordijnrails",
@@ -927,7 +927,7 @@ const ProductsPage = () => {
     }
 
     return {
-      // horren: temporarily removed
+      horren: [], // Temporarily empty - horren section hidden
       accessoires: filteredProducts.filter((p) =>
         productCategories.accessoires.includes(p),
       ),
@@ -1536,8 +1536,24 @@ const ProductsPage = () => {
                   </div>
                 </div>
               ) : (
-                // Horren section temporarily removed
-                <div></div>
+                groupedProducts.horren &&
+                groupedProducts.horren.length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center mb-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
+                        Horren
+                      </h3>
+                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
+                      {groupedProducts.horren.map((category: any) => (
+                        <div key={category.id} className="product-card">
+                          <ProductCard category={category} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
               )}
 
               {!isFilterLoading &&

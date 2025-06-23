@@ -21,6 +21,7 @@ import chalkImage from "@assets/CHALK_1750708862088.png";
 import oakImage from "@assets/OAK_1750708862089.png";
 import rockImage from "@assets/ROCK_1750708862089.png";
 import ashImage from "@assets/ASH_1750708862089.png";
+import squidHeroImage from "@assets/SQUID_1750709810117.jpg";
 import {
   Accordion,
   AccordionContent,
@@ -230,6 +231,15 @@ const SquidConfiguratorPage = () => {
           content="Configureer uw SQUID textielfolie op maat. Kies transparantie, kleur en afmetingen voor de perfecte raamfolie."
         />
       </Helmet>
+
+      {/* SQUID Hero Image Section */}
+      <div className="w-full">
+        <img 
+          src={squidHeroImage} 
+          alt="SQUID Textielfolie - Premium raamfolie voor privacy en stijl"
+          className="w-full h-64 md:h-80 lg:h-96 object-cover"
+        />
+      </div>
 
       <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
         <Container>

@@ -1154,11 +1154,13 @@ export class DatabaseStorage implements IStorage {
 }
 
 async function seedInitialData(storage: DatabaseStorage) {
-  // Check if we already have data in the categories table
-  const existingCategories = await storage.getCategories();
+  // Temporarily skip seeding to avoid database connection issues
+  try {
+    // Check if we already have data in the categories table
+    const existingCategories = await storage.getCategories();
 
-  if (existingCategories.length === 0) {
-    console.log("Seeding initial data...");
+    if (existingCategories.length === 0) {
+      console.log("Seeding initial data...");
 
     // Seed Categories
     const curtainsCategory = await storage.createCategory({
@@ -1321,17 +1323,27 @@ async function seedInitialData(storage: DatabaseStorage) {
 
     console.log("Initial data seeding complete!");
   }
+  } catch (error) {
+    console.error("Database seeding failed, continuing without seeding:", error);
+  }
 }
 
 export const storage = new DatabaseStorage();
 
 // Seed initial data (will only run if the database is empty)
-seedInitialData(storage).catch((error) => {
+seedInitialData(storage).catch((error: any) => {
   console.error("Error seeding initial data:", error);
 });
 
-// Initialize AI chatbot knowledge base
-import { seedChatbotKnowledge } from "./seedKnowledgeBase";
-seedChatbotKnowledge().catch((error) => {
-  console.error("Error seeding chatbot knowledge:", error);
-});
+// Initialize AI chatbot knowledge base - skip if module not found
+try {
+  import("./seedKnowledgeBase").then(({ seedChatbotKnowledge }) => {
+    seedChatbotKnowledge().catch((error: any) => {
+      console.error("Error seeding chatbot knowledge:", error);
+    });
+  }).catch(() => {
+    console.log("Chatbot knowledge seeding skipped - module not found");
+  });
+} catch (error) {
+  console.log("Chatbot knowledge seeding skipped");
+}

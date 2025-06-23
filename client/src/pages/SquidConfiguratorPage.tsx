@@ -23,6 +23,8 @@ import rockImage from "@assets/ROCK_1750708862089.png";
 import ashImage from "@assets/ASH_1750708862089.png";
 import squidHeroImage from "@assets/SQUID_1750711025328.jpg";
 import squidSampleImage from "@assets/SQUID_1750711425584.jpg";
+import installationStep1 from "@assets/Installatie deel 1_1750712733656.jpg";
+import installationStep2 from "@assets/Installatie deel 2_1750712733656.jpg";
 import {
   Accordion,
   AccordionContent,
@@ -63,13 +65,13 @@ const transparencyOptions = [
     id: "transparent",
     name: "Transparant",
     description: "Laat meer licht door, minimale privacy",
-    basePrice: 73, // €73 per meter
+    basePrice: 69.9, // €73 per meter
   },
   {
     id: "opaque",
     name: "Opaque",
     description: "Maximale privacy, beperkt lichtinval",
-    basePrice: 79, // €79 per meter
+    basePrice: 79.9, // €79 per meter
   },
 ];
 
@@ -88,6 +90,7 @@ const SquidConfiguratorPage = () => {
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [lengthError, setLengthError] = useState("");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [showInstallationGuide, setShowInstallationGuide] = useState(false);
   const configuratorRef = useRef<HTMLDivElement>(null);
 
   const [configuration, setConfiguration] = useState<SquidConfiguration>({
@@ -140,7 +143,7 @@ const SquidConfiguratorPage = () => {
     const transparencyOption = transparencyOptions.find(
       (t) => t.id === configuration.transparencyType,
     );
-    const pricePerMeter = transparencyOption?.basePrice || 73;
+    const pricePerMeter = transparencyOption?.basePrice || 69.9;
 
     // Convert cm to meters for calculation: price_per_meter × (length / 100)
     const lengthInMeters = configuration.length / 100;
@@ -938,6 +941,61 @@ const SquidConfiguratorPage = () => {
                     </AccordionItem>
                   </Accordion>
                 </div>
+
+                {/* Installation Guide Section */}
+                <div className="mt-8">
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 text-center">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                      SQUID zelf installeren?
+                    </h2>
+                    <p className="text-gray-700 mb-6">
+                      Bekijk stap voor stap hoe u SQUID textielfolie eenvoudig zelf aanbrengt.
+                    </p>
+                    <Button
+                      onClick={() => setShowInstallationGuide(true)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold"
+                    >
+                      📋 Bekijk de Installatiegids
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Installation Guide Modal */}
+                <Dialog open={showInstallationGuide} onOpenChange={setShowInstallationGuide}>
+                  <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-center">
+                        SQUID Installatiegids
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+                      {/* Installation Step 1 */}
+                      <div className="space-y-3">
+                        <h3 className="text-lg font-semibold text-center">Stap 1: Voorbereiding en bevestiging</h3>
+                        <img 
+                          src={installationStep1}
+                          alt="SQUID installatiegids stap 1 – voorbereiding en bevestiging"
+                          className="w-full h-auto rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+                          onClick={() => window.open(installationStep1, '_blank')}
+                        />
+                      </div>
+                      
+                      {/* Installation Step 2 */}
+                      <div className="space-y-3">
+                        <h3 className="text-lg font-semibold text-center">Stap 2: Afwerking en tips</h3>
+                        <img 
+                          src={installationStep2}
+                          alt="SQUID installatiegids stap 2 – afwerking en tips"
+                          className="w-full h-auto rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+                          onClick={() => window.open(installationStep2, '_blank')}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-6 text-center text-sm text-gray-600">
+                      <p>💡 Tip: Klik op een afbeelding om deze in volledig scherm te bekijken</p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
 
                 {/* Image Preview Modal */}
                 <Dialog

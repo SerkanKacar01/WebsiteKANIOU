@@ -1,0 +1,82 @@
+🔧 Replit Implementation Instruction — SQUID Configurator Updates
+
+1. Remove Roll Quantity Functionality (Step 6 Glijders)
+
+Instruction:
+Remove all text and functionality related to “per strip”, “per stuk”, or “aantal rollen” in Step 6 of the configurator.
+Reason:
+We do not sell in rolls to private customers. The system should only calculate based on selected type (no input fields for quantity).
+
+⸻
+
+2. Right-Side Layout Copy from Gordijnrails to SQUID
+
+Instruction:
+Make sure the right-hand side of the SQUID pages is identical to the gordijnrails layout, including:
+	•	“Jouw Configuratie” block
+	•	“Prijsoverzicht” block
+	•	“Betaal veilig via Mollie” button
+	•	Small text below Mollie button: “Je wordt veilig doorgestuurd naar onze betaalpartner Mollie”
+	•	Button: “Bekijk totaalspecificatie”
+	•	FAQ section titled: Veelgestelde vragen over SQUID
+	•	“Waarom KANIOU?” info box (position and layout must be consistent)
+
+Note: All elements must remain visible on every SQUID step, just like on the rails configurator.
+
+⸻
+
+3. Length Input Validation & Calculation Logic
+
+Step: Step 3 - Length
+Instruction:
+	•	Input must accept values from 100 cm minimum to 5500 cm maximum.
+	•	No placeholder — only numerical input.
+	•	If user types under 100 cm, show a warning:
+“Minimale afname is 100 cm. Voer een geldige lengte in.”
+	•	Pricing should be calculated based on selected transparency type:
+	•	Transparent = €73/meter
+	•	Opaque = €79/meter
+	•	The system must multiply the chosen length (in meters) × 137 cm (fixed width) to get total surface and price.
+
+⸻
+
+4. “Volgende” Button Logic
+
+Step 3 (length):
+	•	The “Volgende” button should function normally and go to the next step.
+
+Step 4 (last page):
+	•	The “Volgende” button should be removed entirely — this is the last step. The customer should now see only the payment + total overview.
+
+⸻
+
+5. Transparent vs Opaque — Photo Selection
+
+Step 1 – Transparantie selectie
+
+Instruction:
+	•	Replace radio buttons with image selections.
+	•	Use the provided images (6 photos you uploaded) to represent transparent and opaque effects.
+	•	When user clicks a photo:
+	•	It becomes selected
+	•	A larger preview is shown in a lightbox/modal
+
+Design:
+	•	Each side of the image should be labeled clearly as “Transparent” (left) and “Opaque” (right).
+	•	Only one transparency option should be selectable at a time.
+
+⸻
+
+6. Colors (Ash, Bone, Chalk, Coal, Oak, Rock)
+
+Instruction:
+	•	Make each color selectable by image (not dropdown or text).
+	•	Use the uploaded PNGs for each color:
+	•	ASH.png
+	•	BONE.png
+	•	CHALK.png
+	•	COAL.png
+	•	OAK.png
+	•	ROCK.png
+	•	On click, the selected image is visually highlighted.
+	•	When clicked again, the image should open larger in preview (just like transparency).

@@ -15,6 +15,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import coalImage from "@assets/COAL_1750708862088.png";
+import boneImage from "@assets/BONE_1750708862088.png";
+import chalkImage from "@assets/CHALK_1750708862088.png";
+import oakImage from "@assets/OAK_1750708862089.png";
+import rockImage from "@assets/ROCK_1750708862089.png";
+import ashImage from "@assets/ASH_1750708862089.png";
 import {
   Accordion,
   AccordionContent,
@@ -65,22 +71,13 @@ const transparencyOptions = [
   },
 ];
 
-const transparentColorOptions = [
-  { id: "coal", name: "Coal", hex: "#36454F" },
-  { id: "rock", name: "Rock", hex: "#696969" },
-  { id: "oak", name: "Oak", hex: "#D2B48C" },
-  { id: "ash", name: "Ash", hex: "#B2BEB5" },
-  { id: "bone", name: "Bone", hex: "#F9F6EE" },
-  { id: "chalk", name: "Chalk", hex: "#F5F5F0" },
-];
-
-const opaqueColorOptions = [
-  { id: "caviar", name: "Caviar", hex: "#1C1C1C" },
-  { id: "iron", name: "Iron", hex: "#4A4A4A" },
-  { id: "sand", name: "Sand", hex: "#C2B280" },
-  { id: "mist", name: "Mist", hex: "#D3D3D3" },
-  { id: "cream", name: "Cream", hex: "#FDF6E3" },
-  { id: "snow", name: "Snow", hex: "#FFFAFA" },
+const colorOptions = [
+  { id: "coal", name: "Coal", image: coalImage },
+  { id: "rock", name: "Rock", image: rockImage },
+  { id: "oak", name: "Oak", image: oakImage },
+  { id: "ash", name: "Ash", image: ashImage },
+  { id: "bone", name: "Bone", image: boneImage },
+  { id: "chalk", name: "Chalk", image: chalkImage },
 ];
 
 const SquidConfiguratorPage = () => {
@@ -88,6 +85,7 @@ const SquidConfiguratorPage = () => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [lengthError, setLengthError] = useState("");
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const configuratorRef = useRef<HTMLDivElement>(null);
   
   const [configuration, setConfiguration] = useState<SquidConfiguration>({
@@ -101,24 +99,11 @@ const SquidConfiguratorPage = () => {
   const BASE_PRICE_PER_METER = 73; // Base price per running meter
 
   const getAvailableColors = () => {
-    if (configuration.transparencyType === "transparent") {
-      return transparentColorOptions;
-    } else if (configuration.transparencyType === "opaque") {
-      return opaqueColorOptions;
-    }
-    return [];
+    // All colors are available for both transparency types
+    return colorOptions;
   };
 
-  // Reset color selection when transparency type changes
-  useEffect(() => {
-    if (configuration.transparencyType && configuration.color) {
-      const availableColors = getAvailableColors();
-      const isColorAvailable = availableColors.some(color => color.id === configuration.color);
-      if (!isColorAvailable) {
-        setConfiguration(prev => ({ ...prev, color: "" }));
-      }
-    }
-  }, [configuration.transparencyType]);
+  // No need to reset color selection since all colors are available for both types
 
   const steps: ConfigStep[] = [
     {
@@ -313,61 +298,96 @@ const SquidConfiguratorPage = () => {
                     {currentStep === 1 && (
                       <div>
                         <h3 className="text-lg font-semibold mb-4">Kies transparantie type</h3>
-                        <RadioGroup
-                          value={configuration.transparencyType}
-                          onValueChange={(value) =>
-                            setConfiguration({ ...configuration, transparencyType: value })
-                          }
-                        >
+                        <p className="text-sm text-gray-600 mb-6">
+                          Klik op een afbeelding om de transparantie te selecteren. Klik nogmaals voor een grotere preview.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {transparencyOptions.map((option) => (
-                            <div key={option.id} className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50">
-                              <RadioGroupItem value={option.id} id={option.id} />
-                              <Label htmlFor={option.id} className="flex-1 cursor-pointer">
-                                <div>
-                                  <p className="font-medium">{option.name}</p>
-                                  <p className="text-sm text-gray-500">{option.description}</p>
-                                  <p className="text-sm text-[#d5c096] font-medium">
-                                    €{option.basePrice}/meter
-                                  </p>
+                            <div 
+                              key={option.id} 
+                              className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
+                                configuration.transparencyType === option.id 
+                                  ? "border-[#d5c096] ring-2 ring-[#d5c096] ring-opacity-50" 
+                                  : "border-gray-200 hover:border-gray-300"
+                              }`}
+                              onClick={() => {
+                                if (configuration.transparencyType === option.id) {
+                                  // Open preview if already selected
+                                  setPreviewImage(option.id === "transparent" ? coalImage : coalImage);
+                                } else {
+                                  // Select this option
+                                  setConfiguration({ ...configuration, transparencyType: option.id });
+                                }
+                              }}
+                            >
+                              <div className="aspect-square bg-gray-100 flex items-center justify-center">
+                                <img 
+                                  src={coalImage} 
+                                  alt={`${option.name} transparantie voorbeeld`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div className="p-4 bg-white">
+                                <h4 className="font-semibold text-lg mb-2">{option.name}</h4>
+                                <p className="text-sm text-gray-600 mb-2">{option.description}</p>
+                                <p className="text-sm font-medium text-[#d5c096]">
+                                  €{option.basePrice}/meter
+                                </p>
+                              </div>
+                              {configuration.transparencyType === option.id && (
+                                <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
+                                  <Check className="h-4 w-4" />
                                 </div>
-                              </Label>
+                              )}
                             </div>
                           ))}
-                        </RadioGroup>
+                        </div>
                       </div>
                     )}
 
                     {currentStep === 2 && (
                       <div>
                         <h3 className="text-lg font-semibold mb-4">Kies kleur</h3>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Beschikbare kleuren voor {configuration.transparencyType === "transparent" ? "Transparant" : "Opaque"}:
+                        <p className="text-sm text-gray-600 mb-6">
+                          Klik op een kleur om deze te selecteren. Klik nogmaals voor een grotere preview.
                         </p>
-                        <RadioGroup
-                          value={configuration.color}
-                          onValueChange={(value) =>
-                            setConfiguration({ ...configuration, color: value })
-                          }
-                        >
-                          <div className="grid grid-cols-2 gap-4">
-                            {getAvailableColors().map((color) => (
-                              <div key={color.id} className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50">
-                                <RadioGroupItem value={color.id} id={color.id} />
-                                <Label htmlFor={color.id} className="flex-1 cursor-pointer">
-                                  <div className="flex items-center gap-3">
-                                    <div
-                                      className="w-8 h-8 rounded-full border-2 border-gray-300"
-                                      style={{ backgroundColor: color.hex }}
-                                    ></div>
-                                    <div>
-                                      <p className="font-medium">{color.name}</p>
-                                    </div>
-                                  </div>
-                                </Label>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {getAvailableColors().map((color) => (
+                            <div 
+                              key={color.id} 
+                              className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
+                                configuration.color === color.id 
+                                  ? "border-[#d5c096] ring-2 ring-[#d5c096] ring-opacity-50" 
+                                  : "border-gray-200 hover:border-gray-300"
+                              }`}
+                              onClick={() => {
+                                if (configuration.color === color.id) {
+                                  // Open preview if already selected
+                                  setPreviewImage(color.image);
+                                } else {
+                                  // Select this color
+                                  setConfiguration({ ...configuration, color: color.id });
+                                }
+                              }}
+                            >
+                              <div className="aspect-square bg-gray-100">
+                                <img 
+                                  src={color.image} 
+                                  alt={`${color.name} kleur voorbeeld`}
+                                  className="w-full h-full object-cover"
+                                />
                               </div>
-                            ))}
-                          </div>
-                        </RadioGroup>
+                              <div className="p-3 bg-white">
+                                <p className="font-medium text-center">{color.name}</p>
+                              </div>
+                              {configuration.color === color.id && (
+                                <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
+                                  <Check className="h-4 w-4" />
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
 
@@ -466,7 +486,7 @@ const SquidConfiguratorPage = () => {
                         Vorige
                       </Button>
 
-                      {currentStep < 5 ? (
+                      {currentStep < 4 ? (
                         <Button
                           onClick={nextStep}
                           disabled={!canProceedToNext()}
@@ -476,11 +496,9 @@ const SquidConfiguratorPage = () => {
                           <ArrowRight className="h-4 w-4" />
                         </Button>
                       ) : (
-                        <Link href="/producten">
-                          <Button variant="outline" className="flex items-center gap-2">
-                            Verder winkelen
-                          </Button>
-                        </Link>
+                        <div className="text-sm text-gray-500">
+                          Gebruik de betalingsopties hiernaast →
+                        </div>
                       )}
                     </div>
                   </CardContent>

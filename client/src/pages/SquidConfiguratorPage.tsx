@@ -21,7 +21,7 @@ import chalkImage from "@assets/CHALK_1750708862088.png";
 import oakImage from "@assets/OAK_1750708862089.png";
 import rockImage from "@assets/ROCK_1750708862089.png";
 import ashImage from "@assets/ASH_1750708862089.png";
-import squidHeroImage from "@assets/SQUID_1750709810117.jpg";
+import squidHeroImage from "@assets/SQUID_1750711025328.jpg";
 import {
   Accordion,
   AccordionContent,
@@ -88,7 +88,7 @@ const SquidConfiguratorPage = () => {
   const [lengthError, setLengthError] = useState("");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const configuratorRef = useRef<HTMLDivElement>(null);
-  
+
   const [configuration, setConfiguration] = useState<SquidConfiguration>({
     transparencyType: "",
     color: "",
@@ -135,39 +135,47 @@ const SquidConfiguratorPage = () => {
 
   const calculatePrice = () => {
     if (configuration.length < 100) return 0; // Don't calculate price for invalid lengths
-    
-    const transparencyOption = transparencyOptions.find(t => t.id === configuration.transparencyType);
+
+    const transparencyOption = transparencyOptions.find(
+      (t) => t.id === configuration.transparencyType,
+    );
     const pricePerMeter = transparencyOption?.basePrice || 73;
-    
+
     // Convert cm to meters for calculation: price_per_meter × (length / 100)
     const lengthInMeters = configuration.length / 100;
     const totalPrice = pricePerMeter * lengthInMeters;
-    
+
     return Math.round(totalPrice * 100) / 100; // Round to 2 decimal places
   };
 
   const nextStep = () => {
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
-      configuratorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      configuratorRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-      configuratorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      configuratorRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
   const handleMolliePayment = async () => {
     setIsProcessingPayment(true);
-    
+
     try {
-      const response = await fetch('/api/mollie/create-payment', {
-        method: 'POST',
+      const response = await fetch("/api/mollie/create-payment", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: calculatePrice(),
@@ -175,7 +183,7 @@ const SquidConfiguratorPage = () => {
           redirectUrl: `${window.location.origin}/payment/success`,
           webhookUrl: `${window.location.origin}/api/mollie/webhook`,
           metadata: {
-            productType: 'squid',
+            productType: "squid",
             configuration: JSON.stringify(configuration),
           },
         }),
@@ -186,11 +194,13 @@ const SquidConfiguratorPage = () => {
         // Redirect to Mollie checkout
         window.location.href = data.checkoutUrl;
       } else {
-        throw new Error('Payment creation failed');
+        throw new Error("Payment creation failed");
       }
     } catch (error) {
-      console.error('Payment error:', error);
-      alert('Er is een fout opgetreden bij het aanmaken van de betaling. Probeer het opnieuw.');
+      console.error("Payment error:", error);
+      alert(
+        "Er is een fout opgetreden bij het aanmaken van de betaling. Probeer het opnieuw.",
+      );
     } finally {
       setIsProcessingPayment(false);
     }
@@ -234,8 +244,8 @@ const SquidConfiguratorPage = () => {
 
       {/* SQUID Hero Image Section */}
       <div className="w-full">
-        <img 
-          src={squidHeroImage} 
+        <img
+          src={squidHeroImage}
           alt="SQUID Textielfolie - Premium raamfolie voor privacy en stijl"
           className="w-full h-64 md:h-80 lg:h-96 object-cover"
         />
@@ -250,7 +260,8 @@ const SquidConfiguratorPage = () => {
                 SQUID Textielfolie Configurator
               </h1>
               <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-                Configureer uw SQUID textielfolie op maat voor de perfecte pasvorm en privacy
+                Configureer uw SQUID textielfolie op maat voor de perfecte
+                pasvorm en privacy
               </p>
             </div>
 
@@ -265,10 +276,10 @@ const SquidConfiguratorPage = () => {
                           currentStep === step.id
                             ? "border-[#d5c096] bg-[#d5c096] text-white"
                             : step.completed
-                            ? "border-green-500 bg-green-500 text-white"
-                            : currentStep > step.id
-                            ? "border-[#d5c096] bg-[#d5c096] text-white"
-                            : "border-gray-300 bg-white text-gray-500"
+                              ? "border-green-500 bg-green-500 text-white"
+                              : currentStep > step.id
+                                ? "border-[#d5c096] bg-[#d5c096] text-white"
+                                : "border-gray-300 bg-white text-gray-500"
                         }`}
                       >
                         {step.completed || currentStep > step.id ? (
@@ -294,6 +305,17 @@ const SquidConfiguratorPage = () => {
               </div>
             </div>
 
+            {/* SQUID Header Image - Above Step 1 */}
+            <div className="mb-8 flex justify-center">
+              <div className="w-full max-w-4xl">
+                <img 
+                  src={squidHeroImage} 
+                  alt="SQUID textielfolie sample visual"
+                  className="w-full h-64 md:h-80 lg:h-96 object-cover rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+
             <div ref={configuratorRef} className="grid lg:grid-cols-3 gap-8">
               {/* Configuration Panel */}
               <div className="lg:col-span-2">
@@ -307,39 +329,55 @@ const SquidConfiguratorPage = () => {
                   <CardContent className="space-y-6">
                     {currentStep === 1 && (
                       <div>
-                        <h3 className="text-lg font-semibold mb-4">Kies transparantie type</h3>
+                        <h3 className="text-lg font-semibold mb-4">
+                          Kies transparantie type
+                        </h3>
                         <p className="text-sm text-gray-600 mb-6">
-                          Klik op een afbeelding om de transparantie te selecteren. Klik nogmaals voor een grotere preview.
+                          Klik op een afbeelding om de transparantie te
+                          selecteren. Klik nogmaals voor een grotere preview.
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {transparencyOptions.map((option) => (
-                            <div 
-                              key={option.id} 
+                            <div
+                              key={option.id}
                               className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
-                                configuration.transparencyType === option.id 
-                                  ? "border-[#d5c096] ring-2 ring-[#d5c096] ring-opacity-50" 
+                                configuration.transparencyType === option.id
+                                  ? "border-[#d5c096] ring-2 ring-[#d5c096] ring-opacity-50"
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                               onClick={() => {
-                                if (configuration.transparencyType === option.id) {
+                                if (
+                                  configuration.transparencyType === option.id
+                                ) {
                                   // Open preview if already selected
-                                  setPreviewImage(option.id === "transparent" ? coalImage : coalImage);
+                                  setPreviewImage(
+                                    option.id === "transparent"
+                                      ? coalImage
+                                      : coalImage,
+                                  );
                                 } else {
                                   // Select this option
-                                  setConfiguration({ ...configuration, transparencyType: option.id });
+                                  setConfiguration({
+                                    ...configuration,
+                                    transparencyType: option.id,
+                                  });
                                 }
                               }}
                             >
                               <div className="aspect-square bg-gray-100 flex items-center justify-center">
-                                <img 
-                                  src={coalImage} 
+                                <img
+                                  src={coalImage}
                                   alt={`${option.name} transparantie voorbeeld`}
                                   className="w-full h-full object-cover"
                                 />
                               </div>
                               <div className="p-4 bg-white">
-                                <h4 className="font-semibold text-lg mb-2">{option.name}</h4>
-                                <p className="text-sm text-gray-600 mb-2">{option.description}</p>
+                                <h4 className="font-semibold text-lg mb-2">
+                                  {option.name}
+                                </h4>
+                                <p className="text-sm text-gray-600 mb-2">
+                                  {option.description}
+                                </p>
                                 <p className="text-sm font-medium text-[#d5c096]">
                                   €{option.basePrice}/meter
                                 </p>
@@ -357,17 +395,20 @@ const SquidConfiguratorPage = () => {
 
                     {currentStep === 2 && (
                       <div>
-                        <h3 className="text-lg font-semibold mb-4">Kies kleur</h3>
+                        <h3 className="text-lg font-semibold mb-4">
+                          Kies kleur
+                        </h3>
                         <p className="text-sm text-gray-600 mb-6">
-                          Klik op een kleur om deze te selecteren. Klik nogmaals voor een grotere preview.
+                          Klik op een kleur om deze te selecteren. Klik nogmaals
+                          voor een grotere preview.
                         </p>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           {getAvailableColors().map((color) => (
-                            <div 
-                              key={color.id} 
+                            <div
+                              key={color.id}
                               className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
-                                configuration.color === color.id 
-                                  ? "border-[#d5c096] ring-2 ring-[#d5c096] ring-opacity-50" 
+                                configuration.color === color.id
+                                  ? "border-[#d5c096] ring-2 ring-[#d5c096] ring-opacity-50"
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                               onClick={() => {
@@ -376,19 +417,24 @@ const SquidConfiguratorPage = () => {
                                   setPreviewImage(color.image);
                                 } else {
                                   // Select this color
-                                  setConfiguration({ ...configuration, color: color.id });
+                                  setConfiguration({
+                                    ...configuration,
+                                    color: color.id,
+                                  });
                                 }
                               }}
                             >
                               <div className="aspect-square bg-gray-100">
-                                <img 
-                                  src={color.image} 
+                                <img
+                                  src={color.image}
                                   alt={`${color.name} kleur voorbeeld`}
                                   className="w-full h-full object-cover"
                                 />
                               </div>
                               <div className="p-3 bg-white">
-                                <p className="font-medium text-center">{color.name}</p>
+                                <p className="font-medium text-center">
+                                  {color.name}
+                                </p>
                               </div>
                               {configuration.color === color.id && (
                                 <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
@@ -403,10 +449,15 @@ const SquidConfiguratorPage = () => {
 
                     {currentStep === 3 && (
                       <div>
-                        <h3 className="text-lg font-semibold mb-4">Bepaal lengte</h3>
+                        <h3 className="text-lg font-semibold mb-4">
+                          Bepaal lengte
+                        </h3>
                         <div className="space-y-4">
                           <div>
-                            <Label htmlFor="length" className="text-sm font-medium">
+                            <Label
+                              htmlFor="length"
+                              className="text-sm font-medium"
+                            >
                               Geef de gewenste lengte in (cm)
                             </Label>
                             <div className="mt-2 flex items-center space-x-2">
@@ -416,10 +467,16 @@ const SquidConfiguratorPage = () => {
                                 min="100"
                                 max="5500"
                                 step="1"
-                                value={configuration.length > 0 ? configuration.length : ""}
+                                value={
+                                  configuration.length > 0
+                                    ? configuration.length
+                                    : ""
+                                }
                                 placeholder=""
                                 onChange={(e) => {
-                                  const value = e.target.value ? parseInt(e.target.value) : 0;
+                                  const value = e.target.value
+                                    ? parseInt(e.target.value)
+                                    : 0;
                                   setConfiguration({
                                     ...configuration,
                                     length: value,
@@ -432,22 +489,30 @@ const SquidConfiguratorPage = () => {
                                 }}
                                 className={`text-lg font-medium ${lengthError ? "border-red-500 focus:border-red-500" : ""}`}
                               />
-                              <span className="text-sm text-gray-600 font-medium">cm</span>
+                              <span className="text-sm text-gray-600 font-medium">
+                                cm
+                              </span>
                             </div>
                             {lengthError && (
-                              <p className="text-sm text-red-600 mt-1">{lengthError}</p>
+                              <p className="text-sm text-red-600 mt-1">
+                                {lengthError}
+                              </p>
                             )}
                           </div>
                           <div className="bg-blue-50 p-4 rounded-lg">
                             <div className="flex items-center gap-2 mb-2">
                               <Ruler className="h-4 w-4 text-blue-600" />
-                              <p className="text-sm font-medium text-blue-900">Productspecificaties</p>
+                              <p className="text-sm font-medium text-blue-900">
+                                Productspecificaties
+                              </p>
                             </div>
                             <p className="text-sm text-blue-700">
-                              • Standaard breedte: 137 cm (vaste rolbreedte)<br />
-                              • Minimale afname: 100 cm<br />
-                              • Maximale afname: 5500 cm<br />
-                              • Totale oppervlakte = lengte × 137 cm
+                              • Standaard breedte: 137 cm (vaste rolbreedte)
+                              <br />
+                              • Minimale afname: 100 cm
+                              <br />
+                              • Maximale afname: 5500 cm
+                              <br />• Totale oppervlakte = lengte × 137 cm
                             </p>
                           </div>
                         </div>
@@ -456,30 +521,48 @@ const SquidConfiguratorPage = () => {
 
                     {currentStep === 4 && (
                       <div>
-                        <h3 className="text-lg font-semibold mb-4">Bestelling afronden</h3>
+                        <h3 className="text-lg font-semibold mb-4">
+                          Bestelling afronden
+                        </h3>
                         <div className="space-y-6">
                           <div className="bg-gray-50 p-4 rounded-lg">
-                            <h4 className="font-medium mb-3">Uw configuratie:</h4>
+                            <h4 className="font-medium mb-3">
+                              Uw configuratie:
+                            </h4>
                             <div className="space-y-2 text-sm">
                               <div className="flex justify-between">
                                 <span>Type:</span>
                                 <span className="font-medium">
-                                  {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name}
+                                  {
+                                    transparencyOptions.find(
+                                      (t) =>
+                                        t.id === configuration.transparencyType,
+                                    )?.name
+                                  }
                                 </span>
                               </div>
                               <div className="flex justify-between">
                                 <span>Kleur:</span>
                                 <span className="font-medium">
-                                  {getAvailableColors().find(c => c.id === configuration.color)?.name}
+                                  {
+                                    getAvailableColors().find(
+                                      (c) => c.id === configuration.color,
+                                    )?.name
+                                  }
                                 </span>
                               </div>
                               <div className="flex justify-between">
                                 <span>Lengte:</span>
-                                <span className="font-medium">{configuration.length}cm ({(configuration.length / 100).toFixed(2)}m)</span>
+                                <span className="font-medium">
+                                  {configuration.length}cm (
+                                  {(configuration.length / 100).toFixed(2)}m)
+                                </span>
                               </div>
                               <div className="flex justify-between">
                                 <span>Breedte:</span>
-                                <span className="font-medium">137cm (standaard)</span>
+                                <span className="font-medium">
+                                  137cm (standaard)
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -527,53 +610,51 @@ const SquidConfiguratorPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Installation Instructions */}
                       <div className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                        <div className="text-blue-600">
-                          🔧
-                        </div>
+                        <div className="text-blue-600">🔧</div>
                         <div className="flex-1">
-                          <a 
-                            href="https://www.squid.be/en/how-to-apply/" 
-                            target="_blank" 
+                          <a
+                            href="https://squid-textiles.com/nl-be/pages/installatie-textiel-raamfolie"
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:text-blue-800 font-medium hover:underline"
                           >
-                            Bekijk installatie-instructies op Squid's officiële website
+                            Bekijk installatie-instructies op Squid's officiële
+                            website
                           </a>
                           <p className="text-sm text-gray-500 mt-1">
-                            Stap-voor-stap handleiding voor het aanbrengen van SQUID
+                            Stap-voor-stap handleiding voor het aanbrengen van
+                            SQUID
                           </p>
                         </div>
                       </div>
 
                       {/* Technical Datasheet - Transparent */}
                       <div className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                        <div className="text-green-600">
-                          📄
-                        </div>
+                        <div className="text-green-600">📄</div>
                         <div className="flex-1">
-                          <a 
-                            href="/downloads/squid-techsheet-transparent.pdf" 
-                            target="_blank" 
+                          <a
+                            href="https://cdn.shopify.com/s/files/1/0568/1971/2157/files/Squid-EN_TechDS_v319.pdf?v=1623600584"
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-green-600 hover:text-green-800 font-medium hover:underline"
                           >
-                            Download technische specificaties - Transparant (PDF)
+                            Download technische specificaties - Transparant
+                            (PDF)
                           </a>
                           <p className="text-sm text-gray-500 mt-1">
-                            Volledige technische informatie voor transparante versie
+                            Volledige technische informatie voor transparante
+                            versie
                           </p>
                         </div>
                       </div>
 
                       {/* Technical Datasheet - Opaque */}
                       <div className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors md:col-span-2">
-                        <div className="text-purple-600">
-                          📄
-                        </div>
+                        <div className="text-purple-600">📄</div>
                         <div className="flex-1">
-                          <a 
-                            href="/downloads/squid-techsheet-opaque.pdf" 
-                            target="_blank" 
+                          <a
+                            href="https://cdn.shopify.com/s/files/1/0568/1971/2157/files/Squid_Opaque-EN_TechDS_v01_00.pdf?v=1671813986"
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-purple-600 hover:text-purple-800 font-medium hover:underline"
                           >
@@ -604,7 +685,11 @@ const SquidConfiguratorPage = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600">Type:</span>
                         <span className="font-medium">
-                          {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name}
+                          {
+                            transparencyOptions.find(
+                              (t) => t.id === configuration.transparencyType,
+                            )?.name
+                          }
                         </span>
                       </div>
                     )}
@@ -613,7 +698,11 @@ const SquidConfiguratorPage = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600">Kleur:</span>
                         <span className="font-medium">
-                          {getAvailableColors().find(c => c.id === configuration.color)?.name}
+                          {
+                            getAvailableColors().find(
+                              (c) => c.id === configuration.color,
+                            )?.name
+                          }
                         </span>
                       </div>
                     )}
@@ -622,14 +711,15 @@ const SquidConfiguratorPage = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600">Lengte:</span>
                         <span className="font-medium">
-                          {configuration.length} cm = {(configuration.length / 100).toFixed(2)}m
+                          {configuration.length} cm ={" "}
+                          {(configuration.length / 100).toFixed(2)}m
                         </span>
                       </div>
                     )}
 
                     <div className="flex justify-between">
                       <span className="text-gray-600">Breedte:</span>
-                      <span className="font-medium">137 cm (standaard)</span>
+                      <span className="font-medium">130 cm (standaard)</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -644,7 +734,8 @@ const SquidConfiguratorPage = () => {
                       <>
                         <div className="flex justify-between">
                           <span>
-                            SQUID textielfolie ({(configuration.length / 100).toFixed(2)}m × 137cm)
+                            SQUID textielfolie (
+                            {(configuration.length / 100).toFixed(2)}m × 137cm)
                           </span>
                           <span>€{calculatePrice().toFixed(2)}</span>
                         </div>
@@ -657,14 +748,18 @@ const SquidConfiguratorPage = () => {
                             €{calculatePrice().toFixed(2)}
                           </span>
                         </div>
-                        
+
                         <p className="text-xs text-gray-500">
-                          Inclusief btw-bedrag: €{(calculatePrice() * 0.21 / 1.21).toFixed(2)} • Levertijd: ±14 werkdagen
+                          Inclusief btw-bedrag: €
+                          {((calculatePrice() * 0.21) / 1.21).toFixed(2)} •
+                          Levertijd: ±14 werkdagen
                         </p>
                       </>
                     ) : (
                       <div className="text-center py-4">
-                        <p className="text-gray-500">Voer een geldige lengte in om de prijs te berekenen</p>
+                        <p className="text-gray-500">
+                          Voer een geldige lengte in om de prijs te berekenen
+                        </p>
                       </div>
                     )}
                   </CardContent>
@@ -673,7 +768,7 @@ const SquidConfiguratorPage = () => {
                 {/* Action Buttons - Always visible */}
                 <div className="space-y-3">
                   {/* Mollie Payment Button */}
-                  <Button 
+                  <Button
                     onClick={handleMolliePayment}
                     disabled={isProcessingPayment || !canProceedToNext()}
                     className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white font-semibold text-lg py-4 px-8 rounded-md"
@@ -693,7 +788,7 @@ const SquidConfiguratorPage = () => {
                   <p className="text-xs text-gray-500 text-center">
                     Je wordt veilig doorgestuurd naar onze betaalpartner Mollie
                   </p>
-                  
+
                   <Dialog
                     open={showSpecificationModal}
                     onOpenChange={setShowSpecificationModal}
@@ -719,19 +814,26 @@ const SquidConfiguratorPage = () => {
                             <div>
                               <span className="text-gray-600">Type:</span>
                               <p className="font-medium">
-                                {transparencyOptions.find(t => t.id === configuration.transparencyType)?.name || "Niet geselecteerd"}
+                                {transparencyOptions.find(
+                                  (t) =>
+                                    t.id === configuration.transparencyType,
+                                )?.name || "Niet geselecteerd"}
                               </p>
                             </div>
                             <div>
                               <span className="text-gray-600">Kleur:</span>
                               <p className="font-medium">
-                                {getAvailableColors().find(c => c.id === configuration.color)?.name || "Niet geselecteerd"}
+                                {getAvailableColors().find(
+                                  (c) => c.id === configuration.color,
+                                )?.name || "Niet geselecteerd"}
                               </p>
                             </div>
                             <div>
                               <span className="text-gray-600">Lengte:</span>
                               <p className="font-medium">
-                                {configuration.length >= 100 ? `${configuration.length} cm (${(configuration.length / 100).toFixed(2)}m)` : "Niet ingevuld"}
+                                {configuration.length >= 100
+                                  ? `${configuration.length} cm (${(configuration.length / 100).toFixed(2)}m)`
+                                  : "Niet ingevuld"}
                               </p>
                             </div>
                             <div>
@@ -760,8 +862,6 @@ const SquidConfiguratorPage = () => {
                   </CardContent>
                 </Card>
 
-
-
                 {/* FAQ Section */}
                 <div className="mt-8">
                   <h2 className="text-2xl font-bold text-center mb-6">
@@ -781,39 +881,43 @@ const SquidConfiguratorPage = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          <strong>Transparant:</strong> Laat meer licht door en biedt minimale privacy - ideaal voor ruimtes waar je veel daglicht wilt behouden.
+                          <strong>Transparant:</strong> Laat meer licht door en
+                          biedt minimale privacy - ideaal voor ruimtes waar je
+                          veel daglicht wilt behouden.
                           <br />
-                          <strong>Opaque:</strong> Maximale privacy met beperkte lichtinval - perfect voor slaapkamers of kantoorruimtes waar volledige privacy gewenst is.
+                          <strong>Opaque:</strong> Maximale privacy met beperkte
+                          lichtinval - perfect voor slaapkamers of
+                          kantoorruimtes waar volledige privacy gewenst is.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-2">
                       <AccordionTrigger className="text-left">
-                        <strong>
-                          2. Hoe eenvoudig is de installatie?
-                        </strong>
+                        <strong>2. Hoe eenvoudig is de installatie?</strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          SQUID is zelfklevend en zeer eenvoudig aan te brengen. Het vereist geen gereedschap 
-                          en kan door iedereen worden geïnstalleerd. De folie plakt direct op het glas 
-                          en is perfect repositioneerbaar tijdens het aanbrengen.
+                          SQUID is zelfklevend en zeer eenvoudig aan te brengen.
+                          Het vereist geen gereedschap en kan door iedereen
+                          worden geïnstalleerd. De folie plakt direct op het
+                          glas en is perfect repositioneerbaar tijdens het
+                          aanbrengen.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-3">
                       <AccordionTrigger className="text-left">
-                        <strong>
-                          3. Wat zijn de voordelen van SQUID?
-                        </strong>
+                        <strong>3. Wat zijn de voordelen van SQUID?</strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          SQUID biedt warmtereflectie, UV-bescherming, privacy overdag met zicht naar buiten,
-                          en heeft een elegante linnenstructuur. Het is geschikt voor alle raamtypen 
-                          inclusief dakramen en vochtige ruimtes zoals badkamers.
+                          SQUID biedt warmtereflectie, UV-bescherming, privacy
+                          overdag met zicht naar buiten, en heeft een elegante
+                          linnenstructuur. Het is geschikt voor alle raamtypen
+                          inclusief dakramen en vochtige ruimtes zoals
+                          badkamers.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -826,22 +930,23 @@ const SquidConfiguratorPage = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          Absoluut! SQUID laat zich eenvoudig verwijderen zonder lijmresten 
-                          of schade aan het raam. Het textiel is zelfs herbruikbaar.
+                          Absoluut! SQUID laat zich eenvoudig verwijderen zonder
+                          lijmresten of schade aan het raam. Het textiel is
+                          zelfs herbruikbaar.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
 
                     <AccordionItem value="item-5">
                       <AccordionTrigger className="text-left">
-                        <strong>
-                          5. Welke afmetingen zijn mogelijk?
-                        </strong>
+                        <strong>5. Welke afmetingen zijn mogelijk?</strong>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p>
-                          SQUID heeft een standaard rolbreedte van 137cm. De lengte is vrij te kiezen 
-                          vanaf 100cm tot 5500cm. Voor specifieke maatwerk wensen kunt u contact met ons opnemen.
+                          SQUID heeft een standaard rolbreedte van 137cm. De
+                          lengte is vrij te kiezen vanaf 100cm tot 5500cm. Voor
+                          specifieke maatwerk wensen kunt u contact met ons
+                          opnemen.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -849,24 +954,25 @@ const SquidConfiguratorPage = () => {
                 </div>
 
                 {/* Image Preview Modal */}
-                <Dialog open={!!previewImage} onOpenChange={() => setPreviewImage(null)}>
+                <Dialog
+                  open={!!previewImage}
+                  onOpenChange={() => setPreviewImage(null)}
+                >
                   <DialogContent className="max-w-2xl">
                     <DialogHeader>
                       <DialogTitle>Preview</DialogTitle>
                     </DialogHeader>
                     {previewImage && (
                       <div className="aspect-square">
-                        <img 
-                          src={previewImage} 
-                          alt="Preview" 
+                        <img
+                          src={previewImage}
+                          alt="Preview"
                           className="w-full h-full object-cover rounded-lg"
                         />
                       </div>
                     )}
                   </DialogContent>
                 </Dialog>
-
-
               </div>
             </div>
           </div>

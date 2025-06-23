@@ -665,37 +665,38 @@ const ProductsPage = () => {
         badge: "Nieuw",
       },
     ],
-    horren: [
-      {
-        id: 9,
-        title: "Horren",
-        subtitle: "Insectenwering & frisse lucht",
-        description:
-          "Hoogwaardige horren die insecten buiten houden en tegelijkertijd frisse lucht binnenlaten.",
-        image:
-          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
-        products: [
-          {
-            name: "Inzethorren",
-            price: " v.a € 45",
-            popular: true,
-          },
-          {
-            name: "Opzethorren",
-            price: "v.a € 45",
-            popular: false,
-          },
-          {
-            name: "Plissé Hordeur",
-            price: "v.a € 165",
-            popular: false,
-          },
-        ],
+    // TEMPORARILY REMOVED - horren section can be restored later by Serkan
+    // horren: [
+    //   {
+    //     id: 9,
+    //     title: "Horren",
+    //     subtitle: "Insectenwering & frisse lucht",
+    //     description:
+    //       "Hoogwaardige horren die insecten buiten houden en tegelijkertijd frisse lucht binnenlaten.",
+    //     image:
+    //       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
+    //     products: [
+    //       {
+    //         name: "Inzethorren",
+    //         price: " v.a € 45",
+    //         popular: true,
+    //       },
+    //       {
+    //         name: "Opzethorren",
+    //         price: "v.a € 45",
+    //         popular: false,
+    //       },
+    //       {
+    //         name: "Plissé Hordeur",
+    //         price: "v.a € 165",
+    //         popular: false,
+    //       },
+    //     ],
 
-        href: "/producten/horren",
-        badge: "Essential",
-      },
-    ],
+    //     href: "/producten/horren",
+    //     badge: "Essential",
+    //   },
+    // ],
     accessoires: [
       {
         id: 7,
@@ -829,11 +830,12 @@ const ProductsPage = () => {
     // Flatten all products based on category filter
     if (selectedCategory === "alles") {
       allProducts = [
-        ...productCategories.horren,
+        // horren temporarily removed
         ...productCategories.accessoires,
       ];
     } else if (selectedCategory === "horren") {
-      allProducts = productCategories.horren;
+      // horren temporarily removed - show accessories instead
+      allProducts = productCategories.accessoires;
     } else if (selectedCategory === "gordijnrails") {
       allProducts = productCategories.accessoires.filter(
         (item) => item.title === "Gordijnrails",
@@ -925,9 +927,7 @@ const ProductsPage = () => {
     }
 
     return {
-      horren: filteredProducts.filter((p) =>
-        productCategories.horren.includes(p),
-      ),
+      // horren: temporarily removed
       accessoires: filteredProducts.filter((p) =>
         productCategories.accessoires.includes(p),
       ),
@@ -1481,7 +1481,7 @@ const ProductsPage = () => {
               <div className="flex gap-3 overflow-x-auto scrollbar-hide smooth-horizontal-scroll max-w-full pb-2">
                 {[
                   { id: "alles", label: "Show All" },
-                  { id: "horren", label: "Horren" },
+                  // { id: "horren", label: "Horren" }, // TEMPORARILY REMOVED
                   { id: "gordijnrails", label: "Gordijnrails" },
                   { id: "squid", label: "SQUID textile foil" },
                 ].map((category) => (
@@ -1536,24 +1536,8 @@ const ProductsPage = () => {
                   </div>
                 </div>
               ) : (
-                groupedProducts.horren &&
-                groupedProducts.horren.length > 0 && (
-                  <div className="mb-16">
-                    <div className="flex items-center mb-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
-                        Horren
-                      </h3>
-                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 product-fade-in">
-                      {groupedProducts.horren.map((category: any) => (
-                        <div key={category.id} className="product-card">
-                          <ProductCard category={category} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )
+                // Horren section temporarily removed
+                <div></div>
               )}
 
               {!isFilterLoading &&

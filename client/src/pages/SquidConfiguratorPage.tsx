@@ -61,7 +61,7 @@ const transparencyOptions = [
     id: "opaque",
     name: "Opaque",
     description: "Maximale privacy, beperkt lichtinval",
-    basePrice: 83.40, // €73 + €10.40 surcharge per meter
+    basePrice: 79, // €79 per meter
   },
 ];
 
@@ -87,12 +87,13 @@ const SquidConfiguratorPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
+  const [lengthError, setLengthError] = useState("");
   const configuratorRef = useRef<HTMLDivElement>(null);
   
   const [configuration, setConfiguration] = useState<SquidConfiguration>({
     transparencyType: "",
     color: "",
-    length: 100, // Default 100cm (minimum)
+    length: 0, // Start with empty input (no default value)
     quantity: 1,
     width: 137, // Fixed width
   });
@@ -136,7 +137,7 @@ const SquidConfiguratorPage = () => {
       id: 3,
       title: "Bepaal lengte",
       description: "Geef de gewenste lengte in (cm)",
-      completed: configuration.length >= 100,
+      completed: configuration.length >= 100 && configuration.length <= 5500,
     },
     {
       id: 4,
@@ -147,10 +148,12 @@ const SquidConfiguratorPage = () => {
   ];
 
   const calculatePrice = () => {
+    if (configuration.length < 100) return 0; // Don't calculate price for invalid lengths
+    
     const transparencyOption = transparencyOptions.find(t => t.id === configuration.transparencyType);
     const pricePerMeter = transparencyOption?.basePrice || 73;
     
-    // Convert cm to meters for calculation
+    // Convert cm to meters for calculation: price_per_meter × (length / 100)
     const lengthInMeters = configuration.length / 100;
     const totalPrice = pricePerMeter * lengthInMeters;
     
@@ -207,6 +210,19 @@ const SquidConfiguratorPage = () => {
     }
   };
 
+  const validateLength = (length: number) => {
+    if (length < 100) {
+      setLengthError("Minimale afname is 100 cm. Voer een lengte in van 100 cm of meer.");
+      return false;
+    } else if (length > 5500) {
+      setLengthError("Maximale lengte is 5500 cm. Voer een kortere lengte in.");
+      return false;
+    } else {
+      setLengthError("");
+      return true;
+    }
+  };
+
   const canProceedToNext = () => {
     switch (currentStep) {
       case 1:
@@ -214,7 +230,7 @@ const SquidConfiguratorPage = () => {
       case 2:
         return !!configuration.color;
       case 3:
-        return configuration.length > 0;
+        return configuration.length >= 100 && configuration.length <= 5500;
       default:
         return false;
     }
@@ -311,7 +327,7 @@ const SquidConfiguratorPage = () => {
                                   <p className="font-medium">{option.name}</p>
                                   <p className="text-sm text-gray-500">{option.description}</p>
                                   <p className="text-sm text-[#d5c096] font-medium">
-                                    {option.basePrice === 73 ? "€73/meter" : `€${option.basePrice}/meter (+€10.40)`}
+                                    €{option.basePrice}/meter
                                   </p>
                                 </div>
                               </Label>
@@ -368,19 +384,25 @@ const SquidConfiguratorPage = () => {
                                 id="length"
                                 type="number"
                                 min="100"
-                                max="500"
+                                max="5500"
                                 step="1"
-                                value={configuration.length}
-                                onChange={(e) =>
+                                value={configuration.length || ""}
+                                placeholder=""
+                                onChange={(e) => {
+                                  const value = parseInt(e.target.value) || 0;
                                   setConfiguration({
                                     ...configuration,
-                                    length: Math.max(100, Math.min(500, parseInt(e.target.value) || 100)),
-                                  })
-                                }
-                                className="text-lg font-medium"
+                                    length: value,
+                                  });
+                                  validateLength(value);
+                                }}
+                                className={`text-lg font-medium ${lengthError ? "border-red-500 focus:border-red-500" : ""}`}
                               />
                               <span className="text-sm text-gray-600 font-medium">cm</span>
                             </div>
+                            {lengthError && (
+                              <p className="text-sm text-red-600 mt-1">{lengthError}</p>
+                            )}
                           </div>
                           <div className="bg-blue-50 p-4 rounded-lg">
                             <div className="flex items-center gap-2 mb-2">
@@ -390,7 +412,7 @@ const SquidConfiguratorPage = () => {
                             <p className="text-sm text-blue-700">
                               • Standaard breedte: 137 cm (vaste rolbreedte)<br />
                               • Minimale afname: 100 cm<br />
-                              • Prijs wordt per strekkende meter berekend<br />
+                              • Maximale afname: 5500 cm<br />
                               • Totale oppervlakte = lengte × 137 cm
                             </p>
                           </div>
@@ -494,11 +516,11 @@ const SquidConfiguratorPage = () => {
                       </div>
                     )}
 
-                    {configuration.length > 0 && (
+                    {configuration.length >= 100 && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Lengte:</span>
                         <span className="font-medium">
-                          {configuration.length} cm ({(configuration.length / 100).toFixed(2)}m)
+                          {configuration.length} cm = {(configuration.length / 100).toFixed(2)}m
                         </span>
                       </div>
                     )}
@@ -516,25 +538,33 @@ const SquidConfiguratorPage = () => {
                     <CardTitle>Prijsoverzicht</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <div className="flex justify-between">
-                      <span>
-                        SQUID textielfolie ({(configuration.length / 100).toFixed(2)}m × 137cm)
-                      </span>
-                      <span>€{calculatePrice().toFixed(2)}</span>
-                    </div>
+                    {configuration.length >= 100 ? (
+                      <>
+                        <div className="flex justify-between">
+                          <span>
+                            SQUID textielfolie ({(configuration.length / 100).toFixed(2)}m × 137cm)
+                          </span>
+                          <span>€{calculatePrice().toFixed(2)}</span>
+                        </div>
 
-                    <Separator />
+                        <Separator />
 
-                    <div className="flex justify-between text-lg font-bold">
-                      <span>Totaalprijs: €{calculatePrice().toFixed(2)} (incl. 21% BTW)</span>
-                      <span className="text-[#d5c096]">
-                        €{calculatePrice().toFixed(2)}
-                      </span>
-                    </div>
-                    
-                    <p className="text-xs text-gray-500">
-                      Inclusief btw-bedrag: €{(calculatePrice() * 0.21 / 1.21).toFixed(2)} • Levertijd: ±14 werkdagen
-                    </p>
+                        <div className="flex justify-between text-lg font-bold">
+                          <span>Totaalprijs</span>
+                          <span className="text-[#d5c096]">
+                            €{calculatePrice().toFixed(2)}
+                          </span>
+                        </div>
+                        
+                        <p className="text-xs text-gray-500">
+                          Inclusief btw-bedrag: €{(calculatePrice() * 0.21 / 1.21).toFixed(2)} • Levertijd: ±14 werkdagen
+                        </p>
+                      </>
+                    ) : (
+                      <div className="text-center py-4">
+                        <p className="text-gray-500">Voer een geldige lengte in om de prijs te berekenen</p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 

@@ -680,6 +680,76 @@ const SquidConfiguratorPage = () => {
                   </CardContent>
                 </Card>
 
+                {/* Additional Resources Section */}
+                <div className="mt-8 mb-8">
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
+                      Aanvullende productinformatie
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Installation Instructions */}
+                      <div className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div className="text-blue-600">
+                          🔧
+                        </div>
+                        <div className="flex-1">
+                          <a 
+                            href="https://www.squid.be/en/how-to-apply/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 font-medium hover:underline"
+                          >
+                            Bekijk installatie-instructies op Squid's officiële website
+                          </a>
+                          <p className="text-sm text-gray-500 mt-1">
+                            Stap-voor-stap handleiding voor het aanbrengen van SQUID
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Technical Datasheet - Transparent */}
+                      <div className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <div className="text-green-600">
+                          📄
+                        </div>
+                        <div className="flex-1">
+                          <a 
+                            href="/downloads/squid-techsheet-transparent.pdf" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-green-600 hover:text-green-800 font-medium hover:underline"
+                          >
+                            Download technische specificaties - Transparant (PDF)
+                          </a>
+                          <p className="text-sm text-gray-500 mt-1">
+                            Volledige technische informatie voor transparante versie
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Technical Datasheet - Opaque */}
+                      <div className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors md:col-span-2">
+                        <div className="text-purple-600">
+                          📄
+                        </div>
+                        <div className="flex-1">
+                          <a 
+                            href="/downloads/squid-techsheet-opaque.pdf" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-purple-600 hover:text-purple-800 font-medium hover:underline"
+                          >
+                            Download technische specificaties - Opaque (PDF)
+                          </a>
+                          <p className="text-sm text-gray-500 mt-1">
+                            Volledige technische informatie voor opaque versie
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* FAQ Section */}
                 <div className="mt-8">
                   <h2 className="text-2xl font-bold text-center mb-6">

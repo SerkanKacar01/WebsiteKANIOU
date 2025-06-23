@@ -102,6 +102,9 @@ import {
   warrantyReminders,
   WarrantyReminder,
   InsertWarrantyReminder,
+  blockedDates,
+  BlockedDate,
+  InsertBlockedDate,
   // Removed non-existent imports that were causing compilation errors
 } from "@shared/schema";
 import { db } from "./db";

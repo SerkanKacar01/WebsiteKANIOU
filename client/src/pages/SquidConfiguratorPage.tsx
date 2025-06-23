@@ -22,6 +22,7 @@ import oakImage from "@assets/OAK_1750708862089.png";
 import rockImage from "@assets/ROCK_1750708862089.png";
 import ashImage from "@assets/ASH_1750708862089.png";
 import squidHeroImage from "@assets/SQUID_1750711025328.jpg";
+import squidSampleImage from "@assets/SQUID_1750711425584.jpg";
 import {
   Accordion,
   AccordionContent,
@@ -350,11 +351,7 @@ const SquidConfiguratorPage = () => {
                                   configuration.transparencyType === option.id
                                 ) {
                                   // Open preview if already selected
-                                  setPreviewImage(
-                                    option.id === "transparent"
-                                      ? coalImage
-                                      : coalImage,
-                                  );
+                                  setPreviewImage(squidSampleImage);
                                 } else {
                                   // Select this option
                                   setConfiguration({
@@ -366,8 +363,8 @@ const SquidConfiguratorPage = () => {
                             >
                               <div className="aspect-square bg-gray-100 flex items-center justify-center">
                                 <img
-                                  src={coalImage}
-                                  alt={`${option.name} transparantie voorbeeld`}
+                                  src={squidSampleImage}
+                                  alt="SQUID sample photo"
                                   className="w-full h-full object-cover"
                                 />
                               </div>

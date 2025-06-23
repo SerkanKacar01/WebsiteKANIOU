@@ -21,7 +21,7 @@ import chalkImage from "@assets/CHALK_1750708862088.png";
 import oakImage from "@assets/OAK_1750708862089.png";
 import rockImage from "@assets/ROCK_1750708862089.png";
 import ashImage from "@assets/ASH_1750708862089.png";
-import squidHeroImage from "@assets/SQUID_1750711025328.jpg";
+import squidHeroImage from "@assets/Scherm­afbeelding 2025-06-23 om 23.20.01_1750713662845.png";
 import squidSampleImage from "@assets/SQUID_1750711425584.jpg";
 import installationStep1 from "@assets/Installatie deel 1_1750712733656.jpg";
 import installationStep2 from "@assets/Installatie deel 2_1750712733656.jpg";
@@ -250,7 +250,7 @@ const SquidConfiguratorPage = () => {
       <div className="w-full">
         <img
           src={squidHeroImage}
-          alt="SQUID Textielfolie - Premium raamfolie voor privacy en stijl"
+          alt="SQUID textielfolie toegepast op ramen en schuifdeuren – collage"
           className="w-full h-64 md:h-80 lg:h-96 object-cover"
         />
       </div>

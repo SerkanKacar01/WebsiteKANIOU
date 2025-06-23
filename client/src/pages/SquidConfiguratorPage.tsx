@@ -306,17 +306,6 @@ const SquidConfiguratorPage = () => {
               </div>
             </div>
 
-            {/* SQUID Header Image - Above Step 1 */}
-            <div className="mb-8 flex justify-center">
-              <div className="w-full max-w-4xl">
-                <img 
-                  src={squidHeroImage} 
-                  alt="SQUID textielfolie sample visual"
-                  className="w-full h-64 md:h-80 lg:h-96 object-cover rounded-lg shadow-lg"
-                />
-              </div>
-            </div>
-
             <div ref={configuratorRef} className="grid lg:grid-cols-3 gap-8">
               {/* Configuration Panel */}
               <div className="lg:col-span-2">
@@ -364,7 +353,7 @@ const SquidConfiguratorPage = () => {
                               <div className="aspect-square bg-gray-100 flex items-center justify-center">
                                 <img
                                   src={squidSampleImage}
-                                  alt="SQUID sample photo"
+                                  alt="SQUID sample image – transparency options"
                                   className="w-full h-full object-cover"
                                 />
                               </div>

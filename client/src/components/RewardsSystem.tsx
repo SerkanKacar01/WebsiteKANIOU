@@ -70,8 +70,8 @@ export function RewardsSystem() {
       },
       {
         id: 'contact_interaction',
-        title: 'Gesprek Gestart',
-        description: 'Chat met onze AI-assistent',
+        title: 'Contact Gemaakt',
+        description: 'Gebruik het contactformulier',
         icon: <Zap className="h-5 w-5" />,
         points: 100,
         unlocked: true,

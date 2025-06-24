@@ -232,8 +232,8 @@ export function useGamification() {
       },
       {
         id: 'contact_master',
-        title: 'Chatbot Meester',
-        description: 'Voer 5 gesprekken met de AI-assistent',
+        title: 'Contact Expert',
+        description: 'Gebruik 5 keer het contactformulier',
         progress: Math.min(contactInteractions, 5),
         maxProgress: 5,
         unlocked: contactInteractions >= 5,

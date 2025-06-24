@@ -277,34 +277,19 @@ export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSche
 export type DealerContactSubmission = typeof dealerContactSubmissions.$inferSelect;
 export type InsertDealerContact = z.infer<typeof insertDealerContactSchema>;
 
-// Chatbot Conversations
-export const chatbotConversations = pgTable("chatbot_conversations", {
+// Newsletter Subscriptions
+export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
   id: serial("id").primaryKey(),
-  sessionId: text("session_id").notNull(),
-  userId: text("user_id"), // Optional for anonymous users
+  email: text("email").notNull().unique(),
+  name: text("name"),
   language: text("language").default("nl"),
+  preferences: jsonb("preferences"), // Topics they want to hear about
   isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-});
-
-export const insertChatbotConversationSchema = createInsertSchema(chatbotConversations).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-// Chatbot Messages
-export const chatbotMessages = pgTable("chatbot_messages", {
-  id: serial("id").primaryKey(),
-  conversationId: integer("conversation_id").notNull().references(() => chatbotConversations.id, { onDelete: 'cascade' }),
-  role: text("role").notNull(), // 'user' or 'assistant'
-  content: text("content").notNull(),
-  metadata: jsonb("metadata"), // Additional data like tokens, processing time, etc.
+  confirmedAt: timestamp("confirmed_at"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertChatbotMessageSchema = createInsertSchema(chatbotMessages).omit({
+export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterSubscriptions).omit({
   id: true,
   createdAt: true,
 });

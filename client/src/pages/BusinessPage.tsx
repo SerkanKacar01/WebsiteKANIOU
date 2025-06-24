@@ -169,7 +169,7 @@ const BusinessPage = () => {
             <p className="text-xl text-gray-700 mb-8">
               Op zoek naar een betrouwbare raambekleding partner?
               <br />
-              Dien een aanvraag in of gebruik onze chatbot om mogelijkheden te
+              Dien een aanvraag in of neem contact met ons op om mogelijkheden te
               bespreken.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -289,7 +289,7 @@ const BusinessPage = () => {
         <section className="py-16 px-4 bg-gray-900 text-white">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-8">
-              📧 Vragen? Email info@kaniou.be of gebruik onze chatbot.
+              📧 Vragen? Email info@kaniou.be of gebruik ons contactformulier.
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="flex items-center justify-center">

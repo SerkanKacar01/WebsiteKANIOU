@@ -192,7 +192,7 @@
   20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
-.chatbot-button {
+.contact-button {
   animation: float 3s ease-in-out infinite, pulse-glow 2s infinite;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

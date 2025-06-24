@@ -175,7 +175,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-4 w-4 text-green-500" />
-            <span>Directe chatbot hulp</span>
+            <span>Directe contact hulp</span>
           </div>
         </div>
       </div>

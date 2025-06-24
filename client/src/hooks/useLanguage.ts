@@ -28,7 +28,7 @@ export const languageOptions: LanguageOption[] = [
   { code: "en", name: "English", flag: "🇬🇧" },
 ];
 
-const STORAGE_KEY = "kaniou-chatbot-language";
+const STORAGE_KEY = "kaniou-language";
 
 function detectBrowserLanguage(): SupportedLanguage {
   const browserLang = navigator.language.toLowerCase();

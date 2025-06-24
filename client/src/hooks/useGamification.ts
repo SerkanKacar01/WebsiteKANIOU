@@ -217,7 +217,7 @@ export function useGamification() {
   // Get available achievements
   const getAvailableAchievements = useCallback(() => {
     const productViews = state.activities.filter(a => a.action === 'PRODUCT_VIEW').length;
-    const chatbotInteractions = state.activities.filter(a => a.action === 'CHATBOT_INTERACTION').length;
+    const contactInteractions = state.activities.filter(a => a.action === 'CONTACT_FORM_USE').length;
     const quoteRequests = state.activities.filter(a => a.action === 'QUOTE_REQUEST').length;
     
     return [
@@ -231,12 +231,12 @@ export function useGamification() {
         points: 200
       },
       {
-        id: 'chatbot_master',
+        id: 'contact_master',
         title: 'Chatbot Meester',
         description: 'Voer 5 gesprekken met de AI-assistent',
-        progress: Math.min(chatbotInteractions, 5),
+        progress: Math.min(contactInteractions, 5),
         maxProgress: 5,
-        unlocked: chatbotInteractions >= 5,
+        unlocked: contactInteractions >= 5,
         points: 150
       },
       {

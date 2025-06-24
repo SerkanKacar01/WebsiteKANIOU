@@ -69,7 +69,7 @@ export function RewardsSystem() {
         category: 'interaction'
       },
       {
-        id: 'chatbot_conversation',
+        id: 'contact_interaction',
         title: 'Gesprek Gestart',
         description: 'Chat met onze AI-assistent',
         icon: <Zap className="h-5 w-5" />,

@@ -3,6 +3,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import gordijnrailsImage from "@assets/Ontwerp zonder titel (4)_1750199510374.png";
+import squidCoverImage from "@assets/SQUID cover_1750792481675.png";
 import {
   Card,
   CardContent,
@@ -754,8 +755,7 @@ const ProductsPage = () => {
         subtitle: "Elegant Privacy with a Natural Look",
         description:
           "Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. It gives your windows a warm, linen-like appearance while maintaining privacy during the day.",
-        image:
-          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop",
+        image: squidCoverImage,
         products: [
           {
             name: "SQUID Chalk",

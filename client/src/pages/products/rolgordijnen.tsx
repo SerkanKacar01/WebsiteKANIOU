@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Container from "@/components/ui/container";
@@ -10,12 +10,31 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check, Smartphone } from "lucide-react";
+import { HomeIcon, ChevronRight, Check, Smartphone, Settings } from "lucide-react";
 import ProductCalculator from "@/components/calculators/ProductCalculator";
 import { textiellamellenHeroImage } from "@/assets";
 import rolgordijnImage1 from "@assets/IMG_9301.jpg";
+import RolgordijnConfigurationModal, { RolgordijnConfiguration } from "@/components/rolgordijn/RolgordijnConfigurationModal";
+import RolgordijnIntroModal from "@/components/rolgordijn/RolgordijnIntroModal";
 
 const RolgordijnenPage = () => {
+  const [showIntroModal, setShowIntroModal] = useState(false);
+  const [showConfigModal, setShowConfigModal] = useState(false);
+
+  const handleConfigurationComplete = (configuration: RolgordijnConfiguration) => {
+    console.log('Rolgordijn configuration:', configuration);
+    // Here you would typically add to cart or save the configuration
+  };
+
+  const openIntroModal = () => {
+    setShowIntroModal(true);
+  };
+
+  const startConfiguration = () => {
+    setShowIntroModal(false);
+    setShowConfigModal(true);
+  };
+
   return (
     <>
       <Helmet>
@@ -71,6 +90,13 @@ const RolgordijnenPage = () => {
               toepasbaarheid.
             </p>
             <div className="flex flex-wrap gap-4">
+              <Button 
+                onClick={openIntroModal}
+                className="bg-secondary hover:bg-secondary/90 text-white"
+              >
+                <Settings className="w-4 h-4 mr-2" />
+                Stel je rolgordijn samen
+              </Button>
               <Link href="/quote">
                 <Button className="bg-primary hover:bg-primary/90 text-white">
                   Vrijblijvende offerte aanvragen
@@ -661,6 +687,20 @@ const RolgordijnenPage = () => {
           </div>
         </Container>
       </div>
+
+      {/* Rolgordijn Intro Modal */}
+      <RolgordijnIntroModal
+        isOpen={showIntroModal}
+        onClose={() => setShowIntroModal(false)}
+        onStartConfiguration={startConfiguration}
+      />
+
+      {/* Rolgordijn Configuration Modal */}
+      <RolgordijnConfigurationModal
+        isOpen={showConfigModal}
+        onClose={() => setShowConfigModal(false)}
+        onComplete={handleConfigurationComplete}
+      />
     </>
   );
 };

@@ -1592,7 +1592,12 @@ const ProductsPage = () => {
                       {groupedProducts.accessoires
                         .filter((category: any) => !category.isSquid)
                         .map((category: any) => (
-                          <div key={category.id} className="product-card">
+                          <div 
+                            key={category.id} 
+                            className={`product-card ${
+                              category.title === "Gordijnroedes" ? "hidden md:block" : ""
+                            }`}
+                          >
                             <ProductCard category={category} />
                           </div>
                         ))}
@@ -1616,7 +1621,14 @@ const ProductsPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredProducts.map((category) => (
-                <ProductCard key={category.id} category={category} />
+                <div 
+                  key={category.id} 
+                  className={`${
+                    category.title === "Gordijnroedes" ? "hidden md:block" : ""
+                  }`}
+                >
+                  <ProductCard category={category} />
+                </div>
               ))}
             </div>
           )}

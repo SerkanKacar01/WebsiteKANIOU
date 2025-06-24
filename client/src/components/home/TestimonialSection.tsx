@@ -104,13 +104,13 @@ const TestimonialSection = () => {
   };
 
   return (
-    <section className="py-16 bg-neutral-100">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+    <section className="py-8 md:py-16 bg-neutral-100">
+      <Container className="px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="font-display text-[24px] md:text-3xl lg:text-4xl text-primary font-semibold mb-4">
             Wat onze klanten vertellen over ons
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto">
+          <p className="font-body text-[14px] md:text-base text-text-medium max-w-[90%] md:max-w-2xl mx-auto">
             Ervaar waarom klanten vertrouwen op KANIOU Zilvernaald voor hun raamdecoratie. Ontdek hun ervaringen met onze kwaliteit, service en maatwerkoplossingen.
           </p>
         </div>
@@ -237,7 +237,7 @@ const TestimonialSection = () => {
             href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.988689,5.6914029,17z/data=!4m8!3m7!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn?authuser=2&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-200 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-200 shadow-lg hover:shadow-xl min-h-[44px] text-[14px] md:text-base"
           >
             View All Google Reviews
             <ExternalLink className="h-4 w-4" />

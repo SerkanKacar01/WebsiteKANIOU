@@ -23,10 +23,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative h-[70vh] overflow-hidden">
+    <section className="relative min-h-[60vh] sm:min-h-[70vh] overflow-hidden">
       {/* Beautiful curtain showcase background */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center object-cover"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80')",
@@ -35,29 +35,29 @@ const HeroSection = () => {
       ></div>
       
       {/* Gradient overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
 
-      <Container className="h-full flex flex-col justify-center">
-        <div className="max-w-lg relative z-10 pl-4 mx-4 sm:mx-0">
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-semibold leading-tight mb-4">
+      <Container className="h-full flex flex-col justify-center py-8 px-4">
+        <div className="max-w-[90%] sm:max-w-lg relative z-10 mx-auto sm:mx-0">
+          <h1 className="font-display text-[24px] sm:text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight mb-4 text-center sm:text-left">
             Verhef Elke Ruimte met Tijdloze Elegantie
           </h1>
-          <p className="font-body text-base sm:text-lg md:text-xl text-white mb-6 sm:mb-8 opacity-90">
+          <p className="font-body text-[16px] sm:text-lg md:text-xl text-white mb-6 sm:mb-8 opacity-90 text-center sm:text-left max-w-[90%] mx-auto sm:mx-0">
             Jaloezieën op maat – stijlvol, functioneel en betaalbaar
           </p>
           
           {/* Dual Call-to-Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 justify-center sm:justify-start">
+          <div className="flex flex-col gap-3 mt-4 justify-center sm:justify-start">
             <Button 
               onClick={scrollToProducts}
-              className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 w-full sm:w-auto"
+              className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg min-h-[44px] text-base w-full sm:w-auto"
             >
               Bekijk alle producten
             </Button>
             <Button
               onClick={scrollToQuote}
               variant="outline"
-              className="bg-transparent border-2 border-[#d5c096] text-white hover:bg-[#d5c096] hover:text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 w-full sm:w-auto"
+              className="bg-transparent border-2 border-[#d5c096] text-white hover:bg-[#d5c096] hover:text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg min-h-[44px] text-base w-full sm:w-auto"
             >
               Direct offerte aanvragen
             </Button>

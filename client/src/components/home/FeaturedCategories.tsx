@@ -33,7 +33,7 @@ const galleryImages = [
 
 const GalleryCard = ({ image }: { image: any }) => {
   return (
-    <div className="group relative h-80 rounded-lg overflow-hidden shadow-md cursor-default">
+    <div className="group relative h-64 sm:h-72 md:h-80 rounded-lg overflow-hidden shadow-md cursor-default">
       <img
         src={image.imageUrl}
         alt={image.alt}
@@ -48,20 +48,20 @@ const FeaturedCategories = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="featured-categories" className="py-16 bg-neutral-100">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+    <section id="featured-categories" className="py-8 md:py-16 bg-neutral-100">
+      <Container className="px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="font-display text-[24px] md:text-3xl lg:text-4xl text-primary font-semibold mb-4">
             Populaire raamdecoraties
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto">
+          <p className="font-body text-[14px] md:text-base text-text-medium max-w-[90%] md:max-w-2xl mx-auto">
             Deze selectie toont onze mooiste raambekledingsprojecten,
             geliefd bij klanten vanwege hun uitstraling, functionaliteit en
             maatwerkmogelijkheden.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {galleryImages.map((image) => (
             <GalleryCard key={image.id} image={image} />
           ))}

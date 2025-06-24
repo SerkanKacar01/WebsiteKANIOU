@@ -117,7 +117,7 @@ const Header = () => {
                 <img
                   src={kaniouLogo}
                   alt="KANIOU zilvernaald"
-                  className="h-12 md:h-14"
+                  className="h-10 sm:h-12 md:h-14 w-auto"
                 />
               </div>
             </Link>
@@ -129,7 +129,7 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-primary p-1"
+                  className="text-primary p-2 min-h-[44px] min-w-[44px]"
                 >
                   <Menu className="h-6 w-6" />
                 </Button>
@@ -192,7 +192,7 @@ const Header = () => {
                   <div className="mt-4 space-y-3">
                     <Link href="/acties">
                       <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
                         onClick={handleMobileNavClick}
                       >
                         Acties
@@ -200,7 +200,7 @@ const Header = () => {
                     </Link>
                     <Link href="/offerte">
                       <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
                         onClick={handleMobileNavClick}
                       >
                         Offerte
@@ -208,7 +208,7 @@ const Header = () => {
                     </Link>
                     <Link href="/shop">
                       <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
                         onClick={handleMobileNavClick}
                       >
                         Shop

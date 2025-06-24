@@ -281,6 +281,51 @@ const ProductCategoryPage = () => {
             </div>
           </Container>
         </div>
+      ) : category === "rolgordijnen" ? (
+        <div className="bg-gradient-to-br from-gray-50 to-neutral-100 py-16">
+          <Container>
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
+                Rolgordijnen
+              </h1>
+              
+              <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <p className="text-lg text-gray-700 leading-relaxed mb-8 text-center">
+                  Verduisterend, stijlvol en volledig op maat. Beschikbaar in diverse stoffen en systemen.
+                </p>
+
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">Prijzen vanaf:</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
+                      <span className="text-gray-700 font-medium">Rolgordijn Verduisterend</span>
+                      <span className="text-[#d5c096] font-bold text-lg">v.a. € 89,95</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
+                      <span className="text-gray-700 font-medium">Rolgordijn Semi-transparant</span>
+                      <span className="text-[#d5c096] font-bold text-lg">v.a. € 69,95</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
+                      <span className="text-gray-700 font-medium">Rolgordijn Transparant</span>
+                      <span className="text-[#d5c096] font-bold text-lg">v.a. € 59,95</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <Link href="/producten/rolgordijnen/configurator">
+                    <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
+                      Bekijk producten
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </div>
       ) : category === "horren" ? (
         <div className="bg-gradient-to-br from-green-50 to-emerald-100 py-16">
           <Container>

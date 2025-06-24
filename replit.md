@@ -120,6 +120,7 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 24, 2025: Added Rolgordijnen product tile and custom category page with pricing, configurator integration, and "Bekijk producten" button
 - June 24, 2025: Completed full AI chatbot removal - eliminated all frontend components, backend services, database schemas, locale files, and replaced with traditional contact forms
 - June 23, 2025: Initial setup
 

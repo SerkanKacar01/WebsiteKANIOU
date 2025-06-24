@@ -50,7 +50,7 @@ const fabricTypes = [
     id: "verduisterend",
     name: "Verduisterend",
     description: "Blokkeert 100% van het licht",
-    price: 89.95,
+    price: 45,
     image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=300&h=200&fit=crop",
   },
   {
@@ -59,13 +59,6 @@ const fabricTypes = [
     description: "Laat diffuus licht door",
     price: 69.95,
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: "transparant",
-    name: "Transparant",
-    description: "Maximaal licht, minimale privacy",
-    price: 59.95,
-    image: "https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?w=300&h=200&fit=crop",
   },
 ];
 

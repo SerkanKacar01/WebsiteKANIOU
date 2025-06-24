@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 // Import all language files
-import nlTranslations from "@/locales/nl.json";
-import frTranslations from "@/locales/fr.json";
-import trTranslations from "@/locales/tr.json";
-import enTranslations from "@/locales/en.json";
+import nlTranslations from "@/translations/nl.json";
+import frTranslations from "@/translations/fr.json";
+import trTranslations from "@/translations/tr.json";
+import enTranslations from "@/translations/en.json";
 
 export type SupportedLanguage = "nl" | "fr" | "tr" | "en";
 

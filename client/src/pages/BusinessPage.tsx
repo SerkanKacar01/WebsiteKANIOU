@@ -30,11 +30,8 @@ const BusinessPage = () => {
     }, 100);
   };
 
-  const openChatbot = () => {
-    const chatButton = document.querySelector(
-      '[data-testid="chat-toggle"]',
-    ) as HTMLElement;
-    if (chatButton) chatButton.click();
+  const redirectToContact = () => {
+    setLocation('/contact');
   };
 
   return (

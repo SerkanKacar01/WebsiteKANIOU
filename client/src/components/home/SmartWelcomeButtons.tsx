@@ -44,14 +44,11 @@ const SmartWelcomeButtons = () => {
       href: "/contact",
       color: "from-accent to-orange-500",
       bgColor: "bg-accent/10"
-    },
-
+    }
   ];
 
-  const handleChatOpen = () => {
-    // This will trigger the chatbot to open
-    const chatEvent = new CustomEvent('openChatbot');
-    window.dispatchEvent(chatEvent);
+  const handleContactRedirect = () => {
+    window.location.href = '/contact';
   };
 
   return (
@@ -75,14 +72,14 @@ const SmartWelcomeButtons = () => {
             const IconComponent = action.icon;
             const isHovered = hoveredButton === action.id;
             
-            if (action.action === "openChat") {
+            if (action.id === "contact") {
               return (
                 <Card 
                   key={action.id}
                   className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 hover:border-accent/30 ${action.bgColor}`}
                   onMouseEnter={() => setHoveredButton(action.id)}
                   onMouseLeave={() => setHoveredButton(null)}
-                  onClick={handleChatOpen}
+                  onClick={handleContactRedirect}
                 >
                   <CardContent className="p-3 md:p-4 text-center min-h-[120px] flex flex-col justify-center">
                     <div className={`w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center transition-transform ${isHovered ? 'scale-110' : ''}`}>

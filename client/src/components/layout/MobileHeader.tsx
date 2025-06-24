@@ -16,7 +16,7 @@ const MobileHeader = () => {
   // Quick access items for mobile
   const quickActions = [
     { icon: Phone, label: "Bellen", href: "/contact", color: "text-green-600" },
-    { icon: MessageCircle, label: "Chat", action: "openChat", color: "text-blue-600" },
+    { icon: MessageCircle, label: "Contact", href: "/contact", color: "text-blue-600" },
     { icon: Search, label: "Zoeken", href: "/products", color: "text-purple-600" },
     { icon: ShoppingBag, label: "Offerte", href: "/quote", color: "text-orange-600" },
   ];
@@ -67,21 +67,9 @@ const MobileHeader = () => {
     handleCloseSheet();
   };
 
-  const openChatbot = () => {
-    // Trigger chatbot opening
-    const chatButton = document.querySelector('[data-chatbot-trigger]') as HTMLButtonElement;
-    if (chatButton) {
-      chatButton.click();
-    }
+  const handleQuickAction = (href: string) => {
+    window.location.href = href;
     handleCloseSheet();
-  };
-
-  const handleQuickAction = (action: string, href?: string) => {
-    if (action === "openChat") {
-      openChatbot();
-    } else if (href) {
-      window.location.href = href;
-    }
   };
 
   return (

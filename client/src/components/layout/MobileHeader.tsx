@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Search, ShoppingBag, Phone, MessageCircle } from "lucide-react";
+import { Menu, X, Search, ShoppingBag, Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
 import { kaniouLogo } from "@/assets/fallback";
@@ -21,31 +21,50 @@ const MobileHeader = () => {
     { icon: ShoppingBag, label: "Offerte", href: "/quote", color: "text-orange-600" },
   ];
 
-  // Main categories for mobile menu
+  // Organized product categories matching desktop layout exactly
   const mobileCategories = [
     {
-      title: "Populair",
+      title: "Gordijnen",
       items: [
-        { label: "Rolgordijnen", href: "/products/rolgordijnen" },
-        { label: "Overgordijnen", href: "/products/overgordijnen" },
-        { label: "Vouwgordijnen", href: "/products/vouwgordijnen" },
-        { label: "Duo rolgordijnen", href: "/products/duo-rolgordijnen" },
+        { label: "Overgordijnen", href: "/producten/overgordijnen" },
+        { label: "Vitrages", href: "/producten/vitrages" },
+        { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
+        { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
       ]
     },
     {
       title: "Lamellen & Jaloezieën",
       items: [
-        { label: "Textiel lamellen", href: "/products/textiel-lamellen" },
-        { label: "Houten jaloezieën", href: "/products/houten-jaloezieen" },
-        { label: "Kunststof lamellen", href: "/products/kunststof-lamellen" },
+        { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
+        { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
+        { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
+        { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
       ]
     },
     {
-      title: "Zonwering & Horren",
+      title: "Zonwering",
       items: [
-        { label: "Plissé", href: "/products/plisse" },
-        { label: "Houten shutters", href: "/products/houten-shutters" },
-        { label: "Opzethorren", href: "/products/opzethorren" },
+        { label: "Plissé", href: "/producten/plisse" },
+        { label: "Duo plissé", href: "/producten/duo-plisse" },
+        { label: "Dakraam zonweringen", href: "/producten/dakraam-zonweringen" },
+        { label: "Houten shutters", href: "/producten/houten-shutters" },
+        { label: "Textiel raamfolie", href: "/producten/textiel-raamfolie" },
+      ]
+    },
+    {
+      title: "Horren",
+      items: [
+        { label: "Inzethorren", href: "/producten/inzethorren" },
+        { label: "Opzethorren", href: "/producten/opzethorren" },
+        { label: "Plissé hordeuren", href: "/producten/plisse-hordeuren" },
+      ]
+    },
+    {
+      title: "Accessoires",
+      items: [
+        { label: "Gordijnrails", href: "/producten/gordijnrails" },
+        { label: "Gordijnroedes", href: "/producten/gordijnroedes" },
+        { label: "SQUID textile foil", href: "/producten/squid" },
       ]
     }
   ];
@@ -86,31 +105,31 @@ const MobileHeader = () => {
                 <Menu className="h-6 w-6 text-primary" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-0 w-80">
+            <SheetContent side="left" className="p-0 w-80 shadow-2xl">
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
-                <div className="flex items-center justify-between p-4 border-b bg-primary text-white">
+                <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary to-primary/90 text-white">
                   <div className="flex items-center space-x-3">
                     <img src={kaniouLogo} alt="KANIOU" className="h-8 brightness-0 invert" />
-                    <span className="font-semibold">Menu</span>
+                    <span className="font-semibold text-lg">Menu</span>
                   </div>
-                  <Button variant="ghost" size="icon" onClick={handleCloseSheet} className="text-white hover:bg-white/20">
+                  <Button variant="ghost" size="icon" onClick={handleCloseSheet} className="text-white hover:bg-white/20 rounded-full transition-all duration-200">
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="grid grid-cols-2 gap-3 p-4 border-b">
+                <div className="grid grid-cols-2 gap-3 p-4 border-b bg-gray-50/50">
                   {quickActions.map((action, index) => (
                     <Button
                       key={index}
                       variant="outline"
                       size="sm"
-                      className="flex flex-col items-center py-3 h-auto space-y-1"
+                      className="flex flex-col items-center py-3 h-auto space-y-1 border-gray-200 hover:border-primary hover:bg-primary/5 transition-all duration-200 min-h-[60px]"
                       onClick={() => handleQuickAction(action.href)}
                     >
                       <action.icon className={`h-5 w-5 ${action.color}`} />
-                      <span className="text-xs">{action.label}</span>
+                      <span className="text-xs font-medium">{action.label}</span>
                     </Button>
                   ))}
                 </div>
@@ -150,30 +169,37 @@ const MobileHeader = () => {
                   </div>
 
                   {/* Product Categories */}
-                  <div className="border-t">
+                  <div className="border-t bg-gradient-to-b from-gray-50 to-white">
                     <div className="p-4">
-                      <h3 className="font-semibold text-primary mb-4">Producten</h3>
-                      {mobileCategories.map((category, categoryIndex) => (
-                        <div key={categoryIndex} className="mb-6">
-                          <h4 className="font-medium text-sm text-gray-600 mb-2 uppercase tracking-wide">
-                            {category.title}
-                          </h4>
-                          <div className="space-y-1">
-                            {category.items.map((item, itemIndex) => (
-                              <Link key={itemIndex} href={item.href}>
-                                <Button 
-                                  variant="ghost" 
-                                  size="sm" 
-                                  className="w-full justify-start text-left py-2 h-auto"
-                                  onClick={handleNavClick}
-                                >
-                                  {item.label}
-                                </Button>
-                              </Link>
-                            ))}
+                      <h3 className="font-semibold text-primary mb-4 text-lg flex items-center">
+                        🛍️ Producten
+                      </h3>
+                      <div className="space-y-4 max-h-[60vh] overflow-y-auto mobile-nav-scroll pr-2">
+                        {mobileCategories.map((category, categoryIndex) => (
+                          <div key={categoryIndex} className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-md">
+                            <div className="bg-gradient-to-r from-primary/5 to-primary/10 px-4 py-3 border-b border-gray-100">
+                              <h4 className="font-semibold text-sm text-primary uppercase tracking-wide flex items-center">
+                                {category.title}
+                              </h4>
+                            </div>
+                            <div className="p-2 space-y-1">
+                              {category.items.map((item, itemIndex) => (
+                                <Link key={itemIndex} href={item.href}>
+                                  <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    className="w-full justify-between text-left py-3 h-auto text-sm hover:bg-primary/10 hover:text-primary transition-all duration-200 min-h-[44px] rounded-md group active:scale-[0.98] hover:shadow-sm"
+                                    onClick={handleNavClick}
+                                  >
+                                    <span className="truncate">{item.label}</span>
+                                    <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                  </Button>
+                                </Link>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

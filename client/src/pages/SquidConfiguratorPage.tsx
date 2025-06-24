@@ -251,7 +251,8 @@ const SquidConfiguratorPage = () => {
         <img
           src={squidHeroImage}
           alt="SQUID textielfolie toegepast op ramen en schuifdeuren – collage"
-          className="w-full h-64 md:h-80 lg:h-96 object-cover"
+          className="w-full h-64 md:h-80 lg:h-96 object-cover rounded-lg"
+          key="squid-hero-image-updated"
         />
       </div>
 

@@ -107,7 +107,7 @@ const MobileHeader = () => {
                       variant="outline"
                       size="sm"
                       className="flex flex-col items-center py-3 h-auto space-y-1"
-                      onClick={() => handleQuickAction(action.action || '', action.href)}
+                      onClick={() => handleQuickAction(action.href)}
                     >
                       <action.icon className={`h-5 w-5 ${action.color}`} />
                       <span className="text-xs">{action.label}</span>
@@ -234,13 +234,12 @@ const MobileHeader = () => {
             </div>
           </Link>
           
-          <div 
-            className="flex flex-col items-center justify-center space-y-1 h-full text-gray-600 cursor-pointer"
-            onClick={openChatbot}
-          >
-            <div className="text-lg">💬</div>
-            <span className="text-xs font-medium">Chat</span>
-          </div>
+          <Link href="/contact">
+            <div className="flex flex-col items-center justify-center space-y-1 h-full text-gray-600 cursor-pointer">
+              <div className="text-lg">💬</div>
+              <span className="text-xs font-medium">Contact</span>
+            </div>
+          </Link>
           
           <Link href="/quote">
             <div className={`flex flex-col items-center justify-center space-y-1 h-full ${

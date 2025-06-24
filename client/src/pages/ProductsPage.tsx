@@ -701,6 +701,39 @@ const ProductsPage = () => {
     // ],
     accessoires: [
       {
+        id: 6,
+        title: "Rolgordijnen",
+        subtitle: "Verduisterend, stijlvol en volledig op maat",
+        description:
+          "Verduisterend, stijlvol en volledig op maat. Beschikbaar in diverse stoffen en systemen.",
+        image:
+          "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
+        products: [
+          {
+            name: "Rolgordijn Verduisterend",
+            price: "v.a. € 89,95",
+            popular: true,
+          },
+          {
+            name: "Rolgordijn Semi-transparant",
+            price: "v.a. € 69,95",
+            popular: true,
+          },
+          {
+            name: "Rolgordijn Transparant",
+            price: "v.a. € 59,95",
+            popular: false,
+          },
+          {
+            name: "Rolgordijn Op Maat",
+            price: "v.a. € 99,95",
+            popular: false,
+          },
+        ],
+        href: "/producten/rolgordijnen/configurator",
+        badge: "Op Maat",
+      },
+      {
         id: 7,
         title: "Gordijnroedes",
         subtitle: "Stijlvolle ophangingen",

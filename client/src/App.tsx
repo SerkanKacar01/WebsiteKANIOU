@@ -20,6 +20,7 @@ import ProductsPage from "@/pages/ProductsPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
 import GordijnrailsConfiguratorPage from "@/pages/GordijnrailsConfiguratorPage";
+import RolgordijnenConfiguratorPage from "@/pages/RolgordijnenConfiguratorPage";
 import SquidConfiguratorPage from "@/pages/SquidConfiguratorPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
@@ -119,6 +120,9 @@ function Router() {
         <Route path="/producten/gordijnrails" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
+        <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
+        <Route path="/producten/rolgordijnen/configurator" component={RolgordijnenConfiguratorPage} />
+        <Route path="/rolgordijnen-configurator" component={RolgordijnenConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />

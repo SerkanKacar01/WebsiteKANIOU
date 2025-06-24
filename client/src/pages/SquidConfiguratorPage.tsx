@@ -21,7 +21,7 @@ import chalkImage from "@assets/CHALK_1750708862088.png";
 import oakImage from "@assets/OAK_1750708862089.png";
 import rockImage from "@assets/ROCK_1750708862089.png";
 import ashImage from "@assets/ASH_1750708862089.png";
-import squidHeroImage from "@assets/SQUID_1750792321674.jpg";
+import squidHeroImage from "@assets/SQUID cover_1750792481675.png";
 import squidSampleImage from "@assets/SQUID_1750711425584.jpg";
 import installationStep1 from "@assets/Installatie deel 1_1750712733656.jpg";
 import installationStep2 from "@assets/Installatie deel 2_1750712733656.jpg";

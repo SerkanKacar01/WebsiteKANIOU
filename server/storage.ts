@@ -144,8 +144,9 @@ export class DatabaseStorage implements IStorage {
 }
 
 async function seedInitialData(storage: DatabaseStorage) {
-  // Check if we already have data in the categories table
-  const existingCategories = await storage.getCategories();
+  try {
+    // Check if we already have data in the categories table
+    const existingCategories = await storage.getCategories();
   
   if (existingCategories.length === 0) {
     console.log("Seeding initial data...");

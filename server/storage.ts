@@ -1331,7 +1331,8 @@ async function seedInitialData(storage: DatabaseStorage) {
   }
 }
 
-export const storage = new DatabaseStorage();
+import { MemoryStorage } from "./memoryStorage";
+export const storage = new MemoryStorage();
 
 // Seed initial data asynchronously without blocking startup
 setTimeout(() => {

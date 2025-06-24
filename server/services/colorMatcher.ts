@@ -20,73 +20,58 @@ export interface RoomAnalysis {
 
 /**
  * Analyzes a room photo and provides color recommendations for window treatments
+ * Note: AI analysis temporarily disabled - returns predefined recommendations
  */
 export async function analyzeRoomForColorMatching(base64Image: string): Promise<RoomAnalysis> {
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        {
-          role: "system",
-          content: `You are an expert interior design consultant specializing in window treatments. 
-          Analyze room photos and recommend blind/curtain colors that complement the existing decor.
-          Always respond with valid JSON in this exact format:
-          {
-            "dominantColors": ["color1", "color2", "color3"],
-            "lightingType": "natural/warm/cool/mixed",
-            "roomStyle": "modern/traditional/rustic/minimalist/eclectic/other",
-            "recommendations": [
-              {
-                "primaryColor": "#hexcode",
-                "secondaryColor": "#hexcode", 
-                "accentColor": "#hexcode",
-                "colorName": "descriptive name",
-                "description": "brief description",
-                "reasoning": "why this color works",
-                "confidence": 0.85,
-                "productTypes": ["rolgordijnen", "venetiaanse lamellen"]
-              }
-            ]
-          }`
-        },
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: "Analyze this room photo and recommend 3-4 ideal blind/curtain colors that would complement the existing decor. Consider the room's color palette, lighting, style, and mood. Focus on colors that would work well for rolgordijnen (roller blinds), venetiaanse lamellen (venetian blinds), verticale lamellen (vertical blinds), or gordijnen (curtains)."
-            },
-            {
-              type: "image_url",
-              image_url: {
-                url: `data:image/jpeg;base64,${base64Image}`
-              }
-            }
-          ],
-        },
-      ],
-      response_format: { type: "json_object" },
-      max_tokens: 1500,
-    });
-
-    const analysis = JSON.parse(response.choices[0].message.content || "{}");
-    
-    // Validate and ensure we have the expected structure
-    return {
-      dominantColors: analysis.dominantColors || [],
-      lightingType: analysis.lightingType || "natural",
-      roomStyle: analysis.roomStyle || "modern",
-      recommendations: analysis.recommendations || []
-    };
-
-  } catch (error) {
-    console.error("Error analyzing room for color matching:", error);
-    throw new Error("Failed to analyze room image. Please try again.");
-  }
+  // Return predefined color recommendations
+  return getFallbackColorRecommendations();
 }
 
 /**
- * Converts uploaded file to base64 for OpenAI analysis
+ * Provides fallback color recommendations when AI analysis is unavailable
+ */
+function getFallbackColorRecommendations(): RoomAnalysis {
+  return {
+    dominantColors: ["#F5F5F5", "#8B7355", "#4A4A4A"],
+    lightingType: "natural",
+    roomStyle: "modern",
+    recommendations: [
+      {
+        primaryColor: "#F8F8FF",
+        secondaryColor: "#E6E6FA", 
+        accentColor: "#9370DB",
+        colorName: "Soft Lavender White",
+        description: "Clean and calming neutral tones",
+        reasoning: "Neutral colors work well in any room style and lighting",
+        confidence: 0.75,
+        productTypes: ["rolgordijnen", "venetiaanse lamellen"]
+      },
+      {
+        primaryColor: "#F5F5DC",
+        secondaryColor: "#DEB887",
+        accentColor: "#8FBC8F", 
+        colorName: "Warm Beige",
+        description: "Natural earth tones for warmth",
+        reasoning: "Earth tones create a cozy, welcoming atmosphere",
+        confidence: 0.70,
+        productTypes: ["gordijnen", "verticale lamellen"]
+      },
+      {
+        primaryColor: "#E0E0E0",
+        secondaryColor: "#C0C0C0",
+        accentColor: "#708090", 
+        colorName: "Modern Grey",
+        description: "Contemporary neutral palette",
+        reasoning: "Grey tones complement modern interior design",
+        confidence: 0.80,
+        productTypes: ["rolgordijnen", "plisse gordijnen"]
+      }
+    ]
+  };
+}
+
+/**
+ * Converts uploaded file to base64 for image processing
  */
 export function convertImageToBase64(buffer: Buffer): string {
   return buffer.toString('base64');

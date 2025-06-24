@@ -45,7 +45,11 @@ const MobileFooter = () => {
             <MapPin className="h-5 w-5 text-secondary mt-1 flex-shrink-0" />
             <div>
               <p className="font-medium">Bezoekadres</p>
-              <p className="text-sm opacity-90">Industrieweg 12<br />2300 Turnhout</p>
+              <p className="text-sm opacity-90">
+                Pauwengraaf 66
+                <br />
+                3630 Maasmechelen _ België
+              </p>
             </div>
           </div>
 
@@ -53,7 +57,11 @@ const MobileFooter = () => {
             <Clock className="h-5 w-5 text-secondary mt-1 flex-shrink-0" />
             <div>
               <p className="font-medium">Openingstijden</p>
-              <p className="text-sm opacity-90">Ma-Za: 9:00 - 18:00<br />Zo: Op afspraak</p>
+              <p className="text-sm opacity-90">
+                Ma-Za: 10:00 - 18:00
+                <br />
+                Zo: GELOSTEN
+              </p>
             </div>
           </div>
         </div>
@@ -64,7 +72,9 @@ const MobileFooter = () => {
             <h4 className="font-medium mb-3">Service</h4>
             <div className="space-y-2 text-sm">
               <Link href="/quote">
-                <div className="opacity-90 hover:opacity-100">Gratis Offerte</div>
+                <div className="opacity-90 hover:opacity-100">
+                  Gratis Offerte
+                </div>
               </Link>
               <Link href="/contact">
                 <div className="opacity-90 hover:opacity-100">Contact</div>
@@ -74,7 +84,7 @@ const MobileFooter = () => {
               </Link>
             </div>
           </div>
-          
+
           <div>
             <h4 className="font-medium mb-3">Populair</h4>
             <div className="space-y-2 text-sm">
@@ -82,7 +92,9 @@ const MobileFooter = () => {
                 <div className="opacity-90 hover:opacity-100">Rolgordijnen</div>
               </Link>
               <Link href="/products/overgordijnen">
-                <div className="opacity-90 hover:opacity-100">Overgordijnen</div>
+                <div className="opacity-90 hover:opacity-100">
+                  Overgordijnen
+                </div>
               </Link>
               <Link href="/gallerij">
                 <div className="opacity-90 hover:opacity-100">Galerij</div>
@@ -128,7 +140,7 @@ const MobileFooter = () => {
               <div className="opacity-90 hover:opacity-100">Disclaimer</div>
             </Link>
           </div>
-          
+
           <div className="text-center text-xs opacity-75">
             © {currentYear} KANIOU zilvernaald. Alle rechten voorbehouden.
           </div>

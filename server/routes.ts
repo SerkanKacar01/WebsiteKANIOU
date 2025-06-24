@@ -138,7 +138,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(galleryItems);
     } catch (error: any) {
       console.error("Error fetching gallery items:", error);
-      res.status(500).json({ message: "Failed to fetch gallery items" });
+      res.json([]);
     }
   });
 
@@ -168,7 +168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(testimonials);
     } catch (error: any) {
       console.error("Error fetching testimonials:", error);
-      res.status(500).json({ message: "Failed to fetch testimonials" });
+      res.json([]);
     }
   });
 

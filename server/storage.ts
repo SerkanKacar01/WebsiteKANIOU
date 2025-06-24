@@ -268,6 +268,11 @@ async function seedInitialData(storage: DatabaseStorage) {
     });
     
     console.log("Initial data seeding complete!");
+  } else {
+    console.log("Data already exists, skipping seed.");
+  }
+  } catch (error) {
+    console.warn("Database seeding skipped due to connection issue:", error.message);
   }
 }
 

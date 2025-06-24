@@ -1,24 +1,4 @@
 {
-  "chatbot": {
-    "title": "KANIOU AI Assistent",
-    "welcome": "Welkom bij KANIOU!",
-    "welcomeMessage": "Welkom terug bij KANIOU! We staan weer klaar om u te helpen. Wilt u stijladvies, een offerte of onze collectie bekijken?",
-    "placeholder": "Typ uw bericht hier...",
-    "send": "Versturen",
-    "typing": "Aan het typen...",
-    "close": "Sluiten",
-    "languageSelector": "Taal selecteren",
-    "errorMessage": "Sorry, er is iets misgegaan. Probeer het opnieuw.",
-    "connecting": "Verbinding maken...",
-    "online": "Online",
-    "offline": "Offline",
-    "businessHours": {
-      "closed": "We zijn momenteel gesloten. Ons team is beschikbaar van maandag tot zaterdag tussen 10:00 en 18:00. Laat uw bericht achter en wij nemen zo spoedig mogelijk contact met u op.",
-      "afterHoursNotice": "🕐 Buiten openingstijden",
-      "openHours": "Openingstijden: Ma-Za 10:00-18:00",
-      "leaveMessage": "U kunt nog steeds uw bericht achterlaten en wij reageren tijdens onze openingstijden."
-    }
-  },
   "languages": {
     "nl": "Nederlands",
     "fr": "Français", 

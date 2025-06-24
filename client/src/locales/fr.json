@@ -1,24 +1,4 @@
 {
-  "chatbot": {
-    "title": "Assistant IA KANIOU",
-    "welcome": "Bienvenue chez KANIOU !",
-    "welcomeMessage": "Bienvenue à nouveau chez KANIOU ! Nous sommes prêts à vous aider. Souhaitez-vous un conseil déco, un devis ou voir notre collection ?",
-    "placeholder": "Tapez votre message ici...",
-    "send": "Envoyer",
-    "typing": "En train de taper...",
-    "close": "Fermer",
-    "languageSelector": "Sélectionner la langue",
-    "errorMessage": "Désolé, quelque chose s'est mal passé. Veuillez réessayer.",
-    "connecting": "Connexion en cours...",
-    "online": "En ligne",
-    "offline": "Hors ligne",
-    "businessHours": {
-      "closed": "Nous sommes actuellement fermés. Notre équipe est disponible du lundi au samedi entre 10h00 et 18h00. Veuillez laisser votre message et nous vous recontacterons dès que possible.",
-      "afterHoursNotice": "🕐 Hors heures d'ouverture",
-      "openHours": "Heures d'ouverture: Lun-Sam 10h00-18h00",
-      "leaveMessage": "Vous pouvez toujours laisser votre message et nous répondrons pendant nos heures d'ouverture."
-    }
-  },
   "languages": {
     "nl": "Nederlands",
     "fr": "Français", 

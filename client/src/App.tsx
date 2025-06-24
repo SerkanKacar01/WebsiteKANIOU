@@ -175,7 +175,7 @@ function Router() {
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
-        <Route path="/admin/chatbot" component={Admin} />
+        <Route path="/admin" component={Admin} />
 
         <Route component={NotFound} />
       </Switch>

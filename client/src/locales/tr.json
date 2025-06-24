@@ -1,24 +1,4 @@
 {
-  "chatbot": {
-    "title": "KANIOU AI Asistanı",
-    "welcome": "KANIOU'ya Hoş Geldiniz!",
-    "welcomeMessage": "KANIOU'ya tekrar hoş geldiniz! Size tekrar yardımcı olmaya hazırız. Stil önerisi, fiyat teklifi veya koleksiyonumuzu görmek ister misiniz?",
-    "placeholder": "Mesajınızı buraya yazın...",
-    "send": "Gönder",
-    "typing": "Yazıyor...",
-    "close": "Kapat",
-    "languageSelector": "Dil seçin",
-    "errorMessage": "Üzgünüm, bir şeyler ters gitti. Lütfen tekrar deneyin.",
-    "connecting": "Bağlanıyor...",
-    "online": "Çevrimiçi",
-    "offline": "Çevrimdışı",
-    "businessHours": {
-      "closed": "Şu anda kapalıyız. Ekibimiz Pazartesi'den Cumartesi'ye 10:00-18:00 saatleri arasında hizmetinizdedir. Lütfen mesajınızı bırakın, en kısa sürede size geri döneceğiz.",
-      "afterHoursNotice": "🕐 Mesai saatleri dışında",
-      "openHours": "Çalışma saatleri: Pzt-Cmt 10:00-18:00",
-      "leaveMessage": "Mesajınızı bırakabilirsiniz, çalışma saatlerimizde size yanıt vereceğiz."
-    }
-  },
   "languages": {
     "nl": "Nederlands",
     "fr": "Français", 

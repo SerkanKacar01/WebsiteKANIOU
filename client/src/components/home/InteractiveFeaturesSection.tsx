@@ -7,23 +7,23 @@ import { Palette, Wand2, ArrowRight, Sparkles, Camera, Settings } from "lucide-r
 
 const InteractiveFeaturesSection = () => {
   return (
-    <section className="py-16 bg-gradient-to-br from-primary/5 via-secondary/20 to-secondary/30">
-      <Container>
-        <div className="text-center mb-12">
-          <Badge className="mb-4 text-sm px-4 py-2 bg-gradient-to-r from-primary to-primary/80">
-            <Sparkles className="h-4 w-4 mr-2" />
+    <section className="py-8 md:py-16 bg-gradient-to-br from-primary/5 via-secondary/20 to-secondary/30">
+      <Container className="px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <Badge className="mb-3 md:mb-4 text-[12px] md:text-sm px-3 md:px-4 py-2 bg-gradient-to-r from-primary to-primary/80">
+            <Sparkles className="h-3 w-3 md:h-4 md:w-4 mr-2" />
             Nieuw & Innovatief
           </Badge>
-          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+          <h2 className="font-display text-[24px] md:text-3xl lg:text-4xl text-primary font-semibold mb-4">
             Ontdek Uw Perfecte Raambekleding
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto text-lg">
+          <p className="font-body text-[14px] md:text-base lg:text-lg text-text-medium max-w-[90%] md:max-w-2xl mx-auto">
             Gebruik onze geavanceerde tools om de ideale kleuren en producten voor uw interieur te vinden. 
             Gratis, snel en op maat gemaakt voor uw wensen.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {/* Color Matcher Feature */}
           <Card className="relative overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 group hover:shadow-xl">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full"></div>

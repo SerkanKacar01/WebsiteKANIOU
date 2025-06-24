@@ -7,15 +7,15 @@ const QuoteRequestSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="quote" className="py-16 bg-primary relative">
-      <Container className="relative z-10">
+    <section id="quote" className="py-8 md:py-16 bg-primary relative">
+      <Container className="relative z-10 px-4">
         <div className="max-w-3xl mx-auto">
           <Card className="shadow-xl overflow-hidden">
-            <CardContent className="p-8 md:p-10">
-              <h2 className="font-display text-2xl md:text-3xl text-primary font-semibold mb-4 text-center">
+            <CardContent className="p-4 md:p-8 lg:p-10">
+              <h2 className="font-display text-[20px] md:text-2xl lg:text-3xl text-primary font-semibold mb-4 text-center">
                 {t("Vrijblijvende Offerte aanvragen")}
               </h2>
-              <p className="font-body text-text-medium mb-8 text-center">
+              <p className="font-body text-[14px] md:text-base text-text-medium mb-6 md:mb-8 text-center max-w-[90%] mx-auto">
                 {t(
                   "Vul het onderstaande formulier in en ontvang binnen 24 uur een persoonlijke offerte, volledig afgestemd op uw wensen en specificaties.",
                 )}

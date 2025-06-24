@@ -66,7 +66,7 @@ const FallbackGalleryItem = ({ item }: { item: any }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="gallery-item group relative overflow-hidden rounded-lg cursor-pointer h-64">
+        <div className="gallery-item group relative overflow-hidden rounded-lg cursor-pointer h-48 sm:h-56 md:h-64">
           <img
             src={item.imageUrl}
             alt={item.title}
@@ -110,13 +110,13 @@ const GallerySection = () => {
   const displayItems = !error && galleryItems ? galleryItems.slice(0, 6) : fallbackGalleryItems;
 
   return (
-    <section id="gallery" className="py-16">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+    <section id="gallery" className="py-8 md:py-16">
+      <Container className="px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="font-display text-[24px] md:text-3xl lg:text-4xl text-primary font-semibold mb-4">
             Onze Installatiegalerij
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto">
+          <p className="font-body text-[14px] md:text-base text-text-medium max-w-[90%] md:max-w-2xl mx-auto">
             Ontdek hoe onze raamdecoraties ruimtes transformeren tot elegante en comfortabele leefomgevingen.
           </p>
         </div>

@@ -6,47 +6,47 @@ const ContactSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="contact" className="py-16">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
+    <section id="contact" className="py-8 md:py-16">
+      <Container className="px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="font-display text-[24px] md:text-3xl lg:text-4xl text-primary font-semibold mb-4">
             {t("Neem contact met ons op")}
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto">
+          <p className="font-body text-[14px] md:text-base text-text-medium max-w-[90%] md:max-w-2xl mx-auto">
             {t(
               "Voor vragen, afspraken of professioneel advies staat ons team voor u klaar.",
             )}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <div className="bg-neutral-100 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MapPin className="text-secondary text-xl" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="bg-white p-5 md:p-6 rounded-lg shadow-md text-center">
+            <div className="bg-neutral-100 h-12 w-12 md:h-16 md:w-16 rounded-full flex items-center justify-center mx-auto mb-4 min-h-[48px] min-w-[48px]">
+              <MapPin className="text-secondary h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <h3 className="font-display text-xl text-primary font-medium mb-2">
+            <h3 className="font-display text-[16px] md:text-xl text-primary font-medium mb-2">
               {t("Showroom bezoeken")}
             </h3>
-            <p className="font-body text-text-medium">
+            <p className="font-body text-[14px] md:text-base text-text-medium">
               {t("Pauwengraaf 66")}
               <br />
               {t("3630 Maasmechelen, België")}
             </p>
-            <p className="font-body text-text-medium mt-2">
+            <p className="font-body text-[14px] md:text-base text-text-medium mt-2">
               {t("Maandag t/m Zaterdag: 10:00 – 18:00")}
               <br />
               {t("Zondag: Gesloten")}
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <div className="bg-neutral-100 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Phone className="text-secondary text-xl" />
+          <div className="bg-white p-5 md:p-6 rounded-lg shadow-md text-center">
+            <div className="bg-neutral-100 h-12 w-12 md:h-16 md:w-16 rounded-full flex items-center justify-center mx-auto mb-4 min-h-[48px] min-w-[48px]">
+              <Phone className="text-secondary h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <h3 className="font-display text-xl text-primary font-medium mb-2">
+            <h3 className="font-display text-[16px] md:text-xl text-primary font-medium mb-2">
               {t("Telefonisch bereikbaar")}
             </h3>
-            <p className="font-body text-text-medium">
+            <p className="font-body text-[14px] md:text-base text-text-medium">
               {t("+32 467 85 64 05")}
             </p>
             <p className="font-body text-text-medium mt-2">

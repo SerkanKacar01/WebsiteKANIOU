@@ -18,7 +18,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
-import { kaniouLogo } from "@/assets";
+import { kaniouLogo } from "@/assets/fallback";
 
 
 

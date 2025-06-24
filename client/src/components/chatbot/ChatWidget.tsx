@@ -27,7 +27,7 @@ import {
 } from "@/utils/conversationSummary";
 import { ConversationSummaryComponent } from "./ConversationSummary";
 import { SmartSuggestionButtons } from "./SmartSuggestionButtons";
-import kaniouLogo from "@/assets/KAN.LOGO.png";
+import { kaniouLogo } from "@/assets/fallback";
 
 interface ChatMessage {
   id: number;

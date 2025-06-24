@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { inbetweenImage } from "@/assets/index";
+import { inbetweenImage } from "@/assets/fallback";
 
 const AboutCompany = () => {
   const { t } = useLanguage();

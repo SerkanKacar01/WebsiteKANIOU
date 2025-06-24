@@ -44,7 +44,7 @@ import {
   galleryImage_IMG9217,
   galleryImage_IMG9204,
   galleryImage_IMG9192,
-} from "@/assets";
+} from "@/assets/fallback";
 
 interface GalleryItemProps {
   item: GalleryItemType;

@@ -23,10 +23,9 @@ KANIOU is a comprehensive Belgian window treatment e-commerce platform that comb
 - **Rate Limiting**: Express rate limiting with spam detection
 
 ### AI Integration
-- **Provider**: OpenAI GPT-4o for chatbot responses
-- **Capabilities**: 24/7 multilingual support (Dutch, French, English, Turkish)
-- **Features**: Price detection, product recommendations, knowledge base integration
-- **Context Management**: Conversation memory and learned responses
+- **Status**: AI chatbot component removed as requested
+- **Previous Features**: Previously included 24/7 multilingual support
+- **Current State**: Traditional contact forms and quote system maintained
 
 ## Key Components
 
@@ -37,12 +36,11 @@ KANIOU is a comprehensive Belgian window treatment e-commerce platform that comb
 - Image gallery with project showcases
 - Customer testimonials and reviews
 
-### 2. AI Chatbot System
-- **Multilingual Support**: Automatic language detection and response
-- **24/7 Operation**: Always available customer service
-- **Smart Price Assistant**: Detects pricing inquiries and provides relevant information
-- **Knowledge Base**: Comprehensive product and service information
-- **Conversation Memory**: Context-aware responses using conversation history
+### 2. Customer Communication System
+- **Contact Forms**: Multi-step quote requests and general inquiries
+- **Email Integration**: Automated confirmation and status updates
+- **Language Support**: Multilingual content support (Dutch, French, English, Turkish)
+- **Quote System**: Smart quote generation with dimension calculators
 
 ### 3. Payment Integration
 - **Payment Processor**: Mollie for European market
@@ -59,19 +57,19 @@ KANIOU is a comprehensive Belgian window treatment e-commerce platform that comb
 ### 5. Content Management
 - **Product Management**: Full CRUD operations for products and categories
 - **Gallery Management**: Project showcase and inspiration images
-- **Knowledge Base**: Admin-trainable chatbot responses
+- **Admin Dashboard**: Simplified content and customer management interface
 - **Testimonial System**: Customer review collection and display
 
 ## Data Flow
 
 ### 1. Customer Journey Flow
 ```
-Landing Page → Product Browsing → Chatbot Interaction → Quote Request → Payment → Order Fulfillment
+Landing Page → Product Browsing → Contact/Quote Forms → Payment → Order Fulfillment
 ```
 
-### 2. Chatbot Interaction Flow
+### 2. Customer Inquiry Flow
 ```
-User Message → Language Detection → Intent Analysis → Knowledge Retrieval → Response Generation → Follow-up Actions
+Contact Form → Email Notification → Admin Review → Human Response → Follow-up Communication
 ```
 
 ### 3. Quote Processing Flow
@@ -92,7 +90,6 @@ Cart Items → Payment Creation → Mollie Processing → Order Confirmation →
 - **Deployment**: Replit with auto-scaling capabilities
 
 ### Third-Party Services
-- **AI Provider**: OpenAI API for GPT-4o chatbot responses
 - **Payment Gateway**: Mollie for European payment processing
 - **Email Service**: SendGrid for transactional and marketing emails
 - **Image Processing**: Built-in color matching and room analysis
@@ -118,13 +115,13 @@ Cart Items → Payment Creation → Mollie Processing → Order Confirmation →
 ### Environment Configuration
 ```
 DATABASE_URL=<PostgreSQL connection string>
-OPENAI_API_KEY=<OpenAI API key for chatbot>
 MOLLIE_API_KEY=<Mollie payment gateway key>
 SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
-- June 23, 2025. Initial setup
+- June 24, 2025: Removed AI chatbot component completely as requested
+- June 23, 2025: Initial setup
 
 ## User Preferences
 

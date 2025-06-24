@@ -10,8 +10,7 @@ import {
   insertQuoteRequestSchema,
   insertContactSubmissionSchema,
   insertDealerContactSchema,
-  insertChatbotConversationSchema,
-  insertChatbotMessageSchema,
+
   insertNewsletterSubscriptionSchema,
   insertStyleQuoteRequestSchema,
   insertPaymentOrderSchema,

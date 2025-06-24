@@ -33,6 +33,20 @@
     --chart-5: 0 0% 20%;
   }
 
+  /* Embla Carousel Styles */
+  .embla {
+    overflow: hidden;
+  }
+
+  .embla__container {
+    display: flex;
+  }
+
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
   /* Step transition animations */
   @keyframes stepFadeIn {
     from {

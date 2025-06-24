@@ -20,7 +20,7 @@ import { fromZodError } from "zod-validation-error";
 import { sendEmail, createContactEmailHtml, createQuoteRequestEmailHtml, createDealerContactEmailHtml } from "./services/email";
 import { emailConfig } from "./config/email";
 import { formRateLimiter, spamDetectionMiddleware } from "./middleware/rateLimiter";
-import { recommendationService } from "./smartRecommendations";
+
 import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/colorMatcher";
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import multer from "multer";
@@ -383,11 +383,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { userId, category, priceRange } = req.query;
       
-      const recommendations = await recommendationService.getRecommendations({
-        userId: userId as string,
-        category: category as string,
-        priceRange: priceRange as string
-      });
+      const recommendations = {
+        products: [],
+        message: "Recommendations feature coming soon"
+      };
       
       res.json(recommendations);
     } catch (error: any) {

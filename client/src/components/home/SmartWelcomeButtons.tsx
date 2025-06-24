@@ -37,14 +37,13 @@ const SmartWelcomeButtons = () => {
       bgColor: "bg-primary/10"
     },
     {
-      id: "ai-assistant",
-      title: "AI Assistent",
-      description: "Stel direct uw vragen",
-      icon: MessageCircle,
-      href: "#",
+      id: "appointment",
+      title: "Afspraak Maken",
+      description: "Plan een gratis opmeetservice",
+      icon: Calendar,
+      href: "/contact",
       color: "from-accent to-orange-500",
-      bgColor: "bg-accent/10",
-      action: "openChat"
+      bgColor: "bg-accent/10"
     },
 
   ];

@@ -48,6 +48,7 @@ import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
 import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import BedanktPage from "@/pages/BedanktPage";
+import VolgBestellingPage from "@/pages/VolgBestellingPage";
 
 
 
@@ -178,6 +179,7 @@ function Router() {
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
+        <Route path="/volg-bestelling" component={VolgBestellingPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin" component={Admin} />
 

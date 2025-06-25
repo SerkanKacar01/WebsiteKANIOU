@@ -239,6 +239,15 @@ const MobileHeader = () => {
         </div>
       </header>
 
+      {/* Order Tracking Button - Above Bottom Navigation */}
+      <div className="fixed bottom-16 left-0 right-0 z-40 px-4 pb-2">
+        <Link href="/volg-bestelling">
+          <button className="w-full bg-[#E6C988] text-white font-medium py-3 px-5 rounded-xl shadow-lg hover:bg-[#D5B992] transition-all duration-200 active:scale-[0.98]">
+            Volg uw bestelling
+          </button>
+        </Link>
+      </div>
+
       {/* Mobile Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t shadow-lg">
         <div className="grid grid-cols-4 h-16">

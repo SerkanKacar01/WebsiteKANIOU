@@ -419,6 +419,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Order tracking route
+  app.get("/api/orders/track/:orderNumber", async (req: Request, res: Response) => {
+    try {
+      const { orderNumber } = req.params;
+      const orderId = parseInt(orderNumber);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: "Invalid order number" });
+      }
+
+      const order = await storage.getPaymentOrderById(orderId);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      res.json(order);
+    } catch (error: any) {
+      console.error("Error tracking order:", error);
+      res.status(500).json({ message: "Failed to track order" });
+    }
+  });
+
   // Shopping cart routes
   app.get("/api/cart/:sessionId", async (req: Request, res: Response) => {
     try {

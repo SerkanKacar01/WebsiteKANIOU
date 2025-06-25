@@ -291,7 +291,7 @@ const ProductCategoryPage = () => {
               
               <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
                 <p className="text-lg text-gray-700 leading-relaxed mb-8 text-center">
-                  Verduisterend, stijlvol en volledig op maat. Beschikbaar in diverse stoffen en systemen.
+                  Ontdek onze stijlvolle rolgordijnen, met zorg gemaakt voor wie waarde hecht aan kwaliteit en afwerking. Verkrijgbaar in verduisterende, semi-transparante en transparante stoffen.
                 </p>
 
                 <div className="mb-8">
@@ -309,7 +309,7 @@ const ProductCategoryPage = () => {
                     </div>
                     
                     <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Rolgordijn Transparant</span>
+                      <span className="text-gray-700 font-medium">Roolgordijn Transparant</span>
                       <span className="text-[#d5c096] font-bold text-lg">v.a. € 59,95</span>
                     </div>
                   </div>

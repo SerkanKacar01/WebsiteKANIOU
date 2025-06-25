@@ -35,6 +35,13 @@ const VolgBestellingPage = () => {
 
   const { data: orderDetails, isLoading, error } = useQuery<OrderDetails>({
     queryKey: ['/api/orders/track', orderNumber],
+    queryFn: async () => {
+      const response = await fetch(`/api/orders/track/${orderNumber}`);
+      if (!response.ok) {
+        throw new Error('Order not found');
+      }
+      return response.json();
+    },
     enabled: searchTriggered && orderNumber.length > 0,
     retry: false,
   });

@@ -17,6 +17,9 @@ import {
   contactSubmissions,
   ContactSubmission,
   InsertContactSubmission,
+  paymentOrders,
+  PaymentOrder,
+  InsertPaymentOrder,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
@@ -51,6 +54,11 @@ export interface IStorage {
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+  
+  // Payment Orders
+  createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
+  getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
+  getPaymentOrders(): Promise<PaymentOrder[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -140,6 +148,33 @@ export class DatabaseStorage implements IStorage {
   
   async getContactSubmissions(): Promise<ContactSubmission[]> {
     return await db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  // Payment Orders
+  async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
+    const orderData = {
+      customerName: order.customerName,
+      customerEmail: order.customerEmail,
+      amount: order.amount,
+      description: order.description,
+      redirectUrl: order.redirectUrl,
+      currency: order.currency || 'EUR',
+      webhookUrl: order.webhookUrl,
+      productDetails: order.productDetails,
+      customerDetails: order.customerDetails,
+      molliePaymentId: '', // Will be updated after Mollie payment creation
+    };
+    const result = await db.insert(paymentOrders).values(orderData).returning();
+    return result[0];
+  }
+
+  async getPaymentOrderById(id: number): Promise<PaymentOrder | undefined> {
+    const result = await db.select().from(paymentOrders).where(eq(paymentOrders.id, id));
+    return result[0];
+  }
+
+  async getPaymentOrders(): Promise<PaymentOrder[]> {
+    return await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
   }
 }
 

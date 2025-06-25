@@ -122,10 +122,20 @@ export default function EntrepreneurDashboardPage() {
       clientNote?: string;
       notificationPreference?: string;
     }) => {
-      return apiRequest(`/api/admin/orders/${data.orderId}`, {
+      const response = await fetch(`/api/admin/orders/${data.orderId}`, {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
         body: JSON.stringify(data),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });

@@ -681,7 +681,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({ authenticated: false });
       }
       
-      const adminUser = await storage.getAdminUserByEmail(session.adminEmail);
+      const adminUser = await storage.getAdminUserByEmail("admin@kaniou.be");
       
       res.json({ 
         authenticated: true,

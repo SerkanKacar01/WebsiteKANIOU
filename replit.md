@@ -120,6 +120,14 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 25, 2025: Completed comprehensive entrepreneur dashboard with full order management
+  - Built responsive entrepreneur dashboard with desktop table and mobile card layouts
+  - Implemented order status updates with 6-step progression system
+  - Added client note functionality for internal communications visible to customers
+  - Created PDF upload system for order documentation
+  - Integrated notification preference management (email/WhatsApp/both)
+  - Added comprehensive order statistics and revenue tracking
+  - Updated database schema with clientNote, pdfFileName, and notificationPreference fields
 - June 25, 2025: Completed hidden entrepreneur login system with secure authentication
   - Implemented secure admin authentication with bcryptjs password hashing
   - Created hidden login page at /kaniouzilvernaald-dashboard (admin@kaniou.be access)

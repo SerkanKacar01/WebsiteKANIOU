@@ -258,6 +258,9 @@ export const paymentOrders = pgTable("payment_orders", {
   productDetails: jsonb("product_details"), // Store product information
   customerDetails: jsonb("customer_details"), // Store customer address, etc.
   mollieStatus: text("mollie_status"), // Direct status from Mollie
+  clientNote: text("client_note"), // Internal note visible to client
+  pdfFileName: text("pdf_file_name"), // Uploaded PDF filename
+  notificationPreference: text("notification_preference").default("email"), // email, whatsapp, both
   paidAt: timestamp("paid_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

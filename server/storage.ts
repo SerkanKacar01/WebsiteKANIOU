@@ -250,6 +250,10 @@ export class DatabaseStorage implements IStorage {
           clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
           pdfFileName: null,
           notificationPreference: 'email',
+          notificationLogs: {
+            'pending': { emailSent: true, sentAt: '2024-06-23T10:00:00Z' },
+            'processing': { emailSent: true, whatsappSent: true, sentAt: '2024-06-24T14:30:00Z' }
+          },
           createdAt: new Date('2024-06-23'),
           updatedAt: new Date()
         };

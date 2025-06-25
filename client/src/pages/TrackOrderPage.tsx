@@ -14,7 +14,8 @@ import {
   CheckCircle, 
   Phone,
   Download,
-  Bell
+  Bell,
+  CheckCircle2
 } from 'lucide-react';
 import type { PaymentOrder } from '@shared/schema';
 
@@ -104,6 +105,26 @@ export default function TrackOrderPage() {
       orderNumber: order.orderNumber,
       notificationPreference: preference
     });
+  };
+
+  // Check if notification was sent for current status
+  const wasNotificationSent = (order: PaymentOrder, currentStatus: string) => {
+    if (!order.notificationLogs || !currentStatus) return false;
+    const logs = order.notificationLogs as { [key: string]: { emailSent?: boolean; whatsappSent?: boolean; sentAt?: string } };
+    return logs[currentStatus] && (logs[currentStatus].emailSent || logs[currentStatus].whatsappSent);
+  };
+
+  // Get notification methods that were used
+  const getNotificationMethods = (order: PaymentOrder, currentStatus: string) => {
+    if (!order.notificationLogs || !currentStatus) return [];
+    const logs = order.notificationLogs as { [key: string]: { emailSent?: boolean; whatsappSent?: boolean; sentAt?: string } };
+    const statusLog = logs[currentStatus];
+    if (!statusLog) return [];
+    
+    const methods = [];
+    if (statusLog.emailSent) methods.push('E-mail');
+    if (statusLog.whatsappSent) methods.push('WhatsApp');
+    return methods;
   };
 
   const getCurrentStatusIndex = (status: string) => {
@@ -236,7 +257,14 @@ export default function TrackOrderPage() {
               <CardContent>
                 <div className="space-y-4">
                   {statusSteps.map((step, index) => {
-                    const currentIndex = getCurrentStatusIndex(order.status || 'pending');
+                    const statusMap: { [key: string]: number } = {
+                      'pending': 0,
+                      'processing': 1,
+                      'production': 2,
+                      'ready': 3,
+                      'delivery': 4
+                    };
+                    const currentIndex = statusMap[order.status || 'pending'] || 0;
                     const isActive = index === currentIndex;
                     const isCompleted = index < currentIndex;
                     const isPending = index > currentIndex;
@@ -264,6 +292,18 @@ export default function TrackOrderPage() {
                             <p className="text-sm text-gray-500">
                               Bijgewerkt op {formatDate(order.updatedAt)}
                             </p>
+                          )}
+                          
+                          {/* Notification Confirmation Box - Only show for active status if notification was sent */}
+                          {isActive && wasNotificationSent(order, step.key) && (
+                            <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                              <div className="flex items-center space-x-2">
+                                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                                <p className="text-sm text-green-800 font-medium">
+                                  U bent over deze update geïnformeerd via {getNotificationMethods(order, step.key).join(' en ')}.
+                                </p>
+                              </div>
+                            </div>
                           )}
                         </div>
                       </div>

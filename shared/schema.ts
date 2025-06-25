@@ -262,6 +262,13 @@ export const paymentOrders = pgTable("payment_orders", {
   clientNote: text("client_note"), // Internal note visible to client
   pdfFileName: text("pdf_file_name"), // Uploaded PDF filename
   notificationPreference: text("notification_preference").default("email"), // email, whatsapp, both
+  notificationLogs: jsonb("notification_logs").$type<{
+    [status: string]: {
+      emailSent?: boolean;
+      whatsappSent?: boolean;
+      sentAt?: string;
+    }
+  }>(), // Track which notifications were sent for each status
   paidAt: timestamp("paid_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

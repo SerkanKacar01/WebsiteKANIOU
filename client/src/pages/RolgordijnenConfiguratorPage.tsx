@@ -639,6 +639,66 @@ const RolgordijnenConfiguratorPage = () => {
                 </Card>
               </div>
             </div>
+
+            {/* Product Information Section */}
+            <div className="mt-12">
+              <Card className="bg-[#f8f8f8] border border-gray-200 shadow-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-3 mb-4">
+                    <Info className="h-6 w-6 text-[#d5c096] mt-0.5 flex-shrink-0" />
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      Belangrijke productinformatie
+                    </h3>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-3">
+                        Onze rolgordijnen zijn standaard voorzien van:
+                      </h4>
+                      <ul className="space-y-2 text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Dichte cassette voor een strakke afwerking</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Aluminium onderlat</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Witte profielkleur (standaard)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Kunststof eindloze ketting (lengte afhankelijk van hoogte: 75 cm, 100 cm, 125 cm of 150 cm)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Klik-montagesteunen inbegrepen</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="border-t border-gray-300 pt-4">
+                      <h4 className="font-medium text-gray-900 mb-3">
+                        Optionele afstandsteunen (meerprijs):
+                      </h4>
+                      <ul className="space-y-2 text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Afstandsteun 8 cm: <span className="font-semibold">+ €4,50 per stuk</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#d5c096] font-bold mt-1">•</span>
+                          <span>Afstandsteun 12 cm: <span className="font-semibold">+ €7,50 per stuk</span></span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </Container>
       </div>

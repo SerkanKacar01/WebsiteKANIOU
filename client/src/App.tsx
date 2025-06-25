@@ -184,6 +184,11 @@ function Router() {
         <Route path="/bedankt" component={BedanktPage} />
         <Route path="/volg-bestelling" component={VolgBestellingPage} />
         <Route path="/bestelling-status/:id" component={BestellingStatusPage} />
+        
+        {/* Hidden Admin Routes */}
+        <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
+        <Route path="/entrepreneur-dashboard" component={EntrepreneurDashboardPage} />
+        
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin" component={Admin} />
 

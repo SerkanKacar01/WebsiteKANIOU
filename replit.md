@@ -120,6 +120,14 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 25, 2025: Completed hidden entrepreneur login system with secure authentication
+  - Implemented secure admin authentication with bcryptjs password hashing
+  - Created hidden login page at /kaniouzilvernaald-dashboard (admin@kaniou.be access)
+  - Built entrepreneur dashboard at /entrepreneur-dashboard with order management
+  - Added admin users and sessions tables to PostgreSQL schema
+  - Integrated cookie-based session management with 2-hour timeout
+  - Added automatic session cleanup and logout functionality
+  - Created admin user initialization script with ADMIN_PASSWORD secret
 - June 25, 2025: Implemented comprehensive order tracking system with mobile-first design
   - Added "Volg uw bestelling" button above bottom navigation with light gold styling (#E6C988)
   - Created order search page at /volg-bestelling for order number input

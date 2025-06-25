@@ -28,7 +28,7 @@ import {
   InsertAdminSession,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, lt } from "drizzle-orm";
 
 export interface IStorage {
   // Categories
@@ -227,7 +227,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async cleanupExpiredSessions(): Promise<void> {
-    await db.delete(adminSessions).where(eq(adminSessions.expiresAt, new Date()));
+    const now = new Date();
+    await db.delete(adminSessions).where(lt(adminSessions.expiresAt, now));
   }
 }
 

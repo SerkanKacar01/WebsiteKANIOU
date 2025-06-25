@@ -50,6 +50,8 @@ import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import BedanktPage from "@/pages/BedanktPage";
 import VolgBestellingPage from "@/pages/VolgBestellingPage";
 import BestellingStatusPage from "@/pages/BestellingStatusPage";
+import AdminLoginPage from "@/pages/AdminLoginPage";
+import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 
 
 

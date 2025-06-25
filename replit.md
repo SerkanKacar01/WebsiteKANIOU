@@ -120,6 +120,13 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 25, 2025: Implemented comprehensive order tracking system with mobile-first design
+  - Added "Volg uw bestelling" button above bottom navigation with light gold styling (#E6C988)
+  - Created order search page at /volg-bestelling for order number input
+  - Built detailed order status page at /bestelling-status/:id with complete order timeline
+  - Integrated 6-step status progression with visual timeline and business notes
+  - Added PDF download functionality for order receipts
+  - Implemented backend API endpoints for order lookup and tracking
 - June 24, 2025: Added Rolgordijnen product tile and custom category page with pricing, configurator integration, and "Bekijk producten" button
 - June 24, 2025: Completed full AI chatbot removal - eliminated all frontend components, backend services, database schemas, locale files, and replaced with traditional contact forms
 - June 23, 2025: Initial setup

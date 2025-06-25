@@ -1,0 +1,83 @@
+📄 GOAL:
+Display the current order status with all relevant information, fully responsive on mobile, styled in white, black, and light gold — matching the KANIOU website.
+
+⸻
+
+🧩 1. PAGE NAME/ROUTE
+
+Create a page or route called:
+/bestelling-status/:id
+This page is dynamically loaded based on the unique order number.
+
+⸻
+
+📲 2. PAGE STRUCTURE (MOBILE FIRST)
+
+🟨 A. HEADER (Top bar)
+	•	Full-width top bar (fixed or sticky)
+	•	Background: #E6C988 (light gold)
+	•	Text: Uw Bestelstatus
+	•	Text color: #FFFFFF
+	•	Font size: 20–22px
+	•	Centered
+	•	Padding top: 16px, padding bottom: 12px
+
+⸻
+
+📌 B. ORDER INFO BOX (Top section)
+	•	White box with rounded corners
+	•	Padding: 16px
+	•	Box-shadow: subtle
+	•	Display:
+	•	Bestelnummer: #123456
+	•	Huidige status: IN PRODUCTIE
+	•	Laatste update: 25/06/2025
+	•	Font color: black
+	•	Font size: normal
+
+⸻
+
+🔄 C. STATUS TIMELINE (Vertical steps)
+
+Show the 6 statuses with only the active and completed ones showing a date next to them:
+
+Statuses:
+	1.	✅ Bestelling in verwerking – datum zichtbaar
+	2.	✅ Bestelling verwerkt – datum zichtbaar
+	3.	✅ Bestelling in productie – datum zichtbaar
+	4.	⬜ Bestelling is gereed – geen datum
+	5.	⬜ U wordt gebeld voor de levering – geen datum
+	6.	⬜ Bestelling geleverd – geen datum
+
+Style:
+	•	Use check icons for completed steps
+	•	Use #E6C988 for the active status background
+	•	Use #CFCFCF or light gray for future steps
+	•	Use green check or gold bullet icons (visueel duidelijk)
+
+⸻
+
+📄 D. EXTRA ORDER DETAILS
+	•	Section: Bestelgegevens
+	•	Toon samenvatting zoals:
+	•	Producttype
+	•	Kleur
+	•	Afmetingen
+	•	Aantal
+	•	Section: Opmerkingen van de ondernemer (indien ingevuld)
+
+⸻
+
+📥 E. DOWNLOAD FACTUUR / BON
+	•	Button: Download bestelbon (PDF)
+	•	Background: #000000 (zwart)
+	•	Text: #FFFFFF (wit)
+	•	Border-radius: 8px
+	•	Full-width
+	•	On click: triggers PDF download (PDF is uploaded via dashboard)
+
+⸻
+
+📱 F. BOTTOM NAVIGATION (persistent)
+	•	Reuse existing navigation bar
+	•	Stays fixed at bottom (like Home, Shop, Contact, Offerte)

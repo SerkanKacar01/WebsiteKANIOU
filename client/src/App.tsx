@@ -49,6 +49,7 @@ import BusinessPage from "@/pages/BusinessPage";
 import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import BedanktPage from "@/pages/BedanktPage";
 import VolgBestellingPage from "@/pages/VolgBestellingPage";
+import BestellingStatusPage from "@/pages/BestellingStatusPage";
 
 
 
@@ -180,6 +181,7 @@ function Router() {
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
         <Route path="/volg-bestelling" component={VolgBestellingPage} />
+        <Route path="/bestelling-status/:id" component={BestellingStatusPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin" component={Admin} />
 

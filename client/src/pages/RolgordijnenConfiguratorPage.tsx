@@ -57,7 +57,7 @@ const fabricTypes = [
     id: "semi-transparant",
     name: "Semi-transparant",
     description: "Laat diffuus licht door",
-    price: 69.95,
+    price: 40,
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
   },
 ];
@@ -682,16 +682,16 @@ const RolgordijnenConfiguratorPage = () => {
 
                     <div className="border-t border-gray-300 pt-4">
                       <h4 className="font-medium text-gray-900 mb-3">
-                        Optionele afstandsteunen (meerprijs):
+                        
                       </h4>
                       <ul className="space-y-2 text-gray-700">
                         <li className="flex items-start gap-2">
-                          <span className="text-[#d5c096] font-bold mt-1">•</span>
-                          <span>Afstandsteun 8 cm: <span className="font-semibold">+ €4,50 per stuk</span></span>
+                          
+                          
                         </li>
                         <li className="flex items-start gap-2">
-                          <span className="text-[#d5c096] font-bold mt-1">•</span>
-                          <span>Afstandsteun 12 cm: <span className="font-semibold">+ €7,50 per stuk</span></span>
+                          
+                          
                         </li>
                       </ul>
                     </div>

@@ -246,12 +246,13 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
 export const paymentOrders = pgTable("payment_orders", {
   id: serial("id").primaryKey(),
   molliePaymentId: text("mollie_payment_id").notNull().unique(),
+  orderNumber: text("order_number").unique(), // Unique order number for tracking
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   amount: doublePrecision("amount").notNull(),
   currency: text("currency").default("EUR"),
   description: text("description").notNull(),
-  status: text("status").default("pending"), // 'pending', 'paid', 'failed', 'cancelled', 'expired'
+  status: text("status").default("pending"), // 'pending', 'confirmed', 'production', 'ready_for_delivery', 'contact_customer', 'completed'
   redirectUrl: text("redirect_url").notNull(),
   webhookUrl: text("webhook_url"),
   checkoutUrl: text("checkout_url"),

@@ -42,7 +42,7 @@ export default function TrackOrderPage() {
   const queryClient = useQueryClient();
 
   // Fetch order details
-  const { data: order, isLoading, error } = useQuery({
+  const { data: order, isLoading, error } = useQuery<Order>({
     queryKey: ['/api/orders/track', searchedOrderNumber],
     enabled: !!searchedOrderNumber,
     retry: false
@@ -51,10 +51,7 @@ export default function TrackOrderPage() {
   // Update notification preferences
   const updatePreferencesMutation = useMutation({
     mutationFn: async (preferences: { orderNumber: string; notificationPreference: string }) => {
-      return apiRequest('/api/orders/update-preferences', {
-        method: 'POST',
-        body: JSON.stringify(preferences)
-      });
+      return apiRequest('/api/orders/update-preferences', 'POST', preferences);
     },
     onSuccess: () => {
       toast({
@@ -86,7 +83,7 @@ export default function TrackOrderPage() {
   };
 
   const handleDownloadPdf = () => {
-    if (order?.pdfFileName) {
+    if (order && order.pdfFileName) {
       // Create download link for PDF
       const link = document.createElement('a');
       link.href = `/api/orders/${order.id}/pdf`;
@@ -98,7 +95,7 @@ export default function TrackOrderPage() {
   };
 
   const handleUpdatePreferences = () => {
-    if (!order) return;
+    if (!order || !order.orderNumber) return;
 
     let preference = 'email';
     if (emailNotifications && whatsappNotifications) {
@@ -130,7 +127,7 @@ export default function TrackOrderPage() {
 
   // Initialize notification preferences when order is loaded
   React.useEffect(() => {
-    if (order) {
+    if (order && order.notificationPreference) {
       setEmailNotifications(order.notificationPreference === 'email' || order.notificationPreference === 'both');
       setWhatsappNotifications(order.notificationPreference === 'whatsapp' || order.notificationPreference === 'both');
     }
@@ -199,7 +196,7 @@ export default function TrackOrderPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>Bestelling {order.orderNumber}</span>
+                  <span>Bestelling {order.orderNumber || `KAN-${order.id}`}</span>
                   <Badge variant="outline" className="bg-[#E6C988] text-black">
                     €{order.amount.toFixed(2)}
                   </Badge>
@@ -220,7 +217,7 @@ export default function TrackOrderPage() {
               <CardContent>
                 <div className="space-y-4">
                   {statusSteps.map((step, index) => {
-                    const currentIndex = getCurrentStatusIndex(order.status);
+                    const currentIndex = getCurrentStatusIndex(order.status || 'pending');
                     const isActive = index === currentIndex;
                     const isCompleted = index < currentIndex;
                     const isPending = index > currentIndex;
@@ -244,7 +241,7 @@ export default function TrackOrderPage() {
                           }`}>
                             {step.label}
                           </p>
-                          {isActive && (
+                          {isActive && order.updatedAt && (
                             <p className="text-sm text-gray-500">
                               Bijgewerkt op {formatDate(order.updatedAt)}
                             </p>

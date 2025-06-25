@@ -50,6 +50,7 @@ import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import BedanktPage from "@/pages/BedanktPage";
 import VolgBestellingPage from "@/pages/VolgBestellingPage";
 import BestellingStatusPage from "@/pages/BestellingStatusPage";
+import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 
@@ -184,6 +185,7 @@ function Router() {
         <Route path="/bedankt" component={BedanktPage} />
         <Route path="/volg-bestelling" component={VolgBestellingPage} />
         <Route path="/bestelling-status/:id" component={BestellingStatusPage} />
+        <Route path="/track-order" component={TrackOrderPage} />
         
         {/* Hidden Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />

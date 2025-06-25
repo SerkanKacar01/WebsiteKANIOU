@@ -24,6 +24,8 @@ export default function TrackOrderPage() {
   const [searchedOrderNumber, setSearchedOrderNumber] = useState('');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [whatsappNotifications, setWhatsappNotifications] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -66,15 +68,30 @@ export default function TrackOrderPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Clear any existing validation errors
+    setValidationError('');
+    
     if (!orderNumber.trim()) {
-      toast({
-        title: "Bestelnummer vereist",
-        description: "Voer uw bestelnummer in om verder te gaan.",
-        variant: "destructive"
-      });
+      setValidationError('Vul uw bestelnummer in om verder te gaan.');
+      // Focus the input field
+      const inputElement = document.getElementById('order-number-input');
+      if (inputElement) {
+        inputElement.focus();
+      }
       return;
     }
+    
     setSearchedOrderNumber(orderNumber.trim());
+  };
+
+  // Handle input change to clear errors
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOrderNumber(e.target.value);
+    // Clear validation error when user starts typing
+    if (validationError) {
+      setValidationError('');
+    }
   };
 
   const handleDownloadPdf = () => {
@@ -173,12 +190,27 @@ export default function TrackOrderPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <Input
+                    id="order-number-input"
                     type="text"
                     placeholder="Bijv. 20240623-001"
                     value={orderNumber}
-                    onChange={(e) => setOrderNumber(e.target.value)}
-                    className="w-full"
+                    onChange={handleInputChange}
+                    onFocus={() => setIsInputFocused(true)}
+                    onBlur={() => setIsInputFocused(false)}
+                    className={`w-full transition-colors ${
+                      validationError ? 'border-red-500 focus:border-red-500' : ''
+                    }`}
                   />
+                  
+                  {/* Validation Error Message */}
+                  {validationError && (
+                    <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-md animate-in fade-in duration-200">
+                      <p className="text-sm text-red-600 font-medium">
+                        {validationError}
+                      </p>
+                    </div>
+                  )}
+                  
                   <p className="text-sm text-gray-500 mt-2">
                     U vindt uw bestelnummer in uw bevestigingsmail of WhatsApp-bericht.
                   </p>
@@ -195,27 +227,37 @@ export default function TrackOrderPage() {
           </Card>
         )}
 
-        {/* Error State */}
+        {/* Error State - Order Not Found */}
         {error && searchedOrderNumber && (
-          <Card>
-            <CardContent className="p-6">
-              <div className="text-center">
-                <p className="text-red-600 mb-4">
-                  Bestelling niet gevonden. Controleer uw bestelnummer en probeer opnieuw.
-                </p>
-                <Button 
-                  onClick={() => {
-                    setSearchedOrderNumber('');
-                    setOrderNumber('');
-                  }}
-                  variant="outline"
-                  className="w-full"
-                >
-                  Opnieuw zoeken
-                </Button>
+          <div className="p-4 bg-red-50 border border-red-200 rounded-lg animate-in fade-in duration-200">
+            <div className="flex items-center space-x-2 mb-3">
+              <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-white text-sm font-bold">!</span>
               </div>
-            </CardContent>
-          </Card>
+              <h3 className="font-medium text-red-800">Bestelling niet gevonden</h3>
+            </div>
+            <p className="text-red-700 mb-4 leading-relaxed">
+              Het ingevoerde bestelnummer is niet gevonden. Controleer het nummer en probeer opnieuw.
+            </p>
+            <Button 
+              onClick={() => {
+                setSearchedOrderNumber('');
+                setOrderNumber('');
+                setValidationError('');
+                // Focus the input field after clearing
+                setTimeout(() => {
+                  const inputElement = document.getElementById('order-number-input');
+                  if (inputElement) {
+                    inputElement.focus();
+                  }
+                }, 100);
+              }}
+              variant="outline"
+              className="w-full border-red-300 text-red-700 hover:bg-red-50 hover:border-red-400"
+            >
+              Opnieuw zoeken
+            </Button>
+          </div>
         )}
 
         {/* Order Details */}

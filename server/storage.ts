@@ -256,7 +256,7 @@ export class DatabaseStorage implements IStorage {
           }),
           customerDetails: JSON.stringify({}),
           clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
-          pdfFileName: null,
+          pdfFileName: 'sample-receipt-20240623-001.pdf',
           notificationPreference: 'email',
           notificationLogs: {
             'pending': { emailSent: true, sentAt: '2024-06-23T10:00:00Z' },

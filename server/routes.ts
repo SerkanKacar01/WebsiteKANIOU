@@ -1,6 +1,8 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import fs from "fs";
+import path from "path";
 import { 
   insertCategorySchema,
   insertProductSchema,
@@ -740,6 +742,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("PDF upload error:", error);
       res.status(500).json({ error: "Fout bij uploaden PDF" });
+    }
+  });
+
+  // PDF download endpoint for customers
+  app.get("/api/orders/:orderNumber/download-pdf", formRateLimiter, async (req: Request, res: Response) => {
+    try {
+      const { orderNumber } = req.params;
+      
+      // Use secure order lookup
+      const order = await storage.getOrderByOrderNumber(orderNumber);
+      
+      if (!order || !order.pdfFileName) {
+        return res.status(404).json({ message: "PDF niet beschikbaar voor deze bestelling" });
+      }
+
+      const filePath = path.join(__dirname, '../uploads', order.pdfFileName);
+      
+      // Check if file exists
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: "PDF bestand niet gevonden op server" });
+      }
+
+      // Set proper headers for PDF download/viewing
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="Bestelbon-${orderNumber}.pdf"`);
+      
+      // Stream the file
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
+      
+    } catch (error: any) {
+      console.error("PDF download error:", error);
+      res.status(500).json({ message: "Fout bij downloaden PDF" });
     }
   });
 

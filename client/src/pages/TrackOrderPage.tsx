@@ -95,14 +95,10 @@ export default function TrackOrderPage() {
   };
 
   const handleDownloadPdf = () => {
-    if (order && order.pdfFileName) {
-      // Create download link for PDF
-      const link = document.createElement('a');
-      link.href = `/api/orders/${order.id}/pdf`;
-      link.download = order.pdfFileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    if (order && order.pdfFileName && order.orderNumber) {
+      // Open PDF in new tab or download based on browser settings
+      const pdfUrl = `/api/orders/${order.orderNumber}/download-pdf`;
+      window.open(pdfUrl, '_blank');
     }
   };
 
@@ -394,19 +390,16 @@ export default function TrackOrderPage() {
               </Card>
             )}
 
-            {/* PDF Download */}
+            {/* PDF Download - Only show if file exists */}
             {order.pdfFileName && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">📎 Documenten</CardTitle>
-                </CardHeader>
-                <CardContent>
+                <CardContent className="p-4">
                   <Button 
                     onClick={handleDownloadPdf}
-                    className="w-full bg-[#E6C988] hover:bg-[#D5B876] text-black"
+                    className="w-full bg-[#E6C988] hover:bg-[#D5B876] text-black font-medium py-3 text-base"
                   >
-                    <Download className="w-4 h-4 mr-2" />
-                    Bestelbon downloaden
+                    <Download className="w-5 h-5 mr-2" />
+                    Download uw bestelbon (PDF)
                   </Button>
                 </CardContent>
               </Card>

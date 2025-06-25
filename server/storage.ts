@@ -64,6 +64,7 @@ export interface IStorage {
   // Payment Orders
   createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
   getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
+  getPaymentOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined>;
   getPaymentOrders(): Promise<PaymentOrder[]>;
   
   // Admin Authentication
@@ -190,6 +191,11 @@ export class DatabaseStorage implements IStorage {
 
   async getPaymentOrderById(id: number): Promise<PaymentOrder | undefined> {
     const result = await db.select().from(paymentOrders).where(eq(paymentOrders.id, id));
+    return result[0];
+  }
+
+  async getPaymentOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined> {
+    const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
     return result[0];
   }
 

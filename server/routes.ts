@@ -423,25 +423,107 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Order tracking route
+  // Order tracking route - updated for proper order number lookup
   app.get("/api/orders/track/:orderNumber", async (req: Request, res: Response) => {
     try {
       const { orderNumber } = req.params;
-      const orderId = parseInt(orderNumber);
       
-      if (isNaN(orderId)) {
-        return res.status(400).json({ message: "Invalid order number" });
+      // Try to find order by order number string first
+      let order = await storage.getPaymentOrderByOrderNumber(orderNumber);
+      
+      // If not found and it's a number, try by ID as fallback
+      if (!order) {
+        const orderId = parseInt(orderNumber);
+        if (!isNaN(orderId)) {
+          order = await storage.getPaymentOrderById(orderId);
+        }
       }
-
-      const order = await storage.getPaymentOrderById(orderId);
+      
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
 
-      res.json(order);
+      // Return order data for client tracking
+      res.json({
+        id: order.id,
+        orderNumber: order.orderNumber || `KAN-${order.id}`,
+        status: order.status || 'pending',
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        amount: order.amount,
+        currency: order.currency || 'EUR',
+        createdAt: order.createdAt,
+        updatedAt: order.updatedAt,
+        clientNote: order.clientNote,
+        pdfFileName: order.pdfFileName,
+        notificationPreference: order.notificationPreference || 'email'
+      });
     } catch (error: any) {
       console.error("Error tracking order:", error);
       res.status(500).json({ message: "Failed to track order" });
+    }
+  });
+
+  // Update notification preferences for orders
+  app.post("/api/orders/update-preferences", async (req: Request, res: Response) => {
+    try {
+      const { orderNumber, notificationPreference } = req.body;
+      
+      if (!orderNumber || !notificationPreference) {
+        return res.status(400).json({ message: "Order number and notification preference required" });
+      }
+      
+      // Find order by order number
+      let order = await storage.getPaymentOrderByOrderNumber(orderNumber);
+      
+      // If not found and it's a number, try by ID as fallback
+      if (!order) {
+        const orderId = parseInt(orderNumber);
+        if (!isNaN(orderId)) {
+          order = await storage.getPaymentOrderById(orderId);
+        }
+      }
+      
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      
+      // Update notification preference
+      await storage.updatePaymentOrder(order.id, {
+        notificationPreference,
+        updatedAt: new Date()
+      });
+      
+      res.json({ message: "Notification preferences updated successfully" });
+    } catch (error: any) {
+      console.error("Error updating notification preferences:", error);
+      res.status(500).json({ message: "Failed to update notification preferences" });
+    }
+  });
+
+  // Download order PDF
+  app.get("/api/orders/:id/pdf", async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: "Invalid order ID" });
+      }
+      
+      const order = await storage.getPaymentOrderById(orderId);
+      
+      if (!order || !order.pdfFileName) {
+        return res.status(404).json({ message: "PDF not found" });
+      }
+      
+      // In a real implementation, you would serve the file from uploads directory
+      // For now, create a simple PDF response
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${order.pdfFileName}"`);
+      res.status(200).send('PDF content for order ' + order.orderNumber + ' would be served here');
+    } catch (error: any) {
+      console.error("Error downloading PDF:", error);
+      res.status(500).json({ message: "Failed to download PDF" });
     }
   });
 

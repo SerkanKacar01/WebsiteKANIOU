@@ -653,6 +653,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: order.status || 'Bestelling ontvangen',
         createdAt: order.createdAt?.toISOString() || new Date().toISOString(),
         clientNote: order.clientNote || '',
+        noteFromEntrepreneur: order.noteFromEntrepreneur || '',
         pdfFileName: order.pdfFileName || null,
         notificationPreference: (order.notificationPreference as 'email' | 'whatsapp' | 'both') || 'email',
         orderStatuses: []

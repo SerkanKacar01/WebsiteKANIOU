@@ -405,6 +405,20 @@ export default function TrackOrderPage() {
               </Card>
             )}
 
+            {/* Entrepreneur Note - Only show if note exists */}
+            {order.noteFromEntrepreneur && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">💬 Bericht van de ondernemer</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                    {order.noteFromEntrepreneur}
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Notification Preferences */}
             <Card>
               <CardHeader>

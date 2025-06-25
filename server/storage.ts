@@ -256,6 +256,7 @@ export class DatabaseStorage implements IStorage {
           }),
           customerDetails: JSON.stringify({}),
           clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
+          noteFromEntrepreneur: 'Bedankt voor uw vertrouwen in KANIOU! Uw rolgordijn wordt met zorg handgemaakt in ons atelier. We houden u op de hoogte van de voortgang.',
           pdfFileName: 'sample-receipt-20240623-001.pdf',
           notificationPreference: 'email',
           notificationLogs: {

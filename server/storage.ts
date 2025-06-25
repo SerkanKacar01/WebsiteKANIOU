@@ -76,6 +76,9 @@ export interface IStorage {
   getAdminSessionById(sessionId: string): Promise<AdminSession | undefined>;
   deleteAdminSession(sessionId: string): Promise<void>;
   cleanupExpiredSessions(): Promise<void>;
+  
+  // Order Management
+  updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -229,6 +232,10 @@ export class DatabaseStorage implements IStorage {
   async cleanupExpiredSessions(): Promise<void> {
     const now = new Date();
     await db.delete(adminSessions).where(lt(adminSessions.expiresAt, now));
+  }
+
+  async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void> {
+    await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
   }
 }
 

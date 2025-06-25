@@ -548,22 +548,148 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Return dashboard data
       const orders = await storage.getPaymentOrders();
-      const quotes = await storage.getQuoteRequests();
-      const contacts = await storage.getContactSubmissions();
       
+      // Calculate dashboard stats
+      const totalOrders = orders.length;
+      const pendingOrders = orders.filter(order => 
+        order.status && !['Geleverd', 'Geannuleerd'].includes(order.status)
+      ).length;
+      const totalRevenue = orders
+        .filter(order => order.status === 'Geleverd')
+        .reduce((sum, order) => sum + order.amount, 0);
+
+      // Format orders for dashboard
+      const formattedOrders = orders.map(order => ({
+        id: order.id,
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        amount: order.amount,
+        currency: order.currency || 'EUR',
+        productType: order.description || 'Algemeen product',
+        status: order.status || 'Bestelling ontvangen',
+        createdAt: order.createdAt?.toISOString() || new Date().toISOString(),
+        clientNote: order.clientNote || '',
+        pdfFileName: order.pdfFileName || null,
+        notificationPreference: (order.notificationPreference as 'email' | 'whatsapp' | 'both') || 'email',
+        orderStatuses: []
+      }));
+
       res.json({
-        orders: orders.slice(0, 10), // Latest 10 orders
-        quotes: quotes.slice(0, 10), // Latest 10 quotes
-        contacts: contacts.slice(0, 10), // Latest 10 contacts
-        stats: {
-          totalOrders: orders.length,
-          totalQuotes: quotes.length,
-          totalContacts: contacts.length,
-        }
+        totalOrders,
+        pendingOrders,
+        totalRevenue,
+        orders: formattedOrders
       });
     } catch (error: any) {
       console.error("Dashboard data error:", error);
       res.status(500).json({ error: "Er is een fout opgetreden bij het laden van dashboard gegevens" });
+    }
+  });
+
+  // Update order endpoint
+  app.patch("/api/admin/orders/:id", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const { status, clientNote, notificationPreference } = req.body;
+
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Get existing order
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      // Update order in database
+      await storage.updatePaymentOrder(orderId, {
+        status: status || existingOrder.status,
+        clientNote: clientNote !== undefined ? clientNote : existingOrder.clientNote,
+        notificationPreference: notificationPreference || existingOrder.notificationPreference,
+        updatedAt: new Date()
+      });
+
+      res.json({ 
+        success: true, 
+        message: "Order succesvol bijgewerkt" 
+      });
+    } catch (error: any) {
+      console.error("Update order error:", error);
+      res.status(500).json({ error: "Fout bij bijwerken order" });
+    }
+  });
+
+  // PDF upload endpoint
+  app.post("/api/admin/orders/:id/upload-pdf", requireAdminAuth, upload.single('pdf'), async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ error: "Geen PDF bestand ontvangen" });
+      }
+
+      // Validate file type
+      if (req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ error: "Alleen PDF bestanden zijn toegestaan" });
+      }
+
+      // Get existing order
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      // Update order with PDF filename
+      await storage.updatePaymentOrder(orderId, {
+        pdfFileName: req.file.filename,
+        updatedAt: new Date()
+      });
+
+      res.json({ 
+        success: true, 
+        message: "PDF succesvol geüpload",
+        fileName: req.file.filename
+      });
+    } catch (error: any) {
+      console.error("PDF upload error:", error);
+      res.status(500).json({ error: "Fout bij uploaden PDF" });
+    }
+  });
+
+  // Auth status endpoint for dashboard
+  app.get("/api/admin/auth-status", async (req: Request, res: Response) => {
+    try {
+      const sessionId = req.cookies?.admin_session;
+      if (!sessionId) {
+        return res.json({ authenticated: false });
+      }
+      
+      const isValid = await AdminAuth.validateSession(sessionId);
+      if (!isValid) {
+        res.clearCookie("admin_session");
+        return res.json({ authenticated: false });
+      }
+      
+      // Get admin user info
+      const session = await storage.getAdminSessionById(sessionId);
+      if (!session) {
+        return res.json({ authenticated: false });
+      }
+      
+      const adminUser = await storage.getAdminUserByEmail(session.adminEmail);
+      
+      res.json({ 
+        authenticated: true,
+        email: adminUser?.email,
+      });
+    } catch (error: any) {
+      console.error("Auth status check error:", error);
+      res.json({ authenticated: false });
     }
   });
 

@@ -25,8 +25,12 @@ import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/co
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import multer from "multer";
 import { molliePaymentService } from "./services/molliePayments";
+import { AdminAuth, requireAdminAuth } from "./auth";
+import cookieParser from "cookie-parser";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Add cookie parser middleware
+  app.use(cookieParser());
   // Configure multer for file uploads
   const upload = multer({ 
     storage: multer.memoryStorage(),
@@ -468,6 +472,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Error adding to cart:", error);
       res.status(500).json({ message: "Failed to add to cart" });
+    }
+  });
+
+  // Admin Authentication Routes
+  app.post("/api/admin/login", async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ error: "Email en wachtwoord zijn vereist" });
+      }
+      
+      const authData = await AdminAuth.login(email, password);
+      if (!authData) {
+        return res.status(401).json({ error: "Ongeldige inloggegevens" });
+      }
+      
+      // Set secure HTTP-only cookie
+      res.cookie("admin_session", authData.sessionId, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: authData.expiresAt,
+      });
+      
+      res.json({ 
+        success: true, 
+        message: "Succesvol ingelogd",
+        expiresAt: authData.expiresAt,
+      });
+    } catch (error: any) {
+      console.error("Admin login error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden bij het inloggen" });
+    }
+  });
+
+  app.post("/api/admin/logout", async (req: Request, res: Response) => {
+    try {
+      const sessionId = req.cookies?.admin_session;
+      if (sessionId) {
+        await AdminAuth.logout(sessionId);
+      }
+      
+      res.clearCookie("admin_session");
+      res.json({ success: true, message: "Succesvol uitgelogd" });
+    } catch (error: any) {
+      console.error("Admin logout error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden bij het uitloggen" });
+    }
+  });
+
+  app.get("/api/admin/status", async (req: Request, res: Response) => {
+    try {
+      const sessionId = req.cookies?.admin_session;
+      const authData = await AdminAuth.validateSession(sessionId);
+      
+      if (!authData) {
+        return res.status(401).json({ authenticated: false });
+      }
+      
+      res.json({ 
+        authenticated: true, 
+        email: authData.email,
+        expiresAt: authData.expiresAt,
+      });
+    } catch (error: any) {
+      console.error("Admin status check error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden" });
+    }
+  });
+
+  // Protected Admin Routes
+  app.get("/api/admin/dashboard", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      // Return dashboard data
+      const orders = await storage.getPaymentOrders();
+      const quotes = await storage.getQuoteRequests();
+      const contacts = await storage.getContactSubmissions();
+      
+      res.json({
+        orders: orders.slice(0, 10), // Latest 10 orders
+        quotes: quotes.slice(0, 10), // Latest 10 quotes
+        contacts: contacts.slice(0, 10), // Latest 10 contacts
+        stats: {
+          totalOrders: orders.length,
+          totalQuotes: quotes.length,
+          totalContacts: contacts.length,
+        }
+      });
+    } catch (error: any) {
+      console.error("Dashboard data error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden bij het laden van dashboard gegevens" });
     }
   });
 

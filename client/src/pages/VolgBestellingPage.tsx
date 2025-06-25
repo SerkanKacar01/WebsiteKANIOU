@@ -74,10 +74,11 @@ const VolgBestellingPage = () => {
           <CardContent className="pt-6">
             <h3 className="font-semibold text-gray-900 mb-3">Hulp nodig?</h3>
             <div className="space-y-2 text-sm text-gray-700">
-              <p>Uw bestelnummer vindt u in de bevestigingsmail die u heeft ontvangen na uw bestelling.</p>
+              <p>U vindt uw bestelnummer in de bevestigingsmail die u van ons heeft ontvangen na het plaatsen van uw bestelling.</p>
               <p className="mt-4"><strong>Contact:</strong></p>
+              <p>Heeft u vragen of hulp nodig? Neem gerust contact met ons op:</p>
               <p>E-mail: info@kaniou.be</p>
-              <p>Telefoon: +32 123 456 789</p>
+              <p>Telefoon: +32 467 85 64 05</p>
             </div>
           </CardContent>
         </Card>

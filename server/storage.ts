@@ -20,6 +20,12 @@ import {
   paymentOrders,
   PaymentOrder,
   InsertPaymentOrder,
+  adminUsers,
+  AdminUser,
+  InsertAdminUser,
+  adminSessions,
+  AdminSession,
+  InsertAdminSession,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
@@ -59,6 +65,17 @@ export interface IStorage {
   createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
   getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
   getPaymentOrders(): Promise<PaymentOrder[]>;
+  
+  // Admin Authentication
+  getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
+  createAdminUser(user: InsertAdminUser): Promise<AdminUser>;
+  updateAdminLastLogin(id: number): Promise<void>;
+  
+  // Admin Sessions
+  createAdminSession(session: InsertAdminSession): Promise<AdminSession>;
+  getAdminSessionById(sessionId: string): Promise<AdminSession | undefined>;
+  deleteAdminSession(sessionId: string): Promise<void>;
+  cleanupExpiredSessions(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -175,6 +192,42 @@ export class DatabaseStorage implements IStorage {
 
   async getPaymentOrders(): Promise<PaymentOrder[]> {
     return await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
+  }
+
+  // Admin Authentication
+  async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
+    const result = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
+    return result[0];
+  }
+
+  async createAdminUser(user: InsertAdminUser): Promise<AdminUser> {
+    const result = await db.insert(adminUsers).values(user).returning();
+    return result[0];
+  }
+
+  async updateAdminLastLogin(id: number): Promise<void> {
+    await db.update(adminUsers)
+      .set({ lastLoginAt: new Date() })
+      .where(eq(adminUsers.id, id));
+  }
+
+  // Admin Sessions
+  async createAdminSession(session: InsertAdminSession): Promise<AdminSession> {
+    const result = await db.insert(adminSessions).values(session).returning();
+    return result[0];
+  }
+
+  async getAdminSessionById(sessionId: string): Promise<AdminSession | undefined> {
+    const result = await db.select().from(adminSessions).where(eq(adminSessions.sessionId, sessionId));
+    return result[0];
+  }
+
+  async deleteAdminSession(sessionId: string): Promise<void> {
+    await db.delete(adminSessions).where(eq(adminSessions.sessionId, sessionId));
+  }
+
+  async cleanupExpiredSessions(): Promise<void> {
+    await db.delete(adminSessions).where(eq(adminSessions.expiresAt, new Date()));
   }
 }
 

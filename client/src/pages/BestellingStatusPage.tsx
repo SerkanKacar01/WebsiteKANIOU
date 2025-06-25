@@ -241,16 +241,13 @@ const BestellingStatusPage = () => {
                 <span className="text-black font-medium">{orderStatus.productDetails.productType}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Kleur:</span>
-                <span className="text-black font-medium">{orderStatus.productDetails.color}</span>
+                
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Afmetingen:</span>
-                <span className="text-black font-medium">{orderStatus.productDetails.dimensions}</span>
+                
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Aantal:</span>
-                <span className="text-black font-medium">{orderStatus.productDetails.quantity}</span>
+                
               </div>
             </div>
           </CardContent>

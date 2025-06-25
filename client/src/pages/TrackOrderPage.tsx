@@ -16,7 +16,7 @@ import {
   Download,
   Bell
 } from 'lucide-react';
-import type { Order } from '@shared/schema';
+import type { PaymentOrder } from '@shared/schema';
 
 export default function TrackOrderPage() {
   const [orderNumber, setOrderNumber] = useState('');
@@ -36,7 +36,7 @@ export default function TrackOrderPage() {
   ];
 
   // Fetch order details
-  const { data: order, isLoading, error } = useQuery<Order>({
+  const { data: order, isLoading, error } = useQuery<PaymentOrder>({
     queryKey: ['/api/orders/track', searchedOrderNumber],
     enabled: !!searchedOrderNumber,
     retry: false

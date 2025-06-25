@@ -203,6 +203,21 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
   }
 
+  // Order tracking methods for clients
+  async getOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined> {
+    const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
+    return result[0];
+  }
+
+  async updateOrderNotificationPreference(orderNumber: string, notificationPreference: string): Promise<void> {
+    await db.update(paymentOrders)
+      .set({ 
+        notificationPreference,
+        updatedAt: new Date() 
+      })
+      .where(eq(paymentOrders.orderNumber, orderNumber));
+  }
+
   // Admin Authentication
   async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
     const result = await db.select().from(adminUsers).where(eq(adminUsers.email, email));

@@ -359,6 +359,9 @@ export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscr
 export type PaymentOrder = typeof paymentOrders.$inferSelect;
 export type InsertPaymentOrder = z.infer<typeof insertPaymentOrderSchema>;
 
+// Order type alias for tracking (based on payment_orders table)
+export type Order = PaymentOrder;
+
 export type ShoppingCartItem = typeof shoppingCartItems.$inferSelect;
 export type InsertShoppingCartItem = z.infer<typeof insertShoppingCartItemSchema>;
 

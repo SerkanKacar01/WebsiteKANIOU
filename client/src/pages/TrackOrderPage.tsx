@@ -1,45 +1,39 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Search, Download, CheckCircle, Clock, Package, Truck, Phone, MessageSquare } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
-
-interface Order {
-  id: number;
-  orderNumber: string;
-  status: string;
-  customerName: string;
-  customerEmail: string;
-  amount: number;
-  currency: string;
-  createdAt: string;
-  updatedAt: string;
-  clientNote?: string;
-  pdfFileName?: string;
-  notificationPreference: 'email' | 'whatsapp' | 'both';
-}
-
-const statusSteps = [
-  { key: 'pending', label: 'Bestelling in behandeling', icon: Clock },
-  { key: 'confirmed', label: 'Bestelling bevestigd', icon: CheckCircle },
-  { key: 'production', label: 'In productie', icon: Package },
-  { key: 'ready_for_delivery', label: 'Klaar voor levering', icon: Truck },
-  { key: 'contact_customer', label: 'U wordt gecontacteerd', icon: Phone },
-  { key: 'completed', label: 'Voltooid', icon: CheckCircle }
-];
+import { 
+  Package, 
+  Settings, 
+  Wrench, 
+  CheckCircle, 
+  Phone,
+  Download,
+  Bell
+} from 'lucide-react';
+import type { Order } from '@shared/schema';
 
 export default function TrackOrderPage() {
   const [orderNumber, setOrderNumber] = useState('');
   const [searchedOrderNumber, setSearchedOrderNumber] = useState('');
-  const [emailNotifications, setEmailNotifications] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(true);
   const [whatsappNotifications, setWhatsappNotifications] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  // Status timeline configuration
+  const statusSteps = [
+    { key: 'pending', label: 'Bestelling in verwerking', icon: Package },
+    { key: 'processing', label: 'Bestelling verwerkt', icon: Settings },
+    { key: 'production', label: 'Bestelling in productie', icon: Wrench },
+    { key: 'ready', label: 'Bestelling is gereed', icon: CheckCircle },
+    { key: 'delivery', label: 'U wordt gebeld voor levering', icon: Phone }
+  ];
 
   // Fetch order details
   const { data: order, isLoading, error } = useQuery<Order>({
@@ -55,26 +49,26 @@ export default function TrackOrderPage() {
     },
     onSuccess: () => {
       toast({
-        title: "Voorkeuren bijgewerkt",
-        description: "Uw notificatie voorkeuren zijn succesvol opgeslagen.",
+        title: "Voorkeur opgeslagen",
+        description: "Uw notificatie voorkeur is bijgewerkt.",
       });
       queryClient.invalidateQueries({ queryKey: ['/api/orders/track', searchedOrderNumber] });
     },
     onError: () => {
       toast({
-        title: "Fout bij bijwerken",
-        description: "Er ging iets mis bij het opslaan van uw voorkeuren.",
+        title: "Fout",
+        description: "Er is een fout opgetreden bij het opslaan van uw voorkeur.",
         variant: "destructive"
       });
     }
   });
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!orderNumber.trim()) {
       toast({
         title: "Bestelnummer vereist",
-        description: "Voer uw bestelnummer in om de status te bekijken.",
+        description: "Voer uw bestelnummer in om verder te gaan.",
         variant: "destructive"
       });
       return;
@@ -113,12 +107,21 @@ export default function TrackOrderPage() {
   };
 
   const getCurrentStatusIndex = (status: string) => {
-    return statusSteps.findIndex(step => step.key === status);
+    const statusMap: { [key: string]: number } = {
+      'pending': 0,
+      'processing': 1,
+      'production': 2,
+      'ready': 3,
+      'delivery': 4,
+      'completed': 4
+    };
+    return statusMap[status] || 0;
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('nl-NL', {
+  const formatDate = (date: Date | string | null) => {
+    if (!date) return '';
+    const d = new Date(date);
+    return d.toLocaleDateString('nl-NL', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -134,56 +137,61 @@ export default function TrackOrderPage() {
   }, [order]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-md mx-auto px-4">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Volg uw bestelling</h1>
-          <p className="text-gray-600">Voer uw bestelnummer in om de status te bekijken</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Volg uw bestelling
+          </h1>
         </div>
 
-        {/* Search Form */}
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <form onSubmit={handleSearch} className="space-y-4">
-              <div>
-                <label htmlFor="orderNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                  Bestelnummer
-                </label>
-                <Input
-                  id="orderNumber"
-                  type="text"
-                  value={orderNumber}
-                  onChange={(e) => setOrderNumber(e.target.value)}
-                  placeholder="Bijv. KAN-2024-001"
-                  className="w-full"
-                />
-                <p className="text-sm text-gray-500 mt-2">
-                  U vindt uw bestelnummer in de bevestigingsmail of WhatsApp bericht.
-                </p>
-              </div>
-              <Button 
-                type="submit" 
-                className="w-full bg-[#E6C988] hover:bg-[#d4b876] text-black"
-                disabled={isLoading}
-              >
-                <Search className="w-4 h-4 mr-2" />
-                Zoek bestelling
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+        {/* Order Lookup Form */}
+        {!searchedOrderNumber && (
+          <Card>
+            <CardContent className="p-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <Input
+                    type="text"
+                    placeholder="Bijv. 20240623-001"
+                    value={orderNumber}
+                    onChange={(e) => setOrderNumber(e.target.value)}
+                    className="w-full"
+                  />
+                  <p className="text-sm text-gray-500 mt-2">
+                    U vindt uw bestelnummer in uw bevestigingsmail of WhatsApp-bericht.
+                  </p>
+                </div>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[#E6C988] hover:bg-[#D5B876] text-black"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Zoeken...' : 'Bestelling bekijken'}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Error State */}
-        {error && (
-          <Card className="mb-8">
-            <CardContent className="p-6 text-center">
-              <div className="text-red-600 mb-2">
-                <MessageSquare className="w-8 h-8 mx-auto mb-2" />
-                <h3 className="font-medium">Bestelling niet gevonden</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Controleer uw bestelnummer en probeer opnieuw.
+        {error && searchedOrderNumber && (
+          <Card>
+            <CardContent className="p-6">
+              <div className="text-center">
+                <p className="text-red-600 mb-4">
+                  Bestelling niet gevonden. Controleer uw bestelnummer en probeer opnieuw.
                 </p>
+                <Button 
+                  onClick={() => {
+                    setSearchedOrderNumber('');
+                    setOrderNumber('');
+                  }}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Opnieuw zoeken
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -206,13 +214,24 @@ export default function TrackOrderPage() {
                 <p className="text-gray-600">
                   Besteld op {formatDate(order.createdAt)}
                 </p>
+                <Button 
+                  onClick={() => {
+                    setSearchedOrderNumber('');
+                    setOrderNumber('');
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="mt-3"
+                >
+                  Andere bestelling zoeken
+                </Button>
               </CardContent>
             </Card>
 
             {/* Status Timeline */}
             <Card>
               <CardHeader>
-                <CardTitle>Status</CardTitle>
+                <CardTitle className="text-lg">📊 Bestelling Status</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -254,11 +273,11 @@ export default function TrackOrderPage() {
               </CardContent>
             </Card>
 
-            {/* Client Note */}
+            {/* Entrepreneur Note */}
             {order.clientNote && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Update van de ondernemer</CardTitle>
+                  <CardTitle className="text-lg">📝 Update van de ondernemer</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-700 whitespace-pre-wrap">
@@ -272,16 +291,15 @@ export default function TrackOrderPage() {
             {order.pdfFileName && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Documenten</CardTitle>
+                  <CardTitle className="text-lg">📎 Documenten</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={handleDownloadPdf}
-                    variant="outline"
-                    className="w-full"
+                    className="w-full bg-[#E6C988] hover:bg-[#D5B876] text-black"
                   >
                     <Download className="w-4 h-4 mr-2" />
-                    Download bestelling samenvatting
+                    Bestelbon downloaden
                   </Button>
                 </CardContent>
               </Card>
@@ -290,17 +308,17 @@ export default function TrackOrderPage() {
             {/* Notification Preferences */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Hoe wilt u updates ontvangen?</CardTitle>
+                <CardTitle className="text-lg">🔔 Ontvang meldingen via:</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
+              <CardContent>
+                <div className="space-y-4">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="email"
                       checked={emailNotifications}
-                      onCheckedChange={(checked) => setEmailNotifications(checked as boolean)}
+                      onCheckedChange={(checked) => setEmailNotifications(checked === true)}
                     />
-                    <label htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    <label htmlFor="email" className="text-sm font-medium">
                       E-mail
                     </label>
                   </div>
@@ -308,33 +326,24 @@ export default function TrackOrderPage() {
                     <Checkbox
                       id="whatsapp"
                       checked={whatsappNotifications}
-                      onCheckedChange={(checked) => setWhatsappNotifications(checked as boolean)}
+                      onCheckedChange={(checked) => setWhatsappNotifications(checked === true)}
                     />
-                    <label htmlFor="whatsapp" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    <label htmlFor="whatsapp" className="text-sm font-medium">
                       WhatsApp
                     </label>
                   </div>
+                  <Button 
+                    onClick={handleUpdatePreferences}
+                    disabled={updatePreferencesMutation.isPending}
+                    className="w-full bg-[#E6C988] hover:bg-[#D5B876] text-black"
+                  >
+                    <Bell className="w-4 h-4 mr-2" />
+                    {updatePreferencesMutation.isPending ? 'Opslaan...' : 'Voorkeur opslaan'}
+                  </Button>
                 </div>
-                <Button 
-                  onClick={handleUpdatePreferences}
-                  disabled={updatePreferencesMutation.isPending}
-                  className="w-full bg-[#E6C988] hover:bg-[#d4b876] text-black"
-                >
-                  Voorkeuren opslaan
-                </Button>
               </CardContent>
             </Card>
           </div>
-        )}
-
-        {/* Loading State */}
-        {isLoading && searchedOrderNumber && (
-          <Card>
-            <CardContent className="p-6 text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#E6C988] mx-auto mb-4"></div>
-              <p className="text-gray-600">Bestelling wordt gezocht...</p>
-            </CardContent>
-          </Card>
         )}
       </div>
     </div>

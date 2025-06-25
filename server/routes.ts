@@ -775,6 +775,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Order tracking endpoints for clients
+  app.get('/api/orders/track/:orderNumber', async (req, res) => {
+    try {
+      const { orderNumber } = req.params;
+      const order = await storage.getOrderByOrderNumber(orderNumber);
+      
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      console.error('Error tracking order:', error);
+      res.status(500).json({ message: 'Failed to track order' });
+    }
+  });
+
+  // Update order notification preferences
+  app.post('/api/orders/update-preferences', async (req, res) => {
+    try {
+      const { orderNumber, notificationPreference } = req.body;
+      
+      if (!orderNumber || !notificationPreference) {
+        return res.status(400).json({ message: 'Order number and notification preference are required' });
+      }
+      
+      await storage.updateOrderNotificationPreference(orderNumber, notificationPreference);
+      res.json({ message: 'Preferences updated successfully' });
+    } catch (error) {
+      console.error('Error updating preferences:', error);
+      res.status(500).json({ message: 'Failed to update preferences' });
+    }
+  });
+
+  // Serve PDF files for orders
+  app.get('/api/orders/:id/pdf', async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const order = await storage.getPaymentOrderById(orderId);
+      
+      if (!order || !order.pdfFileName) {
+        return res.status(404).json({ message: 'PDF not found' });
+      }
+      
+      // In a real implementation, you would serve the file from storage
+      // For now, we'll return a placeholder response
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${order.pdfFileName}"`);
+      res.status(200).send('PDF content would be served here');
+    } catch (error) {
+      console.error('Error serving PDF:', error);
+      res.status(500).json({ message: 'Failed to serve PDF' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

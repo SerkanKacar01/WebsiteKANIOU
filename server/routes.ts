@@ -674,7 +674,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.patch("/api/admin/orders/:id", requireAdminAuth, async (req: Request, res: Response) => {
     try {
       const orderId = parseInt(req.params.id);
-      const { status, clientNote, notificationPreference } = req.body;
+      const { status, clientNote, noteFromEntrepreneur, notificationPreference } = req.body;
 
       if (isNaN(orderId)) {
         return res.status(400).json({ error: "Ongeldig order ID" });
@@ -690,6 +690,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.updatePaymentOrder(orderId, {
         status: status || existingOrder.status,
         clientNote: clientNote !== undefined ? clientNote : existingOrder.clientNote,
+        noteFromEntrepreneur: noteFromEntrepreneur !== undefined ? noteFromEntrepreneur : existingOrder.noteFromEntrepreneur,
         notificationPreference: notificationPreference || existingOrder.notificationPreference,
         updatedAt: new Date()
       });

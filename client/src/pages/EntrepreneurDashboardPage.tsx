@@ -42,6 +42,7 @@ interface Order {
   status: string;
   createdAt: string;
   clientNote?: string;
+  noteFromEntrepreneur?: string;
   pdfFileName?: string;
   notificationPreference: 'email' | 'whatsapp' | 'both';
   orderStatuses: OrderStatus[];
@@ -71,6 +72,7 @@ export default function EntrepreneurDashboardPage() {
   const [editForm, setEditForm] = useState({
     status: '',
     clientNote: '',
+    noteFromEntrepreneur: '',
     notificationPreference: 'email' as 'email' | 'whatsapp' | 'both'
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -193,6 +195,7 @@ export default function EntrepreneurDashboardPage() {
     setEditForm({
       status: order.status,
       clientNote: order.clientNote || '',
+      noteFromEntrepreneur: order.noteFromEntrepreneur || '',
       notificationPreference: order.notificationPreference
     });
     setIsEditModalOpen(true);
@@ -205,6 +208,7 @@ export default function EntrepreneurDashboardPage() {
       orderId: selectedOrder.id,
       status: editForm.status,
       clientNote: editForm.clientNote,
+      noteFromEntrepreneur: editForm.noteFromEntrepreneur,
       notificationPreference: editForm.notificationPreference,
     });
   };
@@ -485,6 +489,22 @@ export default function EntrepreneurDashboardPage() {
                 className="mt-1"
                 rows={3}
               />
+            </div>
+
+            {/* Entrepreneur Note */}
+            <div>
+              <Label htmlFor="noteFromEntrepreneur">Bericht van Ondernemer</Label>
+              <Textarea
+                id="noteFromEntrepreneur"
+                value={editForm.noteFromEntrepreneur}
+                onChange={(e) => setEditForm(prev => ({ ...prev, noteFromEntrepreneur: e.target.value }))}
+                placeholder="Voeg een persoonlijk bericht toe dat klanten kunnen zien op hun tracking pagina..."
+                className="mt-1"
+                rows={3}
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Dit bericht wordt getoond aan klanten als "Bericht van de ondernemer" op hun tracking pagina.
+              </p>
             </div>
 
             {/* Notification Preference */}

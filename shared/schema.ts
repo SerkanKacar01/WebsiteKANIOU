@@ -260,6 +260,7 @@ export const paymentOrders = pgTable("payment_orders", {
   customerDetails: jsonb("customer_details"), // Store customer address, etc.
   mollieStatus: text("mollie_status"), // Direct status from Mollie
   clientNote: text("client_note"), // Internal note visible to client
+  noteFromEntrepreneur: text("note_from_entrepreneur"), // Entrepreneur note visible to customer
   pdfFileName: text("pdf_file_name"), // Uploaded PDF filename
   notificationPreference: text("notification_preference").default("email"), // email, whatsapp, both
   notificationLogs: jsonb("notification_logs").$type<{

@@ -218,14 +218,26 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
   }
 
-  // Order tracking methods for clients
+  // Order tracking methods for clients with security validation
   async getOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined> {
     try {
+      // Validate order number format for security
+      if (!this.isValidOrderNumber(orderNumber)) {
+        return undefined;
+      }
+
       const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
-      return result[0];
+      const order = result[0];
+      
+      // Additional security checks
+      if (order && this.isOrderAccessible(order)) {
+        return order;
+      }
+      
+      return undefined;
     } catch (error) {
       console.warn('Database connection issue for order lookup');
-      // Return a mock order for demonstration purposes when database is unavailable
+      // Return a secure demo order only for valid format
       if (orderNumber === '20240623-001') {
         return {
           id: 1,
@@ -235,18 +247,14 @@ export class DatabaseStorage implements IStorage {
           customerEmail: 'demo@example.com',
           amount: 299.99,
           currency: 'EUR',
-          description: 'Rolgordijn op maat - 120x180cm',
+          description: 'Rolgordijn op maat',
           status: 'processing',
           redirectUrl: null,
           webhookUrl: null,
           productDetails: JSON.stringify({
-            product: 'Rolgordijn',
-            dimensions: '120x180cm',
-            color: 'Wit'
+            product: 'Rolgordijn'
           }),
-          customerDetails: JSON.stringify({
-            address: 'Voorbeeldstraat 123, 1000 Brussel'
-          }),
+          customerDetails: JSON.stringify({}),
           clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
           pdfFileName: null,
           notificationPreference: 'email',
@@ -260,6 +268,37 @@ export class DatabaseStorage implements IStorage {
       }
       return undefined;
     }
+  }
+
+  // Validate order number format
+  private isValidOrderNumber(orderNumber: string): boolean {
+    // Check format: YYYYMMDD-XXX or similar patterns
+    const validPatterns = [
+      /^\d{8}-\d{3}$/,  // 20240623-001
+      /^KAN-\d+$/,      // KAN-123
+      /^ORD-\d+$/       // ORD-456
+    ];
+    
+    return validPatterns.some(pattern => pattern.test(orderNumber));
+  }
+
+  // Check if order is accessible (not expired, valid status)
+  private isOrderAccessible(order: PaymentOrder): boolean {
+    // Don't allow access to very old orders (older than 2 years)
+    const twoYearsAgo = new Date();
+    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+    
+    if (order.createdAt && new Date(order.createdAt) < twoYearsAgo) {
+      return false;
+    }
+    
+    // Don't allow access to cancelled or failed orders
+    const restrictedStatuses = ['cancelled', 'failed', 'expired'];
+    if (order.status && restrictedStatuses.includes(order.status)) {
+      return false;
+    }
+    
+    return true;
   }
 
   async updateOrderNotificationPreference(orderNumber: string, notificationPreference: string): Promise<void> {

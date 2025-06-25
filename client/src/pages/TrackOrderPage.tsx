@@ -144,6 +144,24 @@ export default function TrackOrderPage() {
     return methods;
   };
 
+  // Extract general product name for privacy (no sizes, colors, prices)
+  const getGeneralProductName = (description: string) => {
+    if (!description) return 'Product';
+    
+    // Extract only the general product type
+    const lowerDesc = description.toLowerCase();
+    if (lowerDesc.includes('rolgordijn')) return 'Rolgordijn';
+    if (lowerDesc.includes('vitrage')) return 'Vitrage';
+    if (lowerDesc.includes('overgordijn')) return 'Overgordijn';
+    if (lowerDesc.includes('jaloezie')) return 'Jaloezie';
+    if (lowerDesc.includes('hor')) return 'Hor';
+    if (lowerDesc.includes('lamellen')) return 'Lamellen';
+    if (lowerDesc.includes('plissé')) return 'Plissé gordijn';
+    if (lowerDesc.includes('duo')) return 'Duo rolgordijn';
+    
+    return 'Raambekleding';
+  };
+
   const getCurrentStatusIndex = (status: string) => {
     const statusMap: { [key: string]: number } = {
       'pending': 0,
@@ -237,7 +255,9 @@ export default function TrackOrderPage() {
               <h3 className="font-medium text-red-800">Bestelling niet gevonden</h3>
             </div>
             <p className="text-red-700 mb-4 leading-relaxed">
-              Het ingevoerde bestelnummer is niet gevonden. Controleer het nummer en probeer opnieuw.
+              {error.message === "U heeft geen toegang tot deze bestelling. Controleer uw bestelnummer of neem contact met ons op." 
+                ? error.message 
+                : "Het ingevoerde bestelnummer is niet gevonden. Controleer het nummer en probeer opnieuw."}
             </p>
             <Button 
               onClick={() => {
@@ -263,20 +283,25 @@ export default function TrackOrderPage() {
         {/* Order Details */}
         {order && (
           <div className="space-y-6">
-            {/* Order Info */}
+            {/* Order Info - Privacy Protected */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>Bestelling {order.orderNumber || `KAN-${order.id}`}</span>
-                  <Badge variant="outline" className="bg-[#E6C988] text-black">
-                    €{order.amount.toFixed(2)}
-                  </Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">
-                  Besteld op {formatDate(order.createdAt)}
-                </p>
+                <div className="space-y-2">
+                  <p className="text-gray-600">
+                    Besteld op {formatDate(order.createdAt)}
+                  </p>
+                  {/* Show only general product type, no details */}
+                  {order.description && (
+                    <p className="text-sm text-gray-700">
+                      Product: {getGeneralProductName(order.description)}
+                    </p>
+                  )}
+                </div>
                 <Button 
                   onClick={() => {
                     setSearchedOrderNumber('');

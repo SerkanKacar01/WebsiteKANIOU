@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import type { PaymentOrder } from "@shared/schema";
@@ -26,7 +26,9 @@ import {
   X,
   Eye,
   Save,
-  Lock as LockIcon
+  Lock as LockIcon,
+  Search,
+  RotateCcw
 } from "lucide-react";
 
 interface OrderStatus {
@@ -132,6 +134,54 @@ export default function EntrepreneurDashboardPage() {
     enabled: !!authStatus?.authenticated,
     retry: false,
   });
+
+  // Filter orders based on search and filter criteria (Step 15.8)
+  const filteredOrders = React.useMemo(() => {
+    if (!dashboardData?.orders) return [];
+    
+    let filtered = dashboardData.orders;
+    
+    // Apply search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(order => 
+        order.customerName?.toLowerCase().includes(query) ||
+        order.customerEmail?.toLowerCase().includes(query) ||
+        order.orderNumber?.toLowerCase().includes(query) ||
+        order.id.toString().includes(query) ||
+        order.productType?.toLowerCase().includes(query) ||
+        order.description?.toLowerCase().includes(query)
+      );
+    }
+    
+    // Apply status filter
+    if (statusFilter && statusFilter !== 'Alle') {
+      filtered = filtered.filter(order => order.status === statusFilter);
+    }
+    
+    // Apply room filter
+    if (roomFilter && roomFilter !== 'Alle') {
+      filtered = filtered.filter(order => {
+        const customerDetails = order.customerDetails as any;
+        return customerDetails?.room === roomFilter;
+      });
+    }
+    
+    // Apply product filter
+    if (productFilter && productFilter !== 'Alle') {
+      filtered = filtered.filter(order => order.productType === productFilter);
+    }
+    
+    return filtered;
+  }, [dashboardData?.orders, searchQuery, statusFilter, roomFilter, productFilter]);
+
+  // Reset filters function
+  const resetFilters = () => {
+    setSearchQuery('');
+    setStatusFilter('');
+    setRoomFilter('');
+    setProductFilter('');
+  };
 
   useEffect(() => {
     if (!authLoading && !authStatus?.authenticated) {
@@ -611,6 +661,111 @@ export default function EntrepreneurDashboardPage() {
           </Card>
         </div>
 
+        {/* Search and Filter Section (Step 15.8) */}
+        <Card className="mb-6 shadow-sm">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-semibold text-black">Zoeken en Filteren</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Search Bar */}
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Zoek op klantnaam, ordernummer of productnaam..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E6C988] focus:border-[#E6C988] outline-none transition-colors"
+                />
+              </div>
+            </div>
+            
+            {/* Filter Dropdowns */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Status Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                    <SelectValue placeholder="Alle statussen" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Alle</SelectItem>
+                    <SelectItem value="Nieuw">Nieuw</SelectItem>
+                    <SelectItem value="Bestelling in verwerking">In verwerking</SelectItem>
+                    <SelectItem value="Bestelling verwerkt">Verwerkt</SelectItem>
+                    <SelectItem value="Bestelling in productie">In productie</SelectItem>
+                    <SelectItem value="Bestelling is gereed">Gereed</SelectItem>
+                    <SelectItem value="U wordt gebeld voor de levering">Wachten op levering</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Room Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Ruimte</label>
+                <Select value={roomFilter} onValueChange={setRoomFilter}>
+                  <SelectTrigger className="w-full border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                    <SelectValue placeholder="Alle ruimtes" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Alle</SelectItem>
+                    {ROOM_TYPES.map((room) => (
+                      <SelectItem key={room} value={room}>{room}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Product Type Filter */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Product type</label>
+                <Select value={productFilter} onValueChange={setProductFilter}>
+                  <SelectTrigger className="w-full border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                    <SelectValue placeholder="Alle producten" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Alle</SelectItem>
+                    <SelectItem value="Rolgordijn">Rolgordijn</SelectItem>
+                    <SelectItem value="Plissé">Plissé</SelectItem>
+                    <SelectItem value="Shutters">Shutters</SelectItem>
+                    <SelectItem value="Overgordijnen">Overgordijnen</SelectItem>
+                    <SelectItem value="Inbetweens">Inbetweens</SelectItem>
+                    <SelectItem value="Houten Jaloezieën">Houten Jaloezieën</SelectItem>
+                    <SelectItem value="Textiel Lamellen">Textiel Lamellen</SelectItem>
+                    <SelectItem value="Horren">Horren</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Reset Button */}
+              <div className="flex items-end">
+                <Button
+                  onClick={resetFilters}
+                  variant="outline"
+                  className="w-full border-gray-300 hover:bg-gray-50 text-gray-700"
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset
+                </Button>
+              </div>
+            </div>
+            
+            {/* Results Summary */}
+            <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+              <span className="text-sm text-gray-600">
+                {filteredOrders.length} van {dashboardData?.orders?.length || 0} orders weergegeven
+              </span>
+              {(searchQuery || statusFilter || roomFilter || productFilter) && (
+                <span className="text-sm text-[#E6C988] font-medium">
+                  Actieve filters toegepast
+                </span>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Orders Table - Desktop */}
         <Card className="hidden lg:block shadow-sm">
           <CardHeader className="bg-gray-50 border-b">
@@ -645,7 +800,7 @@ export default function EntrepreneurDashboardPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
-                  {dashboardData?.orders?.map((order) => (
+                  {filteredOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-6">
                         <div className="flex flex-col">
@@ -778,7 +933,7 @@ export default function EntrepreneurDashboardPage() {
             <h3 className="text-lg font-semibold text-black">Orders Overzicht</h3>
             <div className="flex items-center gap-3">
               <div className="text-sm text-gray-600">
-                {dashboardData?.orders?.length || 0} orders
+                {filteredOrders.length} van {dashboardData?.orders?.length || 0} orders
               </div>
               <Button
                 onClick={() => setIsNewOrderModalOpen(true)}
@@ -790,7 +945,7 @@ export default function EntrepreneurDashboardPage() {
               </Button>
             </div>
           </div>
-          {dashboardData?.orders?.map((order) => (
+          {filteredOrders.map((order) => (
             <Card key={order.id} className="shadow-sm border-l-4 border-l-[#E6C988] hover:shadow-md transition-shadow">
               <div className="p-4">
                 <div className="flex justify-between items-start mb-4">

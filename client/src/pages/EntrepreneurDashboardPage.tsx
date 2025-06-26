@@ -155,12 +155,12 @@ export default function EntrepreneurDashboardPage() {
     }
     
     // Apply status filter
-    if (statusFilter && statusFilter !== 'Alle') {
+    if (statusFilter && statusFilter !== 'all') {
       filtered = filtered.filter(order => order.status === statusFilter);
     }
     
     // Apply room filter
-    if (roomFilter && roomFilter !== 'Alle') {
+    if (roomFilter && roomFilter !== 'all') {
       filtered = filtered.filter(order => {
         const customerDetails = order.customerDetails as any;
         return customerDetails?.room === roomFilter;
@@ -168,7 +168,7 @@ export default function EntrepreneurDashboardPage() {
     }
     
     // Apply product filter
-    if (productFilter && productFilter !== 'Alle') {
+    if (productFilter && productFilter !== 'all') {
       filtered = filtered.filter(order => order.productType === productFilter);
     }
     
@@ -178,9 +178,9 @@ export default function EntrepreneurDashboardPage() {
   // Reset filters function
   const resetFilters = () => {
     setSearchQuery('');
-    setStatusFilter('');
-    setRoomFilter('');
-    setProductFilter('');
+    setStatusFilter('all');
+    setRoomFilter('all');
+    setProductFilter('all');
   };
 
   useEffect(() => {

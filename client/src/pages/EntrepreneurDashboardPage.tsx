@@ -110,6 +110,7 @@ export default function EntrepreneurDashboardPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedInvoiceFile, setSelectedInvoiceFile] = useState<File | null>(null);
   const [customerNote, setCustomerNote] = useState<string>('');
+  const [internalNote, setInternalNote] = useState<string>('');
   const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
   const [newOrderForm, setNewOrderForm] = useState({
     customerName: '',
@@ -350,6 +351,40 @@ export default function EntrepreneurDashboardPage() {
     },
   });
 
+  // Internal note mutation (Step 15.5) - Admin Only
+  const saveInternalNoteMutation = useMutation({
+    mutationFn: async (data: { orderId: number; noteText: string }) => {
+      const response = await fetch("/api/orders/add-internal-note", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Internal note save failed');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      toast({
+        title: "Interne notitie opgeslagen",
+        description: "De interne notitie is succesvol opgeslagen.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Fout bij opslaan",
+        description: "Er is een fout opgetreden bij het opslaan van de interne notitie.",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Status update mutation
   const updateStatusMutation = useMutation({
     mutationFn: async ({ orderId, newStatus }: { orderId: number; newStatus: string }) => {
@@ -420,6 +455,7 @@ export default function EntrepreneurDashboardPage() {
       notificationPreference: order.notificationPreference
     });
     setCustomerNote(order.customerNote || '');
+    setInternalNote((order as any).internalNote || '');
     setIsEditModalOpen(true);
   };
 
@@ -458,6 +494,15 @@ export default function EntrepreneurDashboardPage() {
     saveCustomerNoteMutation.mutate({
       orderId: selectedOrder.id,
       noteText: customerNote,
+    });
+  };
+
+  const handleSaveInternalNote = () => {
+    if (!selectedOrder) return;
+    
+    saveInternalNoteMutation.mutate({
+      orderId: selectedOrder.id,
+      noteText: internalNote,
     });
   };
 

@@ -262,6 +262,7 @@ export const paymentOrders = pgTable("payment_orders", {
   clientNote: text("client_note"), // Internal note visible to client
   noteFromEntrepreneur: text("note_from_entrepreneur"), // Entrepreneur note visible to customer
   customerNote: text("customer_note"), // Customer-visible note from entrepreneur
+  internalNote: text("internal_note"), // Admin-only internal note, never visible to customer
   pdfFileName: text("pdf_file_name"), // Uploaded PDF filename (receipt)
   invoiceUrl: text("invoice_url"), // Uploaded invoice PDF filename
   customerPhone: text("customer_phone"), // Phone number for WhatsApp notifications

@@ -951,11 +951,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Update notification preferences
-      await storage.updatePaymentOrder(existingOrder.id, {
+      await storage.updateOrderNotificationPreferences(existingOrder.id, {
         notifyByEmail: notifyByEmail,
         notifyByWhatsapp: notifyByWhatsapp,
-        customerPhone: customerPhone ? customerPhone.trim() : null,
-        updatedAt: new Date()
+        customerPhone: customerPhone ? customerPhone.trim() : null
       });
       
       res.json({ 

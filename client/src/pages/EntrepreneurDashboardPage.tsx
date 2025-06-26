@@ -486,9 +486,23 @@ export default function EntrepreneurDashboardPage() {
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Notificatie:</span>
-                  <span className="text-sm capitalize">{order.notificationPreference}</span>
+                  <span className="text-sm text-gray-600">Notificaties:</span>
+                  <div className="flex space-x-1">
+                    {(order.notifyByEmail ?? true) && (
+                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Email</span>
+                    )}
+                    {(order.notifyByWhatsapp ?? false) && (
+                      <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">WhatsApp</span>
+                    )}
+                  </div>
                 </div>
+                
+                {order.customerPhone && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Telefoon:</span>
+                    <span className="text-xs text-gray-500">{order.customerPhone}</span>
+                  </div>
+                )}
               </div>
             </Card>
           ))}

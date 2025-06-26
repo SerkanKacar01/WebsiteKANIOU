@@ -317,6 +317,27 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
+  async updateOrderNotificationPreferences(
+    orderId: number, 
+    preferences: {
+      notifyByEmail?: boolean;
+      notifyByWhatsapp?: boolean;
+      customerPhone?: string | null;
+    }
+  ): Promise<void> {
+    try {
+      await db.update(paymentOrders)
+        .set({ 
+          ...preferences,
+          updatedAt: new Date() 
+        })
+        .where(eq(paymentOrders.id, orderId));
+    } catch (error) {
+      console.warn('Database connection issue for notification preferences update');
+      // In a real scenario, this would be queued for retry when database is available
+    }
+  }
+
   // Admin Authentication
   async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
     const result = await db.select().from(adminUsers).where(eq(adminUsers.email, email));

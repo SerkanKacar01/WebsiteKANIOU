@@ -611,8 +611,18 @@ export default function EntrepreneurDashboardPage() {
         <div className="lg:hidden space-y-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-black">Orders Overzicht</h3>
-            <div className="text-sm text-gray-600">
-              {dashboardData?.orders?.length || 0} orders
+            <div className="flex items-center gap-3">
+              <div className="text-sm text-gray-600">
+                {dashboardData?.orders?.length || 0} orders
+              </div>
+              <Button
+                onClick={() => setIsNewOrderModalOpen(true)}
+                size="sm"
+                className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium px-3 py-2 rounded-lg flex items-center gap-1"
+              >
+                <Package className="h-3 w-3" />
+                + Nieuw
+              </Button>
             </div>
           </div>
           {dashboardData?.orders?.map((order) => (
@@ -963,6 +973,171 @@ export default function EntrepreneurDashboardPage() {
               <Button
                 variant="outline"
                 onClick={() => setIsEditModalOpen(false)}
+                className="flex-1 h-12 border-gray-300 hover:bg-gray-50"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Annuleren
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* New Order Creation Modal */}
+      <Dialog open={isNewOrderModalOpen} onOpenChange={setIsNewOrderModalOpen}>
+        <DialogContent className="max-w-md mx-auto bg-white rounded-lg shadow-xl">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-black">Nieuwe Bestelling Toevoegen</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            {/* Customer Name */}
+            <div className="space-y-2">
+              <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
+                Klantnaam *
+              </Label>
+              <Input
+                id="customerName"
+                value={newOrderForm.customerName}
+                onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerName: e.target.value }))}
+                placeholder="Volledige naam van de klant"
+                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                required
+              />
+            </div>
+
+            {/* Product Category */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">
+                Product Categorie *
+              </Label>
+              <Select 
+                value={newOrderForm.productCategory} 
+                onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, productCategory: value }))}
+              >
+                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                  <SelectValue placeholder="Selecteer product categorie" />
+                </SelectTrigger>
+                <SelectContent>
+                  {PRODUCT_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Dimensions */}
+            <div className="space-y-2">
+              <Label htmlFor="dimensions" className="text-sm font-medium text-gray-700">
+                Afmetingen *
+              </Label>
+              <Input
+                id="dimensions"
+                value={newOrderForm.dimensions}
+                onChange={(e) => setNewOrderForm(prev => ({ ...prev, dimensions: e.target.value }))}
+                placeholder="bijv. 120 x 250 cm"
+                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                required
+              />
+            </div>
+
+            {/* Price */}
+            <div className="space-y-2">
+              <Label htmlFor="price" className="text-sm font-medium text-gray-700">
+                Prijs (EUR) *
+              </Label>
+              <Input
+                id="price"
+                type="number"
+                value={newOrderForm.price}
+                onChange={(e) => setNewOrderForm(prev => ({ ...prev, price: e.target.value }))}
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                required
+              />
+            </div>
+
+            {/* Order Date */}
+            <div className="space-y-2">
+              <Label htmlFor="orderDate" className="text-sm font-medium text-gray-700">
+                Besteldatum *
+              </Label>
+              <Input
+                id="orderDate"
+                type="date"
+                value={newOrderForm.orderDate}
+                onChange={(e) => setNewOrderForm(prev => ({ ...prev, orderDate: e.target.value }))}
+                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                required
+              />
+            </div>
+
+            {/* Room Type */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">
+                Ruimte Type (optioneel)
+              </Label>
+              <Select 
+                value={newOrderForm.roomType} 
+                onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, roomType: value }))}
+              >
+                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                  <SelectValue placeholder="Selecteer ruimte type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ROOM_TYPES.map((room) => (
+                    <SelectItem key={room} value={room}>
+                      {room}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Status */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">
+                Status *
+              </Label>
+              <Select 
+                value={newOrderForm.status} 
+                onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, status: value }))}
+              >
+                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Nieuw">Nieuw</SelectItem>
+                  {ORDER_STATUSES.map((status) => (
+                    <SelectItem key={status} value={status}>
+                      {status}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
+              <Button
+                onClick={handleCreateOrder}
+                disabled={createOrderMutation.isPending}
+                className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-semibold flex-1 h-12"
+              >
+                {createOrderMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Package className="h-4 w-4 mr-2" />
+                )}
+                Bestelling Aanmaken
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setIsNewOrderModalOpen(false)}
                 className="flex-1 h-12 border-gray-300 hover:bg-gray-50"
               >
                 <X className="h-4 w-4 mr-2" />

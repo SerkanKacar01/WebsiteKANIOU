@@ -128,18 +128,44 @@ export default function TrackOrderPage() {
   const handleUpdatePreferences = () => {
     if (!order || !order.orderNumber) return;
 
-    let preference = 'email';
-    if (emailNotifications && whatsappNotifications) {
-      preference = 'both';
-    } else if (whatsappNotifications) {
-      preference = 'whatsapp';
-    } else if (emailNotifications) {
-      preference = 'email';
+    // Validation: at least one notification method must be selected
+    if (!emailNotifications && !whatsappNotifications) {
+      toast({
+        title: "Selectie vereist",
+        description: "Selecteer minimaal één notificatie methode.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Validation: phone number required for WhatsApp notifications
+    if (whatsappNotifications && !customerPhone.trim()) {
+      toast({
+        title: "Telefoonnummer vereist",
+        description: "Voer uw telefoonnummer in voor WhatsApp notificaties.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Phone number validation for WhatsApp
+    if (whatsappNotifications && customerPhone.trim()) {
+      const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,20}$/;
+      if (!phoneRegex.test(customerPhone.trim())) {
+        toast({
+          title: "Ongeldig telefoonnummer",
+          description: "Voer een geldig telefoonnummer in (10-20 cijfers).",
+          variant: "destructive"
+        });
+        return;
+      }
     }
 
     updatePreferencesMutation.mutate({
       orderNumber: order.orderNumber,
-      notificationPreference: preference
+      notifyByEmail: emailNotifications,
+      notifyByWhatsapp: whatsappNotifications,
+      customerPhone: whatsappNotifications ? customerPhone.trim() : undefined
     });
   };
 
@@ -484,6 +510,27 @@ export default function TrackOrderPage() {
                       WhatsApp
                     </label>
                   </div>
+                  
+                  {/* Phone number input - shown when WhatsApp is selected */}
+                  {whatsappNotifications && (
+                    <div className="space-y-2">
+                      <label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                        Telefoonnummer voor WhatsApp:
+                      </label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+32 9 123 45 67"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        className="w-full"
+                      />
+                      <p className="text-xs text-gray-500">
+                        Voer uw telefoonnummer in met landcode (bijvoorbeeld +32 voor België)
+                      </p>
+                    </div>
+                  )}
+                  
                   <Button 
                     onClick={handleUpdatePreferences}
                     disabled={updatePreferencesMutation.isPending}

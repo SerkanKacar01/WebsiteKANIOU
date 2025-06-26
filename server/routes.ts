@@ -917,6 +917,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update notification preferences endpoint
+  app.post('/api/orders/update-preferences', formRateLimiter, async (req, res) => {
+    try {
+      const { orderNumber, notifyByEmail, notifyByWhatsapp, customerPhone } = req.body;
+      
+      if (!orderNumber) {
+        return res.status(400).json({ error: 'Order number is required' });
+      }
+      
+      // Validate that at least one notification method is selected
+      if (!notifyByEmail && !notifyByWhatsapp) {
+        return res.status(400).json({ error: 'At least one notification method must be selected' });
+      }
+      
+      // Validate phone number if WhatsApp is enabled
+      if (notifyByWhatsapp && (!customerPhone || !customerPhone.trim())) {
+        return res.status(400).json({ error: 'Phone number is required for WhatsApp notifications' });
+      }
+      
+      // Phone number format validation
+      if (notifyByWhatsapp && customerPhone) {
+        const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,20}$/;
+        if (!phoneRegex.test(customerPhone.trim())) {
+          return res.status(400).json({ error: 'Invalid phone number format' });
+        }
+      }
+      
+      // Get the order to verify it exists
+      const existingOrder = await storage.getOrderByOrderNumber(orderNumber);
+      if (!existingOrder) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+      
+      // Update notification preferences
+      await storage.updatePaymentOrder(existingOrder.id, {
+        notifyByEmail: notifyByEmail,
+        notifyByWhatsapp: notifyByWhatsapp,
+        customerPhone: customerPhone ? customerPhone.trim() : null,
+        updatedAt: new Date()
+      });
+      
+      res.json({ 
+        success: true, 
+        message: 'Notification preferences updated successfully' 
+      });
+    } catch (error: any) {
+      console.error('Update preferences error:', error);
+      res.status(500).json({ error: 'Failed to update notification preferences' });
+    }
+  });
+
   // Serve PDF files for orders
   app.get('/api/orders/:id/pdf', async (req, res) => {
     try {

@@ -163,11 +163,22 @@ export class AdminAuth {
 export async function requireAdminAuth(req: any, res: any, next: any) {
   const sessionId = req.cookies?.admin_session || req.headers["x-admin-session"];
   
-  const authData = await AdminAuth.validateSession(sessionId);
-  if (!authData) {
-    return res.status(401).json({ error: "Unauthorized" });
+  // Direct validation for immediate admin access
+  if (sessionId) {
+    // Check if session exists in memory store first
+    const memorySession = memorySessionStore.get(sessionId);
+    if (memorySession && memorySession.expiresAt > new Date()) {
+      req.adminAuth = memorySession;
+      return next();
+    }
+    
+    // Fallback to full validation
+    const authData = await AdminAuth.validateSession(sessionId);
+    if (authData) {
+      req.adminAuth = authData;
+      return next();
+    }
   }
   
-  req.adminAuth = authData;
-  next();
+  return res.status(401).json({ error: "Unauthorized" });
 }

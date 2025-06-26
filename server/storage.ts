@@ -258,6 +258,7 @@ export class DatabaseStorage implements IStorage {
           clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
           noteFromEntrepreneur: 'Bedankt voor uw vertrouwen in KANIOU! Uw rolgordijn wordt met zorg handgemaakt in ons atelier. We houden u op de hoogte van de voortgang.',
           pdfFileName: 'sample-receipt-20240623-001.pdf',
+          invoiceUrl: 'sample-invoice-20240623-001.pdf',
           notificationPreference: 'email',
           notificationLogs: {
             'pending': { emailSent: true, sentAt: '2024-06-23T10:00:00Z' },

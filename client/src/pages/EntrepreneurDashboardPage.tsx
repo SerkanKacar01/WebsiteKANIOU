@@ -44,6 +44,7 @@ interface Order {
   clientNote?: string;
   noteFromEntrepreneur?: string;
   pdfFileName?: string;
+  invoiceUrl?: string;
   notificationPreference: 'email' | 'whatsapp' | 'both';
   orderStatuses: OrderStatus[];
 }
@@ -76,6 +77,7 @@ export default function EntrepreneurDashboardPage() {
     notificationPreference: 'email' as 'email' | 'whatsapp' | 'both'
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedInvoiceFile, setSelectedInvoiceFile] = useState<File | null>(null);
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -331,7 +333,8 @@ export default function EntrepreneurDashboardPage() {
                     <th className="text-left py-3 px-4 font-medium">Order Nummer</th>
                     <th className="text-left py-3 px-4 font-medium">Product Type</th>
                     <th className="text-left py-3 px-4 font-medium">Laatste Status</th>
-                    <th className="text-left py-3 px-4 font-medium">PDF Geüpload?</th>
+                    <th className="text-left py-3 px-4 font-medium">Receipt PDF</th>
+                    <th className="text-left py-3 px-4 font-medium">Invoice PDF</th>
                     <th className="text-left py-3 px-4 font-medium">Notificatie Voorkeur</th>
                     <th className="text-left py-3 px-4 font-medium">Actie</th>
                   </tr>
@@ -353,6 +356,13 @@ export default function EntrepreneurDashboardPage() {
                       </td>
                       <td className="py-3 px-4">
                         {order.pdfFileName ? (
+                          <Check className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <X className="h-4 w-4 text-red-600" />
+                        )}
+                      </td>
+                      <td className="py-3 px-4">
+                        {order.invoiceUrl ? (
                           <Check className="h-4 w-4 text-green-600" />
                         ) : (
                           <X className="h-4 w-4 text-red-600" />

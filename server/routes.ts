@@ -655,6 +655,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clientNote: order.clientNote || '',
         noteFromEntrepreneur: order.noteFromEntrepreneur || '',
         pdfFileName: order.pdfFileName || null,
+        invoiceUrl: order.invoiceUrl || null,
         notificationPreference: (order.notificationPreference as 'email' | 'whatsapp' | 'both') || 'email',
         orderStatuses: []
       }));

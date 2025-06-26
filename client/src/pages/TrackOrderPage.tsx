@@ -427,6 +427,21 @@ export default function TrackOrderPage() {
               </Card>
             )}
 
+            {/* Invoice PDF Download - Only show if file exists */}
+            {order.invoiceUrl && (
+              <Card>
+                <CardContent className="p-4">
+                  <Button 
+                    onClick={handleDownloadInvoice}
+                    className="w-full bg-[#E6C988] hover:bg-[#D5B876] text-black font-medium py-3 text-base"
+                  >
+                    <Download className="w-5 h-5 mr-2" />
+                    📄 Download Invoice (PDF)
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Notification Preferences */}
             <Card>
               <CardHeader>

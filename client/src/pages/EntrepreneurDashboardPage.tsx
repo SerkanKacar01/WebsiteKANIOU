@@ -111,6 +111,12 @@ export default function EntrepreneurDashboardPage() {
   // Status update state
   const [statusUpdates, setStatusUpdates] = useState<{[orderId: number]: string}>({});
   
+  // Search and filter state (Step 15.8)
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [roomFilter, setRoomFilter] = useState<string>('');
+  const [productFilter, setProductFilter] = useState<string>('');
+  
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -435,10 +441,10 @@ export default function EntrepreneurDashboardPage() {
   const openEditModal = (order: Order) => {
     setSelectedOrder(order);
     setEditForm({
-      status: order.status,
+      status: order.status || 'Nieuw',
       clientNote: order.clientNote || '',
       noteFromEntrepreneur: order.noteFromEntrepreneur || '',
-      notificationPreference: order.notificationPreference
+      notificationPreference: (order.notificationPreference as 'email' | 'whatsapp' | 'both') || 'email'
     });
     setCustomerNote(order.customerNote || '');
     setInternalNote((order as any).internalNote || '');
@@ -671,7 +677,7 @@ export default function EntrepreneurDashboardPage() {
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-2">
                           <Select 
-                            value={statusUpdates[order.id] || order.status} 
+                            value={statusUpdates[order.id] || order.status || 'Nieuw'} 
                             onValueChange={(value) => handleStatusChange(order.id, value)}
                           >
                             <SelectTrigger className="w-48 h-8 text-xs border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
@@ -866,7 +872,7 @@ export default function EntrepreneurDashboardPage() {
                     <span className="text-sm font-medium text-gray-700">Status:</span>
                     <div className="flex items-center gap-2">
                       <Select 
-                        value={statusUpdates[order.id] || order.status} 
+                        value={statusUpdates[order.id] || order.status || 'Nieuw'} 
                         onValueChange={(value) => handleStatusChange(order.id, value)}
                       >
                         <SelectTrigger className="w-40 h-7 text-xs border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">

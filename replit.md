@@ -120,6 +120,14 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 26, 2025: Customer Information Display System (Step 15.6) implementation
+  - Added customer information fields to database schema (customerFirstName, customerLastName, customerAddress, customerCity)
+  - Created "Klantgegevens" section in entrepreneur dashboard order detail view
+  - Implemented structured customer data display with Dutch labels (Voornaam, Achternaam, E-mailadres, Telefoonnummer, Adres, Woonplaats)
+  - Added customer information cards to mobile/tablet view with compact grid layout
+  - Integrated proper PaymentOrder type from shared schema for type safety
+  - Added fallback "Niet opgegeven" text for missing customer data fields
+  - Positioned customer information section between product/status and notes sections as requested
 - June 26, 2025: Comprehensive Business Dashboard review and improvements
   - Enhanced header design with professional logo and improved branding using #E6C988 gold accent
   - Redesigned stats cards with colored left borders, hover effects, and enhanced visual hierarchy

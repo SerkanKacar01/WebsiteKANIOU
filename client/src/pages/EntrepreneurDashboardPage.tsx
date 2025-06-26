@@ -206,8 +206,9 @@ export default function EntrepreneurDashboardPage() {
     mutationFn: async (data: { orderId: number; file: File }) => {
       const formData = new FormData();
       formData.append('pdf', data.file);
+      formData.append('orderId', data.orderId.toString());
       
-      const response = await fetch(`/api/admin/orders/${data.orderId}/upload-pdf`, {
+      const response = await fetch(`/api/orders/upload-pdf`, {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -379,7 +380,6 @@ export default function EntrepreneurDashboardPage() {
     setEditForm({
       status: order.status,
       clientNote: order.clientNote || '',
-      noteFromEntrepreneur: order.noteFromEntrepreneur || '',
       notificationPreference: order.notificationPreference
     });
     setIsEditModalOpen(true);
@@ -392,7 +392,6 @@ export default function EntrepreneurDashboardPage() {
       orderId: selectedOrder.id,
       status: editForm.status,
       clientNote: editForm.clientNote,
-      noteFromEntrepreneur: editForm.noteFromEntrepreneur,
       notificationPreference: editForm.notificationPreference,
     });
   };

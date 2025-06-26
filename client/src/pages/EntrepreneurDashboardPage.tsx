@@ -371,12 +371,20 @@ export default function EntrepreneurDashboardPage() {
       setIsNewOrderModalOpen(false);
       setNewOrderForm({
         customerName: '',
+        customerEmail: '',
+        customerPhone: '',
+        customerFirstName: '',
+        customerLastName: '',
+        customerAddress: '',
+        customerCity: '',
         productCategory: '',
         dimensions: '',
         price: '',
         orderDate: new Date().toISOString().split('T')[0],
         roomType: '',
-        status: 'Nieuw'
+        status: 'pending',
+        customerNote: '',
+        internalNote: ''
       });
     },
     onError: (error) => {
@@ -494,6 +502,43 @@ export default function EntrepreneurDashboardPage() {
     },
   });
 
+  // Delete order mutation
+  const deleteOrderMutation = useMutation({
+    mutationFn: async (orderId: number) => {
+      const response = await fetch(`/api/admin/orders/${orderId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      toast({
+        title: "Order verwijderd",
+        description: "De order is succesvol verwijderd.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Fout bij verwijderen",
+        description: "Er is een fout opgetreden bij het verwijderen van de order.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDeleteOrder = (orderId: number, customerName: string) => {
+    if (confirm(`Weet je zeker dat je de order van ${customerName} wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.`)) {
+      deleteOrderMutation.mutate(orderId);
+    }
+  };
+
   const handleStatusChange = (orderId: number, newStatus: string) => {
     setStatusUpdates(prev => ({ ...prev, [orderId]: newStatus }));
   };
@@ -506,10 +551,10 @@ export default function EntrepreneurDashboardPage() {
   };
 
   const handleCreateOrder = () => {
-    if (!newOrderForm.customerName || !newOrderForm.productCategory || !newOrderForm.dimensions || !newOrderForm.price) {
+    if (!newOrderForm.customerName || !newOrderForm.customerEmail || !newOrderForm.productCategory || !newOrderForm.price) {
       toast({
         title: "Vereiste velden",
-        description: "Vul alle verplichte velden in.",
+        description: "Vul tenminste klantnaam, e-mail, productcategorie en prijs in.",
         variant: "destructive",
       });
       return;
@@ -1594,140 +1639,182 @@ export default function EntrepreneurDashboardPage() {
 
       {/* New Order Creation Modal */}
       <Dialog open={isNewOrderModalOpen} onOpenChange={setIsNewOrderModalOpen}>
-        <DialogContent className="max-w-md mx-auto bg-white rounded-lg shadow-xl">
+        <DialogContent className="max-w-2xl mx-auto bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-black">Nieuwe Bestelling Toevoegen</DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
-            {/* Customer Name */}
-            <div className="space-y-2">
-              <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
-                Klantnaam *
-              </Label>
-              <Input
-                id="customerName"
-                value={newOrderForm.customerName}
-                onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerName: e.target.value }))}
-                placeholder="Volledige naam van de klant"
-                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                required
-              />
+            {/* Customer Information Section */}
+            <div className="border-b pb-4 mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Klantgegevens</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Customer Name */}
+                <div className="space-y-2">
+                  <Label htmlFor="customerName" className="text-sm font-medium text-gray-700">
+                    Volledige Naam *
+                  </Label>
+                  <Input
+                    id="customerName"
+                    value={newOrderForm.customerName}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerName: e.target.value }))}
+                    placeholder="Volledige naam van de klant"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                    required
+                  />
+                </div>
+
+                {/* Customer Email */}
+                <div className="space-y-2">
+                  <Label htmlFor="customerEmail" className="text-sm font-medium text-gray-700">
+                    E-mailadres *
+                  </Label>
+                  <Input
+                    id="customerEmail"
+                    type="email"
+                    value={newOrderForm.customerEmail}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerEmail: e.target.value }))}
+                    placeholder="klant@email.com"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                    required
+                  />
+                </div>
+
+                {/* Customer Phone */}
+                <div className="space-y-2">
+                  <Label htmlFor="customerPhone" className="text-sm font-medium text-gray-700">
+                    Telefoonnummer
+                  </Label>
+                  <Input
+                    id="customerPhone"
+                    value={newOrderForm.customerPhone}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerPhone: e.target.value }))}
+                    placeholder="+32 xxx xx xx xx"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                </div>
+
+                {/* Customer Address */}
+                <div className="space-y-2">
+                  <Label htmlFor="customerAddress" className="text-sm font-medium text-gray-700">
+                    Adres
+                  </Label>
+                  <Input
+                    id="customerAddress"
+                    value={newOrderForm.customerAddress}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerAddress: e.target.value }))}
+                    placeholder="Straat en nummer"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                </div>
+
+                {/* Customer City */}
+                <div className="space-y-2">
+                  <Label htmlFor="customerCity" className="text-sm font-medium text-gray-700">
+                    Stad
+                  </Label>
+                  <Input
+                    id="customerCity"
+                    value={newOrderForm.customerCity}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerCity: e.target.value }))}
+                    placeholder="Stad"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Product Category */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">
-                Product Categorie *
-              </Label>
-              <Select 
-                value={newOrderForm.productCategory} 
-                onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, productCategory: value }))}
-              >
-                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
-                  <SelectValue placeholder="Selecteer product categorie" />
-                </SelectTrigger>
-                <SelectContent>
-                  {PRODUCT_CATEGORIES.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            {/* Order Information Section */}
+            <div className="border-b pb-4 mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Bestellingsinformatie</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Product Category */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">
+                    Product Categorie *
+                  </Label>
+                  <Select 
+                    value={newOrderForm.productCategory} 
+                    onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, productCategory: value }))}
+                  >
+                    <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                      <SelectValue placeholder="Selecteer product categorie" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PRODUCT_CATEGORIES.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Price */}
+                <div className="space-y-2">
+                  <Label htmlFor="price" className="text-sm font-medium text-gray-700">
+                    Prijs (EUR) *
+                  </Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    value={newOrderForm.price}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, price: e.target.value }))}
+                    placeholder="0.00"
+                    min="0"
+                    step="0.01"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                    required
+                  />
+                </div>
+
+                {/* Dimensions */}
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="dimensions" className="text-sm font-medium text-gray-700">
+                    Afmetingen
+                  </Label>
+                  <Input
+                    id="dimensions"
+                    value={newOrderForm.dimensions}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, dimensions: e.target.value }))}
+                    placeholder="bijv. 120 x 250 cm"
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Dimensions */}
-            <div className="space-y-2">
-              <Label htmlFor="dimensions" className="text-sm font-medium text-gray-700">
-                Afmetingen *
-              </Label>
-              <Input
-                id="dimensions"
-                value={newOrderForm.dimensions}
-                onChange={(e) => setNewOrderForm(prev => ({ ...prev, dimensions: e.target.value }))}
-                placeholder="bijv. 120 x 250 cm"
-                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                required
-              />
-            </div>
+            {/* Additional Notes Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-800">Aanvullende Informatie</h3>
+              
+              {/* Customer Note */}
+              <div className="space-y-2">
+                <Label htmlFor="customerNote" className="text-sm font-medium text-gray-700">
+                  Klantnotitie (zichtbaar voor klant)
+                </Label>
+                <Textarea
+                  id="customerNote"
+                  value={newOrderForm.customerNote}
+                  onChange={(e) => setNewOrderForm(prev => ({ ...prev, customerNote: e.target.value }))}
+                  placeholder="Notitie die de klant kan zien..."
+                  className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988] min-h-[80px]"
+                />
+              </div>
 
-            {/* Price */}
-            <div className="space-y-2">
-              <Label htmlFor="price" className="text-sm font-medium text-gray-700">
-                Prijs (EUR) *
-              </Label>
-              <Input
-                id="price"
-                type="number"
-                value={newOrderForm.price}
-                onChange={(e) => setNewOrderForm(prev => ({ ...prev, price: e.target.value }))}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                required
-              />
-            </div>
-
-            {/* Order Date */}
-            <div className="space-y-2">
-              <Label htmlFor="orderDate" className="text-sm font-medium text-gray-700">
-                Besteldatum *
-              </Label>
-              <Input
-                id="orderDate"
-                type="date"
-                value={newOrderForm.orderDate}
-                onChange={(e) => setNewOrderForm(prev => ({ ...prev, orderDate: e.target.value }))}
-                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                required
-              />
-            </div>
-
-            {/* Room Type */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">
-                Ruimte Type (optioneel)
-              </Label>
-              <Select 
-                value={newOrderForm.roomType} 
-                onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, roomType: value }))}
-              >
-                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
-                  <SelectValue placeholder="Selecteer ruimte type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ROOM_TYPES.map((room) => (
-                    <SelectItem key={room} value={room}>
-                      {room}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Status */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">
-                Status *
-              </Label>
-              <Select 
-                value={newOrderForm.status} 
-                onValueChange={(value) => setNewOrderForm(prev => ({ ...prev, status: value }))}
-              >
-                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Nieuw">Nieuw</SelectItem>
-                  {ORDER_STATUSES.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              {/* Internal Note */}
+              <div className="space-y-2">
+                <Label htmlFor="internalNote" className="text-sm font-medium text-gray-700">
+                  Interne notitie (alleen admin)
+                </Label>
+                <Textarea
+                  id="internalNote"
+                  value={newOrderForm.internalNote}
+                  onChange={(e) => setNewOrderForm(prev => ({ ...prev, internalNote: e.target.value }))}
+                  placeholder="Interne opmerkingen..."
+                  className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988] min-h-[80px]"
+                />
+              </div>
             </div>
 
             {/* Action Buttons */}

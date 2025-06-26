@@ -416,8 +416,10 @@ export default function EntrepreneurDashboardPage() {
     setEditForm({
       status: order.status,
       clientNote: order.clientNote || '',
+      noteFromEntrepreneur: order.noteFromEntrepreneur || '',
       notificationPreference: order.notificationPreference
     });
+    setCustomerNote(order.customerNote || '');
     setIsEditModalOpen(true);
   };
 
@@ -447,6 +449,15 @@ export default function EntrepreneurDashboardPage() {
     uploadInvoiceMutation.mutate({
       orderId: selectedOrder.id,
       file: selectedInvoiceFile,
+    });
+  };
+
+  const handleSaveCustomerNote = () => {
+    if (!selectedOrder) return;
+    
+    saveCustomerNoteMutation.mutate({
+      orderId: selectedOrder.id,
+      noteText: customerNote,
     });
   };
 
@@ -1165,6 +1176,44 @@ export default function EntrepreneurDashboardPage() {
                 </div>
               </div>
             </div>
+            </div>
+
+            {/* Customer Note Section (Step 15.4) */}
+            <div className="space-y-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Eye className="h-5 w-5 text-blue-600" />
+                <h3 className="text-lg font-semibold text-blue-900">Notitie voor klant</h3>
+              </div>
+              <p className="text-sm text-blue-700">
+                Deze notitie wordt getoond aan de klant op de bestelstatus pagina.
+              </p>
+              
+              <div className="space-y-3">
+                <Textarea
+                  value={customerNote}
+                  onChange={(e) => setCustomerNote(e.target.value)}
+                  placeholder="Voeg een bericht toe dat zichtbaar is voor de klant..."
+                  className="min-h-20 border-blue-300 focus:border-blue-500 focus:ring-blue-500 bg-white"
+                  maxLength={500}
+                />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-blue-600">
+                    {customerNote.length}/500 karakters
+                  </span>
+                  <Button
+                    onClick={handleSaveCustomerNote}
+                    disabled={saveCustomerNoteMutation.isPending}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2"
+                  >
+                    {saveCustomerNoteMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <Save className="h-4 w-4 mr-2" />
+                    )}
+                    Notitie opslaan
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Action Buttons */}

@@ -468,6 +468,22 @@ export default function TrackOrderPage() {
               </Card>
             )}
 
+            {/* Customer Note - Only show if note exists (Step 15.4) */}
+            {order.customerNote && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">📝 Bericht van de ondernemer</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                      {order.customerNote}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Invoice PDF Download - Only show if file exists */}
             {order.invoiceUrl && (
               <Card>

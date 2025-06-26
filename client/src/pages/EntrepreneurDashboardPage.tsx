@@ -69,6 +69,31 @@ const ORDER_STATUSES = [
   'Geleverd'
 ];
 
+const PRODUCT_CATEGORIES = [
+  'Rolgordijnen',
+  'Houten jaloezieën',
+  'Verticale lamellen',
+  'Duorolgordijnen',
+  'Plissé gordijnen',
+  'Overgordijnen',
+  'Inbetween gordijnen',
+  'Luxaflex',
+  'Shutters',
+  'Horren'
+];
+
+const ROOM_TYPES = [
+  'Woonkamer',
+  'Slaapkamer', 
+  'Keuken',
+  'Badkamer',
+  'Kantoor',
+  'Kinderkamer',
+  'Eetkamer',
+  'Studeerkamer',
+  'Gang'
+];
+
 export default function EntrepreneurDashboardPage() {
   const [, setLocation] = useLocation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -82,6 +107,16 @@ export default function EntrepreneurDashboardPage() {
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedInvoiceFile, setSelectedInvoiceFile] = useState<File | null>(null);
+  const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
+  const [newOrderForm, setNewOrderForm] = useState({
+    customerName: '',
+    productCategory: '',
+    dimensions: '',
+    price: '',
+    orderDate: new Date().toISOString().split('T')[0],
+    roomType: '',
+    status: 'Nieuw'
+  });
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -229,6 +264,61 @@ export default function EntrepreneurDashboardPage() {
       });
     },
   });
+
+  const createOrderMutation = useMutation({
+    mutationFn: async (orderData: typeof newOrderForm) => {
+      const response = await fetch("/api/orders/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(orderData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      toast({
+        title: "Bestelling aangemaakt",
+        description: "De nieuwe bestelling is succesvol toegevoegd.",
+      });
+      setIsNewOrderModalOpen(false);
+      setNewOrderForm({
+        customerName: '',
+        productCategory: '',
+        dimensions: '',
+        price: '',
+        orderDate: new Date().toISOString().split('T')[0],
+        roomType: '',
+        status: 'Nieuw'
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Fout bij aanmaken",
+        description: "Er is een fout opgetreden bij het aanmaken van de bestelling.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleCreateOrder = () => {
+    if (!newOrderForm.customerName || !newOrderForm.productCategory || !newOrderForm.dimensions || !newOrderForm.price) {
+      toast({
+        title: "Vereiste velden",
+        description: "Vul alle verplichte velden in.",
+        variant: "destructive",
+      });
+      return;
+    }
+    createOrderMutation.mutate(newOrderForm);
+  };
 
   const openEditModal = (order: Order) => {
     setSelectedOrder(order);
@@ -389,8 +479,17 @@ export default function EntrepreneurDashboardPage() {
           <CardHeader className="bg-gray-50 border-b">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg font-semibold text-black">Orders Overzicht</CardTitle>
-              <div className="text-sm text-gray-600">
-                {dashboardData?.orders?.length || 0} orders totaal
+              <div className="flex items-center gap-4">
+                <div className="text-sm text-gray-600">
+                  {dashboardData?.orders?.length || 0} orders totaal
+                </div>
+                <Button
+                  onClick={() => setIsNewOrderModalOpen(true)}
+                  className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium px-4 py-2 rounded-lg flex items-center gap-2"
+                >
+                  <Package className="h-4 w-4" />
+                  + Nieuwe Order
+                </Button>
               </div>
             </div>
           </CardHeader>

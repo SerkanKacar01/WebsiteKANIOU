@@ -747,6 +747,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Invoice PDF upload endpoint for admin
+  app.post("/api/admin/orders/:orderId/upload-invoice", requireAdminAuth, upload.single('invoice'), async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (!req.file) {
+        return res.status(400).json({ error: "Geen bestand ontvangen" });
+      }
+
+      // Validate file type
+      if (req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ error: "Alleen PDF bestanden zijn toegestaan" });
+      }
+
+      // Get existing order
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      // Update order with invoice PDF filename
+      await storage.updatePaymentOrder(orderId, {
+        invoiceUrl: req.file.filename,
+        updatedAt: new Date()
+      });
+
+      res.json({ 
+        success: true, 
+        message: "Invoice PDF succesvol geüpload",
+        fileName: req.file.filename
+      });
+    } catch (error: any) {
+      console.error("Invoice PDF upload error:", error);
+      res.status(500).json({ error: "Fout bij uploaden invoice PDF" });
+    }
+  });
+
   // PDF download endpoint for customers
   app.get("/api/orders/:orderNumber/download-pdf", formRateLimiter, async (req: Request, res: Response) => {
     try {
@@ -777,6 +814,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("PDF download error:", error);
       res.status(500).json({ message: "Fout bij downloaden PDF" });
+    }
+  });
+
+  // Invoice PDF download endpoint for customers
+  app.get("/api/orders/:orderNumber/download-invoice", formRateLimiter, async (req: Request, res: Response) => {
+    try {
+      const { orderNumber } = req.params;
+      
+      // Use secure order lookup
+      const order = await storage.getOrderByOrderNumber(orderNumber);
+      
+      if (!order || !order.invoiceUrl) {
+        return res.status(404).json({ message: "Invoice PDF niet beschikbaar voor deze bestelling" });
+      }
+
+      const filePath = path.join(process.cwd(), 'uploads', order.invoiceUrl);
+      
+      // Check if file exists
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: "Invoice PDF bestand niet gevonden op server" });
+      }
+
+      // Set proper headers for PDF download/viewing
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="Invoice-${orderNumber}.pdf"`);
+      
+      // Stream the file
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
+      
+    } catch (error: any) {
+      console.error("Invoice PDF download error:", error);
+      res.status(500).json({ message: "Fout bij downloaden invoice PDF" });
     }
   });
 

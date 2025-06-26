@@ -192,6 +192,40 @@ export default function EntrepreneurDashboardPage() {
     },
   });
 
+  const uploadInvoiceMutation = useMutation({
+    mutationFn: async (data: { orderId: number; file: File }) => {
+      const formData = new FormData();
+      formData.append('invoice', data.file);
+      
+      const response = await fetch(`/api/admin/orders/${data.orderId}/upload-invoice`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+      
+      if (!response.ok) {
+        throw new Error('Invoice upload failed');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      toast({
+        title: "Invoice geüpload",
+        description: "Het invoice PDF-bestand is succesvol geüpload.",
+      });
+      setSelectedInvoiceFile(null);
+    },
+    onError: (error) => {
+      toast({
+        title: "Invoice upload fout",
+        description: "Er is een fout opgetreden bij het uploaden van het invoice PDF-bestand.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const openEditModal = (order: Order) => {
     setSelectedOrder(order);
     setEditForm({
@@ -221,6 +255,15 @@ export default function EntrepreneurDashboardPage() {
     uploadPdfMutation.mutate({
       orderId: selectedOrder.id,
       file: selectedFile,
+    });
+  };
+
+  const handleInvoiceUpload = () => {
+    if (!selectedOrder || !selectedInvoiceFile) return;
+    
+    uploadInvoiceMutation.mutate({
+      orderId: selectedOrder.id,
+      file: selectedInvoiceFile,
     });
   };
 
@@ -568,6 +611,42 @@ export default function EntrepreneurDashboardPage() {
                       <Upload className="h-4 w-4 mr-2" />
                     )}
                     PDF Uploaden
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Invoice PDF Upload */}
+            <div>
+              <Label>Invoice PDF Upload</Label>
+              {selectedOrder?.invoiceUrl ? (
+                <div className="mt-2 p-3 bg-green-50 rounded-lg flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-green-600" />
+                  <span className="text-sm text-green-800">
+                    Huidige invoice: {selectedOrder.invoiceUrl}
+                  </span>
+                </div>
+              ) : null}
+              
+              <div className="mt-2">
+                <Input
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => setSelectedInvoiceFile(e.target.files?.[0] || null)}
+                  className="mb-2"
+                />
+                {selectedInvoiceFile && (
+                  <Button
+                    onClick={handleInvoiceUpload}
+                    disabled={uploadInvoiceMutation.isPending}
+                    className="bg-[#E6C988] hover:bg-[#D5B992] text-black"
+                  >
+                    {uploadInvoiceMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <Upload className="h-4 w-4 mr-2" />
+                    )}
+                    Invoice Uploaden
                   </Button>
                 )}
               </div>

@@ -102,6 +102,14 @@ export default function TrackOrderPage() {
     }
   };
 
+  const handleDownloadInvoice = () => {
+    if (order && order.invoiceUrl && order.orderNumber) {
+      // Open invoice PDF in new tab or download based on browser settings
+      const invoiceUrl = `/api/orders/${order.orderNumber}/download-invoice`;
+      window.open(invoiceUrl, '_blank');
+    }
+  };
+
   const handleUpdatePreferences = () => {
     if (!order || !order.orderNumber) return;
 

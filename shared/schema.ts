@@ -261,6 +261,7 @@ export const paymentOrders = pgTable("payment_orders", {
   mollieStatus: text("mollie_status"), // Direct status from Mollie
   clientNote: text("client_note"), // Internal note visible to client
   noteFromEntrepreneur: text("note_from_entrepreneur"), // Entrepreneur note visible to customer
+  customerNote: text("customer_note"), // Customer-visible note from entrepreneur
   pdfFileName: text("pdf_file_name"), // Uploaded PDF filename (receipt)
   invoiceUrl: text("invoice_url"), // Uploaded invoice PDF filename
   customerPhone: text("customer_phone"), // Phone number for WhatsApp notifications

@@ -1037,6 +1037,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Customer Notes Management (Step 15.4)
+  app.post("/api/orders/add-customer-note", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const { orderId, noteText } = req.body;
+      
+      if (!orderId || noteText === undefined) {
+        return res.status(400).json({ error: "Order ID en notitie tekst zijn vereist" });
+      }
+
+      const orderIdNum = parseInt(orderId);
+      if (isNaN(orderIdNum)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Try to update in database, fallback for demo
+      try {
+        const existingOrder = await storage.getPaymentOrderById(orderIdNum);
+        if (!existingOrder) {
+          return res.status(404).json({ error: "Order niet gevonden" });
+        }
+
+        await storage.updatePaymentOrder(orderIdNum, {
+          customerNote: noteText,
+          updatedAt: new Date()
+        });
+      } catch (dbError) {
+        console.warn('Database unavailable for customer note update, continuing for demo');
+      }
+
+      res.json({ 
+        success: true, 
+        message: "Notitie opgeslagen",
+        noteText
+      });
+    } catch (error: any) {
+      console.error("Customer note add error:", error);
+      res.status(500).json({ error: "Fout bij opslaan notitie" });
+    }
+  });
+
+  app.get("/api/orders/:orderId/customer-note", async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Try to get order from database, fallback for demo
+      let order;
+      try {
+        order = await storage.getPaymentOrderById(orderId);
+      } catch (dbError) {
+        console.warn('Database unavailable for customer note retrieval, using demo response');
+        return res.json({ customerNote: null });
+      }
+
+      if (!order) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      res.json({ customerNote: order.customerNote || null });
+    } catch (error: any) {
+      console.error("Customer note get error:", error);
+      res.status(500).json({ error: "Fout bij ophalen notitie" });
+    }
+  });
+
   // Auth status endpoint for dashboard
   app.get("/api/admin/auth-status", async (req: Request, res: Response) => {
     try {

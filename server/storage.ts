@@ -29,6 +29,9 @@ import {
   notificationLogs,
   NotificationLog,
   InsertNotificationLog,
+  orderDocuments,
+  OrderDocument,
+  InsertOrderDocument,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";
@@ -84,6 +87,12 @@ export interface IStorage {
   
   // Order Management
   updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void>;
+  
+  // Order Documents
+  createOrderDocument(document: InsertOrderDocument): Promise<OrderDocument>;
+  getOrderDocuments(orderId: number): Promise<OrderDocument[]>;
+  deleteOrderDocument(id: number): Promise<void>;
+  updateOrderDocumentVisibility(id: number, isVisible: boolean): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -442,6 +451,49 @@ export class DatabaseStorage implements IStorage {
 
   async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void> {
     await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
+  }
+
+  // Order Documents
+  async createOrderDocument(document: InsertOrderDocument): Promise<OrderDocument> {
+    try {
+      const [result] = await db.insert(orderDocuments).values(document).returning();
+      return result;
+    } catch (error) {
+      console.warn('Database connection issue for order document creation');
+      throw error;
+    }
+  }
+
+  async getOrderDocuments(orderId: number): Promise<OrderDocument[]> {
+    try {
+      return await db.select()
+        .from(orderDocuments)
+        .where(eq(orderDocuments.orderId, orderId))
+        .orderBy(desc(orderDocuments.uploadedAt));
+    } catch (error) {
+      console.warn('Database connection issue for order documents');
+      return [];
+    }
+  }
+
+  async deleteOrderDocument(id: number): Promise<void> {
+    try {
+      await db.delete(orderDocuments).where(eq(orderDocuments.id, id));
+    } catch (error) {
+      console.warn('Database connection issue for order document deletion');
+      throw error;
+    }
+  }
+
+  async updateOrderDocumentVisibility(id: number, isVisible: boolean): Promise<void> {
+    try {
+      await db.update(orderDocuments)
+        .set({ isVisibleToCustomer: isVisible })
+        .where(eq(orderDocuments.id, id));
+    } catch (error) {
+      console.warn('Database connection issue for order document visibility update');
+      throw error;
+    }
   }
 }
 

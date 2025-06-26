@@ -16,6 +16,7 @@ import {
   insertStyleQuoteRequestSchema,
   insertPaymentOrderSchema,
   insertShoppingCartItemSchema,
+  insertOrderDocumentSchema,
 } from "@shared/schema";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";

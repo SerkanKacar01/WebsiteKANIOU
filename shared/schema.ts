@@ -398,6 +398,27 @@ export const notificationLogs = pgTable("notification_logs", {
 export type NotificationLog = typeof notificationLogs.$inferSelect;
 export type InsertNotificationLog = typeof notificationLogs.$inferInsert;
 
+// Order Documents
+export const orderDocuments = pgTable("order_documents", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").notNull().references(() => paymentOrders.id, { onDelete: "cascade" }),
+  filename: text("filename").notNull(), // Original filename
+  storedFilename: text("stored_filename").notNull(), // Unique stored filename
+  documentType: text("document_type").notNull(), // 'quote', 'invoice', 'measurement', 'instruction', 'other'
+  filePath: text("file_path").notNull(), // Server file path
+  isVisibleToCustomer: boolean("is_visible_to_customer").default(false),
+  uploadedAt: timestamp("uploaded_at").defaultNow(),
+  fileSize: integer("file_size"), // File size in bytes
+});
+
+export const insertOrderDocumentSchema = createInsertSchema(orderDocuments).omit({
+  id: true,
+  uploadedAt: true,
+});
+
+export type OrderDocument = typeof orderDocuments.$inferSelect;
+export type InsertOrderDocument = z.infer<typeof insertOrderDocumentSchema>;
+
 // Style Consultation Tables
 export const styleConsultations = pgTable("style_consultations", {
   id: serial("id").primaryKey(),

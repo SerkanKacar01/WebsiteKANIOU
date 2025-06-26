@@ -123,6 +123,11 @@ export default function EntrepreneurDashboardPage() {
   const [documentTypes, setDocumentTypes] = useState<string[]>([]);
   const [documentVisibility, setDocumentVisibility] = useState<boolean[]>([]);
   
+  // Document viewing state
+  const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
+  const [selectedOrderDocuments, setSelectedOrderDocuments] = useState<any[]>([]);
+  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+  
   // Status update state
   const [statusUpdates, setStatusUpdates] = useState<{[orderId: number]: string}>({});
   
@@ -627,6 +632,34 @@ export default function EntrepreneurDashboardPage() {
     });
   };
 
+  const handleViewDocuments = async (orderId: number) => {
+    try {
+      setSelectedOrderId(orderId);
+      // Fetch documents for this order
+      const response = await fetch(`/api/orders/${orderId}/documents`, {
+        credentials: "include",
+      });
+      
+      if (response.ok) {
+        const documents = await response.json();
+        setSelectedOrderDocuments(documents);
+        setIsDocumentModalOpen(true);
+      } else {
+        toast({
+          title: "Fout",
+          description: "Kan documenten niet ophalen",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Fout",
+        description: "Er is een fout opgetreden bij het ophalen van documenten",
+        variant: "destructive",
+      });
+    }
+  };
+
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case 'Geleverd':
@@ -942,24 +975,17 @@ export default function EntrepreneurDashboardPage() {
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        <div className="flex items-center space-x-3">
-                          <div className="flex items-center space-x-1">
-                            {order.pdfFileName ? (
-                              <Check className="h-4 w-4 text-green-600" />
-                            ) : (
-                              <X className="h-4 w-4 text-red-600" />
-                            )}
-                            <span className="text-xs text-gray-600">Receipt</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            {order.invoiceUrl ? (
-                              <Check className="h-4 w-4 text-green-600" />
-                            ) : (
-                              <X className="h-4 w-4 text-red-600" />
-                            )}
-                            <span className="text-xs text-gray-600">Invoice</span>
-                          </div>
-                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleViewDocuments(order.id)}
+                          className="flex items-center gap-2 text-[#E6C988] border-[#E6C988] hover:bg-[#E6C988] hover:text-black"
+                        >
+                          <FileText className="h-3 w-3" />
+                          {/* For now showing legacy PDF count - will be replaced with actual document count */}
+                          {(order.pdfFileName ? 1 : 0) + (order.invoiceUrl ? 1 : 0)} PDF
+                          {((order.pdfFileName ? 1 : 0) + (order.invoiceUrl ? 1 : 0)) !== 1 ? 's' : ''}
+                        </Button>
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex flex-col space-y-1">
@@ -1849,6 +1875,86 @@ export default function EntrepreneurDashboardPage() {
                   placeholder="Interne opmerkingen..."
                   className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988] min-h-[80px]"
                 />
+              </div>
+              
+              {/* PDF Documents Upload */}
+              <div className="space-y-2">
+                <Label htmlFor="pdfDocuments" className="text-sm font-medium text-gray-700">
+                  PDF Documenten (optioneel)
+                </Label>
+                <div className="space-y-3">
+                  <Input
+                    id="pdfDocuments"
+                    type="file"
+                    accept=".pdf"
+                    multiple
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files || []);
+                      if (files.length > 3) {
+                        toast({
+                          title: "Te veel bestanden",
+                          description: "Maximum 3 PDF bestanden toegestaan",
+                          variant: "destructive",
+                        });
+                        return;
+                      }
+                      setSelectedPDFs(files);
+                      setDocumentTypes(new Array(files.length).fill('document'));
+                      setDocumentVisibility(new Array(files.length).fill(false));
+                    }}
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                  <p className="text-xs text-gray-500">
+                    Alleen PDF bestanden. Maximum 3 bestanden per bestelling.
+                  </p>
+                  
+                  {/* Document Configuration */}
+                  {selectedPDFs.length > 0 && (
+                    <div className="space-y-3 p-3 bg-gray-50 rounded-lg">
+                      <h4 className="text-sm font-medium text-gray-700">Document Instellingen</h4>
+                      {selectedPDFs.map((file, index) => (
+                        <div key={index} className="flex items-center gap-3 p-2 bg-white rounded border">
+                          <div className="flex-1">
+                            <p className="text-sm font-medium">{file.name}</p>
+                            <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          </div>
+                          <Select 
+                            value={documentTypes[index] || 'document'} 
+                            onValueChange={(value) => {
+                              const newTypes = [...documentTypes];
+                              newTypes[index] = value;
+                              setDocumentTypes(newTypes);
+                            }}
+                          >
+                            <SelectTrigger className="w-32 h-8 text-xs">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="quote">Offerte</SelectItem>
+                              <SelectItem value="invoice">Factuur</SelectItem>
+                              <SelectItem value="measurement">Opmeting</SelectItem>
+                              <SelectItem value="instruction">Instructie</SelectItem>
+                              <SelectItem value="document">Document</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <label className="flex items-center gap-1 text-xs">
+                            <input
+                              type="checkbox"
+                              checked={documentVisibility[index] || false}
+                              onChange={(e) => {
+                                const newVisibility = [...documentVisibility];
+                                newVisibility[index] = e.target.checked;
+                                setDocumentVisibility(newVisibility);
+                              }}
+                              className="rounded border-gray-300"
+                            />
+                            Zichtbaar voor klant
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 

@@ -588,20 +588,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       return res.status(401).json({ error: "Ongeldige inloggegevens" });
-      
-      // Set secure HTTP-only cookie
-      res.cookie("admin_session", authData.sessionId, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        expires: authData.expiresAt,
-      });
-      
-      res.json({ 
-        success: true, 
-        message: "Succesvol ingelogd",
-        expiresAt: authData.expiresAt,
-      });
     } catch (error: any) {
       console.error("Admin login error:", error);
       res.status(500).json({ error: "Er is een fout opgetreden bij het inloggen" });
@@ -610,11 +596,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/logout", async (req: Request, res: Response) => {
     try {
-      const sessionId = req.cookies?.admin_session;
-      if (sessionId) {
-        await AdminAuth.logout(sessionId);
-      }
-      
       res.clearCookie("admin_session");
       res.json({ success: true, message: "Succesvol uitgelogd" });
     } catch (error: any) {
@@ -636,17 +617,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const authData = await AdminAuth.validateSession(sessionId);
-      
-      if (!authData) {
-        return res.status(401).json({ authenticated: false });
-      }
-      
-      res.json({ 
-        authenticated: true, 
-        email: authData.email,
-        expiresAt: authData.expiresAt,
-      });
+      return res.status(401).json({ authenticated: false });
     } catch (error: any) {
       console.error("Admin status check error:", error);
       res.status(500).json({ error: "Er is een fout opgetreden" });

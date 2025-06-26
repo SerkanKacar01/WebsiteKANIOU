@@ -25,9 +25,12 @@ import {
   Check,
   X,
   Eye,
+  EyeOff,
   Save,
   Lock as LockIcon,
   Search,
+  Download,
+  Trash2,
   RotateCcw
 } from "lucide-react";
 
@@ -560,7 +563,7 @@ export default function EntrepreneurDashboardPage() {
     }
   };
 
-  const handleCreateOrder = () => {
+  const handleCreateOrder = async () => {
     if (!newOrderForm.customerName || !newOrderForm.customerEmail || !newOrderForm.productCategory || !newOrderForm.price) {
       toast({
         title: "Vereiste velden",
@@ -569,7 +572,69 @@ export default function EntrepreneurDashboardPage() {
       });
       return;
     }
-    createOrderMutation.mutate(newOrderForm);
+
+    try {
+      // Create the order first
+      const orderResponse = await createOrderMutation.mutateAsync(newOrderForm);
+      
+      // If PDFs are selected, upload them
+      if (selectedPDFs.length > 0) {
+        const formData = new FormData();
+        
+        selectedPDFs.forEach((file, index) => {
+          formData.append('documents', file);
+          formData.append('documentTypes', documentTypes[index] || 'document');
+          formData.append('documentVisibility', documentVisibility[index] ? 'true' : 'false');
+        });
+
+        const uploadResponse = await fetch(`/api/orders/${orderResponse.id}/upload-documents`, {
+          method: 'POST',
+          body: formData,
+          credentials: 'include',
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error('Document upload failed');
+        }
+
+        toast({
+          title: "Bestelling aangemaakt",
+          description: `Bestelling en ${selectedPDFs.length} documenten succesvol geüpload`,
+        });
+      } else {
+        toast({
+          title: "Bestelling aangemaakt",
+          description: "De bestelling is succesvol aangemaakt",
+        });
+      }
+
+      // Reset form and close modal
+      setNewOrderForm({
+        customerName: '',
+        customerEmail: '',
+        customerPhone: '',
+        customerFirstName: '',
+        customerLastName: '',
+        customerAddress: '',
+        customerCity: '',
+        productCategory: '',
+        price: 0,
+        status: 'Nieuw',
+        customerNote: '',
+        internalNote: ''
+      });
+      setSelectedPDFs([]);
+      setDocumentTypes([]);
+      setDocumentVisibility([]);
+      setIsNewOrderModalOpen(false);
+      
+    } catch (error) {
+      toast({
+        title: "Fout",
+        description: "Er is een fout opgetreden bij het aanmaken van de bestelling",
+        variant: "destructive",
+      });
+    }
   };
 
   const openEditModal = (order: Order) => {
@@ -655,6 +720,70 @@ export default function EntrepreneurDashboardPage() {
       toast({
         title: "Fout",
         description: "Er is een fout opgetreden bij het ophalen van documenten",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const toggleDocumentVisibility = async (documentId: number, isVisible: boolean) => {
+    try {
+      const response = await fetch(`/api/orders/documents/${documentId}/visibility`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ isVisible }),
+      });
+
+      if (response.ok) {
+        // Refresh the document list
+        if (selectedOrderId) {
+          handleViewDocuments(selectedOrderId);
+        }
+        toast({
+          title: "Document bijgewerkt",
+          description: `Document is nu ${isVisible ? 'zichtbaar' : 'verborgen'} voor klanten`,
+        });
+      } else {
+        throw new Error('Update failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Fout",
+        description: "Document zichtbaarheid kon niet worden bijgewerkt",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const deleteDocument = async (documentId: number) => {
+    if (!confirm('Weet je zeker dat je dit document wilt verwijderen?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/orders/documents/${documentId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        // Refresh the document list
+        if (selectedOrderId) {
+          handleViewDocuments(selectedOrderId);
+        }
+        toast({
+          title: "Document verwijderd",
+          description: "Het document is succesvol verwijderd",
+        });
+      } else {
+        throw new Error('Delete failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Fout",
+        description: "Document kon niet worden verwijderd",
         variant: "destructive",
       });
     }
@@ -1981,6 +2110,90 @@ export default function EntrepreneurDashboardPage() {
                 Annuleren
               </Button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Document Viewing Modal */}
+      <Dialog open={isDocumentModalOpen} onOpenChange={setIsDocumentModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold text-black flex items-center gap-2">
+              <FileText className="h-5 w-5 text-[#E6C988]" />
+              Order Documenten
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            {selectedOrderDocuments.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <FileText className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                <p>Geen documenten beschikbaar voor deze order</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {selectedOrderDocuments.map((doc: any) => (
+                  <div key={doc.id} className="border rounded-lg p-4 bg-gray-50">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <FileText className="h-4 w-4 text-[#E6C988]" />
+                          <span className="font-medium text-gray-900">{doc.originalName}</span>
+                          <Badge variant="outline" className="text-xs">
+                            {doc.documentType}
+                          </Badge>
+                          {doc.isVisibleToCustomer && (
+                            <Badge className="text-xs bg-green-100 text-green-800">
+                              <Eye className="h-3 w-3 mr-1" />
+                              Zichtbaar
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600">
+                          Geüpload: {new Date(doc.createdAt).toLocaleDateString('nl-NL')}
+                        </p>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => window.open(`/api/orders/documents/${doc.id}/download`, '_blank')}
+                          className="text-[#E6C988] border-[#E6C988] hover:bg-[#E6C988] hover:text-black"
+                        >
+                          <Download className="h-3 w-3 mr-1" />
+                          Download
+                        </Button>
+                        
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => toggleDocumentVisibility(doc.id, !doc.isVisibleToCustomer)}
+                          className="border-gray-300 hover:bg-gray-50"
+                        >
+                          {doc.isVisibleToCustomer ? (
+                            <EyeOff className="h-3 w-3 mr-1" />
+                          ) : (
+                            <Eye className="h-3 w-3 mr-1" />
+                          )}
+                          {doc.isVisibleToCustomer ? 'Verbergen' : 'Tonen'}
+                        </Button>
+                        
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => deleteDocument(doc.id)}
+                          className="bg-red-500 hover:bg-red-600"
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Verwijderen
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>

@@ -570,7 +570,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Direct authentication for immediate dashboard access
       if (email === 'admin@kaniou.be' && password === process.env.ADMIN_PASSWORD) {
-        const sessionId = require('crypto').randomBytes(32).toString('hex');
+        const crypto = await import('crypto');
+        const sessionId = crypto.randomBytes(32).toString('hex');
         const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
         
         res.cookie("admin_session", sessionId, {

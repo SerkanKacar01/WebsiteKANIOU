@@ -1,8 +1,10 @@
 // Simple authentication bypass for immediate dashboard access
+import crypto from 'crypto';
+
 const sessionStore = new Map<string, { email: string; expiresAt: Date }>();
 
 export function createSession(email: string): { sessionId: string; expiresAt: Date } {
-  const sessionId = require('crypto').randomBytes(32).toString('hex');
+  const sessionId = crypto.randomBytes(32).toString('hex');
   const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
   
   sessionStore.set(sessionId, { email, expiresAt });

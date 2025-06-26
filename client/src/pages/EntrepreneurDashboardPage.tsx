@@ -627,42 +627,59 @@ export default function EntrepreneurDashboardPage() {
 
       {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Order #{selectedOrder?.id} Bewerken</DialogTitle>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto border-t-4 border-t-[#E6C988]">
+          <DialogHeader className="pb-4 border-b">
+            <DialogTitle className="text-xl font-bold text-black flex items-center gap-2">
+              <div className="w-6 h-6 bg-[#E6C988] rounded flex items-center justify-center">
+                <Edit className="h-3 w-3 text-black" />
+              </div>
+              Order #{selectedOrder?.orderNumber || selectedOrder?.id} Bewerken
+            </DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-6">
+          <div className="space-y-6 pt-4">
             {/* Order Info */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="font-medium mb-2">Order Informatie</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-600">Klant:</span>
-                  <p className="font-medium">{selectedOrder?.customerName}</p>
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200">
+              <h4 className="font-semibold mb-4 text-black flex items-center gap-2">
+                <Eye className="h-4 w-4 text-[#E6C988]" />
+                Order Informatie
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-gray-600 font-medium">Klant:</span>
+                    <p className="font-semibold text-black mt-1">{selectedOrder?.customerName}</p>
+                    <p className="text-xs text-gray-500">{selectedOrder?.customerEmail}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 font-medium">Product:</span>
+                    <p className="font-semibold text-black mt-1">{selectedOrder?.productType}</p>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-gray-600">Product:</span>
-                  <p className="font-medium">{selectedOrder?.productType}</p>
-                </div>
-                <div>
-                  <span className="text-gray-600">Bedrag:</span>
-                  <p className="font-medium">€{selectedOrder?.amount?.toFixed(2)}</p>
-                </div>
-                <div>
-                  <span className="text-gray-600">Datum:</span>
-                  <p className="font-medium">
-                    {selectedOrder?.createdAt ? new Date(selectedOrder.createdAt).toLocaleDateString('nl-NL') : ''}
-                  </p>
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-gray-600 font-medium">Bedrag:</span>
+                    <p className="font-semibold text-black mt-1 text-lg">
+                      €{((selectedOrder?.amount || 0) / 100).toFixed(2)}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 font-medium">Datum:</span>
+                    <p className="font-semibold text-black mt-1">
+                      {selectedOrder?.createdAt ? new Date(selectedOrder.createdAt).toLocaleDateString('nl-NL') : ''}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Status Update */}
-            <div>
-              <Label htmlFor="status">Status Bijwerken</Label>
+            <div className="space-y-2">
+              <Label htmlFor="status" className="text-sm font-semibold text-gray-700">
+                Status Bijwerken
+              </Label>
               <Select value={editForm.status} onValueChange={(value) => setEditForm(prev => ({ ...prev, status: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
                   <SelectValue placeholder="Selecteer status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -676,16 +693,21 @@ export default function EntrepreneurDashboardPage() {
             </div>
 
             {/* Client Note */}
-            <div>
-              <Label htmlFor="clientNote">Notitie voor Klant</Label>
+            <div className="space-y-2">
+              <Label htmlFor="clientNote" className="text-sm font-semibold text-gray-700">
+                Notitie voor Klant
+              </Label>
               <Textarea
                 id="clientNote"
                 value={editForm.clientNote}
                 onChange={(e) => setEditForm(prev => ({ ...prev, clientNote: e.target.value }))}
                 placeholder="Voeg een notitie toe die de klant kan zien in de order tracker..."
-                className="mt-1"
+                className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988] resize-none"
                 rows={3}
               />
+              <p className="text-xs text-gray-500">
+                Deze notitie is zichtbaar voor klanten in hun order tracking.
+              </p>
             </div>
 
             {/* Entrepreneur Note */}
@@ -705,114 +727,146 @@ export default function EntrepreneurDashboardPage() {
             </div>
 
             {/* Notification Preference */}
-            <div>
-              <Label htmlFor="notification">Notificatie Voorkeur</Label>
+            <div className="space-y-2">
+              <Label htmlFor="notification" className="text-sm font-semibold text-gray-700">
+                Notificatie Voorkeur
+              </Label>
               <Select 
                 value={editForm.notificationPreference} 
                 onValueChange={(value: 'email' | 'whatsapp' | 'both') => 
                   setEditForm(prev => ({ ...prev, notificationPreference: value }))
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="email">Email</SelectItem>
-                  <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                  <SelectItem value="both">Beide</SelectItem>
+                  <SelectItem value="email">📧 Email</SelectItem>
+                  <SelectItem value="whatsapp">📱 WhatsApp</SelectItem>
+                  <SelectItem value="both">📧📱 Beide</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-
-            {/* PDF Upload */}
-            <div>
-              <Label>PDF Upload</Label>
-              {selectedOrder?.pdfFileName ? (
-                <div className="mt-2 p-3 bg-green-50 rounded-lg flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-green-600" />
-                  <span className="text-sm text-green-800">
-                    Huidige file: {selectedOrder.pdfFileName}
-                  </span>
+              <div className="flex gap-2 mt-2">
+                <div className="flex items-center gap-1 text-xs px-2 py-1 bg-blue-50 rounded">
+                  📧 <span className="text-blue-700">Email notificaties</span>
                 </div>
-              ) : null}
-              
-              <div className="mt-2">
-                <Input
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-                  className="mb-2"
-                />
-                {selectedFile && (
-                  <Button
-                    onClick={handleFileUpload}
-                    disabled={uploadPdfMutation.isPending}
-                    className="bg-[#E6C988] hover:bg-[#D5B992] text-black"
-                  >
-                    {uploadPdfMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    ) : (
-                      <Upload className="h-4 w-4 mr-2" />
-                    )}
-                    PDF Uploaden
-                  </Button>
-                )}
+                <div className="flex items-center gap-1 text-xs px-2 py-1 bg-green-50 rounded">
+                  📱 <span className="text-green-700">WhatsApp berichten</span>
+                </div>
               </div>
             </div>
 
-            {/* Invoice PDF Upload */}
-            <div>
-              <Label>Invoice PDF Upload</Label>
-              {selectedOrder?.invoiceUrl ? (
-                <div className="mt-2 p-3 bg-green-50 rounded-lg flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-green-600" />
-                  <span className="text-sm text-green-800">
-                    Huidige invoice: {selectedOrder.invoiceUrl}
-                  </span>
-                </div>
-              ) : null}
-              
-              <div className="mt-2">
-                <Input
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setSelectedInvoiceFile(e.target.files?.[0] || null)}
-                  className="mb-2"
-                />
-                {selectedInvoiceFile && (
-                  <Button
-                    onClick={handleInvoiceUpload}
-                    disabled={uploadInvoiceMutation.isPending}
-                    className="bg-[#E6C988] hover:bg-[#D5B992] text-black"
-                  >
-                    {uploadInvoiceMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    ) : (
-                      <Upload className="h-4 w-4 mr-2" />
-                    )}
-                    Invoice Uploaden
-                  </Button>
+            {/* PDF Upload Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Receipt PDF Upload */}
+              <div className="space-y-3">
+                <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-[#E6C988]" />
+                  Receipt PDF Upload
+                </Label>
+                {selectedOrder?.pdfFileName ? (
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
+                    <Check className="h-4 w-4 text-green-600" />
+                    <span className="text-sm text-green-800 font-medium">
+                      {selectedOrder.pdfFileName}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center gap-2">
+                    <X className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-500">Geen PDF geüpload</span>
+                  </div>
                 )}
+                
+                <div className="space-y-2">
+                  <Input
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                  {selectedFile && (
+                    <Button
+                      onClick={handleFileUpload}
+                      disabled={uploadPdfMutation.isPending}
+                      className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium w-full"
+                    >
+                      {uploadPdfMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Upload className="h-4 w-4 mr-2" />
+                      )}
+                      Receipt PDF Uploaden
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Invoice PDF Upload */}
+              <div className="space-y-3">
+                <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-[#E6C988]" />
+                  Invoice PDF Upload
+                </Label>
+                {selectedOrder?.invoiceUrl ? (
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
+                    <Check className="h-4 w-4 text-green-600" />
+                    <span className="text-sm text-green-800 font-medium">
+                      Invoice beschikbaar
+                    </span>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center gap-2">
+                    <X className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-500">Geen invoice geüpload</span>
+                  </div>
+                )}
+                
+                <div className="space-y-2">
+                  <Input
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setSelectedInvoiceFile(e.target.files?.[0] || null)}
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                  {selectedInvoiceFile && (
+                    <Button
+                      onClick={handleInvoiceUpload}
+                      disabled={uploadInvoiceMutation.isPending}
+                      className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium w-full"
+                    >
+                      {uploadInvoiceMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Upload className="h-4 w-4 mr-2" />
+                      )}
+                      Invoice PDF Uploaden
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
               <Button
                 onClick={handleSaveChanges}
                 disabled={updateOrderMutation.isPending}
-                className="bg-[#E6C988] hover:bg-[#D5B992] text-black flex-1"
+                className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-semibold flex-1 h-12"
               >
                 {updateOrderMutation.isPending ? (
                   <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                ) : null}
+                ) : (
+                  <Check className="h-4 w-4 mr-2" />
+                )}
                 Wijzigingen Opslaan
               </Button>
               <Button
                 variant="outline"
                 onClick={() => setIsEditModalOpen(false)}
-                className="flex-1"
+                className="flex-1 h-12 border-gray-300 hover:bg-gray-50"
               >
+                <X className="h-4 w-4 mr-2" />
                 Annuleren
               </Button>
             </div>

@@ -52,6 +52,7 @@ import VolgBestellingPage from "@/pages/VolgBestellingPage";
 import BestellingStatusPage from "@/pages/BestellingStatusPage";
 import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
+import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 
 
@@ -189,6 +190,8 @@ function Router() {
         
         {/* Hidden Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
+        <Route path="/admin-login" component={AdminLoginPage} />
+        <Route path="/test-login" component={AdminLoginTest} />
         <Route path="/entrepreneur-dashboard" component={EntrepreneurDashboardPage} />
         
         <Route path="/admin/gallery" component={AdminGallery} />

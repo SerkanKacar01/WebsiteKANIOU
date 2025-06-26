@@ -118,7 +118,9 @@ export default function EntrepreneurDashboardPage() {
     roomType: '',
     status: 'pending',
     customerNote: '',
-    internalNote: ''
+    internalNote: '',
+    notifyByEmail: true,
+    notifyByWhatsapp: false
   });
   
   // PDF upload state
@@ -397,7 +399,9 @@ export default function EntrepreneurDashboardPage() {
         roomType: '',
         status: 'pending',
         customerNote: '',
-        internalNote: ''
+        internalNote: '',
+        notifyByEmail: true,
+        notifyByWhatsapp: false
       });
     },
     onError: (error) => {
@@ -564,10 +568,51 @@ export default function EntrepreneurDashboardPage() {
   };
 
   const handleCreateOrder = async () => {
-    if (!newOrderForm.customerName || !newOrderForm.customerEmail || !newOrderForm.productCategory || !newOrderForm.price) {
+    // Basic validation
+    if (!newOrderForm.customerName || !newOrderForm.productCategory || !newOrderForm.price) {
       toast({
         title: "Vereiste velden",
-        description: "Vul tenminste klantnaam, e-mail, productcategorie en prijs in.",
+        description: "Vul tenminste klantnaam, productcategorie en prijs in.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Notification preference validation
+    if (!newOrderForm.notifyByEmail && !newOrderForm.notifyByWhatsapp) {
+      toast({
+        title: "Notificatievoorkeur vereist",
+        description: "Selecteer tenminste één notificatiemethode (E-mail of WhatsApp).",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Email validation
+    if (newOrderForm.notifyByEmail && !newOrderForm.customerEmail) {
+      toast({
+        title: "E-mailadres vereist",
+        description: "E-mailadres is vereist wanneer e-mailnotificaties zijn geselecteerd.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // WhatsApp validation
+    if (newOrderForm.notifyByWhatsapp && !newOrderForm.customerPhone) {
+      toast({
+        title: "Telefoonnummer vereist",
+        description: "Telefoonnummer is vereist wanneer WhatsApp-notificaties zijn geselecteerd.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // International phone format validation for WhatsApp
+    if (newOrderForm.notifyByWhatsapp && newOrderForm.customerPhone && !newOrderForm.customerPhone.startsWith('+')) {
+      toast({
+        title: "Ongeldig telefoonnummer",
+        description: "Voor WhatsApp-notificaties gebruik internationaal formaat: +32...",
         variant: "destructive",
       });
       return;
@@ -618,10 +663,15 @@ export default function EntrepreneurDashboardPage() {
         customerAddress: '',
         customerCity: '',
         productCategory: '',
-        price: 0,
-        status: 'Nieuw',
+        dimensions: '',
+        price: '',
+        orderDate: new Date().toISOString().split('T')[0],
+        roomType: '',
+        status: 'pending',
         customerNote: '',
-        internalNote: ''
+        internalNote: '',
+        notifyByEmail: true,
+        notifyByWhatsapp: false
       });
       setSelectedPDFs([]);
       setDocumentTypes([]);
@@ -1972,6 +2022,59 @@ export default function EntrepreneurDashboardPage() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Notification Preferences Section */}
+            <div className="space-y-4 border-b pb-4 mb-4">
+              <h3 className="text-lg font-semibold text-gray-800">Notificatievoorkeur</h3>
+              <p className="text-sm text-gray-600 mb-3">
+                Selecteer hoe de klant bestellingsupdates wil ontvangen.
+              </p>
+              
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="notifyByEmail"
+                    checked={newOrderForm.notifyByEmail}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, notifyByEmail: e.target.checked }))}
+                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
+                  />
+                  <Label htmlFor="notifyByEmail" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    📧 E-mail
+                  </Label>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="notifyByWhatsapp"
+                    checked={newOrderForm.notifyByWhatsapp}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, notifyByWhatsapp: e.target.checked }))}
+                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
+                  />
+                  <Label htmlFor="notifyByWhatsapp" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    📱 WhatsApp
+                  </Label>
+                </div>
+              </div>
+              
+              {/* Validation messages */}
+              {newOrderForm.notifyByEmail && !newOrderForm.customerEmail && (
+                <p className="text-sm text-red-600 mt-2">
+                  ⚠️ E-mailadres is vereist voor e-mailnotificaties
+                </p>
+              )}
+              {newOrderForm.notifyByWhatsapp && !newOrderForm.customerPhone && (
+                <p className="text-sm text-red-600 mt-2">
+                  ⚠️ Telefoonnummer is vereist voor WhatsApp-notificaties
+                </p>
+              )}
+              {newOrderForm.notifyByWhatsapp && newOrderForm.customerPhone && !newOrderForm.customerPhone.startsWith('+') && (
+                <p className="text-sm text-orange-600 mt-2">
+                  ℹ️ Voor WhatsApp gebruik internationaal formaat: +32...
+                </p>
+              )}
             </div>
 
             {/* Additional Notes Section */}

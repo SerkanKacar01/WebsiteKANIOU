@@ -984,14 +984,29 @@ export default function EntrepreneurDashboardPage() {
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        <Button
-                          size="sm"
-                          onClick={() => openEditModal(order)}
-                          className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium"
-                        >
-                          <Edit className="h-3 w-3 mr-1" />
-                          Bewerk
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => openEditModal(order)}
+                            className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium"
+                          >
+                            <Edit className="h-3 w-3 mr-1" />
+                            Bewerk
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDeleteOrder(order.id, order.customerName)}
+                            disabled={deleteOrderMutation.isPending}
+                            className="bg-red-600 hover:bg-red-700 text-white font-medium"
+                          >
+                            {deleteOrderMutation.isPending ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              <X className="h-3 w-3" />
+                            )}
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -1037,14 +1052,29 @@ export default function EntrepreneurDashboardPage() {
                     <div className="text-lg font-bold text-black">
                       €{((order.amount || 0) / 100).toFixed(2)}
                     </div>
-                    <Button
-                      size="sm"
-                      onClick={() => openEditModal(order)}
-                      className="bg-[#E6C988] hover:bg-[#D5B992] text-black mt-2"
-                    >
-                      <Edit className="h-3 w-3 mr-1" />
-                      Bewerk
-                    </Button>
+                    <div className="flex gap-2 mt-2">
+                      <Button
+                        size="sm"
+                        onClick={() => openEditModal(order)}
+                        className="bg-[#E6C988] hover:bg-[#D5B992] text-black"
+                      >
+                        <Edit className="h-3 w-3 mr-1" />
+                        Bewerk
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleDeleteOrder(order.id, order.customerName)}
+                        disabled={deleteOrderMutation.isPending}
+                        className="bg-red-600 hover:bg-red-700 text-white"
+                      >
+                        {deleteOrderMutation.isPending ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <X className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               

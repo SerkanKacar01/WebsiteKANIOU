@@ -24,7 +24,8 @@ import {
   Check,
   X,
   Eye,
-  Save
+  Save,
+  Lock as LockIcon
 } from "lucide-react";
 
 interface OrderStatus {
@@ -1256,6 +1257,47 @@ export default function EntrepreneurDashboardPage() {
                       <Save className="h-4 w-4 mr-2" />
                     )}
                     Notitie opslaan
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Internal Note Section (Step 15.5) - Admin Only */}
+            <div className="space-y-4 p-4 bg-gray-50 border border-gray-300 rounded-lg">
+              <div className="flex items-center gap-2">
+                <LockIcon className="h-5 w-5 text-gray-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Interne notitie</h3>
+                <span className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded font-medium">
+                  Alleen zichtbaar voor admin
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">
+                Deze notitie is alleen zichtbaar voor beheerders en wordt nooit getoond aan klanten.
+              </p>
+              
+              <div className="space-y-3">
+                <Textarea
+                  value={internalNote}
+                  onChange={(e) => setInternalNote(e.target.value)}
+                  placeholder="Voeg een interne notitie toe die alleen voor admin zichtbaar is..."
+                  className="min-h-20 border-gray-300 focus:border-gray-500 focus:ring-gray-500 bg-white"
+                  maxLength={500}
+                />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-600">
+                    {internalNote.length}/500 karakters
+                  </span>
+                  <Button
+                    onClick={handleSaveInternalNote}
+                    disabled={saveInternalNoteMutation.isPending}
+                    className="bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-2"
+                  >
+                    {saveInternalNoteMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <LockIcon className="h-4 w-4 mr-2" />
+                    )}
+                    Interne notitie opslaan
                   </Button>
                 </div>
               </div>

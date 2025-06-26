@@ -23,7 +23,8 @@ import {
   FileText,
   Check,
   X,
-  Eye
+  Eye,
+  Save
 } from "lucide-react";
 
 interface OrderStatus {
@@ -117,6 +118,10 @@ export default function EntrepreneurDashboardPage() {
     roomType: '',
     status: 'Nieuw'
   });
+  
+  // Status update state
+  const [statusUpdates, setStatusUpdates] = useState<{[orderId: number]: string}>({});
+  
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -307,6 +312,55 @@ export default function EntrepreneurDashboardPage() {
       });
     },
   });
+
+  // Status update mutation
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ orderId, newStatus }: { orderId: number; newStatus: string }) => {
+      const response = await fetch("/api/orders/update-status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          orderId,
+          newStatus,
+          statusDate: new Date().toISOString().split('T')[0]
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      toast({
+        title: "Status bijgewerkt",
+        description: "De orderstatus is succesvol bijgewerkt.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Fout bij bijwerken",
+        description: "Er is een fout opgetreden bij het bijwerken van de status.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleStatusChange = (orderId: number, newStatus: string) => {
+    setStatusUpdates(prev => ({ ...prev, [orderId]: newStatus }));
+  };
+
+  const handleStatusSave = (orderId: number) => {
+    const newStatus = statusUpdates[orderId];
+    if (newStatus) {
+      updateStatusMutation.mutate({ orderId, newStatus });
+    }
+  };
 
   const handleCreateOrder = () => {
     if (!newOrderForm.customerName || !newOrderForm.productCategory || !newOrderForm.dimensions || !newOrderForm.price) {
@@ -538,9 +592,37 @@ export default function EntrepreneurDashboardPage() {
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        <Badge variant={getStatusBadgeVariant(order.status)} className="font-medium">
-                          {order.status}
-                        </Badge>
+                        <div className="flex items-center gap-2">
+                          <Select 
+                            value={statusUpdates[order.id] || order.status} 
+                            onValueChange={(value) => handleStatusChange(order.id, value)}
+                          >
+                            <SelectTrigger className="w-48 h-8 text-xs border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Nieuw">Nieuw</SelectItem>
+                              <SelectItem value="Bestelling in verwerking">Bestelling in verwerking</SelectItem>
+                              <SelectItem value="Bestelling verwerkt">Bestelling verwerkt</SelectItem>
+                              <SelectItem value="Bestelling in productie">Bestelling in productie</SelectItem>
+                              <SelectItem value="Bestelling is gereed">Bestelling is gereed</SelectItem>
+                              <SelectItem value="U wordt gebeld voor de levering">U wordt gebeld voor de levering</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Button
+                            size="sm"
+                            onClick={() => handleStatusSave(order.id)}
+                            disabled={updateStatusMutation.isPending}
+                            className="h-8 w-8 p-0 bg-[#E6C988] hover:bg-[#D5B992] text-black"
+                            title="Status opslaan"
+                          >
+                            {updateStatusMutation.isPending ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              <Save className="h-3 w-3" />
+                            )}
+                          </Button>
+                        </div>
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex items-center space-x-3">

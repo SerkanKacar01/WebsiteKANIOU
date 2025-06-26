@@ -568,7 +568,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Email en wachtwoord zijn vereist" });
       }
       
-      // Try environment-based authentication first for immediate access
+      // Direct authentication for immediate dashboard access
       if (email === 'admin@kaniou.be' && password === process.env.ADMIN_PASSWORD) {
         const sessionId = require('crypto').randomBytes(32).toString('hex');
         const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
@@ -587,10 +587,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const authData = await AdminAuth.login(email, password);
-      if (!authData) {
-        return res.status(401).json({ error: "Ongeldige inloggegevens" });
-      }
+      return res.status(401).json({ error: "Ongeldige inloggegevens" });
       
       // Set secure HTTP-only cookie
       res.cookie("admin_session", authData.sessionId, {

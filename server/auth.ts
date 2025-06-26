@@ -63,7 +63,7 @@ export class AdminAuth {
         // Store session in database
         await storage.createAdminSession({
           sessionId,
-          adminId: adminUser.id,
+          adminUserId: adminUser.id,
           expiresAt,
         });
         

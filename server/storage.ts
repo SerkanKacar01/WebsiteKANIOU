@@ -26,9 +26,12 @@ import {
   adminSessions,
   AdminSession,
   InsertAdminSession,
+  notificationLogs,
+  NotificationLog,
+  InsertNotificationLog,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, lt } from "drizzle-orm";
+import { eq, desc, lt, and } from "drizzle-orm";
 
 export interface IStorage {
   // Categories
@@ -335,6 +338,48 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.warn('Database connection issue for notification preferences update');
       // In a real scenario, this would be queued for retry when database is available
+    }
+  }
+
+  // Notification log methods
+  async createNotificationLog(log: InsertNotificationLog): Promise<NotificationLog> {
+    try {
+      const [result] = await db.insert(notificationLogs).values(log).returning();
+      return result;
+    } catch (error) {
+      console.warn('Database connection issue for notification log creation');
+      throw error;
+    }
+  }
+
+  async getNotificationLogsByOrderId(orderId: number): Promise<NotificationLog[]> {
+    try {
+      return await db.select()
+        .from(notificationLogs)
+        .where(eq(notificationLogs.orderId, orderId))
+        .orderBy(desc(notificationLogs.sentAt));
+    } catch (error) {
+      console.warn('Database connection issue for notification logs');
+      return [];
+    }
+  }
+
+  async getLatestNotificationStatus(orderId: number, type: 'email' | 'whatsapp'): Promise<NotificationLog | undefined> {
+    try {
+      const [result] = await db.select()
+        .from(notificationLogs)
+        .where(
+          and(
+            eq(notificationLogs.orderId, orderId),
+            eq(notificationLogs.notificationType, type)
+          )
+        )
+        .orderBy(desc(notificationLogs.sentAt))
+        .limit(1);
+      return result;
+    } catch (error) {
+      console.warn('Database connection issue for latest notification status');
+      return undefined;
     }
   }
 

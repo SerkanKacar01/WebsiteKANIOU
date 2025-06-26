@@ -377,6 +377,21 @@ export type Order = PaymentOrder;
 export type ShoppingCartItem = typeof shoppingCartItems.$inferSelect;
 export type InsertShoppingCartItem = z.infer<typeof insertShoppingCartItemSchema>;
 
+// Notification Log
+export const notificationLogs = pgTable("notification_logs", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").notNull().references(() => paymentOrders.id, { onDelete: "cascade" }),
+  notificationType: text("notification_type").notNull(), // 'email' or 'whatsapp'
+  status: text("status").notNull(), // 'sent', 'failed', 'pending'
+  sentAt: timestamp("sent_at").defaultNow(),
+  errorMessage: text("error_message"),
+  recipientEmail: text("recipient_email"),
+  recipientPhone: text("recipient_phone"),
+});
+
+export type NotificationLog = typeof notificationLogs.$inferSelect;
+export type InsertNotificationLog = typeof notificationLogs.$inferInsert;
+
 // Style Consultation Tables
 export const styleConsultations = pgTable("style_consultations", {
   id: serial("id").primaryKey(),

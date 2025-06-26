@@ -413,17 +413,32 @@ export default function EntrepreneurDashboardPage() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex flex-col space-y-1">
-                          <div className="flex items-center space-x-2">
-                            {(order.notifyByEmail ?? true) && (
-                              <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Email</span>
+                          <div className="flex items-center space-x-1">
+                            {(order.notifyByEmail ?? true) ? (
+                              <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded flex items-center">
+                                📧 Email ✅
+                              </span>
+                            ) : (
+                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded flex items-center">
+                                📧 Email ❌
+                              </span>
                             )}
-                            {(order.notifyByWhatsapp ?? false) && (
-                              <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">WhatsApp</span>
+                            {(order.notifyByWhatsapp ?? false) ? (
+                              <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded flex items-center">
+                                📱 WhatsApp ✅
+                              </span>
+                            ) : (
+                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded flex items-center">
+                                📱 WhatsApp ❌
+                              </span>
                             )}
                           </div>
                           {order.customerPhone && (
-                            <span className="text-xs text-gray-500">{order.customerPhone}</span>
+                            <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>
                           )}
+                          <div className="text-xs text-gray-400">
+                            Laatste email: Nog niet verzonden
+                          </div>
                         </div>
                       </td>
                       <td className="py-3 px-4">
@@ -485,24 +500,35 @@ export default function EntrepreneurDashboardPage() {
                   )}
                 </div>
                 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-start">
                   <span className="text-sm text-gray-600">Notificaties:</span>
-                  <div className="flex space-x-1">
-                    {(order.notifyByEmail ?? true) && (
-                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Email</span>
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex flex-wrap gap-1">
+                      {(order.notifyByEmail ?? true) ? (
+                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                          📧 Email ✅
+                        </span>
+                      ) : (
+                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
+                          📧 Email ❌
+                        </span>
+                      )}
+                      {(order.notifyByWhatsapp ?? false) ? (
+                        <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
+                          📱 WhatsApp ✅
+                        </span>
+                      ) : (
+                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
+                          📱 WhatsApp ❌
+                        </span>
+                      )}
+                    </div>
+                    {order.customerPhone && (
+                      <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>
                     )}
-                    {(order.notifyByWhatsapp ?? false) && (
-                      <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">WhatsApp</span>
-                    )}
+                    <span className="text-xs text-gray-400">Laatste: Nog niet verzonden</span>
                   </div>
                 </div>
-                
-                {order.customerPhone && (
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Telefoon:</span>
-                    <span className="text-xs text-gray-500">{order.customerPhone}</span>
-                  </div>
-                )}
               </div>
             </Card>
           ))}

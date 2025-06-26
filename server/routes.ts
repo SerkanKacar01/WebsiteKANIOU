@@ -28,6 +28,7 @@ import { analyzeRoomForColorMatching, convertImageToBase64 } from "./services/co
 import { sendNewsletterWelcomeEmail, sendNewsletterNotificationToAdmin } from "./newsletterService";
 import multer from "multer";
 import { molliePaymentService } from "./services/molliePayments";
+import { notificationService } from "./services/notificationService";
 import { AdminAuth, requireAdminAuth } from "./auth";
 import cookieParser from "cookie-parser";
 
@@ -717,14 +718,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Order niet gevonden" });
       }
 
+      // Check if status is changing to trigger notifications
+      const oldStatus = existingOrder.status;
+      const newStatus = status || existingOrder.status;
+      const statusChanged = oldStatus !== newStatus;
+
       // Update order in database
       await storage.updatePaymentOrder(orderId, {
-        status: status || existingOrder.status,
+        status: newStatus,
         clientNote: clientNote !== undefined ? clientNote : existingOrder.clientNote,
         noteFromEntrepreneur: noteFromEntrepreneur !== undefined ? noteFromEntrepreneur : existingOrder.noteFromEntrepreneur,
         notificationPreference: notificationPreference || existingOrder.notificationPreference,
         updatedAt: new Date()
       });
+
+      // Trigger notifications if status changed and customer has notification preferences
+      if (statusChanged && (existingOrder.notifyByEmail || existingOrder.notifyByWhatsapp)) {
+        try {
+          await notificationService.sendOrderStatusUpdate({
+            orderId: existingOrder.id,
+            orderNumber: existingOrder.orderNumber || `ORD-${existingOrder.id}`,
+            customerName: existingOrder.customerName,
+            newStatus: newStatus,
+            productType: existingOrder.description || 'Product',
+            notifyByEmail: existingOrder.notifyByEmail || false,
+            notifyByWhatsapp: existingOrder.notifyByWhatsapp || false,
+            notificationEmail: existingOrder.notificationEmail || existingOrder.customerEmail,
+            notificationPhone: existingOrder.notificationPhone || undefined
+          });
+        } catch (notificationError) {
+          console.error('Failed to send status update notification:', notificationError);
+          // Don't fail the order update if notification fails
+        }
+      }
 
       res.json({ 
         success: true, 

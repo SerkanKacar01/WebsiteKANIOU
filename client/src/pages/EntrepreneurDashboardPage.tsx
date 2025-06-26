@@ -36,6 +36,7 @@ interface Order {
   id: number;
   customerName: string;
   customerEmail: string;
+  customerPhone?: string;
   amount: number;
   currency: string;
   productType: string;
@@ -46,7 +47,10 @@ interface Order {
   pdfFileName?: string;
   invoiceUrl?: string;
   notificationPreference: 'email' | 'whatsapp' | 'both';
+  notifyByEmail?: boolean;
+  notifyByWhatsapp?: boolean;
   orderStatuses: OrderStatus[];
+  orderNumber?: string;
 }
 
 interface DashboardData {
@@ -295,18 +299,23 @@ export default function EntrepreneurDashboardPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-gray-200 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-2xl font-bold text-black">Entrepreneur Dashboard</h1>
-              <p className="text-sm text-gray-600">Welkom, {authStatus.email}</p>
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-[#E6C988] rounded-lg flex items-center justify-center">
+                <Package className="h-5 w-5 text-black" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-black">Business Dashboard</h1>
+                <p className="text-sm text-gray-600">Welkom, {authStatus.email}</p>
+              </div>
             </div>
             <Button
               onClick={handleLogout}
               disabled={isLoggingOut}
               variant="outline"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border-gray-300 hover:bg-gray-50"
             >
               {isLoggingOut ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -321,114 +330,157 @@ export default function EntrepreneurDashboardPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <Card className="border-l-4 border-l-[#E6C988] shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Totaal Orders</CardTitle>
-              <Package className="h-4 w-4 text-gray-600" />
+              <CardTitle className="text-sm font-medium text-gray-700">Totaal Orders</CardTitle>
+              <div className="w-8 h-8 bg-[#E6C988] rounded-full flex items-center justify-center">
+                <Package className="h-4 w-4 text-black" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{dashboardData?.totalOrders || 0}</div>
+              <div className="text-2xl font-bold text-black">{dashboardData?.totalOrders || 0}</div>
+              <p className="text-xs text-gray-600 mt-1">Alle bestellingen</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-l-4 border-l-orange-400 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">In Behandeling</CardTitle>
-              <TrendingUp className="h-4 w-4 text-gray-600" />
+              <CardTitle className="text-sm font-medium text-gray-700">In Behandeling</CardTitle>
+              <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                <TrendingUp className="h-4 w-4 text-orange-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{dashboardData?.pendingOrders || 0}</div>
+              <div className="text-2xl font-bold text-black">{dashboardData?.pendingOrders || 0}</div>
+              <p className="text-xs text-gray-600 mt-1">Actieve orders</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-l-4 border-l-green-400 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Totale Omzet</CardTitle>
-              <Euro className="h-4 w-4 text-gray-600" />
+              <CardTitle className="text-sm font-medium text-gray-700">Totale Omzet</CardTitle>
+              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <Euro className="h-4 w-4 text-green-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">€{dashboardData?.totalRevenue?.toFixed(2) || '0.00'}</div>
+              <div className="text-2xl font-bold text-black">€{((dashboardData?.totalRevenue || 0) / 100).toFixed(2)}</div>
+              <p className="text-xs text-gray-600 mt-1">Bruto omzet</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-l-4 border-l-blue-400 shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Klanten</CardTitle>
-              <Users className="h-4 w-4 text-gray-600" />
+              <CardTitle className="text-sm font-medium text-gray-700">Klanten</CardTitle>
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <Users className="h-4 w-4 text-blue-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{dashboardData?.orders?.length || 0}</div>
+              <div className="text-2xl font-bold text-black">{dashboardData?.orders?.length || 0}</div>
+              <p className="text-xs text-gray-600 mt-1">Unieke klanten</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Orders Table - Desktop */}
-        <Card className="hidden md:block">
-          <CardHeader>
-            <CardTitle>Orders Overzicht</CardTitle>
+        <Card className="hidden lg:block shadow-sm">
+          <CardHeader className="bg-gray-50 border-b">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg font-semibold text-black">Orders Overzicht</CardTitle>
+              <div className="text-sm text-gray-600">
+                {dashboardData?.orders?.length || 0} orders totaal
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-medium">Order Nummer</th>
-                    <th className="text-left py-3 px-4 font-medium">Product Type</th>
-                    <th className="text-left py-3 px-4 font-medium">Laatste Status</th>
-                    <th className="text-left py-3 px-4 font-medium">Receipt PDF</th>
-                    <th className="text-left py-3 px-4 font-medium">Invoice PDF</th>
-                    <th className="text-left py-3 px-4 font-medium">Notificatie Voorkeur</th>
-                    <th className="text-left py-3 px-4 font-medium">Actie</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Order</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Klant</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Product</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Status</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Documenten</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Notificaties</th>
+                    <th className="text-left py-4 px-6 font-semibold text-gray-700">Actie</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y divide-gray-100">
                   {dashboardData?.orders?.map((order) => (
-                    <tr key={order.id} className="border-b border-gray-100">
-                      <td 
-                        className="py-3 px-4 text-[#E6C988] font-medium cursor-pointer hover:underline"
-                        onClick={() => openEditModal(order)}
-                      >
-                        #{order.id}
+                    <tr key={order.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-6">
+                        <div className="flex flex-col">
+                          <span 
+                            className="font-medium text-[#E6C988] cursor-pointer hover:underline"
+                            onClick={() => openEditModal(order)}
+                          >
+                            #{order.orderNumber || order.id}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            €{((order.amount || 0) / 100).toFixed(2)}
+                          </span>
+                        </div>
                       </td>
-                      <td className="py-3 px-4">{order.productType}</td>
-                      <td className="py-3 px-4">
-                        <Badge variant={getStatusBadgeVariant(order.status)}>
+                      <td className="py-4 px-6">
+                        <div className="flex flex-col">
+                          <span className="font-medium text-gray-900">{order.customerName}</span>
+                          <span className="text-xs text-gray-500">{order.customerEmail}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex flex-col">
+                          <span className="font-medium text-gray-900">{order.productType}</span>
+                          <span className="text-xs text-gray-500">
+                            {order.createdAt ? new Date(order.createdAt).toLocaleDateString('nl-NL') : ''}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <Badge variant={getStatusBadgeVariant(order.status)} className="font-medium">
                           {order.status}
                         </Badge>
                       </td>
-                      <td className="py-3 px-4">
-                        {order.pdfFileName ? (
-                          <Check className="h-4 w-4 text-green-600" />
-                        ) : (
-                          <X className="h-4 w-4 text-red-600" />
-                        )}
-                      </td>
-                      <td className="py-3 px-4">
-                        {order.invoiceUrl ? (
-                          <Check className="h-4 w-4 text-green-600" />
-                        ) : (
-                          <X className="h-4 w-4 text-red-600" />
-                        )}
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="flex flex-col space-y-1">
+                      <td className="py-4 px-6">
+                        <div className="flex items-center space-x-3">
                           <div className="flex items-center space-x-1">
+                            {order.pdfFileName ? (
+                              <Check className="h-4 w-4 text-green-600" />
+                            ) : (
+                              <X className="h-4 w-4 text-red-600" />
+                            )}
+                            <span className="text-xs text-gray-600">Receipt</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            {order.invoiceUrl ? (
+                              <Check className="h-4 w-4 text-green-600" />
+                            ) : (
+                              <X className="h-4 w-4 text-red-600" />
+                            )}
+                            <span className="text-xs text-gray-600">Invoice</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex flex-col space-y-1">
+                          <div className="flex flex-wrap gap-1">
                             {(order.notifyByEmail ?? true) ? (
-                              <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded flex items-center">
+                              <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded font-medium">
                                 📧 Email ✅
                               </span>
                             ) : (
-                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded flex items-center">
+                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
                                 📧 Email ❌
                               </span>
                             )}
                             {(order.notifyByWhatsapp ?? false) ? (
-                              <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded flex items-center">
+                              <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded font-medium">
                                 📱 WhatsApp ✅
                               </span>
                             ) : (
-                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded flex items-center">
+                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
                                 📱 WhatsApp ❌
                               </span>
                             )}
@@ -436,19 +488,15 @@ export default function EntrepreneurDashboardPage() {
                           {order.customerPhone && (
                             <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>
                           )}
-                          <div className="text-xs text-gray-400">
-                            Laatste email: Nog niet verzonden
-                          </div>
                         </div>
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-4 px-6">
                         <Button
                           size="sm"
-                          variant="outline"
                           onClick={() => openEditModal(order)}
-                          className="flex items-center gap-1"
+                          className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium"
                         >
-                          <Edit className="h-3 w-3" />
+                          <Edit className="h-3 w-3 mr-1" />
                           Bewerk
                         </Button>
                       </td>
@@ -460,73 +508,115 @@ export default function EntrepreneurDashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Orders Cards - Mobile */}
-        <div className="md:hidden space-y-4">
+        {/* Orders Cards - Mobile & Tablet */}
+        <div className="lg:hidden space-y-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-black">Orders Overzicht</h3>
+            <div className="text-sm text-gray-600">
+              {dashboardData?.orders?.length || 0} orders
+            </div>
+          </div>
           {dashboardData?.orders?.map((order) => (
-            <Card key={order.id} className="p-4">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 
-                    className="font-medium text-[#E6C988] cursor-pointer"
-                    onClick={() => openEditModal(order)}
-                  >
-                    Order #{order.id}
-                  </h3>
-                  <p className="text-sm text-gray-600">{order.productType}</p>
-                </div>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => openEditModal(order)}
-                >
-                  <Edit className="h-3 w-3" />
-                </Button>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Status:</span>
-                  <Badge variant={getStatusBadgeVariant(order.status)}>
-                    {order.status}
-                  </Badge>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">PDF:</span>
-                  {order.pdfFileName ? (
-                    <Check className="h-4 w-4 text-green-600" />
-                  ) : (
-                    <X className="h-4 w-4 text-red-600" />
-                  )}
-                </div>
-                
-                <div className="flex justify-between items-start">
-                  <span className="text-sm text-gray-600">Notificaties:</span>
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex flex-wrap gap-1">
-                      {(order.notifyByEmail ?? true) ? (
-                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                          📧 Email ✅
-                        </span>
-                      ) : (
-                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
-                          📧 Email ❌
-                        </span>
-                      )}
-                      {(order.notifyByWhatsapp ?? false) ? (
-                        <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
-                          📱 WhatsApp ✅
-                        </span>
-                      ) : (
-                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
-                          📱 WhatsApp ❌
-                        </span>
-                      )}
+            <Card key={order.id} className="shadow-sm border-l-4 border-l-[#E6C988] hover:shadow-md transition-shadow">
+              <div className="p-4">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1">
+                    <h3 
+                      className="font-semibold text-[#E6C988] cursor-pointer hover:underline text-lg"
+                      onClick={() => openEditModal(order)}
+                    >
+                      #{order.orderNumber || order.id}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">{order.customerName}</p>
+                    <p className="text-xs text-gray-500">{order.customerEmail}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-black">
+                      €{((order.amount || 0) / 100).toFixed(2)}
                     </div>
-                    {order.customerPhone && (
-                      <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>
-                    )}
-                    <span className="text-xs text-gray-400">Laatste: Nog niet verzonden</span>
+                    <Button
+                      size="sm"
+                      onClick={() => openEditModal(order)}
+                      className="bg-[#E6C988] hover:bg-[#D5B992] text-black mt-2"
+                    >
+                      <Edit className="h-3 w-3 mr-1" />
+                      Bewerk
+                    </Button>
+                  </div>
+                </div>
+              
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <span className="text-sm font-medium text-gray-700">Product:</span>
+                    <p className="text-sm text-gray-900 mt-1">{order.productType}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-medium text-gray-700">Datum:</span>
+                    <p className="text-sm text-gray-900 mt-1">
+                      {order.createdAt ? new Date(order.createdAt).toLocaleDateString('nl-NL') : ''}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-gray-700">Status:</span>
+                    <Badge variant={getStatusBadgeVariant(order.status)} className="font-medium">
+                      {order.status}
+                    </Badge>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-gray-700">Documenten:</span>
+                    <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-1">
+                        {order.pdfFileName ? (
+                          <Check className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <X className="h-4 w-4 text-red-600" />
+                        )}
+                        <span className="text-xs text-gray-600">Receipt</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        {order.invoiceUrl ? (
+                          <Check className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <X className="h-4 w-4 text-red-600" />
+                        )}
+                        <span className="text-xs text-gray-600">Invoice</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t pt-3">
+                    <div className="flex justify-between items-start">
+                      <span className="text-sm font-medium text-gray-700">Notificaties:</span>
+                      <div className="flex flex-col space-y-2 items-end">
+                        <div className="flex flex-wrap gap-1 justify-end">
+                          {(order.notifyByEmail ?? true) ? (
+                            <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded font-medium">
+                              📧 Email ✅
+                            </span>
+                          ) : (
+                            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
+                              📧 Email ❌
+                            </span>
+                          )}
+                          {(order.notifyByWhatsapp ?? false) ? (
+                            <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded font-medium">
+                              📱 WhatsApp ✅
+                            </span>
+                          ) : (
+                            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
+                              📱 WhatsApp ❌
+                            </span>
+                          )}
+                        </div>
+                        {order.customerPhone && (
+                          <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

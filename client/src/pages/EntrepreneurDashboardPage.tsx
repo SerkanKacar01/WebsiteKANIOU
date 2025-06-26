@@ -976,13 +976,78 @@ export default function EntrepreneurDashboardPage() {
             </div>
 
             {/* PDF Upload Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Receipt PDF Upload */}
-              <div className="space-y-3">
+            <div className="space-y-6">
+              {/* Main PDF Upload for Customer */}
+              <div className="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
                 <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <FileText className="h-4 w-4 text-[#E6C988]" />
-                  Receipt PDF Upload
+                  PDF-bestand uploaden
                 </Label>
+                <p className="text-xs text-gray-600">Offerte of factuur voor de klant</p>
+                
+                {selectedOrder?.pdfFileName ? (
+                  <div className="space-y-3">
+                    <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-600" />
+                        <span className="text-sm text-green-800 font-medium">
+                          {selectedOrder.pdfFileName}
+                        </span>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => window.open(`/api/orders/${selectedOrder.id}/download-pdf`, '_blank')}
+                        className="text-green-700 border-green-300 hover:bg-green-100"
+                      >
+                        <Eye className="h-3 w-3 mr-1" />
+                        Bekijk
+                      </Button>
+                    </div>
+                    <p className="text-xs text-green-700 font-medium">
+                      ✅ Offerte of factuur beschikbaar voor de klant
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center gap-2">
+                    <X className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-500">Geen PDF geüpload</span>
+                  </div>
+                )}
+                
+                <div className="space-y-2">
+                  <Input
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                  <p className="text-xs text-gray-500">Alleen PDF bestanden, max 5MB</p>
+                  {selectedFile && (
+                    <Button
+                      onClick={handleFileUpload}
+                      disabled={uploadPdfMutation.isPending}
+                      className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium w-full"
+                    >
+                      {uploadPdfMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Upload className="h-4 w-4 mr-2" />
+                      )}
+                      PDF Uploaden
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Additional Document Uploads */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Receipt PDF Upload */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-[#E6C988]" />
+                    Receipt PDF Upload (Intern)
+                  </Label>
                 {selectedOrder?.pdfFileName ? (
                   <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
                     <Check className="h-4 w-4 text-green-600" />
@@ -1064,6 +1129,7 @@ export default function EntrepreneurDashboardPage() {
                   )}
                 </div>
               </div>
+            </div>
             </div>
 
             {/* Action Buttons */}

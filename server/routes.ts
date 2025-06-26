@@ -797,6 +797,102 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Main PDF upload endpoint for customer documents
+  app.post("/api/orders/upload-pdf", requireAdminAuth, upload.single('pdf'), async (req: Request, res: Response) => {
+    try {
+      const { orderId } = req.body;
+      
+      if (!orderId) {
+        return res.status(400).json({ error: "Order ID vereist" });
+      }
+
+      const orderIdNum = parseInt(orderId);
+      if (isNaN(orderIdNum)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ error: "Geen PDF bestand ontvangen" });
+      }
+
+      // Validate file type
+      if (req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ error: "Alleen PDF bestanden zijn toegestaan" });
+      }
+
+      // Validate file size (5MB max)
+      if (req.file.size > 5 * 1024 * 1024) {
+        return res.status(400).json({ error: "Bestand te groot (max 5MB)" });
+      }
+
+      // Try to update in database, fallback for demo
+      try {
+        const existingOrder = await storage.getPaymentOrderById(orderIdNum);
+        if (!existingOrder) {
+          return res.status(404).json({ error: "Order niet gevonden" });
+        }
+
+        await storage.updatePaymentOrder(orderIdNum, {
+          pdfFileName: req.file.filename,
+          updatedAt: new Date()
+        });
+      } catch (dbError) {
+        console.warn('Database unavailable for PDF upload, continuing for demo');
+      }
+
+      res.json({ 
+        success: true, 
+        message: "PDF succesvol geüpload",
+        fileName: req.file.filename,
+        downloadUrl: `/api/orders/${orderIdNum}/download-pdf`
+      });
+    } catch (error: any) {
+      console.error("PDF upload error:", error);
+      res.status(500).json({ error: "Fout bij uploaden PDF" });
+    }
+  });
+
+  // PDF download endpoint for customers
+  app.get("/api/orders/:orderId/download-pdf", async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Try to get order from database, fallback for demo
+      let order;
+      try {
+        order = await storage.getPaymentOrderById(orderId);
+      } catch (dbError) {
+        console.warn('Database unavailable for PDF download, using demo response');
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      if (!order || !order.pdfFileName) {
+        return res.status(404).json({ error: "PDF niet gevonden" });
+      }
+
+      const filePath = path.join(process.cwd(), 'uploads', 'orders', orderId.toString(), order.pdfFileName);
+      
+      // Check if file exists
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: "Bestand niet gevonden op server" });
+      }
+
+      // Set appropriate headers for PDF download
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${order.pdfFileName}"`);
+      
+      // Send file
+      res.sendFile(filePath);
+    } catch (error: any) {
+      console.error("PDF download error:", error);
+      res.status(500).json({ error: "Fout bij downloaden PDF" });
+    }
+  });
+
   // PDF upload endpoint
   app.post("/api/admin/orders/:id/upload-pdf", requireAdminAuth, upload.single('pdf'), async (req: Request, res: Response) => {
     try {

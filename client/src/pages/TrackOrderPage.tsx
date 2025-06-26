@@ -110,9 +110,9 @@ export default function TrackOrderPage() {
   };
 
   const handleDownloadPdf = () => {
-    if (order && order.pdfFileName && order.orderNumber) {
+    if (order && order.pdfFileName && order.id) {
       // Open PDF in new tab or download based on browser settings
-      const pdfUrl = `/api/orders/${order.orderNumber}/download-pdf`;
+      const pdfUrl = `/api/orders/${order.id}/download-pdf`;
       window.open(pdfUrl, '_blank');
     }
   };

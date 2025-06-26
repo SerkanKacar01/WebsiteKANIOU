@@ -115,9 +115,9 @@ export default function EntrepreneurDashboardPage() {
   
   // Search and filter state (Step 15.8)
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
-  const [roomFilter, setRoomFilter] = useState<string>('');
-  const [productFilter, setProductFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [roomFilter, setRoomFilter] = useState<string>('all');
+  const [productFilter, setProductFilter] = useState<string>('all');
   
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -691,7 +691,7 @@ export default function EntrepreneurDashboardPage() {
                     <SelectValue placeholder="Alle statussen" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Alle</SelectItem>
+                    <SelectItem value="all">Alle</SelectItem>
                     <SelectItem value="Nieuw">Nieuw</SelectItem>
                     <SelectItem value="Bestelling in verwerking">In verwerking</SelectItem>
                     <SelectItem value="Bestelling verwerkt">Verwerkt</SelectItem>
@@ -710,7 +710,7 @@ export default function EntrepreneurDashboardPage() {
                     <SelectValue placeholder="Alle ruimtes" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Alle</SelectItem>
+                    <SelectItem value="all">Alle</SelectItem>
                     {ROOM_TYPES.map((room) => (
                       <SelectItem key={room} value={room}>{room}</SelectItem>
                     ))}
@@ -726,7 +726,7 @@ export default function EntrepreneurDashboardPage() {
                     <SelectValue placeholder="Alle producten" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Alle</SelectItem>
+                    <SelectItem value="all">Alle</SelectItem>
                     <SelectItem value="Rolgordijn">Rolgordijn</SelectItem>
                     <SelectItem value="Plissé">Plissé</SelectItem>
                     <SelectItem value="Shutters">Shutters</SelectItem>

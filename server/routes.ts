@@ -568,23 +568,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Email en wachtwoord zijn vereist" });
       }
       
-      // Direct authentication for immediate dashboard access
-      if (email === 'admin@kaniou.be' && password === process.env.ADMIN_PASSWORD) {
-        const crypto = await import('crypto');
-        const sessionId = crypto.randomBytes(32).toString('hex');
-        const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
-        
-        res.cookie("admin_session", sessionId, {
+      // Use AdminAuth.login to properly handle session storage
+      const authData = await AdminAuth.login(email, password);
+      if (authData) {
+        res.cookie("admin_session", authData.sessionId, {
           httpOnly: true,
           secure: true,
           sameSite: "strict",
-          expires: expiresAt,
+          expires: authData.expiresAt,
         });
         
         return res.json({ 
           success: true, 
           message: "Succesvol ingelogd",
-          expiresAt: expiresAt,
+          expiresAt: authData.expiresAt,
         });
       }
       

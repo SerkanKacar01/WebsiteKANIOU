@@ -107,6 +107,12 @@ export class AdminAuth {
       return memorySession;
     }
     
+    // If not in memory store during direct auth, check for admin credentials directly
+    if (sessionId && !memorySession) {
+      console.log('Session not found in memory store, sessionId:', sessionId.substring(0, 8) + '...');
+      console.log('Memory store has', memorySessionStore.size, 'sessions');
+    }
+    
     try {
       const session = await storage.getAdminSessionById(sessionId);
       if (!session) {

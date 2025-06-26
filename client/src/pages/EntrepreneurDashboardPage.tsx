@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import type { PaymentOrder } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -34,26 +35,10 @@ interface OrderStatus {
   note?: string;
 }
 
-interface Order {
-  id: number;
-  customerName: string;
-  customerEmail: string;
-  customerPhone?: string;
-  amount: number;
-  currency: string;
-  productType: string;
-  status: string;
-  createdAt: string;
-  clientNote?: string;
-  noteFromEntrepreneur?: string;
-  customerNote?: string;
-  pdfFileName?: string;
-  invoiceUrl?: string;
-  notificationPreference: 'email' | 'whatsapp' | 'both';
-  notifyByEmail?: boolean;
-  notifyByWhatsapp?: boolean;
+// Use PaymentOrder from schema and add client-specific fields
+interface Order extends PaymentOrder {
   orderStatuses: OrderStatus[];
-  orderNumber?: string;
+  productType: string; // Simplified product description for dashboard
 }
 
 interface DashboardData {
@@ -841,6 +826,41 @@ export default function EntrepreneurDashboardPage() {
                   </div>
                 </div>
 
+                {/* Customer Information (Step 15.6) - Mobile Card */}
+                <div className="bg-gray-50 rounded-lg p-3 mb-4">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-1">
+                    <Users className="h-4 w-4 text-[#E6C988]" />
+                    Klantgegevens
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <span className="text-gray-600">Naam:</span>
+                      <p className="text-gray-900 font-medium">
+                        {order.customerFirstName && order.customerLastName 
+                          ? `${order.customerFirstName} ${order.customerLastName}`
+                          : order.customerName || "Niet opgegeven"
+                        }
+                      </p>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Telefoon:</span>
+                      <p className="text-gray-900 font-medium">{order.customerPhone || "Niet opgegeven"}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-gray-600">E-mail:</span>
+                      <p className="text-gray-900 font-medium">{order.customerEmail}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-gray-600">Adres:</span>
+                      <p className="text-gray-900 font-medium">{order.customerAddress || "Niet opgegeven"}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-gray-600">Woonplaats:</span>
+                      <p className="text-gray-900 font-medium">{order.customerCity || "Niet opgegeven"}</p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium text-gray-700">Status:</span>
@@ -1222,6 +1242,58 @@ export default function EntrepreneurDashboardPage() {
                 </div>
               </div>
             </div>
+            </div>
+
+            {/* Customer Information Section (Step 15.6) */}
+            <div className="space-y-4 p-4 bg-white border border-gray-200 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-[#E6C988]" />
+                <h3 className="text-lg font-semibold text-gray-900">Klantgegevens</h3>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">Voornaam</Label>
+                  <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded border">
+                    {selectedOrder?.customerFirstName || "Niet opgegeven"}
+                  </p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">Achternaam</Label>
+                  <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded border">
+                    {selectedOrder?.customerLastName || "Niet opgegeven"}
+                  </p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">E-mailadres</Label>
+                  <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded border">
+                    {selectedOrder?.customerEmail || "Niet opgegeven"}
+                  </p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">Telefoonnummer</Label>
+                  <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded border">
+                    {selectedOrder?.customerPhone || "Niet opgegeven"}
+                  </p>
+                </div>
+                
+                <div className="space-y-2 md:col-span-2">
+                  <Label className="text-sm font-medium text-gray-700">Adres</Label>
+                  <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded border">
+                    {selectedOrder?.customerAddress || "Niet opgegeven"}
+                  </p>
+                </div>
+                
+                <div className="space-y-2 md:col-span-2">
+                  <Label className="text-sm font-medium text-gray-700">Woonplaats</Label>
+                  <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded border">
+                    {selectedOrder?.customerCity || "Niet opgegeven"}
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Customer Note Section (Step 15.4) */}

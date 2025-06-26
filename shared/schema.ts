@@ -266,6 +266,10 @@ export const paymentOrders = pgTable("payment_orders", {
   pdfFileName: text("pdf_file_name"), // Uploaded PDF filename (receipt)
   invoiceUrl: text("invoice_url"), // Uploaded invoice PDF filename
   customerPhone: text("customer_phone"), // Phone number for WhatsApp notifications
+  customerFirstName: text("customer_first_name"), // Customer first name
+  customerLastName: text("customer_last_name"), // Customer last name
+  customerAddress: text("customer_address"), // Customer address
+  customerCity: text("customer_city"), // Customer city
   notifyByEmail: boolean("notify_by_email").default(true), // Email notification preference
   notifyByWhatsapp: boolean("notify_by_whatsapp").default(false), // WhatsApp notification preference
   notificationPreference: text("notification_preference").default("email"), // Legacy field - email, whatsapp, both

@@ -24,6 +24,7 @@ export default function TrackOrderPage() {
   const [searchedOrderNumber, setSearchedOrderNumber] = useState('');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [whatsappNotifications, setWhatsappNotifications] = useState(false);
+  const [customerPhone, setCustomerPhone] = useState('');
   const [validationError, setValidationError] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
   const { toast } = useToast();
@@ -45,9 +46,23 @@ export default function TrackOrderPage() {
     retry: false
   });
 
+  // Initialize notification preferences when order data is loaded
+  React.useEffect(() => {
+    if (order) {
+      setEmailNotifications(order.notifyByEmail ?? true);
+      setWhatsappNotifications(order.notifyByWhatsapp ?? false);
+      setCustomerPhone(order.customerPhone || '');
+    }
+  }, [order]);
+
   // Update notification preferences
   const updatePreferencesMutation = useMutation({
-    mutationFn: async (preferences: { orderNumber: string; notificationPreference: string }) => {
+    mutationFn: async (preferences: { 
+      orderNumber: string; 
+      notifyByEmail: boolean; 
+      notifyByWhatsapp: boolean;
+      customerPhone?: string;
+    }) => {
       return apiRequest('/api/orders/update-preferences', 'POST', preferences);
     },
     onSuccess: () => {

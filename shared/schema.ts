@@ -263,7 +263,10 @@ export const paymentOrders = pgTable("payment_orders", {
   noteFromEntrepreneur: text("note_from_entrepreneur"), // Entrepreneur note visible to customer
   pdfFileName: text("pdf_file_name"), // Uploaded PDF filename (receipt)
   invoiceUrl: text("invoice_url"), // Uploaded invoice PDF filename
-  notificationPreference: text("notification_preference").default("email"), // email, whatsapp, both
+  customerPhone: text("customer_phone"), // Phone number for WhatsApp notifications
+  notifyByEmail: boolean("notify_by_email").default(true), // Email notification preference
+  notifyByWhatsapp: boolean("notify_by_whatsapp").default(false), // WhatsApp notification preference
+  notificationPreference: text("notification_preference").default("email"), // Legacy field - email, whatsapp, both
   notificationLogs: jsonb("notification_logs").$type<{
     [status: string]: {
       emailSent?: boolean;

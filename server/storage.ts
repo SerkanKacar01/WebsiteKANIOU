@@ -69,6 +69,7 @@ export interface IStorage {
   getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
   getPaymentOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined>;
   getPaymentOrders(): Promise<PaymentOrder[]>;
+  deletePaymentOrder(id: number): Promise<void>;
   
   // Admin Authentication
   getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
@@ -219,6 +220,10 @@ export class DatabaseStorage implements IStorage {
 
   async getPaymentOrders(): Promise<PaymentOrder[]> {
     return await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
+  }
+
+  async deletePaymentOrder(id: number): Promise<void> {
+    await db.delete(paymentOrders).where(eq(paymentOrders.id, id));
   }
 
   // Order tracking methods for clients with security validation

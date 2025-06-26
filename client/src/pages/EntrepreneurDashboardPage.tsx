@@ -102,12 +102,20 @@ export default function EntrepreneurDashboardPage() {
   const [isNewOrderModalOpen, setIsNewOrderModalOpen] = useState(false);
   const [newOrderForm, setNewOrderForm] = useState({
     customerName: '',
+    customerEmail: '',
+    customerPhone: '',
+    customerFirstName: '',
+    customerLastName: '',
+    customerAddress: '',
+    customerCity: '',
     productCategory: '',
     dimensions: '',
     price: '',
     orderDate: new Date().toISOString().split('T')[0],
     roomType: '',
-    status: 'Nieuw'
+    status: 'pending',
+    customerNote: '',
+    internalNote: ''
   });
   
   // Status update state
@@ -318,17 +326,38 @@ export default function EntrepreneurDashboardPage() {
 
   const createOrderMutation = useMutation({
     mutationFn: async (orderData: typeof newOrderForm) => {
-      const response = await fetch("/api/orders/create", {
+      // Transform form data to API format
+      const apiData = {
+        customerName: orderData.customerName,
+        customerEmail: orderData.customerEmail || `${orderData.customerName.replace(/\s+/g, '').toLowerCase()}@kaniou.be`,
+        customerPhone: orderData.customerPhone || null,
+        customerFirstName: orderData.customerFirstName || null,
+        customerLastName: orderData.customerLastName || null,
+        customerAddress: orderData.customerAddress || null,
+        customerCity: orderData.customerCity || null,
+        amount: parseFloat(orderData.price || '0'),
+        currency: 'EUR',
+        description: `${orderData.productCategory} - ${orderData.dimensions}`,
+        productType: orderData.productCategory,
+        status: orderData.status || 'pending',
+        notifyByEmail: true,
+        notifyByWhatsapp: false,
+        customerNote: orderData.customerNote || null,
+        internalNote: orderData.internalNote || null
+      };
+
+      const response = await fetch("/api/admin/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(orderData),
+        body: JSON.stringify(apiData),
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
       
       return response.json();

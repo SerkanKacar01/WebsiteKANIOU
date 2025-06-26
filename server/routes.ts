@@ -890,6 +890,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create new order manually (admin only)
+  app.post("/api/admin/orders", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const {
+        customerName,
+        customerEmail,
+        customerPhone,
+        customerFirstName,
+        customerLastName,
+        customerAddress,
+        customerCity,
+        amount,
+        currency = "EUR",
+        description,
+        productType,
+        status = "pending",
+        notifyByEmail = true,
+        notifyByWhatsapp = false,
+        customerNote,
+        internalNote
+      } = req.body;
+
+      // Validate required fields
+      if (!customerName || !customerEmail || !amount || !description) {
+        return res.status(400).json({ 
+          error: "Verplichte velden: Klantnaam, E-mail, Bedrag, en Beschrijving" 
+        });
+      }
+
+      // Generate unique order number
+      const orderNumber = `KAN-${Date.now()}`;
+      
+      // Generate a dummy mollie payment ID for manual orders
+      const molliePaymentId = `manual_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+      const orderData = {
+        molliePaymentId,
+        orderNumber,
+        customerName,
+        customerEmail,
+        customerPhone: customerPhone || null,
+        customerFirstName: customerFirstName || null,
+        customerLastName: customerLastName || null,
+        customerAddress: customerAddress || null,
+        customerCity: customerCity || null,
+        amount: parseFloat(amount),
+        currency,
+        description,
+        status,
+        redirectUrl: `${req.protocol}://${req.get('host')}/bestelling-status/${orderNumber}`,
+        productDetails: productType ? { type: productType } : null,
+        customerDetails: {
+          firstName: customerFirstName,
+          lastName: customerLastName,
+          address: customerAddress,
+          city: customerCity,
+          phone: customerPhone
+        },
+        notifyByEmail,
+        notifyByWhatsapp,
+        customerNote: customerNote || null,
+        internalNote: internalNote || null,
+        mollieStatus: 'manual_entry',
+        paidAt: new Date() // Mark as paid since it's manually created
+      };
+
+      const newOrder = await storage.createPaymentOrder(orderData);
+      
+      res.json({ 
+        success: true,
+        message: "Order succesvol aangemaakt",
+        order: newOrder
+      });
+    } catch (error: any) {
+      console.error("Error creating manual order:", error);
+      res.status(500).json({ error: "Fout bij aanmaken order" });
+    }
+  });
+
+  // Delete order (admin only)
+  app.delete("/api/admin/orders/:id", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Check if order exists
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      // Delete the order
+      await storage.deletePaymentOrder(orderId);
+      
+      res.json({ 
+        success: true,
+        message: "Order succesvol verwijderd"
+      });
+    } catch (error: any) {
+      console.error("Error deleting order:", error);
+      res.status(500).json({ error: "Fout bij verwijderen order" });
+    }
+  });
+
   // PDF upload endpoint
   app.post("/api/admin/orders/:id/upload-pdf", requireAdminAuth, upload.single('pdf'), async (req: Request, res: Response) => {
     try {

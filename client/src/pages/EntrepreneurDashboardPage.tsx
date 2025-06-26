@@ -752,9 +752,37 @@ export default function EntrepreneurDashboardPage() {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium text-gray-700">Status:</span>
-                    <Badge variant={getStatusBadgeVariant(order.status)} className="font-medium">
-                      {order.status}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Select 
+                        value={statusUpdates[order.id] || order.status} 
+                        onValueChange={(value) => handleStatusChange(order.id, value)}
+                      >
+                        <SelectTrigger className="w-40 h-7 text-xs border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Nieuw">Nieuw</SelectItem>
+                          <SelectItem value="Bestelling in verwerking">Bestelling in verwerking</SelectItem>
+                          <SelectItem value="Bestelling verwerkt">Bestelling verwerkt</SelectItem>
+                          <SelectItem value="Bestelling in productie">Bestelling in productie</SelectItem>
+                          <SelectItem value="Bestelling is gereed">Bestelling is gereed</SelectItem>
+                          <SelectItem value="U wordt gebeld voor de levering">U wordt gebeld voor de levering</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Button
+                        size="sm"
+                        onClick={() => handleStatusSave(order.id)}
+                        disabled={updateStatusMutation.isPending}
+                        className="h-7 w-7 p-0 bg-[#E6C988] hover:bg-[#D5B992] text-black"
+                        title="Status opslaan"
+                      >
+                        {updateStatusMutation.isPending ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <Save className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </div>
                   </div>
                   
                   <div className="flex justify-between items-center">

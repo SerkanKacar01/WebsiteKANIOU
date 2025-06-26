@@ -120,6 +120,15 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 26, 2025: Enhanced notification preferences system with visual status indicators
+  - Added comprehensive notification preferences display on entrepreneur dashboard
+  - Implemented email and WhatsApp status indicators with checkmarks and icons
+  - Created notification log tracking system for future automated notifications
+  - Added customer phone number display and validation for WhatsApp notifications
+  - Built visual preference badges (📧 Email ✅/❌, 📱 WhatsApp ✅/❌) on dashboard
+  - Enhanced mobile card layout with notification status tracking
+  - Created notification service framework ready for email/WhatsApp automation
+  - Added database schema for notification logs with status tracking
 - June 25, 2025: Completed comprehensive entrepreneur dashboard with full order management
   - Built responsive entrepreneur dashboard with desktop table and mobile card layouts
   - Implemented order status updates with 6-step progression system

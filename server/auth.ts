@@ -105,27 +105,31 @@ export class AdminAuth {
     try {
       const session = await storage.getAdminSessionById(sessionId);
       if (!session) {
+        return null;
+      }
+      
+      // Check if session is expired
+      if (session.expiresAt < new Date()) {
+        await storage.deleteAdminSession(sessionId);
+        return null;
+      }
+      
+      // Get admin user details
+      const adminUser = await storage.getAdminUserByEmail("admin@kaniou.be");
+      if (!adminUser) {
+        return null;
+      }
+      
+      return {
+        sessionId: session.sessionId,
+        adminId: session.adminUserId,
+        email: adminUser.email,
+        expiresAt: session.expiresAt,
+      };
+    } catch (error) {
+      console.warn('Database session validation failed');
       return null;
     }
-    
-    // Check if session is expired
-    if (session.expiresAt < new Date()) {
-      await storage.deleteAdminSession(sessionId);
-      return null;
-    }
-    
-    // Get admin user details
-    const adminUser = await storage.getAdminUserByEmail("admin@kaniou.be");
-    if (!adminUser) {
-      return null;
-    }
-    
-    return {
-      sessionId: session.sessionId,
-      adminId: session.adminUserId,
-      email: adminUser.email,
-      expiresAt: session.expiresAt,
-    };
   }
   
   static async logout(sessionId: string): Promise<void> {

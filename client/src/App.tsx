@@ -53,7 +53,7 @@ import BestellingStatusPage from "@/pages/BestellingStatusPage";
 import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
-import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPageSimple";
+import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 
 
 

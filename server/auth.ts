@@ -34,12 +34,17 @@ export class AdminAuth {
       const sessionId = this.generateSessionId();
       const expiresAt = new Date(Date.now() + this.SESSION_DURATION);
       
-      return {
+      const authData = {
         sessionId,
         adminId: 1,
         email: 'admin@kaniou.be',
         expiresAt
       };
+      
+      // Store in memory as fallback
+      memorySessionStore.set(sessionId, authData);
+      
+      return authData;
     }
 
     // Try database authentication
@@ -127,7 +132,12 @@ export class AdminAuth {
         expiresAt: session.expiresAt,
       };
     } catch (error) {
-      console.warn('Database session validation failed');
+      console.warn('Database session validation failed, checking memory store');
+      // Fallback to memory store when database is unavailable
+      const memorySession = memorySessionStore.get(sessionId);
+      if (memorySession && memorySession.expiresAt > new Date()) {
+        return memorySession;
+      }
       return null;
     }
   }

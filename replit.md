@@ -120,6 +120,13 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 26, 2025: Mailgun Email Integration (TRAC_ORDR) implementation
+  - Successfully integrated Mailgun API for automated email notifications
+  - Created server/mailgun/sendMail.ts with EU endpoint configuration
+  - Added API_KEY environment variable with secure backend-only access
+  - Tested email delivery to info@kaniou.be - confirmed working
+  - Email system ready for order status updates and PDF confirmations
+  - Uses KANIOU Zilvernaald branding with postmaster@kaniou.be sender
 - June 26, 2025: Customer Information Display System (Step 15.6) implementation
   - Added customer information fields to database schema (customerFirstName, customerLastName, customerAddress, customerCity)
   - Created "Klantgegevens" section in entrepreneur dashboard order detail view

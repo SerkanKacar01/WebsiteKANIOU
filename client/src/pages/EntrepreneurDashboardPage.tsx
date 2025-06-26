@@ -118,6 +118,11 @@ export default function EntrepreneurDashboardPage() {
     internalNote: ''
   });
   
+  // PDF upload state
+  const [selectedPDFs, setSelectedPDFs] = useState<File[]>([]);
+  const [documentTypes, setDocumentTypes] = useState<string[]>([]);
+  const [documentVisibility, setDocumentVisibility] = useState<boolean[]>([]);
+  
   // Status update state
   const [statusUpdates, setStatusUpdates] = useState<{[orderId: number]: string}>({});
   

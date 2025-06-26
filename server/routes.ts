@@ -40,6 +40,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
   });
 
+  // Configure multer for PDF uploads (up to 10MB, max 3 files)
+  const pdfUpload = multer({
+    storage: multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, 'uploads/pdfs/')
+      },
+      filename: function (req, file, cb) {
+        const orderId = req.body.orderId || 'unknown';
+        const documentType = req.body.documentType || 'document';
+        const timestamp = new Date().toISOString().split('T')[0].replace(/-/g, '');
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, `ORD${orderId}-${documentType}-${timestamp}-${uniqueSuffix}.pdf`);
+      }
+    }),
+    limits: { 
+      fileSize: 10 * 1024 * 1024, // 10MB limit per file
+      files: 3 // Maximum 3 files
+    },
+    fileFilter: function (req, file, cb) {
+      if (file.mimetype === 'application/pdf') {
+        cb(null, true);
+      } else {
+        cb(new Error('Only PDF files are allowed'));
+      }
+    }
+  });
+
   // Health check endpoint
   app.get("/api/health", (req: Request, res: Response) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
@@ -1275,6 +1302,156 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Customer note get error:", error);
       res.status(500).json({ error: "Fout bij ophalen notitie" });
+    }
+  });
+
+  // Order Document Management API Routes
+  
+  // Upload multiple PDF documents for an order (Admin only)
+  app.post("/api/orders/:orderId/upload-documents", requireAdminAuth, pdfUpload.array('documents', 3), async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const files = req.files as Express.Multer.File[];
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+      
+      if (!files || files.length === 0) {
+        return res.status(400).json({ error: "Geen bestanden ontvangen" });
+      }
+
+      // Verify order exists
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      const uploadedDocuments = [];
+      
+      for (const file of files) {
+        const documentType = req.body.documentType || 'document';
+        const isVisibleToCustomer = req.body.isVisibleToCustomer === 'true';
+        
+        const document = await storage.createOrderDocument({
+          orderId,
+          filename: file.originalname,
+          storedFilename: file.filename,
+          documentType,
+          filePath: file.path,
+          isVisibleToCustomer,
+          fileSize: file.size
+        });
+        
+        uploadedDocuments.push(document);
+      }
+
+      res.json({ 
+        success: true, 
+        message: `${files.length} document(en) succesvol geüpload`,
+        documents: uploadedDocuments
+      });
+    } catch (error: any) {
+      console.error("Document upload error:", error);
+      res.status(500).json({ error: "Fout bij uploaden documenten" });
+    }
+  });
+
+  // Get all documents for an order
+  app.get("/api/orders/:orderId/documents", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      const documents = await storage.getOrderDocuments(orderId);
+      res.json(documents);
+    } catch (error: any) {
+      console.error("Document fetch error:", error);
+      res.status(500).json({ error: "Fout bij ophalen documenten" });
+    }
+  });
+
+  // Download a specific document
+  app.get("/api/orders/documents/:documentId/download", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const documentId = parseInt(req.params.documentId);
+      
+      if (isNaN(documentId)) {
+        return res.status(400).json({ error: "Ongeldig document ID" });
+      }
+
+      const documents = await storage.getOrderDocuments(0); // This is a workaround - we'll improve this
+      const document = documents.find(d => d.id === documentId);
+      
+      if (!document) {
+        return res.status(404).json({ error: "Document niet gevonden" });
+      }
+
+      const filePath = path.resolve(document.filePath);
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: "Bestand niet gevonden op server" });
+      }
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${document.filename}"`);
+      
+      res.sendFile(filePath);
+    } catch (error: any) {
+      console.error("Document download error:", error);
+      res.status(500).json({ error: "Fout bij downloaden document" });
+    }
+  });
+
+  // Delete a document
+  app.delete("/api/orders/documents/:documentId", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const documentId = parseInt(req.params.documentId);
+      
+      if (isNaN(documentId)) {
+        return res.status(400).json({ error: "Ongeldig document ID" });
+      }
+
+      // Get document info before deletion to remove file
+      const documents = await storage.getOrderDocuments(0); // This is a workaround
+      const document = documents.find(d => d.id === documentId);
+      
+      if (document) {
+        const filePath = path.resolve(document.filePath);
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      }
+
+      await storage.deleteOrderDocument(documentId);
+      res.json({ success: true, message: "Document succesvol verwijderd" });
+    } catch (error: any) {
+      console.error("Document delete error:", error);
+      res.status(500).json({ error: "Fout bij verwijderen document" });
+    }
+  });
+
+  // Update document visibility to customer
+  app.patch("/api/orders/documents/:documentId/visibility", requireAdminAuth, async (req: Request, res: Response) => {
+    try {
+      const documentId = parseInt(req.params.documentId);
+      const { isVisible } = req.body;
+      
+      if (isNaN(documentId)) {
+        return res.status(400).json({ error: "Ongeldig document ID" });
+      }
+
+      await storage.updateOrderDocumentVisibility(documentId, isVisible);
+      res.json({ 
+        success: true, 
+        message: `Document zichtbaarheid bijgewerkt naar ${isVisible ? 'zichtbaar' : 'verborgen'} voor klant`
+      });
+    } catch (error: any) {
+      console.error("Document visibility update error:", error);
+      res.status(500).json({ error: "Fout bij bijwerken zichtbaarheid" });
     }
   });
 

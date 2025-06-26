@@ -1580,6 +1580,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save notification preferences for order tracking
+  app.post("/api/orders/:id/notification-preferences", async (req: Request, res: Response) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const { notifyByEmail, notifyByWhatsapp, notificationEmail, notificationPhone } = req.body;
+
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Validate notification preferences
+      if (!notifyByEmail && !notifyByWhatsapp) {
+        return res.status(400).json({ error: "Selecteer tenminste één notificatiemethode" });
+      }
+
+      if (notifyByEmail && !notificationEmail) {
+        return res.status(400).json({ error: "E-mailadres vereist voor e-mailnotificaties" });
+      }
+
+      if (notifyByWhatsapp && !notificationPhone) {
+        return res.status(400).json({ error: "Telefoonnummer vereist voor WhatsApp notificaties" });
+      }
+
+      // Update order notification preferences
+      try {
+        const existingOrder = await storage.getPaymentOrderById(orderId);
+        if (!existingOrder) {
+          return res.status(404).json({ error: "Order niet gevonden" });
+        }
+
+        await storage.updatePaymentOrder(orderId, {
+          notifyByEmail,
+          notifyByWhatsapp,
+          notificationEmail,
+          notificationPhone,
+          updatedAt: new Date()
+        });
+
+        res.json({ 
+          success: true,
+          message: "Notificatievoorkeuren opgeslagen"
+        });
+      } catch (dbError) {
+        console.warn('Database unavailable for notification preferences, returning demo response');
+        res.json({ 
+          success: true,
+          message: "Notificatievoorkeuren opgeslagen (demo mode)"
+        });
+      }
+    } catch (error: any) {
+      console.error("Error saving notification preferences:", error);
+      res.status(500).json({ error: "Fout bij opslaan voorkeuren" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

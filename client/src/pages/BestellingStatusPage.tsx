@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle, Clock, Phone, Truck, Home, Package, Download } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckCircle, Clock, Phone, Truck, Home, Package, Download, Mail, MessageCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
+import { useToast } from "@/hooks/use-toast";
 
 interface OrderStatus {
   id: number;
@@ -34,6 +37,14 @@ const BestellingStatusPage = () => {
   const { id } = useParams();
   const [orderStatus, setOrderStatus] = useState<OrderStatus | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+  
+  // Notification preferences state
+  const [notifyByEmail, setNotifyByEmail] = useState(false);
+  const [notifyByWhatsapp, setNotifyByWhatsapp] = useState(false);
+  const [notificationEmail, setNotificationEmail] = useState('');
+  const [notificationPhone, setNotificationPhone] = useState('');
+  const [preferencesLoading, setPreferencesLoading] = useState(false);
 
   useEffect(() => {
     // Mock data for demonstration - replace with real API call
@@ -112,6 +123,78 @@ const BestellingStatusPage = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleSaveNotificationPreferences = async () => {
+    if (!notifyByEmail && !notifyByWhatsapp) {
+      toast({
+        title: "Selecteer tenminste één optie",
+        description: "Kies tussen e-mail of WhatsApp notificaties.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (notifyByEmail && !notificationEmail) {
+      toast({
+        title: "E-mailadres vereist",
+        description: "Vul uw e-mailadres in voor e-mailnotificaties.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (notifyByWhatsapp && !notificationPhone) {
+      toast({
+        title: "Telefoonnummer vereist",
+        description: "Vul uw WhatsApp nummer in voor WhatsApp notificaties.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (notifyByWhatsapp && notificationPhone && !notificationPhone.startsWith('+')) {
+      toast({
+        title: "Ongeldig telefoonnummer",
+        description: "Gebruik internationaal formaat: +32 123 456 789",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setPreferencesLoading(true);
+
+    try {
+      const response = await fetch(`/api/orders/${id}/notification-preferences`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          notifyByEmail,
+          notifyByWhatsapp,
+          notificationEmail: notifyByEmail ? notificationEmail : null,
+          notificationPhone: notifyByWhatsapp ? notificationPhone : null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save preferences');
+      }
+
+      toast({
+        title: "Voorkeuren opgeslagen",
+        description: "Uw notificatievoorkeuren zijn succesvol bijgewerkt.",
+      });
+    } catch (error) {
+      toast({
+        title: "Fout bij opslaan",
+        description: "Er is een fout opgetreden. Probeer het opnieuw.",
+        variant: "destructive",
+      });
+    } finally {
+      setPreferencesLoading(false);
+    }
   };
 
   if (loading) {
@@ -273,6 +356,83 @@ const BestellingStatusPage = () => {
           <Download className="h-4 w-4" />
           <span>Download bestelbon (PDF)</span>
         </Button>
+
+        {/* Notification Preferences */}
+        <Card className="shadow-sm">
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-black mb-4 flex items-center gap-2">
+              <Mail className="h-5 w-5 text-[#E6C988]" />
+              Ontvang automatische updates over uw bestelling
+            </h3>
+            
+            <div className="space-y-4">
+              {/* Email Notifications */}
+              <div className="space-y-2">
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    id="emailNotifications"
+                    checked={notifyByEmail}
+                    onChange={(e) => setNotifyByEmail(e.target.checked)}
+                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
+                  />
+                  <Label htmlFor="emailNotifications" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    📧 Ja, ik wil updates ontvangen via e-mail
+                  </Label>
+                </div>
+                
+                {notifyByEmail && (
+                  <div className="ml-7">
+                    <Input
+                      type="email"
+                      placeholder="Uw e-mailadres"
+                      value={notificationEmail}
+                      onChange={(e) => setNotificationEmail(e.target.value)}
+                      className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* WhatsApp Notifications */}
+              <div className="space-y-2">
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    id="whatsappNotifications"
+                    checked={notifyByWhatsapp}
+                    onChange={(e) => setNotifyByWhatsapp(e.target.checked)}
+                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
+                  />
+                  <Label htmlFor="whatsappNotifications" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    📱 Ja, ik wil updates ontvangen via WhatsApp
+                  </Label>
+                </div>
+                
+                {notifyByWhatsapp && (
+                  <div className="ml-7">
+                    <Input
+                      type="tel"
+                      placeholder="Uw WhatsApp nummer (bijv. +32 123 456 789)"
+                      value={notificationPhone}
+                      onChange={(e) => setNotificationPhone(e.target.value)}
+                      className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Save Button */}
+              <Button
+                onClick={handleSaveNotificationPreferences}
+                disabled={preferencesLoading || (!notifyByEmail && !notifyByWhatsapp)}
+                className="w-full bg-[#E6C988] hover:bg-[#D4B876] text-white rounded-lg py-2"
+              >
+                {preferencesLoading ? "Opslaan..." : "Voorkeuren opslaan"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Contact Information */}
         <Card className="shadow-sm">

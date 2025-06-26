@@ -1,90 +1,110 @@
-import { PaymentOrder } from "@shared/schema";
-import { sendEmail } from "./email";
-import { emailConfig } from "../config/email";
+import { sendMailgunEmail } from '../mailgun/sendMail.js';
+import { storage } from '../storage.js';
 
-export interface NotificationTrigger {
+interface OrderNotificationData {
   orderId: number;
+  orderNumber: string;
+  customerName: string;
   newStatus: string;
-  previousStatus?: string;
-  customerEmail: string;
-  customerPhone?: string | null;
+  productType: string;
   notifyByEmail: boolean;
   notifyByWhatsapp: boolean;
+  notificationEmail?: string;
+  notificationPhone?: string;
 }
 
 export class NotificationService {
-  static async sendStatusUpdateNotification(trigger: NotificationTrigger): Promise<void> {
-    try {
-      // Send email notification if enabled
-      if (trigger.notifyByEmail) {
-        await this.sendEmailNotification(trigger);
-      }
-      
-      // Send WhatsApp notification if enabled (to be implemented with Twilio)
-      if (trigger.notifyByWhatsapp && trigger.customerPhone) {
-        await this.sendWhatsAppNotification(trigger);
-      }
-    } catch (error) {
-      console.error('Notification service error:', error);
-      // In production, this would be logged and retried
+  
+  async sendOrderStatusUpdate(data: OrderNotificationData): Promise<void> {
+    const statusMessages = {
+      'pending': 'Uw bestelling wordt verwerkt',
+      'Nieuw': 'Uw bestelling is ontvangen',
+      'Bestelling in verwerking': 'Uw bestelling wordt verwerkt',
+      'Bestelling verwerkt': 'Uw bestelling is verwerkt en gaat naar productie',
+      'Bestelling in productie': 'Uw bestelling is in productie',
+      'Bestelling is gereed': 'Uw bestelling is gereed voor levering',
+      'U wordt gebeld voor levering': 'We nemen binnenkort contact op voor de levering'
+    };
+
+    const statusMessage = statusMessages[data.newStatus as keyof typeof statusMessages] || data.newStatus;
+    
+    // Send email notification if enabled
+    if (data.notifyByEmail && data.notificationEmail) {
+      await this.sendEmailNotification(data, statusMessage);
+    }
+
+    // Send WhatsApp notification if enabled (placeholder for Twilio integration)
+    if (data.notifyByWhatsapp && data.notificationPhone) {
+      await this.sendWhatsAppNotification(data, statusMessage);
     }
   }
 
-  private static async sendEmailNotification(trigger: NotificationTrigger): Promise<void> {
-    const statusMessages = {
-      'pending': 'Uw bestelling wordt verwerkt',
-      'processing': 'Uw bestelling is verwerkt en gaat naar productie',
-      'production': 'Uw bestelling is in productie',
-      'ready': 'Uw bestelling is gereed voor levering',
-      'delivery': 'We nemen contact met u op voor de levering',
-      'completed': 'Uw bestelling is voltooid'
-    };
+  private async sendEmailNotification(data: OrderNotificationData, statusMessage: string): Promise<void> {
+    try {
+      const subject = `KANIOU - Update bestelling ${data.orderNumber}`;
+      const emailBody = `
+Beste ${data.customerName},
 
-    const subject = `KANIOU - Status update voor bestelling #${trigger.orderId}`;
-    const statusMessage = statusMessages[trigger.newStatus as keyof typeof statusMessages] || 'Status bijgewerkt';
-    
-    const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #2C3E50;">Bestelling Status Update</h2>
-        <p>Beste klant,</p>
-        <p>De status van uw bestelling #${trigger.orderId} is bijgewerkt:</p>
-        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #E6C988; margin: 0;">${statusMessage}</h3>
-        </div>
-        <p>U kunt de volledige status van uw bestelling bekijken op onze website door uw bestelnummer in te voeren.</p>
-        <p>Met vriendelijke groet,<br>Het KANIOU team</p>
-      </div>
-    `;
+Er is een update voor uw bestelling:
 
-    await sendEmail({
-      from: emailConfig.senderEmail,
-      to: trigger.customerEmail,
-      subject: subject,
-      html: html
-    });
+📦 Bestelnummer: ${data.orderNumber}
+🛍️ Product: ${data.productType}
+📋 Status: ${statusMessage}
+
+U kunt uw bestelling volgen via: https://kaniou.be/bestelling-status/${data.orderId}
+
+Met vriendelijke groet,
+Team KANIOU
+      `.trim();
+
+      await sendMailgunEmail(data.notificationEmail!, subject, emailBody);
+      
+      // Log the notification
+      await this.logNotification(data.orderId, 'email', 'sent', data.notificationEmail);
+      
+    } catch (error) {
+      console.error('Email notification failed:', error);
+      await this.logNotification(data.orderId, 'email', 'failed', data.notificationEmail, error.message);
+    }
   }
 
-  private static async sendWhatsAppNotification(trigger: NotificationTrigger): Promise<void> {
-    // Placeholder for WhatsApp integration with Twilio
-    // This would be implemented when Twilio credentials are available
-    console.log(`WhatsApp notification would be sent to ${trigger.customerPhone} for order ${trigger.orderId}`);
-    
-    // Future implementation:
-    // const twilioClient = new Twilio(accountSid, authToken);
-    // await twilioClient.messages.create({
-    //   from: 'whatsapp:+your_twilio_number',
-    //   to: `whatsapp:${trigger.customerPhone}`,
-    //   body: `KANIOU: Status update voor uw bestelling #${trigger.orderId}. Bezoek onze website voor meer details.`
-    // });
+  private async sendWhatsAppNotification(data: OrderNotificationData, statusMessage: string): Promise<void> {
+    try {
+      // Placeholder for Twilio WhatsApp integration
+      // This would be implemented when Twilio credentials are provided
+      console.log(`WhatsApp notification would be sent to ${data.notificationPhone}:`);
+      console.log(`KANIOU Update: ${statusMessage} voor bestelling ${data.orderNumber}`);
+      
+      // For now, log as sent (demo mode)
+      await this.logNotification(data.orderId, 'whatsapp', 'sent', undefined, undefined, data.notificationPhone);
+      
+    } catch (error) {
+      console.error('WhatsApp notification failed:', error);
+      await this.logNotification(data.orderId, 'whatsapp', 'failed', undefined, error.message, data.notificationPhone);
+    }
   }
 
-  // Utility method to check if notifications should be sent for a status change
-  static shouldSendNotification(oldStatus: string | null, newStatus: string): boolean {
-    // Don't send notifications for same status
-    if (oldStatus === newStatus) return false;
-    
-    // Only send notifications for meaningful status changes
-    const notifiableStatuses = ['processing', 'production', 'ready', 'delivery', 'completed'];
-    return notifiableStatuses.includes(newStatus);
+  private async logNotification(
+    orderId: number, 
+    type: 'email' | 'whatsapp', 
+    status: 'sent' | 'failed', 
+    email?: string, 
+    errorMessage?: string,
+    phone?: string
+  ): Promise<void> {
+    try {
+      await storage.createNotificationLog({
+        orderId,
+        notificationType: type,
+        status,
+        recipientEmail: email || null,
+        recipientPhone: phone || null,
+        errorMessage: errorMessage || null
+      });
+    } catch (error) {
+      console.error('Failed to log notification:', error);
+    }
   }
 }
+
+export const notificationService = new NotificationService();

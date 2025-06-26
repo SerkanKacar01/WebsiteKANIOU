@@ -773,7 +773,7 @@ export default function EntrepreneurDashboardPage() {
               <CardTitle className="text-lg font-semibold text-black">Orders Overzicht</CardTitle>
               <div className="flex items-center gap-4">
                 <div className="text-sm text-gray-600">
-                  {dashboardData?.orders?.length || 0} orders totaal
+                  {filteredOrders.length} van {dashboardData?.orders?.length || 0} orders totaal
                 </div>
                 <Button
                   onClick={() => setIsNewOrderModalOpen(true)}

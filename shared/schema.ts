@@ -247,6 +247,7 @@ export const paymentOrders = pgTable("payment_orders", {
   id: serial("id").primaryKey(),
   molliePaymentId: text("mollie_payment_id").notNull().unique(),
   orderNumber: text("order_number").unique(), // Unique order number for tracking
+  bonnummer: text("bonnummer").notNull().unique(), // Customer-friendly unique order reference number
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   amount: doublePrecision("amount").notNull(),
@@ -294,6 +295,11 @@ export const insertPaymentOrderSchema = createInsertSchema(paymentOrders).omit({
   paidAt: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  bonnummer: z.string()
+    .min(3, "Bonnummer must be at least 3 characters")
+    .max(20, "Bonnummer must be less than 20 characters")
+    .regex(/^[A-Z0-9]+$/, "Bonnummer can only contain uppercase letters and numbers"),
 });
 
 // Shopping Cart Items

@@ -71,6 +71,7 @@ export interface IStorage {
   createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
   getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
   getPaymentOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined>;
+  getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined>;
   getPaymentOrders(): Promise<PaymentOrder[]>;
   deletePaymentOrder(id: number): Promise<void>;
   
@@ -262,6 +263,7 @@ export class DatabaseStorage implements IStorage {
         return {
           id: 1,
           orderNumber: '20240623-001',
+          bonnummer: 'BON123456',
           molliePaymentId: 'tr_mock123',
           customerName: 'Demo Klant',
           customerEmail: 'demo@example.com',

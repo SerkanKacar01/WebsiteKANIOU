@@ -1136,13 +1136,35 @@ KANIOU Zilvernaald`
     }
   });
 
-  // Test Mailgun email endpoint
+  // Test Mailgun configuration endpoint
   app.post('/api/test-mailgun', async (req, res) => {
     try {
       const { to } = req.body;
       
       if (!to) {
         return res.status(400).json({ error: "Email address is required" });
+      }
+
+      // Check environment variables
+      const apiKey = process.env.MAILGUN_API_KEY;
+      const domain = process.env.MAILGUN_DOMAIN;
+
+      const configStatus = {
+        hasApiKey: !!apiKey,
+        hasDomain: !!domain,
+        apiKeyLength: apiKey ? apiKey.length : 0,
+        domain: domain,
+        endpoint: `https://api.eu.mailgun.net/v3/${domain}/messages`
+      };
+
+      console.log('Mailgun configuration status:', configStatus);
+
+      if (!apiKey || !domain) {
+        return res.status(500).json({
+          error: "Mailgun configuratie incomplete",
+          configStatus,
+          details: "MAILGUN_API_KEY en MAILGUN_DOMAIN zijn vereist"
+        });
       }
 
       const { sendMailgunEmail } = await import('./mailgun/sendMail');
@@ -1170,13 +1192,35 @@ Deze email is automatisch gegenereerd door het KANIOU bestelsysteem.`
       res.json({ 
         success: true, 
         message: `Test email succesvol verzonden naar ${to}`,
+        configStatus,
         mailgunResponse: result
       });
     } catch (error: any) {
       console.error('Test email error:', error);
+      
+      // Check for specific Mailgun errors
+      let errorDetails = error.message;
+      let suggestions = [];
+
+      if (error.message.includes('401')) {
+        suggestions.push("Controleer of de MAILGUN_API_KEY correct is");
+        suggestions.push("Verificeer dat de API key active is in Mailgun dashboard");
+      }
+      
+      if (error.message.includes('domain')) {
+        suggestions.push("Controleer of MAILGUN_DOMAIN correct is geconfigureerd");
+        suggestions.push("Verificeer dat de domain is geverifieerd in Mailgun");
+      }
+
       res.status(500).json({ 
         error: "Fout bij verzenden test email",
-        details: error.message
+        details: errorDetails,
+        suggestions,
+        configStatus: {
+          hasApiKey: !!process.env.MAILGUN_API_KEY,
+          hasDomain: !!process.env.MAILGUN_DOMAIN,
+          domain: process.env.MAILGUN_DOMAIN
+        }
       });
     }
   });

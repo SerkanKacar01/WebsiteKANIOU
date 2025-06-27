@@ -218,8 +218,44 @@ export class DatabaseStorage implements IStorage {
       molliePaymentId: '', // Will be updated after Mollie payment creation
       bonnummer: order.bonnummer, // Customer-friendly order reference
     };
-    const result = await db.insert(paymentOrders).values(orderData).returning();
-    return result[0];
+    
+    try {
+      const result = await db.insert(paymentOrders).values(orderData).returning();
+      return result[0];
+    } catch (error: any) {
+      // Fallback to memory storage when database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, using memory fallback for order creation');
+        
+        // Create memory fallback order with all required fields
+        const memoryOrder: PaymentOrder = {
+          id: Date.now(), // Use timestamp as unique ID
+          ...orderData,
+          ...order, // Include all additional order fields
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          molliePaymentId: order.molliePaymentId || `memory_${Date.now()}`,
+          orderNumber: order.orderNumber || `MEM-${Date.now()}`,
+          status: order.status || 'pending',
+          pdfFileName: null,
+          invoicePdfFileName: null,
+          clientNote: null,
+          noteFromEntrepreneur: null,
+          notificationPreference: null
+        };
+        
+        // Store in global memory for session persistence
+        if (!global.memoryOrders) {
+          global.memoryOrders = [];
+        }
+        global.memoryOrders.push(memoryOrder);
+        
+        console.log(`✅ Order stored in memory: ${memoryOrder.bonnummer} (ID: ${memoryOrder.id})`);
+        return memoryOrder;
+      }
+      
+      throw error; // Re-throw other errors
+    }
   }
 
   async getPaymentOrderById(id: number): Promise<PaymentOrder | undefined> {
@@ -233,7 +269,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPaymentOrders(): Promise<PaymentOrder[]> {
-    return await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
+    try {
+      const dbOrders = await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
+      
+      // Merge with memory orders if they exist
+      const memoryOrders = global.memoryOrders || [];
+      const allOrders = [...dbOrders, ...memoryOrders];
+      
+      // Sort by creation date descending
+      return allOrders.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
+    } catch (error: any) {
+      // Return only memory orders if database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, returning memory orders only');
+        return global.memoryOrders || [];
+      }
+      throw error;
+    }
   }
 
   async deletePaymentOrder(id: number): Promise<void> {

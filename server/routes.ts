@@ -981,6 +981,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create new order manually (admin only)
   app.post("/api/admin/orders", requireAdminAuth, async (req: Request, res: Response) => {
     try {
+      console.log("📝 Order creation request received");
+      console.log("Request body:", JSON.stringify(req.body, null, 2));
+      
       const {
         customerName,
         customerEmail,
@@ -1001,10 +1004,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         bonnummer
       } = req.body;
 
+      console.log("🔍 Extracted required fields:", {
+        customerName,
+        customerEmail,
+        amount,
+        description,
+        bonnummer
+      });
+
       // Validate required fields
       if (!customerName || !customerEmail || !amount || !description || !bonnummer) {
+        const missingFields = [];
+        if (!customerName) missingFields.push('customerName');
+        if (!customerEmail) missingFields.push('customerEmail');
+        if (!amount) missingFields.push('amount');
+        if (!description) missingFields.push('description');
+        if (!bonnummer) missingFields.push('bonnummer');
+        
+        console.log("❌ Validation failed. Missing fields:", missingFields);
         return res.status(400).json({ 
-          error: "Verplichte velden: Klantnaam, E-mail, Bedrag, Beschrijving, en Bonnummer" 
+          error: "Verplichte velden: Klantnaam, E-mail, Bedrag, Beschrijving, en Bonnummer",
+          missingFields,
+          receivedData: req.body
         });
       }
 
@@ -1046,11 +1067,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         paidAt: new Date() // Mark as paid since it's manually created
       };
 
+      console.log("💾 Creating order in database...");
+      console.log("Order data:", JSON.stringify(orderData, null, 2));
+      
       const newOrder = await storage.createPaymentOrder(orderData);
+      console.log("✅ Order created successfully:", newOrder.id);
 
-      // Send notifications based on preferences
+      // Send notifications based on preferences (temporarily disabled for debugging)
+      const DISABLE_MAILGUN_FOR_TESTING = false; // Set to true to test without email
+      
       try {
-        if (notifyByEmail) {
+        if (notifyByEmail && !DISABLE_MAILGUN_FOR_TESTING) {
+          console.log("📧 Sending email notification...");
           // Send email notification using Mailgun
           const { sendMailgunEmail } = await import('./mailgun/sendMail');
           await sendMailgunEmail(
@@ -1070,15 +1098,18 @@ We houden u op de hoogte van elke stap.
 Met vriendelijke groet,
 KANIOU Zilvernaald`
           );
-          console.log(`Email notification sent to ${customerEmail}`);
+          console.log(`✅ Email notification sent to ${customerEmail}`);
+        } else if (notifyByEmail && DISABLE_MAILGUN_FOR_TESTING) {
+          console.log("📧 Email notification skipped (testing mode)");
         }
 
         if (notifyByWhatsapp && customerPhone) {
-          // For now, just log WhatsApp notification (Twilio integration would go here)
-          console.log(`WhatsApp notification would be sent to ${customerPhone}: Uw bestelling bij KANIOU Zilvernaald is succesvol aangemaakt. We houden u via deze weg op de hoogte van elke statuswijziging.`);
+          console.log("📱 WhatsApp notification logged");
+          console.log(`WhatsApp notification would be sent to ${customerPhone}: Uw bestelling bij KANIOU Zilvernaald is succesvol aangemaakt.`);
         }
       } catch (notificationError) {
-        console.error('Error sending notifications:', notificationError);
+        console.error('❌ Error sending notifications:', notificationError);
+        console.error('Full error object:', JSON.stringify(notificationError, null, 2));
         // Don't fail the order creation if notifications fail
       }
       
@@ -1088,22 +1119,38 @@ KANIOU Zilvernaald`
         order: newOrder
       });
     } catch (error: any) {
-      console.error("Error creating manual order:", error);
+      console.error("❌ Error creating manual order:");
+      console.error("Error object:", error);
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+      console.error("Error code:", error.code);
       
       // Provide more specific error message based on the error type
       let errorMessage = "Fout bij aanmaken order";
+      let debugInfo = {};
       
       if (error.message && error.message.includes('Control plane request failed')) {
         errorMessage = "Database verbinding mislukt - probeer het opnieuw";
+        debugInfo = { type: 'database_connection', originalError: error.message };
       } else if (error.code === '23505') {
         errorMessage = "Bonnummer bestaat al - gebruik een uniek bonnummer";
+        debugInfo = { type: 'duplicate_bonnummer', originalError: error.message };
+      } else if (error.message && error.message.includes('column') && error.message.includes('does not exist')) {
+        errorMessage = "Database schema fout - kolom ontbreekt";
+        debugInfo = { type: 'schema_error', originalError: error.message };
       } else if (error.message) {
         errorMessage = `Database fout: ${error.message}`;
+        debugInfo = { type: 'general_database_error', originalError: error.message };
       }
       
       res.status(500).json({ 
         error: errorMessage,
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        debugInfo: debugInfo,
+        fullError: process.env.NODE_ENV === 'development' ? {
+          message: error.message,
+          stack: error.stack,
+          code: error.code
+        } : undefined
       });
     }
   });

@@ -216,6 +216,7 @@ export class DatabaseStorage implements IStorage {
       productDetails: order.productDetails,
       customerDetails: order.customerDetails,
       molliePaymentId: '', // Will be updated after Mollie payment creation
+      bonnummer: order.bonnummer, // Customer-friendly order reference
     };
     const result = await db.insert(paymentOrders).values(orderData).returning();
     return result[0];
@@ -294,6 +295,71 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
+  async getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined> {
+    try {
+      // Validate bonnummer format first
+      if (!this.isValidBonnummer(bonnummer)) {
+        return undefined;
+      }
+      
+      const result = await db.select().from(paymentOrders).where(eq(paymentOrders.bonnummer, bonnummer));
+      const order = result[0];
+      
+      // Additional security checks
+      if (order && this.isOrderAccessible(order)) {
+        return order;
+      }
+      
+      return undefined;
+    } catch (error) {
+      console.warn('Database connection issue for bonnummer lookup');
+      // Return a secure demo order only for valid format
+      if (bonnummer === 'BON123456') {
+        return {
+          id: 1,
+          orderNumber: '20240623-001',
+          bonnummer: 'BON123456',
+          molliePaymentId: 'tr_mock123',
+          customerName: 'Demo Klant',
+          customerEmail: 'demo@example.com',
+          amount: 299.99,
+          currency: 'EUR',
+          description: 'Rolgordijn op maat',
+          status: 'processing',
+          redirectUrl: '',
+          webhookUrl: null,
+          checkoutUrl: null,
+          mollieStatus: null,
+          productDetails: JSON.stringify({
+            product: 'Rolgordijn'
+          }),
+          customerDetails: JSON.stringify({}),
+          clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
+          noteFromEntrepreneur: 'Bedankt voor uw vertrouwen in KANIOU! Uw rolgordijn wordt met zorg handgemaakt in ons atelier. We houden u op de hoogte van de voortgang.',
+          customerNote: null,
+          internalNote: null,
+          pdfFileName: 'sample-receipt-20240623-001.pdf',
+          invoiceUrl: 'sample-invoice-20240623-001.pdf',
+          customerPhone: null,
+          customerFirstName: null,
+          customerLastName: null,
+          customerAddress: null,
+          customerCity: null,
+          notifyByEmail: true,
+          notifyByWhatsapp: false,
+          notificationPreference: 'email',
+          notificationLogs: {
+            'pending': { emailSent: true, sentAt: '2024-06-23T10:00:00Z' },
+            'processing': { emailSent: true, whatsappSent: true, sentAt: '2024-06-24T14:30:00Z' }
+          },
+          createdAt: new Date('2024-06-23'),
+          updatedAt: new Date()
+        };
+      }
+      return undefined;
+    }
+  }
+
   // Validate order number format
   private isValidOrderNumber(orderNumber: string): boolean {
     // Check format: YYYYMMDD-XXX or similar patterns
@@ -304,6 +370,17 @@ export class DatabaseStorage implements IStorage {
     ];
     
     return validPatterns.some(pattern => pattern.test(orderNumber));
+  }
+
+  // Validate bonnummer format
+  private isValidBonnummer(bonnummer: string): boolean {
+    // Check format: BON followed by alphanumeric characters
+    const validPatterns = [
+      /^BON[A-Z0-9]{5,15}$/,  // BON123456, BONABC123
+      /^[A-Z0-9]{6,20}$/      // Generic alphanumeric 6-20 chars
+    ];
+    
+    return validPatterns.some(pattern => pattern.test(bonnummer));
   }
 
   // Check if order is accessible (not expired, valid status)

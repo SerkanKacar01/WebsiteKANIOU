@@ -58,7 +58,7 @@ export default function TrackOrderPage() {
   // Update notification preferences
   const updatePreferencesMutation = useMutation({
     mutationFn: async (preferences: { 
-      orderNumber: string; 
+      bonnummer: string; 
       notifyByEmail: boolean; 
       notifyByWhatsapp: boolean;
       customerPhone?: string;
@@ -70,7 +70,7 @@ export default function TrackOrderPage() {
         title: "Voorkeur opgeslagen",
         description: "Uw notificatie voorkeur is bijgewerkt.",
       });
-      queryClient.invalidateQueries({ queryKey: ['/api/orders/track', searchedOrderNumber] });
+      queryClient.invalidateQueries({ queryKey: ['/api/orders/track/bonnummer', searchedBonnummer] });
     },
     onError: () => {
       toast({
@@ -87,22 +87,22 @@ export default function TrackOrderPage() {
     // Clear any existing validation errors
     setValidationError('');
     
-    if (!orderNumber.trim()) {
-      setValidationError('Vul uw bestelnummer in om verder te gaan.');
+    if (!bonnummer.trim()) {
+      setValidationError('Vul uw bonnummer in om verder te gaan.');
       // Focus the input field
-      const inputElement = document.getElementById('order-number-input');
+      const inputElement = document.getElementById('bonnummer-input');
       if (inputElement) {
         inputElement.focus();
       }
       return;
     }
     
-    setSearchedOrderNumber(orderNumber.trim());
+    setSearchedBonnummer(bonnummer.trim());
   };
 
   // Handle input change to clear errors
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOrderNumber(e.target.value);
+    setBonnummer(e.target.value);
     // Clear validation error when user starts typing
     if (validationError) {
       setValidationError('');
@@ -162,7 +162,7 @@ export default function TrackOrderPage() {
     }
 
     updatePreferencesMutation.mutate({
-      orderNumber: order.orderNumber,
+      bonnummer: order.bonnummer,
       notifyByEmail: emailNotifications,
       notifyByWhatsapp: whatsappNotifications,
       customerPhone: whatsappNotifications ? customerPhone.trim() : undefined
@@ -246,17 +246,17 @@ export default function TrackOrderPage() {
           </h1>
         </div>
 
-        {/* Order Lookup Form */}
-        {!searchedOrderNumber && (
+        {/* Bonnummer Lookup Form */}
+        {!searchedBonnummer && (
           <Card>
             <CardContent className="p-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <Input
-                    id="order-number-input"
+                    id="bonnummer-input"
                     type="text"
-                    placeholder="Bijv. 20240623-001"
-                    value={orderNumber}
+                    placeholder="Bijv. BON12345 of ABC123DEF"
+                    value={bonnummer}
                     onChange={handleInputChange}
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
@@ -275,7 +275,7 @@ export default function TrackOrderPage() {
                   )}
                   
                   <p className="text-sm text-gray-500 mt-2">
-                    U vindt uw bestelnummer in uw bevestigingsmail of WhatsApp-bericht.
+                    U vindt uw bonnummer in uw bevestigingsmail of WhatsApp-bericht.
                   </p>
                 </div>
                 <Button 
@@ -300,18 +300,18 @@ export default function TrackOrderPage() {
               <h3 className="font-medium text-red-800">Bestelling niet gevonden</h3>
             </div>
             <p className="text-red-700 mb-4 leading-relaxed">
-              {error.message === "U heeft geen toegang tot deze bestelling. Controleer uw bestelnummer of neem contact met ons op." 
+              {error.message === "U heeft geen toegang tot deze bestelling. Controleer uw bonnummer of neem contact met ons op." 
                 ? error.message 
-                : "Het ingevoerde bestelnummer is niet gevonden. Controleer het nummer en probeer opnieuw."}
+                : "Het ingevoerde bonnummer is niet gevonden. Controleer het nummer en probeer opnieuw."}
             </p>
             <Button 
               onClick={() => {
-                setSearchedOrderNumber('');
-                setOrderNumber('');
+                setSearchedBonnummer('');
+                setBonnummer('');
                 setValidationError('');
                 // Focus the input field after clearing
                 setTimeout(() => {
-                  const inputElement = document.getElementById('order-number-input');
+                  const inputElement = document.getElementById('bonnummer-input');
                   if (inputElement) {
                     inputElement.focus();
                   }

@@ -359,7 +359,8 @@ export default function EntrepreneurDashboardPage() {
         notifyByEmail: true,
         notifyByWhatsapp: false,
         customerNote: orderData.customerNote || null,
-        internalNote: orderData.internalNote || null
+        internalNote: orderData.internalNote || null,
+        bonnummer: orderData.bonnummer // CRITICAL FIX: Add the missing bonnummer field
       };
 
       const response = await fetch("/api/admin/orders", {

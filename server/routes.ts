@@ -1074,7 +1074,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("✅ Order created successfully:", newOrder.id);
 
       // Send notifications based on preferences (temporarily disabled for debugging)
-      const DISABLE_MAILGUN_FOR_TESTING = true; // Set to true to test without email
+      const DISABLE_MAILGUN_FOR_TESTING = false; // Set to true to test without email
       
       try {
         if (notifyByEmail && !DISABLE_MAILGUN_FOR_TESTING) {

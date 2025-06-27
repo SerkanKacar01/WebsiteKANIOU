@@ -1052,24 +1052,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         if (notifyByEmail) {
           // Send email notification using Mailgun
-          const { sendMail } = await import('./mailgun/sendMail');
-          await sendMail({
-            to: customerEmail,
-            subject: 'Uw bestelling bij KANIOU Zilvernaald',
-            html: `
-              <h2>Beste ${customerName},</h2>
-              <p>Uw bestelling is succesvol aangemaakt en wordt momenteel verwerkt.</p>
-              <p><strong>Bestelling details:</strong></p>
-              <ul>
-                <li>Bonnummer: ${bonnummer}</li>
-                <li>Bedrag: €${amount}</li>
-                <li>Beschrijving: ${description}</li>
-              </ul>
-              <p>We houden u op de hoogte van elke stap.</p>
-              <p>Met vriendelijke groet,<br>
-              KANIOU Zilvernaald</p>
-            `
-          });
+          const { sendMailgunEmail } = await import('./mailgun/sendMail');
+          await sendMailgunEmail(
+            customerEmail,
+            'Uw bestelling bij KANIOU Zilvernaald',
+            `Beste ${customerName},
+
+Uw bestelling is succesvol aangemaakt en wordt momenteel verwerkt.
+
+Bestelling details:
+- Bonnummer: ${bonnummer}
+- Bedrag: €${amount}
+- Beschrijving: ${description}
+
+We houden u op de hoogte van elke stap.
+
+Met vriendelijke groet,
+KANIOU Zilvernaald`
+          );
           console.log(`Email notification sent to ${customerEmail}`);
         }
 

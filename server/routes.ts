@@ -1136,6 +1136,51 @@ KANIOU Zilvernaald`
     }
   });
 
+  // Test Mailgun email endpoint
+  app.post('/api/test-mailgun', async (req, res) => {
+    try {
+      const { to } = req.body;
+      
+      if (!to) {
+        return res.status(400).json({ error: "Email address is required" });
+      }
+
+      const { sendMailgunEmail } = await import('./mailgun/sendMail');
+      
+      const result = await sendMailgunEmail(
+        to,
+        'KANIOU Zilvernaald - Test Email',
+        `Test email van KANIOU Zilvernaald
+
+Dit is een test email om de configuratie te verifiëren.
+
+Mailgun instellingen:
+✅ API configuratie: Correct
+✅ Domain verificatie: Actief  
+✅ EU endpoint: https://api.eu.mailgun.net/v3/
+✅ Email verzending: Werkend
+
+Met vriendelijke groet,
+KANIOU Zilvernaald Team
+
+---
+Deze email is automatisch gegenereerd door het KANIOU bestelsysteem.`
+      );
+
+      res.json({ 
+        success: true, 
+        message: `Test email succesvol verzonden naar ${to}`,
+        mailgunResponse: result
+      });
+    } catch (error: any) {
+      console.error('Test email error:', error);
+      res.status(500).json({ 
+        error: "Fout bij verzenden test email",
+        details: error.message
+      });
+    }
+  });
+
   // PDF upload endpoint
   app.post("/api/admin/orders/:id/upload-pdf", requireAdminAuth, upload.single('pdf'), async (req: Request, res: Response) => {
     try {

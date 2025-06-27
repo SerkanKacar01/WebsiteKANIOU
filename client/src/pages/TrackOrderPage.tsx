@@ -291,7 +291,7 @@ export default function TrackOrderPage() {
         )}
 
         {/* Error State - Order Not Found */}
-        {error && searchedOrderNumber && (
+        {error && searchedBonnummer && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-lg animate-in fade-in duration-200">
             <div className="flex items-center space-x-2 mb-3">
               <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -349,8 +349,8 @@ export default function TrackOrderPage() {
                 </div>
                 <Button 
                   onClick={() => {
-                    setSearchedOrderNumber('');
-                    setOrderNumber('');
+                    setSearchedBonnummer('');
+                    setBonnummer('');
                   }}
                   variant="outline"
                   size="sm"

@@ -402,7 +402,8 @@ export default function EntrepreneurDashboardPage() {
         customerNote: '',
         internalNote: '',
         notifyByEmail: true,
-        notifyByWhatsapp: false
+        notifyByWhatsapp: false,
+        bonnummer: ''
       });
     },
     onError: (error) => {
@@ -672,7 +673,8 @@ export default function EntrepreneurDashboardPage() {
         customerNote: '',
         internalNote: '',
         notifyByEmail: true,
-        notifyByWhatsapp: false
+        notifyByWhatsapp: false,
+        bonnummer: ''
       });
       setSelectedPDFs([]);
       setDocumentTypes([]);

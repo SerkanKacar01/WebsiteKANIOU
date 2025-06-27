@@ -1,0 +1,50 @@
+🛠 Instruction for Replit
+	1.	Fix the Order Creation Error
+
+Replit must update the system to ensure that when a new order is submitted via the dashboard, the system does not crash or fail silently. Any backend errors must be shown clearly in the console for debugging. Replit must make sure that the form correctly submits all necessary data.
+	2.	Ensure the Following Fields Are Supported by the Backend
+
+Replit must verify that the order creation endpoint accepts and stores:
+	•	The customer’s note (visible to the client)
+	•	The admin’s internal note
+	•	The selected notification preferences (Email and/or WhatsApp)
+	•	Any uploaded PDF files (optional)
+
+	3.	Link Notification Preferences to Real Actions
+
+Replit must implement logic so that:
+	•	If “Email” is selected, a confirmation message is automatically sent to the customer or admin using Mailgun.
+	•	If “WhatsApp” is selected, a message is sent via Twilio to the customer (if activated later).
+	•	If both options are selected, both notifications are sent.
+	•	If neither is selected, no notifications are sent.
+
+	4.	Notification Texts (to be used by the system)
+
+Email text (Dutch):
+Subject: Uw bestelling bij KANIOU Zilvernaald
+Body:
+“Beste klant,
+Uw bestelling is succesvol aangemaakt en wordt momenteel verwerkt.
+We houden u op de hoogte van elke stap.
+Met vriendelijke groet,
+KANIOU Zilvernaald”
+
+WhatsApp message (Dutch):
+“Uw bestelling bij KANIOU Zilvernaald is succesvol aangemaakt.
+We houden u via deze weg op de hoogte van elke statuswijziging.”
+	5.	Validate PDF Upload System
+
+Replit must ensure that:
+	•	Only PDF files are allowed
+	•	A maximum of 3 files can be uploaded per order
+	•	The PDF upload field must not block the creation of the order if empty
+
+	6.	Test All Scenarios
+
+Replit must test the following cases:
+	•	Create an order with only Email selected
+	•	Create an order with only WhatsApp selected
+	•	Create an order with both options selected
+	•	Create an order with no notifications selected
+
+After these updates, the error “Er is een fout opgetreden bij het aanmaken van de bestelling” should never appear unless there’s a real server issue.

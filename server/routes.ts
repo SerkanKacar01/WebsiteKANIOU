@@ -997,13 +997,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         notifyByEmail = true,
         notifyByWhatsapp = false,
         customerNote,
-        internalNote
+        internalNote,
+        bonnummer
       } = req.body;
 
       // Validate required fields
-      if (!customerName || !customerEmail || !amount || !description) {
+      if (!customerName || !customerEmail || !amount || !description || !bonnummer) {
         return res.status(400).json({ 
-          error: "Verplichte velden: Klantnaam, E-mail, Bedrag, en Beschrijving" 
+          error: "Verplichte velden: Klantnaam, E-mail, Bedrag, Beschrijving, en Bonnummer" 
         });
       }
 
@@ -1016,6 +1017,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const orderData = {
         molliePaymentId,
         orderNumber,
+        bonnummer,
         customerName,
         customerEmail,
         customerPhone: customerPhone || null,
@@ -1045,6 +1047,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const newOrder = await storage.createPaymentOrder(orderData);
+
+      // Send notifications based on preferences
+      try {
+        if (notifyByEmail) {
+          // Send email notification using Mailgun
+          const { sendMail } = await import('./mailgun/sendMail');
+          await sendMail({
+            to: customerEmail,
+            subject: 'Uw bestelling bij KANIOU Zilvernaald',
+            html: `
+              <h2>Beste ${customerName},</h2>
+              <p>Uw bestelling is succesvol aangemaakt en wordt momenteel verwerkt.</p>
+              <p><strong>Bestelling details:</strong></p>
+              <ul>
+                <li>Bonnummer: ${bonnummer}</li>
+                <li>Bedrag: €${amount}</li>
+                <li>Beschrijving: ${description}</li>
+              </ul>
+              <p>We houden u op de hoogte van elke stap.</p>
+              <p>Met vriendelijke groet,<br>
+              KANIOU Zilvernaald</p>
+            `
+          });
+          console.log(`Email notification sent to ${customerEmail}`);
+        }
+
+        if (notifyByWhatsapp && customerPhone) {
+          // For now, just log WhatsApp notification (Twilio integration would go here)
+          console.log(`WhatsApp notification would be sent to ${customerPhone}: Uw bestelling bij KANIOU Zilvernaald is succesvol aangemaakt. We houden u via deze weg op de hoogte van elke statuswijziging.`);
+        }
+      } catch (notificationError) {
+        console.error('Error sending notifications:', notificationError);
+        // Don't fail the order creation if notifications fail
+      }
       
       res.json({ 
         success: true,
@@ -1053,7 +1089,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Error creating manual order:", error);
-      res.status(500).json({ error: "Fout bij aanmaken order" });
+      
+      // Provide more specific error message based on the error type
+      let errorMessage = "Fout bij aanmaken order";
+      
+      if (error.message && error.message.includes('Control plane request failed')) {
+        errorMessage = "Database verbinding mislukt - probeer het opnieuw";
+      } else if (error.code === '23505') {
+        errorMessage = "Bonnummer bestaat al - gebruik een uniek bonnummer";
+      } else if (error.message) {
+        errorMessage = `Database fout: ${error.message}`;
+      }
+      
+      res.status(500).json({ 
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
     }
   });
 

@@ -120,7 +120,8 @@ export default function EntrepreneurDashboardPage() {
     customerNote: '',
     internalNote: '',
     notifyByEmail: true,
-    notifyByWhatsapp: false
+    notifyByWhatsapp: false,
+    bonnummer: ''
   });
   
   // PDF upload state
@@ -2006,6 +2007,39 @@ export default function EntrepreneurDashboardPage() {
                     className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
                     required
                   />
+                </div>
+
+                {/* Bonnummer (Unique Order Reference) */}
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="bonnummer" className="text-sm font-medium text-gray-700">
+                    Bonnummer / Referentienummer *
+                  </Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="bonnummer"
+                      value={newOrderForm.bonnummer}
+                      onChange={(e) => setNewOrderForm(prev => ({ ...prev, bonnummer: e.target.value.toUpperCase() }))}
+                      placeholder="bijv. BON123456"
+                      className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988] flex-1"
+                      required
+                    />
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        const timestamp = Date.now().toString().slice(-6);
+                        const randomStr = Math.random().toString(36).substring(2, 5).toUpperCase();
+                        const generatedBonnummer = `BON${timestamp}${randomStr}`;
+                        setNewOrderForm(prev => ({ ...prev, bonnummer: generatedBonnummer }));
+                      }}
+                      variant="outline"
+                      className="px-4"
+                    >
+                      Genereer
+                    </Button>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Vul hier een uniek bonnummer in. Dit nummer zal gebruikt worden om de bestelling op te volgen.
+                  </p>
                 </div>
 
                 {/* Dimensions */}

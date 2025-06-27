@@ -495,6 +495,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Order tracking by bonnummer (customer-friendly order reference)
+  app.get("/api/orders/track/bonnummer/:bonnummer", async (req: Request, res: Response) => {
+    try {
+      const { bonnummer } = req.params;
+      
+      // Try to find order by bonnummer
+      const order = await storage.getPaymentOrderByBonnummer(bonnummer);
+      
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      // Return order data for client tracking
+      res.json({
+        id: order.id,
+        orderNumber: order.orderNumber || `KAN-${order.id}`,
+        bonnummer: order.bonnummer,
+        status: order.status || 'pending',
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        amount: order.amount,
+        currency: order.currency || 'EUR',
+        createdAt: order.createdAt,
+        updatedAt: order.updatedAt,
+        clientNote: order.clientNote,
+        pdfFileName: order.pdfFileName,
+        notificationPreference: order.notificationPreference || 'email'
+      });
+    } catch (error: any) {
+      console.error("Error tracking order by bonnummer:", error);
+      res.status(500).json({ message: "Failed to track order" });
+    }
+  });
+
   // Update notification preferences for orders
   app.post("/api/orders/update-preferences", async (req: Request, res: Response) => {
     try {

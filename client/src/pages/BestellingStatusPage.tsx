@@ -137,8 +137,7 @@ const BestellingStatusPage = () => {
 
     if (notifyByEmail && !notificationEmail) {
       toast({
-        title: "E-mailadres vereist",
-        description: "Vul uw e-mailadres in voor e-mailnotificaties.",
+        title: "⚠️ E-mailadres is vereist voor e-mailnotificaties",
         variant: "destructive",
       });
       return;
@@ -146,8 +145,7 @@ const BestellingStatusPage = () => {
 
     if (notifyByWhatsapp && !notificationPhone) {
       toast({
-        title: "Telefoonnummer vereist",
-        description: "Vul uw WhatsApp nummer in voor WhatsApp notificaties.",
+        title: "⚠️ Telefoonnummer is vereist voor WhatsApp-notificaties",
         variant: "destructive",
       });
       return;
@@ -382,10 +380,14 @@ const BestellingStatusPage = () => {
                 </div>
                 
                 {notifyByEmail && (
-                  <div className="ml-7">
+                  <div className="ml-7 space-y-2">
+                    <Label htmlFor="emailInput" className="text-sm font-medium text-gray-700">
+                      Uw e-mailadres
+                    </Label>
                     <Input
+                      id="emailInput"
                       type="email"
-                      placeholder="Uw e-mailadres"
+                      placeholder="bijv. klant@email.com"
                       value={notificationEmail}
                       onChange={(e) => setNotificationEmail(e.target.value)}
                       className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
@@ -410,10 +412,14 @@ const BestellingStatusPage = () => {
                 </div>
                 
                 {notifyByWhatsapp && (
-                  <div className="ml-7">
+                  <div className="ml-7 space-y-2">
+                    <Label htmlFor="whatsappInput" className="text-sm font-medium text-gray-700">
+                      Uw WhatsApp-nummer
+                    </Label>
                     <Input
+                      id="whatsappInput"
                       type="tel"
-                      placeholder="Uw WhatsApp nummer (bijv. +32 123 456 789)"
+                      placeholder="bijv. +32 456 78 90 12"
                       value={notificationPhone}
                       onChange={(e) => setNotificationPhone(e.target.value)}
                       className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"

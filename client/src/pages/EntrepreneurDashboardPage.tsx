@@ -570,10 +570,10 @@ export default function EntrepreneurDashboardPage() {
 
   const handleCreateOrder = async () => {
     // Basic validation
-    if (!newOrderForm.customerName || !newOrderForm.productCategory || !newOrderForm.price) {
+    if (!newOrderForm.customerName || !newOrderForm.productCategory || !newOrderForm.price || !newOrderForm.bonnummer) {
       toast({
         title: "Vereiste velden",
-        description: "Vul tenminste klantnaam, productcategorie en prijs in.",
+        description: "Vul tenminste klantnaam, productcategorie, prijs en bonnummer in.",
         variant: "destructive",
       });
       return;

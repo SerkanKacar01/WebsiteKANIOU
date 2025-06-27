@@ -20,8 +20,8 @@ import {
 import type { PaymentOrder } from '@shared/schema';
 
 export default function TrackOrderPage() {
-  const [orderNumber, setOrderNumber] = useState('');
-  const [searchedOrderNumber, setSearchedOrderNumber] = useState('');
+  const [bonnummer, setBonnummer] = useState('');
+  const [searchedBonnummer, setSearchedBonnummer] = useState('');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [whatsappNotifications, setWhatsappNotifications] = useState(false);
   const [customerPhone, setCustomerPhone] = useState('');
@@ -41,8 +41,8 @@ export default function TrackOrderPage() {
 
   // Fetch order details
   const { data: order, isLoading, error } = useQuery<PaymentOrder>({
-    queryKey: ['/api/orders/track', searchedOrderNumber],
-    enabled: !!searchedOrderNumber,
+    queryKey: ['/api/orders/track/bonnummer', searchedBonnummer],
+    enabled: !!searchedBonnummer,
     retry: false
   });
 

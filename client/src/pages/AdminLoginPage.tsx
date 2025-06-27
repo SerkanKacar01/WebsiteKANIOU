@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, Shield } from "lucide-react";
+import { Eye, EyeOff, Shield, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
@@ -22,6 +22,8 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [redirectFailed, setRedirectFailed] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
 
@@ -33,9 +35,14 @@ export default function AdminLoginPage() {
     },
   });
 
+  const handleManualRedirect = () => {
+    setLocation("/entrepreneur-dashboard");
+  };
+
   const onSubmit = async (data: LoginForm) => {
     setIsLoading(true);
     setError(null);
+    setRedirectFailed(false);
 
     try {
       const response = await fetch("/api/admin/login", {
@@ -58,10 +65,26 @@ export default function AdminLoginPage() {
         description: "U wordt doorgestuurd naar het dashboard...",
       });
 
-      // Redirect to dashboard
+      setIsRedirecting(true);
+      
+      // Redirect to dashboard with fallback
       setTimeout(() => {
-        setLocation("/entrepreneur-dashboard");
-      }, 1000);
+        try {
+          setLocation("/entrepreneur-dashboard");
+        } catch (redirectError) {
+          console.error("Redirect error:", redirectError);
+          setRedirectFailed(true);
+          setIsRedirecting(false);
+        }
+      }, 1500);
+
+      // Fallback: If still redirecting after 3 seconds, show manual option
+      setTimeout(() => {
+        if (isRedirecting) {
+          setRedirectFailed(true);
+          setIsRedirecting(false);
+        }
+      }, 3000);
 
     } catch (error) {
       console.error("Login error:", error);
@@ -96,8 +119,36 @@ export default function AdminLoginPage() {
               </Alert>
             )}
 
+            {isRedirecting && (
+              <Alert className="bg-green-50 border-green-200">
+                <Shield className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-800">
+                  <strong>Succesvol ingelogd</strong><br />
+                  U wordt doorgestuurd naar het dashboard...
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {redirectFailed && (
+              <Alert className="bg-orange-50 border-orange-200">
+                <AlertDescription className="text-orange-800">
+                  <strong>Redirect mislukt</strong><br />
+                  Er ging iets mis bij het doorsturen. Klik hier om handmatig naar uw dashboard te gaan.
+                  <Button 
+                    onClick={handleManualRedirect}
+                    className="mt-3 w-full bg-[#E6C988] hover:bg-[#D4B976] text-black font-medium"
+                    size="sm"
+                  >
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                    Ga naar Dashboard
+                  </Button>
+                </AlertDescription>
+              </Alert>
+            )}
+
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <fieldset disabled={isRedirecting}>
                 <FormField
                   control={form.control}
                   name="email"
@@ -158,10 +209,11 @@ export default function AdminLoginPage() {
                 <Button
                   type="submit"
                   className="w-full bg-[#E6C988] hover:bg-[#D4B976] text-black font-medium"
-                  disabled={isLoading}
+                  disabled={isLoading || isRedirecting}
                 >
-                  {isLoading ? "Bezig met inloggen..." : "Inloggen"}
+                  {isLoading ? "Bezig met inloggen..." : isRedirecting ? "Doorsturen..." : "Inloggen"}
                 </Button>
+                </fieldset>
               </form>
             </Form>
 

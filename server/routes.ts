@@ -6,6 +6,8 @@ import bcrypt from "bcryptjs";
 import { storage } from "./storage";
 import { createSession, validateSession, deleteSession, isValidCredentials } from "./simpleAuth";
 import { sendMailgunEmail } from "./mailgun/sendMail";
+import { insertContactSubmissionSchema, insertQuoteRequestSchema } from "@shared/schema";
+import { createContactEmailHtml } from "./services/email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
@@ -92,6 +94,139 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Health check endpoint
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
+  // Contact form submission endpoint
+  app.post("/api/contact", async (req, res) => {
+    try {
+      // Validate request body
+      const validation = insertContactSubmissionSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({ 
+          error: "Invalid form data", 
+          details: validation.error.issues 
+        });
+      }
+
+      const { name, email, subject, message, website } = validation.data;
+
+      // Check honeypot field for spam protection
+      if (website && website.length > 0) {
+        return res.status(400).json({ error: "Invalid submission" });
+      }
+
+      // Save to database
+      await storage.createContactSubmission({
+        name,
+        email,
+        subject,
+        message
+      });
+
+      // Send email notification to business
+      try {
+        const emailSubject = `[KANIOU Contact] ${subject}`;
+        const emailHtml = createContactEmailHtml({ name, email, subject, message });
+        
+        // Send plain text email for better deliverability
+        const emailText = `
+Nieuw contactformulier bericht van KANIOU website
+
+Van: ${name}
+E-mail: ${email}
+Onderwerp: ${subject}
+
+Bericht:
+${message}
+
+---
+Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new Date().toLocaleTimeString('nl-NL')}
+        `.trim();
+
+        await sendMailgunEmail('info@kaniou.be', emailSubject, emailText);
+        console.log(`Contact form email sent to info@kaniou.be from ${email}`);
+      } catch (emailError) {
+        console.error('Failed to send contact form email:', emailError);
+        // Don't fail the request if email fails
+      }
+
+      res.json({ 
+        success: true, 
+        message: "Contact form submitted successfully" 
+      });
+    } catch (error: any) {
+      console.error("Contact form submission error:", error);
+      res.status(500).json({ error: "Failed to submit contact form" });
+    }
+  });
+
+  // Quote request submission endpoint
+  app.post("/api/quote-requests", async (req, res) => {
+    try {
+      // Validate request body
+      const validation = insertQuoteRequestSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({ 
+          error: "Invalid quote request data", 
+          details: validation.error.issues 
+        });
+      }
+
+      const { name, email, phone, productType, dimensions, requirements, website } = validation.data;
+
+      // Check honeypot field for spam protection
+      if (website && website.length > 0) {
+        return res.status(400).json({ error: "Invalid submission" });
+      }
+
+      // Save to database
+      await storage.createQuoteRequest({
+        name,
+        email,
+        phone,
+        productType,
+        dimensions: dimensions || '',
+        requirements: requirements || ''
+      });
+
+      // Send email notification to business
+      try {
+        const emailSubject = `[KANIOU Offerte] ${productType} - ${name}`;
+        
+        const emailText = `
+Nieuwe offerteaanvraag van KANIOU website
+
+Klantgegevens:
+- Naam: ${name}
+- E-mail: ${email}
+- Telefoon: ${phone}
+
+Product Details:
+- Type: ${productType}
+- Afmetingen: ${dimensions || 'Niet opgegeven'}
+
+Aanvullende wensen:
+${requirements || 'Geen aanvullende wensen opgegeven'}
+
+---
+Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new Date().toLocaleTimeString('nl-NL')}
+        `.trim();
+
+        await sendMailgunEmail('info@kaniou.be', emailSubject, emailText);
+        console.log(`Quote request email sent to info@kaniou.be from ${email}`);
+      } catch (emailError) {
+        console.error('Failed to send quote request email:', emailError);
+        // Don't fail the request if email fails
+      }
+
+      res.json({ 
+        success: true, 
+        message: "Quote request submitted successfully" 
+      });
+    } catch (error: any) {
+      console.error("Quote request submission error:", error);
+      res.status(500).json({ error: "Failed to submit quote request" });
+    }
   });
 
   // Admin authentication status route

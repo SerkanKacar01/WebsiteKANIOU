@@ -120,6 +120,21 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 28, 2025: COMPLETE FLOATING ACTION BUTTONS SYSTEM IMPLEMENTED
+  - ✅ Created comprehensive floating action buttons system with 5 buttons
+  - ✅ Implemented responsive design: 50x50px desktop, 40x40px mobile
+  - ✅ Added emoji display on mobile, icons on desktop with hover tooltips
+  - ✅ "Volg uw bestelling" button with text (desktop only) linking to /volg-bestelling
+  - ✅ "Stel je vraag" modal with contact form (name, email, message)
+  - ✅ "Bel ons terug" modal with callback form (firstName, lastName, phone)
+  - ✅ "Bekijk meetinstructies" modal with measuring instructions and video placeholder
+  - ✅ "Vraag een offerte aan" button redirecting to /offerte page
+  - ✅ "Veelgestelde vragen" preview popup with top 3 FAQ entries
+  - ✅ Email integration using SendGrid for callback and question submissions
+  - ✅ Backend API endpoints: /api/contact/callback and /api/contact/question
+  - ✅ Confirmation messages after successful form submissions
+  - ✅ Proper error handling and loading states
+  - ✅ All buttons positioned bottom-right with proper z-index stacking
 - June 28, 2025: URGENT BACKEND ORDER ISSUE RESOLVED + FRONTEND LOADING ISSUE
   - ✅ Fixed critical order creation and persistence system
   - ✅ Enhanced storage layer with robust memory-based fallback mechanisms

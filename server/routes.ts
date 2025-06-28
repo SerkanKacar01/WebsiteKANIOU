@@ -522,6 +522,97 @@ Team KANIOU
     }
   });
 
+  // Contact form endpoints for floating action buttons
+  app.post("/api/contact/callback", async (req, res) => {
+    try {
+      const { firstName, lastName, phone, type } = req.body;
+
+      if (!firstName || !lastName || !phone) {
+        return res.status(400).json({ error: "Alle velden zijn verplicht" });
+      }
+
+      // Send email notification using SendGrid
+      const subject = "KANIOU - Nieuw terugbelverzoek";
+      const emailBody = `
+Nieuw terugbelverzoek ontvangen via KANIOU website:
+
+Naam: ${firstName} ${lastName}
+Telefoonnummer: ${phone}
+Type: Terugbelverzoek
+
+Datum: ${new Date().toLocaleString('nl-BE')}
+
+Deze klant vraagt om teruggebeld te worden.
+      `.trim();
+
+      try {
+        await sendMailgunEmail({
+          to: 'info@kaniou.be',
+          subject: subject,
+          text: emailBody
+        });
+        console.log("Callback request email sent successfully");
+      } catch (emailError) {
+        console.error("Failed to send callback email:", emailError);
+        // Continue anyway - don't fail the request if email fails
+      }
+
+      res.json({ 
+        success: true, 
+        message: "Terugbelverzoek ontvangen" 
+      });
+    } catch (error: any) {
+      console.error("Callback request error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden" });
+    }
+  });
+
+  app.post("/api/contact/question", async (req, res) => {
+    try {
+      const { name, email, message, type } = req.body;
+
+      if (!name || !email || !message) {
+        return res.status(400).json({ error: "Alle velden zijn verplicht" });
+      }
+
+      // Send email notification using SendGrid
+      const subject = "KANIOU - Nieuwe vraag via website";
+      const emailBody = `
+Nieuwe vraag ontvangen via KANIOU website:
+
+Naam: ${name}
+E-mailadres: ${email}
+Bericht:
+${message}
+
+Type: Vraag via floating button
+Datum: ${new Date().toLocaleString('nl-BE')}
+
+Beantwoord deze vraag zo snel mogelijk via e-mail.
+      `.trim();
+
+      try {
+        await sendMailgunEmail({
+          to: 'info@kaniou.be',
+          subject: subject,
+          text: emailBody
+        });
+        console.log("Question email sent successfully");
+      } catch (emailError) {
+        console.error("Failed to send question email:", emailError);
+        // Continue anyway - don't fail the request if email fails
+      }
+
+      res.json({ 
+        success: true, 
+        message: "Vraag verzonden" 
+      });
+    } catch (error: any) {
+      console.error("Question submission error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
-import FloatingActionButtons from "@/components/ui/FloatingActionButtons";
+import FloatingActionButtons from "@/components/ui/FloatingActionButtonsNew";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { CookiebotSetup } from "@/components/CookiebotSetup";
 

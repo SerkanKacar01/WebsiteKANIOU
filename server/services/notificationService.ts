@@ -65,8 +65,8 @@ U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende lin
 
 🛠 **Over uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
-Elk product wordt met zorg op maat gemaakt met hoogwaardige materialen.  
-Wij houden u verder op de hoogte zodra uw bestelling klaar is voor levering of plaatsing.
+Uw bestelling wordt speciaal voor u op maat gemaakt met oog voor detail en kwaliteit.
+We houden u uiteraard op de hoogte zodra uw bestelling gereed is voor levering of plaatsing.
 
 📩 **Vragen of hulp nodig?**  
 ━━━━━━━━━━━━━━━━━━━  

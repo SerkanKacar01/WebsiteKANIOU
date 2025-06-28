@@ -1,38 +1,93 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  MessageCircle, 
-  FileText, 
-  Phone, 
-  Ruler, 
+import { useToast } from "@/hooks/use-toast";
+import {
+  MessageCircle,
+  FileText,
+  Phone,
+  Ruler,
   HelpCircle,
   X,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Search,
 } from "lucide-react";
 
 // Callback form modal component
-const CallbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const CallbackModal = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    message: ""
+    firstName: "",
+    lastName: "",
+    phone: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Callback request:", formData);
-    onClose();
-    // Reset form
-    setFormData({ name: "", phone: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact/callback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          type: 'callback'
+        }),
+      });
+
+      if (response.ok) {
+        setShowConfirmation(true);
+        setFormData({ firstName: "", lastName: "", phone: "" });
+        setTimeout(() => {
+          setShowConfirmation(false);
+          onClose();
+        }, 3000);
+      } else {
+        toast({
+          title: "Er is iets misgegaan",
+          description: "Probeer het later opnieuw of bel ons direct.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Er is iets misgegaan",
+        description: "Controleer uw internetverbinding en probeer opnieuw.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -50,7 +105,9 @@ const CallbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             <Input
               id="callback-name"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               placeholder="Voornaam en achternaam"
               required
             />
@@ -61,7 +118,9 @@ const CallbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               id="callback-phone"
               type="tel"
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
               placeholder="+32 xxx xx xx xx"
               required
             />
@@ -71,16 +130,26 @@ const CallbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             <Textarea
               id="callback-message"
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
               placeholder="Waar kunnen we u mee helpen?"
               rows={3}
             />
           </div>
           <div className="flex gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1"
+            >
               Annuleren
             </Button>
-            <Button type="submit" className="flex-1 bg-[#D0B378] hover:bg-[#C5A565]">
+            <Button
+              type="submit"
+              className="flex-1 bg-[#D0B378] hover:bg-[#C5A565]"
+            >
               Verstuur verzoek
             </Button>
           </div>
@@ -91,7 +160,13 @@ const CallbackModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 };
 
 // Measuring instructions modal component
-const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const MeasuringModal = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
@@ -117,15 +192,20 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
           {/* Step-by-step instructions */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Stap-voor-stap instructies:</h3>
-            
+            <h3 className="font-semibold text-lg">
+              Stap-voor-stap instructies:
+            </h3>
+
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">1. Gereedschap voorbereiden</CardTitle>
+                <CardTitle className="text-base">
+                  1. Gereedschap voorbereiden
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600">
-                  Zorg voor een goede rolmeter (minimaal 3 meter) en eventueel hulp bij grote ramen.
+                  Zorg voor een goede rolmeter (minimaal 3 meter) en eventueel
+                  hulp bij grote ramen.
                 </p>
               </CardContent>
             </Card>
@@ -136,8 +216,8 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600">
-                  Meet de breedte van het raam op 3 punten: boven, midden en onder. 
-                  Neem altijd de kleinste maat en rond af naar beneden.
+                  Meet de breedte van het raam op 3 punten: boven, midden en
+                  onder. Neem altijd de kleinste maat en rond af naar beneden.
                 </p>
               </CardContent>
             </Card>
@@ -148,20 +228,22 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600">
-                  Meet de hoogte links, midden en rechts. Ook hier de kleinste maat aanhouden 
-                  en naar beneden afronden.
+                  Meet de hoogte links, midden en rechts. Ook hier de kleinste
+                  maat aanhouden en naar beneden afronden.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">4. Montage type bepalen</CardTitle>
+                <CardTitle className="text-base">
+                  4. Montage type bepalen
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600">
-                  Bepaal of u binnen of buiten de sponning wilt monteren. 
-                  Dit beïnvloedt de benodigde afmetingen.
+                  Bepaal of u binnen of buiten de sponning wilt monteren. Dit
+                  beïnvloedt de benodigde afmetingen.
                 </p>
               </CardContent>
             </Card>
@@ -169,8 +251,8 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
             <p className="text-sm text-amber-800">
-              <strong>Tip:</strong> Bij twijfel over de juiste maten? 
-              Onze monteurs kunnen altijd langskomen voor een gratis opmeting.
+              <strong>Tip:</strong> Bij twijfel over de juiste maten? Onze
+              monteurs kunnen altijd langskomen voor een gratis opmeting.
             </p>
           </div>
         </div>
@@ -180,20 +262,29 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 };
 
 // FAQ preview component
-const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
+const FAQPreview = ({
+  isVisible,
+  onClose,
+}: {
+  isVisible: boolean;
+  onClose: () => void;
+}) => {
   const faqs = [
     {
       question: "Hoe lang duurt de levering?",
-      answer: "Standaard producten worden binnen 2-3 weken geleverd. Maatwerk kan 4-6 weken duren."
+      answer:
+        "Standaard producten worden binnen 2-3 weken geleverd. Maatwerk kan 4-6 weken duren.",
     },
     {
       question: "Bieden jullie ook montage aan?",
-      answer: "Ja, wij bieden professionele montage door ervaren monteurs in heel België."
+      answer:
+        "Ja, wij bieden professionele montage door ervaren monteurs in heel België.",
     },
     {
       question: "Kan ik eerst stalen ontvangen?",
-      answer: "Natuurlijk! Wij sturen gratis stalen op zodat u thuis de perfecte kleur kunt kiezen."
-    }
+      answer:
+        "Natuurlijk! Wij sturen gratis stalen op zodat u thuis de perfecte kleur kunt kiezen.",
+    },
   ];
 
   if (!isVisible) return null;
@@ -205,9 +296,9 @@ const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =>
           <HelpCircle className="h-4 w-4 text-[#D0B378]" />
           Veelgestelde vragen
         </h3>
-        <Button 
-          variant="ghost" 
-          size="sm" 
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={onClose}
           className="h-6 w-6 p-0"
         >
@@ -227,9 +318,9 @@ const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =>
         ))}
       </div>
       <div className="p-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-        <Link href="/contact">
-          <Button 
-            size="sm" 
+        <Link href="https://54ca87fe-f094-4763-9137-6a31f2c28cd1-00-uqsrparzx25r.janeway.replit.dev/about#faq">
+          <Button
+            size="sm"
             className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs"
             onClick={onClose}
           >
@@ -242,13 +333,19 @@ const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =>
 };
 
 // Contact modal component
-const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const ContactModal = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -276,7 +373,9 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               <Input
                 id="contact-name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 placeholder="Uw naam"
                 required
               />
@@ -287,7 +386,9 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 id="contact-email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 placeholder="uw@email.be"
                 required
               />
@@ -299,7 +400,9 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               id="contact-phone"
               type="tel"
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
               placeholder="+32 xxx xx xx xx"
             />
           </div>
@@ -308,7 +411,9 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             <Input
               id="contact-subject"
               value={formData.subject}
-              onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, subject: e.target.value })
+              }
               placeholder="Waar gaat uw vraag over?"
               required
             />
@@ -318,17 +423,27 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             <Textarea
               id="contact-message"
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
               placeholder="Beschrijf uw vraag in detail..."
               rows={4}
               required
             />
           </div>
           <div className="flex gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1"
+            >
               Annuleren
             </Button>
-            <Button type="submit" className="flex-1 bg-[#D0B378] hover:bg-[#C5A565]">
+            <Button
+              type="submit"
+              className="flex-1 bg-[#D0B378] hover:bg-[#C5A565]"
+            >
               Verstuur vraag
             </Button>
           </div>
@@ -379,7 +494,7 @@ const FloatingActionButtons = () => {
       emoji: "📚",
       tooltip: "Veelgestelde vragen",
       onClick: () => setFaqPreviewVisible(!faqPreviewVisible),
-    }
+    },
   ];
 
   return (
@@ -388,7 +503,7 @@ const FloatingActionButtons = () => {
       <div className="fixed bottom-5 right-5 z-[9999] flex flex-col gap-3">
         {buttons.map((button, index) => {
           const IconComponent = button.icon;
-          
+
           const ButtonContent = (
             <button
               className="
@@ -410,9 +525,7 @@ const FloatingActionButtons = () => {
               onClick={button.onClick}
             >
               {/* Show emoji on mobile, icon on desktop */}
-              <span className="lg:hidden text-lg">
-                {button.emoji}
-              </span>
+              <span className="lg:hidden text-lg">{button.emoji}</span>
               <IconComponent className="hidden lg:block h-5 w-5" />
             </button>
           );
@@ -421,15 +534,13 @@ const FloatingActionButtons = () => {
             <Tooltip key={button.id}>
               <TooltipTrigger asChild>
                 {button.href ? (
-                  <Link href={button.href}>
-                    {ButtonContent}
-                  </Link>
+                  <Link href={button.href}>{ButtonContent}</Link>
                 ) : (
                   ButtonContent
                 )}
               </TooltipTrigger>
-              <TooltipContent 
-                side="left" 
+              <TooltipContent
+                side="left"
                 className="bg-gray-900 text-white border-gray-700 hidden lg:block"
               >
                 <p className="text-sm font-medium">{button.tooltip}</p>
@@ -440,25 +551,25 @@ const FloatingActionButtons = () => {
       </div>
 
       {/* Modals */}
-      <ContactModal 
-        isOpen={contactModalOpen} 
-        onClose={() => setContactModalOpen(false)} 
+      <ContactModal
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
       />
-      
-      <CallbackModal 
-        isOpen={callbackModalOpen} 
-        onClose={() => setCallbackModalOpen(false)} 
+
+      <CallbackModal
+        isOpen={callbackModalOpen}
+        onClose={() => setCallbackModalOpen(false)}
       />
-      
-      <MeasuringModal 
-        isOpen={measuringModalOpen} 
-        onClose={() => setMeasuringModalOpen(false)} 
+
+      <MeasuringModal
+        isOpen={measuringModalOpen}
+        onClose={() => setMeasuringModalOpen(false)}
       />
 
       {/* FAQ Preview Popup */}
-      <FAQPreview 
-        isVisible={faqPreviewVisible} 
-        onClose={() => setFaqPreviewVisible(false)} 
+      <FAQPreview
+        isVisible={faqPreviewVisible}
+        onClose={() => setFaqPreviewVisible(false)}
       />
     </>
   );

@@ -485,21 +485,20 @@ export default function EntrepreneurDashboardPage() {
   // Status update mutation
   const updateStatusMutation = useMutation({
     mutationFn: async ({ orderId, newStatus }: { orderId: number; newStatus: string }) => {
-      const response = await fetch("/api/orders/update-status", {
-        method: "POST",
+      const response = await fetch(`/api/admin/orders/${orderId}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({
-          orderId,
-          newStatus,
-          statusDate: new Date().toISOString().split('T')[0]
+          status: newStatus
         }),
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
       
       return response.json();

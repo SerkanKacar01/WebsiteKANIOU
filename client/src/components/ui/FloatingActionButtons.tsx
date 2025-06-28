@@ -69,7 +69,7 @@ const CallbackModal = ({
 
       if (response.ok) {
         setShowConfirmation(true);
-        setFormData({ firstName: "", lastName: "", phone: "" });
+        setFormData({ firstName: "", lastName: "", phone: "", name: "", message: "" });
         setTimeout(() => {
           setShowConfirmation(false);
           onClose();

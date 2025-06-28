@@ -1,0 +1,83 @@
+✅ Instruction for Replit – Floating Action Buttons (FABs) for Desktop & Mobile
+
+⸻
+
+🔧 General Task
+
+Implement 5 floating action buttons (FABs) that appear in the bottom-right corner of the screen, visible on both desktop and mobile. Each button must:
+	•	Include a relevant emoji/icon
+	•	Show a tooltip on hover (desktop) or on long-press/tap (mobile optional)
+	•	Trigger a specific action (modal open, redirect, etc.)
+	•	Be stacked vertically with spacing
+	•	Be smaller on mobile than on desktop
+
+⸻
+
+📐 Design Requirements
+
+Positioning
+	•	position: fixed;
+	•	bottom: 20px; right: 20px;
+	•	z-index: 9999;
+	•	display: flex; flex-direction: column; gap: 12px;
+
+Responsiveness
+	•	Desktop buttons: 50x50px
+	•	Mobile buttons: 40x40px
+	•	Use @media (max-width: 1023px) to adjust button size for mobile
+
+Tooltip Behavior
+	•	On desktop: show tooltip on hover
+	•	On mobile: tooltip optional (may show below icon on long press or remain hidden)
+
+⸻
+
+🧩 Buttons to Implement
+
+⸻
+
+1. 💬 Stel je vraag
+	•	Tooltip (NL): "Stel je vraag"
+	•	Action: Open the contact form modal or AI chatbot
+
+⸻
+
+2. 📄 Vraag een offerte aan
+	•	Tooltip (NL): "Vraag een offerte aan"
+	•	Action: Redirect to "/offerte" page
+
+⸻
+
+3. 📞 Bel ons terug
+	•	Tooltip (NL): "Bel ons terug"
+	•	Action: Open a callback modal with:
+	•	Name field
+	•	Phone number field
+	•	Submit button
+	•	Optional confirmation message: “We nemen zo snel mogelijk contact met u op.”
+
+⸻
+
+4. 🛠 Meetinstructies
+	•	Tooltip (NL): "Bekijk meetinstructies"
+	•	Action: Open a modal showing:
+	•	Embedded video (YouTube/Vimeo)
+	•	OR step-by-step text instructions for measuring
+
+⸻
+
+5. 📚 Veelgestelde Vragen
+	•	Tooltip (NL): "Veelgestelde vragen"
+	•	Action:
+	•	On hover (desktop) or click (mobile):
+	•	Show a popover or dropdown with top 3 FAQ entries
+	•	Each entry is a link to full FAQ page or opens inline explanation
+
+⸻
+
+🎨 Extra Styling Notes
+	•	Use soft shadows: box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+	•	Buttons should be circular or rounded square
+	•	Background: light beige (#fdf4e3) or white
+	•	Icon/text color: dark gray or black
+	•	Add smooth hover effect on desktop (e.g. transform: scale(1.05))

@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   MessageCircle, 
   FileText, 
@@ -199,7 +199,7 @@ const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =>
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-20 right-6 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-[10001]">
+    <div className="fixed bottom-[340px] right-5 w-80 max-w-[calc(100vw-40px)] bg-white border border-gray-200 rounded-lg shadow-xl z-[10001]">
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         <h3 className="font-semibold text-gray-900 flex items-center gap-2">
           <HelpCircle className="h-4 w-4 text-[#D0B378]" />
@@ -348,76 +348,95 @@ const FloatingActionButtons = () => {
     {
       id: "contact",
       icon: MessageCircle,
+      emoji: "💬",
       tooltip: "Stel je vraag",
       onClick: () => setContactModalOpen(true),
-      className: "bg-[#D0B378] hover:bg-[#C5A565] text-white shadow-lg hover:shadow-xl"
     },
     {
       id: "quote",
       icon: FileText,
+      emoji: "📄",
       tooltip: "Vraag een offerte aan",
       href: "/offerte",
-      className: "bg-[#E6C988] hover:bg-[#D0B378] text-gray-800 shadow-lg hover:shadow-xl"
     },
     {
       id: "callback",
       icon: Phone,
+      emoji: "📞",
       tooltip: "Bel ons terug",
       onClick: () => setCallbackModalOpen(true),
-      className: "bg-[#2C3E50] hover:bg-[#34495E] text-white shadow-lg hover:shadow-xl"
     },
     {
       id: "measuring",
       icon: Ruler,
+      emoji: "🛠",
       tooltip: "Bekijk meetinstructies",
       onClick: () => setMeasuringModalOpen(true),
-      className: "bg-[#3498DB] hover:bg-[#2980B9] text-white shadow-lg hover:shadow-xl"
     },
     {
       id: "faq",
       icon: HelpCircle,
+      emoji: "📚",
       tooltip: "Veelgestelde vragen",
       onClick: () => setFaqPreviewVisible(!faqPreviewVisible),
-      className: "bg-[#E67E22] hover:bg-[#D35400] text-white shadow-lg hover:shadow-xl"
     }
   ];
 
   return (
     <>
-      {/* Floating Action Buttons - Desktop Only */}
-      <div className="hidden lg:block fixed bottom-6 right-6 z-[10000]">
-        <div className="flex flex-col gap-3">
-          {buttons.map((button, index) => {
-            const IconComponent = button.icon;
-            
-            const ButtonContent = (
-              <Button
-                className={`w-14 h-14 rounded-full transition-all duration-300 hover:scale-110 transform ${button.className}`}
-                size="sm"
-                onClick={button.onClick}
-              >
-                <IconComponent className="h-5 w-5" />
-              </Button>
-            );
+      {/* Floating Action Buttons - Desktop & Mobile */}
+      <div className="fixed bottom-5 right-5 z-[9999] flex flex-col gap-3">
+        {buttons.map((button, index) => {
+          const IconComponent = button.icon;
+          
+          const ButtonContent = (
+            <button
+              className="
+                /* Base styles */
+                rounded-full bg-[#fdf4e3] text-gray-800 
+                shadow-[0_2px_8px_rgba(0,0,0,0.15)] 
+                transition-all duration-300 
+                flex items-center justify-center
+                /* Desktop: 50x50px */
+                w-[50px] h-[50px]
+                /* Mobile: 40x40px */
+                max-[1023px]:w-[40px] max-[1023px]:h-[40px]
+                /* Hover effects (desktop only) */
+                hover:scale-105 hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)]
+                active:scale-95
+                /* Focus styles */
+                focus:outline-none focus:ring-2 focus:ring-[#D0B378] focus:ring-opacity-50
+              "
+              onClick={button.onClick}
+            >
+              {/* Show emoji on mobile, icon on desktop */}
+              <span className="lg:hidden text-lg">
+                {button.emoji}
+              </span>
+              <IconComponent className="hidden lg:block h-5 w-5" />
+            </button>
+          );
 
-            return (
-              <Tooltip key={button.id}>
-                <TooltipTrigger asChild>
-                  {button.href ? (
-                    <Link href={button.href}>
-                      {ButtonContent}
-                    </Link>
-                  ) : (
-                    ButtonContent
-                  )}
-                </TooltipTrigger>
-                <TooltipContent side="left" className="bg-gray-900 text-white border-gray-700">
-                  <p className="text-sm font-medium">{button.tooltip}</p>
-                </TooltipContent>
-              </Tooltip>
-            );
-          })}
-        </div>
+          return (
+            <Tooltip key={button.id}>
+              <TooltipTrigger asChild>
+                {button.href ? (
+                  <Link href={button.href}>
+                    {ButtonContent}
+                  </Link>
+                ) : (
+                  ButtonContent
+                )}
+              </TooltipTrigger>
+              <TooltipContent 
+                side="left" 
+                className="bg-gray-900 text-white border-gray-700 hidden lg:block"
+              >
+                <p className="text-sm font-medium">{button.tooltip}</p>
+              </TooltipContent>
+            </Tooltip>
+          );
+        })}
       </div>
 
       {/* Modals */}

@@ -581,41 +581,11 @@ export default function EntrepreneurDashboardPage() {
       return;
     }
 
-    // Notification preference validation
-    if (!newOrderForm.notifyByEmail && !newOrderForm.notifyByWhatsapp) {
-      toast({
-        title: "Notificatievoorkeur vereist",
-        description: "Selecteer tenminste één notificatiemethode (E-mail of WhatsApp).",
-        variant: "destructive",
-      });
-      return;
-    }
-
     // Email validation
     if (newOrderForm.notifyByEmail && !newOrderForm.customerEmail) {
       toast({
         title: "E-mailadres vereist",
-        description: "E-mailadres is vereist wanneer e-mailnotificaties zijn geselecteerd.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // WhatsApp validation
-    if (newOrderForm.notifyByWhatsapp && !newOrderForm.customerPhone) {
-      toast({
-        title: "Telefoonnummer vereist",
-        description: "Telefoonnummer is vereist wanneer WhatsApp-notificaties zijn geselecteerd.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // International phone format validation for WhatsApp
-    if (newOrderForm.notifyByWhatsapp && newOrderForm.customerPhone && !newOrderForm.customerPhone.startsWith('+')) {
-      toast({
-        title: "Ongeldig telefoonnummer",
-        description: "Voor WhatsApp-notificaties gebruik internationaal formaat: +32...",
+        description: "E-mailadres is vereist voor bestellingsupdates.",
         variant: "destructive",
       });
       return;
@@ -2082,18 +2052,7 @@ export default function EntrepreneurDashboardPage() {
                   </Label>
                 </div>
                 
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="notifyByWhatsapp"
-                    checked={newOrderForm.notifyByWhatsapp}
-                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, notifyByWhatsapp: e.target.checked }))}
-                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
-                  />
-                  <Label htmlFor="notifyByWhatsapp" className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    📱 WhatsApp
-                  </Label>
-                </div>
+
               </div>
               
               {/* Validation messages */}
@@ -2102,16 +2061,7 @@ export default function EntrepreneurDashboardPage() {
                   ⚠️ E-mailadres is vereist voor e-mailnotificaties
                 </p>
               )}
-              {newOrderForm.notifyByWhatsapp && !newOrderForm.customerPhone && (
-                <p className="text-sm text-red-600 mt-2">
-                  ⚠️ Telefoonnummer is vereist voor WhatsApp-notificaties
-                </p>
-              )}
-              {newOrderForm.notifyByWhatsapp && newOrderForm.customerPhone && !newOrderForm.customerPhone.startsWith('+') && (
-                <p className="text-sm text-orange-600 mt-2">
-                  ℹ️ Voor WhatsApp gebruik internationaal formaat: +32...
-                </p>
-              )}
+
             </div>
 
             {/* Additional Notes Section */}

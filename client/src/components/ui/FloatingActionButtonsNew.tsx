@@ -504,7 +504,7 @@ const FloatingActionButtons = () => {
       </div>
 
       {/* Floating Action Buttons - Desktop & Mobile */}
-      <div className="fixed bottom-5 right-5 z-[9999] flex flex-col gap-3">
+      <div className="hidden lg:flex fixed bottom-5 right-5 z-[9999] flex-col gap-3">
         {buttons.map((button, index) => {
           const IconComponent = button.icon;
           

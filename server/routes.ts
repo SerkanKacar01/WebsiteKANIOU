@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
 import { createSession, validateSession, deleteSession, isValidCredentials } from "./simpleAuth";
-import { sendMailgunEmail } from "./mailgun/sendMail";
+import { sendEmail } from "./services/sendgrid";
 import { insertContactSubmissionSchema, insertQuoteRequestSchema } from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
 
@@ -546,7 +546,7 @@ Deze klant vraagt om teruggebeld te worden.
       `.trim();
 
       try {
-        await sendMailgunEmail({
+        await sendEmail({
           to: 'info@kaniou.be',
           subject: subject,
           text: emailBody
@@ -592,7 +592,7 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
       `.trim();
 
       try {
-        await sendMailgunEmail({
+        await sendEmail({
           to: 'info@kaniou.be',
           subject: subject,
           text: emailBody

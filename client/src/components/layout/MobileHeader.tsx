@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, Search, ShoppingBag, Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
-import { kaniouLogo } from "@/assets/fallback";
+import { kaniouLogo } from "@/assets";
 
 const MobileHeader = () => {
   const [location] = useLocation();

@@ -328,7 +328,30 @@ class DatabaseStorage implements IStorage {
   }
 
   async deletePaymentOrder(id: number): Promise<void> {
-    await db.delete(paymentOrders).where(eq(paymentOrders.id, id));
+    try {
+      await db.delete(paymentOrders).where(eq(paymentOrders.id, id));
+    } catch (error: any) {
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, deleting from memory storage');
+        
+        // Delete from memory storage
+        if (global.memoryOrders) {
+          const originalLength = global.memoryOrders.length;
+          global.memoryOrders = global.memoryOrders.filter(order => order.id !== id);
+          const newLength = global.memoryOrders.length;
+          
+          if (originalLength > newLength) {
+            console.log(`✅ Order ${id} deleted from memory storage`);
+          } else {
+            console.warn(`⚠️ Order ${id} not found in memory storage`);
+          }
+        } else {
+          console.warn(`⚠️ No memory orders to delete from`);
+        }
+        return;
+      }
+      throw error;
+    }
   }
 
   async getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined> {

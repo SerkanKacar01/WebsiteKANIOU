@@ -588,6 +588,36 @@ Mr. Serkan KACAR
     }
   });
 
+  // Delete order (protected)
+  app.delete("/api/admin/orders/:id", requireAuth, async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Check if order exists before deleting
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      // Delete the order
+      await storage.deletePaymentOrder(orderId);
+
+      console.log(`Order ${orderId} successfully deleted by admin`);
+      
+      res.json({
+        success: true,
+        message: "Order succesvol verwijderd",
+      });
+    } catch (error: any) {
+      console.error("Delete order error:", error);
+      res.status(500).json({ error: "Fout bij verwijderen order" });
+    }
+  });
+
   // Track order by bonnummer
   app.get("/api/orders/:orderNumber/track", async (req, res) => {
     try {

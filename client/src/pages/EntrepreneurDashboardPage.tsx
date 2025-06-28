@@ -542,9 +542,11 @@ export default function EntrepreneurDashboardPage() {
       });
     },
     onError: (error) => {
+      console.error("Delete order error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Er is een fout opgetreden bij het verwijderen van de order.";
       toast({
         title: "Fout bij verwijderen",
-        description: "Er is een fout opgetreden bij het verwijderen van de order.",
+        description: errorMessage,
         variant: "destructive",
       });
     },

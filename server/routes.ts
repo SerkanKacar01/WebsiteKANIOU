@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
 import { createSession, validateSession, deleteSession, isValidCredentials } from "./simpleAuth";
+import { sendMailgunEmail } from "./mailgun/sendMail";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
@@ -157,6 +158,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
         updatedAt: new Date()
       });
 
+      // Send status update email notification
+      if (status && existingOrder.customerEmail && existingOrder.notifyByEmail) {
+        try {
+          const statusMessages: { [key: string]: string } = {
+            'pending': 'Uw bestelling wordt verwerkt',
+            'Nieuw': 'Uw bestelling is ontvangen',
+            'Bestelling in verwerking': 'Uw bestelling wordt verwerkt',
+            'Bestelling verwerkt': 'Uw bestelling is verwerkt en gaat naar productie',
+            'Bestelling in productie': 'Uw bestelling is in productie',
+            'Bestelling is gereed': 'Uw bestelling is gereed voor levering',
+            'U wordt gebeld voor levering': 'We nemen binnenkort contact op voor de levering'
+          };
+
+          const statusMessage = statusMessages[status] || status;
+          let productType = 'Raambekledingsproduct';
+          try {
+            if (existingOrder.productDetails) {
+              const details = JSON.parse(existingOrder.productDetails);
+              productType = details.productType || 'Raambekledingsproduct';
+            }
+          } catch (error) {
+            // Use default value
+          }
+
+          const subject = `KANIOU - Update bestelling ${existingOrder.bonnummer || existingOrder.orderNumber}`;
+          const emailBody = `
+Beste ${existingOrder.customerName},
+
+Er is een update voor uw bestelling:
+
+📦 Bestelnummer: ${existingOrder.bonnummer || existingOrder.orderNumber}
+🛍️ Product: ${productType}
+📋 Status: ${statusMessage}
+
+${noteFromEntrepreneur ? `💬 Bericht van KANIOU: ${noteFromEntrepreneur}` : ''}
+
+U kunt uw bestelling volgen via: https://kaniou.be/volg-bestelling
+
+Met vriendelijke groet,
+Team KANIOU
+          `.trim();
+
+          await sendMailgunEmail(existingOrder.customerEmail, subject, emailBody);
+          console.log(`Status update email sent to ${existingOrder.customerEmail} for order ${orderId}`);
+        } catch (emailError) {
+          console.error(`Failed to send status update email:`, emailError);
+        }
+      }
+
       res.json({ 
         success: true, 
         message: "Order succesvol bijgewerkt" 
@@ -220,6 +270,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const newOrder = await storage.createPaymentOrder(orderData);
+
+      // Send order confirmation email
+      if (customerEmail && notifyByEmail) {
+        try {
+          const subject = `KANIOU - Bevestiging bestelling ${bonnummer}`;
+          const emailBody = `
+Beste ${customerName},
+
+Bedankt voor uw bestelling bij KANIOU!
+
+📦 Bestelnummer: ${bonnummer}
+🛍️ Product: ${productType}
+💰 Bedrag: €${amount}
+📋 Status: Bestelling ontvangen
+
+${description ? `Beschrijving: ${description}` : ''}
+
+U kunt uw bestelling volgen via: https://kaniou.be/volg-bestelling
+
+Wij houden u op de hoogte van de voortgang.
+
+Met vriendelijke groet,
+Team KANIOU
+          `.trim();
+
+          await sendMailgunEmail(customerEmail, subject, emailBody);
+          console.log(`Order confirmation email sent to ${customerEmail}`);
+        } catch (emailError) {
+          console.error(`Failed to send order confirmation email:`, emailError);
+        }
+      }
 
       res.json({
         success: true,

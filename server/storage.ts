@@ -205,43 +205,49 @@ export class DatabaseStorage implements IStorage {
 
   // Payment Orders
   async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
-    const orderData = {
+    // Always create a complete order with all required fields
+    const completeOrderData: any = {
       customerName: order.customerName,
       customerEmail: order.customerEmail,
+      customerPhone: order.customerPhone || '',
+      customerFirstName: order.customerFirstName || '',
+      customerLastName: order.customerLastName || '',
+      customerAddress: order.customerAddress || '',
+      customerCity: order.customerCity || '',
       amount: order.amount,
       description: order.description,
-      redirectUrl: order.redirectUrl,
+      redirectUrl: order.redirectUrl || '',
       currency: order.currency || 'EUR',
-      webhookUrl: order.webhookUrl,
-      productDetails: order.productDetails,
-      customerDetails: order.customerDetails,
-      molliePaymentId: '', // Will be updated after Mollie payment creation
-      bonnummer: order.bonnummer, // Customer-friendly order reference
+      webhookUrl: order.webhookUrl || '',
+      productDetails: order.productDetails || '{}',
+      customerDetails: order.customerDetails || '{}',
+      molliePaymentId: order.molliePaymentId || `manual_${Date.now()}`,
+      orderNumber: order.orderNumber || `ORD-${Date.now()}`,
+      status: order.status || 'pending',
+      bonnummer: order.bonnummer,
+      clientNote: order.clientNote || null,
+      noteFromEntrepreneur: order.noteFromEntrepreneur || null,
+      notificationPreference: order.notificationPreference || 'email',
+      notifyByEmail: order.notifyByEmail !== false,
+      pdfFileName: order.pdfFileName || null,
+      invoiceUrl: order.invoiceUrl || null,
+      createdAt: new Date(),
+      updatedAt: new Date()
     };
     
     try {
-      const result = await db.insert(paymentOrders).values(orderData).returning();
+      const result = await db.insert(paymentOrders).values(completeOrderData).returning();
+      console.log(`✅ Order saved to database: ${result[0].bonnummer} (ID: ${result[0].id})`);
       return result[0];
     } catch (error: any) {
-      // Fallback to memory storage when database is unavailable
+      // Enhanced fallback to memory storage when database is unavailable
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, using memory fallback for order creation');
+        console.warn('🔄 Database unavailable, using enhanced memory fallback for order creation');
         
         // Create memory fallback order with all required fields
         const memoryOrder: PaymentOrder = {
           id: Date.now(), // Use timestamp as unique ID
-          ...orderData,
-          ...order, // Include all additional order fields
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          molliePaymentId: order.molliePaymentId || `memory_${Date.now()}`,
-          orderNumber: order.orderNumber || `MEM-${Date.now()}`,
-          status: order.status || 'pending',
-          pdfFileName: null,
-          invoicePdfFileName: null,
-          clientNote: null,
-          noteFromEntrepreneur: null,
-          notificationPreference: null
+          ...completeOrderData
         };
         
         // Store in global memory for session persistence
@@ -249,6 +255,27 @@ export class DatabaseStorage implements IStorage {
           global.memoryOrders = [];
         }
         global.memoryOrders.push(memoryOrder);
+        
+        // Also persist to file system for better persistence across restarts
+        try {
+          const fs = require('fs');
+          const path = require('path');
+          const ordersFile = path.join(process.cwd(), 'persistent_orders.json');
+          
+          let existingOrders = [];
+          try {
+            const data = fs.readFileSync(ordersFile, 'utf8');
+            existingOrders = JSON.parse(data);
+          } catch (e) {
+            // File doesn't exist or is invalid, start with empty array
+          }
+          
+          existingOrders.push(memoryOrder);
+          fs.writeFileSync(ordersFile, JSON.stringify(existingOrders, null, 2));
+          console.log(`💾 Order also saved to persistent file: ${memoryOrder.bonnummer}`);
+        } catch (fileError) {
+          console.warn('Failed to persist order to file:', fileError);
+        }
         
         console.log(`✅ Order stored in memory: ${memoryOrder.bonnummer} (ID: ${memoryOrder.id})`);
         return memoryOrder;
@@ -299,10 +326,39 @@ export class DatabaseStorage implements IStorage {
       // Sort by creation date descending
       return allOrders.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
     } catch (error: any) {
-      // Return only memory orders if database is unavailable
+      // Enhanced fallback when database is unavailable
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, returning memory orders only');
-        return global.memoryOrders || [];
+        console.warn('🔄 Database unavailable, loading from memory and persistent storage');
+        
+        // Get memory orders
+        const memoryOrders = global.memoryOrders || [];
+        
+        // Load orders from persistent file
+        let fileOrders = [];
+        try {
+          const fs = require('fs');
+          const path = require('path');
+          const ordersFile = path.join(process.cwd(), 'persistent_orders.json');
+          
+          if (fs.existsSync(ordersFile)) {
+            const data = fs.readFileSync(ordersFile, 'utf8');
+            fileOrders = JSON.parse(data);
+            console.log(`📁 Loaded ${fileOrders.length} orders from persistent storage`);
+          }
+        } catch (fileError) {
+          console.warn('Failed to load orders from file:', fileError);
+        }
+        
+        // Merge memory and file orders, remove duplicates by ID
+        const orderMap = new Map();
+        [...memoryOrders, ...fileOrders].forEach(order => {
+          orderMap.set(order.id, order);
+        });
+        
+        const allOrders = Array.from(orderMap.values());
+        
+        // Sort by creation date descending
+        return allOrders.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
       }
       throw error;
     }

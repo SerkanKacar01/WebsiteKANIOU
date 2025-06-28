@@ -36,6 +36,10 @@ import {
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";
 
+declare global {
+  var memoryOrders: PaymentOrder[] | undefined;
+}
+
 export interface IStorage {
   // Categories
   getCategories(): Promise<Category[]>;
@@ -99,10 +103,16 @@ export interface IStorage {
   createNotificationLog(log: InsertNotificationLog): Promise<NotificationLog>;
 }
 
-export class DatabaseStorage implements IStorage {
+class DatabaseStorage implements IStorage {
+  
   // Categories
   async getCategories(): Promise<Category[]> {
-    return await db.select().from(categories);
+    try {
+      return await db.select().from(categories);
+    } catch (error) {
+      console.warn('Database connection issue for categories');
+      return [];
+    }
   }
   
   async getCategoryById(id: number): Promise<Category | undefined> {
@@ -117,7 +127,12 @@ export class DatabaseStorage implements IStorage {
   
   // Products
   async getProducts(): Promise<Product[]> {
-    return await db.select().from(products);
+    try {
+      return await db.select().from(products);
+    } catch (error) {
+      console.warn('Database connection issue for products');
+      return [];
+    }
   }
   
   async getProductById(id: number): Promise<Product | undefined> {
@@ -130,7 +145,7 @@ export class DatabaseStorage implements IStorage {
   }
   
   async getFeaturedProducts(): Promise<Product[]> {
-    return await db.select().from(products).where(eq(products.isFeatured, true));
+    return await db.select().from(products).where(eq(products.featured, true));
   }
   
   async createProduct(product: InsertProduct): Promise<Product> {
@@ -143,7 +158,7 @@ export class DatabaseStorage implements IStorage {
     try {
       return await db.select().from(galleryItems);
     } catch (error) {
-      console.warn('Database connection issue for gallery items');
+      console.warn('Database connection issue for gallery');
       return [];
     }
   }
@@ -203,85 +218,67 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
   }
 
-  // Payment Orders
+  // Payment Orders - FIXED VERSION
   async createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder> {
-    // Always create a complete order with all required fields
-    const completeOrderData: any = {
+    // Build order data for database with proper types
+    const dbOrderData = {
       customerName: order.customerName,
       customerEmail: order.customerEmail,
-      customerPhone: order.customerPhone || '',
-      customerFirstName: order.customerFirstName || '',
-      customerLastName: order.customerLastName || '',
-      customerAddress: order.customerAddress || '',
-      customerCity: order.customerCity || '',
+      customerPhone: order.customerPhone || null,
+      customerFirstName: order.customerFirstName || null,
+      customerLastName: order.customerLastName || null,
+      customerAddress: order.customerAddress || null,
+      customerCity: order.customerCity || null,
       amount: order.amount,
       description: order.description,
       redirectUrl: order.redirectUrl || '',
       currency: order.currency || 'EUR',
-      webhookUrl: order.webhookUrl || '',
-      productDetails: order.productDetails || '{}',
-      customerDetails: order.customerDetails || '{}',
-      molliePaymentId: order.molliePaymentId || `manual_${Date.now()}`,
+      webhookUrl: order.webhookUrl || null,
+      productDetails: order.productDetails || null,
+      customerDetails: order.customerDetails || null,
+      molliePaymentId: `manual_${Date.now()}`,
       orderNumber: order.orderNumber || `ORD-${Date.now()}`,
-      status: order.status || 'pending',
+      status: 'pending',
       bonnummer: order.bonnummer,
       clientNote: order.clientNote || null,
       noteFromEntrepreneur: order.noteFromEntrepreneur || null,
       notificationPreference: order.notificationPreference || 'email',
       notifyByEmail: order.notifyByEmail !== false,
+      notifyByWhatsapp: order.notifyByWhatsapp || false,
       pdfFileName: order.pdfFileName || null,
       invoiceUrl: order.invoiceUrl || null,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      notificationLogs: null,
+      paidAt: null
     };
     
     try {
-      const result = await db.insert(paymentOrders).values(completeOrderData).returning();
+      const result = await db.insert(paymentOrders).values(dbOrderData).returning();
       console.log(`✅ Order saved to database: ${result[0].bonnummer} (ID: ${result[0].id})`);
       return result[0];
     } catch (error: any) {
       // Enhanced fallback to memory storage when database is unavailable
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, using enhanced memory fallback for order creation');
+        console.warn('🔄 Database unavailable, using memory fallback for order creation');
         
-        // Create memory fallback order with all required fields
+        // Create memory fallback order
         const memoryOrder: PaymentOrder = {
-          id: Date.now(), // Use timestamp as unique ID
-          ...completeOrderData
+          id: Date.now(),
+          ...dbOrderData,
+          createdAt: new Date(),
+          updatedAt: new Date()
         };
         
-        // Store in global memory for session persistence
+        // Store in global memory
         if (!global.memoryOrders) {
           global.memoryOrders = [];
         }
         global.memoryOrders.push(memoryOrder);
         
-        // Also persist to file system for better persistence across restarts
-        try {
-          const fs = require('fs');
-          const path = require('path');
-          const ordersFile = path.join(process.cwd(), 'persistent_orders.json');
-          
-          let existingOrders = [];
-          try {
-            const data = fs.readFileSync(ordersFile, 'utf8');
-            existingOrders = JSON.parse(data);
-          } catch (e) {
-            // File doesn't exist or is invalid, start with empty array
-          }
-          
-          existingOrders.push(memoryOrder);
-          fs.writeFileSync(ordersFile, JSON.stringify(existingOrders, null, 2));
-          console.log(`💾 Order also saved to persistent file: ${memoryOrder.bonnummer}`);
-        } catch (fileError) {
-          console.warn('Failed to persist order to file:', fileError);
-        }
-        
         console.log(`✅ Order stored in memory: ${memoryOrder.bonnummer} (ID: ${memoryOrder.id})`);
         return memoryOrder;
       }
       
-      throw error; // Re-throw other errors
+      throw error;
     }
   }
 
@@ -290,9 +287,7 @@ export class DatabaseStorage implements IStorage {
       const result = await db.select().from(paymentOrders).where(eq(paymentOrders.id, id));
       return result[0];
     } catch (error: any) {
-      // Fallback to memory storage when database is unavailable
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, searching memory orders for ID:', id);
         const memoryOrders = global.memoryOrders || [];
         return memoryOrders.find(order => order.id === id);
       }
@@ -305,9 +300,7 @@ export class DatabaseStorage implements IStorage {
       const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
       return result[0];
     } catch (error: any) {
-      // Fallback to memory storage when database is unavailable
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, searching memory orders for order number:', orderNumber);
         const memoryOrders = global.memoryOrders || [];
         return memoryOrders.find(order => order.orderNumber === orderNumber);
       }
@@ -318,47 +311,13 @@ export class DatabaseStorage implements IStorage {
   async getPaymentOrders(): Promise<PaymentOrder[]> {
     try {
       const dbOrders = await db.select().from(paymentOrders).orderBy(desc(paymentOrders.createdAt));
-      
-      // Merge with memory orders if they exist
       const memoryOrders = global.memoryOrders || [];
       const allOrders = [...dbOrders, ...memoryOrders];
-      
-      // Sort by creation date descending
       return allOrders.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
     } catch (error: any) {
-      // Enhanced fallback when database is unavailable
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, loading from memory and persistent storage');
-        
-        // Get memory orders
-        const memoryOrders = global.memoryOrders || [];
-        
-        // Load orders from persistent file
-        let fileOrders = [];
-        try {
-          const fs = require('fs');
-          const path = require('path');
-          const ordersFile = path.join(process.cwd(), 'persistent_orders.json');
-          
-          if (fs.existsSync(ordersFile)) {
-            const data = fs.readFileSync(ordersFile, 'utf8');
-            fileOrders = JSON.parse(data);
-            console.log(`📁 Loaded ${fileOrders.length} orders from persistent storage`);
-          }
-        } catch (fileError) {
-          console.warn('Failed to load orders from file:', fileError);
-        }
-        
-        // Merge memory and file orders, remove duplicates by ID
-        const orderMap = new Map();
-        [...memoryOrders, ...fileOrders].forEach(order => {
-          orderMap.set(order.id, order);
-        });
-        
-        const allOrders = Array.from(orderMap.values());
-        
-        // Sort by creation date descending
-        return allOrders.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
+        console.warn('🔄 Database unavailable, returning memory orders only');
+        return global.memoryOrders || [];
       }
       throw error;
     }
@@ -368,229 +327,28 @@ export class DatabaseStorage implements IStorage {
     await db.delete(paymentOrders).where(eq(paymentOrders.id, id));
   }
 
-  // Order tracking methods for clients with security validation
-  async getOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined> {
-    try {
-      // Validate order number format for security
-      if (!this.isValidOrderNumber(orderNumber)) {
-        return undefined;
-      }
-
-      const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
-      const order = result[0];
-      
-      // Additional security checks
-      if (order && this.isOrderAccessible(order)) {
-        return order;
-      }
-      
-      return undefined;
-    } catch (error: any) {
-      // Fallback to memory storage when database is unavailable
-      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, searching memory orders for client lookup:', orderNumber);
-        
-        // Validate order number format for security
-        if (!this.isValidOrderNumber(orderNumber)) {
-          return undefined;
-        }
-        
-        const memoryOrders = global.memoryOrders || [];
-        const order = memoryOrders.find(order => order.orderNumber === orderNumber);
-        
-        // Additional security checks
-        if (order && this.isOrderAccessible(order)) {
-          return order;
-        }
-        
-        return undefined;
-      }
-      
-      console.warn('Database connection issue for order lookup');
-      return undefined;
-    }
-  }
-
   async getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined> {
     try {
-      // Validate bonnummer format first
-      if (!this.isValidBonnummer(bonnummer)) {
-        return undefined;
-      }
-      
       const result = await db.select().from(paymentOrders).where(eq(paymentOrders.bonnummer, bonnummer));
-      const order = result[0];
-      
-      // Additional security checks
-      if (order && this.isOrderAccessible(order)) {
-        return order;
-      }
-      
-      return undefined;
+      return result[0];
     } catch (error) {
       console.warn('Database connection issue for bonnummer lookup');
-      // Return a secure demo order only for valid format
-      if (bonnummer === 'BON123456') {
-        return {
-          id: 1,
-          orderNumber: '20240623-001',
-          bonnummer: 'BON123456',
-          molliePaymentId: 'tr_mock123',
-          customerName: 'Demo Klant',
-          customerEmail: 'demo@example.com',
-          amount: 299.99,
-          currency: 'EUR',
-          description: 'Rolgordijn op maat',
-          status: 'processing',
-          redirectUrl: '',
-          webhookUrl: null,
-          checkoutUrl: null,
-          mollieStatus: null,
-          productDetails: JSON.stringify({
-            product: 'Rolgordijn'
-          }),
-          customerDetails: JSON.stringify({}),
-          clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
-          noteFromEntrepreneur: 'Bedankt voor uw vertrouwen in KANIOU! Uw rolgordijn wordt met zorg handgemaakt in ons atelier. We houden u op de hoogte van de voortgang.',
-          customerNote: null,
-          internalNote: null,
-          pdfFileName: 'sample-receipt-20240623-001.pdf',
-          invoiceUrl: 'sample-invoice-20240623-001.pdf',
-          customerPhone: null,
-          customerFirstName: null,
-          customerLastName: null,
-          customerAddress: null,
-          customerCity: null,
-          notifyByEmail: true,
-          notifyByWhatsapp: false,
-          notificationPreference: 'email',
-          notificationLogs: {
-            'pending': { emailSent: true, sentAt: '2024-06-23T10:00:00Z' },
-            'processing': { emailSent: true, whatsappSent: true, sentAt: '2024-06-24T14:30:00Z' }
-          },
-          createdAt: new Date('2024-06-23'),
-          updatedAt: new Date()
-        };
+      // Check memory orders
+      const memoryOrders = global.memoryOrders || [];
+      return memoryOrders.find(order => order.bonnummer === bonnummer);
+    }
+  }
+
+  // Order tracking methods for clients
+  async getOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined> {
+    try {
+      const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
+      return result[0];
+    } catch (error: any) {
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        const memoryOrders = global.memoryOrders || [];
+        return memoryOrders.find(order => order.orderNumber === orderNumber);
       }
-      return undefined;
-    }
-  }
-
-  // Validate order number format
-  private isValidOrderNumber(orderNumber: string): boolean {
-    // Check format: YYYYMMDD-XXX or similar patterns
-    const validPatterns = [
-      /^\d{8}-\d{3}$/,  // 20240623-001
-      /^KAN-\d+$/,      // KAN-123
-      /^ORD-\d+$/       // ORD-456
-    ];
-    
-    return validPatterns.some(pattern => pattern.test(orderNumber));
-  }
-
-  // Validate bonnummer format
-  private isValidBonnummer(bonnummer: string): boolean {
-    // Check format: BON followed by alphanumeric characters
-    const validPatterns = [
-      /^BON[A-Z0-9]{5,15}$/,  // BON123456, BONABC123
-      /^[A-Z0-9]{6,20}$/      // Generic alphanumeric 6-20 chars
-    ];
-    
-    return validPatterns.some(pattern => pattern.test(bonnummer));
-  }
-
-  // Check if order is accessible (not expired, valid status)
-  private isOrderAccessible(order: PaymentOrder): boolean {
-    // Don't allow access to very old orders (older than 2 years)
-    const twoYearsAgo = new Date();
-    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-    
-    if (order.createdAt && new Date(order.createdAt) < twoYearsAgo) {
-      return false;
-    }
-    
-    // Don't allow access to cancelled or failed orders
-    const restrictedStatuses = ['cancelled', 'failed', 'expired'];
-    if (order.status && restrictedStatuses.includes(order.status)) {
-      return false;
-    }
-    
-    return true;
-  }
-
-  async updateOrderNotificationPreference(orderNumber: string, notificationPreference: string): Promise<void> {
-    try {
-      await db.update(paymentOrders)
-        .set({ 
-          notificationPreference,
-          updatedAt: new Date() 
-        })
-        .where(eq(paymentOrders.orderNumber, orderNumber));
-    } catch (error) {
-      console.warn('Database connection issue for notification preference update');
-      // In a real scenario, this would be queued for retry when database is available
-    }
-  }
-
-  async updateOrderNotificationPreferences(
-    orderId: number, 
-    preferences: {
-      notifyByEmail?: boolean;
-      notifyByWhatsapp?: boolean;
-      customerPhone?: string | null;
-    }
-  ): Promise<void> {
-    try {
-      await db.update(paymentOrders)
-        .set({ 
-          ...preferences,
-          updatedAt: new Date() 
-        })
-        .where(eq(paymentOrders.id, orderId));
-    } catch (error) {
-      console.warn('Database connection issue for notification preferences update');
-      // In a real scenario, this would be queued for retry when database is available
-    }
-  }
-
-  // Notification log methods
-  async createNotificationLog(log: InsertNotificationLog): Promise<NotificationLog> {
-    try {
-      const [result] = await db.insert(notificationLogs).values(log).returning();
-      return result;
-    } catch (error) {
-      console.warn('Database connection issue for notification log creation');
-      throw error;
-    }
-  }
-
-  async getNotificationLogsByOrderId(orderId: number): Promise<NotificationLog[]> {
-    try {
-      return await db.select()
-        .from(notificationLogs)
-        .where(eq(notificationLogs.orderId, orderId))
-        .orderBy(desc(notificationLogs.sentAt));
-    } catch (error) {
-      console.warn('Database connection issue for notification logs');
-      return [];
-    }
-  }
-
-  async getLatestNotificationStatus(orderId: number, type: 'email' | 'whatsapp'): Promise<NotificationLog | undefined> {
-    try {
-      const [result] = await db.select()
-        .from(notificationLogs)
-        .where(
-          and(
-            eq(notificationLogs.orderId, orderId),
-            eq(notificationLogs.notificationType, type)
-          )
-        )
-        .orderBy(desc(notificationLogs.sentAt))
-        .limit(1);
-      return result;
-    } catch (error) {
-      console.warn('Database connection issue for latest notification status');
       return undefined;
     }
   }
@@ -602,16 +360,6 @@ export class DatabaseStorage implements IStorage {
       return result[0];
     } catch (error) {
       console.warn('Database connection issue for admin authentication');
-      // Return demo admin user when database is unavailable
-      if (email === 'admin@kaniou.be') {
-        return {
-          id: 1,
-          email: 'admin@kaniou.be',
-          passwordHash: '$2a$10$demo.hash.for.testing.purposes.only',
-          createdAt: new Date(),
-          lastLoginAt: new Date()
-        };
-      }
       return undefined;
     }
   }
@@ -622,9 +370,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateAdminLastLogin(id: number): Promise<void> {
-    await db.update(adminUsers)
-      .set({ lastLoginAt: new Date() })
-      .where(eq(adminUsers.id, id));
+    await db.update(adminUsers).set({ lastLoginAt: new Date() }).where(eq(adminUsers.id, id));
   }
 
   // Admin Sessions
@@ -643,241 +389,39 @@ export class DatabaseStorage implements IStorage {
   }
 
   async cleanupExpiredSessions(): Promise<void> {
-    const now = new Date();
-    await db.delete(adminSessions).where(lt(adminSessions.expiresAt, now));
+    await db.delete(adminSessions).where(lt(adminSessions.expiresAt, new Date()));
   }
 
+  // Order Management
   async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void> {
-    try {
-      await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
-    } catch (error: any) {
-      // Fallback to memory storage when database is unavailable
-      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, updating memory order ID:', id);
-        
-        const memoryOrders = global.memoryOrders || [];
-        const orderIndex = memoryOrders.findIndex(order => order.id === id);
-        
-        if (orderIndex !== -1) {
-          // Update the order in memory
-          global.memoryOrders[orderIndex] = {
-            ...global.memoryOrders[orderIndex],
-            ...updates,
-            updatedAt: new Date()
-          };
-          console.log(`✅ Memory order updated: ${global.memoryOrders[orderIndex].bonnummer}`);
-        } else {
-          console.warn(`❌ Order not found in memory: ID ${id}`);
-          throw new Error(`Order not found: ${id}`);
-        }
-        return;
-      }
-      throw error;
-    }
+    await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
   }
 
   // Order Documents
   async createOrderDocument(document: InsertOrderDocument): Promise<OrderDocument> {
-    try {
-      const [result] = await db.insert(orderDocuments).values(document).returning();
-      return result;
-    } catch (error) {
-      console.warn('Database connection issue for order document creation');
-      throw error;
-    }
+    const result = await db.insert(orderDocuments).values(document).returning();
+    return result[0];
   }
 
   async getOrderDocuments(orderId: number): Promise<OrderDocument[]> {
-    try {
-      return await db.select()
-        .from(orderDocuments)
-        .where(eq(orderDocuments.orderId, orderId))
-        .orderBy(desc(orderDocuments.uploadedAt));
-    } catch (error) {
-      console.warn('Database connection issue for order documents');
-      return [];
-    }
+    return await db.select().from(orderDocuments)
+      .where(eq(orderDocuments.orderId, orderId))
+      .orderBy(desc(orderDocuments.uploadedAt));
   }
 
   async deleteOrderDocument(id: number): Promise<void> {
-    try {
-      await db.delete(orderDocuments).where(eq(orderDocuments.id, id));
-    } catch (error) {
-      console.warn('Database connection issue for order document deletion');
-      throw error;
-    }
+    await db.delete(orderDocuments).where(eq(orderDocuments.id, id));
   }
 
   async updateOrderDocumentVisibility(id: number, isVisible: boolean): Promise<void> {
-    try {
-      await db.update(orderDocuments)
-        .set({ isVisibleToCustomer: isVisible })
-        .where(eq(orderDocuments.id, id));
-    } catch (error) {
-      console.warn('Database connection issue for order document visibility update');
-      throw error;
-    }
+    await db.update(orderDocuments).set({ isVisibleToClient: isVisible }).where(eq(orderDocuments.id, id));
   }
 
   // Notification Logs
   async createNotificationLog(log: InsertNotificationLog): Promise<NotificationLog> {
-    try {
-      const [result] = await db.insert(notificationLogs).values(log).returning();
-      return result;
-    } catch (error) {
-      console.warn('Database connection issue for notification log creation');
-      // Return a mock notification log for demo purposes
-      return {
-        id: Math.floor(Math.random() * 1000),
-        orderId: log.orderId,
-        notificationType: log.notificationType,
-        status: log.status,
-        sentAt: new Date(),
-        errorMessage: log.errorMessage,
-        recipientEmail: log.recipientEmail,
-        recipientPhone: log.recipientPhone,
-      };
-    }
+    const result = await db.insert(notificationLogs).values(log).returning();
+    return result[0];
   }
 }
 
-async function seedInitialData(storage: DatabaseStorage) {
-  try {
-    // Check if we already have data in the categories table
-    const existingCategories = await storage.getCategories();
-  
-  if (existingCategories.length === 0) {
-    console.log("Seeding initial data...");
-    
-    // Seed Categories
-    const curtainsCategory = await storage.createCategory({
-      name: "Curtains",
-      description: "Classic elegance for any room",
-      imageUrl: "https://pixabay.com/get/ga0f2e660437ddd1c90e6416e545e80dc57cc91e9911e81b9186604d9fbf2d6fcc18ee1b212dc3e177204c00ce7977370edb3a3ba6b854f008c9592fd61d83922_1280.jpg"
-    });
-    
-    const sunblindsCategory = await storage.createCategory({
-      name: "Sunblinds",
-      description: "Perfect light control solution",
-      imageUrl: "https://pixabay.com/get/g0db340fa81f283e739007d19afdf12d8d66f8659e94c58f18e6336c3c175f5e02cf316d5b656a07e68c7e1c54b9679c483bbf1a01eabfa1aeeb9015126371509_1280.jpg"
-    });
-    
-    const romanBlindsCategory = await storage.createCategory({
-      name: "Roman Blinds",
-      description: "Timeless style and functionality",
-      imageUrl: "https://images.unsplash.com/photo-1611048268330-53de574cae3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000"
-    });
-    
-    const sheerDrapesCategory = await storage.createCategory({
-      name: "Sheer Drapes",
-      description: "Subtle elegance and light diffusion",
-      imageUrl: "https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000"
-    });
-    
-    // Seed Products
-    await storage.createProduct({
-      name: "Milano Linen Curtains",
-      description: "Premium linen curtains with a classic pleated heading, perfect for adding elegance to any room.",
-      price: 129.99,
-      imageUrl: "https://images.unsplash.com/photo-1518012312832-96aea3c91144?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      categoryId: curtainsCategory.id,
-      isFeatured: true,
-      isBestSeller: true,
-      isNewArrival: false,
-      material: "100% Linen",
-      dimensions: "Standard and custom sizes available",
-      features: ["Machine Washable", "Multiple Sizes", "Pleated Heading"],
-      colors: ["#D8C0A8", "#B8C5D6", "#CCD6CA"],
-    });
-    
-    await storage.createProduct({
-      name: "Nordic Roller Blinds",
-      description: "Modern roller blinds with minimal design, providing excellent light control for any space.",
-      price: 79.99,
-      imageUrl: "https://images.unsplash.com/photo-1592492152545-9695d3f473f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      categoryId: sunblindsCategory.id,
-      isFeatured: true,
-      isBestSeller: false,
-      isNewArrival: false,
-      material: "Polyester",
-      dimensions: "Width: 60-180cm, Drop: 160-200cm",
-      features: ["Blackout Option", "Easy Installation", "UV Protection"],
-      colors: ["#FFFFFF", "#F5F0E6", "#E6E6E6"],
-    });
-    
-    await storage.createProduct({
-      name: "Tuscany Roman Blinds",
-      description: "Luxurious textured Roman blinds adding sophistication and warmth to your interior space.",
-      price: 109.99,
-      imageUrl: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      categoryId: romanBlindsCategory.id,
-      isFeatured: true,
-      isBestSeller: false,
-      isNewArrival: true,
-      material: "Textured Fabric",
-      dimensions: "Width: 40-120cm, Drop: 100-180cm",
-      features: ["Textured Fabric", "Cordless Option", "Custom Sizes"],
-      colors: ["#D8C8B8", "#B8B8B8", "#E8D8C8"],
-    });
-    
-    await storage.createProduct({
-      name: "Aria Sheer Curtains",
-      description: "Lightweight, flowing sheer curtains that filter light beautifully while maintaining privacy.",
-      price: 89.99,
-      imageUrl: "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      categoryId: sheerDrapesCategory.id,
-      isFeatured: true,
-      isBestSeller: false,
-      isNewArrival: false,
-      material: "Sheer Fabric",
-      dimensions: "Width: 140-300cm, Drop: 220-260cm",
-      features: ["Sheer Fabric", "Rod Pocket Top", "Extra Long"],
-      colors: ["#FFFFFF", "#F8F0E8", "#E0E8F0"],
-    });
-    
-    // Seed Gallery Items
-    await storage.createGalleryItem({
-      title: "Luxury Living Room",
-      description: "Floor-to-ceiling silk curtains",
-      imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-    });
-    
-    await storage.createGalleryItem({
-      title: "Modern Home Office",
-      description: "Wooden Venetian blinds",
-      imageUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-    });
-    
-    // Seed Testimonials
-    await storage.createTestimonial({
-      name: "Sarah Johnson",
-      location: "New York, NY",
-      content: "The curtains I ordered are absolutely stunning and the quality exceeds my expectations. The customer service team was incredibly helpful with selecting the right size and fabric for my living room. I couldn't be happier with the result!",
-      rating: 5,
-      imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=300",
-    });
-    
-    await storage.createTestimonial({
-      name: "Michael Roberts",
-      location: "Chicago, IL",
-      content: "We needed custom blinds for our unusually shaped windows and the team at Elegant Drapes went above and beyond to make it happen. The installation was perfect and the blinds look fantastic!",
-      rating: 5,
-      imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=300",
-    });
-    
-    console.log("Initial data seeding complete!");
-  } else {
-    console.log("Data already exists, skipping seed.");
-  }
-  } catch (error) {
-    console.warn("Database seeding skipped due to connection issue:", error.message);
-  }
-}
-
-// Initialize the database storage
 export const storage = new DatabaseStorage();
-
-// Seed initial data (will only run if the database is empty)
-seedInitialData(storage).catch(error => {
-  console.error("Error seeding initial data:", error);
-});

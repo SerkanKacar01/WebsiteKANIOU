@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
+import FloatingTrackOrderButton from "@/components/ui/FloatingTrackOrderButton";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { CookiebotSetup } from "@/components/CookiebotSetup";
 
@@ -242,6 +243,7 @@ function App() {
         <MobileLayoutWrapper>
           <Router />
         </MobileLayoutWrapper>
+        <FloatingTrackOrderButton />
         <CookieConsentBanner />
         <CookiebotSetup />
 

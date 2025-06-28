@@ -120,6 +120,17 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 28, 2025: EMAIL TEMPLATE VARIABLES FIXED + MOBILE FLOATING BUTTONS IMPLEMENTED
+  - ✅ Fixed critical email template variable errors causing basic email format
+  - ✅ Corrected undefined `${data.orderId}` to `${orderId}` and `${newOrder.id}` in email templates
+  - ✅ Removed undefined `${statusMessage}` from order confirmation email template  
+  - ✅ Verified email templates now generate detailed, professional emails with proper order tracking links
+  - ✅ Implemented mobile-only floating action buttons system (hidden lg:hidden)
+  - ✅ Added full-width "Volg uw bestelling" button above mobile bottom navigation
+  - ✅ Created four circular floating buttons (💬📄📞🛠) with touch-friendly tooltips
+  - ✅ Proper positioning to avoid conflicts with mobile bottom navigation
+  - ✅ Email notifications confirmed working: detailed templates with order tracking, status updates, entrepreneur notes
+  - 📧 Email system (Mailgun) sending comprehensive Dutch email templates with proper variable substitution
 - June 28, 2025: ORDER UPDATE FAILURE FIXED + STATUS-BASED NOTIFICATIONS RESTORED
   - ✅ Fixed critical "Fout – Er is een fout opgetreden bij het opslaan." error in entrepreneur dashboard
   - ✅ Corrected frontend API endpoint from `/api/orders/update-status` to `/api/admin/orders/:id`

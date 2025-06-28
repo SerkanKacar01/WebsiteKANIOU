@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -474,10 +474,16 @@ const MeasuringModal = ({
 };
 
 const MobileFloatingButtons = () => {
+  const [location] = useLocation();
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [callbackModalOpen, setCallbackModalOpen] = useState(false);
   const [measuringModalOpen, setMeasuringModalOpen] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState<string | null>(null);
+
+  // Only show floating buttons on homepage
+  if (location !== "/") {
+    return null;
+  }
 
   const circularButtons = [
     {

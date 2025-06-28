@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -445,10 +445,16 @@ const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =>
 };
 
 const FloatingActionButtons = () => {
+  const [location] = useLocation();
   const [callbackModalOpen, setCallbackModalOpen] = useState(false);
   const [measuringModalOpen, setMeasuringModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [faqPreviewVisible, setFaqPreviewVisible] = useState(false);
+
+  // Only show floating buttons on homepage
+  if (location !== "/") {
+    return null;
+  }
 
   const buttons = [
     {

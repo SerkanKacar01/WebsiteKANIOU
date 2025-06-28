@@ -527,7 +527,7 @@ Mr. Serkan KACAR
       // Send order confirmation email
       if (customerEmail && notifyByEmail) {
         try {
-          const subject = `KANIOU - Bevestiging bestelling ${bonnummer}`;
+          const subject = `KANIOU Zilvernaald | Orderbevestiging en besteloverzicht ${bonnummer}`;
           const emailBody = `
 Geachte ${customerName},
 

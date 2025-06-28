@@ -115,15 +115,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Invalid submission" });
       }
 
-      // Save to database
-      await storage.createContactSubmission({
-        name,
-        email,
-        subject,
-        message
-      });
-
-      // Send email notification to business
+      // Send email notification to business first (most important)
+      let emailSent = false;
       try {
         const emailSubject = `[KANIOU Contact] ${subject}`;
         const emailHtml = createContactEmailHtml({ name, email, subject, message });
@@ -144,16 +137,37 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new
         `.trim();
 
         await sendMailgunEmail('info@kaniou.be', emailSubject, emailText);
-        console.log(`Contact form email sent to info@kaniou.be from ${email}`);
+        console.log(`✅ Contact form email sent successfully to info@kaniou.be from ${email}`);
+        emailSent = true;
       } catch (emailError) {
-        console.error('Failed to send contact form email:', emailError);
-        // Don't fail the request if email fails
+        console.error('❌ Failed to send contact form email:', emailError);
       }
 
-      res.json({ 
-        success: true, 
-        message: "Contact form submitted successfully" 
-      });
+      // Try to save to database (secondary priority)
+      try {
+        await storage.createContactSubmission({
+          name,
+          email,
+          subject,
+          message
+        });
+        console.log(`📝 Contact form submission saved to database`);
+      } catch (dbError) {
+        console.warn(`⚠️ Database unavailable for contact form storage:`, (dbError as Error).message);
+        // Continue anyway - email is the primary goal
+      }
+
+      // Return success if email was sent (primary goal achieved)
+      if (emailSent) {
+        res.json({ 
+          success: true, 
+          message: "Contact form submitted successfully" 
+        });
+      } else {
+        res.status(500).json({ 
+          error: "Failed to send contact form email" 
+        });
+      }
     } catch (error: any) {
       console.error("Contact form submission error:", error);
       res.status(500).json({ error: "Failed to submit contact form" });
@@ -179,17 +193,8 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new
         return res.status(400).json({ error: "Invalid submission" });
       }
 
-      // Save to database
-      await storage.createQuoteRequest({
-        name,
-        email,
-        phone,
-        productType,
-        dimensions: dimensions || '',
-        requirements: requirements || ''
-      });
-
-      // Send email notification to business
+      // Send email notification to business first (most important)
+      let emailSent = false;
       try {
         const emailSubject = `[KANIOU Offerte] ${productType} - ${name}`;
         
@@ -213,16 +218,39 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
         `.trim();
 
         await sendMailgunEmail('info@kaniou.be', emailSubject, emailText);
-        console.log(`Quote request email sent to info@kaniou.be from ${email}`);
+        console.log(`✅ Quote request email sent successfully to info@kaniou.be from ${email}`);
+        emailSent = true;
       } catch (emailError) {
-        console.error('Failed to send quote request email:', emailError);
-        // Don't fail the request if email fails
+        console.error('❌ Failed to send quote request email:', emailError);
       }
 
-      res.json({ 
-        success: true, 
-        message: "Quote request submitted successfully" 
-      });
+      // Try to save to database (secondary priority)
+      try {
+        await storage.createQuoteRequest({
+          name,
+          email,
+          phone,
+          productType,
+          dimensions: dimensions || '',
+          requirements: requirements || ''
+        });
+        console.log(`📝 Quote request submission saved to database`);
+      } catch (dbError) {
+        console.warn(`⚠️ Database unavailable for quote request storage:`, (dbError as Error).message);
+        // Continue anyway - email is the primary goal
+      }
+
+      // Return success if email was sent (primary goal achieved)
+      if (emailSent) {
+        res.json({ 
+          success: true, 
+          message: "Quote request submitted successfully" 
+        });
+      } else {
+        res.status(500).json({ 
+          error: "Failed to send quote request email" 
+        });
+      }
     } catch (error: any) {
       console.error("Quote request submission error:", error);
       res.status(500).json({ error: "Failed to submit quote request" });

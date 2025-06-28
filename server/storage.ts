@@ -396,9 +396,36 @@ class DatabaseStorage implements IStorage {
     await db.delete(adminSessions).where(lt(adminSessions.expiresAt, new Date()));
   }
 
-  // Order Management
+  // Order Management with memory fallback
   async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void> {
-    await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
+    try {
+      await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
+      console.log(`✅ Order ${id} updated in database`);
+    } catch (error: any) {
+      // Fallback to memory storage when database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, using memory fallback for order update');
+        
+        // Update in global memory storage
+        if (global.memoryOrders) {
+          const orderIndex = global.memoryOrders.findIndex((order: any) => order.id === id);
+          if (orderIndex !== -1) {
+            global.memoryOrders[orderIndex] = {
+              ...global.memoryOrders[orderIndex],
+              ...updates,
+              updatedAt: new Date()
+            };
+            console.log(`✅ Order ${id} updated in memory storage`);
+          } else {
+            console.warn(`⚠️ Order ${id} not found in memory storage`);
+          }
+        } else {
+          console.warn('⚠️ No memory storage available for order update');
+        }
+      } else {
+        throw error;
+      }
+    }
   }
 
   // Order Documents

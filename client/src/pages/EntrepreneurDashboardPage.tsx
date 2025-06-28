@@ -120,7 +120,6 @@ export default function EntrepreneurDashboardPage() {
     customerNote: '',
     internalNote: '',
     notifyByEmail: true,
-    notifyByWhatsapp: false,
     bonnummer: ''
   });
   
@@ -357,7 +356,6 @@ export default function EntrepreneurDashboardPage() {
         productType: orderData.productCategory,
         status: orderData.status || 'pending',
         notifyByEmail: true,
-        notifyByWhatsapp: false,
         customerNote: orderData.customerNote || null,
         internalNote: orderData.internalNote || null,
         bonnummer: orderData.bonnummer // CRITICAL FIX: Add the missing bonnummer field
@@ -403,7 +401,7 @@ export default function EntrepreneurDashboardPage() {
         customerNote: '',
         internalNote: '',
         notifyByEmail: true,
-        notifyByWhatsapp: false,
+
         bonnummer: ''
       });
     },
@@ -644,7 +642,7 @@ export default function EntrepreneurDashboardPage() {
         customerNote: '',
         internalNote: '',
         notifyByEmail: true,
-        notifyByWhatsapp: false,
+
         bonnummer: ''
       });
       setSelectedPDFs([]);
@@ -1152,15 +1150,7 @@ export default function EntrepreneurDashboardPage() {
                                 📧 Email ❌
                               </span>
                             )}
-                            {(order.notifyByWhatsapp ?? false) ? (
-                              <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded font-medium">
-                                📱 WhatsApp ✅
-                              </span>
-                            ) : (
-                              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
-                                📱 WhatsApp ❌
-                              </span>
-                            )}
+
                           </div>
                           {order.customerPhone && (
                             <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>
@@ -1382,15 +1372,7 @@ export default function EntrepreneurDashboardPage() {
                               📧 Email ❌
                             </span>
                           )}
-                          {(order.notifyByWhatsapp ?? false) ? (
-                            <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded font-medium">
-                              📱 WhatsApp ✅
-                            </span>
-                          ) : (
-                            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">
-                              📱 WhatsApp ❌
-                            </span>
-                          )}
+
                         </div>
                         {order.customerPhone && (
                           <span className="text-xs text-gray-600 font-mono">{order.customerPhone}</span>

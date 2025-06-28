@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -6,6 +6,56 @@ import { Menu, X, Search, ShoppingBag, Phone, MessageCircle, ChevronRight } from
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
 import { kaniouLogo } from "@/assets";
+
+// Mobile Tooltip Component for track order button
+const MobileTooltip = ({ text, children }: { text: string; children: React.ReactNode }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const handleTouchStart = () => {
+    setShowTooltip(true);
+    timeoutRef.current = setTimeout(() => {
+      setShowTooltip(false);
+    }, 3000);
+  };
+
+  const handleTouchEnd = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      setTimeout(() => setShowTooltip(false), 300);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const tooltipClasses = `
+    absolute z-[9999] bg-[#f9f3e6] text-[#333] px-2.5 py-1.5 rounded-md
+    transition-opacity duration-200 ease-in-out whitespace-nowrap max-w-[180px] text-center
+    shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    ${showTooltip ? 'opacity-100 visible' : 'opacity-0 invisible'}
+    bottom-full mb-2 left-1/2 -translate-x-1/2
+  `;
+
+  return (
+    <div className="relative">
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {children}
+      </div>
+      <div className={tooltipClasses} style={{ fontSize: '13px' }}>
+        {text}
+      </div>
+    </div>
+  );
+};
 
 const MobileHeader = () => {
   const [location] = useLocation();
@@ -241,11 +291,13 @@ const MobileHeader = () => {
 
       {/* Order Tracking Button - Above Bottom Navigation */}
       <div className="fixed bottom-16 left-0 right-0 z-40 px-4 pb-2">
-        <Link href="/volg-bestelling">
-          <button className="w-full bg-[#E6C988] text-white font-medium py-3 px-5 rounded-xl shadow-lg hover:bg-[#D5B992] transition-all duration-200 active:scale-[0.98]">
-            Volg uw bestelling
-          </button>
-        </Link>
+        <MobileTooltip text="Volg uw bestelling">
+          <Link href="/volg-bestelling">
+            <button className="w-full bg-[#E6C988] text-white font-medium py-3 px-5 rounded-xl shadow-lg hover:bg-[#D5B992] transition-all duration-200 active:scale-[0.98]">
+              Volg uw bestelling
+            </button>
+          </Link>
+        </MobileTooltip>
       </div>
 
       {/* Mobile Bottom Navigation Bar */}

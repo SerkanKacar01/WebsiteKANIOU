@@ -86,12 +86,13 @@ const CustomTooltip = ({ text, children, position = "left" }: CustomTooltipProps
   }, []);
 
   const tooltipClasses = `
-    absolute z-[9999] bg-[#f9f3e6] text-[#333] text-xs px-2.5 py-1.5 rounded-md shadow-lg
+    absolute z-[9999] bg-[#f9f3e6] text-[#333] text-xs px-2.5 py-1.5 rounded-md
     transition-opacity duration-200 ease-in-out whitespace-nowrap max-w-[180px] text-center
+    shadow-[0_2px_6px_rgba(0,0,0,0.15)]
     ${showTooltip ? 'opacity-100 visible' : 'opacity-0 invisible'}
-    ${position === 'left' ? 
-      'right-full mr-2 top-1/2 -translate-y-1/2' : 
-      'bottom-full mb-2 left-1/2 -translate-x-1/2'
+    ${isMobile ? 
+      'bottom-full mb-2 left-1/2 -translate-x-1/2' : 
+      'right-full mr-2 top-1/2 -translate-y-1/2'
     }
   `;
 

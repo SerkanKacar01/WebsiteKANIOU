@@ -268,10 +268,6 @@ class DatabaseStorage implements IStorage {
         const memoryOrder: PaymentOrder = {
           id: Date.now(),
           ...dbOrderData,
-          checkoutUrl: dbOrderData.checkoutUrl || '',
-          mollieStatus: dbOrderData.mollieStatus || null,
-          customerNote: dbOrderData.customerNote || null,
-          internalNote: dbOrderData.internalNote || null,
           createdAt: new Date(),
           updatedAt: new Date()
         };
@@ -422,7 +418,7 @@ class DatabaseStorage implements IStorage {
   }
 
   async updateOrderDocumentVisibility(id: number, isVisible: boolean): Promise<void> {
-    await db.update(orderDocuments).set({ isVisibleToClient: isVisible }).where(eq(orderDocuments.id, id));
+    await db.update(orderDocuments).set({ isVisibleToCustomer: isVisible }).where(eq(orderDocuments.id, id));
   }
 
   // Notification Logs

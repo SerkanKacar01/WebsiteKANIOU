@@ -41,7 +41,9 @@ const CallbackModal = ({
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    phone: ""
+    phone: "",
+    name: "",
+    message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);

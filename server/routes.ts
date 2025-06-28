@@ -1,96 +1,108 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
+import session from "express-session";
+import cookieParser from "cookie-parser";
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
-import { createSession, validateSession, deleteSession, isValidCredentials } from "./simpleAuth";
+import {
+  createSession,
+  validateSession,
+  deleteSession,
+  isValidCredentials,
+} from "./simpleAuth";
 import { sendEmail } from "./services/sendgrid";
-import { insertContactSubmissionSchema, insertQuoteRequestSchema } from "@shared/schema";
+import {
+  insertContactSubmissionSchema,
+  insertQuoteRequestSchema,
+} from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
   app.use(cookieParser());
-  
-  app.use(session({
-    secret: process.env.SESSION_SECRET || 'fallback-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: false, // Set to true in production with HTTPS
-      httpOnly: true,
-      maxAge: 2 * 60 * 60 * 1000, // 2 hours
-    },
-  }));
+
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "fallback-secret-key",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: false, // Set to true in production with HTTPS
+        httpOnly: true,
+        maxAge: 2 * 60 * 60 * 1000, // 2 hours
+      },
+    }),
+  );
 
   // Admin authentication middleware for protected routes
   const requireAuth = (req: any, res: any, next: any) => {
     const sessionId = req.session?.sessionId || req.cookies?.sessionId;
-    
+
     if (!sessionId) {
-      return res.status(401).json({ error: 'Authentication required' });
+      return res.status(401).json({ error: "Authentication required" });
     }
-    
+
     const session = validateSession(sessionId);
     if (!session) {
-      return res.status(401).json({ error: 'Invalid or expired session' });
+      return res.status(401).json({ error: "Invalid or expired session" });
     }
-    
+
     req.admin = session;
     next();
   };
 
   // Admin login route
-  app.post('/api/admin/login', async (req, res) => {
+  app.post("/api/admin/login", async (req, res) => {
     try {
       const { email, password } = req.body;
-      
+
       if (!email || !password) {
-        return res.status(400).json({ error: 'Email en wachtwoord zijn vereist' });
+        return res
+          .status(400)
+          .json({ error: "Email en wachtwoord zijn vereist" });
       }
-      
+
       if (isValidCredentials(email, password)) {
         const { sessionId, expiresAt } = createSession(email);
-        
+
         (req.session as any).sessionId = sessionId;
-        res.cookie('sessionId', sessionId, {
+        res.cookie("sessionId", sessionId, {
           httpOnly: true,
           secure: false,
           maxAge: 2 * 60 * 60 * 1000,
         });
-        
+
         res.json({
           success: true,
-          message: 'Succesvol ingelogd',
-          admin: { email }
+          message: "Succesvol ingelogd",
+          admin: { email },
         });
       } else {
-        res.status(401).json({ error: 'Ongeldige inloggegevens' });
+        res.status(401).json({ error: "Ongeldige inloggegevens" });
       }
     } catch (error) {
-      console.error('Login error:', error);
-      res.status(500).json({ error: 'Server error tijdens inloggen' });
+      console.error("Login error:", error);
+      res.status(500).json({ error: "Server error tijdens inloggen" });
     }
   });
 
   // Admin logout route
-  app.post('/api/admin/logout', (req: any, res) => {
+  app.post("/api/admin/logout", (req: any, res) => {
     const sessionId = req.session?.sessionId || req.cookies?.sessionId;
-    
+
     if (sessionId) {
       deleteSession(sessionId);
     }
-    
+
     req.session.destroy((err: any) => {
       if (err) {
-        console.error('Session destruction error:', err);
+        console.error("Session destruction error:", err);
       }
     });
-    
-    res.clearCookie('sessionId');
-    res.json({ success: true, message: 'Succesvol uitgelogd' });
+
+    res.clearCookie("sessionId");
+    res.json({ success: true, message: "Succesvol uitgelogd" });
   });
   // Health check endpoint
   app.get("/api/health", (req, res) => {
@@ -103,9 +115,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Validate request body
       const validation = insertContactSubmissionSchema.safeParse(req.body);
       if (!validation.success) {
-        return res.status(400).json({ 
-          error: "Invalid form data", 
-          details: validation.error.issues 
+        return res.status(400).json({
+          error: "Invalid form data",
+          details: validation.error.issues,
         });
       }
 
@@ -120,8 +132,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let emailSent = false;
       try {
         const emailSubject = `[KANIOU Contact] ${subject}`;
-        const emailHtml = createContactEmailHtml({ name, email, subject, message });
-        
+        const emailHtml = createContactEmailHtml({
+          name,
+          email,
+          subject,
+          message,
+        });
+
         // Send plain text email for better deliverability
         const emailText = `
 Nieuw contactformulier bericht van KANIOU website
@@ -134,14 +151,16 @@ Bericht:
 ${message}
 
 ---
-Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new Date().toLocaleTimeString('nl-NL')}
+Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new Date().toLocaleTimeString("nl-NL")}
         `.trim();
 
-        await sendMailgunEmail('info@kaniou.be', emailSubject, emailText);
-        console.log(`✅ Contact form email sent successfully to info@kaniou.be from ${email}`);
+        await sendMailgunEmail("info@kaniou.be", emailSubject, emailText);
+        console.log(
+          `✅ Contact form email sent successfully to info@kaniou.be from ${email}`,
+        );
         emailSent = true;
       } catch (emailError) {
-        console.error('❌ Failed to send contact form email:', emailError);
+        console.error("❌ Failed to send contact form email:", emailError);
       }
 
       // Try to save to database (secondary priority)
@@ -150,23 +169,26 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new
           name,
           email,
           subject,
-          message
+          message,
         });
         console.log(`📝 Contact form submission saved to database`);
       } catch (dbError) {
-        console.warn(`⚠️ Database unavailable for contact form storage:`, (dbError as Error).message);
+        console.warn(
+          `⚠️ Database unavailable for contact form storage:`,
+          (dbError as Error).message,
+        );
         // Continue anyway - email is the primary goal
       }
 
       // Return success if email was sent (primary goal achieved)
       if (emailSent) {
-        res.json({ 
-          success: true, 
-          message: "Contact form submitted successfully" 
+        res.json({
+          success: true,
+          message: "Contact form submitted successfully",
         });
       } else {
-        res.status(500).json({ 
-          error: "Failed to send contact form email" 
+        res.status(500).json({
+          error: "Failed to send contact form email",
         });
       }
     } catch (error: any) {
@@ -181,13 +203,21 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new
       // Validate request body
       const validation = insertQuoteRequestSchema.safeParse(req.body);
       if (!validation.success) {
-        return res.status(400).json({ 
-          error: "Invalid quote request data", 
-          details: validation.error.issues 
+        return res.status(400).json({
+          error: "Invalid quote request data",
+          details: validation.error.issues,
         });
       }
 
-      const { name, email, phone, productType, dimensions, requirements, website } = validation.data;
+      const {
+        name,
+        email,
+        phone,
+        productType,
+        dimensions,
+        requirements,
+        website,
+      } = validation.data;
 
       // Check honeypot field for spam protection
       if (website && website.length > 0) {
@@ -198,7 +228,7 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new
       let emailSent = false;
       try {
         const emailSubject = `[KANIOU Offerte] ${productType} - ${name}`;
-        
+
         const emailText = `
 Nieuwe offerteaanvraag van KANIOU website
 
@@ -209,20 +239,22 @@ Klantgegevens:
 
 Product Details:
 - Type: ${productType}
-- Afmetingen: ${dimensions || 'Niet opgegeven'}
+- Afmetingen: ${dimensions || "Niet opgegeven"}
 
 Aanvullende wensen:
-${requirements || 'Geen aanvullende wensen opgegeven'}
+${requirements || "Geen aanvullende wensen opgegeven"}
 
 ---
-Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')} om ${new Date().toLocaleTimeString('nl-NL')}
+Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new Date().toLocaleTimeString("nl-NL")}
         `.trim();
 
-        await sendMailgunEmail('info@kaniou.be', emailSubject, emailText);
-        console.log(`✅ Quote request email sent successfully to info@kaniou.be from ${email}`);
+        await sendMailgunEmail("info@kaniou.be", emailSubject, emailText);
+        console.log(
+          `✅ Quote request email sent successfully to info@kaniou.be from ${email}`,
+        );
         emailSent = true;
       } catch (emailError) {
-        console.error('❌ Failed to send quote request email:', emailError);
+        console.error("❌ Failed to send quote request email:", emailError);
       }
 
       // Try to save to database (secondary priority)
@@ -232,24 +264,27 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
           email,
           phone,
           productType,
-          dimensions: dimensions || '',
-          requirements: requirements || ''
+          dimensions: dimensions || "",
+          requirements: requirements || "",
         });
         console.log(`📝 Quote request submission saved to database`);
       } catch (dbError) {
-        console.warn(`⚠️ Database unavailable for quote request storage:`, (dbError as Error).message);
+        console.warn(
+          `⚠️ Database unavailable for quote request storage:`,
+          (dbError as Error).message,
+        );
         // Continue anyway - email is the primary goal
       }
 
       // Return success if email was sent (primary goal achieved)
       if (emailSent) {
-        res.json({ 
-          success: true, 
-          message: "Quote request submitted successfully" 
+        res.json({
+          success: true,
+          message: "Quote request submitted successfully",
         });
       } else {
-        res.status(500).json({ 
-          error: "Failed to send quote request email" 
+        res.status(500).json({
+          error: "Failed to send quote request email",
         });
       }
     } catch (error: any) {
@@ -259,22 +294,22 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
   });
 
   // Admin authentication status route
-  app.get('/api/admin/auth-status', async (req: any, res) => {
+  app.get("/api/admin/auth-status", async (req: any, res) => {
     try {
       const sessionId = req.session?.sessionId || req.cookies?.sessionId;
-      
+
       if (!sessionId) {
         return res.json({ authenticated: false });
       }
-      
+
       const session = validateSession(sessionId);
       if (!session) {
         return res.json({ authenticated: false });
       }
-      
-      res.json({ 
-        authenticated: true, 
-        email: session.email 
+
+      res.json({
+        authenticated: true,
+        email: session.email,
       });
     } catch (error) {
       res.json({ authenticated: false });
@@ -285,17 +320,17 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
   app.get("/api/admin/dashboard", requireAuth, async (req, res) => {
     try {
       const orders = await storage.getPaymentOrders();
-      
+
       res.json({
         totalOrders: orders.length,
-        pendingOrders: orders.filter(o => o.status === 'pending').length,
+        pendingOrders: orders.filter((o) => o.status === "pending").length,
         totalRevenue: orders.reduce((sum, o) => sum + (o.amount || 0), 0),
-        orders: orders.map(order => ({
+        orders: orders.map((order) => ({
           ...order,
           notifyByEmail: order.notifyByEmail ?? true,
-          customerPhone: order.customerPhone || '',
-          notificationPreference: order.notificationPreference || 'email'
-        }))
+          customerPhone: order.customerPhone || "",
+          notificationPreference: order.notificationPreference || "email",
+        })),
       });
     } catch (error: any) {
       console.error("Dashboard error:", error);
@@ -307,7 +342,12 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
   app.patch("/api/admin/orders/:id", requireAuth, async (req, res) => {
     try {
       const orderId = parseInt(req.params.id);
-      const { status, clientNote, noteFromEntrepreneur, notificationPreference } = req.body;
+      const {
+        status,
+        clientNote,
+        noteFromEntrepreneur,
+        notificationPreference,
+      } = req.body;
 
       const existingOrder = await storage.getPaymentOrderById(orderId);
       if (!existingOrder) {
@@ -316,31 +356,45 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
 
       await storage.updatePaymentOrder(orderId, {
         status: status || existingOrder.status,
-        clientNote: clientNote !== undefined ? clientNote : existingOrder.clientNote,
-        noteFromEntrepreneur: noteFromEntrepreneur !== undefined ? noteFromEntrepreneur : existingOrder.noteFromEntrepreneur,
-        notificationPreference: notificationPreference || existingOrder.notificationPreference,
-        updatedAt: new Date()
+        clientNote:
+          clientNote !== undefined ? clientNote : existingOrder.clientNote,
+        noteFromEntrepreneur:
+          noteFromEntrepreneur !== undefined
+            ? noteFromEntrepreneur
+            : existingOrder.noteFromEntrepreneur,
+        notificationPreference:
+          notificationPreference || existingOrder.notificationPreference,
+        updatedAt: new Date(),
       });
 
       // Send status update email notification
-      if (status && existingOrder.customerEmail && existingOrder.notifyByEmail) {
+      if (
+        status &&
+        existingOrder.customerEmail &&
+        existingOrder.notifyByEmail
+      ) {
         try {
           const statusMessages: { [key: string]: string } = {
-            'pending': 'Uw bestelling wordt verwerkt',
-            'Nieuw': 'Uw bestelling is ontvangen',
-            'Bestelling in verwerking': 'Uw bestelling wordt verwerkt',
-            'Bestelling verwerkt': 'Uw bestelling is verwerkt en gaat naar productie',
-            'Bestelling in productie': 'Uw bestelling is in productie',
-            'Bestelling is gereed': 'Uw bestelling is gereed voor levering',
-            'U wordt gebeld voor levering': 'We nemen binnenkort contact op voor de levering'
+            pending: "Uw bestelling wordt verwerkt",
+            Nieuw: "Uw bestelling is ontvangen",
+            "Bestelling in verwerking": "Uw bestelling wordt verwerkt",
+            "Bestelling verwerkt":
+              "Uw bestelling is verwerkt en gaat naar productie",
+            "Bestelling in productie": "Uw bestelling is in productie",
+            "Bestelling is gereed": "Uw bestelling is gereed voor levering",
+            "U wordt gebeld voor levering":
+              "We nemen binnenkort contact op voor de levering",
           };
 
           const statusMessage = statusMessages[status] || status;
-          let productType = 'Raambekledingsproduct';
+          let productType = "Raambekledingsproduct";
           try {
-            if (existingOrder.productDetails && typeof existingOrder.productDetails === 'string') {
+            if (
+              existingOrder.productDetails &&
+              typeof existingOrder.productDetails === "string"
+            ) {
               const details = JSON.parse(existingOrder.productDetails);
-              productType = details.productType || 'Raambekledingsproduct';
+              productType = details.productType || "Raambekledingsproduct";
             }
           } catch (error) {
             // Use default value
@@ -348,32 +402,60 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
 
           const subject = `KANIOU - Update bestelling ${existingOrder.bonnummer || existingOrder.orderNumber}`;
           const emailBody = `
-Beste ${existingOrder.customerName},
+Geachte ${existingOrder.customerName},
 
-Er is een update voor uw bestelling:
+We hopen dat alles goed met u gaat.  
+Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaald || Gordijnen & Zonweringen**.
 
+🧾 **Bestelgegevens**
+━━━━━━━━━━━━━━━━━━━  
 📦 Bestelnummer: ${existingOrder.bonnummer || existingOrder.orderNumber}
-🛍️ Product: ${productType}
-📋 Status: ${statusMessage}
+📋 Huidige status: ${statusMessage}
 
-${noteFromEntrepreneur ? `💬 Bericht van KANIOU: ${noteFromEntrepreneur}` : ''}
+📦 **Volg uw bestelling**  
+━━━━━━━━━━━━━━━━━━━  
+U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${data.orderId}
 
-U kunt uw bestelling volgen via: https://kaniou.be/volg-bestelling
+🛠 **Over uw bestelling**  
+━━━━━━━━━━━━━━━━━━━  
+Uw bestelling wordt speciaal voor u op maat gemaakt met oog voor detail en kwaliteit.
+We houden u uiteraard op de hoogte zodra uw bestelling gereed is voor levering of plaatsing.
 
-Met vriendelijke groet,
-Team KANIOU
+📩 **Vragen of hulp nodig?**  
+━━━━━━━━━━━━━━━━━━━  
+Heeft u vragen over uw bestelling, levering of iets anders? Neem gerust contact met ons op:  
+📧 E-mail: info@kaniou.be  
+📞 Telefoon: +32 467 85 64 05 
+🌐 Website: www.kaniou.be
+
+${noteFromEntrepreneur ? `💬 Bericht van KANIOU: ${noteFromEntrepreneur}` : ""}
+
+🛍 Bedankt voor uw vertrouwen in **KANIOU Zilvernaald || Gordijnen & Zonweringen** –  
+Dé specialist in premium gordijnen en zonwering op maat.
+
+Met vriendelijke groet,  
+**Team KANIOU**  
+
+Accountmanager
+Mr. Serkan KACAR
           `.trim();
 
-          await sendMailgunEmail(existingOrder.customerEmail, subject, emailBody);
-          console.log(`Status update email sent to ${existingOrder.customerEmail} for order ${orderId}`);
+          await sendMailgunEmail(
+            existingOrder.customerEmail,
+            subject,
+            emailBody,
+          );
+          console.log(
+            `Status update email sent to ${existingOrder.customerEmail} for order ${orderId}`,
+          );
         } catch (emailError) {
           console.error(`Failed to send status update email:`, emailError);
         }
       }
 
-      res.json({ 
-        success: true, 
-        message: "Order succesvol bijgewerkt" 
+      res.json({
+        success: true,
+        message: "Order succesvol bijgewerkt",
       });
     } catch (error: any) {
       console.error("Update order error:", error);
@@ -387,11 +469,11 @@ Team KANIOU
       const {
         customerName,
         customerEmail,
-        customerPhone = '',
-        customerFirstName = '',
-        customerLastName = '',
-        customerAddress = '',
-        customerCity = '',
+        customerPhone = "",
+        customerFirstName = "",
+        customerLastName = "",
+        customerAddress = "",
+        customerCity = "",
         productType,
         amount,
         description,
@@ -399,10 +481,17 @@ Team KANIOU
         notifyByEmail = true,
         customerNote,
         internalNote,
-        bonnummer
+        bonnummer,
       } = req.body;
 
-      if (!customerName || !customerEmail || !productType || !amount || !description || !bonnummer) {
+      if (
+        !customerName ||
+        !customerEmail ||
+        !productType ||
+        !amount ||
+        !description ||
+        !bonnummer
+      ) {
         return res.status(400).json({ error: "Vereiste velden ontbreken" });
       }
 
@@ -416,11 +505,11 @@ Team KANIOU
         customerAddress,
         customerCity,
         amount: parseFloat(amount),
-        currency: 'EUR',
+        currency: "EUR",
         description,
         status,
-        redirectUrl: '',
-        webhookUrl: '',
+        redirectUrl: "",
+        webhookUrl: "",
         productDetails: JSON.stringify({ productType }),
         customerDetails: JSON.stringify({ customerNote, internalNote }),
         molliePaymentId: `manual_${Date.now()}`,
@@ -428,9 +517,9 @@ Team KANIOU
         noteFromEntrepreneur: internalNote || null,
         pdfFileName: null,
         invoiceUrl: null,
-        notificationPreference: 'email' as const,
+        notificationPreference: "email" as const,
         notifyByEmail: true,
-        bonnummer
+        bonnummer,
       };
 
       const newOrder = await storage.createPaymentOrder(orderData);
@@ -449,7 +538,7 @@ Bedankt voor uw bestelling bij KANIOU!
 💰 Bedrag: €${amount}
 📋 Status: Bestelling ontvangen
 
-${description ? `Beschrijving: ${description}` : ''}
+${description ? `Beschrijving: ${description}` : ""}
 
 U kunt uw bestelling volgen via: https://kaniou.be/volg-bestelling
 
@@ -469,7 +558,7 @@ Team KANIOU
       res.json({
         success: true,
         order: newOrder,
-        message: "Order succesvol aangemaakt"
+        message: "Order succesvol aangemaakt",
       });
     } catch (error: any) {
       console.error("Create order error:", error);
@@ -482,7 +571,7 @@ Team KANIOU
     try {
       const { orderNumber } = req.params;
       const order = await storage.getOrderByOrderNumber(orderNumber);
-      
+
       if (!order) {
         return res.status(404).json({ error: "Bestelling niet gevonden" });
       }
@@ -498,9 +587,11 @@ Team KANIOU
   app.post("/api/orders/add-customer-note", async (req, res) => {
     try {
       const { orderId, noteText } = req.body;
-      
+
       if (!orderId || !noteText) {
-        return res.status(400).json({ error: "Order ID en notitie zijn vereist" });
+        return res
+          .status(400)
+          .json({ error: "Order ID en notitie zijn vereist" });
       }
 
       const existingOrder = await storage.getPaymentOrderById(orderId);
@@ -510,12 +601,12 @@ Team KANIOU
 
       await storage.updatePaymentOrder(orderId, {
         clientNote: noteText,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       });
 
-      res.json({ 
-        success: true, 
-        message: "Klantnotitie succesvol opgeslagen" 
+      res.json({
+        success: true,
+        message: "Klantnotitie succesvol opgeslagen",
       });
     } catch (error: any) {
       console.error("Add customer note error:", error);
@@ -541,16 +632,16 @@ Naam: ${firstName} ${lastName}
 Telefoonnummer: ${phone}
 Type: Terugbelverzoek
 
-Datum: ${new Date().toLocaleString('nl-BE')}
+Datum: ${new Date().toLocaleString("nl-BE")}
 
 Deze klant vraagt om teruggebeld te worden.
       `.trim();
 
       try {
         await sendEmail({
-          to: 'info@kaniou.be',
+          to: "info@kaniou.be",
           subject: subject,
-          text: emailBody
+          text: emailBody,
         });
         console.log("Callback request email sent successfully");
       } catch (emailError) {
@@ -558,9 +649,9 @@ Deze klant vraagt om teruggebeld te worden.
         // Continue anyway - don't fail the request if email fails
       }
 
-      res.json({ 
-        success: true, 
-        message: "Terugbelverzoek ontvangen" 
+      res.json({
+        success: true,
+        message: "Terugbelverzoek ontvangen",
       });
     } catch (error: any) {
       console.error("Callback request error:", error);
@@ -587,16 +678,16 @@ Bericht:
 ${message}
 
 Type: Vraag via floating button
-Datum: ${new Date().toLocaleString('nl-BE')}
+Datum: ${new Date().toLocaleString("nl-BE")}
 
 Beantwoord deze vraag zo snel mogelijk via e-mail.
       `.trim();
 
       try {
         await sendEmail({
-          to: 'info@kaniou.be',
+          to: "info@kaniou.be",
           subject: subject,
-          text: emailBody
+          text: emailBody,
         });
         console.log("Question email sent successfully");
       } catch (emailError) {
@@ -604,9 +695,9 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
         // Continue anyway - don't fail the request if email fails
       }
 
-      res.json({ 
-        success: true, 
-        message: "Vraag verzonden" 
+      res.json({
+        success: true,
+        message: "Vraag verzonden",
       });
     } catch (error: any) {
       console.error("Question submission error:", error);

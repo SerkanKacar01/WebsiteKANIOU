@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,11 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +24,94 @@ import {
   ChevronUp,
   Search,
 } from "lucide-react";
+
+// Custom Tooltip Component for floating action buttons
+interface CustomTooltipProps {
+  text: string;
+  children: React.ReactNode;
+  position?: "left" | "top";
+}
+
+const CustomTooltip = ({ text, children, position = "left" }: CustomTooltipProps) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setShowTooltip(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setShowTooltip(false);
+    }
+  };
+
+  const handleTouchStart = () => {
+    if (isMobile) {
+      setShowTooltip(true);
+      // Auto-hide after 3 seconds
+      timeoutRef.current = setTimeout(() => {
+        setShowTooltip(false);
+      }, 3000);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (isMobile && timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      // Small delay before hiding to ensure visibility
+      setTimeout(() => setShowTooltip(false), 300);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const tooltipClasses = `
+    absolute z-[9999] bg-[#f9f3e6] text-[#333] text-xs px-2.5 py-1.5 rounded-md shadow-lg
+    transition-opacity duration-200 ease-in-out whitespace-nowrap max-w-[180px] text-center
+    ${showTooltip ? 'opacity-100 visible' : 'opacity-0 invisible'}
+    ${position === 'left' ? 
+      'right-full mr-2 top-1/2 -translate-y-1/2' : 
+      'bottom-full mb-2 left-1/2 -translate-x-1/2'
+    }
+  `;
+
+  return (
+    <div className="relative inline-block">
+      <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="inline-block"
+      >
+        {children}
+      </div>
+      <div className={tooltipClasses} style={{ fontSize: '13px' }}>
+        {text}
+      </div>
+    </div>
+  );
+};
 
 // Callback form modal component
 const CallbackModal = ({
@@ -460,6 +543,17 @@ const FloatingActionButtons = () => {
   const [measuringModalOpen, setMeasuringModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [faqPreviewVisible, setFaqPreviewVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const buttons = [
     {
@@ -533,21 +627,13 @@ const FloatingActionButtons = () => {
           );
 
           return (
-            <Tooltip key={button.id}>
-              <TooltipTrigger asChild>
-                {button.href ? (
-                  <Link href={button.href}>{ButtonContent}</Link>
-                ) : (
-                  ButtonContent
-                )}
-              </TooltipTrigger>
-              <TooltipContent
-                side="left"
-                className="bg-gray-900 text-white border-gray-700 hidden lg:block"
-              >
-                <p className="text-sm font-medium">{button.tooltip}</p>
-              </TooltipContent>
-            </Tooltip>
+            <CustomTooltip key={button.id} text={button.tooltip}>
+              {button.href ? (
+                <Link href={button.href}>{ButtonContent}</Link>
+              ) : (
+                ButtonContent
+              )}
+            </CustomTooltip>
           );
         })}
       </div>

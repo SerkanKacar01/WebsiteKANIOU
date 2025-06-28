@@ -414,7 +414,7 @@ Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaa
 
 📦 **Volg uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
-U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${data.orderId}
+U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${orderId}
 
 🛠 **Over uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
@@ -540,11 +540,10 @@ Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaa
 ━━━━━━━━━━━━━━━━━━━  
 📦 Bestelnummer: ${bonnummer}
 📋 Status: Bestelling ontvangen
-📋 Huidige status: ${statusMessage}
 
 📦 **Volg uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
-U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${data.orderId}
+U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${newOrder.id}
 ${description ? `Beschrijving: ${description}` : ""}
 
 🛠 **Over uw bestelling**  

@@ -8,6 +8,7 @@ import { createSession, validateSession, deleteSession, isValidCredentials } fro
 import { sendEmail } from "./services/sendgrid";
 import { insertContactSubmissionSchema, insertQuoteRequestSchema } from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
+import { sendMailgunEmail } from "./mailgun/sendMail";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
@@ -337,7 +338,7 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString('nl-NL')}
           const statusMessage = statusMessages[status] || status;
           let productType = 'Raambekledingsproduct';
           try {
-            if (existingOrder.productDetails) {
+            if (existingOrder.productDetails && typeof existingOrder.productDetails === 'string') {
               const details = JSON.parse(existingOrder.productDetails);
               productType = details.productType || 'Raambekledingsproduct';
             }

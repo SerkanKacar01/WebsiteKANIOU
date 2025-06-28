@@ -145,7 +145,7 @@ class DatabaseStorage implements IStorage {
   }
   
   async getFeaturedProducts(): Promise<Product[]> {
-    return await db.select().from(products).where(eq(products.featured, true));
+    return await db.select().from(products).where(eq(products.isFeatured, true));
   }
   
   async createProduct(product: InsertProduct): Promise<Product> {
@@ -242,6 +242,10 @@ class DatabaseStorage implements IStorage {
       bonnummer: order.bonnummer,
       clientNote: order.clientNote || null,
       noteFromEntrepreneur: order.noteFromEntrepreneur || null,
+      customerNote: order.customerNote || null,
+      internalNote: order.internalNote || null,
+      checkoutUrl: '',
+      mollieStatus: null,
       notificationPreference: order.notificationPreference || 'email',
       notifyByEmail: order.notifyByEmail !== false,
       notifyByWhatsapp: order.notifyByWhatsapp || false,
@@ -264,6 +268,10 @@ class DatabaseStorage implements IStorage {
         const memoryOrder: PaymentOrder = {
           id: Date.now(),
           ...dbOrderData,
+          checkoutUrl: dbOrderData.checkoutUrl || '',
+          mollieStatus: dbOrderData.mollieStatus || null,
+          customerNote: dbOrderData.customerNote || null,
+          internalNote: dbOrderData.internalNote || null,
           createdAt: new Date(),
           updatedAt: new Date()
         };

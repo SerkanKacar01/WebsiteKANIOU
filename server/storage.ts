@@ -259,13 +259,33 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPaymentOrderById(id: number): Promise<PaymentOrder | undefined> {
-    const result = await db.select().from(paymentOrders).where(eq(paymentOrders.id, id));
-    return result[0];
+    try {
+      const result = await db.select().from(paymentOrders).where(eq(paymentOrders.id, id));
+      return result[0];
+    } catch (error: any) {
+      // Fallback to memory storage when database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, searching memory orders for ID:', id);
+        const memoryOrders = global.memoryOrders || [];
+        return memoryOrders.find(order => order.id === id);
+      }
+      throw error;
+    }
   }
 
   async getPaymentOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined> {
-    const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
-    return result[0];
+    try {
+      const result = await db.select().from(paymentOrders).where(eq(paymentOrders.orderNumber, orderNumber));
+      return result[0];
+    } catch (error: any) {
+      // Fallback to memory storage when database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, searching memory orders for order number:', orderNumber);
+        const memoryOrders = global.memoryOrders || [];
+        return memoryOrders.find(order => order.orderNumber === orderNumber);
+      }
+      throw error;
+    }
   }
 
   async getPaymentOrders(): Promise<PaymentOrder[]> {
@@ -309,40 +329,28 @@ export class DatabaseStorage implements IStorage {
       }
       
       return undefined;
-    } catch (error) {
-      console.warn('Database connection issue for order lookup');
-      // Return a secure demo order only for valid format
-      if (orderNumber === '20240623-001') {
-        return {
-          id: 1,
-          orderNumber: '20240623-001',
-          bonnummer: 'BON123456',
-          molliePaymentId: 'tr_mock123',
-          customerName: 'Demo Klant',
-          customerEmail: 'demo@example.com',
-          amount: 299.99,
-          currency: 'EUR',
-          description: 'Rolgordijn op maat',
-          status: 'processing',
-          redirectUrl: null,
-          webhookUrl: null,
-          productDetails: JSON.stringify({
-            product: 'Rolgordijn'
-          }),
-          customerDetails: JSON.stringify({}),
-          clientNote: 'Uw bestelling is in productie. Verwachte levertijd: 7-10 werkdagen.',
-          noteFromEntrepreneur: 'Bedankt voor uw vertrouwen in KANIOU! Uw rolgordijn wordt met zorg handgemaakt in ons atelier. We houden u op de hoogte van de voortgang.',
-          pdfFileName: 'sample-receipt-20240623-001.pdf',
-          invoiceUrl: 'sample-invoice-20240623-001.pdf',
-          notificationPreference: 'email',
-          notificationLogs: {
-            'pending': { emailSent: true, sentAt: '2024-06-23T10:00:00Z' },
-            'processing': { emailSent: true, whatsappSent: true, sentAt: '2024-06-24T14:30:00Z' }
-          },
-          createdAt: new Date('2024-06-23'),
-          updatedAt: new Date()
-        };
+    } catch (error: any) {
+      // Fallback to memory storage when database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, searching memory orders for client lookup:', orderNumber);
+        
+        // Validate order number format for security
+        if (!this.isValidOrderNumber(orderNumber)) {
+          return undefined;
+        }
+        
+        const memoryOrders = global.memoryOrders || [];
+        const order = memoryOrders.find(order => order.orderNumber === orderNumber);
+        
+        // Additional security checks
+        if (order && this.isOrderAccessible(order)) {
+          return order;
+        }
+        
+        return undefined;
       }
+      
+      console.warn('Database connection issue for order lookup');
       return undefined;
     }
   }
@@ -584,7 +592,32 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void> {
-    await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
+    try {
+      await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
+    } catch (error: any) {
+      // Fallback to memory storage when database is unavailable
+      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+        console.warn('🔄 Database unavailable, updating memory order ID:', id);
+        
+        const memoryOrders = global.memoryOrders || [];
+        const orderIndex = memoryOrders.findIndex(order => order.id === id);
+        
+        if (orderIndex !== -1) {
+          // Update the order in memory
+          global.memoryOrders[orderIndex] = {
+            ...global.memoryOrders[orderIndex],
+            ...updates,
+            updatedAt: new Date()
+          };
+          console.log(`✅ Memory order updated: ${global.memoryOrders[orderIndex].bonnummer}`);
+        } else {
+          console.warn(`❌ Order not found in memory: ID ${id}`);
+          throw new Error(`Order not found: ${id}`);
+        }
+        return;
+      }
+      throw error;
+    }
   }
 
   // Order Documents

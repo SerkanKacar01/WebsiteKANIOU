@@ -23,7 +23,7 @@ export default function TrackOrderPage() {
   const [bonnummer, setBonnummer] = useState('');
   const [searchedBonnummer, setSearchedBonnummer] = useState('');
   const [emailNotifications, setEmailNotifications] = useState(true);
-  const [whatsappNotifications, setWhatsappNotifications] = useState(false);
+
   const [customerPhone, setCustomerPhone] = useState('');
   const [validationError, setValidationError] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -129,7 +129,7 @@ export default function TrackOrderPage() {
     if (!order || !order.orderNumber) return;
 
     // Validation: at least one notification method must be selected
-    if (!emailNotifications && !whatsappNotifications) {
+    if (!emailNotifications && !false) {
       toast({
         title: "Selectie vereist",
         description: "Selecteer minimaal één notificatie methode.",
@@ -139,7 +139,7 @@ export default function TrackOrderPage() {
     }
     
     // Validation: phone number required for WhatsApp notifications
-    if (whatsappNotifications && !customerPhone.trim()) {
+    if (false && !customerPhone.trim()) {
       toast({
         title: "Telefoonnummer vereist",
         description: "Voer uw telefoonnummer in voor WhatsApp notificaties.",
@@ -149,7 +149,7 @@ export default function TrackOrderPage() {
     }
     
     // Phone number validation for WhatsApp
-    if (whatsappNotifications && customerPhone.trim()) {
+    if (false && customerPhone.trim()) {
       const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,20}$/;
       if (!phoneRegex.test(customerPhone.trim())) {
         toast({
@@ -164,8 +164,8 @@ export default function TrackOrderPage() {
     updatePreferencesMutation.mutate({
       bonnummer: order.bonnummer,
       notifyByEmail: emailNotifications,
-      notifyByWhatsapp: whatsappNotifications,
-      customerPhone: whatsappNotifications ? customerPhone.trim() : undefined
+      notifyByWhatsapp: false,
+      customerPhone: false ? customerPhone.trim() : undefined
     });
   };
 
@@ -516,36 +516,7 @@ export default function TrackOrderPage() {
                       E-mail
                     </label>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="whatsapp"
-                      checked={whatsappNotifications}
-                      onCheckedChange={(checked) => setWhatsappNotifications(checked === true)}
-                    />
-                    <label htmlFor="whatsapp" className="text-sm font-medium">
-                      WhatsApp
-                    </label>
-                  </div>
-                  
-                  {/* Phone number input - shown when WhatsApp is selected */}
-                  {whatsappNotifications && (
-                    <div className="space-y-2">
-                      <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                        Telefoonnummer voor WhatsApp:
-                      </label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+32 9 123 45 67"
-                        value={customerPhone}
-                        onChange={(e) => setCustomerPhone(e.target.value)}
-                        className="w-full"
-                      />
-                      <p className="text-xs text-gray-500">
-                        Voer uw telefoonnummer in met landcode (bijvoorbeeld +32 voor België)
-                      </p>
-                    </div>
-                  )}
+
                   
                   <Button 
                     onClick={handleUpdatePreferences}

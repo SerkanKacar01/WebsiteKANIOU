@@ -41,9 +41,7 @@ const BestellingStatusPage = () => {
   
   // Notification preferences state
   const [notifyByEmail, setNotifyByEmail] = useState(false);
-  const [notifyByWhatsapp, setNotifyByWhatsapp] = useState(false);
   const [notificationEmail, setNotificationEmail] = useState('');
-  const [notificationPhone, setNotificationPhone] = useState('');
   const [preferencesLoading, setPreferencesLoading] = useState(false);
 
   useEffect(() => {
@@ -126,10 +124,10 @@ const BestellingStatusPage = () => {
   };
 
   const handleSaveNotificationPreferences = async () => {
-    if (!notifyByEmail && !notifyByWhatsapp) {
+    if (!notifyByEmail) {
       toast({
-        title: "Selecteer tenminste één optie",
-        description: "Kies tussen e-mail of WhatsApp notificaties.",
+        title: "E-mail notificaties vereist",
+        description: "E-mail is vereist voor bestellingsupdates.",
         variant: "destructive",
       });
       return;
@@ -137,24 +135,7 @@ const BestellingStatusPage = () => {
 
     if (notifyByEmail && !notificationEmail) {
       toast({
-        title: "⚠️ E-mailadres is vereist voor e-mailnotificaties",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (notifyByWhatsapp && !notificationPhone) {
-      toast({
-        title: "⚠️ Telefoonnummer is vereist voor WhatsApp-notificaties",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (notifyByWhatsapp && notificationPhone && !notificationPhone.startsWith('+')) {
-      toast({
-        title: "Ongeldig telefoonnummer",
-        description: "Gebruik internationaal formaat: +32 123 456 789",
+        title: "⚠️ E-mailadres is vereist",
         variant: "destructive",
       });
       return;
@@ -170,9 +151,7 @@ const BestellingStatusPage = () => {
         },
         body: JSON.stringify({
           notifyByEmail,
-          notifyByWhatsapp,
           notificationEmail: notifyByEmail ? notificationEmail : null,
-          notificationPhone: notifyByWhatsapp ? notificationPhone : null,
         }),
       });
 
@@ -396,42 +375,12 @@ const BestellingStatusPage = () => {
                 )}
               </div>
 
-              {/* WhatsApp Notifications */}
-              <div className="space-y-2">
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="checkbox"
-                    id="whatsappNotifications"
-                    checked={notifyByWhatsapp}
-                    onChange={(e) => setNotifyByWhatsapp(e.target.checked)}
-                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
-                  />
-                  <Label htmlFor="whatsappNotifications" className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    📱 Ja, ik wil updates ontvangen via WhatsApp
-                  </Label>
-                </div>
-                
-                {notifyByWhatsapp && (
-                  <div className="ml-7 space-y-2">
-                    <Label htmlFor="whatsappInput" className="text-sm font-medium text-gray-700">
-                      Uw WhatsApp-nummer
-                    </Label>
-                    <Input
-                      id="whatsappInput"
-                      type="tel"
-                      placeholder="bijv. +32 456 78 90 12"
-                      value={notificationPhone}
-                      onChange={(e) => setNotificationPhone(e.target.value)}
-                      className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                    />
-                  </div>
-                )}
-              </div>
+
 
               {/* Save Button */}
               <Button
                 onClick={handleSaveNotificationPreferences}
-                disabled={preferencesLoading || (!notifyByEmail && !notifyByWhatsapp)}
+                disabled={preferencesLoading || !notifyByEmail}
                 className="w-full bg-[#E6C988] hover:bg-[#D4B876] text-white rounded-lg py-2"
               >
                 {preferencesLoading ? "Opslaan..." : "Voorkeuren opslaan"}

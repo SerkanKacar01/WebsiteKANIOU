@@ -529,23 +529,46 @@ Mr. Serkan KACAR
         try {
           const subject = `KANIOU - Bevestiging bestelling ${bonnummer}`;
           const emailBody = `
-Beste ${customerName},
+Geachte ${customerName},
 
-Bedankt voor uw bestelling bij KANIOU!
+Bedankt voor uw bestelling bij KANIOU zilvernaald || Gordijnen & Zonweringen.
 
+We hopen dat alles goed met u gaat.  
+Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaald**.
+
+🧾 **Bestelgegevens**
+━━━━━━━━━━━━━━━━━━━  
 📦 Bestelnummer: ${bonnummer}
-🛍️ Product: ${productType}
-💰 Bedrag: €${amount}
 📋 Status: Bestelling ontvangen
+📋 Huidige status: ${statusMessage}
 
+📦 **Volg uw bestelling**  
+━━━━━━━━━━━━━━━━━━━  
+U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${data.orderId}
 ${description ? `Beschrijving: ${description}` : ""}
 
-U kunt uw bestelling volgen via: https://kaniou.be/volg-bestelling
+🛠 **Over uw bestelling**  
+━━━━━━━━━━━━━━━━━━━  
+Uw bestelling wordt speciaal voor u op maat gemaakt met oog voor detail en kwaliteit.
+We houden u uiteraard op de hoogte zodra uw bestelling gereed is voor levering of plaatsing.
+
+📩 **Vragen of hulp nodig?**  
+━━━━━━━━━━━━━━━━━━━  
+Heeft u vragen over uw bestelling, levering of iets anders? Neem gerust contact met ons op:  
+📧 E-mail: info@kaniou.be  
+📞 Telefoon: +32 467 85 64 05 
+🌐 Website: www.kaniou.be
+
+🛍 Bedankt voor uw vertrouwen in **KANIOU Zilvernaald || Gordijnen & Zonweringen** –  
+Dé specialist in premium gordijnen en zonwering op maat.
 
 Wij houden u op de hoogte van de voortgang.
 
-Met vriendelijke groet,
-Team KANIOU
+Met vriendelijke groet,  
+**Team KANIOU**  
+
+Accountmanager
+Mr. Serkan KACAR
           `.trim();
 
           await sendMailgunEmail(customerEmail, subject, emailBody);

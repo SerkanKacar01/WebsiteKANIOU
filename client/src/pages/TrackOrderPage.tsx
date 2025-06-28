@@ -50,7 +50,7 @@ export default function TrackOrderPage() {
   React.useEffect(() => {
     if (order) {
       setEmailNotifications(order.notifyByEmail ?? true);
-      setWhatsappNotifications(order.notifyByWhatsapp ?? false);
+
       setCustomerPhone(order.customerPhone || '');
     }
   }, [order]);
@@ -233,7 +233,7 @@ export default function TrackOrderPage() {
   React.useEffect(() => {
     if (order && order.notificationPreference) {
       setEmailNotifications(order.notificationPreference === 'email' || order.notificationPreference === 'both');
-      setWhatsappNotifications(order.notificationPreference === 'whatsapp' || order.notificationPreference === 'both');
+
     }
   }, [order]);
 

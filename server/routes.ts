@@ -50,7 +50,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isValidCredentials(email, password)) {
         const { sessionId, expiresAt } = createSession(email);
         
-        req.session.sessionId = sessionId;
+        (req.session as any).sessionId = sessionId;
         res.cookie('sessionId', sessionId, {
           httpOnly: true,
           secure: false,

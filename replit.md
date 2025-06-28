@@ -120,6 +120,14 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 28, 2025: Email Notification System Integration
+  - Added email notifications to order creation process (confirmation emails)
+  - Added email notifications to order status update process (status change emails)
+  - Integrated sendMailgunEmail function into routes.ts for automatic email triggers
+  - Verified Mailgun API connectivity and authentication working correctly
+  - Email notifications trigger for: order confirmation, status updates with entrepreneur notes
+  - System sends emails to customer's provided email address when notifyByEmail is true
+  - Email templates include order details, status messages, and tracking information
 - June 27, 2025: Mailgun Email Integration FULLY OPERATIONAL
   - Successfully configured and tested complete Mailgun integration
   - Updated environment variables: MAILGUN_API_KEY and MAILGUN_DOMAIN

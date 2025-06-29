@@ -26,7 +26,7 @@ import type { PaymentOrder } from "@shared/schema";
 
 // Status mapping for display
 const statusSteps = [
-  { key: "pending", label: "Bestelling in verwerking", icon: Package },
+  { key: "pending", label: "Bestelling ontvangen", icon: Package },
   { key: "Nieuw", label: "Bestelling ontvangen", icon: Package },
   {
     key: "Bestelling in verwerking",

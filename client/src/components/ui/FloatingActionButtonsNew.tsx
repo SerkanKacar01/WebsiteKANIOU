@@ -382,67 +382,7 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
   );
 };
 
-// FAQ preview component
-const FAQPreview = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
-  const faqs = [
-    {
-      question: "Hoe lang duurt de levering?",
-      answer: "Standaard producten worden binnen 2-3 weken geleverd. Maatwerk kan 4-6 weken duren."
-    },
-    {
-      question: "Bieden jullie ook montage aan?",
-      answer: "Ja, wij bieden professionele montage door ervaren monteurs in heel België."
-    },
-    {
-      question: "Kan ik eerst stalen ontvangen?",
-      answer: "Natuurlijk! Wij sturen gratis stalen op zodat u thuis de perfecte kleur kunt kiezen."
-    }
-  ];
 
-  if (!isVisible) return null;
-
-  return (
-    <div className="fixed bottom-[340px] right-5 w-80 max-w-[calc(100vw-40px)] bg-white border border-gray-200 rounded-lg shadow-xl z-[10001]">
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-          <HelpCircle className="h-4 w-4 text-[#D0B378]" />
-          Veelgestelde vragen
-        </h3>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={onClose}
-          className="h-6 w-6 p-0"
-        >
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
-      <div className="p-4 space-y-3 max-h-60 overflow-y-auto">
-        {faqs.map((faq, index) => (
-          <Card key={index} className="border-l-4 border-l-[#D0B378]">
-            <CardContent className="p-3">
-              <h4 className="font-medium text-sm text-gray-900 mb-1">
-                {faq.question}
-              </h4>
-              <p className="text-xs text-gray-600">{faq.answer}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      <div className="p-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-        <Link href="/contact">
-          <Button 
-            size="sm" 
-            className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs"
-            onClick={onClose}
-          >
-            Bekijk alle FAQ's
-          </Button>
-        </Link>
-      </div>
-    </div>
-  );
-};
 
 const FloatingActionButtons = () => {
   const [location] = useLocation();

@@ -403,6 +403,41 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
       if (statusWordtGebeld !== undefined) updateData.statusWordtGebeld = statusWordtGebeld;
       if (statusGeleverd !== undefined) updateData.statusGeleverd = statusGeleverd;
 
+      // Map legacy status strings to individual status fields for backward compatibility
+      if (statusChanged && !statusBestelOntvangen && !statusInVerwerking && !statusVerwerkt && !statusInProductie && !statusGereed && !statusWordtGebeld && !statusGeleverd) {
+        console.log(`🔄 Mapping legacy status "${newStatus}" to individual status fields`);
+        
+        // Clear all individual status fields first
+        updateData.statusBestelOntvangen = null;
+        updateData.statusInVerwerking = null;
+        updateData.statusVerwerkt = null;
+        updateData.statusInProductie = null;
+        updateData.statusGereed = null;
+        updateData.statusWordtGebeld = null;
+        updateData.statusGeleverd = null;
+        
+        // Set the appropriate individual status field based on the legacy status
+        const now = new Date().toISOString();
+        const statusMapping: {[key: string]: string} = {
+          'Nieuw': 'statusBestelOntvangen',
+          'Bestelling ontvangen': 'statusBestelOntvangen',
+          'Bestelling in verwerking': 'statusInVerwerking',
+          'Bestelling verwerkt': 'statusVerwerkt',
+          'Bestelling in productie': 'statusInProductie',
+          'Bestelling is gereed': 'statusGereed',
+          'U wordt gebeld voor levering': 'statusWordtGebeld',
+          'Bestelling geleverd': 'statusGeleverd'
+        };
+        
+        const mappedField = statusMapping[newStatus];
+        if (mappedField) {
+          updateData[mappedField] = now;
+          console.log(`✅ Mapped "${newStatus}" to ${mappedField} with timestamp ${now}`);
+        } else {
+          console.warn(`⚠️ No mapping found for status: "${newStatus}"`);
+        }
+      }
+
       await storage.updatePaymentOrder(orderId, updateData);
 
       // Send status update email notification ONLY if relevant fields changed

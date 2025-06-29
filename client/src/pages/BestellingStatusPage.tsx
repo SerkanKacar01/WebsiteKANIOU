@@ -88,13 +88,37 @@ const BestellingStatusPage = () => {
   const [notificationEmail, setNotificationEmail] = useState("");
   const [preferencesLoading, setPreferencesLoading] = useState(false);
 
-  // Fetch order data from API
+  // Smart order lookup - try by ID first, then by bonnummer
   const {
     data: order,
     isLoading,
     error,
   } = useQuery<PaymentOrder>({
     queryKey: ["/api/orders", id],
+    queryFn: async () => {
+      if (!id) throw new Error("No ID provided");
+      
+      // First try to parse as numeric ID and fetch by internal ID
+      const numericId = parseInt(id);
+      if (!isNaN(numericId)) {
+        try {
+          const response = await fetch(`/api/orders/${numericId}`);
+          if (response.ok) {
+            return await response.json();
+          }
+          // If ID lookup fails, fall through to bonnummer lookup
+        } catch (error) {
+          console.log("ID lookup failed, trying bonnummer lookup");
+        }
+      }
+      
+      // Try to fetch by bonnummer (custom reference number)
+      const response = await fetch(`/api/orders/track/bonnummer/${id}`);
+      if (!response.ok) {
+        throw new Error("Order not found");
+      }
+      return await response.json();
+    },
     enabled: !!id,
     retry: false,
   });

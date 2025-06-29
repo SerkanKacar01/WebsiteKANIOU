@@ -78,6 +78,7 @@ export interface IStorage {
   getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined>;
   getPaymentOrders(): Promise<PaymentOrder[]>;
   deletePaymentOrder(id: number): Promise<void>;
+  updateOrderStatus(id: number, statusKey: string, isActive: boolean): Promise<void>;
   
   // Admin Authentication
   getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
@@ -448,6 +449,32 @@ class DatabaseStorage implements IStorage {
       } else {
         throw error;
       }
+    }
+  }
+
+  // Update individual order status with timestamp
+  async updateOrderStatus(id: number, statusKey: string, isActive: boolean): Promise<void> {
+    const updates: Partial<PaymentOrder> = {};
+    
+    // Map status keys to database fields
+    const statusMap: {[key: string]: keyof PaymentOrder} = {
+      'bestelling_ontvangen': 'statusBestelOntvangen',
+      'bestelling_in_verwerking': 'statusInVerwerking', 
+      'bestelling_verwerkt': 'statusVerwerkt',
+      'bestelling_in_productie': 'statusInProductie',
+      'bestelling_gereed': 'statusGereed',
+      'wordt_gebeld_voor_levering': 'statusWordtGebeld',
+      'bestelling_geleverd': 'statusGeleverd'
+    };
+    
+    const dbField = statusMap[statusKey];
+    if (dbField) {
+      (updates as any)[dbField] = isActive ? new Date() : null;
+      updates.updatedAt = new Date();
+      await this.updatePaymentOrder(id, updates);
+      console.log(`✅ Status ${statusKey} ${isActive ? 'activated' : 'deactivated'} for order ${id}`);
+    } else {
+      throw new Error(`Invalid status key: ${statusKey}`);
     }
   }
 

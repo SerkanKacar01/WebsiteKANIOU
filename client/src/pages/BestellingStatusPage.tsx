@@ -24,36 +24,15 @@ import { nl } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
 import type { PaymentOrder } from "@shared/schema";
 
-// Status mapping for display
+// Individual status steps - each can be independently activated
 const statusSteps = [
-  { key: "pending", label: "Bestelling ontvangen", icon: Package },
-  { key: "Nieuw", label: "Bestelling ontvangen", icon: Package },
-  {
-    key: "Bestelling in verwerking",
-    label: "Bestelling in verwerking",
-    icon: Clock,
-  },
-  {
-    key: "Bestelling verwerkt",
-    label: "Bestelling verwerkt",
-    icon: CheckCircle,
-  },
-  {
-    key: "Bestelling in productie",
-    label: "Bestelling in productie",
-    icon: Truck,
-  },
-  {
-    key: "Bestelling is gereed",
-    label: "Bestelling is gereed",
-    icon: CheckCircle,
-  },
-  {
-    key: "U wordt gebeld voor levering",
-    label: "U wordt gebeld voor levering",
-    icon: Phone,
-  },
-  { key: "Bestelling geleverd", label: "Bestelling geleverd", icon: Home },
+  { key: "bestelling_ontvangen", label: "Bestelling ontvangen", icon: Package },
+  { key: "bestelling_in_verwerking", label: "Bestelling in verwerking", icon: Clock },
+  { key: "bestelling_verwerkt", label: "Bestelling verwerkt", icon: CheckCircle },
+  { key: "bestelling_in_productie", label: "Bestelling in productie", icon: Truck },
+  { key: "bestelling_gereed", label: "Bestelling is gereed", icon: CheckCircle },
+  { key: "wordt_gebeld_voor_levering", label: "U wordt gebeld voor levering", icon: Phone },
+  { key: "bestelling_geleverd", label: "Bestelling geleverd", icon: Home },
 ];
 
 interface OrderStatus {

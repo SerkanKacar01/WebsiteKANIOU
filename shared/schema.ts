@@ -281,6 +281,14 @@ export const paymentOrders = pgTable("payment_orders", {
       sentAt?: string;
     }
   }>(), // Track which notifications were sent for each status
+  // Individual status tracking with dates - each can be independently activated
+  statusBestelOntvangen: timestamp("status_bestel_ontvangen"), // Bestelling ontvangen
+  statusInVerwerking: timestamp("status_in_verwerking"), // Bestelling in verwerking  
+  statusVerwerkt: timestamp("status_verwerkt"), // Bestelling verwerkt
+  statusInProductie: timestamp("status_in_productie"), // Bestelling in productie
+  statusGereed: timestamp("status_gereed"), // Bestelling is gereed
+  statusWordtGebeld: timestamp("status_wordt_gebeld"), // U wordt gebeld voor levering
+  statusGeleverd: timestamp("status_geleverd"), // Bestelling geleverd
   paidAt: timestamp("paid_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

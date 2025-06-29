@@ -133,7 +133,6 @@ export default function EntrepreneurDashboardPage() {
     status: "pending",
     customerNote: "",
     internalNote: "",
-    notifyByEmail: true,
     bonnummer: "",
   });
 
@@ -664,8 +663,8 @@ export default function EntrepreneurDashboardPage() {
       return;
     }
 
-    // Email validation
-    if (newOrderForm.notifyByEmail && !newOrderForm.customerEmail) {
+    // Email validation - email is always required for automatic notifications
+    if (!newOrderForm.customerEmail) {
       toast({
         title: "E-mailadres vereist",
         description: "E-mailadres is vereist voor bestellingsupdates.",
@@ -2420,46 +2419,6 @@ export default function EntrepreneurDashboardPage() {
                   />
                 </div>
               </div>
-            </div>
-
-            {/* Notification Preferences Section */}
-            <div className="space-y-4 border-b pb-4 mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Notificatievoorkeur
-              </h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Selecteer hoe de klant bestellingsupdates wil ontvangen.
-              </p>
-
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="notifyByEmail"
-                    checked={newOrderForm.notifyByEmail}
-                    onChange={(e) =>
-                      setNewOrderForm((prev) => ({
-                        ...prev,
-                        notifyByEmail: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
-                  />
-                  <Label
-                    htmlFor="notifyByEmail"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
-                  >
-                    📧 E-mail
-                  </Label>
-                </div>
-              </div>
-
-              {/* Validation messages */}
-              {newOrderForm.notifyByEmail && !newOrderForm.customerEmail && (
-                <p className="text-sm text-red-600 mt-2">
-                  ⚠️ E-mailadres is vereist voor e-mailnotificaties
-                </p>
-              )}
             </div>
 
             {/* Additional Notes Section */}

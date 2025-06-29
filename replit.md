@@ -120,6 +120,17 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 29, 2025: SMART NOTIFICATION SYSTEM + REMOVED ORDER CREATION NOTIFICATION OPTIONS
+  - ✅ Implemented smart notification system that only sends emails when status or customer notes change
+  - ✅ Added change detection for status, clientNote, and noteFromEntrepreneur fields
+  - ✅ Prevented unnecessary notifications for internal edits (name, amount, product type changes)
+  - ✅ Added detailed console logging to track when notifications are sent vs. skipped
+  - ✅ Fixed email template variables to use updated values correctly (newStatus, newNoteFromEntrepreneur)
+  - ✅ Removed notification preference options from order creation form (customers no longer choose)
+  - ✅ All new orders automatically have email notifications enabled (notifyByEmail: true)
+  - ✅ Simplified order creation interface - notifications are handled automatically by system
+  - ✅ Maintained notification status display on dashboard for transparency
+  - 🎯 Result: Professional notification system that prevents customer email spam while ensuring important updates are delivered
 - June 29, 2025: REDESIGNED "VOLG UW BESTELLING" BUTTON SYSTEM + HERO SEARCH BAR
   - ✅ Eliminated duplicate track order buttons across the system
   - ✅ Removed large mobile "Volg uw bestelling" button from above bottom navigation

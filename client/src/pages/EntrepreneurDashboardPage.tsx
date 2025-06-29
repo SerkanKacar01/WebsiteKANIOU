@@ -442,7 +442,6 @@ export default function EntrepreneurDashboardPage() {
         status: "pending",
         customerNote: "",
         internalNote: "",
-        notifyByEmail: true,
 
         bonnummer: "",
       });
@@ -731,7 +730,6 @@ export default function EntrepreneurDashboardPage() {
         status: "pending",
         customerNote: "",
         internalNote: "",
-        notifyByEmail: true,
 
         bonnummer: "",
       });

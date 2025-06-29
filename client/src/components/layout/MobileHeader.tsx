@@ -216,6 +216,12 @@ const MobileHeader = () => {
                         📞 {t("CONTACT")}
                       </Button>
                     </Link>
+                    
+                    <Link href="/volg-bestelling">
+                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
+                        🔍 Volg uw bestelling
+                      </Button>
+                    </Link>
                   </div>
 
                   {/* Product Categories */}

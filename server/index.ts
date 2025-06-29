@@ -98,7 +98,7 @@ app.use((req, res, next) => {
         console.log(`   Status page: /bestelling-status/${createdOrder.id}`);
         console.log(`   Track page: /volg-bestelling (search: ${createdOrder.bonnummer})`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.warn('Could not create demo order:', error.message);
     }
   }

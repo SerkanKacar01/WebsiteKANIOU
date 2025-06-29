@@ -10,7 +10,6 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import FloatingActionButtons from "@/components/ui/FloatingActionButtonsNew";
-import MobileFloatingButtons from "@/components/ui/MobileFloatingButtons";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { CookiebotSetup } from "@/components/CookiebotSetup";
 
@@ -245,7 +244,6 @@ function App() {
           <Router />
         </MobileLayoutWrapper>
         <FloatingActionButtons />
-        <MobileFloatingButtons />
         <CookieConsentBanner />
         <CookiebotSetup />
 

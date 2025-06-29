@@ -449,7 +449,7 @@ const FloatingActionButtons = () => {
   const [callbackModalOpen, setCallbackModalOpen] = useState(false);
   const [measuringModalOpen, setMeasuringModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [faqPreviewVisible, setFaqPreviewVisible] = useState(false);
+
 
   // Only show floating buttons on homepage
   if (location !== "/") {
@@ -457,6 +457,13 @@ const FloatingActionButtons = () => {
   }
 
   const buttons = [
+    {
+      id: "track-order",
+      icon: Search,
+      emoji: "🔍",
+      tooltip: "Volg uw bestelling",
+      href: "/volg-bestelling",
+    },
     {
       id: "contact",
       icon: MessageCircle,
@@ -484,33 +491,13 @@ const FloatingActionButtons = () => {
       emoji: "🛠",
       tooltip: "Bekijk meetinstructies",
       onClick: () => setMeasuringModalOpen(true),
-    },
-    {
-      id: "faq",
-      icon: HelpCircle,
-      emoji: "📚",
-      tooltip: "Veelgestelde vragen",
-      onClick: () => setFaqPreviewVisible(!faqPreviewVisible),
     }
   ];
 
   return (
     <>
-      {/* Track Order Button - Desktop Only */}
-      <div className="hidden lg:block fixed bottom-[340px] right-5 z-[9999]">
-        <Link href="/volg-bestelling">
-          <Button
-            className="bg-[#D0B378] hover:bg-[#C5A565] text-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-all duration-300 hover:scale-105 px-6 py-3 rounded-full flex items-center gap-2 text-sm font-medium"
-            size="lg"
-          >
-            <Search className="h-4 w-4" />
-            Volg uw bestelling
-          </Button>
-        </Link>
-      </div>
-
       {/* Floating Action Buttons - Desktop & Mobile */}
-      <div className="hidden lg:flex fixed bottom-5 right-5 z-[9999] flex-col gap-3">
+      <div className="flex fixed bottom-5 right-5 z-[9999] flex-col gap-3">
         {buttons.map((button, index) => {
           const IconComponent = button.icon;
           
@@ -580,11 +567,7 @@ const FloatingActionButtons = () => {
         onClose={() => setMeasuringModalOpen(false)} 
       />
 
-      {/* FAQ Preview Popup */}
-      <FAQPreview 
-        isVisible={faqPreviewVisible} 
-        onClose={() => setFaqPreviewVisible(false)} 
-      />
+
     </>
   );
 };

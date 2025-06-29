@@ -120,6 +120,17 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 28, 2025: FLOATING BUTTONS SYSTEM UNIFIED + ORDER DELETION FUNCTIONALITY FIXED
+  - ✅ Unified floating action buttons system into single component
+  - ✅ Added "Volg uw bestelling" as first button in floating stack with magnifying glass icon
+  - ✅ Removed duplicate track order buttons (large horizontal bar and separate floating button)
+  - ✅ Consolidated mobile and desktop floating button systems
+  - ✅ Track order button only appears on homepage (/) and redirects to /volg-bestelling
+  - ✅ Matches size and styling of other floating buttons (50x50px desktop, 40x40px mobile)
+  - ✅ Shows emoji (🔍) on mobile, icon on desktop with proper tooltips
+  - ✅ Fixed order deletion functionality with missing DELETE endpoint
+  - ✅ Added memory storage fallback for order deletion during database downtime
+  - ✅ Enhanced error handling for order deletion with specific error messages
 - June 28, 2025: EMAIL TEMPLATE VARIABLES FIXED + MOBILE FLOATING BUTTONS IMPLEMENTED
   - ✅ Fixed critical email template variable errors causing basic email format
   - ✅ Corrected undefined `${data.orderId}` to `${orderId}` and `${newOrder.id}` in email templates

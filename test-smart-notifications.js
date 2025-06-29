@@ -51,8 +51,13 @@ async function testSmartNotifications() {
     });
 
     const newOrder = await createResponse.json();
-    if (!createResponse.ok || !newOrder.success) {
-      throw new Error('Order creation failed');
+    if (!createResponse.ok) {
+      console.log('Order creation response:', createResponse.status, newOrder);
+      throw new Error(`Order creation failed: ${newOrder.error || 'Unknown error'}`);
+    }
+    if (!newOrder.success) {
+      console.log('Order creation result:', newOrder);
+      throw new Error(`Order creation failed: ${newOrder.error || 'No success flag'}`);
     }
     
     const orderId = newOrder.order.id;

@@ -1233,7 +1233,7 @@ export default function EntrepreneurDashboardPage() {
                             className="font-medium text-[#E6C988] cursor-pointer hover:underline"
                             onClick={() => openEditModal(order)}
                           >
-                            #{order.orderNumber || order.id}
+                            #{order.orderNumber}
                           </span>
                           <span className="text-xs text-gray-500">
                             €{((order.amount || 0) / 100).toFixed(2)}
@@ -1419,7 +1419,7 @@ export default function EntrepreneurDashboardPage() {
                       className="font-semibold text-[#E6C988] cursor-pointer hover:underline text-lg"
                       onClick={() => openEditModal(order)}
                     >
-                      #{order.orderNumber || order.id}
+                      #{order.orderNumber}
                     </h3>
                     <p className="text-sm text-gray-600 mt-1">
                       {order.customerName}

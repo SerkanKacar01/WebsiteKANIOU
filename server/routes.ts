@@ -496,7 +496,7 @@ Mr. Serkan KACAR
       }
 
       const orderData = {
-        orderNumber: `ORD-${Date.now()}`,
+        orderNumber: bonnummer, // Use the custom reference number instead of auto-generated ID
         customerName,
         customerEmail,
         customerPhone,

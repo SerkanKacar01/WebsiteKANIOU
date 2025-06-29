@@ -237,7 +237,7 @@ class DatabaseStorage implements IStorage {
       productDetails: order.productDetails || null,
       customerDetails: order.customerDetails || null,
       molliePaymentId: `manual_${Date.now()}`,
-      orderNumber: order.orderNumber || `ORD-${Date.now()}`,
+      orderNumber: order.orderNumber || null, // Use the provided order number or null
       status: 'pending',
       bonnummer: order.bonnummer,
       clientNote: order.clientNote || null,

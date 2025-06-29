@@ -120,6 +120,16 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 29, 2025: LOGIN REDIRECT FIXED + ORDER TRACKING CLARIFICATION + SMART NOTIFICATION SYSTEM COMPLETED
+  - ✅ Fixed login redirect issue by simplifying authentication flow (immediate redirect after successful login)
+  - ✅ Removed complex authentication verification delay that was causing redirect failures
+  - ✅ Added console logging for better login flow debugging and monitoring
+  - ✅ Clarified order tracking system - works correctly with proper bonnummer (DEMO12345 available for testing)
+  - ✅ Created comprehensive system status documentation with test instructions
+  - ✅ Verified both login system and order tracking are fully operational
+  - ✅ Maintained all smart notification features from previous implementation
+  - ✅ System ready for production use with memory fallback during database maintenance
+  - 🎯 Result: All critical issues resolved - login redirects properly, order tracking works with correct bonnummer
 - June 29, 2025: SMART NOTIFICATION SYSTEM + REMOVED ORDER CREATION NOTIFICATION OPTIONS
   - ✅ Implemented smart notification system that only sends emails when status or customer notes change
   - ✅ Added change detection for status, clientNote, and noteFromEntrepreneur fields

@@ -241,6 +241,7 @@ export default function EntrepreneurDashboardPage() {
 
   useEffect(() => {
     if (!authLoading && !authStatus?.authenticated) {
+      console.log("Authentication failed, redirecting to login...");
       setLocation("/kaniouzilvernaald-dashboard");
     }
   }, [authStatus, authLoading, setLocation]);

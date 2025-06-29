@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import type { PaymentOrder } from "@shared/schema";
+import { format } from "date-fns";
+import { nl } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -216,9 +218,52 @@ export default function EntrepreneurDashboardPage() {
     if (!dateStr) return "Onbekend";
     try {
       const date = new Date(dateStr);
-      return format(date, "dd/MM/yyyy", { locale: nl });
+      return date.toLocaleDateString("nl-NL", {
+        day: "2-digit",
+        month: "2-digit", 
+        year: "numeric"
+      });
     } catch {
       return "Onbekend";
+    }
+  };
+
+  const handleStatusToggle = async (statusKey: string, isChecked: boolean) => {
+    if (!selectedOrder) return;
+
+    const statusMap: {[key: string]: string} = {
+      'bestelling_ontvangen': 'statusBestelOntvangen',
+      'bestelling_in_verwerking': 'statusInVerwerking',
+      'bestelling_verwerkt': 'statusVerwerkt',
+      'bestelling_in_productie': 'statusInProductie',
+      'bestelling_gereed': 'statusGereed',
+      'wordt_gebeld_voor_levering': 'statusWordtGebeld',
+      'bestelling_geleverd': 'statusGeleverd'
+    };
+
+    const updateData = {
+      [statusMap[statusKey]]: isChecked ? new Date().toISOString() : null
+    };
+
+    try {
+      await apiRequest(`/api/admin/orders/${selectedOrder.id}`, "PATCH", updateData);
+
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      
+      // Update the selected order in state
+      setSelectedOrder(prev => prev ? { ...prev, ...updateData } : null);
+
+      toast({
+        title: "Status bijgewerkt",
+        description: `${statusSteps.find(s => s.key === statusKey)?.label} ${isChecked ? 'geactiveerd' : 'gedeactiveerd'}`,
+      });
+    } catch (error: any) {
+      console.error("Status update error:", error);
+      toast({
+        title: "Update gefaald",
+        description: error.message || "Er is een fout opgetreden bij het bijwerken van de status",
+        variant: "destructive",
+      });
     }
   };
 
@@ -1746,31 +1791,41 @@ export default function EntrepreneurDashboardPage() {
               </div>
             </div>
 
-            {/* Status Update */}
-            <div className="space-y-2">
-              <Label
-                htmlFor="status"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Status Bijwerken
+            {/* Individual Status Toggles */}
+            <div className="space-y-4">
+              <Label className="text-sm font-semibold text-gray-700">
+                Order Status Voortgang
               </Label>
-              <Select
-                value={editForm.status}
-                onValueChange={(value) =>
-                  setEditForm((prev) => ({ ...prev, status: value }))
-                }
-              >
-                <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
-                  <SelectValue placeholder="Selecteer status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ORDER_STATUSES.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <p className="text-xs text-gray-500">
+                Selecteer welke statussen actief zijn. Elke status kan onafhankelijk aan/uit worden gezet.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {statusSteps.map((step) => {
+                  const isChecked = getStatusValue(selectedOrder, step.key);
+                  return (
+                    <div key={step.key} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50">
+                      <input
+                        type="checkbox"
+                        id={step.key}
+                        checked={isChecked}
+                        onChange={(e) => handleStatusToggle(step.key, e.target.checked)}
+                        className="w-4 h-4 text-[#E6C988] bg-gray-100 border-gray-300 rounded focus:ring-[#E6C988]"
+                      />
+                      <Label htmlFor={step.key} className="flex-1 text-sm cursor-pointer">
+                        <div className="flex items-center gap-2">
+                          <step.icon className={`h-4 w-4 ${isChecked ? 'text-green-600' : 'text-gray-400'}`} />
+                          {step.label}
+                        </div>
+                        {isChecked && getStatusDate(selectedOrder, step.key) && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            Geactiveerd: {formatDate(getStatusDate(selectedOrder, step.key))}
+                          </div>
+                        )}
+                      </Label>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Client Note */}

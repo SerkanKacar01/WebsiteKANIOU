@@ -246,7 +246,21 @@ export default function EntrepreneurDashboardPage() {
     };
 
     try {
-      await apiRequest(`/api/admin/orders/${selectedOrder.id}`, "PATCH", updateData);
+      const response = await fetch(`/api/admin/orders/${selectedOrder.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error || `HTTP error! status: ${response.status}`,
+        );
+      }
 
       queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
       

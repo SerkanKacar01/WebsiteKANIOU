@@ -58,6 +58,51 @@ interface OrderStatus {
   }[];
 }
 
+// Helper functions for individual status management
+const getStatusValue = (order: PaymentOrder | null, statusKey: string): boolean => {
+  if (!order) return false;
+  const statusMap: {[key: string]: keyof PaymentOrder} = {
+    'bestelling_ontvangen': 'statusBestelOntvangen',
+    'bestelling_in_verwerking': 'statusInVerwerking',
+    'bestelling_verwerkt': 'statusVerwerkt',
+    'bestelling_in_productie': 'statusInProductie',
+    'bestelling_gereed': 'statusGereed',
+    'wordt_gebeld_voor_levering': 'statusWordtGebeld',
+    'bestelling_geleverd': 'statusGeleverd'
+  };
+  const field = statusMap[statusKey];
+  return field ? !!(order as any)[field] : false;
+};
+
+const getStatusDate = (order: PaymentOrder | null, statusKey: string): Date | null => {
+  if (!order) return null;
+  const statusMap: {[key: string]: keyof PaymentOrder} = {
+    'bestelling_ontvangen': 'statusBestelOntvangen',
+    'bestelling_in_verwerking': 'statusInVerwerking',
+    'bestelling_verwerkt': 'statusVerwerkt',
+    'bestelling_in_productie': 'statusInProductie',
+    'bestelling_gereed': 'statusGereed',
+    'wordt_gebeld_voor_levering': 'statusWordtGebeld',
+    'bestelling_geleverd': 'statusGeleverd'
+  };
+  const field = statusMap[statusKey];
+  return field ? (order as any)[field] : null;
+};
+
+const formatDate = (dateStr: string | Date | null | undefined) => {
+  if (!dateStr) return "Nog niet gestart";
+  try {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("nl-NL", {
+      day: "2-digit",
+      month: "2-digit", 
+      year: "numeric"
+    });
+  } catch {
+    return "Onbekend";
+  }
+};
+
 const BestellingStatusPage = () => {
   const { id } = useParams();
   const { toast } = useToast();

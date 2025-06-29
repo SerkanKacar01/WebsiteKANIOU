@@ -347,6 +347,14 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
         clientNote,
         noteFromEntrepreneur,
         notificationPreference,
+        // Individual status fields
+        statusBestelOntvangen,
+        statusInVerwerking,
+        statusVerwerkt,
+        statusInProductie,
+        statusGereed,
+        statusWordtGebeld,
+        statusGeleverd,
       } = req.body;
 
       const existingOrder = await storage.getPaymentOrderById(orderId);
@@ -376,14 +384,26 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
       console.log(`   Entrepreneur note changed: ${entrepreneurNoteChanged}`);
       console.log(`   Will send notification: ${shouldSendNotification}`);
 
-      await storage.updatePaymentOrder(orderId, {
+      // Prepare update data - include individual status fields if provided
+      const updateData: any = {
         status: newStatus,
         clientNote: newClientNote,
         noteFromEntrepreneur: newNoteFromEntrepreneur,
         notificationPreference:
           notificationPreference || existingOrder.notificationPreference,
         updatedAt: new Date(),
-      });
+      };
+
+      // Add individual status fields if provided in request
+      if (statusBestelOntvangen !== undefined) updateData.statusBestelOntvangen = statusBestelOntvangen;
+      if (statusInVerwerking !== undefined) updateData.statusInVerwerking = statusInVerwerking;
+      if (statusVerwerkt !== undefined) updateData.statusVerwerkt = statusVerwerkt;
+      if (statusInProductie !== undefined) updateData.statusInProductie = statusInProductie;
+      if (statusGereed !== undefined) updateData.statusGereed = statusGereed;
+      if (statusWordtGebeld !== undefined) updateData.statusWordtGebeld = statusWordtGebeld;
+      if (statusGeleverd !== undefined) updateData.statusGeleverd = statusGeleverd;
+
+      await storage.updatePaymentOrder(orderId, updateData);
 
       // Send status update email notification ONLY if relevant fields changed
       if (

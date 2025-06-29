@@ -445,7 +445,7 @@ const FloatingActionButtons = () => {
             <button
               className="
                 /* Base styles */
-                rounded-full bg-[#fdf4e3] text-gray-800 
+                rounded-full bg-[#E9C882] text-gray-800 
                 shadow-[0_2px_8px_rgba(0,0,0,0.15)] 
                 transition-all duration-300 
                 flex items-center justify-center

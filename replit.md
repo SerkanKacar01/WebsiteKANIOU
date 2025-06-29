@@ -120,6 +120,19 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 29, 2025: REDESIGNED "VOLG UW BESTELLING" BUTTON SYSTEM + HERO SEARCH BAR
+  - ✅ Eliminated duplicate track order buttons across the system
+  - ✅ Removed large mobile "Volg uw bestelling" button from above bottom navigation
+  - ✅ Removed standalone FloatingTrackOrderButton.tsx component (desktop-only button)
+  - ✅ Consolidated into single FloatingActionButtonsNew component with homepage-only display
+  - ✅ Updated background color to #E9C882 as specified for unified brand consistency
+  - ✅ Implemented optional hero section order tracking search bar below main slider
+  - ✅ Added real-time order lookup functionality using bonnummer (custom order numbers)
+  - ✅ Search bar includes input validation, loading states, and error handling
+  - ✅ Direct navigation to order status page when valid bonnummer is entered
+  - ✅ Maintained responsive design: 🔍 emoji on mobile, search icon on desktop
+  - ✅ Both floating button and search bar redirect to correct tracking endpoints
+  - 🎯 System now uses single unified approach: floating buttons (homepage only) + optional search bar
 - June 28, 2025: FLOATING BUTTONS SYSTEM UNIFIED + ORDER DELETION FUNCTIONALITY FIXED
   - ✅ Unified floating action buttons system into single component
   - ✅ Added "Volg uw bestelling" as first button in floating stack with magnifying glass icon

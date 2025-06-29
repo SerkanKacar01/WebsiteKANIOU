@@ -9,6 +9,7 @@ import AboutCompany from "@/components/home/AboutCompany";
 import InteractiveFeaturesSection from "@/components/home/InteractiveFeaturesSection";
 import SmartQuoteModule from "@/components/home/SmartQuoteModule";
 import NewsletterBanner from "@/components/home/NewsletterBanner";
+import OrderTrackingSearchBar from "@/components/home/OrderTrackingSearchBar";
 
 import QuoteRequestSection from "@/components/home/QuoteRequestSection";
 import ContactSection from "@/components/home/ContactSection";
@@ -25,6 +26,14 @@ const Home = () => {
       </Helmet>
       
       <HeroSection />
+      
+      {/* Order Tracking Search Bar */}
+      <div className="py-8 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <OrderTrackingSearchBar />
+        </div>
+      </div>
+      
       <SmartWelcomeButtons />
       <FeaturedCategories />
       <AIStyleGuide />

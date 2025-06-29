@@ -38,6 +38,7 @@ import { eq, desc, lt, and } from "drizzle-orm";
 
 declare global {
   var memoryOrders: PaymentOrder[] | undefined;
+  var memoryAdminUsers: AdminUser[] | undefined;
 }
 
 export interface IStorage {
@@ -395,14 +396,35 @@ class DatabaseStorage implements IStorage {
       const result = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
       return result[0];
     } catch (error) {
-      console.warn('Database connection issue for admin authentication');
-      return undefined;
+      console.warn('Database connection issue for admin authentication - checking memory storage');
+      // Memory fallback for admin users
+      const memoryAdmins = global.memoryAdminUsers || [];
+      return memoryAdmins.find(user => user.email === email);
     }
   }
 
   async createAdminUser(user: InsertAdminUser): Promise<AdminUser> {
-    const result = await db.insert(adminUsers).values(user).returning();
-    return result[0];
+    try {
+      const result = await db.insert(adminUsers).values(user).returning();
+      return result[0];
+    } catch (error) {
+      console.warn('Database unavailable for admin user creation - using memory storage');
+      // Memory fallback for admin user creation
+      if (!global.memoryAdminUsers) {
+        global.memoryAdminUsers = [];
+      }
+      
+      const newAdminUser: AdminUser = {
+        id: global.memoryAdminUsers.length + 1,
+        email: user.email,
+        passwordHash: user.passwordHash,
+        createdAt: new Date(),
+        lastLoginAt: null,
+      };
+      global.memoryAdminUsers.push(newAdminUser);
+      console.log(`✅ Admin user created in memory: ${user.email}`);
+      return newAdminUser;
+    }
   }
 
   async updateAdminLastLogin(id: number): Promise<void> {

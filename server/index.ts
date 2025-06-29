@@ -61,7 +61,7 @@ app.use((req, res, next) => {
       
       if (!existingOrder) {
         const testOrder = {
-          orderNumber: `ORD-${Date.now()}`,
+          orderNumber: 'DEMO12345', // Use the custom reference number as orderNumber
           customerName: 'Demo Klant',
           customerEmail: 'demo@kaniou.be',
           customerPhone: '+32467856405',

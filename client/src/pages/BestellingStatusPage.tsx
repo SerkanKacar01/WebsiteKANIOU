@@ -165,18 +165,26 @@ const BestellingStatusPage = () => {
         businessNotes:
           order.clientNote || order.noteFromEntrepreneur || undefined,
         statuses: statusSteps.map((step, index) => {
-          const currentStepIndex = getCurrentStatusStep(
-            order.status || "Nieuw",
-          );
+          // Map status keys to order field values
+          const statusDateMap: {[key: string]: Date | null} = {
+            'bestelling_ontvangen': order.statusBestelOntvangen,
+            'bestelling_in_verwerking': order.statusInVerwerking,
+            'bestelling_verwerkt': order.statusVerwerkt,
+            'bestelling_in_productie': order.statusInProductie,
+            'bestelling_gereed': order.statusGereed,
+            'wordt_gebeld_voor_levering': order.statusWordtGebeld,
+            'bestelling_geleverd': order.statusGeleverd
+          };
+          
+          const statusDate = statusDateMap[step.key];
+          const isCompleted = statusDate !== null && statusDate !== undefined;
+          
           return {
             id: index + 1,
             name: step.label,
-            completed: index < currentStepIndex,
-            active: index === currentStepIndex,
-            date:
-              index === currentStepIndex
-                ? formatDate(order.updatedAt || order.createdAt)
-                : undefined,
+            completed: isCompleted,
+            active: false, // No active state - each status is independent
+            date: isCompleted ? formatDate(statusDate) : undefined,
             icon: step.icon,
           };
         }),

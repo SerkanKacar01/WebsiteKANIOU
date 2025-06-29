@@ -485,6 +485,33 @@ Mr. Serkan KACAR
     }
   });
 
+  // Update individual order status (protected)
+  app.patch("/api/admin/orders/:id/status", requireAuth, async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      const { statusKey, isActive } = req.body;
+
+      if (!statusKey || typeof isActive !== 'boolean') {
+        return res.status(400).json({ error: "Status key en actieve status zijn vereist" });
+      }
+
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      await storage.updateOrderStatus(orderId, statusKey, isActive);
+
+      res.json({
+        success: true,
+        message: `Status ${statusKey} ${isActive ? 'geactiveerd' : 'gedeactiveerd'}`,
+      });
+    } catch (error: any) {
+      console.error("Update order status error:", error);
+      res.status(500).json({ error: "Fout bij bijwerken status" });
+    }
+  });
+
   // Create new order (protected)
   app.post("/api/admin/orders", requireAuth, async (req, res) => {
     try {

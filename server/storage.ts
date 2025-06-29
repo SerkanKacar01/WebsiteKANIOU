@@ -265,13 +265,21 @@ class DatabaseStorage implements IStorage {
       if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
         console.warn('🔄 Database unavailable, using memory fallback for order creation');
         
-        // Create memory fallback order
-        const memoryOrder: PaymentOrder = {
+        // Create memory fallback order with all required fields
+        const memoryOrder = {
           id: Date.now(),
           ...dbOrderData,
+          // Initialize all status fields as null
+          statusBestelOntvangen: null,
+          statusInVerwerking: null,
+          statusVerwerkt: null,
+          statusInProductie: null,
+          statusGereed: null,
+          statusWordtGebeld: null,
+          statusGeleverd: null,
           createdAt: new Date(),
           updatedAt: new Date()
-        };
+        } as PaymentOrder;
         
         // Store in global memory
         if (!global.memoryOrders) {

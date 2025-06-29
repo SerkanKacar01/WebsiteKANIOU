@@ -88,19 +88,7 @@ const getStatusDate = (order: PaymentOrder | null, statusKey: string): Date | nu
   return field ? (order as any)[field] : null;
 };
 
-const formatDate = (dateStr: string | Date | null | undefined) => {
-  if (!dateStr) return "Nog niet gestart";
-  try {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("nl-NL", {
-      day: "2-digit",
-      month: "2-digit", 
-      year: "numeric"
-    });
-  } catch {
-    return "Onbekend";
-  }
-};
+// Removed duplicate formatDate function
 
 const BestellingStatusPage = () => {
   const { id } = useParams();
@@ -152,7 +140,11 @@ const BestellingStatusPage = () => {
 
     try {
       const date = new Date(dateStr);
-      return format(date, "dd/MM/yyyy", { locale: nl });
+      return date.toLocaleDateString("nl-NL", {
+        day: "2-digit",
+        month: "2-digit", 
+        year: "numeric"
+      });
     } catch {
       return "Onbekend";
     }

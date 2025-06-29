@@ -104,15 +104,15 @@ const ROOM_TYPES = [
   "Gang",
 ];
 
-// Individual status steps - each can be independently activated
+// Individual status steps - temporarily simplified for compilation fix
 const statusSteps = [
-  { key: "bestelling_ontvangen", label: "Bestelling ontvangen", icon: Package },
-  { key: "bestelling_in_verwerking", label: "Bestelling in verwerking", icon: Clock },
-  { key: "bestelling_verwerkt", label: "Bestelling verwerkt", icon: CheckCircle },
-  { key: "bestelling_in_productie", label: "Bestelling in productie", icon: Truck },
-  { key: "bestelling_gereed", label: "Bestelling is gereed", icon: CheckCircle },
-  { key: "wordt_gebeld_voor_levering", label: "U wordt gebeld voor levering", icon: Phone },
-  { key: "bestelling_geleverd", label: "Bestelling geleverd", icon: Home },
+  { key: "bestelling_ontvangen", label: "Bestelling ontvangen" },
+  { key: "bestelling_in_verwerking", label: "Bestelling in verwerking" },
+  { key: "bestelling_verwerkt", label: "Bestelling verwerkt" },
+  { key: "bestelling_in_productie", label: "Bestelling in productie" },
+  { key: "bestelling_gereed", label: "Bestelling is gereed" },
+  { key: "wordt_gebeld_voor_levering", label: "U wordt gebeld voor levering" },
+  { key: "bestelling_geleverd", label: "Bestelling geleverd" },
 ];
 
 export default function EntrepreneurDashboardPage() {
@@ -1841,7 +1841,7 @@ export default function EntrepreneurDashboardPage() {
                       />
                       <Label htmlFor={step.key} className="flex-1 text-sm cursor-pointer">
                         <div className="flex items-center gap-2">
-                          <step.icon className={`h-4 w-4 ${isChecked ? 'text-green-600' : 'text-gray-400'}`} />
+                          <CheckCircle className={`h-4 w-4 ${isChecked ? 'text-green-600' : 'text-gray-400'}`} />
                           {step.label}
                         </div>
                         {isChecked && getStatusDate(selectedOrder, step.key) && (

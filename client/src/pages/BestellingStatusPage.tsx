@@ -1,26 +1,41 @@
 import { useState, useEffect } from "react";
 import { useParams } from "wouter";
+import { useQuery } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle, Clock, Phone, Truck, Home, Package, Download, Mail, MessageCircle } from "lucide-react";
+import { CheckCircle, Clock, Phone, Truck, Home, Package, Download, Mail, MessageCircle, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
+import type { PaymentOrder } from '@shared/schema';
+
+// Status mapping for display
+const statusSteps = [
+  { key: 'pending', label: 'Bestelling in verwerking', icon: Package },
+  { key: 'Nieuw', label: 'Bestelling ontvangen', icon: Package },
+  { key: 'Bestelling in verwerking', label: 'Bestelling in verwerking', icon: Clock },
+  { key: 'Bestelling verwerkt', label: 'Bestelling verwerkt', icon: CheckCircle },
+  { key: 'Bestelling in productie', label: 'Bestelling in productie', icon: Truck },
+  { key: 'Bestelling is gereed', label: 'Bestelling is gereed', icon: CheckCircle },
+  { key: 'U wordt gebeld voor levering', label: 'U wordt gebeld voor levering', icon: Phone },
+  { key: 'Bestelling geleverd', label: 'Bestelling geleverd', icon: Home }
+];
 
 interface OrderStatus {
   id: number;
   orderNumber: string;
+  bonnummer?: string;
   currentStatus: string;
   lastUpdate: string;
   productDetails: {
     productType: string;
-    color: string;
-    dimensions: string;
-    quantity: number;
+    color?: string;
+    dimensions?: string;
+    quantity?: number;
   };
   businessNotes?: string;
   statuses: {
@@ -35,8 +50,6 @@ interface OrderStatus {
 
 const BestellingStatusPage = () => {
   const { id } = useParams();
-  const [orderStatus, setOrderStatus] = useState<OrderStatus | null>(null);
-  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   
   // Notification preferences state
@@ -44,74 +57,76 @@ const BestellingStatusPage = () => {
   const [notificationEmail, setNotificationEmail] = useState('');
   const [preferencesLoading, setPreferencesLoading] = useState(false);
 
-  useEffect(() => {
-    // Mock data for demonstration - replace with real API call
-    const mockOrderStatus: OrderStatus = {
-      id: parseInt(id || "123456"),
-      orderNumber: `#${id || "123456"}`,
-      currentStatus: "IN PRODUCTIE",
-      lastUpdate: "25/06/2025",
-      productDetails: {
-        productType: "Rolgordijnen",
-        color: "Lichtgrijs",
-        dimensions: "120cm x 180cm",
-        quantity: 2
-      },
-      businessNotes: "Uw bestelling wordt op maat gemaakt met hoogwaardige materialen. Verwachte levertijd is 2-3 weken.",
-      statuses: [
-        {
-          id: 1,
-          name: "Bestelling in verwerking",
-          completed: true,
-          active: false,
-          date: "20/06/2025",
-          icon: Package
-        },
-        {
-          id: 2,
-          name: "Bestelling verwerkt",
-          completed: true,
-          active: false,
-          date: "22/06/2025",
-          icon: CheckCircle
-        },
-        {
-          id: 3,
-          name: "Bestelling in productie",
-          completed: true,
-          active: true,
-          date: "25/06/2025",
-          icon: Clock
-        },
-        {
-          id: 4,
-          name: "Bestelling is gereed",
-          completed: false,
-          active: false,
-          icon: Package
-        },
-        {
-          id: 5,
-          name: "U wordt gebeld voor de levering",
-          completed: false,
-          active: false,
-          icon: Phone
-        },
-        {
-          id: 6,
-          name: "Bestelling geleverd",
-          completed: false,
-          active: false,
-          icon: Home
-        }
-      ]
-    };
+  // Fetch order data from API
+  const { data: order, isLoading, error } = useQuery<PaymentOrder>({
+    queryKey: ['/api/orders', id],
+    enabled: !!id,
+    retry: false
+  });
 
-    setTimeout(() => {
-      setOrderStatus(mockOrderStatus);
-      setLoading(false);
-    }, 1000);
-  }, [id]);
+  // Helper function to format date
+  const formatDate = (dateStr: string | Date | null | undefined) => {
+    if (!dateStr) return "Onbekend";
+    
+    try {
+      const date = new Date(dateStr);
+      return format(date, "dd/MM/yyyy", { locale: nl });
+    } catch {
+      return "Onbekend";
+    }
+  };
+
+  // Helper function to determine current status step
+  const getCurrentStatusStep = (status: string) => {
+    const currentStep = statusSteps.findIndex(step => 
+      step.key === status || step.label === status
+    );
+    return currentStep >= 0 ? currentStep : 0;
+  };
+
+  // Helper function to extract product details
+  const getProductDetails = (productDetailsStr: string | null, description: string) => {
+    let productType = "Raambekledingsproduct";
+    
+    try {
+      if (productDetailsStr) {
+        const details = JSON.parse(productDetailsStr);
+        productType = details.productType || details.product || "Raambekledingsproduct";
+      }
+    } catch {
+      // Use description as fallback
+      productType = description || "Raambekledingsproduct";
+    }
+
+    return {
+      productType,
+      color: "Volgens specificatie",
+      dimensions: "Op maat",
+      quantity: 1
+    };
+  };
+
+  // Convert order data to display format
+  const orderStatus: OrderStatus | null = order ? {
+    id: order.id,
+    orderNumber: order.bonnummer || order.orderNumber || `#${order.id}`,
+    bonnummer: order.bonnummer,
+    currentStatus: order.status || "Nieuw",
+    lastUpdate: formatDate(order.updatedAt || order.createdAt),
+    productDetails: getProductDetails(order.productDetails, order.description),
+    businessNotes: order.clientNote || order.noteFromEntrepreneur || undefined,
+    statuses: statusSteps.map((step, index) => {
+      const currentStepIndex = getCurrentStatusStep(order.status || "Nieuw");
+      return {
+        id: index + 1,
+        name: step.label,
+        completed: index < currentStepIndex,
+        active: index === currentStepIndex,
+        date: index === currentStepIndex ? formatDate(order.updatedAt || order.createdAt) : undefined,
+        icon: step.icon
+      };
+    })
+  } : null;
 
   const handleDownloadInvoice = () => {
     // Mock PDF download - replace with real implementation
@@ -174,7 +189,27 @@ const BestellingStatusPage = () => {
     }
   };
 
-  if (loading) {
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-20">
+        {/* Header */}
+        <div className="bg-[#E6C988] text-white text-center py-4">
+          <h1 className="text-xl font-semibold">Uw Bestelstatus</h1>
+        </div>
+        
+        <div className="px-4 py-6 flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-[#E6C988]" />
+            <p className="text-gray-600">Bestellingsgegevens laden...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !order) {
     return (
       <div className="min-h-screen bg-gray-50 pb-20">
         {/* Header */}
@@ -183,6 +218,44 @@ const BestellingStatusPage = () => {
         </div>
         
         <div className="px-4 py-6">
+          <Card className="shadow-sm">
+            <CardContent className="p-6 text-center">
+              <div className="space-y-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                  <Package className="h-8 w-8 text-red-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900">Bestelling niet gevonden</h3>
+                <p className="text-gray-600">
+                  Deze bestelling bestaat niet of is niet toegankelijk. 
+                  Controleer het order-ID en probeer opnieuw.
+                </p>
+                <Button
+                  onClick={() => window.history.back()}
+                  className="bg-[#E6C988] hover:bg-[#D4B876] text-white"
+                >
+                  Terug
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // Main content with valid order data
+  if (!orderStatus) {
+    return null; // This shouldn't happen, but prevents render issues
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* Header */}
+      <div className="bg-[#E6C988] text-white text-center py-4">
+        <h1 className="text-xl font-semibold">Uw Bestelstatus</h1>
+      </div>
+      
+      <div className="px-4 py-6 space-y-6">
           <div className="animate-pulse space-y-4">
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>

@@ -619,6 +619,51 @@ Mr. Serkan KACAR
   });
 
   // Track order by bonnummer
+  app.get("/api/orders/track/bonnummer/:bonnummer", async (req, res) => {
+    try {
+      const { bonnummer } = req.params;
+      const order = await storage.getPaymentOrderByBonnummer(bonnummer);
+
+      if (!order) {
+        return res.status(404).json({ 
+          error: "Bestelling niet gevonden",
+          message: "Het ingevoerde bonnummer is niet gevonden. Controleer het nummer en probeer opnieuw."
+        });
+      }
+
+      res.json(order);
+    } catch (error: any) {
+      console.error("Track order by bonnummer error:", error);
+      res.status(500).json({ error: "Fout bij ophalen bestellingsstatus" });
+    }
+  });
+
+  // Get order details by orderId for status page
+  app.get("/api/orders/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      const order = await storage.getPaymentOrderById(orderId);
+
+      if (!order) {
+        return res.status(404).json({ 
+          error: "Bestelling niet gevonden",
+          message: "Deze bestelling bestaat niet of is niet toegankelijk."
+        });
+      }
+
+      res.json(order);
+    } catch (error: any) {
+      console.error("Get order by ID error:", error);
+      res.status(500).json({ error: "Fout bij ophalen bestellingsinformatie" });
+    }
+  });
+
+  // Legacy endpoint - Track order by orderNumber
   app.get("/api/orders/:orderNumber/track", async (req, res) => {
     try {
       const { orderNumber } = req.params;

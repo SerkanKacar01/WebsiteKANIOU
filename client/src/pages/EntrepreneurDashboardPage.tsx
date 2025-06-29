@@ -43,6 +43,11 @@ import {
   Download,
   Trash2,
   RotateCcw,
+  Clock,
+  CheckCircle,
+  Truck,
+  Phone,
+  Home,
 } from "lucide-react";
 
 interface OrderStatus {
@@ -97,6 +102,17 @@ const ROOM_TYPES = [
   "Eetkamer",
   "Studeerkamer",
   "Gang",
+];
+
+// Individual status steps - each can be independently activated
+const statusSteps = [
+  { key: "bestelling_ontvangen", label: "Bestelling ontvangen", icon: Package },
+  { key: "bestelling_in_verwerking", label: "Bestelling in verwerking", icon: Clock },
+  { key: "bestelling_verwerkt", label: "Bestelling verwerkt", icon: CheckCircle },
+  { key: "bestelling_in_productie", label: "Bestelling in productie", icon: Truck },
+  { key: "bestelling_gereed", label: "Bestelling is gereed", icon: CheckCircle },
+  { key: "wordt_gebeld_voor_levering", label: "U wordt gebeld voor levering", icon: Phone },
+  { key: "bestelling_geleverd", label: "Bestelling geleverd", icon: Home },
 ];
 
 export default function EntrepreneurDashboardPage() {
@@ -164,6 +180,47 @@ export default function EntrepreneurDashboardPage() {
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  // Helper functions for individual status management
+  const getStatusValue = (order: Order | null, statusKey: string): boolean => {
+    if (!order) return false;
+    const statusMap: {[key: string]: keyof Order} = {
+      'bestelling_ontvangen': 'statusBestelOntvangen',
+      'bestelling_in_verwerking': 'statusInVerwerking',
+      'bestelling_verwerkt': 'statusVerwerkt',
+      'bestelling_in_productie': 'statusInProductie',
+      'bestelling_gereed': 'statusGereed',
+      'wordt_gebeld_voor_levering': 'statusWordtGebeld',
+      'bestelling_geleverd': 'statusGeleverd'
+    };
+    const field = statusMap[statusKey];
+    return field ? !!(order as any)[field] : false;
+  };
+
+  const getStatusDate = (order: Order | null, statusKey: string): Date | null => {
+    if (!order) return null;
+    const statusMap: {[key: string]: keyof Order} = {
+      'bestelling_ontvangen': 'statusBestelOntvangen',
+      'bestelling_in_verwerking': 'statusInVerwerking',
+      'bestelling_verwerkt': 'statusVerwerkt',
+      'bestelling_in_productie': 'statusInProductie',
+      'bestelling_gereed': 'statusGereed',
+      'wordt_gebeld_voor_levering': 'statusWordtGebeld',
+      'bestelling_geleverd': 'statusGeleverd'
+    };
+    const field = statusMap[statusKey];
+    return field ? (order as any)[field] : null;
+  };
+
+  const formatDate = (dateStr: string | Date | null | undefined) => {
+    if (!dateStr) return "Onbekend";
+    try {
+      const date = new Date(dateStr);
+      return format(date, "dd/MM/yyyy", { locale: nl });
+    } catch {
+      return "Onbekend";
+    }
+  };
 
   // Get auth status
   const { data: authStatus, isLoading: authLoading } = useQuery<{

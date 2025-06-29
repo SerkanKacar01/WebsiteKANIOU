@@ -152,6 +152,9 @@ export default function EntrepreneurDashboardPage() {
   const [statusUpdates, setStatusUpdates] = useState<{
     [orderId: number]: string;
   }>({});
+  
+  // Individual order update tracking
+  const [updatingOrderId, setUpdatingOrderId] = useState<number | null>(null);
 
   // Search and filter state (Step 15.8)
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -551,9 +554,16 @@ export default function EntrepreneurDashboardPage() {
         );
       }
 
-      return response.json();
+      return { orderId, ...await response.json() };
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Clear the specific order's status from local state after successful update
+      setStatusUpdates((prev) => {
+        const updated = { ...prev };
+        delete updated[data.orderId];
+        return updated;
+      });
+      
       queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
       toast({
         title: "Status bijgewerkt",

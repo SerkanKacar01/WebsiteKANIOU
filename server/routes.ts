@@ -354,22 +354,40 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
         return res.status(404).json({ error: "Order niet gevonden" });
       }
 
+      // Track what values are actually changing for smart notifications
+      const newStatus = status || existingOrder.status;
+      const newClientNote = clientNote !== undefined ? clientNote : existingOrder.clientNote;
+      const newNoteFromEntrepreneur = noteFromEntrepreneur !== undefined 
+        ? noteFromEntrepreneur 
+        : existingOrder.noteFromEntrepreneur;
+
+      // Determine if we should send notifications based on actual changes
+      const statusChanged = newStatus !== existingOrder.status;
+      const clientNoteChanged = newClientNote !== existingOrder.clientNote;
+      const entrepreneurNoteChanged = newNoteFromEntrepreneur !== existingOrder.noteFromEntrepreneur;
+      
+      // Only send notification if status or customer-visible notes changed
+      const shouldSendNotification = statusChanged || clientNoteChanged || entrepreneurNoteChanged;
+
+      // Debug logging for change tracking
+      console.log(`📝 Order ${orderId} update analysis:`);
+      console.log(`   Status changed: ${statusChanged} (${existingOrder.status} → ${newStatus})`);
+      console.log(`   Client note changed: ${clientNoteChanged}`);
+      console.log(`   Entrepreneur note changed: ${entrepreneurNoteChanged}`);
+      console.log(`   Will send notification: ${shouldSendNotification}`);
+
       await storage.updatePaymentOrder(orderId, {
-        status: status || existingOrder.status,
-        clientNote:
-          clientNote !== undefined ? clientNote : existingOrder.clientNote,
-        noteFromEntrepreneur:
-          noteFromEntrepreneur !== undefined
-            ? noteFromEntrepreneur
-            : existingOrder.noteFromEntrepreneur,
+        status: newStatus,
+        clientNote: newClientNote,
+        noteFromEntrepreneur: newNoteFromEntrepreneur,
         notificationPreference:
           notificationPreference || existingOrder.notificationPreference,
         updatedAt: new Date(),
       });
 
-      // Send status update email notification
+      // Send status update email notification ONLY if relevant fields changed
       if (
-        status &&
+        shouldSendNotification &&
         existingOrder.customerEmail &&
         existingOrder.notifyByEmail
       ) {
@@ -386,7 +404,7 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
               "We nemen binnenkort contact op voor de levering",
           };
 
-          const statusMessage = statusMessages[status] || status;
+          const statusMessage = statusMessages[newStatus] || newStatus;
           let productType = "Raambekledingsproduct";
           try {
             if (
@@ -428,7 +446,7 @@ Heeft u vragen over uw bestelling, levering of iets anders? Neem gerust contact 
 📞 Telefoon: +32 467 85 64 05 
 🌐 Website: www.kaniou.be
 
-${noteFromEntrepreneur ? `💬 Bericht van KANIOU: ${noteFromEntrepreneur}` : ""}
+${newNoteFromEntrepreneur ? `💬 Bericht van KANIOU: ${newNoteFromEntrepreneur}` : ""}
 
 🛍 Bedankt voor uw vertrouwen in **KANIOU Zilvernaald || Gordijnen & Zonweringen** –  
 Dé specialist in premium gordijnen en zonwering op maat.
@@ -446,11 +464,15 @@ Mr. Serkan KACAR
             emailBody,
           );
           console.log(
-            `Status update email sent to ${existingOrder.customerEmail} for order ${orderId}`,
+            `📧 Status update email sent to ${existingOrder.customerEmail} for order ${orderId}`,
           );
         } catch (emailError) {
           console.error(`Failed to send status update email:`, emailError);
         }
+      } else if (!shouldSendNotification) {
+        console.log(`🔇 No notification sent for order ${orderId} - no relevant changes detected`);
+      } else {
+        console.log(`🔇 No notification sent for order ${orderId} - customer email settings or missing email`);
       }
 
       res.json({

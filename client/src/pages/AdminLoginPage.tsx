@@ -47,6 +47,7 @@ export default function AdminLoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        credentials: "include", // Important for session cookies
       });
 
       const result = await response.json();
@@ -61,13 +62,30 @@ export default function AdminLoginPage() {
         description: "U wordt doorgestuurd naar het dashboard...",
       });
 
-      // Immediate redirect to dashboard
-      setLocation("/entrepreneur-dashboard");
+      // Wait a moment for session to be properly set, then verify auth status
+      setTimeout(async () => {
+        try {
+          const authCheck = await fetch("/api/admin/auth-status", {
+            credentials: "include",
+          });
+          const authResult = await authCheck.json();
+          
+          if (authResult.authenticated) {
+            setLocation("/entrepreneur-dashboard");
+          } else {
+            setError("Er is een probleem opgetreden met de authenticatie. Probeer opnieuw.");
+            setIsLoading(false);
+          }
+        } catch (authError) {
+          console.error("Auth check error:", authError);
+          // Fallback to direct redirect if auth check fails
+          setLocation("/entrepreneur-dashboard");
+        }
+      }, 500); // 500ms delay to ensure session is set
 
     } catch (error) {
       console.error("Login error:", error);
       setError("Er is een verbindingsfout opgetreden. Probeer het opnieuw.");
-    } finally {
       setIsLoading(false);
     }
   };

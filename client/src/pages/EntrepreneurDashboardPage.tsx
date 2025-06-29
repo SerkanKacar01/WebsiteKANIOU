@@ -288,6 +288,8 @@ export default function EntrepreneurDashboardPage() {
   }>({
     queryKey: ["/api/admin/auth-status"],
     retry: false,
+    refetchOnWindowFocus: true,
+    staleTime: 0, // Always refetch to ensure latest auth state
   });
 
   // Get dashboard data
@@ -356,9 +358,15 @@ export default function EntrepreneurDashboardPage() {
   };
 
   useEffect(() => {
+    // Only redirect if we're sure the user is not authenticated (after loading is complete)
+    // Add a small delay to prevent race conditions with recent login
     if (!authLoading && !authStatus?.authenticated) {
       console.log("Authentication failed, redirecting to login...");
-      setLocation("/kaniouzilvernaald-dashboard");
+      const redirectTimer = setTimeout(() => {
+        setLocation("/kaniouzilvernaald-dashboard");
+      }, 1000); // Give time for auth status to update after login
+      
+      return () => clearTimeout(redirectTimer);
     }
   }, [authStatus, authLoading, setLocation]);
 
@@ -1037,6 +1045,9 @@ export default function EntrepreneurDashboardPage() {
     }
   };
 
+  // Debug logging for authentication flow
+  console.log("EntrepreneurDashboard - Auth status:", authStatus?.authenticated, "Loading:", authLoading);
+
   if (authLoading || dashboardLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -1046,7 +1057,12 @@ export default function EntrepreneurDashboardPage() {
   }
 
   if (!authStatus?.authenticated) {
-    return null;
+    console.log("User not authenticated, showing loading while redirect timer runs...");
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-[#E6C988]" />
+      </div>
+    );
   }
 
   return (

@@ -64,11 +64,14 @@ export default function AdminLoginPage() {
 
       // Immediate redirect after successful login - the session is already set
       console.log("Login successful, redirecting to dashboard...");
+      
+      // Direct redirect without delay to prevent race conditions
       setLocation("/entrepreneur-dashboard");
 
     } catch (error) {
       console.error("Login error:", error);
       setError("Er is een verbindingsfout opgetreden. Probeer het opnieuw.");
+    } finally {
       setIsLoading(false);
     }
   };

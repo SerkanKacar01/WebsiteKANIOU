@@ -564,6 +564,9 @@ export default function EntrepreneurDashboardPage() {
         return updated;
       });
       
+      // Clear the updating state
+      setUpdatingOrderId(null);
+      
       queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
       toast({
         title: "Status bijgewerkt",
@@ -571,6 +574,9 @@ export default function EntrepreneurDashboardPage() {
       });
     },
     onError: (error) => {
+      // Clear the updating state on error
+      setUpdatingOrderId(null);
+      
       toast({
         title: "Fout bij bijwerken",
         description:
@@ -635,6 +641,7 @@ export default function EntrepreneurDashboardPage() {
   const handleStatusSave = (orderId: number) => {
     const newStatus = statusUpdates[orderId];
     if (newStatus) {
+      setUpdatingOrderId(orderId);
       updateStatusMutation.mutate({ orderId, newStatus });
     }
   };
@@ -1293,11 +1300,11 @@ export default function EntrepreneurDashboardPage() {
                           <Button
                             size="sm"
                             onClick={() => handleStatusSave(order.id)}
-                            disabled={updateStatusMutation.isPending}
+                            disabled={updatingOrderId === order.id}
                             className="h-8 w-8 p-0 bg-[#E6C988] hover:bg-[#D5B992] text-black"
                             title="Status opslaan"
                           >
-                            {updateStatusMutation.isPending ? (
+                            {updatingOrderId === order.id ? (
                               <Loader2 className="h-3 w-3 animate-spin" />
                             ) : (
                               <Save className="h-3 w-3" />
@@ -1556,11 +1563,11 @@ export default function EntrepreneurDashboardPage() {
                       <Button
                         size="sm"
                         onClick={() => handleStatusSave(order.id)}
-                        disabled={updateStatusMutation.isPending}
+                        disabled={updatingOrderId === order.id}
                         className="h-7 w-7 p-0 bg-[#E6C988] hover:bg-[#D5B992] text-black"
                         title="Status opslaan"
                       >
-                        {updateStatusMutation.isPending ? (
+                        {updatingOrderId === order.id ? (
                           <Loader2 className="h-3 w-3 animate-spin" />
                         ) : (
                           <Save className="h-3 w-3" />

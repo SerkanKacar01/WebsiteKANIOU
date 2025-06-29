@@ -65,6 +65,7 @@ interface DashboardData {
 }
 
 const ORDER_STATUSES = [
+  "Bestelling ontvangen",
   "Bestelling in verwerking",
   "Bestelling verwerkt",
   "Bestelling in productie",
@@ -152,7 +153,7 @@ export default function EntrepreneurDashboardPage() {
   const [statusUpdates, setStatusUpdates] = useState<{
     [orderId: number]: string;
   }>({});
-  
+
   // Individual order update tracking
   const [updatingOrderId, setUpdatingOrderId] = useState<number | null>(null);
 
@@ -554,7 +555,7 @@ export default function EntrepreneurDashboardPage() {
         );
       }
 
-      return { orderId, ...await response.json() };
+      return { orderId, ...(await response.json()) };
     },
     onSuccess: (data) => {
       // Clear the specific order's status from local state after successful update
@@ -563,10 +564,10 @@ export default function EntrepreneurDashboardPage() {
         delete updated[data.orderId];
         return updated;
       });
-      
+
       // Clear the updating state
       setUpdatingOrderId(null);
-      
+
       queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
       toast({
         title: "Status bijgewerkt",
@@ -576,7 +577,7 @@ export default function EntrepreneurDashboardPage() {
     onError: (error) => {
       // Clear the updating state on error
       setUpdatingOrderId(null);
-      
+
       toast({
         title: "Fout bij bijwerken",
         description:

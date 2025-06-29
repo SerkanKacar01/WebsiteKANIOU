@@ -452,13 +452,46 @@ class DatabaseStorage implements IStorage {
 
   // Order Management with memory fallback
   async updatePaymentOrder(id: number, updates: Partial<PaymentOrder>): Promise<void> {
+    // Check if we're in memory-only mode (database unavailable)
+    const hasIndividualStatusFields = updates.statusBestelOntvangen !== undefined || 
+                                     updates.statusInVerwerking !== undefined || 
+                                     updates.statusVerwerkt !== undefined ||
+                                     updates.statusInProductie !== undefined ||
+                                     updates.statusGereed !== undefined ||
+                                     updates.statusWordtGebeld !== undefined ||
+                                     updates.statusGeleverd !== undefined;
+
+    // If we have individual status fields and we're likely in memory mode, skip database
+    if (hasIndividualStatusFields && global.memoryOrders && global.memoryOrders.length > 0) {
+      console.warn('🔄 Database unavailable (status fields detected), using memory fallback for order update');
+      
+      // Update in global memory storage
+      const orderIndex = global.memoryOrders.findIndex((order: any) => order.id === id);
+      if (orderIndex !== -1) {
+        global.memoryOrders[orderIndex] = {
+          ...global.memoryOrders[orderIndex],
+          ...updates,
+          updatedAt: new Date()
+        };
+        console.log(`✅ Order ${id} updated in memory storage`);
+        return;
+      } else {
+        console.warn(`⚠️ Order ${id} not found in memory storage`);
+        return;
+      }
+    }
+
     try {
       await db.update(paymentOrders).set(updates).where(eq(paymentOrders.id, id));
       console.log(`✅ Order ${id} updated in database`);
     } catch (error: any) {
-      // Fallback to memory storage when database is unavailable
-      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
-        console.warn('🔄 Database unavailable, using memory fallback for order update');
+      // Fallback to memory storage when database is unavailable or has conversion errors
+      if (error.message?.includes('Control plane request failed') || 
+          error.message?.includes('endpoint is disabled') ||
+          error.message?.includes('toISOString is not a function') ||
+          error.message?.includes('timestamp') ||
+          error.message?.includes('mapToDriverValue')) {
+        console.warn('🔄 Database unavailable or timestamp conversion error, using memory fallback for order update');
         
         // Update in global memory storage
         if (global.memoryOrders) {

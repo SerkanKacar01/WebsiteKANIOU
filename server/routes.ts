@@ -417,7 +417,7 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
         updateData.statusGeleverd = null;
         
         // Set the appropriate individual status field based on the legacy status
-        const now = new Date().toISOString();
+        const now = new Date();
         const statusMapping: {[key: string]: string} = {
           'Nieuw': 'statusBestelOntvangen',
           'Bestelling ontvangen': 'statusBestelOntvangen',
@@ -432,7 +432,7 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
         const mappedField = statusMapping[newStatus];
         if (mappedField) {
           updateData[mappedField] = now;
-          console.log(`✅ Mapped "${newStatus}" to ${mappedField} with timestamp ${now}`);
+          console.log(`✅ Mapped "${newStatus}" to ${mappedField} with timestamp ${now.toISOString()}`);
         } else {
           console.warn(`⚠️ No mapping found for status: "${newStatus}"`);
         }

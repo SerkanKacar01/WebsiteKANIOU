@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "wouter";
 import { useQuery } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
@@ -113,7 +113,10 @@ const BestellingStatusPage = () => {
     bonnummer: order.bonnummer,
     currentStatus: order.status || "Nieuw",
     lastUpdate: formatDate(order.updatedAt || order.createdAt),
-    productDetails: getProductDetails(order.productDetails, order.description),
+    productDetails: getProductDetails(
+      typeof order.productDetails === 'string' ? order.productDetails : null, 
+      order.description || ""
+    ),
     businessNotes: order.clientNote || order.noteFromEntrepreneur || undefined,
     statuses: statusSteps.map((step, index) => {
       const currentStepIndex = getCurrentStatusStep(order.status || "Nieuw");
@@ -129,13 +132,11 @@ const BestellingStatusPage = () => {
   } : null;
 
   const handleDownloadInvoice = () => {
-    // Mock PDF download - replace with real implementation
-    const link = document.createElement('a');
-    link.href = '#';
-    link.download = `bestelbon-${id}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (order && order.pdfFileName && order.id) {
+      // Open PDF in new tab or download based on browser settings
+      const pdfUrl = `/api/orders/${order.id}/download-pdf`;
+      window.open(pdfUrl, '_blank');
+    }
   };
 
   const handleSaveNotificationPreferences = async () => {
@@ -251,54 +252,6 @@ const BestellingStatusPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
-      <div className="bg-[#E6C988] text-white text-center py-4">
-        <h1 className="text-xl font-semibold">Uw Bestelstatus</h1>
-      </div>
-      
-      <div className="px-4 py-6 space-y-6">
-          <div className="animate-pulse space-y-4">
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <div className="space-y-3">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-                    <div className="h-4 bg-gray-200 rounded flex-1"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!orderStatus) {
-    return (
-      <div className="min-h-screen bg-gray-50 pb-20">
-        {/* Header */}
-        <div className="bg-[#E6C988] text-white text-center py-4">
-          <h1 className="text-xl font-semibold">Uw Bestelstatus</h1>
-        </div>
-        
-        <div className="px-4 py-6">
-          <Card>
-            <CardContent className="pt-6 text-center">
-              <p className="text-gray-600">Bestelling niet gevonden</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Header */}
       <div className="bg-[#E6C988] text-white text-center py-4 sticky top-0 z-30">
         <h1 className="text-xl font-semibold">Uw Bestelstatus</h1>
       </div>
@@ -310,7 +263,7 @@ const BestellingStatusPage = () => {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="font-medium text-black">Bestelnummer:</span>
-                <span className="text-black">{orderStatus.orderNumber}</span>
+                <span className="text-black font-mono">{orderStatus.orderNumber}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="font-medium text-black">Huidige status:</span>
@@ -374,13 +327,16 @@ const BestellingStatusPage = () => {
                 <span className="text-black font-medium">{orderStatus.productDetails.productType}</span>
               </div>
               <div className="flex justify-between">
-                
+                <span className="text-gray-600">Kleur:</span>
+                <span className="text-black font-medium">{orderStatus.productDetails.color}</span>
               </div>
               <div className="flex justify-between">
-                
+                <span className="text-gray-600">Afmetingen:</span>
+                <span className="text-black font-medium">{orderStatus.productDetails.dimensions}</span>
               </div>
               <div className="flex justify-between">
-                
+                <span className="text-gray-600">Aantal:</span>
+                <span className="text-black font-medium">{orderStatus.productDetails.quantity}</span>
               </div>
             </div>
           </CardContent>
@@ -398,58 +354,59 @@ const BestellingStatusPage = () => {
           </Card>
         )}
 
-        {/* Download Invoice Button */}
-        <Button 
-          onClick={handleDownloadInvoice}
-          className="w-full bg-black hover:bg-gray-800 text-white rounded-lg py-3 flex items-center justify-center space-x-2"
-        >
-          <Download className="h-4 w-4" />
-          <span>Download bestelbon (PDF)</span>
-        </Button>
+        {/* PDF Download */}
+        {order.pdfFileName && (
+          <Card className="shadow-sm">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-black mb-3">Documenten</h3>
+              <Button
+                onClick={handleDownloadInvoice}
+                className="w-full bg-[#E6C988] hover:bg-[#D4B876] text-white rounded-lg py-2 flex items-center justify-center space-x-2"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download bestelbon</span>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
-        {/* Notification Preferences */}
+        {/* Email Notification Preferences */}
         <Card className="shadow-sm">
           <CardContent className="p-4">
-            <h3 className="font-semibold text-black mb-4 flex items-center gap-2">
-              <Mail className="h-5 w-5 text-[#E6C988]" />
-              Ontvang automatische updates over uw bestelling
+            <h3 className="font-semibold text-black mb-3 flex items-center space-x-2">
+              <Mail className="h-5 w-5" />
+              <span>E-mail notificaties</span>
             </h3>
-            
             <div className="space-y-4">
-              {/* Email Notifications */}
-              <div className="space-y-2">
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="checkbox"
-                    id="emailNotifications"
-                    checked={notifyByEmail}
-                    onChange={(e) => setNotifyByEmail(e.target.checked)}
-                    className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988] h-4 w-4"
-                  />
-                  <Label htmlFor="emailNotifications" className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                    📧 Ja, ik wil updates ontvangen via e-mail
-                  </Label>
-                </div>
-                
-                {notifyByEmail && (
-                  <div className="ml-7 space-y-2">
-                    <Label htmlFor="emailInput" className="text-sm font-medium text-gray-700">
-                      Uw e-mailadres
-                    </Label>
-                    <Input
-                      id="emailInput"
-                      type="email"
-                      placeholder="bijv. klant@email.com"
-                      value={notificationEmail}
-                      onChange={(e) => setNotificationEmail(e.target.value)}
-                      className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                    />
-                  </div>
-                )}
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="email-notifications"
+                  checked={notifyByEmail}
+                  onChange={(e) => setNotifyByEmail(e.target.checked)}
+                  className="rounded border-gray-300 text-[#E6C988] focus:ring-[#E6C988]"
+                />
+                <Label htmlFor="email-notifications" className="text-sm text-gray-700">
+                  Ik wil e-mail notificaties ontvangen over deze bestelling
+                </Label>
               </div>
-
-
-
+              
+              {notifyByEmail && (
+                <div className="space-y-2">
+                  <Label htmlFor="notification-email" className="text-sm font-medium text-gray-700">
+                    E-mailadres voor notificaties
+                  </Label>
+                  <Input
+                    id="notification-email"
+                    type="email"
+                    placeholder="uw-email@voorbeeld.be"
+                    value={notificationEmail}
+                    onChange={(e) => setNotificationEmail(e.target.value)}
+                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
+                  />
+                </div>
+              )}
+              
               {/* Save Button */}
               <Button
                 onClick={handleSaveNotificationPreferences}
@@ -468,8 +425,8 @@ const BestellingStatusPage = () => {
             <h3 className="font-semibold text-black mb-3">Vragen over uw bestelling?</h3>
             <div className="space-y-2 text-sm text-gray-700">
               <p><strong>E-mail:</strong> info@kaniou.be</p>
-              <p><strong>Telefoon:</strong> +32 123 456 789</p>
-              <p><strong>Bestelnummer:</strong> {orderStatus.orderNumber}</p>
+              <p><strong>Telefoon:</strong> +32 467 85 64 05</p>
+              <p><strong>Bestelnummer:</strong> <span className="font-mono">{orderStatus.orderNumber}</span></p>
             </div>
           </CardContent>
         </Card>

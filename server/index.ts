@@ -50,6 +50,58 @@ app.use((req, res, next) => {
   // Initialize admin user and start session cleanup
   await initializeAdminUser();
   startSessionCleanup();
+  
+  // Create a test order for bonnummer demonstration (development only)
+  if (app.get("env") === "development") {
+    try {
+      const { storage } = await import("./storage");
+      
+      // Check if test order already exists
+      const existingOrder = await storage.getPaymentOrderByBonnummer('DEMO12345').catch(() => null);
+      
+      if (!existingOrder) {
+        const testOrder = {
+          orderNumber: `ORD-${Date.now()}`,
+          customerName: 'Demo Klant',
+          customerEmail: 'demo@kaniou.be',
+          customerPhone: '+32467856405',
+          customerFirstName: 'Demo',
+          customerLastName: 'Klant',
+          customerAddress: 'Demostraat 123',
+          customerCity: 'Brussel',
+          amount: 299.99,
+          currency: 'EUR',
+          description: 'Demo rolgordijn voor bonnummer test',
+          status: 'Bestelling in productie',
+          redirectUrl: '',
+          webhookUrl: '',
+          productDetails: JSON.stringify({ 
+            productType: 'Rolgordijnen',
+            color: 'Wit',
+            dimensions: '120cm x 180cm'
+          }),
+          customerDetails: JSON.stringify({}),
+          molliePaymentId: `demo_${Date.now()}`,
+          clientNote: 'Dit is een demo bestelling om de bonnummer functionaliteit te testen',
+          noteFromEntrepreneur: 'Demo order - bonnummer wordt correct getoond op status pagina',
+          pdfFileName: null,
+          invoiceUrl: null,
+          notificationPreference: 'email' as const,
+          notifyByEmail: true,
+          bonnummer: 'DEMO12345', // Fixed bonnummer for easy testing
+        };
+
+        const createdOrder = await storage.createPaymentOrder(testOrder);
+        console.log(`🎯 Demo order created for bonnummer testing:`);
+        console.log(`   Order ID: ${createdOrder.id}`);
+        console.log(`   Bonnummer: ${createdOrder.bonnummer}`);
+        console.log(`   Status page: /bestelling-status/${createdOrder.id}`);
+        console.log(`   Track page: /volg-bestelling (search: ${createdOrder.bonnummer})`);
+      }
+    } catch (error) {
+      console.warn('Could not create demo order:', error.message);
+    }
+  }
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

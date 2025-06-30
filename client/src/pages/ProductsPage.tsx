@@ -1612,7 +1612,7 @@ const ProductsPage = () => {
                           <div 
                             key={category.id} 
                             className={`product-card ${
-                              category.title === "Gordijnroedes" ? "lg:hidden" : ""
+                              category.title === "Gordijnroedes" ? "hidden" : ""
                             }`}
                           >
                             <ProductCard category={category} />
@@ -1663,7 +1663,7 @@ const ProductsPage = () => {
                 <div 
                   key={category.id} 
                   className={`${
-                    category.title === "Gordijnroedes" ? "lg:hidden" : ""
+                    category.title === "Gordijnroedes" ? "hidden" : ""
                   }`}
                 >
                   <ProductCard category={category} />

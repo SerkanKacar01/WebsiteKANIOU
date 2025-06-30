@@ -2545,14 +2545,17 @@ export default function EntrepreneurDashboardPage() {
                 />
               </div>
 
-              {/* PDF Documents Upload */}
+              {/* PDF Documents Upload - Main way to provide product details */}
               <div className="space-y-2">
                 <Label
                   htmlFor="pdfDocuments"
                   className="text-sm font-medium text-gray-700"
                 >
-                  PDF Documenten (optioneel)
+                  📄 Upload Offerte/Bestelbon (aanbevolen) *
                 </Label>
+                <p className="text-xs text-blue-600 bg-blue-50 p-2 rounded border">
+                  Upload hier de officiele offerte of bestelbon met alle productdetails, afmetingen en prijzen.
+                </p>
                 <div className="space-y-3">
                   <Input
                     id="pdfDocuments"

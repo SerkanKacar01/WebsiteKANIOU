@@ -286,7 +286,7 @@ const ProductCategoryPage = () => {
           <Container>
             <div className="max-w-4xl mx-auto">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
-                Rolgordijnen
+                Rolgordijnen op Maat
               </h1>
               
               <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
@@ -296,28 +296,28 @@ const ProductCategoryPage = () => {
                       <Settings className="h-8 w-8 text-white" />
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                      Dit product komt binnenkort beschikbaar
+                      Stel uw rolgordijn samen
                     </h2>
                   </div>
                   
                   <div className="max-w-2xl mx-auto space-y-4 text-gray-700 leading-relaxed">
                     <p className="text-lg">
-                      We werken momenteel hard aan de laatste details om dit product zo snel mogelijk aan te bieden. 
-                      Binnenkort kunt u hier eenvoudig rolgordijnen op maat samenstellen en bestellen.
+                      Ontwerp uw perfecte rolgordijn met onze slimme configurator. Kies uit verschillende stoffen, 
+                      kleuren, afmetingen en bedieningsmogelijkheden voor rolgordijnen op maat.
                     </p>
                     
                     <p>
-                      Heeft u vragen of wenst u nu al informatie of een offerte? Neem gerust contact met ons op 
-                      via het contactformulier of onze klantenservice.
+                      Onze configurator begeleidt u stap voor stap door het hele proces en berekent direct 
+                      de prijs voor uw unieke rolgordijn.
                     </p>
                   </div>
 
                   <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/contact">
+                    <Link href="/producten/rolgordijnen/configurator">
                       <Button 
-                        className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-3 rounded-lg transition-all duration-300"
+                        className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2"
                       >
-                        Neem contact op
+                        🛠️ Start Configurator
                       </Button>
                     </Link>
                     <Link href="/offerte">
@@ -326,6 +326,14 @@ const ProductCategoryPage = () => {
                         className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white px-6 py-3 rounded-lg transition-all duration-300"
                       >
                         Vraag offerte aan
+                      </Button>
+                    </Link>
+                    <Link href="/contact">
+                      <Button 
+                        variant="outline"
+                        className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3 rounded-lg transition-all duration-300"
+                      >
+                        Neem contact op
                       </Button>
                     </Link>
                   </div>

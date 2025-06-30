@@ -858,8 +858,8 @@ const RolgordijnenConfiguratorPage = () => {
               <h4 className="font-semibold text-lg mb-4 text-[#d5c096]">Prijsopbouw:</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span>Basisprijs ({((configuration.width * configuration.height) / 10000).toFixed(2)} m² × €{fabricTypes.find(f => f.id === configuration.fabricType)?.price}/m²):</span>
-                  <span>€{(fabricTypes.find(f => f.id === configuration.fabricType)?.price * ((configuration.width * configuration.height) / 10000)).toFixed(2)}</span>
+                  <span>Basisprijs ({((configuration.width * configuration.height) / 10000).toFixed(2)} m² × €{fabricTypes.find(f => f.id === configuration.fabricType)?.price || 0}/m²):</span>
+                  <span>€{((fabricTypes.find(f => f.id === configuration.fabricType)?.price || 0) * ((configuration.width * configuration.height) / 10000)).toFixed(2)}</span>
                 </div>
                 
                 {configuration.profile === 'cassette' && (

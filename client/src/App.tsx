@@ -128,9 +128,9 @@ function Router() {
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
-        {/* Rolgordijnen configurator temporarily disabled - coming soon */}
-        <Route path="/producten/rolgordijnen/configurator" component={() => <div>Redirect to coming soon message</div>} />
-        <Route path="/rolgordijnen-configurator" component={() => <div>Redirect to coming soon message</div>} />
+        {/* Rolgordijnen configurator routes */}
+        <Route path="/producten/rolgordijnen/configurator" component={RolgordijnenConfiguratorPage} />
+        <Route path="/rolgordijnen-configurator" component={RolgordijnenConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />

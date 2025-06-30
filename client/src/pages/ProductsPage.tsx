@@ -514,7 +514,7 @@ const ProductsPage = () => {
           },
         ],
         dimensions: { width: 200, height: 250, depth: 0.8 },
-        href: "/products/rolgordijnen",
+        href: "/producten/rolgordijnen",
         badge: "Populair",
       },
     ],

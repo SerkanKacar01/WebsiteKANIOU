@@ -1,0 +1,82 @@
+✅ Replit Implementation Instruction (English)
+
+TASK:
+Build a full product configurator for custom roller blinds (“rolgordijnen op maat”) on the website. This configurator must include multiple steps and live price calculation based on user selections.
+
+⸻
+
+🧱 Structure & Display Logic:
+
+STEP 1 – Choose Fabric Type (NL: “Kies uw stofsoort”)
+	•	Show radio buttons:
+	•	Verduisterend
+	•	Lichtdoorlatend
+	•	Screenstof
+	•	After user selects a fabric type, show only the available colors for that type.
+
+STEP 2 – Select Profile (NL: “Kies uw profiel”)
+	•	Options:
+	•	Open profiel (standaard – no extra cost)
+	•	Dichte cassette (+15%)
+	•	Show image/tooltip per option with photo.
+
+STEP 3 – Input Dimensions (NL: “Voer uw afmetingen in”)
+	•	Width: min 40 cm – max 300 cm
+	•	Height: min 40 cm – max per fabric type:
+	•	Some fabrics: max height 190 cm
+	•	Others: max height 350 cm
+	•	Validation:
+	•	Show error if dimensions exceed limits based on fabric type.
+
+STEP 4 – Mounting Type (NL: “Montagewijze”)
+	•	In de dag (in het kozijn)
+	•	Op de dag (op de muur/plafond)
+
+STEP 5 – Bottom Bar (NL: “Onderlat”)
+	•	Default: Wit aluminium
+(No options – display only as included feature)
+
+STEP 6 – Control Type (NL: “Bedieningstype”)
+	•	Show radio buttons:
+	•	Kunststof ketting (keuze uit wit, zwart, grijs)
+	•	Metalen ketting (+€12,50)
+	•	Gemotoriseerd (via BREL):
+	•	Handzender
+	•	App
+	•	Beide
+	•	Logic:
+	•	Only one choice allowed.
+	•	When motorized is selected → hide ketting options.
+
+STEP 7 – Side of Operation (NL: “Bedieningszijde”)
+	•	Links
+	•	Rechts
+
+⸻
+
+💶 Price Calculation Logic
+	•	Base price per m² (you may hardcode e.g. €45/m² or use dynamic lookup)
+	•	+15% if cassette is selected
+	•	+€12,50 if metalen ketting is selected
+	•	+X amount for motorisation (manual, app or both – to be defined)
+
+⸻
+
+🛒 Final Summary + Order
+	•	Show summary of all choices in Dutch.
+	•	Show final calculated price.
+	•	Button: “Toevoegen aan winkelmand” or “Offerte aanvragen”
+
+⸻
+
+📱 Responsive Behavior
+	•	Fully responsive for mobile and desktop.
+	•	Consider using accordions or vertical steps for mobile display.
+	•	On desktop: horizontal step-by-step form layout is preferred.
+
+⸻
+
+🔁 Optional Enhancements
+	•	Hover-over previews on color blocks
+	•	Real-time preview image changing with selections
+	•	Allow adding multiple configured products to cart/offerte

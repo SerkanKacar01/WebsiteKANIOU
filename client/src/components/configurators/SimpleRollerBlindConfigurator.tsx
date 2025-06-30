@@ -14,13 +14,9 @@ import { Loader2, Package, ShoppingCart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PRICE_MATRIX, getRollerBlindPrice, getAvailableWidths } from "@/data/rollerBlindPrices";
 
-// Generate width options (40cm - 300cm in steps of 10cm)
+// Generate width options - now using data from external file
 const generateWidthOptions = (): number[] => {
-  const options: number[] = [];
-  for (let width = 40; width <= 300; width += 10) {
-    options.push(width);
-  }
-  return options;
+  return getAvailableWidths();
 };
 
 // Generate custom height options (200cm - 350cm in steps of 10cm)
@@ -72,7 +68,7 @@ const SimpleRollerBlindConfigurator: React.FC<SimpleRollerBlindConfiguratorProps
     if (!height) return { price: 0, priceKey: "" };
     
     const priceKey = `${config.width}_${height}`;
-    const price = PRICE_MATRIX[priceKey] || 0;
+    const price = getRollerBlindPrice(config.width, height);
     
     return { price, priceKey };
   };

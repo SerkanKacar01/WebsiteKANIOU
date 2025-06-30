@@ -55,6 +55,7 @@ import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
+import SimpleRollerBlindConfiguratorPage from "@/pages/SimpleRollerBlindConfiguratorPage";
 
 
 
@@ -131,6 +132,8 @@ function Router() {
         {/* Rolgordijnen configurator routes */}
         <Route path="/producten/rolgordijnen/configurator" component={RolgordijnenConfiguratorPage} />
         <Route path="/rolgordijnen-configurator" component={RolgordijnenConfiguratorPage} />
+        <Route path="/producten/rolgordijnen/eenvoudige-configurator" component={SimpleRollerBlindConfiguratorPage} />
+        <Route path="/rolgordijnen-eenvoudige-configurator" component={SimpleRollerBlindConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />

@@ -865,14 +865,13 @@ const ProductsPage = () => {
     if (selectedCategory === "alles") {
       allProducts = [
         // horren temporarily excluded
-        ...productCategories.accessoires,
+        // rolgordijnen temporarily excluded - coming soon
+        ...productCategories.accessoires.filter(item => item.title !== "Rolgordijnen"),
       ];
     } else if (selectedCategory === "horren") {
       allProducts = []; // Empty - horren temporarily hidden
     } else if (selectedCategory === "rolgordijnen") {
-      allProducts = productCategories.accessoires.filter(
-        (item) => item.title === "Rolgordijnen",
-      );
+      allProducts = []; // Empty - rolgordijnen temporarily hidden - coming soon
     } else if (selectedCategory === "gordijnrails") {
       allProducts = productCategories.accessoires.filter(
         (item) => item.title === "Gordijnrails",
@@ -1519,7 +1518,7 @@ const ProductsPage = () => {
                 {[
                   { id: "alles", label: "Show All" },
                   // { id: "horren", label: "Horren" }, // TEMPORARILY REMOVED
-                  { id: "rolgordijnen", label: "Rolgordijnen" },
+                  // { id: "rolgordijnen", label: "Rolgordijnen" }, // TEMPORARILY REMOVED - COMING SOON
                   { id: "gordijnrails", label: "Gordijnrails" },
                   { id: "squid", label: "SQUID textile foil" },
                 ].map((category) => (

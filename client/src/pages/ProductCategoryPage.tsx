@@ -12,7 +12,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check } from "lucide-react";
+import { HomeIcon, ChevronRight, Check, Settings } from "lucide-react";
 import { Product, Category } from "@shared/schema";
 
 // Product categories with their display labels and URL paths
@@ -290,37 +290,45 @@ const ProductCategoryPage = () => {
               </h1>
               
               <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <p className="text-lg text-gray-700 leading-relaxed mb-8 text-center">
-                  Ontdek onze stijlvolle rolgordijnen, met zorg gemaakt voor wie waarde hecht aan kwaliteit en afwerking. Verkrijgbaar in verduisterende, semi-transparante en transparante stoffen.
-                </p>
-
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">Prijzen vanaf:</h3>
-                  
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Rolgordijn Verduisterend</span>
-                      <span className="text-[#d5c096] font-bold text-lg">v.a. € 89,95</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Rolgordijn Semi-transparant</span>
-                      <span className="text-[#d5c096] font-bold text-lg">v.a. € 69,95</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Roolgordijn Transparant</span>
-                      <span className="text-[#d5c096] font-bold text-lg">v.a. € 59,95</span>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="text-center">
-                  <Link href="/producten/rolgordijnen/configurator">
-                    <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
-                      Bekijk producten
-                    </Button>
-                  </Link>
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-[#d5c096] rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Settings className="h-8 w-8 text-white" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                      Dit product komt binnenkort beschikbaar
+                    </h2>
+                  </div>
+                  
+                  <div className="max-w-2xl mx-auto space-y-4 text-gray-700 leading-relaxed">
+                    <p className="text-lg">
+                      We werken momenteel hard aan de laatste details om dit product zo snel mogelijk aan te bieden. 
+                      Binnenkort kunt u hier eenvoudig rolgordijnen op maat samenstellen en bestellen.
+                    </p>
+                    
+                    <p>
+                      Heeft u vragen of wenst u nu al informatie of een offerte? Neem gerust contact met ons op 
+                      via het contactformulier of onze klantenservice.
+                    </p>
+                  </div>
+
+                  <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link href="/contact">
+                      <Button 
+                        className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-6 py-3 rounded-lg transition-all duration-300"
+                      >
+                        Neem contact op
+                      </Button>
+                    </Link>
+                    <Link href="/offerte">
+                      <Button 
+                        variant="outline"
+                        className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white px-6 py-3 rounded-lg transition-all duration-300"
+                      >
+                        Vraag offerte aan
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

@@ -15,7 +15,8 @@ import {
   Ruler, 
   HelpCircle,
   X,
-  Search
+  Package,
+  MapPin
 } from "lucide-react";
 
 // Callback form modal component
@@ -399,8 +400,8 @@ const FloatingActionButtons = () => {
   const buttons = [
     {
       id: "track-order",
-      icon: Search,
-      emoji: "🔍",
+      icon: Package,
+      emoji: "📦",
       tooltip: "Volg uw bestelling",
       href: "/volg-bestelling",
     },
@@ -449,12 +450,12 @@ const FloatingActionButtons = () => {
                 shadow-[0_2px_8px_rgba(0,0,0,0.15)] 
                 transition-all duration-300 
                 flex items-center justify-center
-                /* Desktop: 50x50px */
-                w-[50px] h-[50px]
-                /* Mobile: 40x40px */
-                max-[1023px]:w-[40px] max-[1023px]:h-[40px]
-                /* Hover effects (desktop only) */
-                hover:scale-105 hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)]
+                /* Updated size: max 48x48px as requested */
+                w-12 h-12
+                /* Mobile: slightly smaller */
+                max-[1023px]:w-10 max-[1023px]:h-10
+                /* Enhanced hover effects */
+                hover:scale-110 hover:shadow-[0_6px_16px_rgba(0,0,0,0.25)]
                 active:scale-95
                 /* Focus styles */
                 focus:outline-none focus:ring-2 focus:ring-[#D0B378] focus:ring-opacity-50
@@ -482,7 +483,8 @@ const FloatingActionButtons = () => {
               </TooltipTrigger>
               <TooltipContent 
                 side="left" 
-                className="bg-gray-900 text-white border-gray-700 hidden lg:block"
+                className="bg-white text-gray-800 border border-gray-200 shadow-lg rounded-lg px-3 py-2"
+                sideOffset={10}
               >
                 <p className="text-sm font-medium">{button.tooltip}</p>
               </TooltipContent>

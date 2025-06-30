@@ -865,14 +865,14 @@ const RolgordijnenConfiguratorPage = () => {
                 {configuration.profile === 'cassette' && (
                   <div className="flex justify-between text-[#d5c096]">
                     <span>Dichte cassette (+15%):</span>
-                    <span>+€{((fabricTypes.find(f => f.id === configuration.fabricType)?.price * ((configuration.width * configuration.height) / 10000)) * 0.15).toFixed(2)}</span>
+                    <span>+€{(((fabricTypes.find(f => f.id === configuration.fabricType)?.price || 0) * ((configuration.width * configuration.height) / 10000)) * 0.15).toFixed(2)}</span>
                   </div>
                 )}
                 
-                {controlTypes.find(c => c.id === configuration.controlType)?.price && controlTypes.find(c => c.id === configuration.controlType)?.price > 0 && (
+                {controlTypes.find(c => c.id === configuration.controlType)?.price && (controlTypes.find(c => c.id === configuration.controlType)?.price || 0) > 0 && (
                   <div className="flex justify-between text-[#d5c096]">
                     <span>{controlTypes.find(c => c.id === configuration.controlType)?.name}:</span>
-                    <span>+€{controlTypes.find(c => c.id === configuration.controlType)?.price.toFixed(2)}</span>
+                    <span>+€{(controlTypes.find(c => c.id === configuration.controlType)?.price || 0).toFixed(2)}</span>
                   </div>
                 )}
                 

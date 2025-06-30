@@ -141,12 +141,8 @@ export default function EntrepreneurDashboardPage() {
     customerLastName: "",
     customerAddress: "",
     customerCity: "",
-    productCategory: "",
-    dimensions: "",
-    price: "",
     orderDate: new Date().toISOString().split("T")[0],
-    roomType: "",
-    status: "pending",
+    status: "Bestelling ontvangen",
     customerNote: "",
     internalNote: "",
     bonnummer: "",
@@ -502,7 +498,7 @@ export default function EntrepreneurDashboardPage() {
 
   const createOrderMutation = useMutation({
     mutationFn: async (orderData: typeof newOrderForm) => {
-      // Transform form data to API format
+      // Transform form data to API format - simplified to only include essential fields
       const apiData = {
         customerName: orderData.customerName,
         customerEmail:
@@ -513,15 +509,15 @@ export default function EntrepreneurDashboardPage() {
         customerLastName: orderData.customerLastName || null,
         customerAddress: orderData.customerAddress || null,
         customerCity: orderData.customerCity || null,
-        amount: parseFloat(orderData.price || "0"),
+        amount: 0, // Amount will be in the uploaded PDF
         currency: "EUR",
-        description: `${orderData.productCategory} - ${orderData.dimensions}`,
-        productType: orderData.productCategory,
-        status: orderData.status || "pending",
+        description: "Besteldetails beschikbaar in geüploade PDF",
+        productType: "Zie PDF voor productdetails",
+        status: orderData.status || "Bestelling ontvangen",
         notifyByEmail: true,
         customerNote: orderData.customerNote || null,
         internalNote: orderData.internalNote || null,
-        bonnummer: orderData.bonnummer, // CRITICAL FIX: Add the missing bonnummer field
+        bonnummer: orderData.bonnummer,
       };
 
       const response = await fetch("/api/admin/orders", {
@@ -2429,67 +2425,14 @@ export default function EntrepreneurDashboardPage() {
               </div>
             </div>
 
-            {/* Order Information Section */}
+            {/* Order Information Section - Simplified */}
             <div className="border-b pb-4 mb-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
                 Bestellingsinformatie
               </h3>
-              <div className="grid grid-cols-2 gap-4">
-                {/* Product Category */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">
-                    Product Categorie *
-                  </Label>
-                  <Select
-                    value={newOrderForm.productCategory}
-                    onValueChange={(value) =>
-                      setNewOrderForm((prev) => ({
-                        ...prev,
-                        productCategory: value,
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
-                      <SelectValue placeholder="Selecteer product categorie" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PRODUCT_CATEGORIES.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Price */}
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="price"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Prijs (EUR) *
-                  </Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    value={newOrderForm.price}
-                    onChange={(e) =>
-                      setNewOrderForm((prev) => ({
-                        ...prev,
-                        price: e.target.value,
-                      }))
-                    }
-                    placeholder="0.00"
-                    min="0"
-                    step="0.01"
-                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                    required
-                  />
-                </div>
-
+              <div className="grid grid-cols-1 gap-4">
                 {/* Bonnummer (Unique Order Reference) */}
-                <div className="space-y-2 col-span-2">
+                <div className="space-y-2">
                   <Label
                     htmlFor="bonnummer"
                     className="text-sm font-medium text-gray-700"
@@ -2531,31 +2474,35 @@ export default function EntrepreneurDashboardPage() {
                     </Button>
                   </div>
                   <p className="text-xs text-gray-500">
-                    Vul hier een uniek bonnummer in. Dit nummer zal gebruikt
-                    worden om de bestelling op te volgen.
+                    Uniek bonnummer voor het opvolgen van de bestelling
                   </p>
                 </div>
 
-                {/* Dimensions */}
-                <div className="space-y-2 col-span-2">
-                  <Label
-                    htmlFor="dimensions"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Afmetingen
+                {/* Status Selection */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">
+                    Status *
                   </Label>
-                  <Input
-                    id="dimensions"
-                    value={newOrderForm.dimensions}
-                    onChange={(e) =>
+                  <Select
+                    value={newOrderForm.status}
+                    onValueChange={(value) =>
                       setNewOrderForm((prev) => ({
                         ...prev,
-                        dimensions: e.target.value,
+                        status: value,
                       }))
                     }
-                    placeholder="bijv. 120 x 250 cm"
-                    className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]"
-                  />
+                  >
+                    <SelectTrigger className="border-gray-300 focus:border-[#E6C988] focus:ring-[#E6C988]">
+                      <SelectValue placeholder="Selecteer status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {ORDER_STATUSES.map((status) => (
+                        <SelectItem key={status} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>

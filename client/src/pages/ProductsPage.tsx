@@ -1643,33 +1643,6 @@ const ProductsPage = () => {
                     </div>
                   </div>
                 )}
-
-              {!isFilterLoading &&
-                groupedProducts.accessoires &&
-                groupedProducts.accessoires.length > 0 && (
-                  <div className="mb-16">
-                    <div className="flex items-center mb-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
-                        Accessoires
-                      </h3>
-                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 product-fade-in">
-                      {groupedProducts.accessoires
-                        .filter((category: any) => !category.isSquid)
-                        .map((category: any) => (
-                          <div 
-                            key={category.id} 
-                            className={`product-card ${
-                              category.title === "Gordijnroedes" ? "hidden md:block" : ""
-                            }`}
-                          >
-                            <ProductCard category={category} />
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
             </>
           ) : // Show filtered category products
           isFilterLoading ? (

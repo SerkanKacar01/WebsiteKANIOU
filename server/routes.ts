@@ -407,32 +407,46 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
       if (statusChanged && !statusBestelOntvangen && !statusInVerwerking && !statusVerwerkt && !statusInProductie && !statusGereed && !statusWordtGebeld && !statusGeleverd) {
         console.log(`🔄 Mapping legacy status "${newStatus}" to individual status fields`);
         
-        // Clear all individual status fields first
-        updateData.statusBestelOntvangen = null;
-        updateData.statusInVerwerking = null;
-        updateData.statusVerwerkt = null;
-        updateData.statusInProductie = null;
-        updateData.statusGereed = null;
-        updateData.statusWordtGebeld = null;
-        updateData.statusGeleverd = null;
-        
-        // Set the appropriate individual status field based on the legacy status
         const now = new Date();
-        const statusMapping: {[key: string]: string} = {
-          'Nieuw': 'statusBestelOntvangen',
-          'Bestelling ontvangen': 'statusBestelOntvangen',
-          'Bestelling in verwerking': 'statusInVerwerking',
-          'Bestelling verwerkt': 'statusVerwerkt',
-          'Bestelling in productie': 'statusInProductie',
-          'Bestelling is gereed': 'statusGereed',
-          'U wordt gebeld voor levering': 'statusWordtGebeld',
-          'Bestelling geleverd': 'statusGeleverd'
-        };
         
-        const mappedField = statusMapping[newStatus];
-        if (mappedField) {
-          updateData[mappedField] = now;
-          console.log(`✅ Mapped "${newStatus}" to ${mappedField} with timestamp ${now.toISOString()}`);
+        // Define the status progression order
+        const statusProgression = [
+          { key: 'statusBestelOntvangen', labels: ['Nieuw', 'Bestelling ontvangen'] },
+          { key: 'statusInVerwerking', labels: ['Bestelling in verwerking'] },
+          { key: 'statusVerwerkt', labels: ['Bestelling verwerkt'] },
+          { key: 'statusInProductie', labels: ['Bestelling in productie'] },
+          { key: 'statusGereed', labels: ['Bestelling is gereed'] },
+          { key: 'statusWordtGebeld', labels: ['U wordt gebeld voor levering'] },
+          { key: 'statusGeleverd', labels: ['Bestelling geleverd'] }
+        ];
+        
+        // Find the target status level
+        let targetLevel = -1;
+        for (let i = 0; i < statusProgression.length; i++) {
+          if (statusProgression[i].labels.includes(newStatus)) {
+            targetLevel = i;
+            break;
+          }
+        }
+        
+        if (targetLevel >= 0) {
+          // Clear all status fields first
+          updateData.statusBestelOntvangen = null;
+          updateData.statusInVerwerking = null;
+          updateData.statusVerwerkt = null;
+          updateData.statusInProductie = null;
+          updateData.statusGereed = null;
+          updateData.statusWordtGebeld = null;
+          updateData.statusGeleverd = null;
+          
+          // Set all statuses up to and including the target level
+          for (let i = 0; i <= targetLevel; i++) {
+            const statusKey = statusProgression[i].key;
+            updateData[statusKey] = now;
+            console.log(`✅ Progressive status: ${statusKey} set to ${now.toISOString()}`);
+          }
+          
+          console.log(`✅ Mapped "${newStatus}" with ${targetLevel + 1} progressive statuses activated`);
         } else {
           console.warn(`⚠️ No mapping found for status: "${newStatus}"`);
         }

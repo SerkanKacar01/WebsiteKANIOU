@@ -838,31 +838,23 @@ const RolgordijnenConfiguratorPage = () => {
                   <CardContent className="space-y-4">
                     {configuration.fabricType && (
                       <div>
-                        <p className="text-sm font-medium text-gray-700">Stoftype</p>
+                        <p className="text-sm font-medium text-gray-700">Stofsoort</p>
                         <p className="text-lg font-semibold">
                           {fabricTypes.find(f => f.id === configuration.fabricType)?.name}
                         </p>
                       </div>
                     )}
                     
-                    {configuration.color && (
+                    {configuration.profile && (
                       <div>
-                        <p className="text-sm font-medium text-gray-700">Kleur</p>
-                        <div className="flex items-center gap-2">
-                          <div
-                            className="w-6 h-6 rounded border"
-                            style={{
-                              backgroundColor: colors.find(c => c.id === configuration.color)?.hex
-                            }}
-                          ></div>
-                          <span className="font-semibold">
-                            {colors.find(c => c.id === configuration.color)?.name}
-                          </span>
-                        </div>
+                        <p className="text-sm font-medium text-gray-700">Profiel</p>
+                        <p className="text-lg font-semibold">
+                          {profileOptions.find(p => p.id === configuration.profile)?.name}
+                        </p>
                       </div>
                     )}
 
-                    {(configuration.width >= 50 && configuration.height >= 50) && (
+                    {(configuration.width >= 40 && configuration.height >= 40) && (
                       <div>
                         <p className="text-sm font-medium text-gray-700">Afmetingen</p>
                         <p className="text-lg font-semibold">
@@ -873,6 +865,46 @@ const RolgordijnenConfiguratorPage = () => {
                             Aantal: {configuration.quantity}x
                           </p>
                         )}
+                      </div>
+                    )}
+
+                    {configuration.mounting && (
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Montage</p>
+                        <p className="text-lg font-semibold">
+                          {mountingOptions.find(m => m.id === configuration.mounting)?.name}
+                        </p>
+                      </div>
+                    )}
+
+                    {configuration.controlType && (
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Bediening</p>
+                        <p className="text-lg font-semibold">
+                          {controlTypes.find(c => c.id === configuration.controlType)?.name}
+                        </p>
+                        {configuration.controlColor && (
+                          <div className="flex items-center gap-2 mt-1">
+                            <div
+                              className="w-4 h-4 rounded border"
+                              style={{
+                                backgroundColor: colors.find(c => c.id === configuration.controlColor)?.hex
+                              }}
+                            ></div>
+                            <span className="text-sm text-gray-600">
+                              {colors.find(c => c.id === configuration.controlColor)?.name}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {configuration.operationSide && (
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Bedieningszijde</p>
+                        <p className="text-lg font-semibold">
+                          {operationSides.find(s => s.id === configuration.operationSide)?.name}
+                        </p>
                       </div>
                     )}
 

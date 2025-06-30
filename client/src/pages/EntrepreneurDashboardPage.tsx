@@ -173,6 +173,8 @@ export default function EntrepreneurDashboardPage() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [roomFilter, setRoomFilter] = useState<string>("all");
   const [productFilter, setProductFilter] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<string>("createdAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -334,6 +336,35 @@ export default function EntrepreneurDashboardPage() {
       );
     }
 
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let aValue: any, bValue: any;
+      
+      switch (sortBy) {
+        case 'customerName':
+          aValue = a.customerName?.toLowerCase() || '';
+          bValue = b.customerName?.toLowerCase() || '';
+          break;
+        case 'amount':
+          aValue = a.amount || 0;
+          bValue = b.amount || 0;
+          break;
+        case 'status':
+          aValue = a.status || '';
+          bValue = b.status || '';
+          break;
+        case 'createdAt':
+        default:
+          aValue = a.createdAt ? new Date(a.createdAt.toString()).getTime() : 0;
+          bValue = b.createdAt ? new Date(b.createdAt.toString()).getTime() : 0;
+          break;
+      }
+      
+      if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+
     return filtered;
   }, [
     dashboardData?.orders,
@@ -341,6 +372,8 @@ export default function EntrepreneurDashboardPage() {
     statusFilter,
     roomFilter,
     productFilter,
+    sortBy,
+    sortOrder,
   ]);
 
   // Reset filters function
@@ -349,6 +382,8 @@ export default function EntrepreneurDashboardPage() {
     setStatusFilter("all");
     setRoomFilter("all");
     setProductFilter("all");
+    setSortBy("createdAt");
+    setSortOrder("desc");
   };
 
   useEffect(() => {

@@ -642,7 +642,7 @@ Mr. Serkan KACAR
 
       const newOrder = await storage.createPaymentOrder(orderData);
 
-      // Send order confirmation email
+      // Send order confirmation email to customer
       if (customerEmail && notifyByEmail) {
         try {
           const subject = `KANIOU Zilvernaald | Orderbevestiging en besteloverzicht ${bonnummer}`;
@@ -689,10 +689,64 @@ Mr. Serkan KACAR
           `.trim();
 
           await sendMailgunEmail(customerEmail, subject, emailBody);
-          console.log(`Order confirmation email sent to ${customerEmail}`);
+          console.log(`📧 Order confirmation email sent to ${customerEmail}`);
         } catch (emailError) {
           console.error(`Failed to send order confirmation email:`, emailError);
         }
+      }
+
+      // Send admin notification email for new order
+      try {
+        const adminSubject = `🆕 NIEUWE BESTELLING - ${bonnummer} | KANIOU Admin Dashboard`;
+        const adminEmailBody = `
+🚨 **NIEUWE BESTELLING ONTVANGEN**
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 **BESTELLING DETAILS**
+• Bestelnummer: ${bonnummer}
+• Order ID: ${newOrder.id}
+• Bedrag: €${parseFloat(amount).toFixed(2)}
+• Product: ${productType}
+• Status: Bestelling ontvangen
+
+👤 **KLANT INFORMATIE**
+• Naam: ${customerName}
+• E-mail: ${customerEmail}
+• Telefoon: ${customerPhone || 'Niet opgegeven'}
+• Adres: ${customerAddress || 'Niet opgegeven'}
+• Stad: ${customerCity || 'Niet opgegeven'}
+
+📝 **BESTELLING BESCHRIJVING**
+${description}
+
+💬 **KLANT NOTITIE**
+${customerNote || 'Geen klantnotitie opgegeven'}
+
+🔧 **INTERNE NOTITIE**
+${internalNote || 'Geen interne notitie opgegeven'}
+
+🌐 **DIRECTE ACTIES**
+• Dashboard: https://kaniou.be/entrepreneur-dashboard
+• Order bewerken: https://kaniou.be/entrepreneur-dashboard (zoek order ${bonnummer})
+• Klant status: https://kaniou.be/bestelling-status/${newOrder.id}
+
+⚡ **VOLGENDE STAPPEN**
+1. Log in op het admin dashboard
+2. Bekijk de volledige orderdetails
+3. Update de status wanneer verwerking begint
+4. Klant ontvangt automatisch een statusupdate
+
+📧 Notification Settings: ${notifyByEmail ? '✅ Email' : '❌ Email'}
+
+────────────────────────────────────────
+Dit is een automatische melding van het KANIOU bestellingssysteem.
+Tijd: ${new Date().toLocaleString('nl-BE')}
+        `.trim();
+
+        await sendMailgunEmail('info@kaniou.be', adminSubject, adminEmailBody);
+        console.log(`🔔 Admin notification sent for new order ${bonnummer}`);
+      } catch (adminEmailError) {
+        console.error(`Failed to send admin notification email:`, adminEmailError);
       }
 
       res.json({

@@ -383,13 +383,110 @@ const MeasuringModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
   );
 };
 
+// Order tracking modal component
+const TrackingModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [orderNumber, setOrderNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [, navigate] = useLocation();
+  const { toast } = useToast();
 
+  const handleTrackOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!orderNumber.trim()) {
+      toast({
+        title: "Bestelnummer vereist",
+        description: "Voer uw bestelnummer in om uw bestelling te volgen.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`/api/orders/track/bonnummer/${orderNumber.trim()}`);
+      
+      if (response.ok) {
+        const order = await response.json();
+        onClose();
+        navigate(`/bestelling-status/${order.id}`);
+      } else if (response.status === 404) {
+        toast({
+          title: "Bestelling niet gevonden",
+          description: "Er is geen bestelling gevonden met dit bestelnummer. Controleer het nummer en probeer opnieuw.",
+          variant: "destructive",
+        });
+      } else {
+        throw new Error("Network error");
+      }
+    } catch (error) {
+      console.error("Error tracking order:", error);
+      toast({
+        title: "Fout bij het opzoeken",
+        description: "Er is een fout opgetreden. Probeer het later opnieuw.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Package className="h-5 w-5 text-[#D0B378]" />
+            Volg uw bestelling
+          </DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleTrackOrder} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="order-number">Bestelnummer *</Label>
+            <Input
+              id="order-number"
+              value={orderNumber}
+              onChange={(e) => setOrderNumber(e.target.value)}
+              placeholder="Voer uw bestelnummer in..."
+              required
+              disabled={isLoading}
+              className="text-center font-mono"
+            />
+            <p className="text-xs text-gray-500 text-center">
+              U vindt uw bestelnummer in uw bevestigingsmail
+            </p>
+          </div>
+          <div className="flex gap-2 pt-4">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onClose} 
+              className="flex-1"
+              disabled={isLoading}
+            >
+              Annuleren
+            </Button>
+            <Button 
+              type="submit" 
+              className="flex-1 bg-[#D0B378] hover:bg-[#C5A565]"
+              disabled={isLoading || !orderNumber.trim()}
+            >
+              {isLoading ? "Zoeken..." : "Volg bestelling"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const FloatingActionButtons = () => {
   const [location] = useLocation();
   const [callbackModalOpen, setCallbackModalOpen] = useState(false);
   const [measuringModalOpen, setMeasuringModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [trackingModalOpen, setTrackingModalOpen] = useState(false);
 
 
   // Only show floating buttons on homepage
@@ -403,7 +500,7 @@ const FloatingActionButtons = () => {
       icon: Package,
       emoji: "📦",
       tooltip: "Volg uw bestelling",
-      href: "/volg-bestelling",
+      onClick: () => setTrackingModalOpen(true),
     },
     {
       id: "contact",
@@ -438,7 +535,7 @@ const FloatingActionButtons = () => {
   return (
     <>
       {/* Floating Action Buttons - Desktop & Mobile */}
-      <div className="flex fixed bottom-5 right-5 z-[9999] flex-col gap-3">
+      <div className="flex fixed bottom-6 right-6 z-[9999] flex-col gap-3">
         {buttons.map((button, index) => {
           const IconComponent = button.icon;
           
@@ -508,8 +605,11 @@ const FloatingActionButtons = () => {
         isOpen={measuringModalOpen} 
         onClose={() => setMeasuringModalOpen(false)} 
       />
-
-
+      
+      <TrackingModal 
+        isOpen={trackingModalOpen} 
+        onClose={() => setTrackingModalOpen(false)} 
+      />
     </>
   );
 };

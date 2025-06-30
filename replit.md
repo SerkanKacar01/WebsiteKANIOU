@@ -120,6 +120,17 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- June 30, 2025: ENHANCED TRACK ORDER BUTTON + IMPROVED UX DESIGN
+  - ✅ Replaced magnifier icon (🔍) with package icon (📦) for better intuitive recognition
+  - ✅ Updated button size to maximum 48x48px on desktop, 40x40px mobile as requested
+  - ✅ Enhanced hover effects with scale-up and improved shadow for visual feedback
+  - ✅ Improved tooltip design with light background, border, and subtle shadow
+  - ✅ Added TrackingModal component for direct order lookup from floating button
+  - ✅ Enhanced positioning to avoid UI conflicts (moved to bottom-6 right-6)
+  - ✅ Implemented elegant error handling with user-friendly messages
+  - ✅ Modal includes order number validation and loading states
+  - ✅ Maintains both modal option and direct navigation to /volg-bestelling page
+  - 🎯 Result: More intuitive and user-friendly order tracking interface with improved visual design
 - June 29, 2025: LOGIN REDIRECT FIXED + ORDER TRACKING CLARIFICATION + SMART NOTIFICATION SYSTEM COMPLETED
   - ✅ Fixed login redirect issue by simplifying authentication flow (immediate redirect after successful login)
   - ✅ Removed complex authentication verification delay that was causing redirect failures

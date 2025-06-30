@@ -553,15 +553,10 @@ export default function EntrepreneurDashboardPage() {
         customerLastName: "",
         customerAddress: "",
         customerCity: "",
-        productCategory: "",
-        dimensions: "",
-        price: "",
         orderDate: new Date().toISOString().split("T")[0],
-        roomType: "",
-        status: "pending",
+        status: "Bestelling ontvangen",
         customerNote: "",
         internalNote: "",
-
         bonnummer: "",
       });
     },
@@ -765,17 +760,15 @@ export default function EntrepreneurDashboardPage() {
   };
 
   const handleCreateOrder = async () => {
-    // Basic validation
+    // Basic validation - simplified to essential fields only
     if (
       !newOrderForm.customerName ||
-      !newOrderForm.productCategory ||
-      !newOrderForm.price ||
       !newOrderForm.bonnummer
     ) {
       toast({
         title: "Vereiste velden",
         description:
-          "Vul tenminste klantnaam, productcategorie, prijs en bonnummer in.",
+          "Vul tenminste klantnaam en bonnummer in.",
         variant: "destructive",
       });
       return;
@@ -841,15 +834,10 @@ export default function EntrepreneurDashboardPage() {
         customerLastName: "",
         customerAddress: "",
         customerCity: "",
-        productCategory: "",
-        dimensions: "",
-        price: "",
         orderDate: new Date().toISOString().split("T")[0],
-        roomType: "",
-        status: "pending",
+        status: "Bestelling ontvangen",
         customerNote: "",
         internalNote: "",
-
         bonnummer: "",
       });
       setSelectedPDFs([]);

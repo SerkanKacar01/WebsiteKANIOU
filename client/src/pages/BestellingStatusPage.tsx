@@ -428,38 +428,31 @@ const BestellingStatusPage = () => {
           </CardContent>
         </Card>
 
-        {/* Order Details */}
-        <Card className="shadow-sm">
-          <CardContent className="p-4">
-            <h3 className="font-semibold text-black mb-4">Bestelgegevens</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Producttype:</span>
-                <span className="text-black font-medium">
-                  {orderStatus.productDetails.productType}
-                </span>
+        {/* PDF Documents Section - Product details available in uploaded PDF */}
+        {order?.pdfFileName && (
+          <Card className="shadow-sm">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-black mb-4 flex items-center gap-2">
+                <Download className="h-5 w-5 text-[#E6C988]" />
+                Bestelgegevens
+              </h3>
+              <div className="space-y-3">
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800 mb-2">
+                    Alle product- en prijsinformatie is beschikbaar in het geüploade document.
+                  </p>
+                  <Button
+                    onClick={() => window.open(`/api/orders/pdf/${order.pdfFileName}`, '_blank')}
+                    className="w-full bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download Besteldocument
+                  </Button>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Kleur:</span>
-                <span className="text-black font-medium">
-                  {orderStatus.productDetails.color}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Afmetingen:</span>
-                <span className="text-black font-medium">
-                  {orderStatus.productDetails.dimensions}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Aantal:</span>
-                <span className="text-black font-medium">
-                  {orderStatus.productDetails.quantity}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Business Notes */}
         {orderStatus.businessNotes && (

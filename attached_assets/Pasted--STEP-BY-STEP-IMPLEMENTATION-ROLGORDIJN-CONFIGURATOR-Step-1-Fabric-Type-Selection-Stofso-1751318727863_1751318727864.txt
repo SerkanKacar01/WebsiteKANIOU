@@ -1,0 +1,97 @@
+🔧 STEP-BY-STEP IMPLEMENTATION (ROLGORDIJN CONFIGURATOR)
+
+⸻
+
+✅ Step 1: Fabric Type Selection (Stofsoort)
+	•	Display 3 fabric options with visual icons or images:
+	1.	Verduisterend
+	2.	Lichtdoorlatend
+	3.	Screens
+	•	Each fabric type should trigger a tooltip or expandable info box showing the Dutch explanation (see previous message).
+	•	Upon selection, store fabric type in the configuration state.
+
+⸻
+
+✅ Step 2: Profile Type
+	•	Default selection = Open profiel (standard, no extra cost)
+	•	Optional upgrade: Dichte cassette (+15%)
+	•	When cassette is selected, apply +15% surcharge to total price.
+	•	Tooltip shows Dutch explanation.
+	•	Selection must update price preview live.
+
+⸻
+
+✅ Step 3: Dimensions Input
+	•	Allow width and height input in centimeters (integers only).
+	•	Validate:
+	•	Minimum width: 40 cm
+	•	Maximum width: 300 cm
+	•	Max height depends on fabric:
+	•	Verduisterend: max 190 cm
+	•	Lichtdoorlatend & Screens: max 350 cm
+	•	Show validation warning in Dutch if out of bounds.
+	•	Apply pricing logic after input is confirmed.
+
+⸻
+
+✅ Step 4: Mount Type (Montagewijze)
+	•	Two radio button choices:
+	1.	In de dag
+	2.	Op de dag
+	•	Tooltip with Dutch info (see previous message).
+
+⸻
+
+✅ Step 5: Bottom Bar (Onderlat)
+	•	Fixed value: Witte aluminium onderlat (standard)
+	•	No options here, just confirmation text.
+	•	Can show icon or image for clarity.
+
+⸻
+
+✅ Step 6: Control Type (Bediening)
+	•	Display options:
+	1.	Kunststof ketting (colors: wit, zwart, grijs)
+	2.	Metalen ketting (+€12,50)
+	3.	Gemotoriseerd BREL
+	•	Sub-options:
+	•	Handzender
+	•	App
+	•	Beide
+	•	Metalen ketting adds €12,50
+	•	Gemotoriseerd disables manual chain and shows motor options.
+	•	Tooltip shows Dutch explanation for each.
+
+⸻
+
+✅ Step 7: Control Side (Bedieningszijde)
+	•	Radio buttons:
+	•	Links
+	•	Rechts
+	•	Tooltip explanation in Dutch.
+
+⸻
+
+✅ Layout & Navigation
+	•	Display each step as a separate section.
+	•	Add Next and Previous buttons between steps.
+	•	At the end, show a Summary page:
+	•	Toon alle gemaakte keuzes
+	•	Toon totaalprijs (inclusief alle toeslagen)
+	•	Toon knop “Offerte aanvragen” of “Toevoegen aan winkelmandje”
+
+⸻
+
+✅ Price Calculation Rules
+	•	Base price per m² = (hidden constant, can be updated in backend)
+	•	Add surcharges:
+	•	Cassette: +15%
+	•	Metalen ketting: +€12,50
+	•	Motorisering: prijs afhankelijk van type (optioneel later toevoegen)
+
+⸻
+
+✅ Responsive Behavior
+	•	All UI must work perfectly on desktop and mobile.
+	•	Buttons and labels must adapt for small screens.
+	•	Use mobile-specific layout for width < 768px.

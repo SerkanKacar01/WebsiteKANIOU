@@ -51,7 +51,8 @@ const fabricTypes = [
   {
     id: "verduisterend",
     name: "Verduisterend",
-    description: "Blokkeert 100% van het licht",
+    description: "Blokkeert 100% van het licht voor volledige duisternis",
+    detailedInfo: "Perfect voor slaapkamers en ruimtes waar totale duisternis gewenst is. Blokkeert alle lichtinval en biedt maximale privacy.",
     price: 45,
     maxHeight: 190,
     image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=300&h=200&fit=crop",
@@ -59,8 +60,9 @@ const fabricTypes = [
   },
   {
     id: "lichtdoorlatend",
-    name: "Lichtdoorlatend",
+    name: "Lichtdoorlatend", 
     description: "Laat diffuus licht door voor privacy en sfeer",
+    detailedInfo: "Ideaal voor woonkamers en kantoren. Filtert het licht en biedt privacy zonder de ruimte volledig te verduisteren.",
     price: 40,
     maxHeight: 350,
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
@@ -70,6 +72,7 @@ const fabricTypes = [
     id: "screenstof",
     name: "Screenstof",
     description: "Biedt zicht naar buiten met UV-bescherming",
+    detailedInfo: "Houdt de warmte buiten en beschermt tegen UV-straling terwijl u naar buiten kunt kijken. Perfect voor kantoren en woonkamers.",
     price: 50,
     maxHeight: 350,
     image: "https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=300&h=200&fit=crop",
@@ -122,7 +125,8 @@ const controlTypes = [
   {
     id: "kunststof-ketting",
     name: "Kunststof ketting",
-    description: "Standaard bediening",
+    description: "Standaard bediening - eindeloze ketting",
+    detailedInfo: "Duurzame kunststof ketting voor handmatige bediening. Verkrijgbaar in verschillende kleuren.",
     price: 0,
     colors: ["wit", "zwart", "grijs"]
   },
@@ -130,27 +134,31 @@ const controlTypes = [
     id: "metalen-ketting",
     name: "Metalen ketting",
     description: "Duurzamere optie (+€12,50)",
+    detailedInfo: "Roestvrije metalen ketting voor extra duurzaamheid en een premium uitstraling.",
     price: 12.50,
     colors: []
   },
   {
     id: "gemotoriseerd-handzender",
     name: "Gemotoriseerd - Handzender",
-    description: "BREL motor met handzender",
+    description: "BREL motor met handzender (+€150)",
+    detailedInfo: "Elektrische motor van BREL met draadloze handzender. Eenvoudige bediening op afstand.",
     price: 150,
     colors: []
   },
   {
     id: "gemotoriseerd-app",
     name: "Gemotoriseerd - App",
-    description: "BREL motor met app-bediening",
+    description: "BREL motor met app-bediening (+€180)",
+    detailedInfo: "Smart motor van BREL bestuurd via smartphone app. Timers en automatisering mogelijk.",
     price: 180,
     colors: []
   },
   {
     id: "gemotoriseerd-beide",
     name: "Gemotoriseerd - Beide",
-    description: "BREL motor met handzender én app",
+    description: "BREL motor met handzender én app (+€200)",
+    detailedInfo: "Complete smart oplossing: zowel handzender als app-bediening. Maximale flexibiliteit.",
     price: 200,
     colors: []
   }
@@ -189,43 +197,55 @@ const RolgordijnenConfiguratorPage = () => {
     {
       id: 1,
       title: "Kies uw stofsoort",
-      description: "Selecteer het gewenste stoftype",
+      description: "Verduisterend, Lichtdoorlatend of Screenstof",
       completed: !!configuration.fabricType,
     },
     {
       id: 2,
+      title: "Kies kleur",
+      description: "Selecteer de gewenste kleur",
+      completed: !!configuration.color,
+    },
+    {
+      id: 3,
       title: "Kies uw profiel",
       description: "Open profiel of dichte cassette",
       completed: !!configuration.profile,
     },
     {
-      id: 3,
+      id: 4,
       title: "Voer uw afmetingen in",
       description: "Breedte en hoogte specificeren",
       completed: configuration.width >= 40 && configuration.height >= 40,
     },
     {
-      id: 4,
+      id: 5,
       title: "Montagewijze",
       description: "In de dag of op de dag",
       completed: !!configuration.mounting,
     },
     {
-      id: 5,
+      id: 6,
+      title: "Onderlat",
+      description: "Wit aluminium (standaard)",
+      completed: true, // Always true as it's included
+    },
+    {
+      id: 7,
       title: "Bedieningstype",
       description: "Kies het bedieningstype",
       completed: !!configuration.controlType && (configuration.controlType.includes('gemotoriseerd') || !!configuration.controlColor),
     },
     {
-      id: 6,
+      id: 8,
       title: "Bedieningszijde",
       description: "Links of rechts",
       completed: !!configuration.operationSide,
     },
     {
-      id: 7,
-      title: "Bestelling afronden",
-      description: "Samenvatting en bestellen",
+      id: 9,
+      title: "Samenvatting",
+      description: "Overzicht en bestellen",
       completed: false,
     },
   ];
@@ -300,12 +320,12 @@ const RolgordijnenConfiguratorPage = () => {
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 1:
+      case 1: // Fabric Type Selection
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Kies uw stofsoort</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Selecteer het gewenste stoftype voor uw rolgordijn. Na uw keuze ziet u alleen de beschikbare kleuren.
+              Selecteer het gewenste stoftype voor uw rolgordijn. Elk type heeft specifieke eigenschappen en maximale afmetingen.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {fabricTypes.map((fabric) => (
@@ -332,6 +352,9 @@ const RolgordijnenConfiguratorPage = () => {
                   <div className="p-4">
                     <h4 className="font-semibold text-gray-900">{fabric.name}</h4>
                     <p className="text-sm text-gray-600 mb-2">{fabric.description}</p>
+                    <div className="text-xs text-gray-500 mb-3 bg-gray-50 p-2 rounded">
+                      {fabric.detailedInfo}
+                    </div>
                     <div className="flex justify-between items-center">
                       <p className="text-lg font-bold text-[#d5c096]">
                         €{fabric.price}/m²
@@ -349,27 +372,60 @@ const RolgordijnenConfiguratorPage = () => {
                 </div>
               ))}
             </div>
+          </div>
+        );
+
+      case 2: // Color Selection
+        const availableColors = getAvailableColors();
+        return (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Kies uw kleur</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Selecteer de kleur die het beste bij uw interieur past. Beschikbare kleuren zijn afhankelijk van uw gekozen stoftype.
+            </p>
             
-            {configuration.fabricType && (
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h4 className="font-medium text-blue-900 mb-2">Beschikbare kleuren voor {fabricTypes.find(f => f.id === configuration.fabricType)?.name}:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {getAvailableColors().map((color) => (
-                    <div key={color.id} className="flex items-center gap-2">
+            {!configuration.fabricType ? (
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">Selecteer eerst een stoftype om de beschikbare kleuren te zien.</p>
+              </div>
+            ) : (
+              <>
+                <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    Beschikbare kleuren voor <strong>{fabricTypes.find(f => f.id === configuration.fabricType)?.name}</strong>
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {availableColors.map((color) => (
+                    <div
+                      key={color.id}
+                      className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                        configuration.color === color.id
+                          ? "border-[#d5c096] shadow-lg scale-105"
+                          : "border-gray-200 hover:border-[#d5c096]/50"
+                      }`}
+                      onClick={() => updateConfiguration("color", color.id)}
+                    >
                       <div
-                        className="w-4 h-4 rounded-full border"
+                        className="w-full h-16 rounded-lg mb-3 border"
                         style={{ backgroundColor: color.hex }}
                       ></div>
-                      <span className="text-sm text-blue-800">{color.name}</span>
+                      <p className="text-center font-medium">{color.name}</p>
+                      {configuration.color === color.id && (
+                        <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
+                          <Check className="h-4 w-4" />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
-              </div>
+              </>
             )}
           </div>
         );
 
-      case 2:
+      case 3: // Profile Selection  
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Kies uw profiel</h3>
@@ -395,6 +451,12 @@ const RolgordijnenConfiguratorPage = () => {
                   <div className="p-4">
                     <h4 className="font-semibold text-gray-900">{profile.name}</h4>
                     <p className="text-sm text-gray-600 mb-2">{profile.description}</p>
+                    <div className="text-xs text-gray-500 mb-2 bg-gray-50 p-2 rounded">
+                      {profile.id === 'open' ? 
+                        'Het open profiel is de standaard optie met zichtbare bevestigingspunten.' :
+                        'De dichte cassette zorgt voor een strakke, moderne uitstraling zonder zichtbare bevestigingen.'
+                      }
+                    </div>
                     {profile.price > 0 && (
                       <p className="text-sm font-medium text-[#d5c096]">
                         +{(profile.price * 100).toFixed(0)}% meerprijs
@@ -412,7 +474,7 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 3:
+      case 4: // Dimensions Input
         const selectedFabric = fabricTypes.find(f => f.id === configuration.fabricType);
         const maxHeight = selectedFabric ? selectedFabric.maxHeight : 400;
         
@@ -420,7 +482,7 @@ const RolgordijnenConfiguratorPage = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Voer uw afmetingen in</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Voer de gewenste afmetingen in centimeters in. Let op de maximale hoogte voor uw gekozen stoftype.
+              Voer de gewenste afmetingen in centimeters in (alleen hele getallen). Let op de maximale hoogte voor uw gekozen stoftype.
             </p>
             
             {selectedFabric && (
@@ -439,6 +501,7 @@ const RolgordijnenConfiguratorPage = () => {
                   type="number"
                   min="40"
                   max="300"
+                  step="1"
                   value={configuration.width}
                   onChange={(e) =>
                     updateConfiguration("width", parseInt(e.target.value) || 0)
@@ -447,7 +510,7 @@ const RolgordijnenConfiguratorPage = () => {
                 />
                 <p className="text-xs text-gray-500 mt-1">Minimum: 40cm, Maximum: 300cm</p>
                 {configuration.width > 0 && (configuration.width < 40 || configuration.width > 300) && (
-                  <p className="text-xs text-red-500 mt-1">Breedte moet tussen 40cm en 300cm zijn</p>
+                  <p className="text-xs text-red-500 mt-1">⚠️ Breedte moet tussen 40cm en 300cm zijn</p>
                 )}
               </div>
               <div>
@@ -457,6 +520,7 @@ const RolgordijnenConfiguratorPage = () => {
                   type="number"
                   min="40"
                   max={maxHeight}
+                  step="1"
                   value={configuration.height}
                   onChange={(e) =>
                     updateConfiguration("height", parseInt(e.target.value) || 0)
@@ -465,7 +529,7 @@ const RolgordijnenConfiguratorPage = () => {
                 />
                 <p className="text-xs text-gray-500 mt-1">Minimum: 40cm, Maximum: {maxHeight}cm</p>
                 {configuration.height > 0 && (configuration.height < 40 || configuration.height > maxHeight) && (
-                  <p className="text-xs text-red-500 mt-1">Hoogte moet tussen 40cm en {maxHeight}cm zijn</p>
+                  <p className="text-xs text-red-500 mt-1">⚠️ Hoogte moet tussen 40cm en {maxHeight}cm zijn</p>
                 )}
               </div>
               <div>
@@ -475,40 +539,57 @@ const RolgordijnenConfiguratorPage = () => {
                   type="number"
                   min="1"
                   max="10"
+                  step="1"
                   value={configuration.quantity}
                   onChange={(e) =>
                     updateConfiguration("quantity", parseInt(e.target.value) || 1)
                   }
                   className="mt-1"
                 />
+                <p className="text-xs text-gray-500 mt-1">Aantal rolgordijnen</p>
               </div>
             </div>
+            
+            {isValidDimensions() && (
+              <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                <p className="text-sm text-green-800">
+                  ✓ Afmetingen zijn geldig. Oppervlakte: {((configuration.width * configuration.height) / 10000).toFixed(2)} m²
+                </p>
+              </div>
+            )}
           </div>
         );
 
-      case 4:
+      case 5: // Mounting Type
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Montagewijze</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Selecteer hoe u het rolgordijn wilt monteren.
+              Selecteer hoe u het rolgordijn wilt monteren. Dit beïnvloedt de manier van meten en installeren.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {mountingOptions.map((option) => (
                 <div
                   key={option.id}
-                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                  className={`border-2 rounded-lg p-6 cursor-pointer transition-all duration-300 ${
                     configuration.mounting === option.id
                       ? "border-[#d5c096] bg-[#d5c096]/5"
                       : "border-gray-200 hover:border-[#d5c096]/50"
                   }`}
                   onClick={() => updateConfiguration("mounting", option.id)}
                 >
-                  <h5 className="font-semibold">{option.name}</h5>
-                  <p className="text-sm text-gray-600">{option.description}</p>
+                  <h5 className="font-semibold text-lg mb-2">{option.name}</h5>
+                  <p className="text-sm text-gray-600 mb-3">{option.description}</p>
+                  <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
+                    {option.id === 'in-dag' ? 
+                      'Het rolgordijn wordt in de raamopening gemonteerd. Meet de exacte binnenmaat van het kozijn.' :
+                      'Het rolgordijn wordt op de muur of plafond gemonteerd. Het gordijn hangt voor het raam.'
+                    }
+                  </div>
                   {configuration.mounting === option.id && (
-                    <div className="mt-2">
-                      <Check className="h-5 w-5 text-[#d5c096]" />
+                    <div className="mt-3 flex items-center text-[#d5c096]">
+                      <Check className="h-5 w-5 mr-2" />
+                      <span className="text-sm font-medium">Geselecteerd</span>
                     </div>
                   )}
                 </div>
@@ -517,111 +598,171 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 5:
+      case 6: // Bottom Bar (Fixed)
+        return (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Onderlat</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Alle rolgordijnen worden standaard geleverd met een witte aluminium onderlat. Deze zorgt voor een strak afhangende doek.
+            </p>
+            
+            <div className="border-2 border-[#d5c096] bg-[#d5c096]/5 rounded-lg p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                  <Package className="h-8 w-8 text-gray-500" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900 mb-2">Wit aluminium onderlat</h4>
+                  <p className="text-sm text-gray-600 mb-2">Standaard inbegrepen</p>
+                  <div className="text-xs text-gray-500 bg-white/50 p-3 rounded">
+                    De aluminium onderlat zorgt ervoor dat uw rolgordijn recht hangt en een professionele uitstraling heeft. Deze is altijd wit van kleur en perfect afgestemd op onze rolgordijnen.
+                  </div>
+                </div>
+                <div className="text-[#d5c096]">
+                  <Check className="h-6 w-6" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 text-center">
+              <p className="text-sm text-gray-500">✓ Automatisch inbegrepen - geen extra kosten</p>
+            </div>
+          </div>
+        );
+
+      case 7: // Control Type
         const selectedControlType = controlTypes.find(c => c.id === configuration.controlType);
         const showColorOptions = selectedControlType && selectedControlType.colors.length > 0;
+        const isMotorized = selectedControlType && selectedControlType.id.includes('gemotoriseerd');
         
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Bedieningstype</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Kies hoe u het rolgordijn wilt bedienen. Gemotoriseerd betekent dat ketting-opties wegvallen.
+              Kies hoe u het rolgordijn wilt bedienen. Bij gemotoriseerde opties vervallen de handmatige kettingopties.
             </p>
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 gap-4">
-                {controlTypes.map((control) => (
-                  <div
-                    key={control.id}
-                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
-                      configuration.controlType === control.id
-                        ? "border-[#d5c096] bg-[#d5c096]/5"
-                        : "border-gray-200 hover:border-[#d5c096]/50"
-                    }`}
-                    onClick={() => {
-                      updateConfiguration("controlType", control.id);
-                      // Reset color if new control type doesn't have colors
-                      if (control.colors.length === 0) {
-                        updateConfiguration("controlColor", "");
-                      }
-                    }}
-                  >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h5 className="font-semibold">{control.name}</h5>
-                        <p className="text-sm text-gray-600">{control.description}</p>
-                      </div>
-                      <div className="text-right">
-                        {control.price > 0 && (
-                          <p className="text-lg font-bold text-[#d5c096]">+€{control.price.toFixed(2)}</p>
-                        )}
-                        {configuration.controlType === control.id && (
-                          <Check className="h-5 w-5 text-[#d5c096] mt-1" />
-                        )}
+            
+            <div className="space-y-4 mb-6">
+              {controlTypes.map((control) => (
+                <div
+                  key={control.id}
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                    configuration.controlType === control.id
+                      ? "border-[#d5c096] bg-[#d5c096]/5"
+                      : "border-gray-200 hover:border-[#d5c096]/50"
+                  }`}
+                  onClick={() => {
+                    updateConfiguration("controlType", control.id);
+                    // Reset color if new control type doesn't have colors
+                    if (control.colors.length === 0) {
+                      updateConfiguration("controlColor", "");
+                    }
+                  }}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h5 className="font-semibold text-lg mb-1">{control.name}</h5>
+                      <p className="text-sm text-gray-600 mb-2">{control.description}</p>
+                      <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                        {control.detailedInfo}
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              
-              {showColorOptions && (
-                <div>
-                  <h4 className="font-medium mb-3">Kies kettingkleur</h4>
-                  <div className="grid grid-cols-3 gap-3">
-                    {selectedControlType.colors.map((colorId) => {
-                      const color = colors.find(c => c.id === colorId);
-                      if (!color) return null;
-                      
-                      return (
-                        <div
-                          key={color.id}
-                          className={`border-2 rounded-lg p-3 cursor-pointer transition-all duration-300 text-center ${
-                            configuration.controlColor === color.id
-                              ? "border-[#d5c096] bg-[#d5c096]/5"
-                              : "border-gray-200 hover:border-[#d5c096]/50"
-                          }`}
-                          onClick={() => updateConfiguration("controlColor", color.id)}
-                        >
-                          <div
-                            className="w-8 h-8 rounded-full mx-auto mb-2 border"
-                            style={{ backgroundColor: color.hex }}
-                          ></div>
-                          <p className="text-sm font-medium">{color.name}</p>
-                          {configuration.controlColor === color.id && (
-                            <Check className="h-4 w-4 text-[#d5c096] mx-auto mt-1" />
-                          )}
+                    <div className="text-right ml-4">
+                      {control.price > 0 && (
+                        <p className="text-lg font-bold text-[#d5c096] mb-1">+€{control.price.toFixed(2)}</p>
+                      )}
+                      {configuration.controlType === control.id && (
+                        <div className="flex items-center text-[#d5c096]">
+                          <Check className="h-5 w-5" />
                         </div>
-                      );
-                    })}
+                      )}
+                    </div>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
+            
+            {showColorOptions && !isMotorized && (
+              <div className="border-t pt-6">
+                <h4 className="font-medium mb-3">Kies kettingkleur</h4>
+                <p className="text-sm text-gray-600 mb-4">Selecteer de kleur van uw kunststof of metalen ketting:</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {selectedControlType.colors.map((colorId) => {
+                    const color = colors.find(c => c.id === colorId);
+                    if (!color) return null;
+                    
+                    return (
+                      <div
+                        key={color.id}
+                        className={`border-2 rounded-lg p-3 cursor-pointer transition-all duration-300 text-center ${
+                          configuration.controlColor === color.id
+                            ? "border-[#d5c096] bg-[#d5c096]/5"
+                            : "border-gray-200 hover:border-[#d5c096]/50"
+                        }`}
+                        onClick={() => updateConfiguration("controlColor", color.id)}
+                      >
+                        <div
+                          className="w-8 h-8 rounded-full mx-auto mb-2 border"
+                          style={{ backgroundColor: color.hex }}
+                        ></div>
+                        <p className="text-sm font-medium">{color.name}</p>
+                        {configuration.controlColor === color.id && (
+                          <Check className="h-4 w-4 text-[#d5c096] mx-auto mt-1" />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            
+            {isMotorized && (
+              <div className="border-t pt-6">
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    <strong>Gemotoriseerd:</strong> Bij een gemotoriseerde oplossing vervallen alle handmatige bedieningsmogelijkheden. 
+                    Het rolgordijn wordt volledig elektrisch bediend.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         );
 
-      case 6:
+      case 8: // Operation Side
+        const controlType = controlTypes.find(c => c.id === configuration.controlType);
+        const isMotorizedControl = controlType && controlType.id.includes('gemotoriseerd');
+        
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Bedieningszijde</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Kies aan welke kant u de bediening wilt hebben.
+              Kies aan welke kant u de bediening wilt hebben. {isMotorizedControl ? 'Bij gemotoriseerde rolgordijnen bepaalt dit de positie van de schakelaar.' : 'Dit bepaalt aan welke kant de ketting hangt.'}
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {operationSides.map((side) => (
                 <div
                   key={side.id}
-                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                  className={`border-2 rounded-lg p-6 cursor-pointer transition-all duration-300 ${
                     configuration.operationSide === side.id
                       ? "border-[#d5c096] bg-[#d5c096]/5"
                       : "border-gray-200 hover:border-[#d5c096]/50"
                   }`}
                   onClick={() => updateConfiguration("operationSide", side.id)}
                 >
-                  <h5 className="font-semibold">{side.name}</h5>
-                  <p className="text-sm text-gray-600">{side.description}</p>
+                  <h5 className="font-semibold text-lg mb-2">{side.name}</h5>
+                  <p className="text-sm text-gray-600 mb-3">{side.description}</p>
+                  <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
+                    {side.id === 'links' ? 
+                      isMotorizedControl ? 'De schakelaar wordt links van het raam geplaatst.' : 'De ketting hangt aan de linkerkant van het rolgordijn.' :
+                      isMotorizedControl ? 'De schakelaar wordt rechts van het raam geplaatst.' : 'De ketting hangt aan de rechterkant van het rolgordijn.'
+                    }
+                  </div>
                   {configuration.operationSide === side.id && (
-                    <div className="mt-2">
-                      <Check className="h-5 w-5 text-[#d5c096]" />
+                    <div className="mt-3 flex items-center text-[#d5c096]">
+                      <Check className="h-5 w-5 mr-2" />
+                      <span className="text-sm font-medium">Geselecteerd</span>
                     </div>
                   )}
                 </div>
@@ -630,73 +771,142 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 7:
+      case 9: // Summary
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Samenvatting</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Controleer uw configuratie en voeg toe aan winkelwagen of vraag een offerte aan.
+              Toon alle gemaakte keuzes, controleer de totaalprijs en voeg toe aan winkelwagen of vraag een offerte aan.
             </p>
             
-            <div className="bg-gray-50 rounded-lg p-6 mb-6">
-              <h4 className="font-semibold mb-4">Uw configuratie:</h4>
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 mb-6">
+              <h4 className="font-semibold text-lg mb-4 flex items-center">
+                <Check className="h-5 w-5 text-green-500 mr-2" />
+                Uw configuratie:
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Stofsoort:</span>
+                    <span className="font-medium">{fabricTypes.find(f => f.id === configuration.fabricType)?.name}</span>
+                  </div>
+                  {configuration.color && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Kleur:</span>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-4 h-4 rounded border"
+                          style={{ backgroundColor: colors.find(c => c.id === configuration.color)?.hex }}
+                        ></div>
+                        <span className="font-medium">{colors.find(c => c.id === configuration.color)?.name}</span>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Profiel:</span>
+                    <span className="font-medium">{profileOptions.find(p => p.id === configuration.profile)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Afmetingen:</span>
+                    <span className="font-medium">{configuration.width} × {configuration.height} cm</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Oppervlakte:</span>
+                    <span className="font-medium">{((configuration.width * configuration.height) / 10000).toFixed(2)} m²</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Montage:</span>
+                    <span className="font-medium">{mountingOptions.find(m => m.id === configuration.mounting)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Onderlat:</span>
+                    <span className="font-medium">Wit aluminium</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Bediening:</span>
+                    <span className="font-medium">{controlTypes.find(c => c.id === configuration.controlType)?.name}</span>
+                  </div>
+                  {configuration.controlColor && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Kettingkleur:</span>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-4 h-4 rounded border"
+                          style={{ backgroundColor: colors.find(c => c.id === configuration.controlColor)?.hex }}
+                        ></div>
+                        <span className="font-medium">{colors.find(c => c.id === configuration.controlColor)?.name}</span>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Bedieningszijde:</span>
+                    <span className="font-medium">{operationSides.find(s => s.id === configuration.operationSide)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Aantal:</span>
+                    <span className="font-medium">{configuration.quantity}x</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Price Breakdown */}
+            <div className="bg-white border-2 border-[#d5c096] rounded-lg p-6 mb-6">
+              <h4 className="font-semibold text-lg mb-4 text-[#d5c096]">Prijsopbouw:</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span>Stofsoort:</span>
-                  <span>{fabricTypes.find(f => f.id === configuration.fabricType)?.name}</span>
+                  <span>Basisprijs ({((configuration.width * configuration.height) / 10000).toFixed(2)} m² × €{fabricTypes.find(f => f.id === configuration.fabricType)?.price}/m²):</span>
+                  <span>€{(fabricTypes.find(f => f.id === configuration.fabricType)?.price * ((configuration.width * configuration.height) / 10000)).toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Profiel:</span>
-                  <span>{profileOptions.find(p => p.id === configuration.profile)?.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Afmetingen:</span>
-                  <span>{configuration.width} × {configuration.height} cm</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Montage:</span>
-                  <span>{mountingOptions.find(m => m.id === configuration.mounting)?.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Bediening:</span>
-                  <span>{controlTypes.find(c => c.id === configuration.controlType)?.name}</span>
-                </div>
-                {configuration.controlColor && (
-                  <div className="flex justify-between">
-                    <span>Kettingkleur:</span>
-                    <span>{colors.find(c => c.id === configuration.controlColor)?.name}</span>
+                
+                {configuration.profile === 'cassette' && (
+                  <div className="flex justify-between text-[#d5c096]">
+                    <span>Dichte cassette (+15%):</span>
+                    <span>+€{((fabricTypes.find(f => f.id === configuration.fabricType)?.price * ((configuration.width * configuration.height) / 10000)) * 0.15).toFixed(2)}</span>
                   </div>
                 )}
-                <div className="flex justify-between">
-                  <span>Bedieningszijde:</span>
-                  <span>{operationSides.find(s => s.id === configuration.operationSide)?.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Aantal:</span>
-                  <span>{configuration.quantity}x</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Onderlat:</span>
-                  <span>Wit aluminium (inbegrepen)</span>
+                
+                {controlTypes.find(c => c.id === configuration.controlType)?.price && controlTypes.find(c => c.id === configuration.controlType)?.price > 0 && (
+                  <div className="flex justify-between text-[#d5c096]">
+                    <span>{controlTypes.find(c => c.id === configuration.controlType)?.name}:</span>
+                    <span>+€{controlTypes.find(c => c.id === configuration.controlType)?.price.toFixed(2)}</span>
+                  </div>
+                )}
+                
+                {configuration.quantity > 1 && (
+                  <div className="flex justify-between">
+                    <span>Aantal ({configuration.quantity}x):</span>
+                    <span>×{configuration.quantity}</span>
+                  </div>
+                )}
+                
+                <div className="border-t pt-2 mt-2">
+                  <div className="flex justify-between text-lg font-bold text-[#d5c096]">
+                    <span>Totaal (incl. BTW):</span>
+                    <span>€{calculatePrice().toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Button
-                className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white py-3"
+                className="w-full bg-[#d5c096] hover:bg-[#c4b183] text-white py-4 text-lg font-semibold"
                 onClick={() => {
                   // Add to cart logic here
                   alert("Rolgordijn toegevoegd aan winkelwagen!");
                 }}
               >
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                Toevoegen aan winkelmand - €{calculatePrice().toFixed(2)}
+                <ShoppingCart className="h-6 w-6 mr-2" />
+                Toevoegen aan winkelwagen
               </Button>
               
               <Button
                 variant="outline"
-                className="w-full border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white py-3"
+                className="w-full border-2 border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white py-4 text-lg font-semibold"
                 onClick={() => {
                   // Request quote logic here
                   alert("Offerte aangevraagd!");
@@ -704,6 +914,12 @@ const RolgordijnenConfiguratorPage = () => {
               >
                 Offerte aanvragen
               </Button>
+            </div>
+            
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-500">
+                Verzendkosten worden berekend bij het afrekenen. Gratis verzending vanaf €75.
+              </p>
             </div>
           </div>
         );

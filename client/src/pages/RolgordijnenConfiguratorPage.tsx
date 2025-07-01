@@ -515,81 +515,47 @@ const RolgordijnenConfiguratorPage = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Kies uw profiel</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Voer de gewenste afmetingen in centimeters in (alleen hele getallen). Let op de maximale hoogte voor uw gekozen stoftype.
+              Selecteer tussen een open profiel (standaard) of een dichte cassette voor een strakke afwerking.
             </p>
-            
-            {selectedFabric && (
-              <div className="mb-6 p-4 bg-yellow-50 rounded-lg">
-                <p className="text-sm text-yellow-800">
-                  <strong>{selectedFabric.name}</strong> heeft een maximale hoogte van <strong>{selectedFabric.maxHeight}cm</strong>
-                </p>
-              </div>
-            )}
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="width">Breedte (cm)</Label>
-                <Input
-                  id="width"
-                  type="number"
-                  min="40"
-                  max="300"
-                  step="1"
-                  value={configuration.width}
-                  onChange={(e) =>
-                    updateConfiguration("width", parseInt(e.target.value) || 0)
-                  }
-                  className="mt-1"
-                />
-                <p className="text-xs text-gray-500 mt-1">Minimum: 40cm, Maximum: 300cm</p>
-                {configuration.width > 0 && (configuration.width < 40 || configuration.width > 300) && (
-                  <p className="text-xs text-red-500 mt-1">⚠️ Breedte moet tussen 40cm en 300cm zijn</p>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="height">Hoogte (cm)</Label>
-                <Input
-                  id="height"
-                  type="number"
-                  min="40"
-                  max={maxHeight}
-                  step="1"
-                  value={configuration.height}
-                  onChange={(e) =>
-                    updateConfiguration("height", parseInt(e.target.value) || 0)
-                  }
-                  className="mt-1"
-                />
-                <p className="text-xs text-gray-500 mt-1">Minimum: 40cm, Maximum: {maxHeight}cm</p>
-                {configuration.height > 0 && (configuration.height < 40 || configuration.height > maxHeight) && (
-                  <p className="text-xs text-red-500 mt-1">⚠️ Hoogte moet tussen 40cm en {maxHeight}cm zijn</p>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="quantity">Aantal</Label>
-                <Input
-                  id="quantity"
-                  type="number"
-                  min="1"
-                  max="10"
-                  step="1"
-                  value={configuration.quantity}
-                  onChange={(e) =>
-                    updateConfiguration("quantity", parseInt(e.target.value) || 1)
-                  }
-                  className="mt-1"
-                />
-                <p className="text-xs text-gray-500 mt-1">Aantal rolgordijnen</p>
-              </div>
+              {profileOptions.map((profile) => (
+                <div
+                  key={profile.id}
+                  className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
+                    configuration.profile === profile.id
+                      ? "border-[#d5c096] shadow-lg scale-105"
+                      : "border-gray-200 hover:border-[#d5c096]/50"
+                  }`}
+                  onClick={() => updateConfiguration("profile", profile.id)}
+                >
+                  <img
+                    src={profile.image}
+                    alt={profile.name}
+                    className="w-full h-32 object-cover"
+                  />
+                  <div className="p-4">
+                    <h4 className="font-semibold text-gray-900">{profile.name}</h4>
+                    <p className="text-sm text-gray-600 mb-2">{profile.description}</p>
+                    <div className="text-xs text-gray-500 mb-2 bg-gray-50 p-2 rounded">
+                      {profile.id === 'open' ? 
+                        'Het open profiel is de standaard optie met zichtbare bevestigingspunten.' :
+                        'De dichte cassette zorgt voor een strakke, moderne uitstraling zonder zichtbare bevestigingen.'
+                      }
+                    </div>
+                    {profile.price > 0 && (
+                      <p className="text-sm font-medium text-[#d5c096]">
+                        +{(profile.price * 100).toFixed(0)}% meerprijs
+                      </p>
+                    )}
+                  </div>
+                  {configuration.profile === profile.id && (
+                    <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
+                      <Check className="h-4 w-4" />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-            
-            {isValidDimensions() && (
-              <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                <p className="text-sm text-green-800">
-                  ✓ Afmetingen zijn geldig. Oppervlakte: {((configuration.width * configuration.height) / 10000).toFixed(2)} m²
-                </p>
-              </div>
-            )}
           </div>
         );
 

@@ -198,6 +198,94 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new
     }
   });
 
+  // Color sample request submission endpoint
+  app.post("/api/color-sample-requests", async (req, res) => {
+    try {
+      // Validate request body
+      const validation = insertColorSampleRequestSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          error: "Invalid color sample request data",
+          details: validation.error.issues,
+        });
+      }
+
+      const { email, selectedColor, colorName, website } = validation.data;
+
+      // Check honeypot field for spam protection
+      if (website && website.length > 0) {
+        return res.status(400).json({ error: "Invalid submission" });
+      }
+
+      // Store the request in database
+      const sampleRequest = await storage.createColorSampleRequest({
+        email,
+        selectedColor,
+        colorName,
+      });
+
+      // Send confirmation email to customer
+      const customerSubject = "KANIOU - Bevestiging staalverzoek ontvangen";
+      const customerEmailText = `
+Beste klant,
+
+Bedankt voor uw interesse in KANIOU rolgordijnen!
+
+We hebben uw verzoek ontvangen voor stalen in de kleur: ${colorName}
+
+Binnen 2-3 werkdagen ontvangt u per post enkele gratis stofstalen zodat u thuis de perfecte keuze kunt maken.
+
+Met vriendelijke groet,
+Het KANIOU team
+
+---
+KANIOU Zilvernaald
+Kwaliteit en stijl voor elk raam
+      `.trim();
+
+      // Send admin notification email
+      const adminSubject = `[KANIOU] Nieuw staalverzoek - ${colorName}`;
+      const adminEmailText = `
+Nieuw staalverzoek ontvangen via KANIOU website:
+
+E-mailadres: ${email}
+Gekozen kleur: ${colorName} (${selectedColor})
+Datum: ${new Date().toLocaleString("nl-BE")}
+
+Actie vereist: Staal verzenden naar klant.
+
+Verzoek ID: ${sampleRequest.id}
+      `.trim();
+
+      // Send emails
+      let emailsSent = 0;
+      
+      try {
+        await sendMailgunEmail(email, customerSubject, customerEmailText);
+        emailsSent++;
+      } catch (error) {
+        console.error("Failed to send customer confirmation email:", error);
+      }
+
+      try {
+        await sendMailgunEmail("info@kaniou.be", adminSubject, adminEmailText);
+        emailsSent++;
+      } catch (error) {
+        console.error("Failed to send admin notification email:", error);
+      }
+
+      res.json({
+        success: true,
+        message: "Staalverzoek succesvol ingediend",
+        requestId: sampleRequest.id,
+      });
+
+    } catch (error: any) {
+      console.error("Color sample request submission error:", error);
+      res.status(500).json({ error: "Er is een fout opgetreden bij het indienen van uw verzoek" });
+    }
+  });
+
   // Quote request submission endpoint
   app.post("/api/quote-requests", async (req, res) => {
     try {

@@ -56,6 +56,7 @@ import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import SimpleRollerBlindConfiguratorPage from "@/pages/SimpleRollerBlindConfiguratorPage";
+import ColorSamplePage from "@/pages/ColorSamplePage";
 
 
 

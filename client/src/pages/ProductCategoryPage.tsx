@@ -282,50 +282,58 @@ const ProductCategoryPage = () => {
           </Container>
         </div>
       ) : category === "rolgordijnen" ? (
-        <div className="bg-gradient-to-br from-gray-50 to-neutral-100 py-16">
+        <div className="bg-gradient-to-br from-orange-50 to-amber-100 py-16">
           <Container>
             <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
-                Rolgordijnen op Maat
-              </h1>
-              
-              <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              {/* Placeholder Message for Development */}
+              <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border-l-4 border-orange-400">
                 <div className="text-center">
                   <div className="mb-6">
-                    <div className="w-16 h-16 bg-[#d5c096] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Settings className="h-8 w-8 text-white" />
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                      Stel uw rolgordijn samen
+                      🛠️ Rolgordijnen op maat – Binnenkort online beschikbaar
                     </h2>
                   </div>
                   
                   <div className="max-w-2xl mx-auto space-y-4 text-gray-700 leading-relaxed">
                     <p className="text-lg">
-                      Ontwerp uw perfecte rolgordijn met onze slimme configurator. Kies uit verschillende stoffen, 
-                      kleuren, afmetingen en bedieningsmogelijkheden voor rolgordijnen op maat.
+                      We zijn momenteel druk bezig om onze rolgordijnen perfect voor u beschikbaar te maken.
+                      Binnenkort kunt u eenvoudig uw rolgordijn op maat bestellen via onze website.
                     </p>
                     
-                    <p>
-                      Onze configurator begeleidt u stap voor stap door het hele proces en berekent direct 
-                      de prijs voor uw unieke rolgordijn.
+                    <div className="bg-blue-50 rounded-lg p-6 mt-6">
+                      <h3 className="text-lg font-semibold text-blue-900 mb-3">
+                        🔜 Beschikbaar met keuze uit:
+                      </h3>
+                      <ul className="text-left space-y-2 text-blue-800">
+                        <li className="flex items-center">
+                          <Check className="h-5 w-5 text-blue-600 mr-2" />
+                          Verduisterende, lichtdoorlatende en screen stoffen
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="h-5 w-5 text-blue-600 mr-2" />
+                          Diverse kleuren
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="h-5 w-5 text-blue-600 mr-2" />
+                          Eenvoudige configurator
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <p className="text-orange-600 font-medium mt-4">
+                      Nog even geduld – wij zorgen voor een gebruiksvriendelijke en complete ervaring.
                     </p>
                   </div>
 
                   <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/producten/rolgordijnen/configurator">
+                    <Link href="/offerte">
                       <Button 
                         className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2"
                       >
-                        🛠️ Start Configurator
-                      </Button>
-                    </Link>
-                    <Link href="/offerte">
-                      <Button 
-                        variant="outline"
-                        className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white px-6 py-3 rounded-lg transition-all duration-300"
-                      >
-                        Vraag offerte aan
+                        Vraag nu offerte aan
                       </Button>
                     </Link>
                     <Link href="/contact">

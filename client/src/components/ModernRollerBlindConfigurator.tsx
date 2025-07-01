@@ -59,31 +59,16 @@ const fabricTypes = [
   }
 ];
 
-// Color options per fabric type
-const colorOptions = {
-  verduisterend: [
-    { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
-    { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
-    { id: "beige", name: "Beige", color: "#F5F5DC", borderColor: "#D1D5DB" },
-    { id: "grijs", name: "Grijs", color: "#9CA3AF", borderColor: "#6B7280" },
-    { id: "zwart", name: "Zwart", color: "#1F2937", borderColor: "#111827" },
-    { id: "taupe", name: "Taupe", color: "#D2B48C", borderColor: "#B8956A" },
-  ],
-  lichtdoorlatend: [
-    { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
-    { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
-    { id: "beige", name: "Beige", color: "#F5F5DC", borderColor: "#D1D5DB" },
-    { id: "zand", name: "Zand", color: "#F4A460", borderColor: "#CD853F" },
-    { id: "grijs", name: "Lichtgrijs", color: "#D1D5DB", borderColor: "#9CA3AF" },
-  ],
-  screenstof: [
-    { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
-    { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
-    { id: "grijs", name: "Grijs", color: "#9CA3AF", borderColor: "#6B7280" },
-    { id: "zwart", name: "Zwart", color: "#1F2937", borderColor: "#111827" },
-    { id: "bruin", name: "Bruin", color: "#8B4513", borderColor: "#654321" },
-  ]
-};
+// Base colors available for all fabric types (7 colors in specified order)
+const baseColors = [
+  { id: "wit", name: "White", color: "#FFFFFF", borderColor: "#E5E7EB" },
+  { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
+  { id: "beige", name: "Beige", color: "#F5F5DC", borderColor: "#D1D5DB" },
+  { id: "grijs", name: "Gray", color: "#9CA3AF", borderColor: "#6B7280" },
+  { id: "taupe", name: "Taupe", color: "#D2B48C", borderColor: "#B8956A" },
+  { id: "zwart", name: "Black", color: "#1F2937", borderColor: "#111827" },
+  { id: "bruin", name: "Brown", color: "#8B4513", borderColor: "#654321" },
+];
 
 const ModernRollerBlindConfigurator = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -132,8 +117,8 @@ const ModernRollerBlindConfigurator = () => {
   };
 
   const getCurrentColors = () => {
-    if (!configuration.fabricType) return [];
-    return colorOptions[configuration.fabricType as keyof typeof colorOptions] || [];
+    // Return all 7 base colors for any fabric type
+    return baseColors;
   };
 
   const calculatePrice = () => {
@@ -295,55 +280,110 @@ const ModernRollerBlindConfigurator = () => {
     </Card>
   );
 
-  const renderStep2 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-xl font-bold">Stap 2: Kies uw kleur</CardTitle>
-        <p className="text-gray-600">Beschikbare kleuren voor {configuration.fabricType}</p>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mb-6">
-          {getCurrentColors().map((color) => (
-            <button
-              key={color.id}
-              onClick={() => {
-                setConfiguration({
-                  ...configuration, 
-                  selectedColor: color.id, 
-                  colorName: color.name
-                });
-              }}
-              className={`relative group ${
-                configuration.selectedColor === color.id
-                  ? "ring-4 ring-yellow-500 ring-offset-2"
-                  : "hover:scale-105"
-              } transition-all duration-200`}
-            >
-              <div
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 mx-auto"
-                style={{ 
-                  backgroundColor: color.color,
-                  borderColor: color.borderColor 
-                }}
-              ></div>
-              <p className="text-sm font-medium mt-2 text-gray-700">{color.name}</p>
-              {configuration.selectedColor === color.id && (
-                <CheckCircle className="w-6 h-6 text-yellow-500 absolute -top-2 -right-2 bg-white rounded-full" />
-              )}
-            </button>
-          ))}
-        </div>
-
-        {configuration.selectedColor && (
-          <div className="text-center">
-            <Button onClick={nextStep} className="bg-yellow-500 hover:bg-yellow-600 text-white">
-              Ga verder naar afmetingen <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
+  const renderStep2 = () => {
+    const colors = getCurrentColors();
+    const topRowColors = colors.slice(0, 4); // First 4 colors
+    const bottomRowColors = colors.slice(4, 7); // Last 3 colors
+    
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">Stap 2: Kies uw kleur</CardTitle>
+          <p className="text-gray-600">Beschikbare kleuren voor {configuration.fabricType}</p>
+        </CardHeader>
+        <CardContent>
+          {/* 2-row layout: 4 colors top, 3 colors bottom */}
+          <div className="mb-6">
+            {/* Top row - 4 colors */}
+            <div className="grid grid-cols-4 gap-4 mb-4 justify-items-center">
+              {topRowColors.map((color) => (
+                <button
+                  key={color.id}
+                  onClick={() => {
+                    setConfiguration({
+                      ...configuration, 
+                      selectedColor: color.id, 
+                      colorName: color.name
+                    });
+                  }}
+                  className={`relative group ${
+                    configuration.selectedColor === color.id
+                      ? "ring-4 ring-yellow-500 ring-offset-2"
+                      : "hover:scale-105"
+                  } transition-all duration-200`}
+                  title="Gratis stalen beschikbaar"
+                >
+                  <div
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-lg border-4 mx-auto"
+                    style={{ 
+                      backgroundColor: color.color,
+                      borderColor: color.borderColor 
+                    }}
+                  ></div>
+                  <p className="text-sm font-medium mt-2 text-gray-700">{color.name}</p>
+                  {configuration.selectedColor === color.id && (
+                    <CheckCircle className="w-6 h-6 text-yellow-500 absolute -top-2 -right-2 bg-white rounded-full" />
+                  )}
+                  
+                  {/* Hover tooltip */}
+                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+                    Gratis stalen beschikbaar
+                  </div>
+                </button>
+              ))}
+            </div>
+            
+            {/* Bottom row - 3 colors (centered) */}
+            <div className="flex justify-center gap-4">
+              {bottomRowColors.map((color) => (
+                <button
+                  key={color.id}
+                  onClick={() => {
+                    setConfiguration({
+                      ...configuration, 
+                      selectedColor: color.id, 
+                      colorName: color.name
+                    });
+                  }}
+                  className={`relative group ${
+                    configuration.selectedColor === color.id
+                      ? "ring-4 ring-yellow-500 ring-offset-2"
+                      : "hover:scale-105"
+                  } transition-all duration-200`}
+                  title="Gratis stalen beschikbaar"
+                >
+                  <div
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-lg border-4 mx-auto"
+                    style={{ 
+                      backgroundColor: color.color,
+                      borderColor: color.borderColor 
+                    }}
+                  ></div>
+                  <p className="text-sm font-medium mt-2 text-gray-700">{color.name}</p>
+                  {configuration.selectedColor === color.id && (
+                    <CheckCircle className="w-6 h-6 text-yellow-500 absolute -top-2 -right-2 bg-white rounded-full" />
+                  )}
+                  
+                  {/* Hover tooltip */}
+                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+                    Gratis stalen beschikbaar
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
-  );
+
+          {configuration.selectedColor && (
+            <div className="text-center">
+              <Button onClick={nextStep} className="bg-yellow-500 hover:bg-yellow-600 text-white">
+                Ga verder naar afmetingen <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  };
 
   const renderStep3 = () => (
     <Card>

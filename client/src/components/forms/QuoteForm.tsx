@@ -264,7 +264,6 @@ const QuoteForm = () => {
           name="requirements"
           render={({ field }) => {
             const charCount = field.value?.length || 0;
-            const isValidLength = charCount === 0 || charCount >= 10;
             const hasError = form.formState.errors.requirements;
             
             return (

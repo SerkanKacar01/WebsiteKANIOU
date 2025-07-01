@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import TestApp from "./TestApp";
 import "./index.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./context/LanguageContext";
@@ -19,7 +19,7 @@ if (rootElement) {
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
       </Helmet>
       <LanguageProvider>
-        <App />
+        <TestApp />
       </LanguageProvider>
     </HelmetProvider>
   );

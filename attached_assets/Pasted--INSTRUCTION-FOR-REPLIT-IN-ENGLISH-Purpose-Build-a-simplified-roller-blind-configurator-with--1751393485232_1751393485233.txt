@@ -1,0 +1,72 @@
+🛠️ INSTRUCTION FOR REPLIT (IN ENGLISH)
+
+Purpose: Build a simplified roller blind configurator with a guided 3-step interface. The content should remain in Dutch, layout must work perfectly on both desktop and mobile.
+
+⸻
+
+🔹 STEP 1 — KLEURKEUZE (Color Selection)
+
+Visible elements:
+	•	Titel bovenaan sectie:
+Kies uw favoriete kleur
+	•	Toon 6–8 kleurcirkels met vaste kleurenopties (bijvoorbeeld):
+Wit, Crème, Beige, Grijs, Zwart, Taupe, Zand, Bruin
+	•	Wanneer de klant op een kleur klikt:
+➝ Toon tekst eronder:
+U ontvangt gratis stofstalen in deze kleur
+	•	Onder die tekst direct een veld:
+	•	Label: Vul uw e-mailadres in om de stofstalen te ontvangen
+	•	Vereist veld (verplicht in te vullen)
+	•	Button: Stalen aanvragen
+
+Functionaliteit:
+→ Het systeem moet het e-mailadres en de gekozen kleur opslaan of doorsturen naar het backend systeem.
+→ Geen naam, adres of andere gegevens nodig.
+
+⸻
+
+🔹 STEP 2 — STOFTYPE KIEZEN (Fabric Type Selection)
+
+Verschijnt pas als kleur is gekozen.
+Toon titel:
+Kies het type stof
+
+Toon twee radio buttons:
+	•	Verduisterend (blackout)
+	•	Lichtdoorlatend
+(Slechts één optie kan tegelijk geselecteerd zijn)
+
+⸻
+
+🔹 STEP 3 — DOORGAAN NAAR VOLLEDIGE CONFIGURATOR
+
+Toon een knop onderaan:
+
+Ga verder met samenstellen van uw rolgordijn
+
+Functionaliteit:
+→ Knop leidt naar het bestaande maatwerkconfiguratieformulier (waar breedte/hoogte/cassette/bediening enz. ingevuld worden).
+
+⸻
+
+🖼️ EXTRA: BOVEN DEZE STAPPEN TOON EEN FOTOSECTIE
+
+Titel:
+Wat u kunt verwachten van onze standaard rolgordijnen
+
+Toon 4–5 kleine foto’s als slider of naast elkaar (desktop) of swipebaar (mobiel):
+	•	Open profiel (standaard)
+	•	Cassette optie (meerprijs)
+	•	Onderlat (wit aluminium)
+	•	Kettingbediening (wit, zwart, grijs)
+	•	Zijaanzicht of ophangmontage
+
+Deze sectie moet altijd zichtbaar boven de stappen, ook mobielvriendelijk.
+
+⸻
+
+✅ DESIGN & FUNCTIONALITY NOTES
+	•	Alles moet netjes gestructureerd zijn en mobielvriendelijk
+	•	Gebruik duidelijke lettertypes en zachte kleuren zoals wit, lichtgrijs, beige
+	•	Emailverzameling moet veilig gebeuren (GDPR-proof)
+	•	Stappen moeten vanzelf op volgorde verschijnen (pas stap 2 na stap 1, enz.)

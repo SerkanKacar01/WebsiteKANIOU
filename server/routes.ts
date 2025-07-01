@@ -974,6 +974,28 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     }
   });
 
+  // Gallery items endpoint
+  app.get("/api/gallery", async (req, res) => {
+    try {
+      const galleryItems = await storage.getGalleryItems();
+      res.json(galleryItems);
+    } catch (error: any) {
+      console.error("Gallery fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch gallery items" });
+    }
+  });
+
+  // Testimonials endpoint
+  app.get("/api/testimonials", async (req, res) => {
+    try {
+      const testimonials = await storage.getTestimonials();
+      res.json(testimonials);
+    } catch (error: any) {
+      console.error("Testimonials fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch testimonials" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

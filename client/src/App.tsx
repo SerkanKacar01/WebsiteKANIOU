@@ -135,6 +135,8 @@ function Router() {
         <Route path="/rolgordijnen-configurator" component={RolgordijnenConfiguratorPage} />
         <Route path="/producten/rolgordijnen/eenvoudige-configurator" component={SimpleRollerBlindConfiguratorPage} />
         <Route path="/rolgordijnen-eenvoudige-configurator" component={SimpleRollerBlindConfiguratorPage} />
+        <Route path="/producten/rolgordijnen/kleurstalen" component={ColorSamplePage} />
+        <Route path="/rolgordijnen-kleurstalen" component={ColorSamplePage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />

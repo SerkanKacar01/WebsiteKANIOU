@@ -9,126 +9,267 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CheckCircle, Loader2, ChevronRight, ArrowRight } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CheckCircle, Loader2, ChevronRight, ArrowRight, Check, Settings, Palette, Ruler, Package, Cog } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
-const colorSampleSchema = z.object({
-  email: z.string().email("Vul een geldig e-mailadres in"),
+// Configuration schema for the complete configurator
+const configuratorSchema = z.object({
+  // Step 1: Fabric type
+  fabricType: z.string().min(1, "Selecteer een stofsoort"),
+  
+  // Step 2: Color
   selectedColor: z.string().min(1, "Selecteer een kleur"),
   colorName: z.string().min(1, "Kleur naam is verplicht"),
-  fabricType: z.string().optional(),
+  
+  // Step 3: Dimensions
+  width: z.number().min(40, "Minimum breedte is 40cm").max(300, "Maximum breedte is 300cm"),
+  height: z.number().min(50, "Minimum hoogte is 50cm").max(350, "Maximum hoogte is 350cm"),
+  
+  // Step 4: Options
+  profileType: z.string().min(1, "Selecteer een profieltype"),
+  bottomRail: z.string().min(1, "Selecteer een onderlat"),
+  mounting: z.string().min(1, "Selecteer een montage optie"),
+  
+  // Step 5: Operation
+  operationType: z.string().min(1, "Selecteer een bediening"),
+  operationSide: z.string().min(1, "Selecteer een zijde"),
+  motorized: z.boolean().optional(),
+  
+  // Step 6: Customer info (for ordering)
+  email: z.string().email("Vul een geldig e-mailadres in").optional(),
   website: z.string().max(0).optional(), // Honeypot
 });
 
-type ConfiguratorFormValues = z.infer<typeof colorSampleSchema>;
+type ConfiguratorFormValues = z.infer<typeof configuratorSchema>;
 
-// Available color options
-const colorOptions = [
-  { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
-  { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
-  { id: "beige", name: "Beige", color: "#F5F5DC", borderColor: "#D1D5DB" },
-  { id: "grijs", name: "Grijs", color: "#9CA3AF", borderColor: "#6B7280" },
-  { id: "zwart", name: "Zwart", color: "#1F2937", borderColor: "#111827" },
-  { id: "taupe", name: "Taupe", color: "#D2B48C", borderColor: "#B8956A" },
-  { id: "zand", name: "Zand", color: "#F4A460", borderColor: "#CD853F" },
-  { id: "bruin", name: "Bruin", color: "#8B4513", borderColor: "#654321" },
+// Step definitions
+const steps = [
+  { id: 1, title: "Stofsoort", icon: Palette, description: "Kies de gewenste lichtdoorlatendheid" },
+  { id: 2, title: "Kleur", icon: Settings, description: "Selecteer uw favoriete kleur" },
+  { id: 3, title: "Afmetingen", icon: Ruler, description: "Voer de exacte maten in" },
+  { id: 4, title: "Opties", icon: Package, description: "Profiel, onderlat en montage" },
+  { id: 5, title: "Bediening", icon: Cog, description: "Ketting en positie" },
+  { id: 6, title: "Samenvatting", icon: Check, description: "Overzicht en bestellen" },
 ];
 
-// Product images for the photo section
-const productImages = [
+// Fabric type options
+const fabricTypes = [
   {
-    title: "Open profiel (standaard)",
-    description: "Eenvoudig en functioneel ontwerp",
-    image: "data:image/svg+xml,%3Csvg width='120' height='80' viewBox='0 0 120 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='120' height='80' fill='%23f3f4f6'/%3E%3Crect x='10' y='10' width='100' height='60' fill='white' stroke='%23d1d5db' stroke-width='2'/%3E%3Ctext x='60' y='45' text-anchor='middle' fill='%23374151' font-size='10'%3EOpen profiel%3C/text%3E%3C/svg%3E"
+    id: "verduisterend",
+    name: "Verduisterend (Blackout)",
+    description: "Blokkeert licht volledig voor perfecte duisternis",
+    image: "data:image/svg+xml,%3Csvg width='60' height='40' viewBox='0 0 60 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='40' fill='%23374151'/%3E%3C/svg%3E"
   },
   {
-    title: "Cassette optie (meerprijs)",
-    description: "Strakke afwerking met beschermkast",
-    image: "data:image/svg+xml,%3Csvg width='120' height='80' viewBox='0 0 120 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='120' height='80' fill='%23f3f4f6'/%3E%3Crect x='10' y='5' width='100' height='15' fill='%23e5e7eb' stroke='%23d1d5db'/%3E%3Crect x='10' y='20' width='100' height='50' fill='white' stroke='%23d1d5db' stroke-width='2'/%3E%3Ctext x='60' y='50' text-anchor='middle' fill='%23374151' font-size='10'%3ECassette%3C/text%3E%3C/svg%3E"
+    id: "lichtdoorlatend",
+    name: "Lichtdoorlatend",
+    description: "Laat zachte lichtinval door voor een aangename sfeer",
+    image: "data:image/svg+xml,%3Csvg width='60' height='40' viewBox='0 0 60 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='40' fill='%23F3F4F6'/%3E%3C/svg%3E"
   },
   {
-    title: "Onderlat (wit aluminium)",
-    description: "Stevige aluminium afwerking",
-    image: "data:image/svg+xml,%3Csvg width='120' height='80' viewBox='0 0 120 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='120' height='80' fill='%23f3f4f6'/%3E%3Crect x='10' y='10' width='100' height='50' fill='white' stroke='%23d1d5db' stroke-width='2'/%3E%3Crect x='10' y='60' width='100' height='8' fill='%23f9fafb' stroke='%239ca3af'/%3E%3Ctext x='60' y='45' text-anchor='middle' fill='%23374151' font-size='10'%3EAluminium%3C/text%3E%3C/svg%3E"
-  },
-  {
-    title: "Kettingbediening",
-    description: "Verkrijgbaar in wit, zwart, grijs",
-    image: "data:image/svg+xml,%3Csvg width='120' height='80' viewBox='0 0 120 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='120' height='80' fill='%23f3f4f6'/%3E%3Crect x='10' y='10' width='100' height='50' fill='white' stroke='%23d1d5db' stroke-width='2'/%3E%3Cline x1='95' y1='20' x2='95' y2='70' stroke='%23374151' stroke-width='3'/%3E%3Ctext x='60' y='45' text-anchor='middle' fill='%23374151' font-size='10'%3EKetting%3C/text%3E%3C/svg%3E"
-  },
-  {
-    title: "Ophangmontage",
-    description: "Eenvoudige montage aan muur of plafond",
-    image: "data:image/svg+xml,%3Csvg width='120' height='80' viewBox='0 0 120 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='120' height='80' fill='%23f3f4f6'/%3E%3Crect x='10' y='5' width='100' height='5' fill='%23d1d5db'/%3E%3Crect x='20' y='10' width='5' height='5' fill='%23374151'/%3E%3Crect x='95' y='10' width='5' height='5' fill='%23374151'/%3E%3Crect x='10' y='15' width='100' height='45' fill='white' stroke='%23d1d5db' stroke-width='2'/%3E%3Ctext x='60' y='45' text-anchor='middle' fill='%23374151' font-size='10'%3EMontage%3C/text%3E%3C/svg%3E"
+    id: "screenstof",
+    name: "Screenstof",
+    description: "Perfecte balans tussen licht en privacy",
+    image: "data:image/svg+xml,%3Csvg width='60' height='40' viewBox='0 0 60 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='40' fill='%23E5E7EB'/%3E%3Cg opacity='0.6'%3E%3Cline x1='0' y1='8' x2='60' y2='8' stroke='%23374151'/%3E%3Cline x1='0' y1='16' x2='60' y2='16' stroke='%23374151'/%3E%3Cline x1='0' y1='24' x2='60' y2='24' stroke='%23374151'/%3E%3Cline x1='0' y1='32' x2='60' y2='32' stroke='%23374151'/%3E%3C/g%3E%3C/svg%3E"
   }
 ];
 
+// Color options per fabric type
+const colorOptions = {
+  verduisterend: [
+    { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
+    { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
+    { id: "beige", name: "Beige", color: "#F5F5DC", borderColor: "#D1D5DB" },
+    { id: "grijs", name: "Grijs", color: "#9CA3AF", borderColor: "#6B7280" },
+    { id: "zwart", name: "Zwart", color: "#1F2937", borderColor: "#111827" },
+    { id: "taupe", name: "Taupe", color: "#D2B48C", borderColor: "#B8956A" },
+  ],
+  lichtdoorlatend: [
+    { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
+    { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
+    { id: "beige", name: "Beige", color: "#F5F5DC", borderColor: "#D1D5DB" },
+    { id: "zand", name: "Zand", color: "#F4A460", borderColor: "#CD853F" },
+    { id: "grijs", name: "Lichtgrijs", color: "#D1D5DB", borderColor: "#9CA3AF" },
+  ],
+  screenstof: [
+    { id: "wit", name: "Wit", color: "#FFFFFF", borderColor: "#E5E7EB" },
+    { id: "creme", name: "Crème", color: "#FDF6E3", borderColor: "#E5D3B3" },
+    { id: "grijs", name: "Grijs", color: "#9CA3AF", borderColor: "#6B7280" },
+    { id: "zwart", name: "Zwart", color: "#1F2937", borderColor: "#111827" },
+    { id: "bruin", name: "Bruin", color: "#8B4513", borderColor: "#654321" },
+  ]
+};
+
 const SimpleRollerBlindConfigurator = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedColor, setSelectedColor] = useState<typeof colorOptions[0] | null>(null);
-  const [fabricType, setFabricType] = useState<string>("");
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
-
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [configuration, setConfiguration] = useState<Partial<ConfiguratorFormValues>>({});
+  
   const form = useForm<ConfiguratorFormValues>({
-    resolver: zodResolver(colorSampleSchema),
+    resolver: zodResolver(configuratorSchema),
     defaultValues: {
-      email: "",
+      fabricType: "",
       selectedColor: "",
       colorName: "",
-      fabricType: "",
+      width: 100,
+      height: 190,
+      profileType: "",
+      bottomRail: "",
+      mounting: "",
+      operationType: "",
+      operationSide: "",
+      motorized: false,
+      email: "",
       website: "",
     },
   });
 
-  const emailMutation = useMutation({
-    mutationFn: (data: ConfiguratorFormValues) =>
-      apiRequest("POST", "/api/color-sample-requests", data),
-    onSuccess: () => {
-      setEmailSubmitted(true);
-      toast({
-        title: "Staalverzoek verzonden",
-        description: "U ontvangt binnenkort uw gratis stofstalen per post.",
-        variant: "default",
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Fout bij verzenden",
-        description: error.message || "Er is een fout opgetreden. Probeer het opnieuw.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleColorSelect = (color: typeof colorOptions[0]) => {
-    setSelectedColor(color);
-    form.setValue("selectedColor", color.id);
-    form.setValue("colorName", color.name);
-    // Don't auto-advance to step 2 yet, wait for email submission
-  };
-
-  const handleEmailSubmit = (data: ConfiguratorFormValues) => {
-    if (!selectedColor) {
-      toast({
-        title: "Selecteer eerst een kleur",
-        description: "Kies een kleur voordat u uw e-mailadres invult.",
-        variant: "destructive",
-      });
-      return;
+  // Helper functions
+  const markStepComplete = (step: number) => {
+    if (!completedSteps.includes(step)) {
+      setCompletedSteps([...completedSteps, step]);
     }
-    emailMutation.mutate(data);
   };
 
-  const handleFabricTypeSelect = (value: string) => {
-    setFabricType(value);
-    setCurrentStep(3);
+  const goToStep = (step: number) => {
+    if (step <= Math.max(...completedSteps) + 1) {
+      setCurrentStep(step);
+    }
   };
 
-  const handleContinueToFullConfigurator = () => {
-    // Navigate to the full configurator with pre-selected options
-    window.location.href = "/producten/rolgordijnen/configurator";
+  const nextStep = () => {
+    markStepComplete(currentStep);
+    if (currentStep < 6) {
+      setCurrentStep(currentStep + 1);
+    }
   };
+
+  const getCurrentColors = () => {
+    if (!configuration.fabricType) return [];
+    return colorOptions[configuration.fabricType as keyof typeof colorOptions] || [];
+  };
+
+  const calculatePrice = () => {
+    let basePrice = 89.95;
+    
+    // Add fabric type pricing
+    if (configuration.fabricType === "verduisterend") basePrice += 20;
+    if (configuration.fabricType === "screenstof") basePrice += 15;
+    
+    // Add size pricing
+    const area = (configuration.width || 100) * (configuration.height || 190) / 10000;
+    basePrice += area * 25;
+    
+    // Add profile type pricing
+    if (configuration.profileType === "cassette") basePrice += 35;
+    
+    // Add motorization pricing
+    if (configuration.motorized) basePrice += 150;
+    
+    return Math.round(basePrice * 100) / 100;
+  };
+
+  // Step component renderers
+  const renderStepIndicator = () => (
+    <div className="mb-8">
+      {/* Desktop: Horizontal layout */}
+      <div className="hidden md:flex justify-between items-center">
+        {steps.map((step, index) => {
+          const isActive = currentStep === step.id;
+          const isCompleted = completedSteps.includes(step.id);
+          const isAccessible = step.id <= Math.max(...completedSteps) + 1;
+          const Icon = step.icon;
+          
+          return (
+            <div key={step.id} className="flex items-center flex-1">
+              <button
+                onClick={() => goToStep(step.id)}
+                disabled={!isAccessible}
+                className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 ${
+                  isCompleted
+                    ? "bg-green-500 border-green-500 text-white"
+                    : isActive
+                    ? "bg-yellow-500 border-yellow-500 text-white"
+                    : isAccessible
+                    ? "bg-white border-gray-300 text-gray-600 hover:border-yellow-400"
+                    : "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                {isCompleted ? (
+                  <Check className="w-5 h-5" />
+                ) : (
+                  <Icon className="w-5 h-5" />
+                )}
+              </button>
+              <div className="ml-3 flex-1">
+                <div className={`text-sm font-medium ${
+                  isActive ? "text-yellow-600" : isCompleted ? "text-green-600" : "text-gray-600"
+                }`}>
+                  {step.title}
+                </div>
+                <div className="text-xs text-gray-500">{step.description}</div>
+              </div>
+              {index < steps.length - 1 && (
+                <div className={`w-8 h-1 mx-4 ${
+                  completedSteps.includes(step.id) ? "bg-green-500" : "bg-gray-200"
+                }`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+      
+      {/* Mobile: Horizontal scroll */}
+      <div className="md:hidden overflow-x-auto">
+        <div className="flex space-x-4 pb-4">
+          {steps.map((step) => {
+            const isActive = currentStep === step.id;
+            const isCompleted = completedSteps.includes(step.id);
+            const isAccessible = step.id <= Math.max(...completedSteps) + 1;
+            const Icon = step.icon;
+            
+            return (
+              <button
+                key={step.id}
+                onClick={() => goToStep(step.id)}
+                disabled={!isAccessible}
+                className={`flex flex-col items-center min-w-[80px] p-3 rounded-lg transition-all duration-300 ${
+                  isCompleted
+                    ? "bg-green-50 border border-green-200"
+                    : isActive
+                    ? "bg-yellow-50 border border-yellow-200"
+                    : isAccessible
+                    ? "bg-white border border-gray-200 hover:bg-gray-50"
+                    : "bg-gray-50 border border-gray-100 opacity-50"
+                }`}
+              >
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 mb-2 ${
+                  isCompleted
+                    ? "bg-green-500 border-green-500 text-white"
+                    : isActive
+                    ? "bg-yellow-500 border-yellow-500 text-white"
+                    : "border-gray-300 text-gray-600"
+                }`}>
+                  {isCompleted ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    <Icon className="w-4 h-4" />
+                  )}
+                </div>
+                <span className={`text-xs font-medium text-center ${
+                  isActive ? "text-yellow-600" : isCompleted ? "text-green-600" : "text-gray-600"
+                }`}>
+                  {step.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">

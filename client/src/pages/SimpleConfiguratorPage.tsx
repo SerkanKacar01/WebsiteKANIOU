@@ -1,7 +1,7 @@
-import SimpleRollerBlindConfigurator from "@/components/SimpleRollerBlindConfigurator";
+import ModernRollerBlindConfigurator from "@/components/ModernRollerBlindConfigurator";
 
 const SimpleConfiguratorPage = () => {
-  return <SimpleRollerBlindConfigurator />;
+  return <ModernRollerBlindConfigurator />;
 };
 
 export default SimpleConfiguratorPage;

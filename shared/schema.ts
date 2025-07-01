@@ -446,6 +446,39 @@ export const insertOrderDocumentSchema = createInsertSchema(orderDocuments).omit
 export type OrderDocument = typeof orderDocuments.$inferSelect;
 export type InsertOrderDocument = z.infer<typeof insertOrderDocumentSchema>;
 
+// Color Sample Requests
+export const colorSampleRequests = pgTable("color_sample_requests", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull(),
+  selectedColor: text("selected_color").notNull(),
+  colorName: text("color_name").notNull(),
+  status: text("status").default("pending"), // 'pending', 'shipped', 'delivered'
+  shippingAddress: text("shipping_address"), // Optional - can be added later if needed
+  notes: text("notes"), // Internal notes
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertColorSampleRequestSchema = createInsertSchema(colorSampleRequests).omit({
+  id: true,
+  createdAt: true,
+  status: true,
+}).extend({
+  email: z.string()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  selectedColor: z.string()
+    .min(1, "Please select a color")
+    .max(50, "Color name must be less than 50 characters"),
+  colorName: z.string()
+    .min(1, "Color name is required")
+    .max(100, "Color name must be less than 100 characters"),
+  // Honeypot field for spam protection
+  website: z.string().max(0, "Invalid submission").optional(),
+});
+
+export type ColorSampleRequest = typeof colorSampleRequests.$inferSelect;
+export type InsertColorSampleRequest = z.infer<typeof insertColorSampleRequestSchema>;
+
 // Style Consultation Tables
 export const styleConsultations = pgTable("style_consultations", {
   id: serial("id").primaryKey(),

@@ -14,6 +14,7 @@ import { sendEmail } from "./services/sendgrid";
 import {
   insertContactSubmissionSchema,
   insertQuoteRequestSchema,
+  insertColorSampleRequestSchema,
 } from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";

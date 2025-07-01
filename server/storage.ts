@@ -32,6 +32,9 @@ import {
   orderDocuments,
   OrderDocument,
   InsertOrderDocument,
+  colorSampleRequests,
+  ColorSampleRequest,
+  InsertColorSampleRequest,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";
@@ -39,6 +42,7 @@ import { eq, desc, lt, and } from "drizzle-orm";
 declare global {
   var memoryOrders: PaymentOrder[] | undefined;
   var memoryAdminUsers: AdminUser[] | undefined;
+  var memoryColorSampleRequests: ColorSampleRequest[] | undefined;
 }
 
 export interface IStorage {
@@ -103,6 +107,12 @@ export interface IStorage {
   
   // Notification Logs
   createNotificationLog(log: InsertNotificationLog): Promise<NotificationLog>;
+  
+  // Color Sample Requests
+  createColorSampleRequest(request: InsertColorSampleRequest): Promise<ColorSampleRequest>;
+  getColorSampleRequests(): Promise<ColorSampleRequest[]>;
+  getColorSampleRequestById(id: number): Promise<ColorSampleRequest | undefined>;
+  updateColorSampleRequestStatus(id: number, status: string): Promise<void>;
 }
 
 class DatabaseStorage implements IStorage {
@@ -565,6 +575,65 @@ class DatabaseStorage implements IStorage {
   async createNotificationLog(log: InsertNotificationLog): Promise<NotificationLog> {
     const result = await db.insert(notificationLogs).values(log).returning();
     return result[0];
+  }
+
+  // Color Sample Requests
+  async createColorSampleRequest(request: InsertColorSampleRequest): Promise<ColorSampleRequest> {
+    try {
+      const result = await db.insert(colorSampleRequests).values(request).returning();
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for color sample request creation, using memory fallback');
+      // Memory fallback for color sample requests
+      if (!global.memoryColorSampleRequests) {
+        global.memoryColorSampleRequests = [];
+      }
+      const newRequest: ColorSampleRequest = {
+        id: Date.now(),
+        email: request.email,
+        selectedColor: request.selectedColor,
+        colorName: request.colorName,
+        status: 'pending',
+        shippingAddress: request.shippingAddress || null,
+        notes: request.notes || null,
+        createdAt: new Date(),
+      };
+      global.memoryColorSampleRequests.push(newRequest);
+      return newRequest;
+    }
+  }
+
+  async getColorSampleRequests(): Promise<ColorSampleRequest[]> {
+    try {
+      return await db.select().from(colorSampleRequests).orderBy(desc(colorSampleRequests.createdAt));
+    } catch (error) {
+      console.warn('Database connection issue for color sample requests');
+      return global.memoryColorSampleRequests || [];
+    }
+  }
+
+  async getColorSampleRequestById(id: number): Promise<ColorSampleRequest | undefined> {
+    try {
+      const result = await db.select().from(colorSampleRequests).where(eq(colorSampleRequests.id, id));
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for color sample request lookup');
+      const memoryRequests = global.memoryColorSampleRequests || [];
+      return memoryRequests.find(req => req.id === id);
+    }
+  }
+
+  async updateColorSampleRequestStatus(id: number, status: string): Promise<void> {
+    try {
+      await db.update(colorSampleRequests).set({ status }).where(eq(colorSampleRequests.id, id));
+    } catch (error) {
+      console.warn('Database connection issue for color sample request status update, using memory fallback');
+      const memoryRequests = global.memoryColorSampleRequests || [];
+      const request = memoryRequests.find(req => req.id === id);
+      if (request) {
+        request.status = status;
+      }
+    }
   }
 }
 

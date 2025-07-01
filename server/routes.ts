@@ -227,6 +227,8 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new
       // Send email notification to business first (most important)
       let emailSent = false;
       try {
+        console.log(`🔄 QUOTE FORM: Preparing to send email for quote request from ${email}`);
+        
         const emailSubject = `[KANIOU Offerte] ${productType} - ${name}`;
 
         const emailText = `
@@ -248,6 +250,7 @@ ${requirements || "Geen aanvullende wensen opgegeven"}
 Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new Date().toLocaleTimeString("nl-NL")}
         `.trim();
 
+        console.log(`📧 QUOTE FORM: Sending email to info@kaniou.be with subject: ${emailSubject}`);
         await sendMailgunEmail("info@kaniou.be", emailSubject, emailText);
         console.log(
           `✅ Quote request email sent successfully to info@kaniou.be from ${email}`,

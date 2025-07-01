@@ -150,9 +150,22 @@ export const insertQuoteRequestSchema = createInsertSchema(quoteRequests).omit({
     .max(500, "Dimensions must be less than 500 characters")
     .optional(),
   requirements: z.string()
-    .min(10, "Requirements must be at least 10 characters")
-    .max(2000, "Requirements must be less than 2000 characters")
-    .optional(),
+    .optional()
+    .refine((val) => {
+      // If field is empty, undefined, or null, it's valid (optional)
+      if (!val || val.trim() === "") return true;
+      // If field has content, it must be at least 10 characters
+      return val.trim().length >= 10;
+    }, {
+      message: "Requirements must be at least 10 characters when provided",
+    })
+    .refine((val) => {
+      // Check max length only if field has content
+      if (!val || val.trim() === "") return true;
+      return val.trim().length <= 2000;
+    }, {
+      message: "Requirements must be less than 2000 characters",
+    }),
   // Honeypot field for spam protection
   website: z.string().max(0, "Invalid submission").optional(),
 });

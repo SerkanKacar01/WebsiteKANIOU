@@ -28,14 +28,23 @@ import { apiRequest } from "@/lib/queryClient";
 
 // Create extended schema for the new form structure
 const quoteFormSchema = z.object({
-  firstName: z.string().min(2, "First name must be at least 2 characters"),
-  lastName: z.string().min(2, "Last name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  productType: z.string().min(1, "Product type is required"),
+  firstName: z.string().min(2, "Voornaam moet minstens 2 tekens bevatten"),
+  lastName: z.string().min(2, "Achternaam moet minstens 2 tekens bevatten"),
+  email: z.string().email("Gelieve een geldig e-mailadres in te voeren"),
+  phone: z.string().min(10, "Telefoonnummer moet minstens 10 cijfers bevatten"),
+  productType: z.string().min(1, "Producttype is verplicht"),
   width: z.string().optional(),
   height: z.string().optional(),
-  requirements: z.string().optional(),
+  requirements: z.string()
+    .optional()
+    .refine((val) => {
+      // If field is empty or undefined, it's valid (optional)
+      if (!val || val.trim() === "") return true;
+      // If field has content, it must be at least 10 characters
+      return val.trim().length >= 10;
+    }, {
+      message: "Gelieve minstens 10 tekens in te vullen bij uw aanvraag",
+    }),
   website: z.string().max(0, "Invalid submission").optional(),
 });
 
@@ -71,7 +80,10 @@ const QuoteForm = () => {
         productType: data.productType,
         dimensions:
           data.width && data.height ? `${data.width} x ${data.height} cm` : "",
-        requirements: data.requirements || "",
+        // Only send requirements if it has valid content (10+ chars), otherwise omit it
+        ...(data.requirements && data.requirements.trim().length >= 10 
+          ? { requirements: data.requirements.trim() } 
+          : {}),
         website: data.website || "",
       };
       return apiRequest("POST", "/api/quote-requests", transformedData);
@@ -250,19 +262,38 @@ const QuoteForm = () => {
         <FormField
           control={form.control}
           name="requirements"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Optioneel voor evt. opmerkingen</FormLabel>
-              <FormControl>
-                <Textarea
-                  rows={4}
-                  placeholder="Geef aan of u specifieke wensen of vragen heeft..."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const charCount = field.value?.length || 0;
+            const isValidLength = charCount === 0 || charCount >= 10;
+            const hasError = form.formState.errors.requirements;
+            
+            return (
+              <FormItem>
+                <FormLabel>Optioneel voor evt. opmerkingen</FormLabel>
+                <FormControl>
+                  <Textarea
+                    rows={4}
+                    placeholder="Geef aan of u specifieke wensen of vragen heeft..."
+                    className={`${hasError ? "border-red-500 ring-red-500" : ""}`}
+                    {...field}
+                  />
+                </FormControl>
+                <div className="flex justify-between items-center text-sm mt-1">
+                  <FormMessage />
+                  {charCount > 0 && charCount < 10 && (
+                    <span className="text-orange-600">
+                      {10 - charCount} tekens nog nodig
+                    </span>
+                  )}
+                  {charCount >= 10 && (
+                    <span className="text-green-600">
+                      ✓ Voldoende tekens
+                    </span>
+                  )}
+                </div>
+              </FormItem>
+            );
+          }}
         />
 
         {/* Honeypot field - hidden from users but visible to bots */}

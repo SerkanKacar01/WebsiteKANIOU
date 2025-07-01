@@ -27,8 +27,9 @@ import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
-import QuotePage from "@/pages/QuotePage";
-import OffertePage from "@/pages/OffertePage";
+// Temporarily commented out to isolate crash
+// import QuotePage from "@/pages/QuotePage";
+// import OffertePage from "@/pages/OffertePage";
 import ActiesPage from "@/pages/ActiesPage";
 import SmartQuote from "@/pages/SmartQuote";
 import ColorMatcherPage from "@/pages/ColorMatcherPage";
@@ -149,8 +150,9 @@ function Router() {
         <Route path="/contact" component={ContactPage} />
         <Route path="/zakelijk" component={BusinessPage} />
         <Route path="/business" component={BusinessPage} />
-        <Route path="/quote" component={QuotePage} />
-        <Route path="/offerte" component={OffertePage} />
+        {/* Temporarily commented out to isolate crash */}
+        {/* <Route path="/quote" component={QuotePage} /> */}
+        {/* <Route path="/offerte" component={OffertePage} /> */}
         <Route path="/acties" component={ActiesPage} />
         <Route path="/smart-quote" component={SmartQuote} />
         <Route path="/slimme-offerte" component={SmartQuote} />

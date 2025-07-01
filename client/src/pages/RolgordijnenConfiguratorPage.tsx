@@ -81,12 +81,13 @@ const fabricTypes = [
 ];
 
 const colors = [
-  { id: "wit", name: "Wit", hex: "#ffffff" },
+  { id: "white", name: "White", hex: "#ffffff" },
   { id: "creme", name: "Crème", hex: "#f5f5dc" },
   { id: "beige", name: "Beige", hex: "#f5deb3" },
-  { id: "grijs", name: "Grijs", hex: "#808080" },
-  { id: "antraciet", name: "Antraciet", hex: "#2f4f4f" },
-  { id: "zwart", name: "Zwart", hex: "#000000" },
+  { id: "gray", name: "Gray", hex: "#808080" },
+  { id: "taupe", name: "Taupe", hex: "#8b7355" },
+  { id: "black", name: "Black", hex: "#000000" },
+  { id: "brown", name: "Brown", hex: "#964b00" },
 ];
 
 const profileOptions = [
@@ -376,51 +377,90 @@ const RolgordijnenConfiguratorPage = () => {
         );
 
       case 2: // Color Selection
-        const availableColors = getAvailableColors();
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Kies uw kleur</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Selecteer de kleur die het beste bij uw interieur past. Beschikbare kleuren zijn afhankelijk van uw gekozen stoftype.
+              Selecteer de gewenste kleur uit onze basiskleurencollectie. Gratis kleurstalen zijn beschikbaar.
             </p>
             
-            {!configuration.fabricType ? (
-              <div className="text-center py-8 bg-gray-50 rounded-lg">
-                <p className="text-gray-500">Selecteer eerst een stoftype om de beschikbare kleuren te zien.</p>
-              </div>
-            ) : (
-              <>
-                <div className="mb-4 p-3 bg-blue-50 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    Beschikbare kleuren voor <strong>{fabricTypes.find(f => f.id === configuration.fabricType)?.name}</strong>
-                  </p>
-                </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {availableColors.map((color) => (
-                    <div
-                      key={color.id}
-                      className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
-                        configuration.color === color.id
-                          ? "border-[#d5c096] shadow-lg scale-105"
-                          : "border-gray-200 hover:border-[#d5c096]/50"
-                      }`}
-                      onClick={() => updateConfiguration("color", color.id)}
-                    >
-                      <div
-                        className="w-full h-16 rounded-lg mb-3 border"
-                        style={{ backgroundColor: color.hex }}
-                      ></div>
-                      <p className="text-center font-medium">{color.name}</p>
-                      {configuration.color === color.id && (
-                        <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
-                          <Check className="h-4 w-4" />
-                        </div>
-                      )}
+            {/* Top row - 4 colors */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              {colors.slice(0, 4).map((color) => (
+                <div
+                  key={color.id}
+                  className={`group relative border-2 rounded-lg p-3 cursor-pointer transition-all duration-300 ${
+                    configuration.color === color.id
+                      ? "border-[#d5c096] shadow-lg ring-2 ring-[#d5c096]/30"
+                      : "border-gray-200 hover:border-[#d5c096]/50 hover:shadow-md"
+                  }`}
+                  onClick={() => updateConfiguration("color", color.id)}
+                  title="Gratis stalen beschikbaar"
+                >
+                  <div
+                    className="w-full h-20 rounded-lg mb-2 border shadow-sm"
+                    style={{ backgroundColor: color.hex }}
+                  ></div>
+                  <p className="text-center font-medium text-sm">{color.name}</p>
+                  
+                  {/* Selection indicator */}
+                  {configuration.color === color.id && (
+                    <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
+                      <Check className="h-4 w-4" />
                     </div>
-                  ))}
+                  )}
+                  
+                  {/* Hover tooltip */}
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                    Gratis stalen beschikbaar
+                  </div>
                 </div>
-              </>
+              ))}
+            </div>
+            
+            {/* Bottom row - 3 colors */}
+            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
+              {colors.slice(4, 7).map((color) => (
+                <div
+                  key={color.id}
+                  className={`group relative border-2 rounded-lg p-3 cursor-pointer transition-all duration-300 ${
+                    configuration.color === color.id
+                      ? "border-[#d5c096] shadow-lg ring-2 ring-[#d5c096]/30"
+                      : "border-gray-200 hover:border-[#d5c096]/50 hover:shadow-md"
+                  }`}
+                  onClick={() => updateConfiguration("color", color.id)}
+                  title="Gratis stalen beschikbaar"
+                >
+                  <div
+                    className="w-full h-20 rounded-lg mb-2 border shadow-sm"
+                    style={{ backgroundColor: color.hex }}
+                  ></div>
+                  <p className="text-center font-medium text-sm">{color.name}</p>
+                  
+                  {/* Selection indicator */}
+                  {configuration.color === color.id && (
+                    <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
+                      <Check className="h-4 w-4" />
+                    </div>
+                  )}
+                  
+                  {/* Hover tooltip */}
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                    Gratis stalen beschikbaar
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {configuration.color && (
+              <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                <p className="text-sm text-green-800 font-medium">
+                  ✓ Geselecteerde kleur: {colors.find(c => c.id === configuration.color)?.name}
+                </p>
+                <p className="text-xs text-green-600 mt-1">
+                  Gratis kleurstalen kunnen worden aangevraagd voor deze kleur
+                </p>
+              </div>
             )}
           </div>
         );

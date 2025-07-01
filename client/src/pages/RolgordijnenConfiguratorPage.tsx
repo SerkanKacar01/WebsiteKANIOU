@@ -196,56 +196,56 @@ const RolgordijnenConfiguratorPage = () => {
   const steps: ConfigStep[] = [
     {
       id: 1,
-      title: "Kies uw stofsoort",
-      description: "Verduisterend, Lichtdoorlatend of Screenstof",
+      title: "Stofsoort",
+      description: "🧵 Stofsoort",
       completed: !!configuration.fabricType,
     },
     {
       id: 2,
-      title: "Kies kleur",
-      description: "Selecteer de gewenste kleur",
+      title: "Kleur",
+      description: "🎨 Kleur", 
       completed: !!configuration.color,
     },
     {
       id: 3,
-      title: "Kies uw profiel",
-      description: "Open profiel of dichte cassette",
-      completed: !!configuration.profile,
-    },
-    {
-      id: 4,
-      title: "Voer uw afmetingen in",
-      description: "Breedte en hoogte specificeren",
+      title: "Afmetingen",
+      description: "📏 Afmetingen",
       completed: configuration.width >= 40 && configuration.height >= 40,
     },
     {
+      id: 4,
+      title: "Profiel",
+      description: "🧩 Profiel",
+      completed: !!configuration.profile,
+    },
+    {
       id: 5,
-      title: "Montagewijze",
-      description: "In de dag of op de dag",
+      title: "Montage",
+      description: "🛠️ Montage",
       completed: !!configuration.mounting,
     },
     {
       id: 6,
       title: "Onderlat",
-      description: "Wit aluminium (standaard)",
+      description: "📐 Onderlat",
       completed: true, // Always true as it's included
     },
     {
       id: 7,
       title: "Bedieningstype",
-      description: "Kies het bedieningstype",
+      description: "⚙️ Bedieningstype",
       completed: !!configuration.controlType && (configuration.controlType.includes('gemotoriseerd') || !!configuration.controlColor),
     },
     {
       id: 8,
-      title: "Bedieningszijde",
-      description: "Links of rechts",
+      title: "Bedieningszijde", 
+      description: "↔️ Bedieningszijde",
       completed: !!configuration.operationSide,
     },
     {
       id: 9,
-      title: "Samenvatting",
-      description: "Overzicht en bestellen",
+      title: "Overzicht & Bestellen",
+      description: "🧾 Overzicht & Bestellen",
       completed: false,
     },
   ];
@@ -425,62 +425,95 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 3: // Profile Selection  
-        return (
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Kies uw profiel</h3>
-            <p className="text-sm text-gray-600 mb-6">
-              Selecteer tussen een open profiel (standaard) of een dichte cassette voor een strakke afwerking.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {profileOptions.map((profile) => (
-                <div
-                  key={profile.id}
-                  className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${
-                    configuration.profile === profile.id
-                      ? "border-[#d5c096] shadow-lg scale-105"
-                      : "border-gray-200 hover:border-[#d5c096]/50"
-                  }`}
-                  onClick={() => updateConfiguration("profile", profile.id)}
-                >
-                  <img
-                    src={profile.image}
-                    alt={profile.name}
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="p-4">
-                    <h4 className="font-semibold text-gray-900">{profile.name}</h4>
-                    <p className="text-sm text-gray-600 mb-2">{profile.description}</p>
-                    <div className="text-xs text-gray-500 mb-2 bg-gray-50 p-2 rounded">
-                      {profile.id === 'open' ? 
-                        'Het open profiel is de standaard optie met zichtbare bevestigingspunten.' :
-                        'De dichte cassette zorgt voor een strakke, moderne uitstraling zonder zichtbare bevestigingen.'
-                      }
-                    </div>
-                    {profile.price > 0 && (
-                      <p className="text-sm font-medium text-[#d5c096]">
-                        +{(profile.price * 100).toFixed(0)}% meerprijs
-                      </p>
-                    )}
-                  </div>
-                  {configuration.profile === profile.id && (
-                    <div className="absolute top-2 right-2 bg-[#d5c096] text-white rounded-full p-1">
-                      <Check className="h-4 w-4" />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 4: // Dimensions Input
+      case 3: // Dimensions Input
         const selectedFabric = fabricTypes.find(f => f.id === configuration.fabricType);
         const maxHeight = selectedFabric ? selectedFabric.maxHeight : 400;
         
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Voer uw afmetingen in</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Voer de exacte breedte en hoogte van uw rolgordijn in centimeters in. Meet zorgvuldig op voor het beste resultaat.
+            </p>
+            
+            {!configuration.fabricType ? (
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">Selecteer eerst een stoftype om de maximale afmetingen te zien.</p>
+              </div>
+            ) : (
+              <>
+                <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    Maximum hoogte voor <strong>{selectedFabric?.name}</strong>: {maxHeight}cm
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="width" className="text-base font-medium text-gray-700">
+                      Breedte (cm)
+                    </Label>
+                    <Input
+                      id="width"
+                      type="number"
+                      min={40}
+                      max={300}
+                      value={configuration.width}
+                      onChange={(e) => updateConfiguration("width", parseInt(e.target.value) || 40)}
+                      className="mt-2"
+                      placeholder="40"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      Minimum: 40cm, Maximum: 300cm
+                    </p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="height" className="text-base font-medium text-gray-700">
+                      Hoogte (cm)
+                    </Label>
+                    <Input
+                      id="height"
+                      type="number"
+                      min={40}
+                      max={maxHeight}
+                      value={configuration.height}
+                      onChange={(e) => updateConfiguration("height", parseInt(e.target.value) || 40)}
+                      className="mt-2"
+                      placeholder="40"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      Minimum: 40cm, Maximum: {maxHeight}cm
+                    </p>
+                  </div>
+                </div>
+
+                {isValidDimensions() && (
+                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-green-800">
+                          Afmetingen: {configuration.width} × {configuration.height} cm
+                        </p>
+                        <p className="text-sm text-green-600">
+                          Oppervlakte: {((configuration.width * configuration.height) / 10000).toFixed(2)} m²
+                        </p>
+                      </div>
+                      <p className="text-lg font-bold text-green-700">
+                        €{calculatePrice().toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        );
+
+      case 4: // Profile Selection        
+        return (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Kies uw profiel</h3>
             <p className="text-sm text-gray-600 mb-6">
               Voer de gewenste afmetingen in centimeters in (alleen hele getallen). Let op de maximale hoogte voor uw gekozen stoftype.
             </p>
@@ -959,46 +992,83 @@ const RolgordijnenConfiguratorPage = () => {
               </p>
             </div>
 
-            {/* Progress Steps */}
+            {/* Modern Progress Steps */}
             <div className="mb-8">
-              <div className="flex items-center justify-center space-x-4 overflow-x-auto pb-4">
-                {steps.map((step, index) => (
-                  <div
-                    key={step.id}
-                    className={`flex items-center ${
-                      index < steps.length - 1 ? "min-w-0" : ""
-                    }`}
-                  >
-                    <div
-                      className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-semibold ${
-                        currentStep === step.id
-                          ? "bg-[#d5c096] text-white"
-                          : step.completed
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-200 text-gray-600"
-                      }`}
-                    >
-                      {step.completed ? <Check className="h-5 w-5" /> : step.id}
-                    </div>
-                    <div className="ml-3 min-w-0">
-                      <p
-                        className={`text-sm font-medium ${
+              {/* Desktop: Horizontal layout */}
+              <div className="hidden md:block">
+                <div className="flex items-start justify-between max-w-7xl mx-auto px-4">
+                  {steps.map((step, index) => (
+                    <div key={step.id} className="flex flex-col items-center relative flex-1">
+                      {/* Step circle */}
+                      <div
+                        className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 z-10 bg-white ${
                           currentStep === step.id
-                            ? "text-[#d5c096]"
+                            ? "border-[#d5c096] bg-[#d5c096] text-white shadow-lg scale-110"
                             : step.completed
-                            ? "text-green-600"
-                            : "text-gray-500"
+                            ? "border-green-500 bg-green-500 text-white"
+                            : "border-gray-300 text-gray-400"
                         }`}
                       >
-                        {step.title}
-                      </p>
-                      <p className="text-xs text-gray-500">{step.description}</p>
+                        {step.completed ? (
+                          <Check className="h-5 w-5" />
+                        ) : (
+                          <span className="text-lg">{step.description.split(' ')[0]}</span>
+                        )}
+                      </div>
+                      
+                      {/* Step label */}
+                      <div className="mt-3 text-center max-w-[80px]">
+                        <p
+                          className={`text-xs font-medium leading-tight ${
+                            currentStep === step.id
+                              ? "text-[#d5c096]"
+                              : step.completed
+                              ? "text-green-600"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {step.title}
+                        </p>
+                      </div>
+                      
+                      {/* Connection line */}
+                      {index < steps.length - 1 && (
+                        <div className="absolute top-6 left-1/2 w-full h-0.5 -translate-y-0.5">
+                          <div 
+                            className={`ml-6 mr-6 h-full ${
+                              step.completed ? "bg-green-500" : "bg-gray-200"
+                            }`}
+                          />
+                        </div>
+                      )}
                     </div>
-                    {index < steps.length - 1 && (
-                      <ArrowRight className="h-4 w-4 text-gray-300 mx-4 flex-shrink-0" />
-                    )}
+                  ))}
+                </div>
+              </div>
+              
+              {/* Mobile: Current step indicator */}
+              <div className="md:hidden bg-[#d5c096] text-white p-4 rounded-lg mx-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">{steps[currentStep - 1]?.description.split(' ')[0]}</span>
+                    <div>
+                      <p className="font-medium">Stap {currentStep} van {steps.length}</p>
+                      <p className="text-sm opacity-90">{steps[currentStep - 1]?.title}</p>
+                    </div>
                   </div>
-                ))}
+                  
+                  {/* Progress bar */}
+                  <div className="flex-1 mx-4">
+                    <div className="w-full bg-white/20 rounded-full h-2">
+                      <div 
+                        className="bg-white h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${(currentStep / steps.length) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <span className="text-sm font-medium">{Math.round((currentStep / steps.length) * 100)}%</span>
+                </div>
               </div>
             </div>
 

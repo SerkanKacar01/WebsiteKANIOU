@@ -1,0 +1,67 @@
+🛠️ INSTRUCTION FOR REPLIT – ROLLER BLIND CONFIGURATOR + COLOR SAMPLE REQUEST
+
+🎯 GOAL:
+
+Build a lightweight and conversion-focused product configurator that allows the customer to:
+	1.	Choose a base color (visually shown)
+	2.	Enter their email address only
+	3.	Submit a request to receive physical fabric samples (small color swatches) of that chosen base color
+
+⸻
+
+✅ COMPONENT STRUCTURE
+
+1. Header Section
+	•	Title: “Rolgordijnen op maat – Kies uw kleur & ontvang gratis stalen”
+	•	Short paragraph:
+“Kies hieronder een basiskleur. U ontvangt gratis enkele stofstalen in deze kleur. Zo kunt u thuis het juiste type kiezen vóór uw bestelling.”
+
+2. Visual Color Selection
+	•	Display 6–10 base color blocks (bijv. Wit, Beige, Grijs, Zwart, Taupe, Donkerblauw, enz.)
+	•	Elke kleur heeft een mooie miniatuur (1 vaste afbeelding per kleur)
+	•	Wanneer gebruiker erop klikt → deze kleur wordt geselecteerd
+
+3. Email Input
+	•	Text field: “Vul uw e-mailadres in om uw gratis stalen te ontvangen:”
+	•	Placeholder: “voorbeeld@e-mail.be”
+	•	Only email required (no name, no address yet)
+
+4. Submit Button
+	•	Text: “Vraag gratis stalen aan”
+	•	When clicked:
+	•	Save the request in the database (with date, selected color, email)
+	•	Send confirmation email to user
+	•	Send internal email to admin with selected color + email for shipping
+
+⸻
+
+💡 TECHNISCHE DETAILS / TIPS VOOR REPLIT
+	•	Use a simple table: color_sample_requests with columns: email, selected_color, timestamp
+	•	Use one folder with pre-made swatches (e.g. 6–10) and reuse them across all products
+	•	Later kan je per kleur extra info tonen zoals: “Verkrijgbaar in verduisterend en lichtdoorlatend”
+
+⸻
+
+📸 PRODUCT VISUALS ABOVE CONFIGURATOR
+
+At the top of the page, place:
+	•	1–2 professional photos of the standard roller blind system
+	•	With annotations or tooltips for:
+	•	Cassette type (open profiel standaard)
+	•	Onderlat (wit aluminium)
+	•	Kettingbediening (wit kunststof ketting standaard)
+	•	Buisdikte
+
+This helps customers visueel vertrouwen te krijgen zonder alle kleine keuzes apart te moeten tonen.
+
+⸻
+
+🔒 PRIVACY & FOLLOW-UP
+	•	After submitting email: “Bedankt! U ontvangt binnenkort uw gratis stalen per post.”
+	•	Don’t require more fields – this reduces drempel voor klanten om te bestellen
+
+⸻
+
+🚀 STRATEGISCH ADVIES
+	•	Hou de configuratiepagina gescheiden van de echte offertepagina
+	•	Later kan je klanten die stalen aangevraagd hebben automatisch opvolgen via e-mail met een aanbieding

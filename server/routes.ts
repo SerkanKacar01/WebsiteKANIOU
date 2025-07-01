@@ -255,6 +255,13 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
         console.log(
           `✅ Quote request email sent successfully to info@kaniou.be from ${email}`,
         );
+        
+        // BACKUP: Also send to alternative email to ensure delivery
+        console.log(`📧 BACKUP: Sending copy to serkann.k01@gmail.com for guaranteed delivery`);
+        await sendMailgunEmail("serkann.k01@gmail.com", `[BACKUP] ${emailSubject}`, 
+          `BACKUP COPY - Original sent to info@kaniou.be\n\n${emailText}`);
+        console.log(`✅ Backup email sent to serkann.k01@gmail.com`);
+        
         emailSent = true;
       } catch (emailError) {
         console.error("❌ Failed to send quote request email:", emailError);

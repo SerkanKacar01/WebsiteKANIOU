@@ -14,7 +14,7 @@ export async function sendMailgunEmail(to: string, subject: string, text: string
     const response = await axios.post(
       `https://api.eu.mailgun.net/v3/${DOMAIN}/messages`,
       new URLSearchParams({
-        from: `KANIOU Zilvernaald <noreply@${DOMAIN}>`,
+        from: `KANIOU <info@${DOMAIN}>`,
         to: to,
         subject: subject,
         text: text,

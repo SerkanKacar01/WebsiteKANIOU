@@ -43,6 +43,8 @@ declare global {
   var memoryOrders: PaymentOrder[] | undefined;
   var memoryAdminUsers: AdminUser[] | undefined;
   var memoryColorSampleRequests: ColorSampleRequest[] | undefined;
+  var memoryCategories: Category[] | undefined;
+  var memoryProducts: Product[] | undefined;
 }
 
 export interface IStorage {
@@ -123,18 +125,52 @@ class DatabaseStorage implements IStorage {
       return await db.select().from(categories);
     } catch (error) {
       console.warn('Database connection issue for categories');
-      return [];
+      // Initialize memory storage with cleaning category for HTC 620
+      if (!global.memoryCategories) {
+        global.memoryCategories = [
+          {
+            id: 1,
+            name: 'Reiniging & Onderhoud',
+            description: 'Professionele reinigingsproducten voor vloeren, textiel en gordijnen',
+            imageUrl: '/images/cleaning-category.jpg'
+          }
+        ];
+      }
+      return global.memoryCategories;
     }
   }
   
   async getCategoryById(id: number): Promise<Category | undefined> {
-    const result = await db.select().from(categories).where(eq(categories.id, id));
-    return result[0];
+    try {
+      const result = await db.select().from(categories).where(eq(categories.id, id));
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for category by id');
+      if (!global.memoryCategories) {
+        await this.getCategories(); // Initialize memory storage
+      }
+      return global.memoryCategories?.find(cat => cat.id === id);
+    }
   }
   
   async createCategory(category: InsertCategory): Promise<Category> {
-    const result = await db.insert(categories).values(category).returning();
-    return result[0];
+    try {
+      const result = await db.insert(categories).values(category).returning();
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for category creation - using memory storage');
+      if (!global.memoryCategories) {
+        global.memoryCategories = [];
+      }
+      
+      const newCategory: Category = {
+        id: global.memoryCategories.length + 1,
+        ...category
+      };
+      
+      global.memoryCategories.push(newCategory);
+      return newCategory;
+    }
   }
   
   // Products
@@ -143,26 +179,127 @@ class DatabaseStorage implements IStorage {
       return await db.select().from(products);
     } catch (error) {
       console.warn('Database connection issue for products');
-      return [];
+      // Initialize memory storage with HTC 620 product
+      if (!global.memoryProducts) {
+        global.memoryProducts = [
+          {
+            id: 1,
+            name: 'HTC 620 Vlekkenformule – Tapijt & Textiel Vlekkenreiniger (0,5 liter)',
+            description: `**Professionele vlekkenreiniger voor tapijten en textiel**
+
+HTC 620 is een krachtige vlekkenformule speciaal ontwikkeld voor het effectief verwijderen van vlekken uit tapijten, gordijnen en meubelstof. Deze professionele reiniger is geschikt voor alle textielsoorten en biedt uitstekende resultaten.
+
+**Belangrijkste voordelen:**
+• Verwijdert effectief vlekken van koffie, wijn, vet en algemeen vuil
+• Veilig voor alle textielsoorten en kleuren
+• Laat geen residu achter
+• Snelle werking voor verse én ingedroogde vlekken
+• Milieuvriendelijke formule
+
+**Toepassingen:**
+• Tapijten en vloerkleden
+• Gordijnen en overgordijnen
+• Meubelstof en bekleding
+• Autointerieur textiel
+• Commerciële en residentiële ruimtes
+
+**Gebruiksaanwijzing:**
+1. Test eerst op een onopvallende plek
+2. Spray direct op de vlek
+3. Laat 2-3 minuten inwerken
+4. Dep voorzichtig met een schone doek
+5. Spoel indien nodig na met water
+
+**Technische specificaties:**
+• Volume: 0,5 liter
+• pH-waarde: 7-8 (mild alkalisch)
+• Biologisch afbreekbaar
+• Niet-giftig bij normaal gebruik`,
+            price: 9.95,
+            imageUrl: '/images/htc-620-vlekkenreiniger.jpg',
+            categoryId: 1,
+            isFeatured: true,
+            isBestSeller: false,
+            isNewArrival: true,
+            material: 'Vloeistof',
+            dimensions: '0,5 liter fles',
+            features: [
+              'Professionele kwaliteit',
+              'Geschikt voor alle textielsoorten', 
+              'Milieuvriendelijke formule',
+              'Snelle werking',
+              'Geen residu'
+            ],
+            colors: ['Transparant']
+          }
+        ];
+      }
+      return global.memoryProducts;
     }
   }
   
   async getProductById(id: number): Promise<Product | undefined> {
-    const result = await db.select().from(products).where(eq(products.id, id));
-    return result[0];
+    try {
+      const result = await db.select().from(products).where(eq(products.id, id));
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for product by id');
+      if (!global.memoryProducts) {
+        await this.getProducts(); // Initialize memory storage
+      }
+      return global.memoryProducts?.find(product => product.id === id);
+    }
   }
   
   async getProductsByCategory(categoryId: number): Promise<Product[]> {
-    return await db.select().from(products).where(eq(products.categoryId, categoryId));
+    try {
+      return await db.select().from(products).where(eq(products.categoryId, categoryId));
+    } catch (error) {
+      console.warn('Database connection issue for products by category');
+      if (!global.memoryProducts) {
+        await this.getProducts(); // Initialize memory storage
+      }
+      return global.memoryProducts?.filter(product => product.categoryId === categoryId) || [];
+    }
   }
   
   async getFeaturedProducts(): Promise<Product[]> {
-    return await db.select().from(products).where(eq(products.isFeatured, true));
+    try {
+      return await db.select().from(products).where(eq(products.isFeatured, true));
+    } catch (error) {
+      console.warn('Database connection issue for featured products');
+      if (!global.memoryProducts) {
+        await this.getProducts(); // Initialize memory storage
+      }
+      return global.memoryProducts?.filter(product => product.isFeatured) || [];
+    }
   }
   
   async createProduct(product: InsertProduct): Promise<Product> {
-    const result = await db.insert(products).values(product).returning();
-    return result[0];
+    try {
+      const result = await db.insert(products).values(product).returning();
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for product creation - using memory storage');
+      if (!global.memoryProducts) {
+        global.memoryProducts = [];
+      }
+      
+      const newProduct: Product = {
+        id: global.memoryProducts.length + 1,
+        ...product,
+        isFeatured: product.isFeatured ?? false,
+        isBestSeller: product.isBestSeller ?? false,
+        isNewArrival: product.isNewArrival ?? false,
+        material: product.material ?? null,
+        dimensions: product.dimensions ?? null,
+        features: product.features ?? null,
+        colors: product.colors ?? null
+      };
+      
+      global.memoryProducts.push(newProduct);
+      return newProduct;
+    }
   }
   
   // Gallery

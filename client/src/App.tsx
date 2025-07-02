@@ -48,6 +48,7 @@ import CookiePolicy from "@/pages/CookiePolicy";
 import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
 import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
+import CleaningProductsPage from "@/pages/CleaningProductsPage";
 import BedanktPage from "@/pages/BedanktPage";
 import VolgBestellingPage from "@/pages/VolgBestellingPage";
 import BestellingStatusPage from "@/pages/BestellingStatusPage";
@@ -141,6 +142,8 @@ function Router() {
         <Route path="/producten/rolgordijnen/simpele-configurator" component={SimpleConfiguratorPage} />
         <Route path="/rolgordijnen-simpele-configurator" component={SimpleConfiguratorPage} />
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
+        <Route path="/producten/reiniging" component={CleaningProductsPage} />
+        <Route path="/reiniging" component={CleaningProductsPage} />
         <Route path="/producten/squid" component={ProductCategoryPage} />
         <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />
         <Route path="/squid-configurator" component={SquidConfiguratorPage} />

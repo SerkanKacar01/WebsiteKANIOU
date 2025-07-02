@@ -1095,6 +1095,75 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     }
   });
 
+  // Categories endpoints
+  app.get("/api/categories", async (req, res) => {
+    try {
+      const categories = await storage.getCategories();
+      res.json(categories);
+    } catch (error: any) {
+      console.error("Categories fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch categories" });
+    }
+  });
+
+  app.post("/api/categories", async (req, res) => {
+    try {
+      const category = await storage.createCategory(req.body);
+      res.status(201).json(category);
+    } catch (error: any) {
+      console.error("Category creation error:", error);
+      res.status(500).json({ error: "Failed to create category" });
+    }
+  });
+
+  // Products endpoints
+  app.get("/api/products", async (req, res) => {
+    try {
+      const products = await storage.getProducts();
+      res.json(products);
+    } catch (error: any) {
+      console.error("Products fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch products" });
+    }
+  });
+
+  app.post("/api/products", async (req, res) => {
+    try {
+      const product = await storage.createProduct(req.body);
+      res.status(201).json(product);
+    } catch (error: any) {
+      console.error("Product creation error:", error);
+      res.status(500).json({ error: "Failed to create product" });
+    }
+  });
+
+  app.get("/api/products/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const product = await storage.getProductById(id);
+      
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      
+      res.json(product);
+    } catch (error: any) {
+      console.error("Product fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch product" });
+    }
+  });
+
+  app.get("/api/products/category/:categoryId", async (req, res) => {
+    try {
+      const categoryId = parseInt(req.params.categoryId);
+      const products = await storage.getProductsByCategory(categoryId);
+      res.json(products);
+    } catch (error: any) {
+      console.error("Products by category fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch products by category" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

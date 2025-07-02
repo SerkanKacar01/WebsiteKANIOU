@@ -34,6 +34,7 @@ interface Configuration {
   width: number;
   height: number;
   mounting: string;
+  bottomBar: string;
   controlType: string;
   controlColor: string;
   operationSide: string;
@@ -115,6 +116,33 @@ const mountingOptions = [
   }
 ];
 
+const bottomBarOptions = [
+  {
+    id: "standard",
+    name: "White aluminium bar",
+    description: "Standard – included at no extra cost",
+    details: "The aluminium bar ensures your roller blind hangs straight and has a professional look. Always white and perfectly matched with our fabrics.",
+    pricePercentage: 0,
+    image: "https://images.unsplash.com/photo-1615529328677-ac9d21bee59f?w=200&h=150&fit=crop"
+  },
+  {
+    id: "one-side",
+    name: "White aluminium bar – one side covered",
+    description: "One side of the bar is wrapped in matching fabric for a softer look, ideal for modern interiors. Adds 10% to the total price.",
+    details: "",
+    pricePercentage: 10,
+    image: "https://images.unsplash.com/photo-1615529328677-ac9d21bee59f?w=200&h=150&fit=crop"
+  },
+  {
+    id: "both-sides",
+    name: "White aluminium bar – both sides covered",
+    description: "The bar is wrapped in matching fabric on both front and back for a seamless and luxurious finish. Adds 15% to the total price.",
+    details: "",
+    pricePercentage: 15,
+    image: "https://images.unsplash.com/photo-1615529328677-ac9d21bee59f?w=200&h=150&fit=crop"
+  }
+];
+
 const controlTypes = [
   {
     id: "kunststof-ketting",
@@ -181,6 +209,7 @@ const RolgordijnenConfiguratorPage = () => {
     width: 40,
     height: 40,
     mounting: "",
+    bottomBar: "standard", // Default to standard white aluminium bar
     controlType: "",
     controlColor: "",
     operationSide: "",
@@ -222,7 +251,7 @@ const RolgordijnenConfiguratorPage = () => {
       id: 6,
       title: "Onderlat",
       description: "📐 Onderlat",
-      completed: true, // Always true as it's included
+      completed: !!configuration.bottomBar,
     },
     {
       id: 7,
@@ -278,6 +307,12 @@ const RolgordijnenConfiguratorPage = () => {
     const controlType = controlTypes.find(c => c.id === configuration.controlType);
     if (controlType && controlType.price > 0) {
       basePrice += controlType.price;
+    }
+
+    // Add bottom bar percentage surcharge
+    const bottomBar = bottomBarOptions.find(b => b.id === configuration.bottomBar);
+    if (bottomBar && bottomBar.pricePercentage > 0) {
+      basePrice = basePrice * (1 + bottomBar.pricePercentage / 100);
     }
 
     const totalPrice = basePrice * configuration.quantity;
@@ -640,35 +675,72 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 6: // Bottom Bar (Fixed)
+      case 6: // Bottom Bar Selection
         return (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Onderlat</h3>
+            <h3 className="text-lg font-semibold mb-4">Onderlat opties</h3>
             <p className="text-sm text-gray-600 mb-6">
-              Alle rolgordijnen worden standaard geleverd met een witte aluminium onderlat. Deze zorgt voor een strak afhangende doek.
+              Kies het type onderlat voor uw rolgordijn. De standaard witte aluminium lat is inbegrepen, of kies voor een luxere afwerking met stoffering.
             </p>
             
-            <div className="border-2 border-[#d5c096] bg-[#d5c096]/5 rounded-lg p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                  <Package className="h-8 w-8 text-gray-500" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-gray-900 mb-2">Wit aluminium onderlat</h4>
-                  <p className="text-sm text-gray-600 mb-2">Standaard inbegrepen</p>
-                  <div className="text-xs text-gray-500 bg-white/50 p-3 rounded">
-                    De aluminium onderlat zorgt ervoor dat uw rolgordijn recht hangt en een professionele uitstraling heeft. Deze is altijd wit van kleur en perfect afgestemd op onze rolgordijnen.
+            <div className="space-y-4">
+              {bottomBarOptions.map((option) => (
+                <div
+                  key={option.id}
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                    configuration.bottomBar === option.id
+                      ? "border-[#d5c096] bg-[#d5c096]/5"
+                      : "border-gray-200 hover:border-[#d5c096]/50"
+                  }`}
+                  onClick={() => updateConfiguration("bottomBar", option.id)}
+                >
+                  <div className="flex items-start gap-4">
+                    {/* Radio button indicator */}
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-1 ${
+                      configuration.bottomBar === option.id
+                        ? "border-[#d5c096] bg-[#d5c096]"
+                        : "border-gray-300"
+                    }`}>
+                      {configuration.bottomBar === option.id && (
+                        <div className="w-2 h-2 rounded-full bg-white"></div>
+                      )}
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-gray-900">{option.name}</h4>
+                        {option.pricePercentage > 0 && (
+                          <span className="text-sm font-medium text-[#d5c096]">
+                            +{option.pricePercentage}%
+                          </span>
+                        )}
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mb-2">{option.description}</p>
+                      
+                      {option.details && (
+                        <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
+                          {option.details}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className="text-[#d5c096]">
-                  <Check className="h-6 w-6" />
-                </div>
-              </div>
+              ))}
             </div>
             
-            <div className="mt-4 text-center">
-              <p className="text-sm text-gray-500">✓ Automatisch inbegrepen - geen extra kosten</p>
-            </div>
+            {configuration.bottomBar && (
+              <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                <p className="text-sm text-green-800 font-medium">
+                  ✓ Geselecteerde onderlat: {bottomBarOptions.find(b => b.id === configuration.bottomBar)?.name}
+                </p>
+                {configuration.bottomBar !== 'standard' && (
+                  <p className="text-xs text-green-600 mt-1">
+                    Prijs wordt aangepast met {bottomBarOptions.find(b => b.id === configuration.bottomBar)?.pricePercentage}%
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         );
 

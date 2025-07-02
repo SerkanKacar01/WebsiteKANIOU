@@ -29,11 +29,10 @@ const Header = () => {
   const { t } = useLanguage();
   const { summary, openCart } = useCart();
 
-  // Define product categories for dropdown - All 20 official categories
+  // Define product categories for dropdown - Updated list per user requirements
   const productCategories = [
     { label: "Overgordijnen", href: "/producten/overgordijnen" },
     { label: "Vitrages", href: "/producten/vitrages" },
-    { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
     { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
     { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
     { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
@@ -49,7 +48,6 @@ const Header = () => {
     { label: "Dakraam zonweringen", href: "/producten/dakraam-zonweringen" },
     { label: "Gordijnrails", href: "/producten/gordijnrails" },
     { label: "Gordijnroedes", href: "/producten/gordijnroedes" },
-    { label: "SQUID textile foil", href: "/producten/squid" },
   ];
 
   // Define navigation items

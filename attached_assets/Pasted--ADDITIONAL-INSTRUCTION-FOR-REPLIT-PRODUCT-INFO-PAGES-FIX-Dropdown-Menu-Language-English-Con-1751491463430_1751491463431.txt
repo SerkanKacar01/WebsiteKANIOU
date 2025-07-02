@@ -1,0 +1,68 @@
+🔧 ADDITIONAL INSTRUCTION FOR REPLIT – PRODUCT INFO PAGES FIX (Dropdown Menu)
+
+Language: English
+Content language: Dutch
+Status: Urgent
+Scope: Navigation Menu + Product Pages Visibility (desktop + mobile)
+
+⸻
+
+✅ 9. Dropdown menu ‘PRODUCTEN’ – repair and link all product pages
+
+Problem: No product page opens anymore via the “Producten” dropdown. All links are broken or lead nowhere.
+
+Task:
+	•	Go through every product listed in the dropdown menu “PRODUCTEN”.
+	•	For each item, make sure the page opens and loads correctly, including:
+	•	Title
+	•	Introduction text
+	•	Example image (if available)
+	•	Layout responsive on mobile and desktop
+
+Producten die zichtbaar moeten blijven in het dropdownmenu + elk een eigen informatieve pagina moeten hebben:
+	1.	Overgordijnen
+	2.	Vitrages
+	3.	Duo rolgordijnen
+	4.	Textiel lamellen
+	5.	Kunststof lamellen
+	6.	Houten jaloezieën
+	7.	Kunststof jaloezieën
+	8.	Textiel raamfolie
+	9.	Houten shutters
+	10.	Inzethorren
+	11.	Opzethorren
+	12.	Plissé hordeuren
+	13.	Plissé
+	14.	Duo plissé
+	15.	Dakraam zonweringen
+	16.	Gordijnrails
+	17.	Gordijnroedes
+
+🚫 Verwijderen uit dropdownmenu + pagina’s onzichtbaar maken:
+	•	Rolgordijnen
+	•	SQUID textile foil
+
+⸻
+
+✅ 10. Each product info page must include (in Dutch):
+	•	Productnaam als titel
+	•	Korte beschrijving van het product
+	•	Toepassingen (bv. woonkamer, badkamer, enz.)
+	•	Voordelen van het product (bv. vochtbestendig, verduisterend)
+	•	Mogelijke kleuren / materialen (optioneel)
+	•	Foto indien beschikbaar
+
+💡 Tip: Gebruik voorlopig dummy content en één afbeelding indien nodig, zodat de structuur functioneel is. Inhoud wordt later definitief aangeleverd.
+
+⸻
+
+✅ 11. Responsive check:
+	•	Alle pagina’s moeten perfect leesbaar en klikbaar zijn op:
+	•	📱 mobiele schermen
+	•	💻 desktop schermen
+	•	Dropdown moet openklappen en links moeten werken op beide apparaten.
+
+⸻
+
+❗ Opmerking voor Replit:
+Gebruik bestaande pagina-IDs of route-mapping indien beschikbaar. Voorkom dubbele routes of 404-pagina’s. Indien pagina’s zijn gedeactiveerd of verplaatst, herstel ze via CMS of paginabeheer.

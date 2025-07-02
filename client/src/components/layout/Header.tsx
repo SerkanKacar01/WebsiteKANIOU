@@ -3,10 +3,9 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown, ShoppingCart } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
-import { useCart } from "@/context/CartContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
 import LanguageSelector from "./LanguageSelector";
 import NewsletterSignup from "./NewsletterSignup";
@@ -27,7 +26,6 @@ const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
-  const { summary, openCart } = useCart();
 
   // Define product categories for dropdown - Updated list per user requirements
   const productCategories = [
@@ -125,22 +123,6 @@ const Header = () => {
 
           {isMobile ? (
             <div className="flex items-center gap-2">
-              {/* Cart Icon for Mobile */}
-              <Link href="/winkelwagen">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="relative text-primary p-2 min-h-[44px] min-w-[44px]"
-                >
-                  <ShoppingCart className="h-6 w-6" />
-                  {summary.totalItems > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-[#E6C988] text-gray-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center min-w-[20px]">
-                      {summary.totalItems}
-                    </span>
-                  )}
-                </Button>
-              </Link>
-              
               <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
@@ -223,14 +205,7 @@ const Header = () => {
                         Offerte
                       </Button>
                     </Link>
-                    <Link href="/shop">
-                      <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
-                        onClick={handleMobileNavClick}
-                      >
-                        Shop
-                      </Button>
-                    </Link>
+
                   </div>
                 </div>
               </SheetContent>
@@ -286,22 +261,6 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3">
-                {/* Cart Icon for Desktop */}
-                <Link href="/winkelwagen">
-                  <Button 
-                    variant="ghost"
-                    size="icon"
-                    className="relative text-primary hover:text-accent transition-colors h-8 w-8"
-                  >
-                    <ShoppingCart className="h-5 w-5" />
-                    {summary.totalItems > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-[#E6C988] text-gray-900 text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center min-w-[16px]">
-                        {summary.totalItems}
-                      </span>
-                    )}
-                  </Button>
-                </Link>
-                
                 <Link href="/acties">
                   <Button 
                     className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
@@ -318,14 +277,7 @@ const Header = () => {
                     Offerte
                   </Button>
                 </Link>
-                <Link href="/shop">
-                  <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
-                    onClick={handleNavClick}
-                  >
-                    Shop
-                  </Button>
-                </Link>
+
               </div>
             </nav>
           )}

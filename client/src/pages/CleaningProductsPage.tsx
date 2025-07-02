@@ -5,14 +5,9 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useCart } from "@/context/CartContext";
-import { useToast } from "@/hooks/use-toast";
-import { ShoppingCart, Star, Check, Package, Heart, Eye } from "lucide-react";
+import { Star, Check, Package, Heart, Eye } from "lucide-react";
 
 const CleaningProductsPage: React.FC = () => {
-  const { addToCart } = useCart();
-  const { toast } = useToast();
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   // HTC 620 product data
   const htcProduct = {
@@ -63,38 +58,7 @@ const CleaningProductsPage: React.FC = () => {
     reviewCount: 127
   };
 
-  const handleAddToCart = async () => {
-    try {
-      setIsAddingToCart(true);
-      
-      await addToCart({
-        productType: 'reiniging',
-        productName: htcProduct.name,
-        material: 'Vlekkenreiniger',
-        color: 'Wit',
-        quantity: 1,
-        unitPrice: htcProduct.price,
-        imageUrl: htcProduct.imageUrl,
-        customizations: {
-          volume: htcProduct.specifications.volume,
-          brand: htcProduct.specifications.brand
-        }
-      });
 
-      toast({
-        title: "Product toegevoegd!",
-        description: `${htcProduct.name} is toegevoegd aan uw winkelwagen.`,
-      });
-    } catch (error) {
-      toast({
-        title: "Fout",
-        description: "Er is een fout opgetreden bij het toevoegen aan de winkelwagen.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsAddingToCart(false);
-    }
-  };
 
   return (
     <>
@@ -185,36 +149,29 @@ const CleaningProductsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  {/* Quantity Selector */}
-                  <div className="flex items-center gap-4">
-                    <label className="text-sm font-medium">Aantal:</label>
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm">-</Button>
-                      <span className="w-12 text-center">1</span>
-                      <Button variant="outline" size="sm">+</Button>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <Button 
-                      className="w-full bg-[#d5c096] hover:bg-[#d5c096]/90"
-                      size="lg"
-                      onClick={handleAddToCart}
-                      disabled={isAddingToCart}
-                    >
-                      <ShoppingCart className="h-5 w-5 mr-2" />
-                      {isAddingToCart ? "Toevoegen..." : "In winkelwagen"}
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="w-full"
-                      size="lg"
-                    >
-                      <Heart className="h-5 w-5 mr-2" />
-                      Bewaren
-                    </Button>
+                {/* Contact informatie voor bestellingen */}
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-3">
+                    Voor bestellingen en meer informatie:
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    <Link href="/contact">
+                      <Button 
+                        className="w-full bg-[#d5c096] hover:bg-[#d5c096]/90"
+                        size="lg"
+                      >
+                        Neem Contact Op
+                      </Button>
+                    </Link>
+                    <Link href="/offerte">
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        size="lg"
+                      >
+                        Vraag Offerte Aan
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </CardContent>

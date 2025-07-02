@@ -1164,162 +1164,43 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     }
   });
 
-  // Shopping Cart API endpoints
+  // Shopping Cart API endpoints - DISABLED (E-commerce functionality removed)
+  /*
   app.post("/api/cart/add", async (req, res) => {
-    try {
-      const cartItem = await storage.addToCart(req.body);
-      res.status(201).json({ success: true, item: cartItem });
-    } catch (error: any) {
-      console.error("Add to cart error:", error);
-      res.status(500).json({ error: "Failed to add item to cart" });
-    }
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
 
   app.get("/api/cart/:sessionId", async (req, res) => {
-    try {
-      const { sessionId } = req.params;
-      const cartData = await storage.getCartBySession(sessionId);
-      res.json(cartData);
-    } catch (error: any) {
-      console.error("Get cart error:", error);
-      res.status(500).json({ error: "Failed to fetch cart" });
-    }
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
 
   app.patch("/api/cart/item/:itemId", async (req, res) => {
-    try {
-      const itemId = parseInt(req.params.itemId);
-      const { quantity } = req.body;
-      
-      if (!quantity || quantity < 1) {
-        return res.status(400).json({ error: "Invalid quantity" });
-      }
-
-      const updatedItem = await storage.updateCartItemQuantity(itemId, quantity);
-      res.json({ success: true, item: updatedItem });
-    } catch (error: any) {
-      console.error("Update cart item error:", error);
-      res.status(500).json({ error: "Failed to update cart item" });
-    }
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
 
   app.delete("/api/cart/item/:itemId", async (req, res) => {
-    try {
-      const itemId = parseInt(req.params.itemId);
-      await storage.removeFromCart(itemId);
-      res.json({ success: true });
-    } catch (error: any) {
-      console.error("Remove from cart error:", error);
-      res.status(500).json({ error: "Failed to remove item from cart" });
-    }
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
 
   app.delete("/api/cart/:sessionId", async (req, res) => {
-    try {
-      const { sessionId } = req.params;
-      await storage.clearCart(sessionId);
-      res.json({ success: true });
-    } catch (error: any) {
-      console.error("Clear cart error:", error);
-      res.status(500).json({ error: "Failed to clear cart" });
-    }
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
+  */
 
-  // Payment Routes
+  // Payment Routes - DISABLED (E-commerce functionality removed)
+  /*
   app.post("/api/payment/create", async (req, res) => {
-    try {
-      const { items, totalAmount, currency, description, redirectUrl, webhookUrl } = req.body;
-
-      if (!items || !totalAmount || !currency || !description || !redirectUrl) {
-        return res.status(400).json({ error: "Missing required payment fields" });
-      }
-
-      // Create Mollie payment using the existing API client
-      const mollieApiKey = process.env.MOLLIE_API_KEY;
-      if (!mollieApiKey) {
-        return res.status(500).json({ error: "Mollie API key not configured" });
-      }
-
-      const paymentData = {
-        amount: {
-          currency: currency,
-          value: totalAmount.toFixed(2)
-        },
-        description: description,
-        redirectUrl: redirectUrl,
-        webhookUrl: webhookUrl,
-        metadata: {
-          items: JSON.stringify(items),
-          sessionId: req.sessionID
-        }
-      };
-
-      const response = await fetch("https://api.mollie.com/v2/payments", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${mollieApiKey}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(paymentData)
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error("Mollie payment creation failed:", errorData);
-        throw new Error("Payment creation failed");
-      }
-
-      const payment = await response.json();
-      
-      res.json({ 
-        checkoutUrl: payment._links.checkout.href,
-        paymentId: payment.id 
-      });
-
-    } catch (error: any) {
-      console.error("Payment creation error:", error);
-      res.status(500).json({ error: "Failed to create payment" });
-    }
+    // Payment functionality has been disabled
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
+  */
 
+  /*
   app.post("/api/payment/webhook", async (req, res) => {
-    try {
-      const paymentId = req.body.id;
-      
-      if (!paymentId) {
-        return res.status(400).json({ error: "Payment ID required" });
-      }
-
-      // Verify payment status with Mollie
-      const mollieApiKey = process.env.MOLLIE_API_KEY;
-      const response = await fetch(`https://api.mollie.com/v2/payments/${paymentId}`, {
-        headers: {
-          "Authorization": `Bearer ${mollieApiKey}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to verify payment");
-      }
-
-      const payment = await response.json();
-      
-      if (payment.status === 'paid') {
-        // Clear the cart for successful payments
-        const sessionId = payment.metadata?.sessionId;
-        if (sessionId) {
-          await storage.clearCart(sessionId);
-        }
-        
-        console.log(`Payment ${paymentId} completed successfully`);
-      }
-
-      res.status(200).send("OK"); // Mollie expects 200 response
-    } catch (error: any) {
-      console.error("Payment webhook error:", error);
-      res.status(500).json({ error: "Webhook processing failed" });
-    }
+    // Payment webhook disabled - e-commerce functionality removed
+    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
   });
+  */
 
   const httpServer = createServer(app);
   return httpServer;

@@ -120,7 +120,17 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
-- July 2, 2025: COMPLETE SHOPPING CART SYSTEM WITH MOLLIE INTEGRATION IMPLEMENTED
+- July 2, 2025: COMPLETE E-COMMERCE SYSTEM REMOVAL COMPLETED
+  - ✅ Removed all cart icons and shop buttons from header (desktop & mobile)
+  - ✅ Disabled and redirected all e-commerce routes (/shop, /cart, /winkelwagen, /checkout, /afrekenen)
+  - ✅ Removed cart functionality from HTC 620 product page - replaced with contact buttons
+  - ✅ Disabled all Mollie payment integration endpoints on server
+  - ✅ Commented out all cart API endpoints (/api/cart/*, /api/payment/*)
+  - ✅ Removed CartProvider and cart context from application
+  - ✅ Updated product pages to show information only (no purchasing capability)
+  - ✅ All e-commerce routes now redirect to home with "Deze pagina is niet beschikbaar" message
+  - 🎯 Result: Website is now purely informational with contact/quote functionality only
+- July 2, 2025: COMPLETE SHOPPING CART SYSTEM WITH MOLLIE INTEGRATION IMPLEMENTED (REMOVED)
   - ✅ Complete cart API backend with memory storage and session management
   - ✅ React context for cart state management across entire application
   - ✅ Cart icon in header (desktop & mobile) with yellow badge showing item count

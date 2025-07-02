@@ -1,0 +1,77 @@
+🚨 URGENT FINAL INSTRUCTION FOR REPLIT
+
+REMOVE SHOP & CART COMPLETELY FROM SYSTEM – NO ONLINE SALES
+
+🔧 Instruction Language: English (for Replit execution)
+🌐 Frontend Content Language: Dutch
+📱 Applies to: mobile + desktop
+🎯 Objective: The website must no longer have any e-commerce or checkout system active or visible.
+
+⸻
+
+✅ 1. REMOVE “Shop” button (header/top menu)
+	•	Delete the “Shop” button from the top navigation bar completely.
+	•	The button must not be visible on any page, both desktop and mobile.
+	•	If the button is inserted via CMS or navigation component, permanently remove it.
+
+⸻
+
+✅ 2. REMOVE “Winkelwagen” or Cart icon in header
+	•	Completely delete the cart icon or cart dropdown from the top bar.
+	•	Do not show it even if 1 or more products are added.
+	•	Disable any dynamic badge or counter for cart items (e.g. 0 artikelen).
+
+⸻
+
+✅ 3. DISABLE ENTIRE SHOP SYSTEM ROUTES
+	•	Deactivate or delete the following pages/routes:
+	•	/shop
+	•	/winkelwagen
+	•	/checkout
+	•	/cart
+	•	/afrekenen
+
+👉 Redirect all of these to / (home) or return a 404 error with Dutch message:
+“Deze pagina is niet beschikbaar.”
+
+⸻
+
+✅ 4. REMOVE “In winkelwagen” buttons from all product pages
+	•	On each product page (like HTC 620 Vlekkenformule), remove:
+	•	Add-to-cart button
+	•	Quantity selector (+ / – buttons)
+	•	Price total calculation
+	•	“Afrekenen” or payment block
+
+👉 Keep only:
+	•	Product name, image, prijs incl. btw, and beschrijving
+	•	Example: the product should look like a brochure, not a webshop.
+
+⸻
+
+✅ 5. REMOVE Mollie integration
+	•	Disconnect and fully deactivate any Mollie API/payment integration.
+	•	If JavaScript code, forms, or tokens are still active, delete them completely.
+	•	There must be no payment method active anywhere.
+
+⸻
+
+✅ 6. REMOVE product categories from dropdown IF they link to shop
+	•	In the “Producten” dropdown, remove all links that open product shop pages.
+	•	You can keep informational categories (zoals “Gordijnrails”) but link them only to non-shopping pages.
+
+⸻
+
+✅ 7. IMPORTANT FOR MOBILE
+	•	All of the above steps must also be applied on mobile layout.
+	•	No cart icon, no “shop” link, no add-to-cart buttons, no Mollie code.
+
+⸻
+
+✅ 8. CHECKPOINT AFTER REMOVAL
+
+After completing:
+	•	Go to homepage
+	•	Check the top navigation on desktop + mobile
+	•	Try accessing /shop, /winkelwagen, /checkout, etc. — they must NOT work
+	•	Visit a product (like HTC 620): only see product info, no cart

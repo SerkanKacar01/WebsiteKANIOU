@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
-import { CartProvider } from "@/context/CartContext";
+
 import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
@@ -100,7 +100,11 @@ function Router() {
         {/* Product categories */}
         <Route path="/products" component={ProductsPage} />
         <Route path="/producten" component={ProductsPage} />
-        <Route path="/shop" component={ProductsPage} />
+        {/* Disabled shop route - redirect to home */}
+        <Route path="/shop" component={() => {
+          window.location.href = '/';
+          return <div>Deze pagina is niet beschikbaar.</div>;
+        }} />
         
         {/* All product category routes for both /products/ and /producten/ paths */}
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
@@ -189,9 +193,23 @@ function Router() {
         <Route path="/bestelling-status/:id" component={BestellingStatusPage} />
         <Route path="/track-order" component={TrackOrderPage} />
         
-        {/* Shopping Cart */}
-        <Route path="/cart" component={CartPage} />
-        <Route path="/winkelwagen" component={CartPage} />
+        {/* Disabled shopping cart routes - redirect to home */}
+        <Route path="/cart" component={() => {
+          window.location.href = '/';
+          return <div>Deze pagina is niet beschikbaar.</div>;
+        }} />
+        <Route path="/winkelwagen" component={() => {
+          window.location.href = '/';
+          return <div>Deze pagina is niet beschikbaar.</div>;
+        }} />
+        <Route path="/checkout" component={() => {
+          window.location.href = '/';
+          return <div>Deze pagina is niet beschikbaar.</div>;
+        }} />
+        <Route path="/afrekenen" component={() => {
+          window.location.href = '/';
+          return <div>Deze pagina is niet beschikbaar.</div>;
+        }} />
         
         {/* Hidden Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
@@ -242,24 +260,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <TooltipProvider>
-          <Toaster />
-          <MobileLayoutWrapper>
-            <Router />
-          </MobileLayoutWrapper>
-          <FloatingActionButtons />
-          <CookieConsentBanner />
-          <CookiebotSetup />
+      <TooltipProvider>
+        <Toaster />
+        <MobileLayoutWrapper>
+          <Router />
+        </MobileLayoutWrapper>
+        <FloatingActionButtons />
+        <CookieConsentBanner />
+        <CookiebotSetup />
 
-          {shouldShowOnboarding && (
-            <OnboardingWizard 
-              onComplete={handleOnboardingComplete}
-              onSkip={handleOnboardingSkip}
-            />
-          )}
-        </TooltipProvider>
-      </CartProvider>
+        {shouldShowOnboarding && (
+          <OnboardingWizard 
+            onComplete={handleOnboardingComplete}
+            onSkip={handleOnboardingSkip}
+          />
+        )}
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }

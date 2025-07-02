@@ -661,6 +661,37 @@ const ProductsPage = () => {
     //     badge: "Essential",
     //   },
     // ],
+    reiniging: [
+      {
+        id: 10,
+        title: "HTC 620 Vlekkenformule",
+        subtitle: "Professionele vlekkenreiniger",
+        description:
+          "Verwijdert eenvoudig vlekken uit textiel, meubelstof en tapijt. Direct toepasbaar met handige sprayflacon. Niet geschikt voor leder.",
+        image: "/images/htc-620-vlekkenreiniger.jpg",
+        products: [
+          {
+            name: "HTC 620 Vlekkenformule",
+            price: "€16,95",
+            popular: true,
+          },
+        ],
+        href: "/producten/reiniging",
+        badge: "Nieuw",
+        features: [
+          "Professionele kwaliteit",
+          "Geschikt voor alle textielsoorten",
+          "Milieuvriendelijke formule",
+          "Snelle werking",
+          "Geen residu"
+        ],
+        instructions: [
+          "Spray direct op de vlek",
+          "Laat 2-3 minuten inwerken", 
+          "Dep voorzichtig met een schone doek"
+        ]
+      },
+    ],
     accessoires: [
       {
         id: 6,
@@ -774,7 +805,7 @@ const ProductsPage = () => {
     if (selectedCategory === "alles") {
       allProducts = [
         // horren temporarily excluded
-
+        ...productCategories.reiniging,
         ...productCategories.accessoires.filter(item => item.title !== "Rolgordijnen"),
       ];
     } else if (selectedCategory === "horren") {
@@ -784,6 +815,9 @@ const ProductsPage = () => {
       allProducts = productCategories.accessoires.filter(
         (item) => item.title === "Gordijnrails",
       );
+
+    } else if (selectedCategory === "reiniging") {
+      allProducts = productCategories.reiniging;
 
     } else if (selectedCategory === "accessoires") {
       allProducts = productCategories.accessoires;
@@ -869,6 +903,9 @@ const ProductsPage = () => {
 
     return {
       horren: [], // Temporarily empty - horren section hidden
+      reiniging: filteredProducts.filter((p) =>
+        productCategories.reiniging.includes(p),
+      ),
       accessoires: filteredProducts.filter((p) =>
         productCategories.accessoires.includes(p),
       ),
@@ -1423,7 +1460,7 @@ const ProductsPage = () => {
                 {[
                   { id: "alles", label: "Show All" },
                   // { id: "horren", label: "Horren" }, // TEMPORARILY REMOVED
-
+                  { id: "reiniging", label: "Reiniging" },
                   { id: "gordijnrails", label: "Gordijnrails" },
 
                 ].map((category) => (
@@ -1457,11 +1494,13 @@ const ProductsPage = () => {
                   ? "Rolgordijnen"
                   : selectedCategory === "gordijnrails"
                     ? "Gordijnrails"
-                    : selectedCategory === "squid"
-                      ? "SQUID Textile Foil"
-                      : selectedCategory === "accessoires"
-                        ? "Accessoires"
-                        : "Producten"}
+                    : selectedCategory === "reiniging"
+                      ? "Reiniging & Onderhoud"
+                      : selectedCategory === "squid"
+                        ? "SQUID Textile Foil"
+                        : selectedCategory === "accessoires"
+                          ? "Accessoires"
+                          : "Producten"}
           </h2>
 
           {selectedCategory === "alles" ? (
@@ -1499,6 +1538,31 @@ const ProductsPage = () => {
                   </div>
                 )
               )}
+
+              {!isFilterLoading &&
+                groupedProducts.reiniging &&
+                groupedProducts.reiniging.length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center mb-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mr-4">
+                        Reiniging & Onderhoud
+                      </h3>
+                      <div className="flex-grow h-px bg-[#d5c096]/30"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 product-fade-in">
+                      {groupedProducts.reiniging.map((category: any) => (
+                        <div 
+                          key={category.id} 
+                          className={`product-card ${
+                            category.title === selectedProduct?.title ? "ring-2 ring-[#d5c096]" : ""
+                          }`}
+                        >
+                          <ProductCard category={category} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
               {!isFilterLoading &&
                 groupedProducts.accessoires &&

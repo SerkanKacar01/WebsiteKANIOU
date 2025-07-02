@@ -1225,6 +1225,102 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     }
   });
 
+  // Payment Routes
+  app.post("/api/payment/create", async (req, res) => {
+    try {
+      const { items, totalAmount, currency, description, redirectUrl, webhookUrl } = req.body;
+
+      if (!items || !totalAmount || !currency || !description || !redirectUrl) {
+        return res.status(400).json({ error: "Missing required payment fields" });
+      }
+
+      // Create Mollie payment using the existing API client
+      const mollieApiKey = process.env.MOLLIE_API_KEY;
+      if (!mollieApiKey) {
+        return res.status(500).json({ error: "Mollie API key not configured" });
+      }
+
+      const paymentData = {
+        amount: {
+          currency: currency,
+          value: totalAmount.toFixed(2)
+        },
+        description: description,
+        redirectUrl: redirectUrl,
+        webhookUrl: webhookUrl,
+        metadata: {
+          items: JSON.stringify(items),
+          sessionId: req.sessionID
+        }
+      };
+
+      const response = await fetch("https://api.mollie.com/v2/payments", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${mollieApiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(paymentData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error("Mollie payment creation failed:", errorData);
+        throw new Error("Payment creation failed");
+      }
+
+      const payment = await response.json();
+      
+      res.json({ 
+        checkoutUrl: payment._links.checkout.href,
+        paymentId: payment.id 
+      });
+
+    } catch (error: any) {
+      console.error("Payment creation error:", error);
+      res.status(500).json({ error: "Failed to create payment" });
+    }
+  });
+
+  app.post("/api/payment/webhook", async (req, res) => {
+    try {
+      const paymentId = req.body.id;
+      
+      if (!paymentId) {
+        return res.status(400).json({ error: "Payment ID required" });
+      }
+
+      // Verify payment status with Mollie
+      const mollieApiKey = process.env.MOLLIE_API_KEY;
+      const response = await fetch(`https://api.mollie.com/v2/payments/${paymentId}`, {
+        headers: {
+          "Authorization": `Bearer ${mollieApiKey}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to verify payment");
+      }
+
+      const payment = await response.json();
+      
+      if (payment.status === 'paid') {
+        // Clear the cart for successful payments
+        const sessionId = payment.metadata?.sessionId;
+        if (sessionId) {
+          await storage.clearCart(sessionId);
+        }
+        
+        console.log(`Payment ${paymentId} completed successfully`);
+      }
+
+      res.status(200).send("OK"); // Mollie expects 200 response
+    } catch (error: any) {
+      console.error("Payment webhook error:", error);
+      res.status(500).json({ error: "Webhook processing failed" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

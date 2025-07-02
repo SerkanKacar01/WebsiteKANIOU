@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
+import { useToast } from "@/hooks/use-toast";
 import { 
   ShoppingCart, 
   Plus, 
@@ -22,6 +23,9 @@ import {
 export default function CartPage() {
   const { items, summary, loading, updateQuantity, removeFromCart, clearCart } = useCart();
   const { t, language } = useLanguage();
+  const { toast } = useToast();
+  const [_, setLocation] = useLocation();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   const content = {
     nl: {
@@ -138,6 +142,56 @@ export default function CartPage() {
       await clearCart();
     } catch (error) {
       console.error('Failed to clear cart:', error);
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (items.length === 0) {
+      toast({
+        title: "Winkelwagen leeg",
+        description: "Voeg eerst producten toe aan uw winkelwagen",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setCheckoutLoading(true);
+    
+    try {
+      // Create Mollie payment
+      const response = await fetch('/api/payment/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: items,
+          totalAmount: summary.totalAmount,
+          currency: 'EUR',
+          description: `KANIOU Bestelling - ${items.length} artikel${items.length !== 1 ? 'en' : ''}`,
+          redirectUrl: `${window.location.origin}/bedankt`,
+          webhookUrl: `${window.location.origin}/api/payment/webhook`
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create payment');
+      }
+
+      const { checkoutUrl } = await response.json();
+      
+      // Redirect to Mollie checkout
+      window.location.href = checkoutUrl;
+      
+    } catch (error) {
+      console.error('Checkout error:', error);
+      toast({
+        title: "Checkout fout",
+        description: "Er is een fout opgetreden bij het afrekenen. Probeer het opnieuw.",
+        variant: "destructive"
+      });
+    } finally {
+      setCheckoutLoading(false);
     }
   };
 
@@ -339,25 +393,25 @@ export default function CartPage() {
                       <span>€{summary.totalAmount.toFixed(2)}</span>
                     </div>
                     
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <span>BTW (21%):</span>
-                      <span>€{(summary.totalAmount * 0.21).toFixed(2)}</span>
+                    <div className="text-sm text-gray-600 text-center py-2">
+                      Prijs is incl. 21% BTW
                     </div>
 
                     <hr />
 
                     <div className="flex justify-between text-lg font-bold">
                       <span>{currentContent.total}:</span>
-                      <span>€{(summary.totalAmount * 1.21).toFixed(2)}</span>
+                      <span>€{summary.totalAmount.toFixed(2)} <span className="text-sm text-gray-600 font-normal">(incl. €{(summary.totalAmount * 0.21 / 1.21).toFixed(2)} BTW)</span></span>
                     </div>
 
                     <Button 
                       size="lg" 
-                      className="w-full bg-[#E6C988] hover:bg-[#D5B992] text-gray-900"
-                      disabled={loading}
+                      className="w-full bg-[#E10000] hover:bg-[#C50000] text-white"
+                      disabled={loading || checkoutLoading}
+                      onClick={handleCheckout}
                     >
                       <CreditCard className="w-5 h-5 mr-2" />
-                      {currentContent.checkout}
+                      {checkoutLoading ? currentContent.processing : currentContent.checkout}
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center">

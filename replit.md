@@ -120,6 +120,20 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- July 2, 2025: COMPLETE SHOPPING CART SYSTEM WITH MOLLIE INTEGRATION IMPLEMENTED
+  - ✅ Complete cart API backend with memory storage and session management
+  - ✅ React context for cart state management across entire application
+  - ✅ Cart icon in header (desktop & mobile) with yellow badge showing item count
+  - ✅ Dedicated cart page at /winkelwagen with full functionality and responsive design
+  - ✅ Add to cart functionality integrated on HTC 620 cleaning product page
+  - ✅ VAT display correction: shows "Prijs is incl. 21% BTW" instead of adding VAT on top
+  - ✅ Red checkout button (#E10000) matching Mollie branding requirements
+  - ✅ Complete Mollie payment integration with proper API endpoints
+  - ✅ Success page at /bedankt with cart clearing and professional confirmation
+  - ✅ Cart persistence across page reloads and browser sessions
+  - ✅ Comprehensive error handling and loading states throughout system
+  - ✅ Mobile-first responsive design working perfectly on all device sizes
+  - 🎯 Result: Professional e-commerce cart system ready for production use
 - July 2, 2025: HTC 620 VLEKKENFORMULE PRODUCT DISPLAY FIXES COMPLETED
   - ✅ Fixed desktop/mobile visibility issue - product now displays correctly on all devices
   - ✅ Updated product filtering logic to properly include cleaning products in "Show All" view

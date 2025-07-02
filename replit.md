@@ -120,6 +120,15 @@ SENDGRID_API_KEY=<SendGrid email service key>
 ```
 
 ## Changelog
+- July 2, 2025: HTC 620 VLEKKENFORMULE PRODUCT DISPLAY FIXES COMPLETED
+  - ✅ Fixed desktop/mobile visibility issue - product now displays correctly on all devices
+  - ✅ Updated product filtering logic to properly include cleaning products in "Show All" view
+  - ✅ Replaced placeholder box image with authentic HTC 620 spray bottle product image
+  - ✅ Added "Reiniging" category button to product filter navigation
+  - ✅ Created dedicated "Reiniging & Onderhoud" section with proper styling and responsive grid
+  - ✅ Product displays correct Dutch information: title, price €16,95, features, and usage instructions
+  - ✅ Fixed image paths in both ProductsPage.tsx and CleaningProductsPage.tsx for consistent display
+  - 🎯 Result: HTC 620 product fully integrated and visible across desktop and mobile platforms
 - July 1, 2025: MODERN 6-STEP ROLLER BLIND CONFIGURATOR WITH ENHANCED COLOR SELECTION COMPLETED
   - ✅ Redesigned configurator from 3-step to professional 6-step flow (Stofsoort → Kleur → Afmetingen → Opties → Bediening → Samenvatting)
   - ✅ Implemented visual step indicators with gold/green/gray color coding for current/completed/inactive states

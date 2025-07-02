@@ -903,11 +903,11 @@ const ProductsPage = () => {
 
     return {
       horren: [], // Temporarily empty - horren section hidden
-      reiniging: filteredProducts.filter((p) =>
-        productCategories.reiniging.includes(p),
+      reiniging: productCategories.reiniging.filter((p) =>
+        filteredProducts.includes(p),
       ),
-      accessoires: filteredProducts.filter((p) =>
-        productCategories.accessoires.includes(p),
+      accessoires: productCategories.accessoires.filter((p) =>
+        filteredProducts.includes(p),
       ),
     };
   };

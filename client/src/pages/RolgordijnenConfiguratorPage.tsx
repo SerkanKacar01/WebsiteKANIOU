@@ -33,10 +33,13 @@ interface Configuration {
   profile: string;
   width: number;
   height: number;
-  mounting: string;
-  bottomBar: string;
+  controlCategory: string; // "manual" or "motorized"
   controlType: string;
   controlColor: string;
+  motorOptions: string; // "remote-only" or "remote-app"
+  includeHub: boolean;
+  mounting: string;
+  bottomBar: string;
   operationSide: string;
   quantity: number;
 }
@@ -143,6 +146,44 @@ const bottomBarOptions = [
   }
 ];
 
+const manualControlOptions = [
+  {
+    id: "kunststof-ketting",
+    name: "Kunststof ketting",
+    description: "Standaard inbegrepen",
+    detailedInfo: "Duurzame kunststof ketting voor handmatige bediening. Verkrijgbaar in verschillende kleuren.",
+    price: 0,
+    colors: ["wit", "zwart", "grijs"]
+  },
+  {
+    id: "metalen-ketting",
+    name: "Metalen ketting",
+    description: "Duurzamere optie (+€12,50)",
+    detailedInfo: "Roestvrije metalen ketting voor extra duurzaamheid en een premium uitstraling.",
+    price: 12.50,
+    colors: []
+  }
+];
+
+const motorOptions = [
+  {
+    id: "remote-only",
+    name: "Alleen afstandsbediening",
+    description: "BREL BLE20 motor + afstandsbediening",
+    detailedInfo: "Elektrische motor van BREL met draadloze afstandsbediening. Eenvoudige bediening op afstand.",
+    price: 150,
+    includesHub: false
+  },
+  {
+    id: "remote-app",
+    name: "Afstandsbediening + App-bediening",
+    description: "BREL BLE20 motor + afstandsbediening + HUB-04",
+    detailedInfo: "Complete smart oplossing: zowel afstandsbediening als app-bediening via BREL Matter App.",
+    price: 200,
+    includesHub: true
+  }
+];
+
 const controlTypes = [
   {
     id: "kunststof-ketting",
@@ -208,10 +249,13 @@ const RolgordijnenConfiguratorPage = () => {
     profile: "cassette", // Pre-select closed cassette as default
     width: 40,
     height: 40,
-    mounting: "",
-    bottomBar: "standard", // Default to standard white aluminium bar
+    controlCategory: "manual", // Default to manual control
     controlType: "",
     controlColor: "",
+    motorOptions: "remote-only", // Default motor option
+    includeHub: false,
+    mounting: "",
+    bottomBar: "standard", // Default to standard white aluminium bar
     operationSide: "",
     quantity: 1,
   });
@@ -237,28 +281,29 @@ const RolgordijnenConfiguratorPage = () => {
     },
     {
       id: 4,
+      title: "Bediening",
+      description: "⚙️ Bediening",
+      completed: !!configuration.controlCategory && (configuration.controlCategory === "motorized" ? !!configuration.motorOptions : !!configuration.controlType),
+    },
+    {
+      id: 5,
       title: "Profiel",
       description: "🧩 Profiel",
       completed: true, // Always completed - cassette is pre-selected
     },
     {
-      id: 5,
+      id: 6,
       title: "Montage",
       description: "🛠️ Montage",
       completed: !!configuration.mounting,
     },
     {
-      id: 6,
+      id: 7,
       title: "Onderlat",
       description: "📐 Onderlat",
       completed: !!configuration.bottomBar,
     },
-    {
-      id: 7,
-      title: "Bedieningstype",
-      description: "⚙️ Bedieningstype",
-      completed: !!configuration.controlType && (configuration.controlType.includes('gemotoriseerd') || !!configuration.controlColor),
-    },
+
     {
       id: 8,
       title: "Bedieningszijde", 
@@ -304,9 +349,16 @@ const RolgordijnenConfiguratorPage = () => {
     }
 
     // Add control type surcharge
-    const controlType = controlTypes.find(c => c.id === configuration.controlType);
-    if (controlType && controlType.price > 0) {
-      basePrice += controlType.price;
+    if (configuration.controlCategory === "manual") {
+      const manualControl = manualControlOptions.find(c => c.id === configuration.controlType);
+      if (manualControl && manualControl.price > 0) {
+        basePrice += manualControl.price;
+      }
+    } else if (configuration.controlCategory === "motorized") {
+      const motorOption = motorOptions.find(m => m.id === configuration.motorOptions);
+      if (motorOption && motorOption.price > 0) {
+        basePrice += motorOption.price;
+      }
     }
 
     // Add bottom bar percentage surcharge
@@ -322,9 +374,9 @@ const RolgordijnenConfiguratorPage = () => {
   const nextStep = () => {
     if (currentStep < steps.length) {
       let nextStepNumber = currentStep + 1;
-      // Skip step 4 (profile selection) since cassette is pre-selected
-      if (nextStepNumber === 4) {
-        nextStepNumber = 5;
+      // Skip step 5 (profile selection) since cassette is pre-selected
+      if (nextStepNumber === 5) {
+        nextStepNumber = 6;
       }
       setCurrentStep(nextStepNumber);
       setTimeout(() => {
@@ -339,9 +391,9 @@ const RolgordijnenConfiguratorPage = () => {
   const prevStep = () => {
     if (currentStep > 1) {
       let prevStepNumber = currentStep - 1;
-      // Skip step 4 (profile selection) when going backwards too
-      if (prevStepNumber === 4) {
-        prevStepNumber = 3;
+      // Skip step 5 (profile selection) when going backwards too
+      if (prevStepNumber === 5) {
+        prevStepNumber = 4;
       }
       setCurrentStep(prevStepNumber);
       setTimeout(() => {
@@ -588,7 +640,243 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 4: // Profile Selection        
+      case 4: // Control Selection
+        return (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Bedieningstype</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Maak een keuze tussen handmatige bediening of elektrische bediening voor uw rolgordijn.
+            </p>
+            
+            {/* Control Category Toggle */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <button
+                className={`p-4 border-2 rounded-lg transition-all duration-300 ${
+                  configuration.controlCategory === "manual"
+                    ? "border-[#d5c096] bg-[#d5c096]/5"
+                    : "border-gray-200 hover:border-[#d5c096]/50"
+                }`}
+                onClick={() => {
+                  updateConfiguration("controlCategory", "manual");
+                  updateConfiguration("controlType", "");
+                  updateConfiguration("motorOptions", "");
+                  updateConfiguration("includeHub", false);
+                }}
+              >
+                <div className="text-center">
+                  <div className="text-2xl mb-2">🔗</div>
+                  <h4 className="font-medium">Handmatige bediening</h4>
+                  <p className="text-sm text-gray-500 mt-1">Bediening met ketting</p>
+                </div>
+              </button>
+              
+              <button
+                className={`p-4 border-2 rounded-lg transition-all duration-300 ${
+                  configuration.controlCategory === "motorized"
+                    ? "border-[#d5c096] bg-[#d5c096]/5"
+                    : "border-gray-200 hover:border-[#d5c096]/50"
+                }`}
+                onClick={() => {
+                  updateConfiguration("controlCategory", "motorized");
+                  updateConfiguration("controlType", "");
+                  updateConfiguration("motorOptions", "remote-only");
+                }}
+              >
+                <div className="text-center">
+                  <div className="text-2xl mb-2">⚡</div>
+                  <h4 className="font-medium">Elektrische bediening</h4>
+                  <p className="text-sm text-gray-500 mt-1">Gemotoriseerd (+€150)</p>
+                </div>
+              </button>
+            </div>
+
+            {/* Manual Control Options */}
+            {configuration.controlCategory === "manual" && (
+              <div className="space-y-4">
+                <h4 className="font-medium">Kies uw kettingtype:</h4>
+                {manualControlOptions.map((option) => (
+                  <div
+                    key={option.id}
+                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                      configuration.controlType === option.id
+                        ? "border-[#d5c096] bg-[#d5c096]/5"
+                        : "border-gray-200 hover:border-[#d5c096]/50"
+                    }`}
+                    onClick={() => updateConfiguration("controlType", option.id)}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-1 ${
+                        configuration.controlType === option.id
+                          ? "border-[#d5c096] bg-[#d5c096]"
+                          : "border-gray-300"
+                      }`}>
+                        {configuration.controlType === option.id && (
+                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <h5 className="font-medium">{option.name}</h5>
+                          {option.price > 0 && (
+                            <span className="text-sm font-medium text-[#d5c096]">
+                              +€{option.price}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600">{option.description}</p>
+                        
+                        {/* Color options for plastic chain */}
+                        {option.colors.length > 0 && configuration.controlType === option.id && (
+                          <div className="mt-3">
+                            <p className="text-xs text-gray-500 mb-2">Kies een kleur:</p>
+                            <div className="flex gap-2">
+                              {option.colors.map((color) => (
+                                <button
+                                  key={color}
+                                  className={`px-3 py-1 text-xs border rounded ${
+                                    configuration.controlColor === color
+                                      ? "border-[#d5c096] bg-[#d5c096] text-white"
+                                      : "border-gray-300 hover:border-[#d5c096]"
+                                  }`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    updateConfiguration("controlColor", color);
+                                  }}
+                                >
+                                  {color.charAt(0).toUpperCase() + color.slice(1)}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Motorized Control Options */}
+            {configuration.controlCategory === "motorized" && (
+              <div className="space-y-4">
+                {/* Motor Info Card */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="text-blue-600 text-xl">⚡</div>
+                    <div>
+                      <h4 className="font-medium text-blue-900 mb-2">BREL BLE20 Motor</h4>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Ingebouwde batterij</li>
+                        <li>• USB-C oplaadbaar</li>
+                        <li>• Radio gestuurd</li>
+                        <li>• Inclusief afstandsbediening</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <h4 className="font-medium">Bedieningsopties:</h4>
+                {motorOptions.map((option) => (
+                  <div
+                    key={option.id}
+                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
+                      configuration.motorOptions === option.id
+                        ? "border-[#d5c096] bg-[#d5c096]/5"
+                        : "border-gray-200 hover:border-[#d5c096]/50"
+                    }`}
+                    onClick={() => {
+                      updateConfiguration("motorOptions", option.id);
+                      updateConfiguration("includeHub", option.includesHub);
+                    }}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-1 ${
+                        configuration.motorOptions === option.id
+                          ? "border-[#d5c096] bg-[#d5c096]"
+                          : "border-gray-300"
+                      }`}>
+                        {configuration.motorOptions === option.id && (
+                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <h5 className="font-medium">{option.name}</h5>
+                          <span className="text-sm font-medium text-[#d5c096]">
+                            +€{option.price}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600">{option.description}</p>
+                        
+                        {option.includesHub && (
+                          <div className="mt-3 p-3 bg-orange-50 border border-orange-200 rounded">
+                            <p className="text-sm text-orange-800">
+                              <Info className="inline h-4 w-4 mr-1" />
+                              BREL HUB-04 wordt automatisch toegevoegd voor app-bediening
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Expanded Motor Info */}
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                  <h5 className="font-medium mb-3">Technische specificaties:</h5>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                    <div>
+                      <h6 className="font-medium text-gray-900 mb-1">🔌 BREL BLE20 Motor</h6>
+                      <ul className="space-y-1">
+                        <li>• Radio gestuurd (RF)</li>
+                        <li>• Ingebouwde Li-ion batterij</li>
+                        <li>• Stil en energiezuinig</li>
+                        <li>• Vermogen: 0,5Nm / 8V / 2A</li>
+                        <li>• Lengte motor: 450 mm</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h6 className="font-medium text-gray-900 mb-1">🌐 BREL HUB-04</h6>
+                      <ul className="space-y-1">
+                        <li>• BREL Matter App compatible</li>
+                        <li>• Android & iOS ondersteuning</li>
+                        <li>• Compact ontwerp</li>
+                        <li>• Vereist voor app-integratie</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Selection Summary */}
+            {(configuration.controlCategory === "manual" && configuration.controlType) && (
+              <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                <p className="text-sm text-green-800 font-medium">
+                  ✓ Geselecteerd: {manualControlOptions.find(c => c.id === configuration.controlType)?.name}
+                  {configuration.controlColor && ` (${configuration.controlColor})`}
+                </p>
+              </div>
+            )}
+
+            {(configuration.controlCategory === "motorized" && configuration.motorOptions) && (
+              <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                <p className="text-sm text-green-800 font-medium">
+                  ✓ Geselecteerd: {motorOptions.find(m => m.id === configuration.motorOptions)?.name}
+                </p>
+                {configuration.includeHub && (
+                  <p className="text-xs text-green-600 mt-1">
+                    HUB-04 inbegrepen voor app-bediening
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        );
+
+      case 5: // Profile Selection        
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Kies uw profiel</h3>
@@ -637,7 +925,7 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 5: // Mounting Type
+      case 6: // Mounting Type
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Montagewijze</h3>
@@ -675,7 +963,7 @@ const RolgordijnenConfiguratorPage = () => {
           </div>
         );
 
-      case 6: // Bottom Bar Selection
+      case 7: // Bottom Bar Selection
         return (
           <div>
             <h3 className="text-lg font-semibold mb-4">Onderlat opties</h3>
@@ -739,105 +1027,6 @@ const RolgordijnenConfiguratorPage = () => {
                     Prijs wordt aangepast met {bottomBarOptions.find(b => b.id === configuration.bottomBar)?.pricePercentage}%
                   </p>
                 )}
-              </div>
-            )}
-          </div>
-        );
-
-      case 7: // Control Type
-        const selectedControlType = controlTypes.find(c => c.id === configuration.controlType);
-        const showColorOptions = selectedControlType && selectedControlType.colors.length > 0;
-        const isMotorized = selectedControlType && selectedControlType.id.includes('gemotoriseerd');
-        
-        return (
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Bedieningstype</h3>
-            <p className="text-sm text-gray-600 mb-6">
-              Kies hoe u het rolgordijn wilt bedienen. Bij gemotoriseerde opties vervallen de handmatige kettingopties.
-            </p>
-            
-            <div className="space-y-4 mb-6">
-              {controlTypes.map((control) => (
-                <div
-                  key={control.id}
-                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
-                    configuration.controlType === control.id
-                      ? "border-[#d5c096] bg-[#d5c096]/5"
-                      : "border-gray-200 hover:border-[#d5c096]/50"
-                  }`}
-                  onClick={() => {
-                    updateConfiguration("controlType", control.id);
-                    // Reset color if new control type doesn't have colors
-                    if (control.colors.length === 0) {
-                      updateConfiguration("controlColor", "");
-                    }
-                  }}
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h5 className="font-semibold text-lg mb-1">{control.name}</h5>
-                      <p className="text-sm text-gray-600 mb-2">{control.description}</p>
-                      <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
-                        {control.detailedInfo}
-                      </div>
-                    </div>
-                    <div className="text-right ml-4">
-                      {control.price > 0 && (
-                        <p className="text-lg font-bold text-[#d5c096] mb-1">+€{control.price.toFixed(2)}</p>
-                      )}
-                      {configuration.controlType === control.id && (
-                        <div className="flex items-center text-[#d5c096]">
-                          <Check className="h-5 w-5" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {showColorOptions && !isMotorized && (
-              <div className="border-t pt-6">
-                <h4 className="font-medium mb-3">Kies kettingkleur</h4>
-                <p className="text-sm text-gray-600 mb-4">Selecteer de kleur van uw kunststof of metalen ketting:</p>
-                <div className="grid grid-cols-3 gap-3">
-                  {selectedControlType.colors.map((colorId) => {
-                    const color = colors.find(c => c.id === colorId);
-                    if (!color) return null;
-                    
-                    return (
-                      <div
-                        key={color.id}
-                        className={`border-2 rounded-lg p-3 cursor-pointer transition-all duration-300 text-center ${
-                          configuration.controlColor === color.id
-                            ? "border-[#d5c096] bg-[#d5c096]/5"
-                            : "border-gray-200 hover:border-[#d5c096]/50"
-                        }`}
-                        onClick={() => updateConfiguration("controlColor", color.id)}
-                      >
-                        <div
-                          className="w-8 h-8 rounded-full mx-auto mb-2 border"
-                          style={{ backgroundColor: color.hex }}
-                        ></div>
-                        <p className="text-sm font-medium">{color.name}</p>
-                        {configuration.controlColor === color.id && (
-                          <Check className="h-4 w-4 text-[#d5c096] mx-auto mt-1" />
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-            
-            {isMotorized && (
-              <div className="border-t pt-6">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    <strong>Gemotoriseerd:</strong> Bij een gemotoriseerde oplossing vervallen alle handmatige bedieningsmogelijkheden. 
-                    Het rolgordijn wordt volledig elektrisch bediend.
-                  </p>
-                </div>
               </div>
             )}
           </div>

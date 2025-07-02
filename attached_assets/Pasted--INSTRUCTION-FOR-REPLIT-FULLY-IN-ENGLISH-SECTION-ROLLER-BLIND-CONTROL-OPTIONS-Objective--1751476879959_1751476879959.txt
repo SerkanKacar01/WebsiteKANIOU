@@ -1,0 +1,145 @@
+🛠️ INSTRUCTION FOR REPLIT – FULLY IN ENGLISH
+
+SECTION: ROLLER BLIND CONTROL OPTIONS
+
+🎯 Objective:
+
+Integrate a clean and dynamic section in the roller blind configurator to allow customers to choose between manual and motorised control, with upsell logic for remote control and app-based smart hub.
+
+⸻
+
+✅ 1. Placement
+
+Place this section right after the width & height selection block.
+
+⸻
+
+✅ 2. Add Control Type Toggle
+
+Display two main buttons or cards:
+	•	Manual Control
+	•	Motorised Control
+
+Allow only one selection at a time. The default can be “Manual Control”.
+
+⸻
+
+✅ 3. Manual Control Logic
+
+When “Manual Control” is selected:
+	•	Show the following options:
+	•	Plastic Chain (default, included) → color dropdown: White / Black / Grey
+	•	Metal Chain → +€12,50 surcharge
+	•	Make sure user can only select one.
+	•	If “Metal Chain” is selected, display the added cost in the total price.
+
+⸻
+
+✅ 4. Motorised Control Logic
+
+When “Motorised Control” is selected:
+	•	Default motor: BREL BLE20 motor
+	•	Display info card with:
+	•	Built-in battery
+	•	USB-C rechargeable
+	•	Radio-operated
+	•	Includes remote control
+
+Add sub-options below:
+	•	(●) Remote only (default, included)
+	•	(○) Remote + Smartphone control (App)
+
+When the user selects the Smartphone App, auto-display the following:
+
+You need the BREL HUB-04 for smartphone control.
+▸ Add HUB-04 to cart (required)
+
+If “App” is selected → ensure the backend includes HUB-04 in the order.
+
+⸻
+
+✅ 5. Dynamic Info Block (Auto-expands when motor selected)
+
+Add a collapsible text area with more details:
+
+BREL BLE20 Motor
+	•	Rechargeable via USB-C
+	•	Quiet operation
+	•	Built-in radio receiver
+	•	Battery powered
+	•	Compatible with Ø32mm tube
+	•	Includes remote control
+	•	0.5Nm power / 8V / 450mm length
+
+HUB-04 Smart Hub (optional)
+	•	Enables smartphone control via the BREL Matter App
+	•	Compatible with Android & iOS
+	•	Required for Matter integration
+	•	Small & easy to install
+
+⸻
+
+✅ 6. Notes
+	•	Add info icon (ℹ️) next to all terms (motor, hub, chain types)
+	•	If needed, allow hover or tap for more explanation
+	•	Keep the layout mobile-friendly
+
+⸻
+
+🇳🇱 FRONTEND DUTCH CONTENT – BEDIENINGSECTIE
+
+⸻
+
+🧩 Bedieningstype
+
+Maak een keuze:
+( ) Handmatige bediening
+( ) Elektrische bediening (gemotoriseerd)
+
+⸻
+
+🔘 Handmatige bediening
+
+Standaard inbegrepen:
+▫ Kunststof ketting – keuze uit wit, zwart of grijs
+▫ Optie: Metalen ketting (+€12,50)
+
+⸻
+
+⚙️ Elektrische bediening (gemotoriseerd)
+
+Upgrade jouw rolgordijn met een stille en krachtige motor:
+
+Standaard inbegrepen:
+▫ BREL BLE20 motor
+▫ Ingebouwde batterij
+▫ Radio gestuurd
+▫ Inclusief afstandsbediening
+▫ USB-C oplaadbaar
+
+Bedieningsopties:
+(●) Alleen afstandsbediening
+(○) Afstandsbediening + App-bediening (smartphone)
+
+Om je rolgordijn via een app te bedienen is de BREL HUB-04 vereist.
+➤ Voeg HUB-04 toe aan je bestelling
+
+⸻
+
+ℹ️ Meer informatie (automatisch zichtbaar bij keuze motor)
+
+🔌 BREL BLE20 Motor
+	•	Radio gestuurd (RF)
+	•	Ingebouwde Li-ion batterij
+	•	Stil en energiezuinig
+	•	Oplaadbaar via USB-C
+	•	Geschikt voor Ø32mm buis
+	•	Vermogen: 0,5Nm / 8V / 2A
+	•	Lengte motor: 450 mm
+	•	Inclusief afstandsbediening
+
+🌐 BREL HUB-04
+	•	Verbind je rolgordijnen met de BREL Matter App
+	•	Te bedienen via Android & iOS
+	•	Compact ontwerp
+	•	Vereist voor app- en Matter-integratie

@@ -668,7 +668,7 @@ const ProductsPage = () => {
         subtitle: "Professionele vlekkenreiniger",
         description:
           "Verwijdert eenvoudig vlekken uit textiel, meubelstof en tapijt. Direct toepasbaar met handige sprayflacon. Niet geschikt voor leder.",
-        image: "/attached_assets/Scherm­afbeelding 2025-07-02 om 21.20.31_1751484795783.png",
+        image: "/attached_assets/Scherm­afbeelding 2025-07-02 om 21.20.31_1751486071504.png",
         products: [
           {
             name: "HTC 620 Vlekkenformule",

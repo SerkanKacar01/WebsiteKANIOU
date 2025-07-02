@@ -13,7 +13,7 @@ const CleaningProductsPage: React.FC = () => {
     id: 1,
     name: 'HTC 620 Vlekkenformule',
     price: 16.95,
-    imageUrl: '/attached_assets/Scherm­afbeelding 2025-07-02 om 21.20.31_1751484795783.png',
+    imageUrl: '/attached_assets/Scherm­afbeelding 2025-07-02 om 21.20.31_1751486071504.png',
     description: `Verwijdert eenvoudig vlekken uit textiel, meubelstof en tapijt. Direct toepasbaar met handige sprayflacon. Niet geschikt voor leder.`,
     features: [
       'Professionele kwaliteit',

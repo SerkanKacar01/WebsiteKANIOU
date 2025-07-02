@@ -92,17 +92,10 @@ const colors = [
 
 const profileOptions = [
   {
-    id: "open",
-    name: "Open profiel",
-    description: "Standaard - geen extra kosten",
-    price: 0,
-    image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=200&h=150&fit=crop"
-  },
-  {
     id: "cassette",
-    name: "Dichte cassette",
-    description: "Strakke afwerking (+15%)",
-    price: 0.15, // 15% surcharge
+    name: "Closed cassette",
+    description: "(standard) – included at no extra cost",
+    price: 0,
     image: "https://images.unsplash.com/photo-1615529328677-ac9d21bee59f?w=200&h=150&fit=crop"
   }
 ];
@@ -184,7 +177,7 @@ const RolgordijnenConfiguratorPage = () => {
   const [configuration, setConfiguration] = useState<Configuration>({
     fabricType: "",
     color: "",
-    profile: "",
+    profile: "cassette", // Pre-select closed cassette as default
     width: 40,
     height: 40,
     mounting: "",
@@ -217,7 +210,7 @@ const RolgordijnenConfiguratorPage = () => {
       id: 4,
       title: "Profiel",
       description: "🧩 Profiel",
-      completed: !!configuration.profile,
+      completed: true, // Always completed - cassette is pre-selected
     },
     {
       id: 5,
@@ -293,7 +286,12 @@ const RolgordijnenConfiguratorPage = () => {
 
   const nextStep = () => {
     if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
+      let nextStepNumber = currentStep + 1;
+      // Skip step 4 (profile selection) since cassette is pre-selected
+      if (nextStepNumber === 4) {
+        nextStepNumber = 5;
+      }
+      setCurrentStep(nextStepNumber);
       setTimeout(() => {
         configuratorRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -305,7 +303,12 @@ const RolgordijnenConfiguratorPage = () => {
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      let prevStepNumber = currentStep - 1;
+      // Skip step 4 (profile selection) when going backwards too
+      if (prevStepNumber === 4) {
+        prevStepNumber = 3;
+      }
+      setCurrentStep(prevStepNumber);
       setTimeout(() => {
         configuratorRef.current?.scrollIntoView({
           behavior: "smooth",

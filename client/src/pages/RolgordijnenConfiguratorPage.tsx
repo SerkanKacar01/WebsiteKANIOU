@@ -819,7 +819,7 @@ const RolgordijnenConfiguratorPage = () => {
                           </div>
                         )}
                         
-{/* Detailed breakdown for Remote control only option - temporarily commented */}
+                        {/* TODO: Re-add expandable details boxes once application loading is resolved */}
                       </div>
                     </div>
                   </div>

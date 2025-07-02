@@ -314,26 +314,7 @@ const PlissePage = () => {
                 </Card>
               </div>
 
-              {/* Related Products */}
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold text-text-dark mb-6">
-                  Bekijk ook onze andere raamdecoratie
-                </h2>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <Button variant="outline" asChild>
-                    <Link href="/products/duo-plisse">Duo Plissé</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link href="/products/vouwgordijnen">Vouwgordijnen</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link href="/products/rolgordijnen">Rolgordijnen</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link href="/products">Alle Producten</Link>
-                  </Button>
-                </div>
-              </div>
+
             </div>
           </div>
         </Container>

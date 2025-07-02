@@ -271,59 +271,7 @@ HTC 620 is een krachtige vlekkenformule speciaal ontwikkeld voor het effectief v
           </div>
         </div>
 
-        {/* Related Products */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Gerelateerde producten</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="group cursor-pointer hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
-                  <Package className="h-16 w-16 text-gray-400" />
-                </div>
-                <h4 className="font-semibold mb-2">Microvezel reinigingsdoeken (set van 5)</h4>
-                <p className="text-sm text-gray-600 mb-3">Perfect voor gebruik met vlekkenreinigers</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#d5c096]">€14,95</span>
-                  <Button size="sm" variant="outline">
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="group cursor-pointer hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
-                  <Package className="h-16 w-16 text-gray-400" />
-                </div>
-                <h4 className="font-semibold mb-2">Tapijt beschermingsspray (0,75L)</h4>
-                <p className="text-sm text-gray-600 mb-3">Voorkomt vlekken en verlengt levensduur</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#d5c096]">€19,95</span>
-                  <Button size="sm" variant="outline">
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group cursor-pointer hover:shadow-lg transition-shadow">
-              <CardContent className="p-4">
-                <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
-                  <Package className="h-16 w-16 text-gray-400" />
-                </div>
-                <h4 className="font-semibold mb-2">Professionele sproeifles (0,5L)</h4>
-                <p className="text-sm text-gray-600 mb-3">Hervulbare fles voor precisie dosering</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#d5c096]">€7,95</span>
-                  <Button size="sm" variant="outline">
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </Container>
     </>
   );

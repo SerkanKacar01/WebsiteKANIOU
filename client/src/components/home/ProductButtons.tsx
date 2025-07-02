@@ -6,8 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 const productCategories = [
   { label: "Overgordijnen", urlPath: "overgordijnen" },
   { label: "Vitrages", urlPath: "vitrages" },
-  { label: "Rolgordijnen", urlPath: "rolgordijnen" },
-  { label: "Duo rolgordijnen", urlPath: "duo-rolgordijnen" },
+
   { label: "Textiel lamellen", urlPath: "textiel-lamellen" },
   { label: "Kunststof lamellen", urlPath: "kunststof-lamellen" },
   { label: "Houten jaloezieën", urlPath: "houten-jaloezieen" },
@@ -24,7 +23,7 @@ const productCategories = [
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },
   { label: "Horren", urlPath: "horren" },
-  { label: "SQUID textiel folie", urlPath: "squid" },
+
 ];
 
 const ProductButton = ({ category }: { category: { label: string; urlPath: string } }) => {

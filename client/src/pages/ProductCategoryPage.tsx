@@ -12,15 +12,13 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight, Check, Settings } from "lucide-react";
+import { HomeIcon, ChevronRight, Check } from "lucide-react";
 import { Product, Category } from "@shared/schema";
 
 // Product categories with their display labels and URL paths
 const productCategories = [
   { label: "Overgordijnen", urlPath: "overgordijnen" },
   { label: "Vitrages", urlPath: "vitrages" },
-  { label: "Rolgordijnen", urlPath: "rolgordijnen" },
-  { label: "Duo rolgordijnen", urlPath: "duo-rolgordijnen" },
   { label: "Textiel lamellen", urlPath: "textiel-lamellen" },
   { label: "Kunststof lamellen", urlPath: "kunststof-lamellen" },
   { label: "Houten jaloezieën", urlPath: "houten-jaloezieen" },
@@ -37,7 +35,6 @@ const productCategories = [
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },
   { label: "Horren", urlPath: "horren" },
-  { label: "SQUID textiel folie", urlPath: "squid" },
 ];
 
 const ProductCategoryPage = () => {
@@ -46,116 +43,87 @@ const ProductCategoryPage = () => {
   const { category } = params;
   const { t } = useLanguage();
 
-  const [categoryData, setCategoryData] = useState<Category | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Check if the current category is valid
+  const isValidCategory = productCategories.some(cat => cat.urlPath === category);
+
+  // If category doesn't exist, redirect to shop
+  useEffect(() => {
+    if (!isValidCategory && category) {
+      setLocation('/shop');
+    }
+  }, [category, isValidCategory, setLocation]);
 
   // Fetch categories and products
-  const { data: categories = [], isLoading: categoriesLoading } = useQuery<
-    Category[]
-  >({
+  const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 
-  const { data: allProducts = [], isLoading: productsLoading } = useQuery<
-    Product[]
-  >({
+  const { data: products = [] } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
 
-  useEffect(() => {
-    if (categories.length > 0 && allProducts.length > 0 && category) {
-      setLoading(true);
-
-      // Find matching category based on URL
-      // Map specific URL segments to their corresponding categories
-      const urlToCategoryMap: Record<string, string> = {
-        overgordijnen: "Overgordijnen",
-        vitrages: "Vitrages", 
-        rolgordijnen: "Rolgordijnen",
-        "duo-rolgordijnen": "Duo rolgordijnen",
-        "textiel-lamellen": "Textiel lamellen",
-        "kunststof-lamellen": "Kunststof lamellen",
-        "houten-jaloezieen": "Houten jaloezieën",
-        "kunststof-jaloezieen": "Kunststof jaloezieën",
-        "textiel-raamfolie": "Textiel raamfolie",
-        "houten-shutters": "Houten shutters",
-        "fly-screens": "Fly Screens",
-        inzethorren: "Inzethorren",
-        opzethorren: "Opzethorren",
-        "plisse-hordeuren": "Plissé hordeuren",
-        plisse: "Plissé",
-        "duo-plisse": "Duo plissé",
-        "dakraam-zonwering": "Dakraam zonweringen (Fakro, Velux)",
-        gordijnrails: "Gordijnrails",
-        gordijnroedes: "Gordijnroedes",
-        horren: "Horren",
-        squid: "SQUID textiel folie",
-      };
-
-      // Get the matching category name or default to the first one
-      const categoryName = urlToCategoryMap[category as string];
-
-      // Find the category object
-      const foundCategory = categories.find(
-        (cat: Category) => cat.name === categoryName,
-      );
-
-      if (foundCategory) {
-        setCategoryData(foundCategory);
-
-        // Filter products by category
-        const categoryProducts = allProducts.filter(
-          (product: Product) => product.categoryId === foundCategory.id,
-        );
-        setProducts(categoryProducts);
-        setLoading(false);
-      } else {
-        // Try direct search if mapping doesn't work
-        console.log("Available categories:", categories.map(c => c.name));
-        console.log("Looking for category:", categoryName);
-        console.log("URL category:", category);
-        
-        // If no mapping found, redirect to home
-        setLocation("/", { replace: true });
-        setLoading(false);
-      }
-    } else if (!categoriesLoading && !productsLoading && categories.length === 0) {
-      // If no categories loaded at all, redirect to home
-      setLocation("/", { replace: true });
-      setLoading(false);
-    }
-  }, [categories, allProducts, category, setLocation, categoriesLoading, productsLoading]);
-
-  // Loading state
-  if (loading || categoriesLoading || productsLoading || !categoryData) {
-    return (
-      <Container className="py-16">
-        <div className="flex flex-col items-center justify-center py-12">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-text-medium">Loading...</p>
-        </div>
-      </Container>
-    );
+  // If no valid category, return null (will redirect)
+  if (!isValidCategory || !category) {
+    return null;
   }
+
+  // Map specific URL segments to their corresponding categories
+  const urlToCategoryMap: Record<string, string> = {
+    overgordijnen: "Overgordijnen",
+    vitrages: "Vitrages", 
+    "textiel-lamellen": "Textiel lamellen",
+    "kunststof-lamellen": "Kunststof lamellen",
+    "houten-jaloezieen": "Houten jaloezieën",
+    "kunststof-jaloezieen": "Kunststof jaloezieën",
+    "textiel-raamfolie": "Textiel raamfolie",
+    "houten-shutters": "Houten shutters",
+    "fly-screens": "Fly Screens",
+    inzethorren: "Inzethorren",
+    opzethorren: "Opzethorren",
+    "plisse-hordeuren": "Plissé hordeuren",
+    plisse: "Plissé",
+    "duo-plisse": "Duo plissé",
+    "dakraam-zonwering": "Dakraam zonweringen (Fakro, Velux)",
+    gordijnrails: "Gordijnrails",
+    gordijnroedes: "Gordijnroedes",
+    horren: "Horren",
+  };
+
+  // Get the matching category name or default to the first one
+  const categoryName = urlToCategoryMap[category as string];
+
+  // Find category data
+  const foundCategory = categories.find(
+    (cat: Category) => cat.name === categoryName,
+  );
+
+  // If category not found in database, create a default one
+  const categoryData = foundCategory || {
+    id: 0,
+    name: categoryName || productCategories[0].label,
+    description: `Ontdek onze uitgebreide collectie ${categoryName || productCategories[0].label}`,
+    imageUrl: "/placeholder-category.jpg",
+  };
+
+  // Filter products for this category
+  const categoryProducts = foundCategory
+    ? products.filter(
+        (product: Product) => product.categoryId === foundCategory.id,
+      )
+    : [];
 
   return (
     <>
       <Helmet>
-        {/* Use the product-specific label or fall back to category name */}
-        <title>
-          {productCategories.find(
-            (pc: { label: string; urlPath: string }) => pc.urlPath === category,
-          )?.label || categoryData.name}{" "}
-          | Elegant Drapes
-        </title>
+        <title>{categoryData.name} - KANIOU</title>
         <meta
           name="description"
-          content={`Discover our premium quality ${categoryData.name.toLowerCase()} collection. ${categoryData.description}. Request a free quote for your ${productCategories.find((pc: { label: string; urlPath: string }) => pc.urlPath === category)?.label.toLowerCase() || categoryData.name.toLowerCase()}.`}
+          content={`${categoryData.description} - Premium kwaliteit raamdecoratie van KANIOU`}
         />
       </Helmet>
 
-      <div className="bg-neutral-100 py-4">
+      {/* Breadcrumb Navigation */}
+      <div className="bg-gray-50 py-4">
         <Container>
           <Breadcrumb>
             <BreadcrumbList>
@@ -168,17 +136,15 @@ const ProductCategoryPage = () => {
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+                <BreadcrumbLink href="/shop">Shop</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                {/* Use the label from productCategories or fallback to category data */}
-                <BreadcrumbLink>
+                <BreadcrumbLink href={`/products/${category}`}>
                   {productCategories.find(
-                    (pc: { label: string; urlPath: string }) =>
-                      pc.urlPath === category,
+                    (cat) => cat.urlPath === category,
                   )?.label || categoryData.name}
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -187,454 +153,195 @@ const ProductCategoryPage = () => {
         </Container>
       </div>
 
-      {/* Custom SQUID Page */}
-      {category === "squid" ? (
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
-          <Container>
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
-                SQUID Textielfolie – Discrete Privacy met Elegantie
-              </h1>
-              
-              <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                  Breng stijl, comfort en privacy samen in één oplossing met SQUID – de zelfklevende textielfolie die zicht blokkeert van buitenaf, maar daglicht perfect doorlaat. Deze innovatieve raamfolie heeft een warme, linnenachtige uitstraling en is geschikt voor elk interieur. Geen lijm, geen gereedschap – gewoon elegantie, eenvoud en effectiviteit.
-
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div>
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">Waarom SQUID?</h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Stijlvolle linnenstructuur die past in elk interieur</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Privacy overdag, zicht naar buiten</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Zelfklevend: géén lijm, géén schade</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Hitte- en vochtbestendig — ideaal voor keuken, badkamer & dakramen</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Verwijderbaar en herbruikbaar</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-green-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Op maat verkrijgbaar</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">Perfect voor:</h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Woonkamers & slaapkamers</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Badkamers & keukens</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Dakramen & lichtkoepels</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-5 w-5 text-blue-600 mt-1 mr-3 flex-shrink-0" />
-                        <span>Etalages & kantoorruimtes</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Beschikbaar in 5 tijdloze kleuren:</h3>
-                  <div className="flex flex-wrap gap-4">
-                    {['Chalk', 'Oak', 'Ash', 'Rock', 'Coal'].map((color) => (
-                      <div key={color} className="bg-white px-4 py-2 rounded-full border border-gray-200 text-gray-700 font-medium">
-                        {color}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <Link href="/shop/squid-samenstellen">
-                    <Button 
-                      className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2"
-                      aria-label="Bestellen SQUID textielfolie - Ga naar productconfigurator"
-                    >
-                      Bestel nu SQUID
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </div>
-      ) : category === "rolgordijnen" ? (
-        <div className="bg-gradient-to-br from-orange-50 to-amber-100 py-16">
-          <Container>
-            <div className="max-w-4xl mx-auto">
-              {/* Placeholder Message for Development */}
-              <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border-l-4 border-orange-400">
-                <div className="text-center">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Settings className="h-8 w-8 text-white" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                      🛠️ Rolgordijnen op maat – Binnenkort online beschikbaar
-                    </h2>
-                  </div>
-                  
-                  <div className="max-w-2xl mx-auto space-y-4 text-gray-700 leading-relaxed">
-                    <p className="text-lg">
-                      We zijn momenteel druk bezig om onze rolgordijnen perfect voor u beschikbaar te maken.
-                      Binnenkort kunt u eenvoudig uw rolgordijn op maat bestellen via onze website.
-                    </p>
-                    
-                    <div className="bg-blue-50 rounded-lg p-6 mt-6">
-                      <h3 className="text-lg font-semibold text-blue-900 mb-3">
-                        🔜 Beschikbaar met keuze uit:
-                      </h3>
-                      <ul className="text-left space-y-2 text-blue-800">
-                        <li className="flex items-center">
-                          <Check className="h-5 w-5 text-blue-600 mr-2" />
-                          Verduisterende, lichtdoorlatende en screen stoffen
-                        </li>
-                        <li className="flex items-center">
-                          <Check className="h-5 w-5 text-blue-600 mr-2" />
-                          Diverse kleuren
-                        </li>
-                        <li className="flex items-center">
-                          <Check className="h-5 w-5 text-blue-600 mr-2" />
-                          Eenvoudige configurator
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <p className="text-orange-600 font-medium mt-4">
-                      Nog even geduld – wij zorgen voor een gebruiksvriendelijke en complete ervaring.
-                    </p>
-                  </div>
-
-                  <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/offerte">
-                      <Button 
-                        className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#d5c096]/50 focus:ring-offset-2"
-                      >
-                        Vraag nu offerte aan
-                      </Button>
-                    </Link>
-                    <Link href="/contact">
-                      <Button 
-                        variant="outline"
-                        className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3 rounded-lg transition-all duration-300"
-                      >
-                        Neem contact op
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </div>
-      ) : category === "horren" ? (
-        <div className="bg-gradient-to-br from-green-50 to-emerald-100 py-16">
-          <Container>
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center">
-                Horren — Insectenwering & Frisse Lucht
-              </h1>
-              
-              <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <p className="text-lg text-gray-700 leading-relaxed mb-8 text-center">
-                  Hoogwaardige horren die insecten buiten houden en tegelijkertijd frisse lucht binnenlaten. Perfect geschikt voor elk type raam of deur.
-                </p>
-
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-gray-50 rounded-lg p-6 text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Inzethorren</h3>
-                    <p className="text-2xl font-bold text-[#d5c096] mb-4">vanaf €45</p>
-                    <p className="text-gray-600">Eenvoudig te plaatsen zonder boren of schroeven</p>
-                  </div>
-                  
-                  <div className="bg-gray-50 rounded-lg p-6 text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Opzethorren</h3>
-                    <p className="text-2xl font-bold text-[#d5c096] mb-4">vanaf €45</p>
-                    <p className="text-gray-600">Stevige bevestiging op het raamkozijn</p>
-                  </div>
-                  
-                  <div className="bg-gray-50 rounded-lg p-6 text-center">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Plissé Hordeur</h3>
-                    <p className="text-2xl font-bold text-[#d5c096] mb-4">vanaf €165</p>
-                    <p className="text-gray-600">Compacte plooibare oplossing voor deuren</p>
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <Link href="/producten?filter=horren">
-                    <Button className="bg-[#d5c096] hover:bg-[#c4b183] text-white px-8 py-4 text-lg font-semibold rounded-lg">
-                      Bekijk alle horren
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </div>
-      ) : (
-        /* Default Hero Section for other categories */
-        <div
-          className="relative bg-cover bg-center py-24"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})`,
-          }}
-        >
-          <Container>
-            <div className="max-w-2xl">
-              <h1 className="font-display text-4xl md:text-5xl text-white font-semibold mb-4">
-                {productCategories.find(
-                  (pc: { label: string; urlPath: string }) =>
-                    pc.urlPath === category,
-                )?.label || categoryData.name}
-              </h1>
-              <p className="font-body text-white text-lg mb-8">
-                {categoryData.description}
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/quote">
-                  <Button className="bg-primary hover:bg-primary/90 text-white">
-                    Request a Quote
-                  </Button>
-                </Link>
-                <a href="#products">
-                  <Button
-                    variant="outline"
-                    className="bg-white/10 text-white border-white hover:bg-white/20"
-                  >
-                    View Products
-                  </Button>
-                </a>
-              </div>
-            </div>
-          </Container>
-        </div>
-      )}
-
-      {/* Features Section */}
-      <div className="py-16 bg-white">
+      {/* Standard Category Hero Section */}
+      <div
+        className="relative bg-cover bg-center py-24"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})`,
+        }}
+      >
         <Container>
-          <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
-            Key Features
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-neutral-50 p-8 rounded-lg flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <Check className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-display text-xl font-medium mb-2">
-                Premium Quality
-              </h3>
-              <p className="text-text-medium">
-                Crafted with the finest materials to ensure durability and
-                elegant appearance
-              </p>
-            </div>
-
-            <div className="bg-neutral-50 p-8 rounded-lg flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <Check className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-display text-xl font-medium mb-2">
-                Custom Options
-              </h3>
-              <p className="text-text-medium">
-                Available in multiple sizes, colors, and styles to perfectly
-                match your interior
-              </p>
-            </div>
-
-            <div className="bg-neutral-50 p-8 rounded-lg flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <Check className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-display text-xl font-medium mb-2">
-                Professional Installation
-              </h3>
-              <p className="text-text-medium">
-                Expert installation service available to ensure perfect fit and
-                finish
-              </p>
-            </div>
+          <div className="text-center text-white">
+            <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              {categoryData.name}
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+              {categoryData.description}
+            </p>
+            <Button
+              size="lg"
+              className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+            >
+              Bekijk Collectie
+            </Button>
           </div>
         </Container>
       </div>
 
-      {/* Products Section */}
-      <div id="products" className="py-16 bg-neutral-50">
+      {/* Products Grid Section */}
+      <div className="py-16 bg-gray-50">
         <Container>
-          <h2 className="font-display text-3xl text-primary font-semibold text-center mb-6">
-            {productCategories.find(
-              (pc: { label: string; urlPath: string }) =>
-                pc.urlPath === category,
-            )?.label || categoryData.name}{" "}
-            Collection
+          <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
+            Onze {categoryData.name} Collectie
           </h2>
-          <p className="font-body text-text-medium max-w-2xl mx-auto text-center mb-12">
-            Explore our wide range of{" "}
-            {(
-              productCategories.find(
-                (pc: { label: string; urlPath: string }) =>
-                  pc.urlPath === category,
-              )?.label || categoryData.name
-            ).toLowerCase()}{" "}
-            designed to enhance your living space with style and functionality.
-          </p>
 
-          {products.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-text-medium">
-                No products available in this category at the moment.
-              </p>
-            </div>
-          ) : (
+          {categoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product) => (
+              {categoryProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02]"
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
-                  <div className="aspect-[4/3] relative overflow-hidden">
-                    <Link
-                      href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    >
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform hover:scale-105"
-                      />
-                    </Link>
-                    {product.isNewArrival && (
-                      <div className="absolute top-2 right-2 bg-accent text-white text-xs px-2 py-1 rounded">
-                        New Arrival
-                      </div>
-                    )}
-                    {product.isBestSeller && (
-                      <div className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
-                        Best Seller
-                      </div>
-                    )}
+                  <div className="aspect-square bg-gray-200">
+                    <img
+                      src={product.imageUrl || "/placeholder-product.jpg"}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="p-4">
-                    <Link
-                      href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    >
-                      <h3 className="font-display text-lg font-medium mb-2 hover:text-primary transition-colors">
-                        {product.name}
-                      </h3>
-                    </Link>
-                    <p className="text-text-medium text-sm mb-3 line-clamp-2">
+                  <div className="p-6">
+                    <h3 className="font-display text-xl font-medium text-primary mb-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-text-medium mb-4">
                       {product.description}
                     </p>
                     <div className="flex justify-between items-center">
-                      <div className="text-accent">
-                        <span className="font-semibold text-lg">
-                          €{product.price.toFixed(2)}
-                        </span>
-                        <span className="text-sm font-normal text-text-medium ml-1">
-                          per window
-                        </span>
-                      </div>
-                      <Link
-                        href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}
+                      <span className="text-2xl font-bold text-primary">
+                        €{product.price}
+                      </span>
+                      <Button
+                        size="sm"
+                        className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
                       >
-                        <span className="text-primary text-sm font-medium hover:underline cursor-pointer">
-                          View Details
-                        </span>
-                      </Link>
+                        Bekijk Details
+                      </Button>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+          ) : (
+            <div className="text-center py-16">
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                Binnenkort beschikbaar
+              </h3>
+              <p className="text-lg text-gray-600 mb-8">
+                We werken hard aan het toevoegen van producten voor deze categorie.
+              </p>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+                >
+                  Neem Contact Op
+                </Button>
+              </Link>
+            </div>
           )}
+        </Container>
+      </div>
 
-          <div className="text-center mt-12">
-            <Link href="/quote">
-              <Button className="bg-primary hover:bg-primary/90 text-white">
-                Request a Quote
-              </Button>
-            </Link>
+      {/* Features Section */}
+      <div className="py-16 bg-white">
+        <Container>
+          <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
+            Waarom Kiezen voor KANIOU?
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-display text-xl font-medium mb-4">
+                Premium Kwaliteit
+              </h3>
+              <p className="text-text-medium">
+                Alleen de beste materialen en vakmanschap voor duurzame raamdecoratie.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-display text-xl font-medium mb-4">
+                Op Maat Gemaakt
+              </h3>
+              <p className="text-text-medium">
+                Elke bestelling wordt perfect afgestemd op uw specifieke wensen en afmetingen.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-display text-xl font-medium mb-4">
+                Professionele Service
+              </h3>
+              <p className="text-text-medium">
+                Van advies tot installatie, wij begeleiden u door het hele proces.
+              </p>
+            </div>
           </div>
         </Container>
       </div>
 
       {/* Specifications Section */}
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-gray-50">
         <Container>
           <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
-            Specifications
+            Specificaties
           </h2>
 
-          <div className="bg-neutral-50 rounded-lg p-8">
+          <div className="bg-white rounded-lg p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-display text-xl font-medium mb-4">
-                  Materials
+                  Materialen
                 </h3>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Premium quality fabrics</span>
+                    <span>Hoogwaardige stoffen</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Durable hardware components</span>
+                    <span>Duurzame hardware componenten</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>UV resistant materials</span>
+                    <span>UV bestendige materialen</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Easy to clean and maintain</span>
+                    <span>Gemakkelijk te reinigen</span>
                   </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-display text-xl font-medium mb-4">
-                  Available Options
+                  Beschikbare Opties
                 </h3>
                 <ul className="space-y-2">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Multiple color choices</span>
+                    <span>Verschillende kleuren en patronen</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Custom dimensions available</span>
+                    <span>Handmatige of elektrische bediening</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Various operating mechanisms</span>
+                    <span>Op maat gemaakte afmetingen</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                    <span>Different mounting options</span>
+                    <span>Professionele installatieservice</span>
                   </li>
                 </ul>
               </div>
@@ -643,36 +350,32 @@ const ProductCategoryPage = () => {
         </Container>
       </div>
 
-      {/* CTA Section */}
+      {/* Call to Action Section */}
       <div className="py-16 bg-primary text-white">
         <Container>
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-display text-3xl font-semibold mb-4">
-              Ready to Transform Your Space?
+          <div className="text-center">
+            <h2 className="font-display text-3xl font-bold mb-6">
+              Klaar om uw interieur te transformeren?
             </h2>
-            <p className="font-body mb-8">
-              Contact us today for a personalized consultation and free quote.
-              Our experts will help you find the perfect{" "}
-              {(
-                productCategories.find(
-                  (pc: { label: string; urlPath: string }) =>
-                    pc.urlPath === category,
-                )?.label || categoryData.name
-              ).toLowerCase()}{" "}
-              solution for your home or business.
+            <p className="text-xl mb-8 max-w-2xl mx-auto">
+              Neem vandaag nog contact met ons op voor een vrijblijvende offerte.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/quote">
-                <Button className="bg-white text-primary hover:bg-white/90">
-                  Request a Quote
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/offerte">
+                <Button
+                  size="lg"
+                  className="bg-white text-primary hover:bg-gray-100"
+                >
+                  Vraag Offerte Aan
                 </Button>
               </Link>
               <Link href="/contact">
                 <Button
+                  size="lg"
                   variant="outline"
-                  className="border-white text-white hover:bg-white/20"
+                  className="border-white text-white hover:bg-white hover:text-primary"
                 >
-                  Contact Us
+                  Contact Opnemen
                 </Button>
               </Link>
             </div>

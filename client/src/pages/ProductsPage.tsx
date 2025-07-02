@@ -3,7 +3,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import gordijnrailsImage from "@assets/Ontwerp zonder titel (4)_1750199510374.png";
-import squidCoverImage from "@assets/SQUID cover_1750792481675.png";
+
 import {
   Card,
   CardContent,
@@ -479,45 +479,7 @@ const ProductsPage = () => {
         badge: "Vochtbestendig",
       },
     ],
-    rolgordijnen: [
-      {
-        id: 3,
-        title: "Rolgordijnen",
-        subtitle: "Praktisch & stijlvol",
-        description: "Hoogwaardige rolgordijnen voor elke ruimte en smaak.",
-        image:
-          "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&h=300&fit=crop",
-        products: [
-          {
-            name: "Rolgordijn Verduisterend",
-            price: "€89,95",
-            popular: true,
-            width: 200,
-            height: 250,
-            thickness: 0.8,
-          },
-          {
-            name: "Rolgordijn Semi-transparant",
-            price: "€69,95",
-            popular: false,
-            width: 200,
-            height: 250,
-            thickness: 0.5,
-          },
-          {
-            name: "Rolgordijn op Maat",
-            price: "€129,95",
-            popular: false,
-            width: 300,
-            height: 280,
-            thickness: 1.2,
-          },
-        ],
-        dimensions: { width: 200, height: 250, depth: 0.8 },
-        href: "/producten/rolgordijnen/configurator",
-        badge: "Populair",
-      },
-    ],
+
     vitrages: [
       {
         id: 4,
@@ -730,7 +692,7 @@ const ProductsPage = () => {
             popular: false,
           },
         ],
-        href: "/producten/rolgordijnen/configurator",
+        href: "/producten/gordijnrails/configurator",
         badge: "Op Maat",
       },
       {
@@ -782,60 +744,7 @@ const ProductsPage = () => {
         href: "/producten/gordijnrails/configurator",
         badge: "Op Maat",
       },
-      {
-        id: 10,
-        title: "SQUID Textile Foil",
-        subtitle: "Elegant Privacy with a Natural Look",
-        description:
-          "Squid is a self-adhesive transparent textile that lets daylight in, but blocks unwanted views from outside. It gives your windows a warm, linen-like appearance while maintaining privacy during the day.",
-        image: squidCoverImage,
-        products: [
-          {
-            name: "SQUID Chalk",
-            price: "€34,95",
-            popular: true,
-            width: 100,
-            height: 150,
-            thickness: 0.1,
-          },
-          {
-            name: "SQUID Oak",
-            price: "€34,95",
-            popular: true,
-            width: 100,
-            height: 150,
-            thickness: 0.1,
-          },
-          {
-            name: "SQUID Ash",
-            price: "€34,95",
-            popular: false,
-            width: 100,
-            height: 150,
-            thickness: 0.1,
-          },
-          {
-            name: "SQUID Rock",
-            price: "€34,95",
-            popular: false,
-            width: 100,
-            height: 150,
-            thickness: 0.1,
-          },
-          {
-            name: "SQUID Coal",
-            price: "€34,95",
-            popular: false,
-            width: 100,
-            height: 150,
-            thickness: 0.1,
-          },
-        ],
-        dimensions: { width: 100, height: 150, depth: 0.1 },
-        href: "/producten/squid",
-        badge: "Premium",
-        isSquid: true,
-      },
+
     ],
   };
 
@@ -865,21 +774,17 @@ const ProductsPage = () => {
     if (selectedCategory === "alles") {
       allProducts = [
         // horren temporarily excluded
-        ...productCategories.rolgordijnen, // FIXED: Restored rolgordijnen visibility
+
         ...productCategories.accessoires.filter(item => item.title !== "Rolgordijnen"),
       ];
     } else if (selectedCategory === "horren") {
       allProducts = []; // Empty - horren temporarily hidden
-    } else if (selectedCategory === "rolgordijnen") {
-      allProducts = productCategories.rolgordijnen; // FIXED: Restored rolgordijnen category
+
     } else if (selectedCategory === "gordijnrails") {
       allProducts = productCategories.accessoires.filter(
         (item) => item.title === "Gordijnrails",
       );
-    } else if (selectedCategory === "squid") {
-      allProducts = productCategories.accessoires.filter(
-        (item) => item.isSquid === true,
-      );
+
     } else if (selectedCategory === "accessoires") {
       allProducts = productCategories.accessoires;
     }
@@ -1518,9 +1423,9 @@ const ProductsPage = () => {
                 {[
                   { id: "alles", label: "Show All" },
                   // { id: "horren", label: "Horren" }, // TEMPORARILY REMOVED
-                  { id: "rolgordijnen", label: "Rolgordijnen" }, // FIXED: Restored rolgordijnen button
+
                   { id: "gordijnrails", label: "Gordijnrails" },
-                  { id: "squid", label: "SQUID textile foil" },
+
                 ].map((category) => (
                   <button
                     key={category.id}

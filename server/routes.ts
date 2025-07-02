@@ -229,7 +229,7 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new
       const customerEmailText = `
 Beste klant,
 
-Bedankt voor uw interesse in KANIOU rolgordijnen!
+Bedankt voor uw interesse in KANIOU raamdecoratie!
 
 We hebben uw verzoek ontvangen voor stalen in de kleur: ${colorName}
 

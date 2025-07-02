@@ -21,8 +21,7 @@ import ProductsPage from "@/pages/ProductsPage";
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
 import GordijnrailsConfiguratorPage from "@/pages/GordijnrailsConfiguratorPage";
-import RolgordijnenConfiguratorPage from "@/pages/RolgordijnenConfiguratorPage";
-import SquidConfiguratorPage from "@/pages/SquidConfiguratorPage";
+
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
@@ -56,9 +55,7 @@ import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
-import SimpleRollerBlindConfiguratorPage from "@/pages/SimpleRollerBlindConfiguratorPage";
-import ColorSamplePage from "@/pages/ColorSamplePage";
-import SimpleConfiguratorPage from "@/pages/SimpleConfiguratorPage";
+
 
 
 
@@ -105,7 +102,7 @@ function Router() {
         
         {/* All product category routes for both /products/ and /producten/ paths */}
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
-        <Route path="/products/rolgordijnen" component={ProductCategoryPage} />
+
         <Route path="/products/overgordijnen" component={ProductCategoryPage} />
         <Route path="/products/plisse" component={ProductCategoryPage} />
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
@@ -113,8 +110,7 @@ function Router() {
         {/* New /producten/ routes for all 20 categories */}
         <Route path="/producten/overgordijnen" component={ProductCategoryPage} />
         <Route path="/producten/vitrages" component={ProductCategoryPage} />
-        <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
-        <Route path="/producten/duo-rolgordijnen" component={ProductCategoryPage} />
+
         <Route path="/producten/textiel-lamellen" component={ProductCategoryPage} />
         <Route path="/producten/kunststof-lamellen" component={ProductCategoryPage} />
         <Route path="/producten/houten-jaloezieen" component={ProductCategoryPage} />
@@ -131,22 +127,11 @@ function Router() {
         <Route path="/producten/gordijnrails" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
-        <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
-        {/* Rolgordijnen configurator routes */}
-        <Route path="/producten/rolgordijnen/configurator" component={RolgordijnenConfiguratorPage} />
-        <Route path="/rolgordijnen-configurator" component={RolgordijnenConfiguratorPage} />
-        <Route path="/producten/rolgordijnen/eenvoudige-configurator" component={SimpleRollerBlindConfiguratorPage} />
-        <Route path="/rolgordijnen-eenvoudige-configurator" component={SimpleRollerBlindConfiguratorPage} />
-        <Route path="/producten/rolgordijnen/kleurstalen" component={ColorSamplePage} />
-        <Route path="/rolgordijnen-kleurstalen" component={ColorSamplePage} />
-        <Route path="/producten/rolgordijnen/simpele-configurator" component={SimpleConfiguratorPage} />
-        <Route path="/rolgordijnen-simpele-configurator" component={SimpleConfiguratorPage} />
+
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
         <Route path="/reiniging" component={CleaningProductsPage} />
-        <Route path="/producten/squid" component={ProductCategoryPage} />
-        <Route path="/shop/squid-samenstellen" component={SquidConfiguratorPage} />
-        <Route path="/squid-configurator" component={SquidConfiguratorPage} />
+
         
         {/* Handle all other product category routes */}
         <Route path="/products/:category" component={ProductCategoryPage} />

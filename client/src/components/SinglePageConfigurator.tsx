@@ -523,109 +523,200 @@ const SinglePageConfigurator: React.FC = () => {
           </Card>
         </div>
 
-        {/* Sticky Summary */}
+        {/* Persistent Sidebar */}
         <div className="lg:col-span-1">
-          <div className="sticky top-6">
+          <div className="sticky top-6 space-y-4">
+            
+            {/* Configuration Summary */}
             <Card>
               <CardHeader>
-                <CardTitle>Overzicht & Prijs</CardTitle>
+                <CardTitle className="text-lg font-semibold">Jouw Configuratie</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Selected Items Summary */}
+              <CardContent className="space-y-3">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Stofsoort:</span>
+                    <span className="font-medium">
+                      {configuration.fabricType ? 
+                        fabricTypes.find(f => f.id === configuration.fabricType)?.name || "Niet gekozen" : 
+                        "Niet gekozen"
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Profiel:</span>
+                    <span className="font-medium">
+                      {configuration.profileType ? 
+                        profileTypes.find(p => p.id === configuration.profileType)?.name || "Niet gekozen" : 
+                        "Niet gekozen"
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Afmetingen:</span>
+                    <span className="font-medium">
+                      {configuration.width > 0 && configuration.height > 0 ? 
+                        `${configuration.width} × ${configuration.height} cm` : 
+                        "Niet ingevuld"
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Montage:</span>
+                    <span className="font-medium">
+                      {configuration.installationType ? 
+                        installationTypes.find(i => i.id === configuration.installationType)?.name || "Niet gekozen" : 
+                        "Niet gekozen"
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Bedieningszijde:</span>
+                    <span className="font-medium">
+                      {configuration.controlSide ? 
+                        controlSides.find(s => s.id === configuration.controlSide)?.name || "Niet gekozen" : 
+                        "Niet gekozen"
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Bediening:</span>
+                    <span className="font-medium">
+                      {configuration.operationType === "manual" && configuration.controlMethod ? 
+                        `Handmatig – ${manualControls.find(c => c.id === configuration.controlMethod)?.name}` :
+                        configuration.operationType === "motorized" && configuration.controlMethod ?
+                        `Elektrisch – ${motorizedControls.find(c => c.id === configuration.controlMethod)?.name}` :
+                        "Niet gekozen"
+                      }
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Price Breakdown */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">Prijsoverzicht</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-2 text-sm">
+                  {getSelectedItems().map((item, index) => (
+                    <div key={index} className="flex justify-between">
+                      <span className="text-gray-600">{item.name}</span>
+                      <span className="font-medium">
+                        {item.price > 0 ? `+€${item.price.toFixed(2)}` : `€${item.price.toFixed(2)}`}
+                      </span>
+                    </div>
+                  ))}
+                  
+                  {getSelectedItems().length === 0 && (
+                    <div className="text-gray-500 text-center py-4">
+                      Maak uw keuzes om de prijs te zien
+                    </div>
+                  )}
+                </div>
+                
                 {getSelectedItems().length > 0 && (
-                  <div className="space-y-3">
-                    <h6 className="font-medium text-gray-900">Geselecteerde opties:</h6>
-                    <div className="space-y-2">
-                      {getSelectedItems().map((item, index) => (
-                        <div key={index} className="flex justify-between text-sm">
-                          <span className="text-gray-600">{item.name}</span>
-                          <span className="font-medium">€{item.price.toFixed(2)}</span>
+                  <>
+                    <div className="border-t pt-3">
+                      <div className="flex justify-between items-center text-lg font-bold">
+                        <span>Totaalprijs:</span>
+                        <span>€{calculatePrice().toFixed(2)}</span>
+                      </div>
+                      <div className="text-xs text-gray-500 text-right">
+                        (incl. 21% BTW)
+                      </div>
+                    </div>
+                    
+                    {/* Quantity Selection */}
+                    <div className="border-t pt-3">
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="quantity" className="text-sm">Aantal:</Label>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateConfiguration("quantity", Math.max(1, configuration.quantity - 1))}
+                          >
+                            -
+                          </Button>
+                          <Input
+                            id="quantity"
+                            type="number"
+                            value={configuration.quantity}
+                            onChange={(e) => updateConfiguration("quantity", parseInt(e.target.value) || 1)}
+                            className="w-16 text-center"
+                            min="1"
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => updateConfiguration("quantity", configuration.quantity + 1)}
+                          >
+                            +
+                          </Button>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Dimensions Summary */}
-                {configuration.width > 0 && configuration.height > 0 && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm">
-                      <div className="flex justify-between">
-                        <span>Afmetingen:</span>
-                        <span>{configuration.width} × {configuration.height} cm</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Oppervlakte:</span>
-                        <span>{((configuration.width * configuration.height) / 10000).toFixed(2)} m²</span>
                       </div>
                     </div>
-                  </div>
-                )}
-
-                {/* Quantity */}
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="quantity">Aantal:</Label>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updateConfiguration("quantity", Math.max(1, configuration.quantity - 1))}
-                    >
-                      -
-                    </Button>
-                    <Input
-                      id="quantity"
-                      type="number"
-                      value={configuration.quantity}
-                      onChange={(e) => updateConfiguration("quantity", parseInt(e.target.value) || 1)}
-                      className="w-16 text-center"
-                      min="1"
-                    />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updateConfiguration("quantity", configuration.quantity + 1)}
-                    >
-                      +
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Total Price */}
-                <div className="border-t pt-4">
-                  <div className="flex justify-between items-center text-lg font-bold text-[#d5c096]">
-                    <span>Totaal (incl. BTW):</span>
-                    <span>€{calculatePrice().toFixed(2)}</span>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="space-y-3 pt-4">
-                  <Button 
-                    className="w-full bg-[#d5c096] hover:bg-[#d5c096]/90"
-                    disabled={!isConfigurationComplete()}
-                  >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    Toevoegen aan winkelwagen
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    disabled={!isConfigurationComplete()}
-                  >
-                    <FileText className="h-4 w-4 mr-2" />
-                    Offerte aanvragen
-                  </Button>
-                </div>
-
-                {!isConfigurationComplete() && (
-                  <div className="text-sm text-gray-500 flex items-center gap-2">
-                    <Info className="h-4 w-4" />
-                    Maak alle keuzes om door te gaan
-                  </div>
+                  </>
                 )}
               </CardContent>
             </Card>
+
+            {/* Payment Button */}
+            {isConfigurationComplete() && (
+              <Button 
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3"
+                size="lg"
+              >
+                Betaal veilig via Mollie
+              </Button>
+            )}
+
+            {/* View Full Breakdown Link */}
+            {isConfigurationComplete() && (
+              <div className="text-center">
+                <button className="text-sm text-[#d5c096] hover:underline">
+                  Bekijk totaalspecificatie
+                </button>
+              </div>
+            )}
+
+            {/* Why KANIOU Section */}
+            <Card className="bg-green-50 border-green-200">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold text-green-900">Waarom KANIOU?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm text-green-800">
+                  <div className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <span>Op maat gemaakt in eigen atelier</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <span>Inclusief professioneel montagemateriaal</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <span>5 jaar garantie op werking & onderdelen</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">✓</span>
+                    <span>Snelle, vriendelijke levering & plaatsing</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Additional Action Buttons */}
+            {!isConfigurationComplete() && (
+              <div className="text-sm text-gray-500 flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                <Info className="h-4 w-4" />
+                <span>Maak alle keuzes om door te gaan</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

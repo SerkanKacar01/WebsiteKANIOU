@@ -11,13 +11,10 @@ const CleaningProductsPage: React.FC = () => {
   // HTC 620 product data
   const htcProduct = {
     id: 1,
-    name: 'HTC 620 Vlekkenformule – Tapijt & Textiel Vlekkenreiniger (0,5 liter)',
-    price: 9.95,
-    originalPrice: 12.95,
+    name: 'HTC 620 Vlekkenformule',
+    price: 16.95,
     imageUrl: '/images/htc-620-vlekkenreiniger.jpg',
-    description: `**Professionele vlekkenreiniger voor tapijten en textiel**
-
-HTC 620 is een krachtige vlekkenformule speciaal ontwikkeld voor het effectief verwijderen van vlekken uit tapijten, gordijnen en meubelstof. Deze professionele reiniger is geschikt voor alle textielsoorten en biedt uitstekende resultaten.`,
+    description: `Verwijdert eenvoudig vlekken uit textiel, meubelstof en tapijt. Direct toepasbaar met handige sprayflacon. Niet geschikt voor leder.`,
     features: [
       'Professionele kwaliteit',
       'Geschikt voor alle textielsoorten', 
@@ -39,11 +36,9 @@ HTC 620 is een krachtige vlekkenformule speciaal ontwikkeld voor het effectief v
       biodegradable: true
     },
     instructions: [
-      'Test eerst op een onopvallende plek',
       'Spray direct op de vlek',
       'Laat 2-3 minuten inwerken',
-      'Dep voorzichtig met een schone doek',
-      'Spoel indien nodig na met water'
+      'Dep voorzichtig met een schone doek'
     ],
     inStock: true,
     rating: 4.8,
@@ -136,14 +131,6 @@ HTC 620 is een krachtige vlekkenformule speciaal ontwikkeld voor het effectief v
                     <div className="text-sm text-gray-500">
                       incl. 21% BTW
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-500 line-through">
-                      €{htcProduct.originalPrice?.toFixed(2)}
-                    </div>
-                    <Badge variant="destructive" className="text-xs">
-                      Aanbieding
-                    </Badge>
                   </div>
                 </div>
 

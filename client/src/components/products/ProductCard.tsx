@@ -43,7 +43,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <h3 className="font-display text-lg sm:text-xl text-primary font-medium">
             {product.name}
           </h3>
-          <div className="text-accent font-semibold">${product.price.toFixed(2)}</div>
+          <div className="text-accent font-semibold">€{product.price.toFixed(2)}</div>
         </div>
         <p className="font-body text-text-medium text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
           {product.description}

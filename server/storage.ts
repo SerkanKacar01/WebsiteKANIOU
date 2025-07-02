@@ -184,38 +184,12 @@ class DatabaseStorage implements IStorage {
         global.memoryProducts = [
           {
             id: 1,
-            name: 'HTC 620 Vlekkenformule – Tapijt & Textiel Vlekkenreiniger (0,5 liter)',
-            description: `**Professionele vlekkenreiniger voor tapijten en textiel**
-
-HTC 620 is een krachtige vlekkenformule speciaal ontwikkeld voor het effectief verwijderen van vlekken uit tapijten, gordijnen en meubelstof. Deze professionele reiniger is geschikt voor alle textielsoorten en biedt uitstekende resultaten.
-
-**Belangrijkste voordelen:**
-• Verwijdert effectief vlekken van koffie, wijn, vet en algemeen vuil
-• Veilig voor alle textielsoorten en kleuren
-• Laat geen residu achter
-• Snelle werking voor verse én ingedroogde vlekken
-• Milieuvriendelijke formule
-
-**Toepassingen:**
-• Tapijten en vloerkleden
-• Gordijnen en overgordijnen
-• Meubelstof en bekleding
-• Autointerieur textiel
-• Commerciële en residentiële ruimtes
+            name: 'HTC 620 Vlekkenformule',
+            description: `Verwijdert eenvoudig vlekken uit textiel, meubelstof en tapijt. Direct toepasbaar met handige sprayflacon. Niet geschikt voor leder.
 
 **Gebruiksaanwijzing:**
-1. Test eerst op een onopvallende plek
-2. Spray direct op de vlek
-3. Laat 2-3 minuten inwerken
-4. Dep voorzichtig met een schone doek
-5. Spoel indien nodig na met water
-
-**Technische specificaties:**
-• Volume: 0,5 liter
-• pH-waarde: 7-8 (mild alkalisch)
-• Biologisch afbreekbaar
-• Niet-giftig bij normaal gebruik`,
-            price: 9.95,
+Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een schone doek.`,
+            price: 16.95,
             imageUrl: '/images/htc-620-vlekkenreiniger.jpg',
             categoryId: 1,
             isFeatured: true,

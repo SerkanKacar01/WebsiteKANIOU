@@ -20,7 +20,8 @@ const CleaningProductsPage: React.FC = () => {
       'Geschikt voor alle textielsoorten', 
       'Milieuvriendelijke formule',
       'Snelle werking',
-      'Geen residu'
+      'Geen residu',
+      'Levertijd 2 - 3 dagen'
     ],
     applications: [
       'Tapijt',
@@ -33,12 +34,23 @@ const CleaningProductsPage: React.FC = () => {
       type: 'Vlekkenreiniger',
       brand: 'HTC',
       pH: '7-8 (mild alkalisch)',
+      Artikel: 'HTC 620 vlekkenformule à 0,5 liter - tapijt & textiel vlekkenreiniger',
       biodegradable: true
     },
     instructions: [
       'Spray direct op de vlek',
       'Laat 2-3 minuten inwerken',
-      'Dep voorzichtig met een schone doek'
+      'Dep voorzichtig met een schone doek',
+      '*** Kleding, meubelstof en autobekleding ***',
+      '● HTC 620 middels een witte schone doek (denk aan badstof washandje) aanbrengen op de vlek.',
+      '● Voorzichtig de vlek verwijderen.',
+      '● Niet geschikt voor leder bekleding.',
+
+        '*** Tapijt ***',
+        '● HTC 620 direct opsprayen',
+        '● Voorkom "te nat" worden van de backing (rug van het tapijt, deze kan anders niet goed meer drogen als deze te nat wordt), dus spaarzaam toepassen (Het is beter een vlek in tweemaal te verwijderen dan deze teveel in te sprayen)',
+        '● Even laten inwerken.',
+        '● Vlek verwijderen met een witte, schone en goed absorberende doek.'
     ],
     inStock: true,
     rating: 4.8,

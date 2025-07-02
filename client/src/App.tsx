@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
+import { CartProvider } from "@/context/CartContext";
 import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
@@ -55,6 +56,7 @@ import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
+import CartPage from "@/pages/CartPage";
 
 
 
@@ -187,6 +189,10 @@ function Router() {
         <Route path="/bestelling-status/:id" component={BestellingStatusPage} />
         <Route path="/track-order" component={TrackOrderPage} />
         
+        {/* Shopping Cart */}
+        <Route path="/cart" component={CartPage} />
+        <Route path="/winkelwagen" component={CartPage} />
+        
         {/* Hidden Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
         <Route path="/admin-login" component={AdminLoginPage} />
@@ -236,22 +242,24 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <MobileLayoutWrapper>
-          <Router />
-        </MobileLayoutWrapper>
-        <FloatingActionButtons />
-        <CookieConsentBanner />
-        <CookiebotSetup />
+      <CartProvider>
+        <TooltipProvider>
+          <Toaster />
+          <MobileLayoutWrapper>
+            <Router />
+          </MobileLayoutWrapper>
+          <FloatingActionButtons />
+          <CookieConsentBanner />
+          <CookiebotSetup />
 
-        {shouldShowOnboarding && (
-          <OnboardingWizard 
-            onComplete={handleOnboardingComplete}
-            onSkip={handleOnboardingSkip}
-          />
-        )}
-      </TooltipProvider>
+          {shouldShowOnboarding && (
+            <OnboardingWizard 
+              onComplete={handleOnboardingComplete}
+              onSkip={handleOnboardingSkip}
+            />
+          )}
+        </TooltipProvider>
+      </CartProvider>
     </QueryClientProvider>
   );
 }

@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/context/CartContext";
+import { useToast } from "@/hooks/use-toast";
 import { ShoppingCart, Star, Check, Package, Heart, Eye } from "lucide-react";
 
 const CleaningProductsPage: React.FC = () => {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+
   // HTC 620 product data
   const htcProduct = {
     id: 1,
@@ -55,6 +61,39 @@ const CleaningProductsPage: React.FC = () => {
     inStock: true,
     rating: 4.8,
     reviewCount: 127
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      setIsAddingToCart(true);
+      
+      await addToCart({
+        productType: 'reiniging',
+        productName: htcProduct.name,
+        material: 'Vlekkenreiniger',
+        color: 'Wit',
+        quantity: 1,
+        unitPrice: htcProduct.price,
+        imageUrl: htcProduct.imageUrl,
+        customizations: {
+          volume: htcProduct.specifications.volume,
+          brand: htcProduct.specifications.brand
+        }
+      });
+
+      toast({
+        title: "Product toegevoegd!",
+        description: `${htcProduct.name} is toegevoegd aan uw winkelwagen.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Fout",
+        description: "Er is een fout opgetreden bij het toevoegen aan de winkelwagen.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsAddingToCart(false);
+    }
   };
 
   return (
@@ -162,9 +201,11 @@ const CleaningProductsPage: React.FC = () => {
                     <Button 
                       className="w-full bg-[#d5c096] hover:bg-[#d5c096]/90"
                       size="lg"
+                      onClick={handleAddToCart}
+                      disabled={isAddingToCart}
                     >
                       <ShoppingCart className="h-5 w-5 mr-2" />
-                      In winkelwagen
+                      {isAddingToCart ? "Toevoegen..." : "In winkelwagen"}
                     </Button>
                     <Button 
                       variant="outline" 

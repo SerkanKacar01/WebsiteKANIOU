@@ -1164,6 +1164,67 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     }
   });
 
+  // Shopping Cart API endpoints
+  app.post("/api/cart/add", async (req, res) => {
+    try {
+      const cartItem = await storage.addToCart(req.body);
+      res.status(201).json({ success: true, item: cartItem });
+    } catch (error: any) {
+      console.error("Add to cart error:", error);
+      res.status(500).json({ error: "Failed to add item to cart" });
+    }
+  });
+
+  app.get("/api/cart/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const cartData = await storage.getCartBySession(sessionId);
+      res.json(cartData);
+    } catch (error: any) {
+      console.error("Get cart error:", error);
+      res.status(500).json({ error: "Failed to fetch cart" });
+    }
+  });
+
+  app.patch("/api/cart/item/:itemId", async (req, res) => {
+    try {
+      const itemId = parseInt(req.params.itemId);
+      const { quantity } = req.body;
+      
+      if (!quantity || quantity < 1) {
+        return res.status(400).json({ error: "Invalid quantity" });
+      }
+
+      const updatedItem = await storage.updateCartItemQuantity(itemId, quantity);
+      res.json({ success: true, item: updatedItem });
+    } catch (error: any) {
+      console.error("Update cart item error:", error);
+      res.status(500).json({ error: "Failed to update cart item" });
+    }
+  });
+
+  app.delete("/api/cart/item/:itemId", async (req, res) => {
+    try {
+      const itemId = parseInt(req.params.itemId);
+      await storage.removeFromCart(itemId);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Remove from cart error:", error);
+      res.status(500).json({ error: "Failed to remove item from cart" });
+    }
+  });
+
+  app.delete("/api/cart/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      await storage.clearCart(sessionId);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Clear cart error:", error);
+      res.status(500).json({ error: "Failed to clear cart" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

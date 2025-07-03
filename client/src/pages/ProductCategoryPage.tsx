@@ -54,15 +54,6 @@ const ProductCategoryPage = () => {
     }
   }, [category, isValidCategory, setLocation]);
 
-  // Fetch categories and products
-  const { data: categories = [] } = useQuery<Category[]>({
-    queryKey: ["/api/categories"],
-  });
-
-  const { data: products = [] } = useQuery<Product[]>({
-    queryKey: ["/api/products"],
-  });
-
   // If no valid category, return null (will redirect)
   if (!isValidCategory || !category) {
     return null;
@@ -291,25 +282,16 @@ const ProductCategoryPage = () => {
 
   const productInfo = getProductInfo(category || "");
 
-  // Find category data
-  const foundCategory = categories.find(
-    (cat: Category) => cat.name === categoryName,
-  );
-
-  // If category not found in database, create a default one with specific info
-  const categoryData = foundCategory || {
+  // Create category data object using static content (e-commerce system was removed)
+  const categoryData = {
     id: 0,
     name: productInfo.name,
     description: productInfo.description,
     imageUrl: "/placeholder-category.jpg",
   };
 
-  // Filter products for this category
-  const categoryProducts = foundCategory
-    ? products.filter(
-        (product: Product) => product.categoryId === foundCategory.id,
-      )
-    : [];
+  // Since e-commerce was removed, show informational content instead of products
+  const categoryProducts: Product[] = [];
 
   return (
     <>
@@ -335,13 +317,13 @@ const ProductCategoryPage = () => {
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/shop">Shop</BreadcrumbLink>
+                <BreadcrumbLink href="/producten">Producten</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href={`/products/${category}`}>
+                <BreadcrumbLink href={`/producten/${category}`}>
                   {productCategories.find(
                     (cat) => cat.urlPath === category,
                   )?.label || categoryData.name}
@@ -384,60 +366,85 @@ const ProductCategoryPage = () => {
             Onze {categoryData.name} Collectie
           </h2>
 
-          {categoryProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categoryProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-                >
-                  <div className="aspect-square bg-gray-200">
-                    <img
-                      src={product.imageUrl || "/placeholder-product.jpg"}
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-display text-xl font-medium text-primary mb-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-text-medium mb-4">
-                      {product.description}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-primary">
-                        €{product.price}
-                      </span>
-                      <Button
-                        size="sm"
-                        className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
-                      >
-                        Bekijk Details
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                Binnenkort beschikbaar
+          {/* Product Information Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Applications Card */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+                <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
+                Toepassingen
               </h3>
-              <p className="text-lg text-gray-600 mb-8">
-                We werken hard aan het toevoegen van producten voor deze categorie.
-              </p>
-              <Link href="/contact">
+              <ul className="space-y-2">
+                {productInfo.applications.map((app, index) => (
+                  <li key={index} className="text-text-medium flex items-center">
+                    <Check className="h-4 w-4 mr-2 text-[#d5c096]" />
+                    {app}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Benefits Card */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+                <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
+                Voordelen
+              </h3>
+              <ul className="space-y-2">
+                {productInfo.benefits.map((benefit, index) => (
+                  <li key={index} className="text-text-medium flex items-center">
+                    <Check className="h-4 w-4 mr-2 text-[#d5c096]" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Colors/Materials Card */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+                <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
+                {productInfo.colors ? "Beschikbare Kleuren" : "Materialen"}
+              </h3>
+              <ul className="space-y-2">
+                {(productInfo.colors || productInfo.materials || []).map((item, index) => (
+                  <li key={index} className="text-text-medium flex items-center">
+                    <Check className="h-4 w-4 mr-2 text-[#d5c096]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Call to Action Section */}
+          <div className="text-center mt-12 py-8 bg-white rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Interesse in {categoryData.name}?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              Neem contact met ons op voor een vrijblijvende offerte of kom langs in onze showroom voor persoonlijk advies.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/offerte">
                 <Button
                   size="lg"
                   className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+                >
+                  Vraag Offerte Aan
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white"
                 >
                   Neem Contact Op
                 </Button>
               </Link>
             </div>
-          )}
+          </div>
         </Container>
       </div>
 

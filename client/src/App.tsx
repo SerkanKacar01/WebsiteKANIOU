@@ -116,6 +116,7 @@ function Router() {
         {/* New /producten/ routes for all categories */}
         <Route path="/producten/overgordijnen" component={ProductCategoryPage} />
         <Route path="/producten/vitrages" component={ProductCategoryPage} />
+        <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
         <Route path="/producten/duo-rolgordijnen" component={ProductCategoryPage} />
         <Route path="/producten/textiel-lamellen" component={ProductCategoryPage} />
         <Route path="/producten/kunststof-lamellen" component={ProductCategoryPage} />
@@ -135,6 +136,7 @@ function Router() {
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
 
         <Route path="/producten/gordijnroedes" component={ProductCategoryPage} />
+        <Route path="/producten/squid-textile-foil" component={ProductCategoryPage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
         <Route path="/reiniging" component={CleaningProductsPage} />
 

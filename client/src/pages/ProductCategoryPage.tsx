@@ -15,10 +15,11 @@ import {
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
 import { Product, Category } from "@shared/schema";
 
-// Product categories with their display labels and URL paths - Updated per requirements
+// Product categories with their display labels and URL paths - Complete list per user requirements
 const productCategories = [
   { label: "Overgordijnen", urlPath: "overgordijnen" },
   { label: "Vitrages", urlPath: "vitrages" },
+  { label: "Rolgordijnen", urlPath: "rolgordijnen" },
   { label: "Duo rolgordijnen", urlPath: "duo-rolgordijnen" },
   { label: "Textiel lamellen", urlPath: "textiel-lamellen" },
   { label: "Kunststof lamellen", urlPath: "kunststof-lamellen" },
@@ -34,6 +35,7 @@ const productCategories = [
   { label: "Dakraam zonweringen", urlPath: "dakraam-zonweringen" },
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },
+  { label: "SQUID textile folie", urlPath: "squid-textile-foil" },
 ];
 
 const ProductCategoryPage = () => {
@@ -45,10 +47,10 @@ const ProductCategoryPage = () => {
   // Check if the current category is valid
   const isValidCategory = productCategories.some(cat => cat.urlPath === category);
 
-  // If category doesn't exist, redirect to shop
+  // If category doesn't exist, redirect to home
   useEffect(() => {
     if (!isValidCategory && category) {
-      setLocation('/shop');
+      setLocation('/');
     }
   }, [category, isValidCategory, setLocation]);
 
@@ -69,7 +71,8 @@ const ProductCategoryPage = () => {
   // Map specific URL segments to their corresponding categories
   const urlToCategoryMap: Record<string, string> = {
     overgordijnen: "Overgordijnen",
-    vitrages: "Vitrages", 
+    vitrages: "Vitrages",
+    rolgordijnen: "Rolgordijnen", 
     "duo-rolgordijnen": "Duo rolgordijnen",
     "textiel-lamellen": "Textiel lamellen",
     "kunststof-lamellen": "Kunststof lamellen",
@@ -85,6 +88,7 @@ const ProductCategoryPage = () => {
     "dakraam-zonweringen": "Dakraam zonweringen",
     gordijnrails: "Gordijnrails",
     gordijnroedes: "Gordijnroedes",
+    "squid-textile-foil": "SQUID textile folie",
   };
 
   // Get the matching category name or default to the first one
@@ -118,6 +122,15 @@ const ProductCategoryPage = () => {
         benefits: ["Privacy overdag", "Lichtdoorlatend", "Decoratief", "Gemakkelijk onderhoud", "Diverse patronen"],
         colors: ["Wit", "Crème", "Lichtgrijs", "Beige", "Ecru"],
         materials: ["Katoen", "Polyester", "Linnen mix", "Voile", "Organza"]
+      },
+      "rolgordijnen": {
+        name: "Rolgordijnen",
+        description: "Praktische rolgordijnen voor optimale lichtregulatie",
+        detailedDescription: "Rolgordijnen zijn een klassieke en veelzijdige keuze voor raamdecoratie. Ze bieden uitstekende lichtcontrole en privacy, terwijl ze een strakke, moderne uitstraling behouden. Perfect voor elke ruimte in huis.",
+        applications: ["Slaapkamer", "Woonkamer", "Keuken", "Badkamer", "Kantoor", "Kinderkamer"],
+        benefits: ["Eenvoudige bediening", "Lichtregulatie", "Privacy", "Compact design", "Onderhoudsarm"],
+        colors: ["Wit", "Crème", "Beige", "Grijs", "Zwart", "Taupe", "Diverse kleuren"],
+        materials: ["Polyester", "Blackout weefsel", "Zonwerend doek", "Brandvertragende stoffen"]
       },
       "duo-rolgordijnen": {
         name: "Duo Rolgordijnen",
@@ -253,6 +266,15 @@ const ProductCategoryPage = () => {
         benefits: ["Decoratief element", "Diverse stijlen", "Kwalitatieve materialen", "Maatwerk mogelijk", "Compleet systeem"],
         colors: ["Naturel hout", "Wit", "Zwart", "Chroom", "Antiek brons"],
         materials: ["Hout", "Metaal", "Combinatiematerialen", "Decoratieve eindknoppen"]
+      },
+      "squid-textile-foil": {
+        name: "SQUID Textile Folie",
+        description: "Innovatieve SQUID textile folie voor moderne raamoplossingen",
+        detailedDescription: "SQUID textile folie is een geavanceerde raamfolie die privacy combineert met lichtdoorval. Deze innovatieve technologie biedt een moderne oplossing voor stijlvolle en functionele raamdecoratie.",
+        applications: ["Kantoorruimtes", "Badkamer", "Keuken", "Praktijkruimtes", "Moderne interieurs", "Showrooms"],
+        benefits: ["Privacy zonder lichtbeperking", "Innovatieve technologie", "Eenvoudige applicatie", "Modern design", "Herbruikbaar", "Onderhoudsarm"],
+        colors: ["Transparant", "Wit", "Grijs", "Frosted effect", "Custom patronen"],
+        materials: ["SQUID textile composiet", "Zelfklevende backing", "UV-filter", "Anti-statisch materiaal"]
       }
     };
 

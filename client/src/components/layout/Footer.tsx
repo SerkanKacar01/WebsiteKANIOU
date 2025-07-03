@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import Container from "@/components/ui/container";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Linkedin, Mail, Shield, CheckCircle, CreditCard } from "lucide-react";
+import { Instagram, Mail } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { CookieSettings } from "@/components/CookieSettings";
 
@@ -136,53 +136,6 @@ const Footer = () => {
                 <Mail className="h-4 w-4" />
               </Button>
             </form>
-          </div>
-        </div>
-
-        {/* Trust Signals and Payment Methods */}
-        <div className="border-t border-gray-700 pt-6 md:pt-8 pb-6 md:pb-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
-            {/* Trust Badges */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full lg:w-auto">
-              <div className="flex items-center gap-3 bg-white/10 rounded-lg px-3 md:px-4 py-3 min-h-[44px]">
-                <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
-                <span className="text-white text-[12px] md:text-sm font-medium">
-                  100% Tevredenheidsgarantie
-                </span>
-              </div>
-              <div className="flex items-center gap-3 bg-white/10 rounded-lg px-3 md:px-4 py-3 min-h-[44px]">
-                <Shield className="h-5 w-5 text-green-400 flex-shrink-0" />
-                <span className="text-white text-[12px] md:text-sm font-medium">
-                  Veilige betaling via SSL
-                </span>
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="flex flex-col items-center lg:items-end w-full lg:w-auto">
-              <p className="text-white text-[12px] md:text-sm mb-3 font-medium">Betaalmethoden:</p>
-              <div className="flex items-center gap-2 md:gap-3 flex-wrap justify-center lg:justify-end">
-                {/* Visa */}
-                <div className="bg-white rounded px-2 md:px-3 py-2 flex items-center justify-center min-w-[60px] min-h-[40px]">
-                  <span className="text-blue-600 font-bold text-[10px] md:text-sm tracking-wider">VISA</span>
-                </div>
-                {/* Mastercard */}
-                <div className="bg-white rounded px-2 md:px-3 py-2 flex items-center justify-center min-w-[60px] min-h-[40px]">
-                  <div className="flex">
-                    <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 md:w-4 md:h-4 bg-yellow-500 rounded-full -ml-1 md:-ml-2"></div>
-                  </div>
-                </div>
-                {/* PayPal */}
-                <div className="bg-white rounded px-2 md:px-3 py-2 flex items-center justify-center min-w-[60px] min-h-[40px]">
-                  <span className="text-blue-600 font-bold text-[10px] md:text-sm">PayPal</span>
-                </div>
-                {/* Bancontact */}
-                <div className="bg-white rounded px-2 md:px-3 py-2 flex items-center justify-center min-w-[60px] min-h-[40px]">
-                  <span className="text-gray-800 font-bold text-[8px] md:text-xs">Bancontact</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

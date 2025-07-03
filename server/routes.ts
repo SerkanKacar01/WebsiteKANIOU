@@ -704,12 +704,9 @@ Mr. Serkan KACAR
       if (
         !customerName ||
         !customerEmail ||
-        !productType ||
-        !amount ||
-        !description ||
         !bonnummer
       ) {
-        return res.status(400).json({ error: "Vereiste velden ontbreken" });
+        return res.status(400).json({ error: "Vereiste velden ontbreken: klantnaam, email en bonnummer" });
       }
 
       const orderData = {
@@ -721,13 +718,13 @@ Mr. Serkan KACAR
         customerLastName,
         customerAddress,
         customerCity,
-        amount: parseFloat(amount),
+        amount: amount ? parseFloat(amount) : 0,
         currency: "EUR",
-        description,
+        description: description || "Besteldetails beschikbaar in geüploade PDF",
         status,
         redirectUrl: "",
         webhookUrl: "",
-        productDetails: JSON.stringify({ productType }),
+        productDetails: JSON.stringify({ productType: productType || "Zie PDF voor productdetails" }),
         customerDetails: JSON.stringify({ customerNote, internalNote }),
         molliePaymentId: `manual_${Date.now()}`,
         clientNote: customerNote || null,

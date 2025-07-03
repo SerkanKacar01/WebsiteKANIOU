@@ -571,7 +571,8 @@ export default function EntrepreneurDashboardPage() {
         );
       }
 
-      return response.json();
+      const result = await response.json();
+      return result;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
@@ -837,7 +838,7 @@ export default function EntrepreneurDashboardPage() {
         });
 
         const uploadResponse = await fetch(
-          `/api/orders/${orderResponse.id}/upload-documents`,
+          `/api/orders/${orderResponse.order.id}/upload-documents`,
           {
             method: "POST",
             body: formData,

@@ -1,0 +1,41 @@
+🔧 INSTRUCTION FOR REPLIT – ORDER CREATION FIX (TRAC_ORDR)
+
+🔴 Problem Description:
+
+The user is unable to create a new order within the entrepreneur dashboard of TRAC_ORDR. When they attempt to create an order after uploading a PDF file and entering customer/internal notes, an error message appears in red stating that something went wrong during the creation of the order.
+
+⸻
+
+🎯 Objective:
+
+Ensure that the “Bestelling Aanmaken” (Create Order) button functions correctly and allows the user to successfully submit and register a new order along with any uploaded PDF and all input fields.
+
+⸻
+
+📝 Tasks to be performed:
+	1.	Check the backend logic for order creation.
+Ensure that all expected fields are properly received, including status, customer note, internal note, and uploaded file. There must be no mismatch or missing data structure that would trigger an error.
+	2.	Verify that the PDF file upload is fully functional.
+Uploaded PDFs must be:
+	•	Properly stored on the server or cloud
+	•	Accepted by the system without errors
+	•	Not exceeding any maximum file size
+	•	Supported in format and extension
+	3.	Ensure required fields are not empty or invalid.
+The backend must validate and accept the form submission even if some optional fields are left empty, but all required fields (e.g., status, file) must be handled appropriately.
+	4.	Prevent crashes due to missing field handling.
+If a field is accidentally left empty, the system should still handle the request gracefully and either apply a default value or return a user-friendly message (not a crash).
+	5.	Check that only PDF files are allowed.
+The system must recognize and process uploaded PDFs, and reject unsupported file types only when necessary with a clear message.
+	6.	Verify successful saving of the order record.
+The order should be saved in the database with all correct metadata, including file reference, status, and notes.
+	7.	Display proper confirmation or success message after creation.
+Once the order is created, a visual confirmation must be shown, and the new order must appear in the order overview.
+
+⸻
+
+✅ Expected Outcome:
+	•	The user can upload a PDF file and fill in the required fields.
+	•	After clicking the “Bestelling Aanmaken” button, no error appears.
+	•	The order is saved successfully and listed in the dashboard overview.
+	•	No disruption occurs, and all functions continue to work smoothly.

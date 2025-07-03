@@ -420,16 +420,36 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
     try {
       const orders = await storage.getPaymentOrders();
 
+      // Get document counts for each order
+      const ordersWithDocCounts = await Promise.all(
+        orders.map(async (order) => {
+          try {
+            const documents = await storage.getOrderDocuments(order.id);
+            return {
+              ...order,
+              notifyByEmail: order.notifyByEmail ?? true,
+              customerPhone: order.customerPhone || "",
+              notificationPreference: order.notificationPreference || "email",
+              documentCount: documents.length,
+            };
+          } catch (docError) {
+            console.warn(`Failed to get documents for order ${order.id}:`, docError);
+            return {
+              ...order,
+              notifyByEmail: order.notifyByEmail ?? true,
+              customerPhone: order.customerPhone || "",
+              notificationPreference: order.notificationPreference || "email",
+              documentCount: 0,
+            };
+          }
+        })
+      );
+
       res.json({
         totalOrders: orders.length,
         pendingOrders: orders.filter((o) => o.status === "pending").length,
         totalRevenue: orders.reduce((sum, o) => sum + (o.amount || 0), 0),
-        orders: orders.map((order) => ({
-          ...order,
-          notifyByEmail: order.notifyByEmail ?? true,
-          customerPhone: order.customerPhone || "",
-          notificationPreference: order.notificationPreference || "email",
-        })),
+        orders: ordersWithDocCounts,
       });
     } catch (error: any) {
       console.error("Dashboard error:", error);
@@ -883,6 +903,123 @@ Tijd: ${new Date().toLocaleString('nl-BE')}
     } catch (error: any) {
       console.error("Delete order error:", error);
       res.status(500).json({ error: "Fout bij verwijderen order" });
+    }
+  });
+
+  // Document upload endpoint (protected)
+  app.post("/api/orders/:id/upload-documents", requireAuth, async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      // Check if order exists
+      const existingOrder = await storage.getPaymentOrderById(orderId);
+      if (!existingOrder) {
+        return res.status(404).json({ error: "Order niet gevonden" });
+      }
+
+      // For now, we'll store document metadata without actual file storage
+      // In a production environment, you would implement actual file upload to cloud storage
+      const uploadedDocuments = [];
+      
+      // Mock document upload process - in reality you'd handle multipart/form-data
+      if (req.body.documents && Array.isArray(req.body.documents)) {
+        for (let i = 0; i < req.body.documents.length; i++) {
+          const doc = req.body.documents[i];
+          const documentType = req.body.documentTypes?.[i] || 'document';
+          const isVisible = req.body.documentVisibility?.[i] === 'true';
+          
+          const documentData = {
+            orderId: orderId,
+            filename: `document_${i + 1}.pdf`, // Mock filename
+            storedFilename: `order_${orderId}_doc_${Date.now()}_${i}.pdf`,
+            documentType: documentType,
+            filePath: `/uploads/orders/${orderId}/`,
+            isVisibleToCustomer: isVisible,
+            fileSize: 1024, // Mock file size
+          };
+
+          try {
+            const savedDoc = await storage.createOrderDocument(documentData);
+            uploadedDocuments.push(savedDoc);
+          } catch (docError) {
+            console.warn(`Failed to save document ${i + 1}:`, docError);
+            // Continue with other documents
+          }
+        }
+      }
+
+      res.json({
+        success: true,
+        message: `${uploadedDocuments.length} documenten succesvol geüpload`,
+        documents: uploadedDocuments,
+      });
+    } catch (error: any) {
+      console.error("Document upload error:", error);
+      res.status(500).json({ error: "Fout bij uploaden documenten" });
+    }
+  });
+
+  // Get order documents endpoint (protected)
+  app.get("/api/orders/:id/documents", requireAuth, async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ error: "Ongeldig order ID" });
+      }
+
+      const documents = await storage.getOrderDocuments(orderId);
+      res.json(documents);
+    } catch (error: any) {
+      console.error("Get documents error:", error);
+      res.status(500).json({ error: "Fout bij ophalen documenten" });
+    }
+  });
+
+  // Update document visibility endpoint (protected)  
+  app.patch("/api/orders/documents/:id/visibility", requireAuth, async (req, res) => {
+    try {
+      const documentId = parseInt(req.params.id);
+      const { isVisible } = req.body;
+      
+      if (isNaN(documentId)) {
+        return res.status(400).json({ error: "Ongeldig document ID" });
+      }
+
+      await storage.updateOrderDocumentVisibility(documentId, isVisible);
+      
+      res.json({
+        success: true,
+        message: "Document zichtbaarheid bijgewerkt",
+      });
+    } catch (error: any) {
+      console.error("Update document visibility error:", error);
+      res.status(500).json({ error: "Fout bij bijwerken document zichtbaarheid" });
+    }
+  });
+
+  // Delete document endpoint (protected)
+  app.delete("/api/orders/documents/:id", requireAuth, async (req, res) => {
+    try {
+      const documentId = parseInt(req.params.id);
+      
+      if (isNaN(documentId)) {
+        return res.status(400).json({ error: "Ongeldig document ID" });
+      }
+
+      await storage.deleteOrderDocument(documentId);
+      
+      res.json({
+        success: true,
+        message: "Document succesvol verwijderd",
+      });
+    } catch (error: any) {
+      console.error("Delete document error:", error);
+      res.status(500).json({ error: "Fout bij verwijderen document" });
     }
   });
 

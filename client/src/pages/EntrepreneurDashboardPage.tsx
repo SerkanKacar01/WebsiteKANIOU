@@ -60,6 +60,7 @@ interface OrderStatus {
 interface Order extends PaymentOrder {
   orderStatuses: OrderStatus[];
   productType: string; // Simplified product description for dashboard
+  documentCount?: number; // Number of uploaded documents
 }
 
 interface DashboardData {
@@ -1729,24 +1730,16 @@ export default function EntrepreneurDashboardPage() {
                     <span className="text-sm font-medium text-gray-700">
                       Documenten:
                     </span>
-                    <div className="flex items-center space-x-3">
-                      <div className="flex items-center space-x-1">
-                        {order.pdfFileName ? (
-                          <Check className="h-4 w-4 text-green-600" />
-                        ) : (
-                          <X className="h-4 w-4 text-red-600" />
-                        )}
-                        <span className="text-xs text-gray-600">Receipt</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        {order.invoiceUrl ? (
-                          <Check className="h-4 w-4 text-green-600" />
-                        ) : (
-                          <X className="h-4 w-4 text-red-600" />
-                        )}
-                        <span className="text-xs text-gray-600">Invoice</span>
-                      </div>
-                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleViewDocuments(order.id)}
+                      className="h-8 px-3 text-xs border-[#E6C988] text-[#E6C988] hover:bg-[#E6C988] hover:text-black"
+                    >
+                      <FileText className="h-3 w-3 mr-1" />
+                      {order.documentCount || 0} 
+                      {(order.documentCount || 0) === 1 ? ' PDF' : ' PDFs'}
+                    </Button>
                   </div>
 
                   <div className="border-t pt-3">

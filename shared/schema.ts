@@ -323,6 +323,8 @@ export const insertPaymentOrderSchema = createInsertSchema(paymentOrders).omit({
     .regex(/^[A-Z0-9]+$/, "Bonnummer can only contain uppercase letters and numbers"),
 });
 
+
+
 // Shopping Cart Items
 export const shoppingCartItems = pgTable("shopping_cart_items", {
   id: serial("id").primaryKey(),

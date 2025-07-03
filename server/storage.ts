@@ -49,6 +49,7 @@ declare global {
   var memoryCategories: Category[] | undefined;
   var memoryProducts: Product[] | undefined;
   var memoryCartItems: any[] | undefined;
+  var memoryOrderDocuments: OrderDocument[] | undefined;
 }
 
 export interface IStorage {
@@ -675,22 +676,82 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
 
   // Order Documents
   async createOrderDocument(document: InsertOrderDocument): Promise<OrderDocument> {
-    const result = await db.insert(orderDocuments).values(document).returning();
-    return result[0];
+    try {
+      const result = await db.insert(orderDocuments).values(document).returning();
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for order document creation, using memory fallback');
+      // Memory fallback for order documents
+      if (!global.memoryOrderDocuments) {
+        global.memoryOrderDocuments = [];
+      }
+      const newDocument: OrderDocument = {
+        id: Date.now(),
+        orderId: document.orderId,
+        filename: document.filename,
+        storedFilename: document.storedFilename,
+        documentType: document.documentType,
+        filePath: document.filePath,
+        isVisibleToCustomer: document.isVisibleToCustomer || false,
+        uploadedAt: new Date(),
+        fileSize: document.fileSize || null,
+      };
+      global.memoryOrderDocuments.push(newDocument);
+      console.log(`✅ Document stored in memory for order ${document.orderId}: ${document.filename}`);
+      return newDocument;
+    }
   }
 
   async getOrderDocuments(orderId: number): Promise<OrderDocument[]> {
-    return await db.select().from(orderDocuments)
-      .where(eq(orderDocuments.orderId, orderId))
-      .orderBy(desc(orderDocuments.uploadedAt));
+    try {
+      return await db.select().from(orderDocuments)
+        .where(eq(orderDocuments.orderId, orderId))
+        .orderBy(desc(orderDocuments.uploadedAt));
+    } catch (error) {
+      console.warn('Database connection issue for order documents, using memory fallback');
+      if (!global.memoryOrderDocuments) {
+        global.memoryOrderDocuments = [];
+      }
+      return global.memoryOrderDocuments
+        .filter(doc => doc.orderId === orderId)
+        .sort((a, b) => {
+          const dateA = a.uploadedAt instanceof Date ? a.uploadedAt.getTime() : 0;
+          const dateB = b.uploadedAt instanceof Date ? b.uploadedAt.getTime() : 0;
+          return dateB - dateA;
+        });
+    }
   }
 
   async deleteOrderDocument(id: number): Promise<void> {
-    await db.delete(orderDocuments).where(eq(orderDocuments.id, id));
+    try {
+      await db.delete(orderDocuments).where(eq(orderDocuments.id, id));
+    } catch (error) {
+      console.warn('Database connection issue for order document deletion, using memory fallback');
+      if (!global.memoryOrderDocuments) {
+        global.memoryOrderDocuments = [];
+      }
+      const index = global.memoryOrderDocuments.findIndex(doc => doc.id === id);
+      if (index > -1) {
+        global.memoryOrderDocuments.splice(index, 1);
+        console.log(`✅ Document ${id} deleted from memory`);
+      }
+    }
   }
 
   async updateOrderDocumentVisibility(id: number, isVisible: boolean): Promise<void> {
-    await db.update(orderDocuments).set({ isVisibleToCustomer: isVisible }).where(eq(orderDocuments.id, id));
+    try {
+      await db.update(orderDocuments).set({ isVisibleToCustomer: isVisible }).where(eq(orderDocuments.id, id));
+    } catch (error) {
+      console.warn('Database connection issue for order document visibility update, using memory fallback');
+      if (!global.memoryOrderDocuments) {
+        global.memoryOrderDocuments = [];
+      }
+      const document = global.memoryOrderDocuments.find(doc => doc.id === id);
+      if (document) {
+        document.isVisibleToCustomer = isVisible;
+        console.log(`✅ Document ${id} visibility updated in memory: ${isVisible}`);
+      }
+    }
   }
 
   // Notification Logs

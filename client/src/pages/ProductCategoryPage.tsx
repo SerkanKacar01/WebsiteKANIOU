@@ -1,7 +1,10 @@
-import { useParams, Link } from "wouter";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useLocation, useParams, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronRight, Check } from "lucide-react";
+import { Product, Category } from "@shared/schema";
 
 // Product categories with their display labels and URL paths - Complete list per user requirements
 const productCategories = [
@@ -35,25 +39,24 @@ const productCategories = [
 ];
 
 const ProductCategoryPage = () => {
+  const [, setLocation] = useLocation();
   const params = useParams();
   const { category } = params;
+  const { t } = useLanguage();
 
   // Check if the current category is valid
   const isValidCategory = productCategories.some(cat => cat.urlPath === category);
 
-  // If no valid category, show not found page
+  // If category doesn't exist, redirect to home
+  useEffect(() => {
+    if (!isValidCategory && category) {
+      setLocation('/');
+    }
+  }, [category, isValidCategory, setLocation]);
+
+  // If no valid category, return null (will redirect)
   if (!isValidCategory || !category) {
-    return (
-      <Container>
-        <div className="py-16 text-center">
-          <h1 className="text-2xl font-bold mb-4">Pagina niet gevonden</h1>
-          <p className="text-gray-600 mb-8">Deze productcategorie bestaat niet.</p>
-          <Link href="/producten">
-            <Button>Terug naar producten</Button>
-          </Link>
-        </div>
-      </Container>
-    );
+    return null;
   }
 
   // Map specific URL segments to their corresponding categories
@@ -288,7 +291,7 @@ const ProductCategoryPage = () => {
   };
 
   // Since e-commerce was removed, show informational content instead of products
-  const categoryProducts: any[] = [];
+  const categoryProducts: Product[] = [];
 
   return (
     <>

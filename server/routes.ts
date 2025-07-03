@@ -18,17 +18,8 @@ import {
 } from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
-import { productPageHTML, productCategories } from "./static-pages";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Static HTML Product Pages - Immediate Solution for Product Visibility
-  productCategories.forEach(category => {
-    app.get(`/producten/${category.urlPath}`, (req, res) => {
-      console.log(`Serving static product page for: ${category.label}`);
-      res.send(productPageHTML(category.label));
-    });
-  });
-
   // Session and cookie middleware
   app.use(cookieParser());
 

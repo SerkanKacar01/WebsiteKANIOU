@@ -85,6 +85,7 @@ export function useCookieConsent() {
           window.CookiebotCallback_OnAccept = updateConsentFromCookiebot;
           window.CookiebotCallback_OnDecline = updateConsentFromCookiebot;
           window.CookiebotCallback_OnDialogInit = () => {
+            console.log('Cookiebot dialog initialized');
             setShowBanner(false); // Hide our custom banner when Cookiebot is active
           };
 
@@ -104,7 +105,8 @@ export function useCookieConsent() {
               setShowBanner(true);
             }
           } else {
-            setShowBanner(false); // Let Cookiebot handle the banner
+            // Don't interfere with Cookiebot banner - let it handle display logic
+            console.log('No stored consent found, allowing Cookiebot to show banner');
           }
         }
       } catch (error) {

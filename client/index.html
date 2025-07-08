@@ -9,6 +9,63 @@
       type="text/javascript">
     </script>
     
+    <!-- Cookiebot Force Show Script -->
+    <script>
+      // Inline script to force Cookiebot banner display
+      function forceCookiebotBanner() {
+        console.log('🍪 Forcing Cookiebot banner display...');
+        
+        // Clear all possible consent cookies
+        const domain = window.location.hostname;
+        const cookieNames = ['CookieConsent', 'CookieConsentBulkSetting', 'CookieConsentBulkTicket'];
+        
+        cookieNames.forEach(name => {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + domain + ';';
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + domain + ';';
+        });
+        
+        // Clear storage
+        ['localStorage', 'sessionStorage'].forEach(storage => {
+          Object.keys(window[storage]).forEach(key => {
+            if (key.toLowerCase().includes('cookie') || key.toLowerCase().includes('consent')) {
+              window[storage].removeItem(key);
+            }
+          });
+        });
+        
+        // Force show after Cookiebot loads
+        let attempts = 0;
+        const checkAndShow = setInterval(() => {
+          attempts++;
+          if (window.Cookiebot) {
+            console.log('✅ Cookiebot loaded, forcing banner');
+            try {
+              window.Cookiebot.withdraw?.();
+            } catch (e) {}
+            
+            try {
+              window.Cookiebot.show();
+              console.log('✅ Banner show() called');
+            } catch (e) {
+              console.error('❌ Error calling show():', e);
+            }
+            clearInterval(checkAndShow);
+          } else if (attempts >= 20) {
+            console.error('❌ Cookiebot failed to load');
+            clearInterval(checkAndShow);
+          }
+        }, 200);
+      }
+      
+      // Run immediately
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', forceCookiebotBanner);
+      } else {
+        forceCookiebotBanner();
+      }
+    </script>
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   </head>

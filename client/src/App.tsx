@@ -268,7 +268,8 @@ function App() {
           <Router />
         </MobileLayoutWrapper>
         <FloatingActionButtons />
-        <CookieConsentBanner />
+        {/* Temporarily disabled to allow Cookiebot banner to show */}
+        {/* <CookieConsentBanner /> */}
         <CookiebotSetup />
 
         {shouldShowOnboarding && (

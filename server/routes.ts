@@ -35,8 +35,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         maxAge: 2 * 60 * 60 * 1000, // 2 hours
         sameSite: 'lax', // GDPR compliance
       },
-      // Only save session when user interacts (login/admin actions)
-      saveUninitialized: false,
     }),
   );
 
@@ -126,29 +124,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Invalid language code" });
       }
 
-      // Check if user has given preferences consent
+      // Check if user has given preferences consent (GDPR requirement)
       if (req.cookieConsent?.preferences) {
         res.cookie("kaniou-language", language, {
           httpOnly: false,
           secure: false,
           maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
           sameSite: 'lax',
+          // Add purpose description for Cookiebot classification
+          domain: process.env.NODE_ENV === 'production' ? '.kaniou.be' : undefined,
         });
         
         res.json({ 
           success: true, 
           message: `Language set to ${language}`,
-          cookieSet: true 
+          cookieSet: true,
+          category: "preferences"
         });
       } else {
-        // Store in session temporarily until consent is given
-        (req.session as any).pendingLanguage = language;
+        // Completely block cookie setting until consent (GDPR compliance)
+        console.log(`🚫 Blocked kaniou-language cookie - no preferences consent`);
         
         res.json({ 
-          success: true, 
-          message: `Language preference stored temporarily`,
+          success: false, 
+          message: `Language preference blocked - consent required`,
           cookieSet: false,
-          note: "Cookie will be set after consent is given"
+          reason: "GDPR compliance - preferences consent required"
         });
       }
     } catch (error) {

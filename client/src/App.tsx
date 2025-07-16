@@ -232,15 +232,31 @@ function App() {
   const { language } = useLanguage();
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(false);
 
-  // Check if user should see onboarding
+  // GDPR-compliant onboarding check - only use localStorage after consent
   useEffect(() => {
-    const hasCompletedOnboarding = localStorage.getItem('kaniou_onboarding_completed');
-    const hasVisitedBefore = localStorage.getItem('kaniou_has_visited');
-    
-    // Show onboarding for completely new users
-    if (!hasCompletedOnboarding && !hasVisitedBefore) {
-      setShouldShowOnboarding(true);
-      localStorage.setItem('kaniou_has_visited', 'true');
+    try {
+      // Only access localStorage if user has given preferences consent via Cookiebot
+      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
+        const hasCompletedOnboarding = localStorage.getItem('kaniou_onboarding_completed');
+        const hasVisitedBefore = localStorage.getItem('kaniou_has_visited');
+        
+        // Show onboarding for completely new users
+        if (!hasCompletedOnboarding && !hasVisitedBefore) {
+          setShouldShowOnboarding(true);
+          localStorage.setItem('kaniou_has_visited', 'true');
+        }
+      } else {
+        // For first-time visitors without consent, still show onboarding but don't store
+        // Check if this is a new session without any previous interaction
+        const sessionOnboarding = sessionStorage.getItem('session_onboarding_shown');
+        if (!sessionOnboarding) {
+          setShouldShowOnboarding(true);
+          sessionStorage.setItem('session_onboarding_shown', 'true');
+        }
+      }
+    } catch (error) {
+      // Silently handle any localStorage errors without breaking the app
+      console.warn('Onboarding check failed:', error);
     }
   }, []);
 
@@ -252,34 +268,58 @@ function App() {
 
   const handleOnboardingComplete = () => {
     setShouldShowOnboarding(false);
-    localStorage.setItem('kaniou_onboarding_completed', 'true');
+    
+    // Only store preference if user has given consent
+    try {
+      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
+        localStorage.setItem('kaniou_onboarding_completed', 'true');
+      } else {
+        // Store in session for this session only
+        sessionStorage.setItem('kaniou_onboarding_completed', 'true');
+      }
+    } catch (error) {
+      console.warn('Failed to store onboarding preference:', error);
+    }
   };
 
   const handleOnboardingSkip = () => {
     setShouldShowOnboarding(false);
-    localStorage.setItem('kaniou_onboarding_skipped', 'true');
+    
+    // Only store preference if user has given consent
+    try {
+      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
+        localStorage.setItem('kaniou_onboarding_skipped', 'true');
+      } else {
+        // Store in session for this session only
+        sessionStorage.setItem('kaniou_onboarding_skipped', 'true');
+      }
+    } catch (error) {
+      console.warn('Failed to store onboarding preference:', error);
+    }
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <MobileLayoutWrapper>
-          <Router />
-        </MobileLayoutWrapper>
-        <FloatingActionButtons />
-        {/* Temporarily disabled to allow Cookiebot banner to show */}
-        {/* <CookieConsentBanner /> */}
-        <CookiebotSetup />
+    <div className="min-h-screen bg-background">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <MobileLayoutWrapper>
+            <Router />
+          </MobileLayoutWrapper>
+          <FloatingActionButtons />
+          {/* Temporarily disabled to allow Cookiebot banner to show */}
+          {/* <CookieConsentBanner /> */}
+          <CookiebotSetup />
 
-        {shouldShowOnboarding && (
-          <OnboardingWizard 
-            onComplete={handleOnboardingComplete}
-            onSkip={handleOnboardingSkip}
-          />
-        )}
-      </TooltipProvider>
-    </QueryClientProvider>
+          {shouldShowOnboarding && (
+            <OnboardingWizard 
+              onComplete={handleOnboardingComplete}
+              onSkip={handleOnboardingSkip}
+            />
+          )}
+        </TooltipProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
 

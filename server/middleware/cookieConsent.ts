@@ -78,11 +78,11 @@ export function cookieConsentMiddleware(req: CookieConsentRequest, res: Response
   // Override res.cookie to respect consent and classify cookies properly
   const originalCookie = res.cookie.bind(res);
   res.cookie = function(name: string, value: any, options: any = {}) {
-    // Define cookie categories for GDPR compliance
-    const essentialCookies = ['connect.sid', 'sessionId', 'csrf', 'auth'];
-    const preferencesCookies = ['kaniou-language', 'currency', 'theme'];
-    const statisticsCookies = ['_ga', '_gid', '_gat', 'analytics'];
-    const marketingCookies = ['_fb', 'fbp', 'ads', 'marketing'];
+    // Define cookie categories for GDPR compliance (as per Cookiebot audit requirements)
+    const essentialCookies = ['connect.sid', 'sessionId', 'csrf', 'auth', 'CookieConsent'];
+    const preferencesCookies = ['kaniou-language', 'currency', 'theme', 'cookiePreferencesReferrer'];
+    const statisticsCookies = ['_ga', '_gid', '_gat', 'analytics', 'kaniou_has_visited'];
+    const marketingCookies = ['_fb', 'fbp', 'ads', 'marketing', '_fbp', 'fr'];
     
     const isEssential = essentialCookies.some(essential => name.includes(essential) || name === essential);
     const isPreferences = preferencesCookies.some(pref => name.includes(pref) || name === pref);

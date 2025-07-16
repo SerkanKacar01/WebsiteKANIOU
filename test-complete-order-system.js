@@ -33,7 +33,7 @@ async function testCompleteOrderSystem() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: 'admin@kaniou.be',
-        password: 'kaniouzilvernaald188.'
+        password: process.env.ADMIN_PASSWORD || 'defaulttestpassword'
       })
     });
 

@@ -15,7 +15,7 @@ async function testOrderCreationFix() {
     console.log('🔐 Step 1: Logging in as admin...');
     const loginResponse = await axios.post(`${baseUrl}/api/admin/login`, {
       email: 'admin@kaniou.be',
-      password: 'kaniouzilvernaald188.'
+      password: process.env.ADMIN_PASSWORD || 'defaulttestpassword'
     });
 
     if (loginResponse.data.success) {

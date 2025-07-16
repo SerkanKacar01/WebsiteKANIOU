@@ -49,10 +49,12 @@ export function useCookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Initialize Cookiebot callbacks with error handling
+    // Initialize Cookiebot callbacks with minimal interference
     const initializeCookiebot = () => {
       try {
         if (window.Cookiebot) {
+          console.log('🍪 Cookiebot detected, setting up non-intrusive callbacks');
+          
           // Update our state based on Cookiebot consent
           const updateConsentFromCookiebot = () => {
             try {
@@ -81,18 +83,27 @@ export function useCookieConsent() {
             }
           };
 
-          // Set up Cookiebot callbacks with error handling
+          // Set up Cookiebot callbacks - but don't interfere with banner display
           window.CookiebotCallback_OnAccept = updateConsentFromCookiebot;
           window.CookiebotCallback_OnDecline = updateConsentFromCookiebot;
+          
+          // IMPORTANT: Don't hide banner or interfere with Cookiebot's display logic
           window.CookiebotCallback_OnDialogInit = () => {
-            console.log('Cookiebot dialog initialized');
-            setShowBanner(false); // Hide our custom banner when Cookiebot is active
+            console.log('🍪 Cookiebot dialog initialized - not interfering with display');
+            // Don't set setShowBanner(false) here - let Cookiebot handle it
           };
 
-          // Initial check
-          updateConsentFromCookiebot();
+          // Only update consent if user has already consented
+          const hasCookieConsent = document.cookie.includes('CookieConsent=');
+          if (hasCookieConsent) {
+            console.log('🍪 Existing consent found, updating state');
+            updateConsentFromCookiebot();
+          } else {
+            console.log('🍪 No existing consent - letting Cookiebot handle banner display');
+            // Don't interfere with Cookiebot's banner display logic
+          }
         } else {
-          // Fallback to localStorage if Cookiebot is not available
+          // Fallback to localStorage only if Cookiebot is completely unavailable
           const stored = localStorage.getItem(STORAGE_KEY);
           if (stored) {
             try {
@@ -102,16 +113,16 @@ export function useCookieConsent() {
             } catch (error) {
               console.error('Error parsing stored consent:', error);
               localStorage.removeItem(STORAGE_KEY);
-              setShowBanner(true);
+              // Don't show our banner - let Cookiebot handle it
             }
           } else {
-            // Don't interfere with Cookiebot banner - let it handle display logic
-            console.log('No stored consent found, allowing Cookiebot to show banner');
+            // Don't show our banner - wait for Cookiebot to load
+            console.log('🍪 No stored consent, waiting for Cookiebot to load');
           }
         }
       } catch (error) {
         console.warn('Error initializing Cookiebot:', error);
-        // Fallback to localStorage if Cookiebot fails
+        // Minimal fallback - don't interfere with Cookiebot
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
           try {
@@ -120,28 +131,31 @@ export function useCookieConsent() {
             setShowBanner(false);
           } catch (parseError) {
             localStorage.removeItem(STORAGE_KEY);
-            setShowBanner(true);
+            // Don't show our banner - let Cookiebot handle it
           }
-        } else {
-          setShowBanner(true);
         }
       }
     };
 
-    // Wait for Cookiebot to load
+    // Wait for Cookiebot to load with longer timeout
     if (window.Cookiebot) {
       initializeCookiebot();
     } else {
-      // Poll for Cookiebot availability
+      // Poll for Cookiebot availability with longer timeout
       const checkCookiebot = setInterval(() => {
         if (window.Cookiebot) {
           clearInterval(checkCookiebot);
           initializeCookiebot();
         }
-      }, 100);
+      }, 200);
 
-      // Cleanup interval after 10 seconds
-      setTimeout(() => clearInterval(checkCookiebot), 10000);
+      // Cleanup interval after 20 seconds (give Cookiebot more time to load)
+      setTimeout(() => {
+        clearInterval(checkCookiebot);
+        if (!window.Cookiebot) {
+          console.warn('🍪 Cookiebot failed to load after 20 seconds');
+        }
+      }, 20000);
     }
   }, []);
 

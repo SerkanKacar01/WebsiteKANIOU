@@ -9,61 +9,161 @@
       type="text/javascript">
     </script>
     
-    <!-- Cookiebot Force Show Script -->
-    <script>
-      // Inline script to force Cookiebot banner display
-      function forceCookiebotBanner() {
-        console.log('🍪 Forcing Cookiebot banner display...');
-        
-        // Clear all possible consent cookies
-        const domain = window.location.hostname;
-        const cookieNames = ['CookieConsent', 'CookieConsentBulkSetting', 'CookieConsentBulkTicket'];
-        
-        cookieNames.forEach(name => {
-          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + domain + ';';
-          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + domain + ';';
-        });
-        
-        // Clear storage
-        ['localStorage', 'sessionStorage'].forEach(storage => {
-          Object.keys(window[storage]).forEach(key => {
-            if (key.toLowerCase().includes('cookie') || key.toLowerCase().includes('consent')) {
-              window[storage].removeItem(key);
-            }
-          });
-        });
-        
-        // Force show after Cookiebot loads
-        let attempts = 0;
-        const checkAndShow = setInterval(() => {
-          attempts++;
-          if (window.Cookiebot) {
-            console.log('✅ Cookiebot loaded, forcing banner');
-            try {
-              window.Cookiebot.withdraw?.();
-            } catch (e) {}
-            
-            try {
-              window.Cookiebot.show();
-              console.log('✅ Banner show() called');
-            } catch (e) {
-              console.error('❌ Error calling show():', e);
-            }
-            clearInterval(checkAndShow);
-          } else if (attempts >= 20) {
-            console.error('❌ Cookiebot failed to load');
-            clearInterval(checkAndShow);
-          }
-        }, 200);
+    <!-- Cookiebot CSS Enhancement for Better Visibility -->
+    <style>
+      /* Ensure Cookiebot banner is always visible and properly positioned */
+      #CybotCookiebotDialog,
+      #CybotCookiebotDialogBodyUnderlay,
+      #CybotCookiebotDialogBody,
+      [id*="CybotCookiebot"] {
+        z-index: 999999 !important;
+        position: fixed !important;
       }
       
-      // Run immediately
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', forceCookiebotBanner);
-      } else {
-        forceCookiebotBanner();
+      /* Ensure no conflicts with site styles */
+      #CybotCookiebotDialog {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        background: rgba(0, 0, 0, 0.8) !important;
       }
+      
+      /* Banner content styling */
+      #CybotCookiebotDialogBody {
+        background: white !important;
+        border: none !important;
+        border-radius: 8px 8px 0 0 !important;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25) !important;
+        margin: 0 !important;
+        padding: 20px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      
+      /* Ensure buttons are visible */
+      #CybotCookiebotDialogBody button,
+      #CybotCookiebotDialogBody input[type="button"],
+      #CybotCookiebotDialogBody input[type="submit"] {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        min-height: 40px !important;
+        padding: 8px 16px !important;
+        margin: 4px !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+        background: #f8f9fa !important;
+        color: #333 !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+      }
+      
+      /* Accept button styling */
+      #CybotCookiebotDialogBody button[id*="Accept"],
+      #CybotCookiebotDialogBody input[id*="Accept"] {
+        background: #28a745 !important;
+        color: white !important;
+        border-color: #28a745 !important;
+      }
+      
+      /* Decline button styling */
+      #CybotCookiebotDialogBody button[id*="Decline"],
+      #CybotCookiebotDialogBody input[id*="Decline"] {
+        background: #dc3545 !important;
+        color: white !important;
+        border-color: #dc3545 !important;
+      }
+      
+      /* Settings button styling */
+      #CybotCookiebotDialogBody button[id*="Settings"],
+      #CybotCookiebotDialogBody input[id*="Settings"] {
+        background: #6c757d !important;
+        color: white !important;
+        border-color: #6c757d !important;
+      }
+      
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        #CybotCookiebotDialogBody {
+          padding: 16px !important;
+        }
+        
+        #CybotCookiebotDialogBody button,
+        #CybotCookiebotDialogBody input[type="button"],
+        #CybotCookiebotDialogBody input[type="submit"] {
+          width: 100% !important;
+          margin: 4px 0 !important;
+          min-height: 44px !important;
+        }
+      }
+    </style>
+    
+    <!-- Cookiebot Initialization Script -->
+    <script>
+      // Initialize Cookiebot properly without interference
+      window.addEventListener('load', function() {
+        console.log('🍪 Initializing Cookiebot...');
+        
+        // Clear any stored consent to ensure banner shows on first visit
+        const isFirstVisit = !document.cookie.includes('CookieConsent=');
+        
+        if (isFirstVisit) {
+          console.log('🍪 First visit detected - clearing any cached consent');
+          
+          // Clear any cached consent
+          ['cookie_consent'].forEach(key => {
+            localStorage.removeItem(key);
+            sessionStorage.removeItem(key);
+          });
+        }
+        
+        // Wait for Cookiebot to load and initialize
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        const initializeCookiebot = setInterval(() => {
+          attempts++;
+          
+          if (window.Cookiebot) {
+            console.log('✅ Cookiebot loaded successfully');
+            
+            // Set up proper callbacks
+            window.CookiebotCallback_OnLoad = function() {
+              console.log('🍪 Cookiebot OnLoad callback fired');
+            };
+            
+            window.CookiebotCallback_OnAccept = function() {
+              console.log('🍪 Cookiebot OnAccept callback fired');
+            };
+            
+            window.CookiebotCallback_OnDecline = function() {
+              console.log('🍪 Cookiebot OnDecline callback fired');
+            };
+            
+            window.CookiebotCallback_OnDialogInit = function() {
+              console.log('🍪 Cookiebot Dialog initialized');
+            };
+            
+            window.CookiebotCallback_OnDialogDisplay = function() {
+              console.log('🍪 Cookiebot Dialog displayed');
+            };
+            
+            clearInterval(initializeCookiebot);
+          } else if (attempts >= maxAttempts) {
+            console.error('❌ Cookiebot failed to load after maximum attempts');
+            clearInterval(initializeCookiebot);
+          }
+        }, 100);
+      });
     </script>
     
     <meta charset="UTF-8" />

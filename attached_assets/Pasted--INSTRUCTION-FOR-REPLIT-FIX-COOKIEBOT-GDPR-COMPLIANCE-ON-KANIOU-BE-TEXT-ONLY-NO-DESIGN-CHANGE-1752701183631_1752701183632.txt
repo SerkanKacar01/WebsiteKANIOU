@@ -1,0 +1,47 @@
+🔧 INSTRUCTION FOR REPLIT – FIX COOKIEBOT GDPR COMPLIANCE ON KANIOU.BE (TEXT ONLY – NO DESIGN CHANGES)
+
+Background:
+As per the Cookiebot scan and official communication dated 15/07/2025, the domain kaniou.be is currently not GDPR-compliant. Cookies are being loaded in the browser before user consent is given, which violates GDPR and EU cookie laws.
+
+⸻
+
+❗ URGENT ISSUES TO FIX:
+	1.	Cookiebot script is not the first loaded.
+	•	Ensure the Cookiebot script (uc.js) is the very first script loaded in the <head> section of every page, before any other JavaScript, inline scripts, or third-party libraries.
+	•	This includes all CSS/JS bundlers, preloaders, or UI frameworks that may come before Cookiebot.
+	2.	Cookies are set before user consent.
+	•	Several non-essential cookies (e.g. language, visit tracking, etc.) are initiated before consent.
+	•	These must be blocked until explicit consent is given, either by:
+	•	Manual markup (type="text/plain" and data-cookieconsent)
+	•	Or activating Cookiebot automatic blocking mode
+	3.	Unclassified cookies are active.
+	•	Cookies like kaniou-language, kaniou_has_visited, and cookiePreferencesReferrer are not categorized.
+	•	These must be defined in Cookiebot as either:
+	•	Strictly Necessary
+	•	Preferences
+	•	Statistics
+	•	Marketing
+	•	Provide a short purpose description in Cookiebot dashboard for each one.
+	4.	Google Tag Manager (GTM) support (if applicable).
+	•	If GTM is used, it must wait for Cookiebot’s consent state before loading any tags.
+	•	Configure GTM with Cookiebot’s consent values (marketing, statistics, etc.).
+	•	Use the official Cookiebot GTM setup guide: https://www.cookiebot.com/en/google-tag-manager/
+	5.	Webserver-set cookies must be blocked server-side.
+	•	Some cookies are set by the backend server before any JavaScript loads (Initiator: Webserver).
+	•	These cookies must be held back via conditional logic until the user’s consent is submitted.
+	•	Replit must modify the backend logic to only serve these cookies after consent.
+
+⸻
+
+🚫 STRICT RULE: DO NOT TOUCH DESIGN OR LAYOUT
+	•	Do not change anything related to design.
+	•	No changes to visual layout, spacing, CSS, headers, footers, containers or typography.
+	•	This task is strictly technical and only for GDPR/cookie behavior.
+
+⸻
+
+✅ FINAL GOAL
+	•	When a visitor lands on kaniou.be, the Cookiebot banner must appear immediately.
+	•	No non-essential cookies may load until the user gives explicit consent.
+	•	All cookies must be categorized and have a purpose description.
+	•	The site must fully pass the Cookiebot GDPR scan and function accordingly.

@@ -23,16 +23,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
   app.use(cookieParser());
 
+  // GDPR-compliant session configuration
   app.use(
     session({
       secret: process.env.SESSION_SECRET || "fallback-secret-key",
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: false, // Critical: Don't create sessions without user action
       cookie: {
         secure: false, // Set to true in production with HTTPS
         httpOnly: true,
         maxAge: 2 * 60 * 60 * 1000, // 2 hours
+        sameSite: 'lax', // GDPR compliance
       },
+      // Only save session when user interacts (login/admin actions)
+      saveUninitialized: false,
     }),
   );
 
@@ -67,11 +71,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isValidCredentials(email, password)) {
         const { sessionId, expiresAt } = createSession(email);
 
+        // Only set cookies for admin authentication (essential cookies)
         (req.session as any).sessionId = sessionId;
         res.cookie("sessionId", sessionId, {
           httpOnly: true,
           secure: false,
           maxAge: 2 * 60 * 60 * 1000,
+          sameSite: 'lax',
+          // This is an essential cookie for admin functionality
         });
 
         res.json({
@@ -108,6 +115,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Health check endpoint
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
+  // GDPR-compliant language preference endpoint
+  app.post("/api/set-language", (req: any, res) => {
+    try {
+      const { language } = req.body;
+      
+      if (!language || !['nl', 'fr', 'en', 'tr'].includes(language)) {
+        return res.status(400).json({ error: "Invalid language code" });
+      }
+
+      // Check if user has given preferences consent
+      if (req.cookieConsent?.preferences) {
+        res.cookie("kaniou-language", language, {
+          httpOnly: false,
+          secure: false,
+          maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+          sameSite: 'lax',
+        });
+        
+        res.json({ 
+          success: true, 
+          message: `Language set to ${language}`,
+          cookieSet: true 
+        });
+      } else {
+        // Store in session temporarily until consent is given
+        (req.session as any).pendingLanguage = language;
+        
+        res.json({ 
+          success: true, 
+          message: `Language preference stored temporarily`,
+          cookieSet: false,
+          note: "Cookie will be set after consent is given"
+        });
+      }
+    } catch (error) {
+      console.error("Language setting error:", error);
+      res.status(500).json({ error: "Server error setting language" });
+    }
   });
 
   // Contact form submission endpoint

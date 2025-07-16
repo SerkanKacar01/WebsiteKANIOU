@@ -75,19 +75,40 @@ export function cookieConsentMiddleware(req: CookieConsentRequest, res: Response
     preferences
   };
 
-  // Override res.cookie to respect consent
+  // Override res.cookie to respect consent and classify cookies properly
   const originalCookie = res.cookie.bind(res);
   res.cookie = function(name: string, value: any, options: any = {}) {
-    // Allow essential cookies always
-    const essentialCookies = ['session', 'csrf', 'auth', 'language', 'currency'];
-    const isEssential = essentialCookies.some(essential => name.includes(essential));
+    // Define cookie categories for GDPR compliance
+    const essentialCookies = ['connect.sid', 'sessionId', 'csrf', 'auth'];
+    const preferencesCookies = ['kaniou-language', 'currency', 'theme'];
+    const statisticsCookies = ['_ga', '_gid', '_gat', 'analytics'];
+    const marketingCookies = ['_fb', 'fbp', 'ads', 'marketing'];
     
-    if (isEssential || req.cookieConsent?.hasConsent) {
+    const isEssential = essentialCookies.some(essential => name.includes(essential) || name === essential);
+    const isPreferences = preferencesCookies.some(pref => name.includes(pref) || name === pref);
+    const isStatistics = statisticsCookies.some(stat => name.includes(stat) || name === stat);
+    const isMarketing = marketingCookies.some(mark => name.includes(mark) || name === mark);
+    
+    // Always allow essential cookies
+    if (isEssential) {
       return originalCookie(name, value, options);
     }
     
-    // Block non-essential cookies without consent
-    console.log(`Blocked cookie '${name}' - no user consent`);
+    // Check specific consent for each category
+    if (isPreferences && req.cookieConsent?.preferences) {
+      return originalCookie(name, value, options);
+    }
+    
+    if (isStatistics && req.cookieConsent?.analytics) {
+      return originalCookie(name, value, options);
+    }
+    
+    if (isMarketing && req.cookieConsent?.marketing) {
+      return originalCookie(name, value, options);
+    }
+    
+    // Block non-essential cookies without proper consent
+    console.log(`🚫 Blocked cookie '${name}' - missing consent for category`);
     return res;
   };
 

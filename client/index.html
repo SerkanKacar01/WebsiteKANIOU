@@ -6,6 +6,7 @@
       src="https://consent.cookiebot.com/uc.js"
       data-cbid="277bd293-9336-4f15-ba87-4c760a56129b"
       data-blockingmode="auto"
+      data-culture="nl"
       type="text/javascript">
     </script>
     
@@ -107,63 +108,42 @@
       }
     </style>
     
-    <!-- Cookiebot Initialization Script -->
+    <!-- Cookiebot Callbacks - MUST BE AFTER COOKIEBOT SCRIPT -->
     <script>
-      // Initialize Cookiebot properly without interference
-      window.addEventListener('load', function() {
-        console.log('🍪 Initializing Cookiebot...');
-        
-        // Clear any stored consent to ensure banner shows on first visit
-        const isFirstVisit = !document.cookie.includes('CookieConsent=');
-        
-        if (isFirstVisit) {
-          console.log('🍪 First visit detected - clearing any cached consent');
-          
-          // Clear any cached consent
-          ['cookie_consent'].forEach(key => {
-            localStorage.removeItem(key);
-            sessionStorage.removeItem(key);
+      // Set up Cookiebot callbacks immediately
+      window.CookiebotCallback_OnLoad = function() {
+        console.log('🍪 Cookiebot OnLoad callback fired');
+      };
+      
+      window.CookiebotCallback_OnAccept = function() {
+        console.log('🍪 Cookiebot OnAccept callback fired');
+        // Reload analytics scripts with consent
+        if (window.gtag) {
+          gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': window.Cookiebot.consent.marketing ? 'granted' : 'denied'
           });
         }
-        
-        // Wait for Cookiebot to load and initialize
-        let attempts = 0;
-        const maxAttempts = 50;
-        
-        const initializeCookiebot = setInterval(() => {
-          attempts++;
-          
-          if (window.Cookiebot) {
-            console.log('✅ Cookiebot loaded successfully');
-            
-            // Set up proper callbacks
-            window.CookiebotCallback_OnLoad = function() {
-              console.log('🍪 Cookiebot OnLoad callback fired');
-            };
-            
-            window.CookiebotCallback_OnAccept = function() {
-              console.log('🍪 Cookiebot OnAccept callback fired');
-            };
-            
-            window.CookiebotCallback_OnDecline = function() {
-              console.log('🍪 Cookiebot OnDecline callback fired');
-            };
-            
-            window.CookiebotCallback_OnDialogInit = function() {
-              console.log('🍪 Cookiebot Dialog initialized');
-            };
-            
-            window.CookiebotCallback_OnDialogDisplay = function() {
-              console.log('🍪 Cookiebot Dialog displayed');
-            };
-            
-            clearInterval(initializeCookiebot);
-          } else if (attempts >= maxAttempts) {
-            console.error('❌ Cookiebot failed to load after maximum attempts');
-            clearInterval(initializeCookiebot);
-          }
-        }, 100);
-      });
+      };
+      
+      window.CookiebotCallback_OnDecline = function() {
+        console.log('🍪 Cookiebot OnDecline callback fired');
+        // Ensure analytics are disabled
+        if (window.gtag) {
+          gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+          });
+        }
+      };
+      
+      window.CookiebotCallback_OnDialogInit = function() {
+        console.log('🍪 Cookiebot Dialog initialized');
+      };
+      
+      window.CookiebotCallback_OnDialogDisplay = function() {
+        console.log('🍪 Cookiebot Dialog displayed');
+      };
     </script>
     
     <meta charset="UTF-8" />
@@ -175,7 +155,53 @@
     
 
     
-    <!-- Development tools - marked for Cookiebot -->
-    <script type="text/plain" data-cookieconsent="preferences" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+    <!-- Development tools - marked for Cookiebot (statistics category) -->
+    <script type="text/plain" data-cookieconsent="statistics" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+    
+    <!-- Additional script blocking for GDPR compliance -->
+    <script>
+      // Block any dynamically loaded scripts until consent
+      (function() {
+        'use strict';
+        
+        // Store original createElement
+        const originalCreateElement = document.createElement;
+        
+        // Override createElement to block scripts
+        document.createElement = function(tagName) {
+          const element = originalCreateElement.call(this, tagName);
+          
+          if (tagName.toLowerCase() === 'script') {
+            // Check if Cookiebot has loaded and consent is available
+            if (window.Cookiebot && window.Cookiebot.consent) {
+              // Script is allowed to load
+              return element;
+            } else {
+              // Block script loading until consent
+              const originalSrc = element.src;
+              const originalInnerHTML = element.innerHTML;
+              
+              Object.defineProperty(element, 'src', {
+                get: function() { return ''; },
+                set: function(value) {
+                  // Store the intended source for later activation
+                  element.setAttribute('data-pending-src', value);
+                }
+              });
+              
+              Object.defineProperty(element, 'innerHTML', {
+                get: function() { return ''; },
+                set: function(value) {
+                  // Store the intended content for later activation
+                  element.setAttribute('data-pending-content', value);
+                }
+              });
+            }
+          }
+          
+          return element;
+        };
+      })();
+    </script>
   </body>
 </html>

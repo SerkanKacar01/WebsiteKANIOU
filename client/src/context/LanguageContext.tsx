@@ -37,14 +37,26 @@ const translations: Record<Language, Record<string, any>> = {
 
 // Provider component that wraps your app and provides the language context
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Get stored language from localStorage or default to 'nl'
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window !== 'undefined') {
-      const storedLang = localStorage.getItem('language') as Language;
-      return (storedLang && ['en', 'fr', 'nl', 'tr', 'ar'].includes(storedLang)) ? storedLang : 'nl';
+  // Check for GDPR-compliant language storage
+  const getStoredLanguage = (): Language => {
+    if (typeof window === 'undefined') return 'nl';
+    
+    // First check for cookie-based preference (GDPR compliant)
+    const cookies = document.cookie.split(';');
+    const langCookie = cookies.find(c => c.trim().startsWith('kaniou-language='));
+    if (langCookie) {
+      const cookieLang = langCookie.split('=')[1] as Language;
+      if (['en', 'fr', 'nl', 'tr', 'ar'].includes(cookieLang)) {
+        return cookieLang;
+      }
     }
-    return 'nl';
-  });
+    
+    // Fallback to browser language detection (no storage)
+    const browserLang = navigator.language.slice(0, 2) as Language;
+    return (['en', 'fr', 'nl', 'tr', 'ar'].includes(browserLang)) ? browserLang : 'nl';
+  };
+
+  const [language, setLanguageState] = useState<Language>(getStoredLanguage);
 
   // Current translations based on selected language
   const [currentTranslations, setCurrentTranslations] = useState<Record<string, any>>(
@@ -66,15 +78,34 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       document.documentElement.classList.remove('rtl');
     }
     
-    // Store language preference
+    // GDPR-compliant language storage
     if (typeof window !== 'undefined') {
-      localStorage.setItem('language', language);
+      // Only store in cookie if user has preferences consent via Cookiebot
+      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
+        // Set language cookie via API to respect server-side GDPR controls
+        fetch('/api/set-language', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ language })
+        }).catch(err => console.warn('Failed to set language cookie:', err));
+      }
+      // Remove any old localStorage entries to comply with GDPR
+      localStorage.removeItem('language');
     }
   }, [language]);
 
-  // Set language function
+  // GDPR-compliant language setting function
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
+    
+    // Immediately try to store preference if consent is available
+    if (typeof window !== 'undefined' && window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
+      fetch('/api/set-language', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ language: lang })
+      }).catch(err => console.warn('Failed to set language cookie:', err));
+    }
   };
 
   // Translation function that handles nested keys

@@ -9,6 +9,12 @@ const rootElement = document.getElementById("root");
 
 if (rootElement) {
   try {
+    // Add minimum styling to ensure visibility
+    rootElement.style.minHeight = '100vh';
+    rootElement.style.display = 'block';
+    rootElement.style.position = 'relative';
+    rootElement.style.zIndex = '1';
+    
     const root = createRoot(rootElement);
     root.render(
       <HelmetProvider>
@@ -31,9 +37,9 @@ if (rootElement) {
     // Fallback: Show basic content
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     rootElement.innerHTML = `
-      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
-        <h1>KANIOU</h1>
-        <p>Loading application...</p>
+      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white;">
+        <h1 style="color: #2C3E50; font-size: 2em; margin-bottom: 16px;">KANIOU</h1>
+        <p style="color: #666; font-size: 1.2em; margin-bottom: 16px;">Loading application...</p>
         <p style="color: red; font-size: 12px;">Error: ${errorMessage}</p>
       </div>
     `;

@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure body and html are visible */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: white;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+#root {
+  height: 100%;
+  min-height: 100vh;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  background: white;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

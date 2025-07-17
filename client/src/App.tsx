@@ -231,15 +231,6 @@ function Router() {
 function App() {
   const { language } = useLanguage();
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(false);
-  
-  // Debug: Add a visible test element to confirm rendering
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    // Ensure the app is visible
-    setIsVisible(true);
-    console.log('App component rendered and visible');
-  }, []);
 
   // GDPR-compliant onboarding check - only use localStorage after consent
   useEffect(() => {
@@ -308,33 +299,14 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white" style={{ minHeight: '100vh', display: 'block', position: 'relative' }}>
-      {/* Debug visibility indicator */}
-      {isVisible && (
-        <div style={{
-          position: 'fixed',
-          top: '10px',
-          right: '10px',
-          background: '#28a745',
-          color: 'white',
-          padding: '5px 10px',
-          borderRadius: '3px',
-          fontSize: '12px',
-          zIndex: 9999
-        }}>
-          App Loaded
-        </div>
-      )}
-      
+    <div className="min-h-screen bg-white">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
-          <div className="relative z-10" style={{ position: 'relative', zIndex: 10 }}>
-            <MobileLayoutWrapper>
-              <Router />
-            </MobileLayoutWrapper>
-            <FloatingActionButtons />
-          </div>
+          <MobileLayoutWrapper>
+            <Router />
+          </MobileLayoutWrapper>
+          <FloatingActionButtons />
           <CookiebotSetup />
 
           {shouldShowOnboarding && (

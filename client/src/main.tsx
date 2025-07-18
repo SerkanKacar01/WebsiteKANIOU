@@ -34,23 +34,47 @@ if (rootElement) {
     console.log("React app mounted successfully");
   } catch (error) {
     console.error("Failed to mount React app:", error);
-    // Fallback: Show basic content
+    // Fallback: Show basic content with safe DOM manipulation
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    rootElement.innerHTML = `
-      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white;">
-        <h1 style="color: #2C3E50; font-size: 2em; margin-bottom: 16px;">KANIOU</h1>
-        <p style="color: #666; font-size: 1.2em; margin-bottom: 16px;">Loading application...</p>
-        <p style="color: red; font-size: 12px;">Error: ${errorMessage}</p>
-      </div>
-    `;
+    
+    // Create elements safely without innerHTML
+    const container = document.createElement('div');
+    container.style.cssText = 'padding: 20px; text-align: center; font-family: Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white;';
+    
+    const title = document.createElement('h1');
+    title.style.cssText = 'color: #2C3E50; font-size: 2em; margin-bottom: 16px;';
+    title.textContent = 'KANIOU';
+    
+    const loadingText = document.createElement('p');
+    loadingText.style.cssText = 'color: #666; font-size: 1.2em; margin-bottom: 16px;';
+    loadingText.textContent = 'Loading application...';
+    
+    const errorText = document.createElement('p');
+    errorText.style.cssText = 'color: red; font-size: 12px;';
+    errorText.textContent = `Error: ${errorMessage}`;
+    
+    container.appendChild(title);
+    container.appendChild(loadingText);
+    container.appendChild(errorText);
+    
+    rootElement.innerHTML = '';
+    rootElement.appendChild(container);
   }
 } else {
   console.error("Root element not found - creating fallback");
-  // Create fallback content directly in body
-  document.body.innerHTML = `
-    <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
-      <h1>KANIOU</h1>
-      <p>Application loading error - root element not found</p>
-    </div>
-  `;
+  // Create fallback content directly in body safely
+  const container = document.createElement('div');
+  container.style.cssText = 'padding: 20px; text-align: center; font-family: Arial, sans-serif;';
+  
+  const title = document.createElement('h1');
+  title.textContent = 'KANIOU';
+  
+  const errorText = document.createElement('p');
+  errorText.textContent = 'Application loading error - root element not found';
+  
+  container.appendChild(title);
+  container.appendChild(errorText);
+  
+  document.body.innerHTML = '';
+  document.body.appendChild(container);
 }

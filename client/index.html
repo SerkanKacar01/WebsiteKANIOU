@@ -161,9 +161,64 @@
     
     <!-- Cookiebot Callbacks - MUST BE AFTER COOKIEBOT SCRIPT -->
     <script>
+      // Function to force clear all cookies and show banner
+      window.clearCookieConsent = function() {
+        console.log('🍪 Forcing cookie consent reset...');
+        
+        // Clear all possible cookie names
+        const cookieNames = ['CookieConsent', 'CookieConsentBulkSetting', 'CookieConsentBulkTicket'];
+        const domain = window.location.hostname;
+        
+        cookieNames.forEach(name => {
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${domain};`;
+        });
+        
+        // Clear localStorage
+        localStorage.removeItem('cookie_consent');
+        sessionStorage.removeItem('cookie_consent');
+        
+        // Force show Cookiebot banner
+        if (window.Cookiebot && window.Cookiebot.renew) {
+          window.Cookiebot.renew();
+        }
+        
+        // Reload page to ensure clean state
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      };
+      
+      // Auto-run on page load if no consent exists
+      window.addEventListener('load', function() {
+        setTimeout(() => {
+          const hasConsent = document.cookie.includes('CookieConsent=');
+          console.log('🍪 Checking consent on load:', hasConsent ? 'EXISTS' : 'MISSING');
+          
+          if (!hasConsent) {
+            console.log('🍪 No consent found - forcing banner display');
+            if (window.Cookiebot) {
+              if (window.Cookiebot.show) {
+                window.Cookiebot.show();
+              } else if (window.Cookiebot.renew) {
+                window.Cookiebot.renew();
+              }
+            }
+          }
+        }, 2000);
+      });
+      
       // Set up Cookiebot callbacks immediately
       window.CookiebotCallback_OnLoad = function() {
         console.log('🍪 Cookiebot OnLoad callback fired');
+        
+        // Force show banner if no consent
+        const hasConsent = document.cookie.includes('CookieConsent=');
+        if (!hasConsent && window.Cookiebot && window.Cookiebot.show) {
+          console.log('🍪 Forcing banner show from OnLoad');
+          window.Cookiebot.show();
+        }
       };
       
       window.CookiebotCallback_OnAccept = function() {

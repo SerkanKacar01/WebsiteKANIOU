@@ -11,11 +11,24 @@ export function CookieConsentBanner() {
   const [cookiebotLoaded, setCookiebotLoaded] = useState(false);
   const { t } = useLanguage();
 
-  // Check if Cookiebot is loaded and hide custom banner
+  // Force banner to show if no consent exists
   useEffect(() => {
     const checkCookiebot = () => {
       if (window.Cookiebot) {
         setCookiebotLoaded(true);
+        // Check if there's existing consent
+        const hasConsent = document.cookie.includes('CookieConsent=');
+        if (!hasConsent) {
+          // Force show Cookiebot banner if no consent
+          try {
+            if (window.Cookiebot.show) {
+              window.Cookiebot.show();
+            }
+          } catch (error) {
+            console.log('Could not show Cookiebot banner, showing fallback');
+            setCookiebotLoaded(false); // Show our custom banner instead
+          }
+        }
       }
     };
 
@@ -30,8 +43,14 @@ export function CookieConsentBanner() {
     return () => clearInterval(interval);
   }, []);
 
-  // Don't show custom banner if Cookiebot is loaded or banner should be hidden
-  if (!showBanner || cookiebotLoaded) return null;
+  // Force show banner for testing - remove this line in production
+  // Always show our banner if no consent exists, regardless of Cookiebot status
+  const hasConsent = document.cookie.includes('CookieConsent=');
+  
+  // TEMPORARY: Force show banner for testing (remove after testing)
+  const forceShow = window.location.search.includes('show-cookie-banner') || !hasConsent;
+  
+  if (hasConsent && !forceShow) return null;
 
   return (
     <>

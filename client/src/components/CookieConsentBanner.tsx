@@ -36,15 +36,15 @@ export function CookieConsentBanner() {
   return (
     <>
       {/* Cookie Banner */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 p-4 md:p-6">
+      <div className="cookie-consent-banner-mobile fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 p-4 md:p-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-start gap-4">
-            <Cookie className="w-6 h-6 text-accent mt-1 flex-shrink-0" />
-            <div className="flex-1">
+          <div className="flex items-start gap-4 md:gap-4 flex-col md:flex-row">
+            <Cookie className="w-6 h-6 text-accent mt-1 flex-shrink-0 hidden md:block" />
+            <div className="flex-1 w-full">
               <h3 className="font-semibold text-lg mb-2 text-primary">
                 {t("Wij respecteren uw privacy") || "Wij gebruiken cookies"}
               </h3>
-              <p className="text-text-medium mb-4 leading-relaxed">
+              <p className="text-text-medium mb-4 leading-relaxed text-sm md:text-base">
                 {t(
                   "Deze website maakt gebruik van cookies om uw surfervaring te verbeteren, statistieken te verzamelen en u relevante content te tonen. U kunt uw voorkeuren op elk moment aanpassen.",
                 ) ||
@@ -57,24 +57,24 @@ export function CookieConsentBanner() {
                     "Lees meer"}
                 </a>
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 md:flex-row flex-col">
                 <Button
                   onClick={acceptAll}
-                  className="bg-accent hover:bg-accent/90 text-white"
+                  className="bg-accent hover:bg-accent/90 text-white w-full md:w-auto min-h-[48px] md:min-h-auto"
                 >
                   {t("Alle cookies accepteren") || "Alles accepteren"}
                 </Button>
                 <Button
                   onClick={declineAll}
                   variant="outline"
-                  className="border-gray-300 hover:bg-gray-50"
+                  className="border-gray-300 hover:bg-gray-50 w-full md:w-auto min-h-[48px] md:min-h-auto"
                 >
                   {t("Alleen essentiële cookies toestaan") || "Alles weigeren"}
                 </Button>
                 <Button
                   onClick={() => setShowPreferences(true)}
                   variant="outline"
-                  className="border-gray-300 hover:bg-gray-50 inline-flex items-center gap-2"
+                  className="border-gray-300 hover:bg-gray-50 inline-flex items-center gap-2 w-full md:w-auto min-h-[48px] md:min-h-auto justify-center"
                 >
                   <Settings className="w-4 h-4" />
                   {t("Beheer cookievoorkeuren") || "Beheer voorkeuren"}

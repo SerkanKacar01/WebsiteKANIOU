@@ -201,10 +201,16 @@ const Home = () => {
           <div className="flex justify-center mb-12 md:mb-20">
             <button
               onClick={handleRequestQuote}
-              className="btn-luxury-primary text-base md:text-lg px-8 md:px-20 py-4 md:py-6 min-w-[280px] md:min-w-[360px] group"
+              className="ultra-luxury-cta-button group"
             >
-              VANDAAG NOG OFFERTE
-              <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+              <div className="ultra-luxury-cta-bg"></div>
+              <div className="ultra-luxury-cta-glow"></div>
+              <div className="ultra-luxury-cta-content">
+                <span className="ultra-luxury-cta-text">VANDAAG NOG OFFERTE</span>
+                <div className="ultra-luxury-cta-icon">
+                  <ArrowRight className="w-6 h-6" />
+                </div>
+              </div>
             </button>
           </div>
 

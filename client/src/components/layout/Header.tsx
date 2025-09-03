@@ -70,8 +70,7 @@ const Header = () => {
 
   const isActive = (href: string) => {
     if (href === "/" && location === "/") return true;
-    if (href === "/producten" && (location.startsWith("/producten") || location.startsWith("/products") || location.startsWith("/shop"))) return true;
-    if (href !== "/" && href !== "/producten" && location.startsWith(href)) return true;
+    if (href !== "/" && location.startsWith(href)) return true;
     return false;
   };
 

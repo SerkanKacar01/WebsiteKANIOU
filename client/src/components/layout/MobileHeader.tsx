@@ -71,53 +71,6 @@ const MobileHeader = () => {
     { icon: ShoppingBag, label: "Offerte", href: "/quote", color: "text-orange-600" },
   ];
 
-  // Organized product categories matching desktop layout exactly
-  const mobileCategories = [
-    {
-      title: "Gordijnen",
-      items: [
-        { label: "Overgordijnen", href: "/producten/overgordijnen" },
-        { label: "Vitrages", href: "/producten/vitrages" },
-        { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
-        { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
-      ]
-    },
-    {
-      title: "Lamellen & Jaloezieën",
-      items: [
-        { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
-        { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
-        { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
-        { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
-      ]
-    },
-    {
-      title: "Zonwering",
-      items: [
-        { label: "Plissé", href: "/producten/plisse" },
-        { label: "Duo plissé", href: "/producten/duo-plisse" },
-        { label: "Dakraam zonweringen", href: "/producten/dakraam-zonweringen" },
-        { label: "Houten shutters", href: "/producten/houten-shutters" },
-        { label: "Textiel raamfolie", href: "/producten/textiel-raamfolie" },
-      ]
-    },
-    {
-      title: "Horren",
-      items: [
-        { label: "Inzethorren", href: "/producten/inzethorren" },
-        { label: "Opzethorren", href: "/producten/opzethorren" },
-        { label: "Plissé hordeuren", href: "/producten/plisse-hordeuren" },
-      ]
-    },
-    {
-      title: "Accessoires",
-      items: [
-        { label: "Gordijnrails", href: "/producten/gordijnrails" },
-        { label: "Gordijnroedes", href: "/producten/gordijnroedes" },
-        { label: "SQUID textile foil", href: "/producten/squid" },
-      ]
-    }
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -187,12 +140,6 @@ const MobileHeader = () => {
                 {/* Main Navigation */}
                 <div className="flex-1 overflow-y-auto">
                   <div className="p-4 space-y-4">
-                    <Link href="/producten">
-                      <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
-                        🛍️ SHOP
-                      </Button>
-                    </Link>
-                    
                     <Link href="/gallerij">
                       <Button variant="ghost" className="w-full justify-start text-left" onClick={handleNavClick}>
                         📸 {t("GALLERIJ")}
@@ -224,40 +171,6 @@ const MobileHeader = () => {
                     </Link>
                   </div>
 
-                  {/* Product Categories */}
-                  <div className="border-t bg-gradient-to-b from-gray-50 to-white">
-                    <div className="p-4">
-                      <h3 className="font-semibold text-primary mb-4 text-lg flex items-center">
-                        🛍️ Producten
-                      </h3>
-                      <div className="space-y-4 max-h-[60vh] overflow-y-auto mobile-nav-scroll pr-2">
-                        {mobileCategories.map((category, categoryIndex) => (
-                          <div key={categoryIndex} className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-md">
-                            <div className="bg-gradient-to-r from-primary/5 to-primary/10 px-4 py-3 border-b border-gray-100">
-                              <h4 className="font-semibold text-sm text-primary uppercase tracking-wide flex items-center">
-                                {category.title}
-                              </h4>
-                            </div>
-                            <div className="p-2 space-y-1">
-                              {category.items.map((item, itemIndex) => (
-                                <Link key={itemIndex} href={item.href}>
-                                  <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    className="w-full justify-between text-left py-3 h-auto text-sm hover:bg-primary/10 hover:text-primary transition-all duration-200 min-h-[44px] rounded-md group active:scale-[0.98] hover:shadow-sm"
-                                    onClick={handleNavClick}
-                                  >
-                                    <span className="truncate">{item.label}</span>
-                                    <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                                  </Button>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Mobile Menu Footer */}
@@ -309,12 +222,12 @@ const MobileHeader = () => {
             </div>
           </Link>
           
-          <Link href="/producten">
+          <Link href="/gallerij">
             <div className={`flex flex-col items-center justify-center space-y-1 h-full ${
-              location.startsWith("/producten") || location.startsWith("/products") || location.startsWith("/shop") ? "text-primary bg-primary/10" : "text-gray-600"
+              location.startsWith("/gallerij") ? "text-primary bg-primary/10" : "text-gray-600"
             }`}>
-              <div className="text-lg">🛍️</div>
-              <span className="text-xs font-medium">Shop</span>
+              <div className="text-lg">📸</div>
+              <span className="text-xs font-medium">Gallerij</span>
             </div>
           </Link>
           

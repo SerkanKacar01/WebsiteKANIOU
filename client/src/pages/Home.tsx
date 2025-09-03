@@ -1,7 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Percent, Tag, Ruler, Zap, Phone, Mail, MapPin, Instagram, MessageCircle, Globe } from "lucide-react";
+import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Menu, X } from "lucide-react";
+import React from "react";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -18,6 +19,108 @@ const gallery4 = "/images/IMG_9219.jpeg";
 const gallery5 = "/images/IMG_9220.jpeg";
 const gallery6 = "/images/IMG_9221.jpeg";
 
+// Premium Navigation Component
+const PremiumNavigation = () => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [, setLocation] = useLocation();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navigationLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/producten' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' }
+  ];
+
+  return (
+    <nav className={`nav-luxury ${isScrolled ? 'scrolled' : ''}`}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="nav-logo">
+            <button 
+              onClick={() => setLocation('/')}
+              className="text-3xl font-display font-bold text-gradient hover:scale-105 transition-transform duration-300"
+            >
+              KANIOU
+            </button>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navigationLinks.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => setLocation(link.path)}
+                className="nav-link"
+              >
+                {link.name}
+              </button>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <div className="hidden md:block">
+            <button
+              onClick={() => setLocation('/quote')}
+              className="btn-luxury"
+            >
+              Get Quote
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 text-gray-700 hover:text-[#D5B36A] transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 animate-fade-in-up">
+            <div className="flex flex-col space-y-4">
+              {navigationLinks.map((link) => (
+                <button
+                  key={link.name}
+                  onClick={() => {
+                    setLocation(link.path);
+                    setIsMenuOpen(false);
+                  }}
+                  className="nav-link text-left"
+                >
+                  {link.name}
+                </button>
+              ))}
+              <button
+                onClick={() => {
+                  setLocation('/quote');
+                  setIsMenuOpen(false);
+                }}
+                className="btn-luxury mt-4"
+              >
+                Get Quote
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};
+
 const Home = () => {
   const [, setLocation] = useLocation();
 
@@ -32,21 +135,17 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>KANIOU | Tailor-made Window Decor That Elevates Every Space</title>
-        <meta
-          name="description"
-          content="Over 30 years of expertise in curtains & sun protection. Premium custom window treatments that transform your space with style and functionality."
-        />
-        <meta
-          property="og:title"
-          content="KANIOU | Tailor-made Window Decor That Elevates Every Space"
-        />
-        <meta
-          property="og:description"
-          content="Over 30 years of expertise in curtains & sun protection. Premium custom window treatments that transform your space with style and functionality."
-        />
+        <title>KANIOU - Premium Window Treatments & Custom Curtains | 30+ Years Experience</title>
+        <meta name="description" content="KANIOU offers premium custom curtains, blinds, and window treatments in Belgium. 30+ years of expertise in tailor-made solutions for your home and business." />
+        <meta property="og:title" content="KANIOU - Premium Window Treatments & Custom Curtains" />
+        <meta property="og:description" content="Transform your space with our premium custom window treatments. Professional installation and 30+ years of expertise in Belgium." />
         <meta property="og:type" content="website" />
       </Helmet>
+
+      {/* Premium Navigation */}
+      <PremiumNavigation />
+
+      <div className="content-offset">
       
       {/* Hero Section */}
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -660,8 +759,7 @@ const Home = () => {
         </div>
       </section>
 
-
-
+      </div>
     </>
   );
 };

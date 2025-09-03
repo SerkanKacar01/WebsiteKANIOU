@@ -721,10 +721,31 @@ const Home = () => {
               <p className="text-gray-600 text-sm mb-4">
                 © 2025 KANIOU Zilvernaald – Alle rechten voorbehouden
               </p>
-              <div className="flex justify-center space-x-6 text-sm">
+              
+              {/* Enhanced Legal Links */}
+              <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm mb-4">
                 <a href="/privacybeleid" className="footer-legal-link">Privacybeleid</a>
                 <span className="text-gray-400">|</span>
                 <a href="/algemene-voorwaarden" className="footer-legal-link">Algemene voorwaarden</a>
+                <span className="text-gray-400">|</span>
+                <a href="/cookiebeleid" className="footer-legal-link">Cookiebeleid</a>
+                <span className="text-gray-400">|</span>
+                <a href="/disclaimer" className="footer-legal-link">Disclaimer</a>
+                <span className="text-gray-400">|</span>
+                <a href="/gebruiksvoorwaarden" className="footer-legal-link">Gebruiksvoorwaarden</a>
+              </div>
+              
+              {/* Google Reviews Link */}
+              <div className="text-center">
+                <a 
+                  href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm font-medium text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
+                >
+                  <span className="mr-1">⭐</span>
+                  Bekijk onze Google Reviews
+                </a>
               </div>
             </div>
           </div>

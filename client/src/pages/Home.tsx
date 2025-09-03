@@ -173,15 +173,13 @@ const Home = () => {
             Over 30 years of expertise in curtains & sun protection.
           </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            {/* Primary Button */}
+          {/* Action Button */}
+          <div className="flex justify-center">
             <Button
-              onClick={handleExploreProducts}
+              onClick={handleRequestQuote}
               className="
-                w-full sm:w-auto
-                px-8 py-4 
-                text-lg font-semibold
+                px-12 py-6 
+                text-xl font-bold
                 bg-[#d5b36a] hover:bg-[#c4a55a] 
                 text-white 
                 border-0
@@ -189,32 +187,11 @@ const Home = () => {
                 transition-all duration-300 
                 transform hover:scale-105 hover:-translate-y-1
                 shadow-lg hover:shadow-xl
-                min-w-[200px]
-              "
-            >
-              Explore Products
-            </Button>
-
-            {/* Secondary Button */}
-            <Button
-              onClick={handleRequestQuote}
-              variant="outline"
-              className="
-                w-full sm:w-auto
-                px-8 py-4 
-                text-lg font-semibold
-                bg-white/10 backdrop-blur-sm
-                hover:bg-white/20 
-                text-white 
-                border-2 border-[#d5b36a] hover:border-[#c4a55a]
-                rounded-lg
-                transition-all duration-300 
-                transform hover:scale-105 hover:-translate-y-1
-                shadow-lg hover:shadow-xl
-                min-w-[200px]
+                min-w-[280px]
               "
             >
               Request a Free Quote
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
 

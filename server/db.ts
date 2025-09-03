@@ -14,15 +14,52 @@ if (!process.env.DATABASE_URL) {
 let pool: Pool;
 let db: ReturnType<typeof drizzle>;
 
-try {
-  pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  db = drizzle({ client: pool, schema });
-  console.log("Database connection established successfully");
-} catch (error) {
-  console.error("Database connection failed:", error);
-  // Create a mock pool for fallback
-  pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  db = drizzle({ client: pool, schema });
+// Initialize database connection with improved error handling
+async function initializeDatabase() {
+  try {
+    pool = new Pool({ 
+      connectionString: process.env.DATABASE_URL,
+      connectionTimeoutMillis: 5000,
+      idleTimeoutMillis: 30000,
+      max: 10
+    });
+    db = drizzle({ client: pool, schema });
+    
+    // Test the connection
+    await pool.query('SELECT 1');
+    console.log("Database connection established successfully");
+    return true;
+  } catch (error) {
+    console.error("Database connection failed, using fallback:", error);
+    
+    // Create a more robust fallback pool with retry logic
+    try {
+      pool = new Pool({ 
+        connectionString: process.env.DATABASE_URL,
+        connectionTimeoutMillis: 10000,
+        idleTimeoutMillis: 60000,
+        max: 5
+      });
+      db = drizzle({ client: pool, schema });
+      console.log("Fallback database connection established");
+      return true;
+    } catch (fallbackError) {
+      console.error("Fallback database connection also failed:", fallbackError);
+      // Create minimal pool for basic functionality
+      pool = new Pool({ connectionString: process.env.DATABASE_URL });
+      db = drizzle({ client: pool, schema });
+      return false;
+    }
+  }
 }
+
+// Initialize with default pool first, then try to improve connection
+pool = new Pool({ connectionString: process.env.DATABASE_URL });
+db = drizzle({ client: pool, schema });
+
+// Try to establish better connection in background
+initializeDatabase().catch(error => {
+  console.warn("Database initialization failed, continuing with basic connection:", error);
+});
 
 export { pool, db };

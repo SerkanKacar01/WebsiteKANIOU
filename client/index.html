@@ -193,62 +193,86 @@
       // Auto-run on page load if no consent exists
       window.addEventListener('load', function() {
         setTimeout(() => {
-          const hasConsent = document.cookie.includes('CookieConsent=');
-          console.log('🍪 Checking consent on load:', hasConsent ? 'EXISTS' : 'MISSING');
-          
-          if (!hasConsent) {
-            console.log('🍪 No consent found - forcing banner display');
-            if (window.Cookiebot) {
-              if (window.Cookiebot.show) {
-                window.Cookiebot.show();
-              } else if (window.Cookiebot.renew) {
-                window.Cookiebot.renew();
+          try {
+            const hasConsent = document.cookie.includes('CookieConsent=');
+            console.log('🍪 Checking consent on load:', hasConsent ? 'EXISTS' : 'MISSING');
+            
+            if (!hasConsent) {
+              console.log('🍪 No consent found - forcing banner display');
+              if (window.Cookiebot) {
+                if (typeof window.Cookiebot.show === 'function') {
+                  window.Cookiebot.show();
+                } else if (typeof window.Cookiebot.renew === 'function') {
+                  window.Cookiebot.renew();
+                }
               }
             }
+          } catch (error) {
+            console.warn('🍪 Error during consent check:', error);
           }
         }, 2000);
       });
       
       // Set up Cookiebot callbacks immediately
       window.CookiebotCallback_OnLoad = function() {
-        console.log('🍪 Cookiebot OnLoad callback fired');
-        
-        // Force show banner if no consent
-        const hasConsent = document.cookie.includes('CookieConsent=');
-        if (!hasConsent && window.Cookiebot && window.Cookiebot.show) {
-          console.log('🍪 Forcing banner show from OnLoad');
-          window.Cookiebot.show();
+        try {
+          console.log('🍪 Cookiebot OnLoad callback fired');
+          
+          // Force show banner if no consent
+          const hasConsent = document.cookie.includes('CookieConsent=');
+          if (!hasConsent && window.Cookiebot && typeof window.Cookiebot.show === 'function') {
+            console.log('🍪 Forcing banner show from OnLoad');
+            window.Cookiebot.show();
+          }
+        } catch (error) {
+          console.warn('🍪 Error in OnLoad callback:', error);
         }
       };
       
       window.CookiebotCallback_OnAccept = function() {
-        console.log('🍪 Cookiebot OnAccept callback fired');
-        // Reload analytics scripts with consent
-        if (window.gtag) {
-          gtag('consent', 'update', {
-            'analytics_storage': 'granted',
-            'ad_storage': window.Cookiebot.consent.marketing ? 'granted' : 'denied'
-          });
+        try {
+          console.log('🍪 Cookiebot OnAccept callback fired');
+          // Reload analytics scripts with consent
+          if (window.gtag && typeof window.gtag === 'function') {
+            gtag('consent', 'update', {
+              'analytics_storage': 'granted',
+              'ad_storage': (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.marketing) ? 'granted' : 'denied'
+            });
+          }
+        } catch (error) {
+          console.warn('🍪 Error in OnAccept callback:', error);
         }
       };
       
       window.CookiebotCallback_OnDecline = function() {
-        console.log('🍪 Cookiebot OnDecline callback fired');
-        // Ensure analytics are disabled
-        if (window.gtag) {
-          gtag('consent', 'update', {
-            'analytics_storage': 'denied',
-            'ad_storage': 'denied'
-          });
+        try {
+          console.log('🍪 Cookiebot OnDecline callback fired');
+          // Ensure analytics are disabled
+          if (window.gtag && typeof window.gtag === 'function') {
+            gtag('consent', 'update', {
+              'analytics_storage': 'denied',
+              'ad_storage': 'denied'
+            });
+          }
+        } catch (error) {
+          console.warn('🍪 Error in OnDecline callback:', error);
         }
       };
       
       window.CookiebotCallback_OnDialogInit = function() {
-        console.log('🍪 Cookiebot Dialog initialized');
+        try {
+          console.log('🍪 Cookiebot Dialog initialized');
+        } catch (error) {
+          console.warn('🍪 Error in OnDialogInit callback:', error);
+        }
       };
       
       window.CookiebotCallback_OnDialogDisplay = function() {
-        console.log('🍪 Cookiebot Dialog displayed');
+        try {
+          console.log('🍪 Cookiebot Dialog displayed');
+        } catch (error) {
+          console.warn('🍪 Error in OnDialogDisplay callback:', error);
+        }
       };
     </script>
     

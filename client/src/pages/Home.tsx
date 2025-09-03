@@ -84,7 +84,7 @@ const PremiumNavigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700 hover:text-[#D5B36A] transition-colors"
+            className="md:hidden p-2 text-white hover:text-white transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

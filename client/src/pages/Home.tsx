@@ -257,7 +257,7 @@ const Home = () => {
                       <img 
                         src="/images/jaloezieen-icon.png" 
                         alt="Houten jaloezieën" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -278,7 +278,7 @@ const Home = () => {
                       <img 
                         src="/images/jaloezieen-icon.png" 
                         alt="Aluminium jaloezieën" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -299,7 +299,7 @@ const Home = () => {
                       <img 
                         src="/images/jaloezieen-icon.png" 
                         alt="Kunststof jaloezieën" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -320,7 +320,7 @@ const Home = () => {
                       <img 
                         src="/images/verticaal-lamellen-icon.png" 
                         alt="Verticaal lamellen" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -341,7 +341,7 @@ const Home = () => {
                       <img 
                         src="/images/plisse-icon.png" 
                         alt="Plissés" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -362,7 +362,7 @@ const Home = () => {
                       <img 
                         src="/images/jaloezieen-icon.png" 
                         alt="Aluminium jaloezieën" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -383,7 +383,7 @@ const Home = () => {
                       <img 
                         src="/images/rolgordijnen-icon.png" 
                         alt="Rolgordijnen" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -404,7 +404,7 @@ const Home = () => {
                       <img 
                         src="/images/duo-rolgordijnen-icon.png" 
                         alt="Duo rolgordijnen" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -425,7 +425,7 @@ const Home = () => {
                       <img 
                         src="/images/gordijnen-icon.png" 
                         alt="Gordijnen" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -446,7 +446,7 @@ const Home = () => {
                       <img 
                         src="/images/rails-roedes-icon.png" 
                         alt="Rails & roedes" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -467,7 +467,7 @@ const Home = () => {
                       <img 
                         src="/images/vouwgordijnen-icon.png" 
                         alt="Vouwgordijnen" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>
@@ -488,7 +488,7 @@ const Home = () => {
                       <img 
                         src="/images/houten-shutters-icon.png" 
                         alt="Houten shutters" 
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                       />
                     </div>
                   </div>

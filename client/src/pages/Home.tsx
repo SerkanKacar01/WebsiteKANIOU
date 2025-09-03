@@ -192,8 +192,8 @@ const Home = () => {
           
           {/* Luxury Subtitle */}
           <p className="text-lg md:text-subtitle text-white/90 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl font-luxury-display">
-            <span className="block text-xl md:text-2xl font-medium tracking-wide">Waar vakmanschap en verfijning samenkomen.</span>
-            <span className="block mt-4 text-white/75 text-base md:text-lg font-light tracking-wide">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
+            <span className="block text-xl md:text-3xl font-medium tracking-wide">Waar vakmanschap en verfijning samenkomen.</span>
+            <span className="block mt-4 text-white/75 text-base md:text-xl font-light tracking-wide">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
             Ontdek de perfecte oplossing voor elke ruimte – vandaag nog.</span>
           </p>
 

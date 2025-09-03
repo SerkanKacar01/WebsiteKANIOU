@@ -533,6 +533,20 @@ const Home = () => {
                 Distinguished clients share their experiences of transformation, where KANIOU's artistry 
                 has elevated their most treasured spaces into sanctuaries of refined beauty.
               </p>
+              
+              {/* Google Reviews Link */}
+              <div className="text-center mt-6">
+                <a 
+                  href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-body font-semibold text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
+                >
+                  <span className="mr-2">⭐</span>
+                  Bekijk onze Google reviews
+                </a>
+                <p className="text-sm text-gray-500 mt-1">(Link opent in een nieuw tabblad)</p>
+              </div>
             </div>
 
             {/* Ultra-Luxury Testimonials Grid */}
@@ -550,13 +564,13 @@ const Home = () => {
 
                 {/* Premium Testimonial Text */}
                 <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
-                  "An extraordinary experience from consultation to completion. The precision of craftsmanship and attention to detail exceeded our highest expectations. KANIOU has transformed our home into a masterpiece."
+                  "Duidelijke correcte afspraken, snelle levering, kwaliteitsvol werk."
                 </p>
 
                 {/* Distinguished Customer Info */}
                 <div className="pt-4 border-t border-gold-200">
-                  <p className="font-semibold text-gray-900 text-lg">Maria Van Der Berg</p>
-                  <p className="text-body text-gray-600 font-light">Brussels • Interior Designer</p>
+                  <p className="font-semibold text-gray-900 text-lg">SLEDSENS</p>
+                  <p className="text-body text-gray-600 font-light">België</p>
                 </div>
               </div>
 
@@ -573,13 +587,13 @@ const Home = () => {
 
                 {/* Premium Testimonial Text */}
                 <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
-                  "The artistry and sophistication of KANIOU's work speaks volumes. Our plissé collection has become the crown jewel of our residence. Three decades of mastery is evident in every detail."
+                  "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na en werkte nauwkeurig. De kwaliteit van de materialen is uitstekend. Kortom, een absolute aanrader voor iedereen – deze vijf sterren zijn méér dan verdiend!"
                 </p>
 
                 {/* Distinguished Customer Info */}
                 <div className="pt-4 border-t border-gold-200">
-                  <p className="font-semibold text-gray-900 text-lg">Johan Pieters</p>
-                  <p className="text-body text-gray-600 font-light">Antwerp • Architect</p>
+                  <p className="font-semibold text-gray-900 text-lg">Anedda</p>
+                  <p className="text-body text-gray-600 font-light">België</p>
                 </div>
               </div>
 
@@ -596,13 +610,13 @@ const Home = () => {
 
                 {/* Premium Testimonial Text */}
                 <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
-                  "Impeccable service and breathtaking results. The bespoke curtains have redefined luxury in our home. KANIOU's commitment to excellence is unmatched in Belgian craftsmanship."
+                  "Een echte aanrader. Goede service, kwaliteit en prachtig resultaat. Wij zijn tevreden."
                 </p>
 
                 {/* Distinguished Customer Info */}
                 <div className="pt-4 border-t border-gold-200">
-                  <p className="font-semibold text-gray-900 text-lg">Sophie Martens</p>
-                  <p className="text-body text-gray-600 font-light">Ghent • Art Collector</p>
+                  <p className="font-semibold text-gray-900 text-lg">Marolt</p>
+                  <p className="text-body text-gray-600 font-light">Bekgië</p>
                 </div>
               </div>
           </div>

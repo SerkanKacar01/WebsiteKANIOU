@@ -537,7 +537,7 @@ const Home = () => {
             </div>
 
             {/* Luxury USP Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-luxury-xl">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5 md:gap-luxury-xl">
               {/* Perfect Fit - Ultra Luxury */}
               <div className="text-center group hover-elegant animate-fade-in-up stagger-1">
                 <div className="mb-8 flex justify-center">
@@ -636,7 +636,7 @@ const Home = () => {
             </div>
 
             {/* World-Class Product Showcase */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-luxury-xl mb-20">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-luxury-xl mb-20">
               {/* Duo Plissé - Ultra Luxury Card */}
               <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-1" onClick={() => setLocation("/producten/duo-plisse")}>
                 <div className="card-showcase">
@@ -848,7 +848,7 @@ const Home = () => {
             </div>
 
             {/* Ultra-Luxury Testimonials Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-luxury-xl">
               {/* Testimonial 1 - Ultra Luxury */}
               <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
                 <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />

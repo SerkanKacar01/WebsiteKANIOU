@@ -797,16 +797,6 @@ const Home = () => {
               </div>
           </div>
 
-            {/* Luxury CTA Button */}
-            <div className="text-center">
-              <button
-                onClick={() => setLocation("/producten")}
-                className="btn-luxury-secondary group"
-              >
-                Ontdek Alle Collecties
-                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
-              </button>
-            </div>
         </div>
       </section>
 

@@ -654,200 +654,87 @@ const Home = () => {
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>
 
-        {/* Product Showcase - World-Class Design */}
-        <section className="section-spacing-luxury gradient-luxury-subtle">
-          <div className="container-golden">
-            {/* Luxury Section Header */}
-            <div className="text-center mb-24">
-              <div className="divider-luxury w-40 mx-auto mb-12"></div>
-              <h2 className="font-display text-headline gradient-text-subtle mb-8">
-                Geselecteerde Collecties
-              </h2>
-              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
-                Ontdek onze zorgvuldig samengestelde collectie premium raamdecoratie – elk stuk ontworpen om uw interieur te transformeren tot een oase van verfijnde elegantie.
-              </p>
+        {/* Ultra-Modern Luxury Collections Showcase */}
+        <section className="haute-couture-collections">
+          <div className="collections-ethereal-header">
+            <div className="collections-prestige-badge">
+              <span className="collections-prestige-badge-text">CURATED EXCELLENCE</span>
             </div>
-
-            {/* World-Class Product Showcase */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-luxury-xl mb-20">
-              {/* Duo Plissé - Ultra Luxury Card */}
-              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-1" onClick={() => setLocation("/producten/duo-plisse")}>
-                <div className="card-showcase">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={duoPlisseImage}
-                      alt="Duo Plissé Innovation"
-                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                        <div className="flex items-center text-gray-800 font-semibold">
-                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Duo Plissé Innovatie
-                    </h3>
-                    <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Revolutionaire dubbel-laagse technologie voor optimale lichtregeling.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Duo Rolgordijnen - Ultra Luxury Card */}
-              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-2" onClick={() => setLocation("/producten/duo-rolgordijnen")}>
-                <div className="card-showcase">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={duoRolgordijnenImage}
-                      alt="Luxury Duo Roller Blinds"
-                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                        <div className="flex items-center text-gray-800 font-semibold">
-                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-title font-display gradient-text-subtle mb-4">
-                     Duo Rolgordijn Meesterschap
-                    </h3>
-                    <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Veelzijdige lichtregeling met een moderne en verfijnde uitstraling.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Overgordijnen - Ultra Luxury Card */}
-              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-3" onClick={() => setLocation("/producten/overgordijnen")}>
-                <div className="card-showcase">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={overgordijnenImage}
-                      alt="Premium Curtain Couture"
-                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                        <div className="flex items-center text-gray-800 font-semibold">
-                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Couture Gordijnen
-                    </h3>
-                    <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Tijdloze elegantie, verweven tot op maat gemaakte meesterwerken van verfijning.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Plissé - Ultra Luxury Card */}
-              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-4" onClick={() => setLocation("/producten/plisse")}>
-                <div className="card-showcase">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={plisseImage}
-                      alt="Luxury Plissé Artistry"
-                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                        <div className="flex items-center text-gray-800 font-semibold">
-                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Plissé Perfectie
-                    </h3>
-                    <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Verfijnde geplooide precisie, ontworpen voor architectonische schoonheid.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Rolgordijnen - Ultra Luxury Card */}
-              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-5" onClick={() => setLocation("/producten/rolgordijnen")}>
-                <div className="card-showcase">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={rolgordijnenImage}
-                      alt="Premium Roller Excellence"
-                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                        <div className="flex items-center text-gray-800 font-semibold">
-                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Rolgordijn Excellentie
-
-                    </h3>
-                    <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Minimalistische precisie voor eigentijdse interieurwensen.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Opzethorren - Ultra Luxury Card */}
-              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-6" onClick={() => setLocation("/producten/opzethorren")}>
-                <div className="card-showcase">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={opzethorrenImage}
-                      alt="Invisible Protection Systems"
-                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
-                        <div className="flex items-center text-gray-800 font-semibold">
-                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Onzichtbare Bescherming
-                    </h3>
-                    <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Naadloze ventilatie-oplossingen met compromisloze esthetiek.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <h2 className="collections-majestic-title">
+              <span className="collections-title-primary">Geselecteerde</span>
+              <span className="collections-title-accent">Collecties</span>
+            </h2>
+            <p className="collections-refined-subtitle">
+              Ontdek onze zorgvuldig samengestelde collectie premium raamdecoratie – elk stuk ontworpen om uw 
+              interieur te transformeren tot een oase van verfijnde elegantie.
+            </p>
           </div>
 
-        </div>
-      </section>
+          <div className="collections-sovereign-grid">
+            {/* Plissé Perfectie */}
+            <div className="collections-masterpiece-card" onClick={() => setLocation("/producten/plisse")}>
+              <div className="collections-artwork-container">
+                <img 
+                  src={plisseImage}
+                  alt="Plissé Perfectie - Verfijnde geplooide precisie"
+                  className="collections-artwork-image"
+                />
+                <div className="collections-artwork-overlay"></div>
+                <div className="collections-prestige-indicator"></div>
+              </div>
+              <div className="collections-content-sanctuary">
+                <h3 className="collections-elite-title">
+                  Plissé Perfectie
+                </h3>
+                <p className="collections-sophisticated-description">
+                  Verfijnde geplooide precisie, ontworpen voor architectonische schoonheid.
+                </p>
+              </div>
+            </div>
+
+            {/* Rolgordijn Excellentie */}
+            <div className="collections-masterpiece-card" onClick={() => setLocation("/producten/rolgordijnen")}>
+              <div className="collections-artwork-container">
+                <img 
+                  src={rolgordijnenImage}
+                  alt="Rolgordijn Excellentie - Minimalistische precisie"
+                  className="collections-artwork-image"
+                />
+                <div className="collections-artwork-overlay"></div>
+                <div className="collections-prestige-indicator"></div>
+              </div>
+              <div className="collections-content-sanctuary">
+                <h3 className="collections-elite-title">
+                  Rolgordijn Excellentie
+                </h3>
+                <p className="collections-sophisticated-description">
+                  Minimalistische precisie voor eigentijdse interieurwensen.
+                </p>
+              </div>
+            </div>
+
+            {/* Onzichtbare Bescherming */}
+            <div className="collections-masterpiece-card" onClick={() => setLocation("/producten/opzethorren")}>
+              <div className="collections-artwork-container">
+                <img 
+                  src={opzethorrenImage}
+                  alt="Onzichtbare Bescherming - Naadloze ventilatie-oplossingen"
+                  className="collections-artwork-image"
+                />
+                <div className="collections-artwork-overlay"></div>
+                <div className="collections-prestige-indicator"></div>
+              </div>
+              <div className="collections-content-sanctuary">
+                <h3 className="collections-elite-title">
+                  Onzichtbare Bescherming
+                </h3>
+                <p className="collections-sophisticated-description">
+                  Naadloze ventilatie-oplossingen met compromisloze esthetiek.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>

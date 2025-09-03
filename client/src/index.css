@@ -3527,3 +3527,385 @@ body.cookiebot-active {
     transform: translateY(0);
   }
 }
+
+/* ULTRA-MODERN LUXURY COLLECTIONS SECTION */
+.haute-couture-collections {
+  position: relative;
+  padding: clamp(8rem, 15vw, 20rem) 0;
+  background: linear-gradient(180deg, 
+    #FAFAFA 0%, 
+    #F8F6F0 25%, 
+    #FFFFFF 50%, 
+    #F8F6F0 75%, 
+    #FAFAFA 100%
+  );
+  overflow: hidden;
+}
+
+.haute-couture-collections::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(213, 179, 106, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(213, 179, 106, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.haute-couture-collections::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.01'/%3E%3C/svg%3E");
+  animation: texture-drift 60s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes texture-drift {
+  0% { transform: translate(-10%, -10%) rotate(0deg); }
+  100% { transform: translate(-20%, -20%) rotate(360deg); }
+}
+
+.collections-ethereal-header {
+  text-align: center;
+  margin-bottom: clamp(4rem, 8vw, 8rem);
+  position: relative;
+  z-index: 10;
+}
+
+.collections-prestige-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 32px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(213, 179, 106, 0.15);
+  border-radius: 60px;
+  backdrop-filter: blur(24px);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(213, 179, 106, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.collections-prestige-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(213, 179, 106, 0.08), transparent);
+  animation: badge-elegance 4s ease-in-out infinite;
+}
+
+.collections-prestige-badge-text {
+  position: relative;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #D5B36A;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+}
+
+@keyframes badge-elegance {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.collections-majestic-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  margin: 0 0 2rem 0;
+  position: relative;
+}
+
+.collections-title-primary {
+  display: block;
+  color: #1A1A1A;
+  font-weight: 200;
+  opacity: 0.9;
+}
+
+.collections-title-accent {
+  display: block;
+  background: linear-gradient(135deg, 
+    #D5B36A 0%, 
+    #E6C988 25%, 
+    #F0D4A0 50%, 
+    #E6C988 75%, 
+    #D5B36A 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 400;
+  animation: gradient-shift 8s ease-in-out infinite;
+  filter: drop-shadow(0 0 40px rgba(213, 179, 106, 0.3));
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.collections-refined-subtitle {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: #5A5A5A;
+  max-width: 52rem;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.collections-sovereign-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 84rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .collections-sovereign-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding: 0 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .collections-sovereign-grid {
+    gap: 4rem;
+    padding: 0;
+  }
+}
+
+.collections-masterpiece-card {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 32px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #FFFFFF;
+  box-shadow: 
+    0 24px 64px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(213, 179, 106, 0.04);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  transform-origin: center center;
+}
+
+.collections-masterpiece-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.8) 0%, 
+    rgba(248, 246, 240, 0.6) 50%, 
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  z-index: 1;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.collections-masterpiece-card:hover {
+  transform: translateY(-16px) scale(1.04) rotateX(2deg);
+  box-shadow: 
+    0 48px 128px rgba(0, 0, 0, 0.15),
+    0 20px 64px rgba(213, 179, 106, 0.12),
+    0 0 0 1px rgba(213, 179, 106, 0.1);
+}
+
+.collections-masterpiece-card:hover::before {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(248, 246, 240, 0.8) 50%, 
+    rgba(255, 255, 255, 0.95) 100%
+  );
+}
+
+.collections-artwork-container {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 100%);
+}
+
+.collections-artwork-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  filter: saturate(0.9) contrast(1.1);
+}
+
+.collections-masterpiece-card:hover .collections-artwork-image {
+  transform: scale(1.08);
+  filter: saturate(1.1) contrast(1.2) brightness(1.05);
+}
+
+.collections-artwork-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(0, 0, 0, 0.02) 60%, 
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  z-index: 2;
+}
+
+.collections-content-sanctuary {
+  position: relative;
+  height: 40%;
+  padding: 2.5rem 2rem 2rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.98) 0%, 
+    rgba(248, 246, 240, 0.95) 100%
+  );
+}
+
+.collections-elite-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1A1A1A;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.01em;
+}
+
+.collections-sophisticated-description {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: #6B6B6B;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.collections-prestige-indicator {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(213, 179, 106, 0.04);
+}
+
+.collections-prestige-indicator::before {
+  content: '→';
+  font-size: 18px;
+  font-weight: 300;
+  color: #D5B36A;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.collections-masterpiece-card:hover .collections-prestige-indicator {
+  transform: scale(1.1) rotate(45deg);
+  background: rgba(213, 179, 106, 0.95);
+  box-shadow: 
+    0 12px 32px rgba(213, 179, 106, 0.25),
+    0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.collections-masterpiece-card:hover .collections-prestige-indicator::before {
+  color: #FFFFFF;
+  transform: rotate(-45deg);
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 767px) {
+  .collections-sovereign-grid {
+    padding: 0 1.5rem;
+    gap: 2.5rem;
+  }
+  
+  .collections-masterpiece-card {
+    aspect-ratio: 3/4;
+    border-radius: 24px;
+  }
+  
+  .collections-masterpiece-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+  
+  .collections-content-sanctuary {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  
+  .collections-prestige-indicator {
+    width: 40px;
+    height: 40px;
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .collections-prestige-indicator::before {
+    font-size: 16px;
+  }
+}
+
+/* Ultra-wide screen optimizations */
+@media (min-width: 1600px) {
+  .collections-sovereign-grid {
+    max-width: 100rem;
+    gap: 5rem;
+  }
+  
+  .collections-masterpiece-card {
+    border-radius: 40px;
+  }
+  
+  .collections-content-sanctuary {
+    padding: 3rem 2.5rem 2.5rem;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .collections-masterpiece-card,
+  .collections-artwork-image,
+  .collections-prestige-indicator {
+    transition: none;
+    animation: none;
+  }
+  
+  .collections-masterpiece-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .texture-drift,
+  .gradient-shift,
+  .badge-elegance {
+    animation: none;
+  }
+}

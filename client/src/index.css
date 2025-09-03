@@ -1312,12 +1312,16 @@ html.rtl .right-0 {
   font-weight: 600;
   font-size: 17px;
   letter-spacing: 0.02em;
-  padding: 12px 20px;
+  padding: 6px 12px;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-  border-radius: 10px;
+  border: 1px solid #D5B36A;
+  border-radius: 7px;
   overflow: hidden;
   text-transform: capitalize;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-link::before {
@@ -1327,7 +1331,7 @@ html.rtl .right-0 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(213, 179, 106, 0.05) 0%, rgba(213, 179, 106, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(224, 193, 136, 0.15) 0%, rgba(213, 179, 106, 0.25) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: inherit;
@@ -1337,6 +1341,12 @@ html.rtl .right-0 {
   color: #F9F2E7;
   transform: translateY(-2px) scale(1.02);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-color: #E0C188;
+  box-shadow: 
+    0 4px 12px rgba(213, 179, 106, 0.25),
+    0 0 0 1px rgba(224, 193, 136, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: rgba(213, 179, 106, 0.1);
 }
 
 .nav-link:hover::before {
@@ -1364,6 +1374,11 @@ html.rtl .right-0 {
 .nav-link.active {
   color: #F9F2E7;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-color: #E0C188;
+  background: rgba(213, 179, 106, 0.15);
+  box-shadow: 
+    0 2px 8px rgba(213, 179, 106, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .nav-link.active::before {
@@ -1419,6 +1434,20 @@ html.rtl .right-0 {
     padding: 16px 0;
   }
   
+  .nav-link {
+    padding: 8px 14px;
+    font-size: 16px;
+    margin: 2px 0;
+    border: 1px solid rgba(213, 179, 106, 0.8);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  .nav-link:hover {
+    transform: translateY(-1px) scale(1.01);
+    border-color: #E0C188;
+    background: rgba(213, 179, 106, 0.12);
+  }
+  
   .card-ultra-luxury {
     padding: clamp(1.5rem, 4vw, 2rem);
     border-radius: 16px;
@@ -1431,6 +1460,11 @@ html.rtl .right-0 {
   
   .btn-luxury-secondary {
     padding: 12px 30px;
+    font-size: 15px;
+  }
+  
+  .btn-luxury {
+    padding: 10px 24px;
     font-size: 15px;
   }
   

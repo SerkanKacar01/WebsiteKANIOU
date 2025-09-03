@@ -5,6 +5,7 @@ import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Menu,
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 import plisseIcon from "@assets/plisse_1756929777496.png";
+import gordijnenIcon from "@assets/gordijnen_1756929802707.png";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -386,7 +387,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🎨</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src={gordijnenIcon} 
+                        alt="Gordijnen" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Gordijnen</h3>
                   <p className="luxury-card-subtitle">Klassieke grandeur</p>

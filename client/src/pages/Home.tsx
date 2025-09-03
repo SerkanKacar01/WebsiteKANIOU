@@ -137,10 +137,11 @@ const Home = () => {
   });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
+    setExpandedSections(prev => {
+      const newState = { ...prev };
+      newState[section] = !newState[section];
+      return newState;
+    });
   };
 
   const handleExploreProducts = () => {
@@ -178,28 +179,30 @@ const Home = () => {
           {/* Elegant transparent overlay for better text contrast */}
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+          {/* Additional mobile overlay for better text readability */}
+          <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6 py-16">
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
           {/* Ultra-Luxury Title */}
-          <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury">
-            Exquise raamdecoratie
-            <span className="block gradient-text-luxury mt-4 text-glow">Artistry</span>
+          <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury drop-shadow-2xl">
+            <span className="block text-4xl md:text-hero">Exquise raamdecoratie</span>
+            <span className="block gradient-text-luxury mt-2 md:mt-4 text-glow text-3xl md:text-hero">Artistry</span>
           </h1>
           
           {/* Luxury Subtitle */}
-          <p className="text-subtitle text-white/85 mb-16 max-w-5xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-subtitle text-white/85 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-lg">
             Waar vakmanschap en verfijning samenkomen.
-            <span className="block mt-3 text-white/70">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
+            <span className="block mt-3 text-white/70 text-base md:text-lg">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
             Ontdek de perfecte oplossing voor elke ruimte – vandaag nog.</span>
           </p>
 
           {/* Ultra-Premium CTA */}
-          <div className="flex justify-center mb-20">
+          <div className="flex justify-center mb-12 md:mb-20">
             <button
               onClick={handleRequestQuote}
-              className="btn-luxury-primary text-lg px-20 py-6 min-w-[360px] group"
+              className="btn-luxury-primary text-base md:text-lg px-8 md:px-20 py-4 md:py-6 min-w-[280px] md:min-w-[360px] group"
             >
               VANDAAG NOG OFFERTE
               <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
@@ -522,140 +525,101 @@ const Home = () => {
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>
 
-        {/* De Kunst van Perfectie - Ultra-High-End Luxury Section */}
-        <section className="relative overflow-hidden">
-          {/* Premium Background with Animated Gradient */}
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-amber-50/30"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/40 to-transparent"></div>
-            <div className="absolute inset-0">
-              <div className="luxury-perfection-particles"></div>
+        {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
+        <section className="section-spacing-luxury bg-texture-luxury">
+          <div className="container-golden">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
+              <div className="divider-luxury w-40 mx-auto mb-12"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-8">
+                De Kunst van Perfectie
+              </h2>
+              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
+                Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia toewijding aan perfectie samensmelten met hedendaagse luxe in elk met zorg vervaardigd detail.
+              </p>
             </div>
-          </div>
-          
-          {/* Content */}
-          <div className="relative z-20 section-spacing-luxury">
-            <div className="container-golden">
-              {/* Ultra-Premium Section Header */}
-              <div className="text-center mb-20 lg:mb-32">
-                {/* Luxury Badge */}
-                <div className="inline-flex items-center justify-center mb-8">
-                  <div className="perfection-badge">
-                    <div className="perfection-badge-glow"></div>
-                    <span className="perfection-badge-text">BELGISCH VAKMANSCHAP</span>
+
+            {/* Luxury USP Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-luxury-xl">
+              {/* Perfect Fit - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-1">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Shield className="w-9 h-9 text-white" />
                   </div>
                 </div>
-                
-                {/* Premium Title */}
-                <div className="perfection-title-container mb-12">
-                  <h2 className="perfection-main-title">
-                    De Kunst van <span className="perfection-title-emphasis">Perfectie</span>
-                  </h2>
-                  <div className="perfection-title-underline"></div>
-                </div>
-                
-                {/* Elegant Subtitle */}
-                <p className="perfection-subtitle max-w-5xl mx-auto">
-                  Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia toewijding aan perfectie samensmelten 
-                  met hedendaagse luxe in elk met zorg vervaardigd detail.
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Vakkundig Op Maat
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Elk stuk wordt nauwkeurig opgemeten en vervaardigd met Zwitserse precisie voor uw unieke interieur.
                 </p>
               </div>
 
-              {/* Ultra-Luxury USP Grid */}
-              <div className="perfection-grid">
-                {/* Vakkundig Op Maat - Premium Card */}
-                <div className="perfection-card group animate-fade-in-up stagger-1">
-                  <div className="perfection-card-background"></div>
-                  <div className="perfection-card-glow"></div>
-                  <div className="perfection-card-content">
-                    <div className="perfection-icon-container">
-                      <div className="perfection-icon-background">
-                        <div className="perfection-icon-glow-inner"></div>
-                        <Shield className="perfection-icon" />
-                      </div>
-                    </div>
-                    <h3 className="perfection-card-title">Vakkundig Op Maat</h3>
-                    <p className="perfection-card-description">
-                      Elk stuk wordt nauwkeurig opgemeten en vervaardigd met Zwitserse precisie voor uw unieke interieur.
-                    </p>
+              {/* Express Service - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-2">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Truck className="w-9 h-9 text-white" />
                   </div>
                 </div>
-
-                {/* Uitmuntende Levering - Premium Card */}
-                <div className="perfection-card group animate-fade-in-up stagger-2">
-                  <div className="perfection-card-background"></div>
-                  <div className="perfection-card-glow"></div>
-                  <div className="perfection-card-content">
-                    <div className="perfection-icon-container">
-                      <div className="perfection-icon-background">
-                        <div className="perfection-icon-glow-inner"></div>
-                        <Truck className="perfection-icon" />
-                      </div>
-                    </div>
-                    <h3 className="perfection-card-title">Uitmuntende Levering</h3>
-                    <p className="perfection-card-description">
-                      Snelle levering, zorgvuldig gecoördineerd met compromisloze aandacht voor elk detail. Mits beschikbaarheid van de materialen.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Meesterlijk Advies - Premium Card */}
-                <div className="perfection-card group animate-fade-in-up stagger-3">
-                  <div className="perfection-card-background"></div>
-                  <div className="perfection-card-glow"></div>
-                  <div className="perfection-card-content">
-                    <div className="perfection-icon-container">
-                      <div className="perfection-icon-background">
-                        <div className="perfection-icon-glow-inner"></div>
-                        <Users className="perfection-icon" />
-                      </div>
-                    </div>
-                    <h3 className="perfection-card-title">Meesterlijk Advies</h3>
-                    <p className="perfection-card-description">
-                      Persoonlijke begeleiding door vakmensen met meer dan dertig jaar verfijnde expertise.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Luxueuze Materialen - Premium Card */}
-                <div className="perfection-card group animate-fade-in-up stagger-4">
-                  <div className="perfection-card-background"></div>
-                  <div className="perfection-card-glow"></div>
-                  <div className="perfection-card-content">
-                    <div className="perfection-icon-container">
-                      <div className="perfection-icon-background">
-                        <div className="perfection-icon-glow-inner"></div>
-                        <Award className="perfection-icon" />
-                      </div>
-                    </div>
-                    <h3 className="perfection-card-title">Luxueuze Materialen</h3>
-                    <p className="perfection-card-description">
-                      Geselecteerde stoffen en hoogwaardige materialen voor blijvende schoonheid en verfijning.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Traditie in Perfectie - Premium Card */}
-                <div className="perfection-card group animate-fade-in-up stagger-5">
-                  <div className="perfection-card-background"></div>
-                  <div className="perfection-card-glow"></div>
-                  <div className="perfection-card-content">
-                    <div className="perfection-icon-container">
-                      <div className="perfection-icon-background">
-                        <div className="perfection-icon-glow-inner"></div>
-                        <Clock className="perfection-icon" />
-                      </div>
-                    </div>
-                    <h3 className="perfection-card-title">Traditie in Perfectie</h3>
-                    <p className="perfection-card-description">
-                      Dertig jaar onafgebroken toewijding aan de kunst van raamdecoratie op maat.
-                    </p>
-                  </div>
-                </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Uitmuntende Levering
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Snelle levering, zorgvuldig gecoördineerd met compromisloze aandacht voor elk detail. Mits beschikbaarheid van de materialen.
+                </p>
               </div>
-            </div>
+
+              {/* Master Consultation - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-3">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Users className="w-9 h-9 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Meesterlijk Advies
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Persoonlijke begeleiding door vakmensen met meer dan dertig jaar verfijnde expertise.
+                </p>
+              </div>
+
+              {/* Luxury Materials - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-4">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Award className="w-9 h-9 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                   Luxueuze Materialen
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Geselecteerde stoffen en hoogwaardige materialen voor blijvende schoonheid en verfijning.
+
+                </p>
+              </div>
+
+              {/* Heritage Excellence - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-5">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Clock className="w-9 h-9 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Traditie in Perfectie
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Dertig jaar onafgebroken toewijding aan de kunst van raamdecoratie op maat.
+
+                </p>
+              </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>
@@ -675,7 +639,7 @@ const Home = () => {
             </div>
 
             {/* World-Class Product Showcase */}
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-luxury-xl mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-luxury-xl mb-20">
               {/* Duo Plissé - Ultra Luxury Card */}
               <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-1" onClick={() => setLocation("/producten/duo-plisse")}>
                 <div className="card-showcase">
@@ -887,7 +851,7 @@ const Home = () => {
             </div>
 
             {/* Ultra-Luxury Testimonials Grid */}
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-luxury-xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
               {/* Testimonial 1 - Ultra Luxury */}
               <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
                 <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />

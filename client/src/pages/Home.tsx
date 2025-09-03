@@ -217,166 +217,233 @@ const Home = () => {
         </div>
       </div>
 
-        {/* Product Categories Section */}
-        <section className="section-spacing-luxury bg-gradient-to-b from-white to-gray-50">
-          <div className="container-golden">
-            {/* Section Header */}
-            <div className="text-center mb-16">
-              <div className="divider-luxury w-32 mx-auto mb-8"></div>
-              <h2 className="font-display text-headline gradient-text-subtle mb-6">
-                Ontdek onze collectie
+        {/* Product Categories Section - Ultra Luxury Design */}
+        <section className="section-spacing-luxury relative overflow-hidden">
+          {/* Luxury Background with Animated Particles */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3]">
+            <div className="absolute inset-0 opacity-60">
+              <div className="luxury-particles"></div>
+            </div>
+          </div>
+          
+          <div className="container-golden relative z-10">
+            {/* Ultra-Premium Section Header */}
+            <div className="text-center mb-20">
+              <div className="luxury-section-badge">
+                <div className="luxury-badge-glow"></div>
+                <span className="luxury-badge-text">PREMIUM COLLECTIE</span>
+              </div>
+              <h2 className="luxury-mega-title mb-8">
+                <span className="luxury-title-line">Ontdek onze</span>
+                <span className="luxury-title-emphasis">collectie</span>
               </h2>
-              <p className="text-body text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
-                Kies uit onze uitgebreide collectie premium raamdecoratie. 
-                Elk product wordt met de grootste zorg vervaardigd voor uw unieke interieur.
+              <p className="luxury-subtitle max-w-4xl mx-auto">
+                Verken onze exclusieve collectie van artisanaal vervaardigde raamdecoratie. 
+                Elk meesterwerk wordt met uitzonderlijke precisie en devotie gecreëerd voor uw verfijnde interieur.
               </p>
             </div>
 
-            {/* Product Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
-              {/* Product Category Buttons */}
-              <button
-                onClick={() => setLocation("/producten/houten-jaloezieen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Houten jaloezieën
+            {/* Revolutionary Product Showcase Grid */}
+            <div className="luxury-product-grid mb-16">
+              
+              {/* Houten jaloezieën - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/houten-jaloezieen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🪟</div>
                   </div>
+                  <h3 className="luxury-card-title">Houten jaloezieën</h3>
+                  <p className="luxury-card-subtitle">Natuurlijke elegantie</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/aluminium-jaloezieen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Aluminium jaloezieën
+              {/* Aluminium jaloezieën - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/aluminium-jaloezieen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">✨</div>
                   </div>
+                  <h3 className="luxury-card-title">Aluminium jaloezieën</h3>
+                  <p className="luxury-card-subtitle">Moderne verfijning</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/kunststof-jaloezieen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Kunststof jaloezieën
+              {/* Kunststof jaloezieën - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/kunststof-jaloezieen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🎯</div>
                   </div>
+                  <h3 className="luxury-card-title">Kunststof jaloezieën</h3>
+                  <p className="luxury-card-subtitle">Praktische perfectie</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/verticale-lamellen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Verticaal lamellen
+              {/* Verticaal lamellen - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/verticale-lamellen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">📐</div>
                   </div>
+                  <h3 className="luxury-card-title">Verticaal lamellen</h3>
+                  <p className="luxury-card-subtitle">Architecturale grandeur</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/plisses")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Plissés
+              {/* Plissés - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/plisses")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🌊</div>
                   </div>
+                  <h3 className="luxury-card-title">Plissés</h3>
+                  <p className="luxury-card-subtitle">Gevouwen elegantie</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/duo-plisses")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Duo plissés
+              {/* Duo plissés - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/duo-plisses")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">✨</div>
                   </div>
+                  <h3 className="luxury-card-title">Duo plissés</h3>
+                  <p className="luxury-card-subtitle">Dubbele perfectie</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/rolgordijnen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Rolgordijnen
+              {/* Rolgordijnen - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/rolgordijnen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🌐</div>
                   </div>
+                  <h3 className="luxury-card-title">Rolgordijnen</h3>
+                  <p className="luxury-card-subtitle">Strakke simpliciteit</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/duo-rolgordijnen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Duo rolgordijnen
+              {/* Duo rolgordijnen - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/duo-rolgordijnen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🎆</div>
                   </div>
+                  <h3 className="luxury-card-title">Duo rolgordijnen</h3>
+                  <p className="luxury-card-subtitle">Innovatieve functionaliteit</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/gordijnen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Gordijnen
+              {/* Gordijnen - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/gordijnen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🎨</div>
                   </div>
+                  <h3 className="luxury-card-title">Gordijnen</h3>
+                  <p className="luxury-card-subtitle">Klassieke grandeur</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/rails-en-roedes")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Rails & roedes
+              {/* Rails & roedes - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/rails-en-roedes")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">⚙️</div>
                   </div>
+                  <h3 className="luxury-card-title">Rails & roedes</h3>
+                  <p className="luxury-card-subtitle">Perfecte mechaniek</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/vouwgordijnen")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Vouwgordijnen
+              {/* Vouwgordijnen - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/vouwgordijnen")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🏠</div>
                   </div>
+                  <h3 className="luxury-card-title">Vouwgordijnen</h3>
+                  <p className="luxury-card-subtitle">Rustieke warmte</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
 
-              <button
-                onClick={() => setLocation("/producten/houten-shutters")}
-                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
-                    Houten shutters
+              {/* Houten shutters - Premium Card */}
+              <div className="luxury-product-card group" onClick={() => setLocation("/producten/houten-shutters")}>
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">🏡</div>
                   </div>
+                  <h3 className="luxury-card-title">Houten shutters</h3>
+                  <p className="luxury-card-subtitle">Tijdloze klasse</p>
+                  <div className="luxury-card-arrow">→</div>
                 </div>
-              </button>
+              </div>
+              
             </div>
 
-            {/* View All Products Button */}
-            <div className="text-center">
-              <button
-                onClick={() => setLocation("/producten")}
-                className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#D5B36A] to-[#E6C988] hover:from-[#C5A565] hover:to-[#D5B36A] text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-              >
-                Bekijk alle producten
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+            {/* Ultra-Luxury CTA Section */}
+            <div className="luxury-cta-container">
+              <div className="luxury-cta-background"></div>
+              <div className="luxury-cta-content">
+                <div className="luxury-cta-sparkle">✨</div>
+                <button
+                  onClick={() => setLocation("/producten")}
+                  className="luxury-cta-button group"
+                >
+                  <span className="luxury-cta-text">Bekijk alle producten</span>
+                  <div className="luxury-cta-arrow group-hover:translate-x-2">
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </button>
+                <p className="luxury-cta-subtitle">Ontdek onze volledige collectie van artisanaal maatwerk</p>
+              </div>
             </div>
           </div>
         </section>

@@ -880,6 +880,419 @@ html, body {
   }
 }
 
+/* REVOLUTIONARY LUXURY PRODUCT SHOWCASE SYSTEM */
+
+/* Animated Luxury Particles Background */
+.luxury-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.luxury-particles::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(213, 179, 106, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(213, 179, 106, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+  animation: particles-float 20s ease-in-out infinite;
+}
+
+@keyframes particles-float {
+  0%, 100% { transform: translateX(-10%) translateY(-10%) rotate(0deg); }
+  50% { transform: translateX(-20%) translateY(-20%) rotate(180deg); }
+}
+
+/* Ultra-Premium Section Badge */
+.luxury-section-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  border-radius: 50px;
+  padding: 8px 24px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.luxury-badge-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(213, 179, 106, 0.1), transparent);
+  animation: badge-shimmer 3s ease-in-out infinite;
+}
+
+.luxury-badge-text {
+  position: relative;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #D5B36A;
+  text-transform: uppercase;
+}
+
+@keyframes badge-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Revolutionary Mega Title */
+.luxury-mega-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0;
+}
+
+.luxury-title-line {
+  display: block;
+  color: #2A2A2A;
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+.luxury-title-emphasis {
+  display: block;
+  background: linear-gradient(135deg, #D5B36A 0%, #E6C988 50%, #D5B36A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  text-shadow: 0 0 40px rgba(213, 179, 106, 0.3);
+  animation: title-glow 4s ease-in-out infinite;
+}
+
+@keyframes title-glow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(213, 179, 106, 0.2)); }
+  50% { filter: drop-shadow(0 0 40px rgba(213, 179, 106, 0.4)); }
+}
+
+.luxury-subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: #6B6B6B;
+  margin-top: 24px;
+}
+
+/* Revolutionary Product Grid */
+.luxury-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .luxury-product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+    padding: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .luxury-product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Ultra-Luxury Product Cards */
+.luxury-product-card {
+  position: relative;
+  height: 200px;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.luxury-card-background {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.98) 0%, 
+      rgba(248, 246, 240, 0.95) 50%, 
+      rgba(255, 255, 255, 0.98) 100%
+    );
+  backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(213, 179, 106, 0.08);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-glow {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, 
+    transparent 0%, 
+    rgba(213, 179, 106, 0.1) 50%, 
+    transparent 100%
+  );
+  border-radius: 26px;
+  opacity: 0;
+  filter: blur(20px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  text-align: center;
+  z-index: 10;
+}
+
+.luxury-icon-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.luxury-icon-glow {
+  position: absolute;
+  inset: -8px;
+  background: radial-gradient(circle, rgba(213, 179, 106, 0.2) 0%, transparent 60%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.luxury-icon {
+  font-size: 2.5rem;
+  display: block;
+  filter: grayscale(0.2);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: #2A2A2A;
+  margin-bottom: 8px;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-subtitle {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #9A9A9A;
+  letter-spacing: 0.5px;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 1.25rem;
+  color: #D5B36A;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Luxury Card Hover Effects */
+.luxury-product-card:hover {
+  transform: translateY(-12px) rotateX(5deg) rotateY(5deg) scale(1.02);
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.12),
+    0 16px 40px rgba(213, 179, 106, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+.luxury-product-card:hover .luxury-card-background {
+  background: 
+    linear-gradient(135deg, 
+      rgba(255, 255, 255, 1) 0%, 
+      rgba(248, 246, 240, 0.98) 50%, 
+      rgba(255, 255, 255, 1) 100%
+    );
+  border-color: rgba(213, 179, 106, 0.2);
+}
+
+.luxury-product-card:hover .luxury-card-glow {
+  opacity: 1;
+}
+
+.luxury-product-card:hover .luxury-icon-glow {
+  opacity: 1;
+}
+
+.luxury-product-card:hover .luxury-icon {
+  transform: scale(1.1) rotate(5deg);
+  filter: grayscale(0);
+}
+
+.luxury-product-card:hover .luxury-card-title {
+  color: #D5B36A;
+  transform: translateY(-2px);
+}
+
+.luxury-product-card:hover .luxury-card-subtitle {
+  color: #6B6B6B;
+  transform: translateY(-1px);
+}
+
+.luxury-product-card:hover .luxury-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Ultra-Luxury CTA Section */
+.luxury-cta-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 32px;
+  margin-top: 48px;
+  border-radius: 32px;
+  overflow: hidden;
+}
+
+.luxury-cta-background {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at center, 
+      rgba(213, 179, 106, 0.08) 0%, 
+      rgba(255, 255, 255, 0.02) 50%, 
+      transparent 100%
+    );
+  backdrop-filter: blur(20px);
+}
+
+.luxury-cta-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.luxury-cta-sparkle {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  animation: sparkle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes sparkle-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+}
+
+.luxury-cta-button {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #D5B36A 0%, #E6C988 50%, #D5B36A 100%);
+  border: none;
+  border-radius: 50px;
+  padding: 18px 48px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 16px 48px rgba(213, 179, 106, 0.25),
+    0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.luxury-cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+
+.luxury-cta-text {
+  position: relative;
+  z-index: 2;
+}
+
+.luxury-cta-arrow {
+  position: relative;
+  z-index: 2;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-cta-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 24px 64px rgba(213, 179, 106, 0.35),
+    0 12px 24px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, #C5A565 0%, #D5B36A 50%, #E6C988 100%);
+}
+
+.luxury-cta-button:hover::before {
+  transform: translateX(100%);
+}
+
+.luxury-cta-subtitle {
+  margin-top: 16px;
+  font-size: 0.875rem;
+  color: #9A9A9A;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .luxury-mega-title {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+  
+  .luxury-product-card {
+    height: 160px;
+  }
+  
+  .luxury-card-content {
+    padding: 20px 16px;
+  }
+  
+  .luxury-icon {
+    font-size: 2rem;
+  }
+  
+  .luxury-card-title {
+    font-size: 1.125rem;
+  }
+  
+  .luxury-cta-container {
+    padding: 48px 24px;
+    margin-top: 32px;
+  }
+  
+  .luxury-cta-button {
+    padding: 16px 36px;
+    font-size: 1rem;
+  }
+}
+
 .divider-luxury::before {
   content: '';
   position: absolute;

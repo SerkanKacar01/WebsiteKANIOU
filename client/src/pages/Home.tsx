@@ -136,11 +136,12 @@ const Home = () => {
     legal: false
   });
 
-  const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections(prev => {
+      const newState = { ...prev };
+      newState[section] = !newState[section];
+      return newState;
+    });
   };
 
   const handleExploreProducts = () => {
@@ -178,28 +179,30 @@ const Home = () => {
           {/* Elegant transparent overlay for better text contrast */}
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+          {/* Additional mobile overlay for better text readability */}
+          <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6 py-16">
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
           {/* Ultra-Luxury Title */}
-          <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury">
-            Exquise raamdecoratie
-            <span className="block gradient-text-luxury mt-4 text-glow">Artistry</span>
+          <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury drop-shadow-2xl">
+            <span className="block text-4xl md:text-hero">Exquise raamdecoratie</span>
+            <span className="block gradient-text-luxury mt-2 md:mt-4 text-glow text-3xl md:text-hero">Artistry</span>
           </h1>
           
           {/* Luxury Subtitle */}
-          <p className="text-subtitle text-white/85 mb-16 max-w-5xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-subtitle text-white/85 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-lg">
             Waar vakmanschap en verfijning samenkomen.
-            <span className="block mt-3 text-white/70">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
+            <span className="block mt-3 text-white/70 text-base md:text-lg">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
             Ontdek de perfecte oplossing voor elke ruimte – vandaag nog.</span>
           </p>
 
           {/* Ultra-Premium CTA */}
-          <div className="flex justify-center mb-20">
+          <div className="flex justify-center mb-12 md:mb-20">
             <button
               onClick={handleRequestQuote}
-              className="btn-luxury-primary text-lg px-20 py-6 min-w-[360px] group"
+              className="btn-luxury-primary text-base md:text-lg px-8 md:px-20 py-4 md:py-6 min-w-[280px] md:min-w-[360px] group"
             >
               VANDAAG NOG OFFERTE
               <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />

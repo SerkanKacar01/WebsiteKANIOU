@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Percent, Tag } from "lucide-react";
+import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Percent, Tag, Ruler, Zap } from "lucide-react";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -775,6 +775,93 @@ const Home = () => {
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Quote Request Call-to-Action Section */}
+      <section className="py-20 md:py-28 bg-gradient-to-br from-[#d5b36a] to-[#c4a55a]">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          {/* Main CTA Content */}
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+            Start Your Custom Order Today
+          </h2>
+          
+          <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Our team is ready to help you find the perfect solution.
+          </p>
+
+          {/* Trust Badges */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-12">
+            <div className="flex items-center text-white/90">
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                <Ruler className="w-6 h-6" />
+              </div>
+              <span className="text-lg font-semibold">Free Measurement</span>
+            </div>
+            
+            <div className="flex items-center text-white/90">
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                <Zap className="w-6 h-6" />
+              </div>
+              <span className="text-lg font-semibold">Fast Delivery</span>
+            </div>
+            
+            <div className="flex items-center text-white/90">
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                <Shield className="w-6 h-6" />
+              </div>
+              <span className="text-lg font-semibold">5-Year Warranty</span>
+            </div>
+          </div>
+
+          {/* Large CTA Button */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => setLocation("/quote")}
+              className="
+                px-12 py-6 
+                text-xl font-bold
+                bg-white hover:bg-gray-100 
+                text-[#d5b36a] hover:text-[#c4a55a]
+                border-0
+                rounded-xl
+                transition-all duration-300 
+                transform hover:scale-105 hover:-translate-y-2
+                shadow-2xl hover:shadow-3xl
+                group
+                min-w-[280px]
+              "
+              size="lg"
+            >
+              Request a Quote
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
+            </Button>
+            
+            <Button
+              onClick={() => setLocation("/contact")}
+              variant="outline"
+              className="
+                px-12 py-6 
+                text-xl font-bold
+                bg-transparent hover:bg-white/10 
+                text-white hover:text-white
+                border-2 border-white/50 hover:border-white
+                rounded-xl
+                transition-all duration-300 
+                transform hover:scale-105 hover:-translate-y-2
+                shadow-lg hover:shadow-xl
+                min-w-[280px]
+              "
+              size="lg"
+            >
+              Contact Us
+            </Button>
+          </div>
+
+          {/* Additional Info */}
+          <p className="text-white/70 mt-8 text-lg">
+            📞 Get expert advice in just 24 hours • 🏆 30+ years of experience
+          </p>
         </div>
       </section>
     </>

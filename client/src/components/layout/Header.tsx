@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
@@ -26,24 +26,7 @@ const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
-  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Define product categories for dropdown - Exact list per user requirements
-  const productCategories = [
-    { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
-    { label: "Aluminium jaloezieën", href: "/producten/aluminium-jaloezieen" },
-    { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
-    { label: "Verticaal lamellen", href: "/producten/verticale-lamellen" },
-    { label: "Plissés", href: "/producten/plisses" },
-    { label: "Duo plissés", href: "/producten/duo-plisses" },
-    { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
-    { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
-    { label: "Gordijnen", href: "/producten/gordijnen" },
-    { label: "Rails & roedes", href: "/producten/rails-en-roedes" },
-    { label: "Vouwgordijnen", href: "/producten/vouwgordijnen" },
-    { label: "Houten shutters", href: "/producten/houten-shutters" },
-  ];
 
   // Define navigation items
   const navItems = [
@@ -53,19 +36,6 @@ const Header = () => {
     { label: t("CONTACT"), href: "/contact" },
   ];
 
-  // Handle click outside dropdown
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsProductsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -105,9 +75,6 @@ const Header = () => {
     return false;
   };
 
-  const isProductsActive = () => {
-    return location.startsWith("/producten") || location.startsWith("/products") || location.startsWith("/shop");
-  };
 
   return (
     <header
@@ -163,26 +130,6 @@ const Header = () => {
                     </Button>
                   </div>
 
-                  {/* Products section with dropdown items */}
-                  <div className="border-b border-neutral-200 pb-3">
-                    <div className={`font-body py-3 text-base font-medium ${
-                      isProductsActive() ? "text-accent" : "text-text-dark"
-                    }`}>
-                      PRODUCTEN
-                    </div>
-                    <div className="pl-4 space-y-2 max-h-64 overflow-y-auto">
-                      {productCategories.map((category) => (
-                        <Link key={category.href} href={category.href}>
-                          <a
-                            className="font-body text-sm text-text-medium hover:text-accent transition-colors cursor-pointer block py-1"
-                            onClick={handleMobileNavClick}
-                          >
-                            {category.label}
-                          </a>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
 
                   {navItems.map((item) => (
                     <Link key={item.href} href={item.href}>
@@ -224,46 +171,6 @@ const Header = () => {
             </div>
           ) : (
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {/* Products Dropdown */}
-              <div 
-                className="relative"
-                ref={dropdownRef}
-                onMouseEnter={() => setIsProductsDropdownOpen(true)}
-                onMouseLeave={() => setIsProductsDropdownOpen(false)}
-              >
-                <button
-                  className="font-body text-sm text-text-dark hover:text-accent transition-colors flex items-center gap-1"
-                  onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
-                >
-                  PRODUCTEN
-                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isProductsDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {/* Dropdown Menu */}
-                <div 
-                  className={`absolute top-full left-0 mt-2 bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto z-50 transition-all duration-200 ${
-                    isProductsDropdownOpen 
-                      ? 'opacity-100 visible transform translate-y-0' 
-                      : 'opacity-0 invisible transform -translate-y-2 pointer-events-none'
-                  }`}
-                >
-                  <div className="grid gap-1">
-                    {productCategories.map((category) => (
-                      <Link key={category.href} href={category.href}>
-                        <a 
-                          className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer"
-                          onClick={() => {
-                            setIsProductsDropdownOpen(false);
-                            handleNavClick();
-                          }}
-                        >
-                          {category.label}
-                        </a>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
 
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>

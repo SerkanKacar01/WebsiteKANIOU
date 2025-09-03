@@ -36,7 +36,6 @@ const PremiumNavigation = () => {
   }, []);
 
   const navigationLinks = [
-    { name: 'Producten', path: '/producten' },
     { name: 'Gallerij', path: '/gallerij' },
     { name: 'Over ons', path: '/over-ons' },
     { name: 'Contact', path: '/contact' }
@@ -217,6 +216,170 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+        {/* Product Categories Section */}
+        <section className="section-spacing-luxury bg-gradient-to-b from-white to-gray-50">
+          <div className="container-golden">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <div className="divider-luxury w-32 mx-auto mb-8"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-6">
+                Ontdek onze collectie
+              </h2>
+              <p className="text-body text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
+                Kies uit onze uitgebreide collectie premium raamdecoratie. 
+                Elk product wordt met de grootste zorg vervaardigd voor uw unieke interieur.
+              </p>
+            </div>
+
+            {/* Product Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+              {/* Product Category Buttons */}
+              <button
+                onClick={() => setLocation("/producten/houten-jaloezieen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Houten jaloezieën
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/aluminium-jaloezieen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Aluminium jaloezieën
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/kunststof-jaloezieen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Kunststof jaloezieën
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/verticale-lamellen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Verticaal lamellen
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/plisses")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Plissés
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/duo-plisses")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Duo plissés
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/rolgordijnen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Rolgordijnen
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/duo-rolgordijnen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Duo rolgordijnen
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/gordijnen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Gordijnen
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/rails-en-roedes")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Rails & roedes
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/vouwgordijnen")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Vouwgordijnen
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setLocation("/producten/houten-shutters")}
+                className="group bg-white hover:bg-[#F8F6F0] border border-[#E6C988] hover:border-[#D5B36A] rounded-xl p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="text-center">
+                  <div className="text-sm md:text-base font-medium text-gray-900 group-hover:text-[#D5B36A] transition-colors">
+                    Houten shutters
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            {/* View All Products Button */}
+            <div className="text-center">
+              <button
+                onClick={() => setLocation("/producten")}
+                className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#D5B36A] to-[#E6C988] hover:from-[#C5A565] hover:to-[#D5B36A] text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
+                Bekijk alle producten
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </button>
+            </div>
+          </div>
+        </section>
 
         {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
         <section className="section-spacing-luxury bg-texture-luxury">

@@ -1,21 +1,22 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye } from "lucide-react";
-import interiorImage from "@assets/image00001.jpeg";
-import duoPlisseImage from "@assets/Duoplisse.jpeg";
-import duoRolgordijnenImage from "@assets/Duorolgordijnen.jpeg";
-import overgordijnenImage from "@assets/Overgordijnen.jpeg";
-import plisseImage from "@assets/Plisse.jpeg";
-import rolgordijnenImage from "@assets/Rolgordijnen.jpeg";
-import opzethorrenImage from "@assets/Opzethorren.jpeg";
+import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star } from "lucide-react";
+// Product and gallery images
+const interiorImage = "/images/Overgordijnen.jpeg";
+const duoPlisseImage = "/images/Duoplisse.jpeg";
+const duoRolgordijnenImage = "/images/Duorolgordijnen.jpeg";
+const overgordijnenImage = "/images/Overgordijnen.jpeg";
+const plisseImage = "/images/Plisse.jpeg";
+const rolgordijnenImage = "/images/Rolgordijnen.jpeg";
+const opzethorrenImage = "/images/Opzethorren.jpeg";
 // Gallery images for real installations
-import gallery1 from "@assets/IMG_9192.jpeg";
-import gallery2 from "@assets/IMG_9204.jpeg";
-import gallery3 from "@assets/IMG_9217.jpeg";
-import gallery4 from "@assets/IMG_9219.jpeg";
-import gallery5 from "@assets/IMG_9220.jpeg";
-import gallery6 from "@assets/IMG_9221.jpeg";
+const gallery1 = "/images/IMG_9192.jpeg";
+const gallery2 = "/images/IMG_9204.jpeg";
+const gallery3 = "/images/IMG_9217.jpeg";
+const gallery4 = "/images/IMG_9219.jpeg";
+const gallery5 = "/images/IMG_9220.jpeg";
+const gallery6 = "/images/IMG_9221.jpeg";
 
 const Home = () => {
   const [, setLocation] = useLocation();
@@ -541,6 +542,118 @@ const Home = () => {
               "
             >
               View Full Gallery
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Testimonials Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              What Our Customers Say
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Real experiences from satisfied customers who transformed their homes with KANIOU
+            </p>
+          </div>
+
+          {/* Testimonials Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Testimonial 1 */}
+            <div className="bg-gray-50 rounded-xl p-8 relative">
+              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#d5b36a]/30" />
+              
+              {/* Star Rating */}
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 text-[#d5b36a] fill-current" />
+                ))}
+              </div>
+
+              {/* Testimonial Text */}
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                "Perfect service from start to finish! The roller blinds fit exactly and look amazing. The installation was quick and professional. Highly recommend KANIOU for quality window treatments."
+              </p>
+
+              {/* Customer Info */}
+              <div>
+                <p className="font-semibold text-gray-900">Maria Van Der Berg</p>
+                <p className="text-sm text-gray-600">Brussels</p>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-gray-50 rounded-xl p-8 relative">
+              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#d5b36a]/30" />
+              
+              {/* Star Rating */}
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 text-[#d5b36a] fill-current" />
+                ))}
+              </div>
+
+              {/* Testimonial Text */}
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                "Excellent quality plissé blinds that completely transformed our living room. The consultation was thorough and the advice was spot-on. 30 years of experience really shows!"
+              </p>
+
+              {/* Customer Info */}
+              <div>
+                <p className="font-semibold text-gray-900">Johan Pieters</p>
+                <p className="text-sm text-gray-600">Antwerp</p>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="bg-gray-50 rounded-xl p-8 relative">
+              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#d5b36a]/30" />
+              
+              {/* Star Rating */}
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 text-[#d5b36a] fill-current" />
+                ))}
+              </div>
+
+              {/* Testimonial Text */}
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                "Fast delivery and beautiful curtains that exceeded our expectations. The fabric quality is outstanding and the fit is perfect. KANIOU truly delivers premium window solutions."
+              </p>
+
+              {/* Customer Info */}
+              <div>
+                <p className="font-semibold text-gray-900">Sophie Martens</p>
+                <p className="text-sm text-gray-600">Ghent</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-6">
+              Ready to transform your space with premium window treatments?
+            </p>
+            <Button
+              onClick={() => setLocation("/quote")}
+              className="
+                px-8 py-4 
+                text-lg font-semibold
+                bg-[#d5b36a] hover:bg-[#c4a55a] 
+                text-white 
+                border-0
+                rounded-lg
+                transition-all duration-300 
+                transform hover:scale-105 hover:-translate-y-1
+                shadow-lg hover:shadow-xl
+                group
+              "
+            >
+              Get Your Free Quote
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>

@@ -224,7 +224,7 @@ const Header = () => {
             </div>
           ) : (
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {/* Custom Products Dropdown */}
+              {/* Products Dropdown */}
               <div 
                 className="relative"
                 ref={dropdownRef}
@@ -232,37 +232,37 @@ const Header = () => {
                 onMouseLeave={() => setIsProductsDropdownOpen(false)}
               >
                 <button
-                  className="font-body text-sm text-text-dark hover:text-accent transition-colors flex items-center gap-1 bg-transparent border-none p-0 shadow-none"
-                  style={{ 
-                    background: 'transparent !important', 
-                    border: 'none !important', 
-                    boxShadow: 'none !important',
-                    borderRadius: '0 !important',
-                    padding: '0 !important',
-                    transform: 'none !important'
-                  }}
+                  className="font-body text-sm text-text-dark hover:text-accent transition-colors flex items-center gap-1"
                   onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
                 >
                   PRODUCTEN
-                  <ChevronDown className={`w-3 h-3 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isProductsDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
-                {isProductsDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto z-50 fade-in">
-                    <div className="grid gap-2">
-                      {productCategories.map((category) => (
-                        <Link key={category.href} href={category.href}>
-                          <a 
-                            className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer"
-                            onClick={() => setIsProductsDropdownOpen(false)}
-                          >
-                            {category.label}
-                          </a>
-                        </Link>
-                      ))}
-                    </div>
+                {/* Dropdown Menu */}
+                <div 
+                  className={`absolute top-full left-0 mt-2 bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto z-50 transition-all duration-200 ${
+                    isProductsDropdownOpen 
+                      ? 'opacity-100 visible transform translate-y-0' 
+                      : 'opacity-0 invisible transform -translate-y-2 pointer-events-none'
+                  }`}
+                >
+                  <div className="grid gap-1">
+                    {productCategories.map((category) => (
+                      <Link key={category.href} href={category.href}>
+                        <a 
+                          className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer"
+                          onClick={() => {
+                            setIsProductsDropdownOpen(false);
+                            handleNavClick();
+                          }}
+                        >
+                          {category.label}
+                        </a>
+                      </Link>
+                    ))}
                   </div>
-                )}
+                </div>
               </div>
 
               {navItems.map((item) => (

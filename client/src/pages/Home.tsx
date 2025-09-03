@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { Shield, Truck, Users, Award, Clock } from "lucide-react";
 import interiorImage from "@assets/image00001.jpeg";
 
 const Home = () => {
@@ -112,6 +113,99 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      {/* Why Choose KANIOU - USP Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Why Choose KANIOU?
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Experience the difference that three decades of craftsmanship and dedication make
+            </p>
+          </div>
+
+          {/* USP Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
+            {/* Perfect Fit */}
+            <div className="text-center group">
+              <div className="mb-6 flex justify-center">
+                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
+                  <Shield className="w-8 h-8 text-[#d5b36a]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
+                Perfect Fit
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Every piece is measured and crafted precisely for your windows
+              </p>
+            </div>
+
+            {/* Fast Delivery */}
+            <div className="text-center group">
+              <div className="mb-6 flex justify-center">
+                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
+                  <Truck className="w-8 h-8 text-[#d5b36a]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
+                Fast Delivery
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Quick turnaround times without compromising on quality
+              </p>
+            </div>
+
+            {/* Expert Advice */}
+            <div className="text-center group">
+              <div className="mb-6 flex justify-center">
+                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
+                  <Users className="w-8 h-8 text-[#d5b36a]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
+                Expert Advice
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Professional guidance to help you choose the perfect solution
+              </p>
+            </div>
+
+            {/* Premium Quality */}
+            <div className="text-center group">
+              <div className="mb-6 flex justify-center">
+                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
+                  <Award className="w-8 h-8 text-[#d5b36a]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
+                Premium Quality
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Top-grade materials and meticulous attention to detail
+              </p>
+            </div>
+
+            {/* 30+ Years Experience */}
+            <div className="text-center group">
+              <div className="mb-6 flex justify-center">
+                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
+                  <Clock className="w-8 h-8 text-[#d5b36a]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
+                30+ Years Experience
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Trusted expertise built over three decades of excellence
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

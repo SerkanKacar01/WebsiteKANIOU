@@ -4,8 +4,6 @@ import { useLocation } from "wouter";
 import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Menu, X } from "lucide-react";
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
-import verticaalLamellenIcon from "@assets/verticaallamellen_1756929605947.png";
-import jaloezieenIcon from "@assets/jaloezieen_1756929670346.png";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -255,13 +253,7 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
-                      <img 
-                        src={jaloezieenIcon} 
-                        alt="Houten jaloezieën" 
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                    <div className="luxury-icon">🪟</div>
                   </div>
                   <h3 className="luxury-card-title">Houten jaloezieën</h3>
                   <p className="luxury-card-subtitle">Natuurlijke elegantie</p>
@@ -276,13 +268,7 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
-                      <img 
-                        src={jaloezieenIcon} 
-                        alt="Aluminium jaloezieën" 
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                    <div className="luxury-icon">✨</div>
                   </div>
                   <h3 className="luxury-card-title">Aluminium jaloezieën</h3>
                   <p className="luxury-card-subtitle">Moderne verfijning</p>
@@ -297,13 +283,7 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
-                      <img 
-                        src={jaloezieenIcon} 
-                        alt="Kunststof jaloezieën" 
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                    <div className="luxury-icon">🎯</div>
                   </div>
                   <h3 className="luxury-card-title">Kunststof jaloezieën</h3>
                   <p className="luxury-card-subtitle">Praktische perfectie</p>
@@ -318,13 +298,7 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
-                      <img 
-                        src={verticaalLamellenIcon} 
-                        alt="Verticaal lamellen" 
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                    <div className="luxury-icon">📐</div>
                   </div>
                   <h3 className="luxury-card-title">Verticaal lamellen</h3>
                   <p className="luxury-card-subtitle">Architecturale grandeur</p>

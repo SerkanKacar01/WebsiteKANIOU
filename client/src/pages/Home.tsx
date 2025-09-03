@@ -607,20 +607,6 @@ const Home = () => {
               </div>
           </div>
 
-            {/* Ultra-Luxury CTA */}
-            <div className="text-center mt-20">
-              <p className="text-body text-gray-600 mb-8 font-light max-w-3xl mx-auto leading-relaxed">
-                Ready to embark on a journey of transformation? 
-                <span className="block mt-2">Let our artisans create your bespoke window masterpiece.</span>
-              </p>
-              <button
-                onClick={() => setLocation("/quote")}
-                className="btn-luxury-primary group"
-              >
-                Commence Your Journey
-                <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
-              </button>
-            </div>
         </div>
       </section>
 

@@ -1,0 +1,132 @@
+📝 REPLIT INSTRUCTION — FULL WEBSITE REBUILD (HIGH-END DESIGN)
+
+Client: KANIOU Zilvernaald
+Project: Complete website redesign
+Goal: Create a modern, clean, high-end website for a custom curtain and window coverings business, with a luxurious yet minimalistic design.
+Inspiration: SUNBLIND website style
+
+⸻
+
+🧭 GENERAL GUIDELINES
+	1.	Design Style:
+	•	Minimalistic
+	•	White background
+	•	Clean spacing and elegant layout
+	•	Premium feel, high-end finish
+	•	Consistent use of colors and fonts
+	2.	Primary Colors:
+	•	Background: White #FFFFFF
+	•	Accent: Light Gold #D5B36A (or #E0C188 if needed)
+	•	Text: Dark grey or black for readability
+	3.	Typography:
+	•	Elegant sans-serif or modern serif
+	•	Suggested: Poppins, Playfair Display, or Montserrat
+	4.	Animations & Effects:
+	•	Subtle hover effects
+	•	Soft button transitions
+	•	Smooth scrolling
+	5.	Responsive Design:
+	•	Fully mobile- and tablet-friendly
+	•	Fluid grid and flexible components
+
+⸻
+
+🏠 PAGES TO BUILD
+
+1. Homepage
+	•	High-end layout (see separate homepage instruction if needed)
+	•	Clean navigation bar with sticky header
+	•	Hero section with professional interior photo, slogan & buttons
+	•	USP blocks (e.g., tailor-made, affordable, 30+ years experience)
+	•	Product categories preview
+	•	Inspiration gallery
+	•	Testimonials
+	•	Quote request section
+	•	Footer with contact, links, languages, social media
+
+2. Product Category Pages (20 total)
+	•	Each product type must have its own page
+Example categories:
+	•	Roller Blinds
+	•	Blackout Curtains
+	•	Plissé
+	•	Wooden Blinds
+	•	Roof Window Shades (Fakro, Velux)
+	•	Each page must include:
+	•	Hero image or banner
+	•	Product details + options
+	•	Size rules + price calculators (if applicable)
+	•	CTA: Request quote or contact
+	•	Related photos or projects
+
+3. Quote Page
+	•	Multi-step quote request form
+	•	User can add multiple window projects (each with own options)
+	•	Final form collects contact details
+	•	Confirmation message after submission
+
+4. About Us
+	•	Story, mission, expertise (30+ years)
+	•	Timeline or team (optional)
+	•	Clean layout, brand colors, few images
+
+5. Business Clients (Zakelijk)
+	•	Section for B2B: hotels, offices, schools, etc.
+	•	Tailored services overview
+	•	Button to request business quote
+
+6. Gallery
+	•	Grid or masonry layout
+	•	Showcases real projects, styled photoshoots
+	•	Filters for product type or room
+
+7. Contact Page
+	•	Clean layout with form
+	•	Company info (address, phone, email)
+	•	Map integration optional
+	•	Language selector
+
+8. Promotions Page (“Acties”)
+	•	List of active deals
+	•	Product highlight banners
+	•	CTA buttons to quote or view product
+
+⸻
+
+🔐 LEGAL & FOOTER
+	•	GDPR-compliant cookie banner (Cookiebot is already integrated)
+	•	Add Privacy Policy + Terms & Conditions (texts are ready)
+	•	Add social media icons (Instagram, WhatsApp, etc.)
+	•	Professional structured footer
+
+⸻
+
+🤖 FUTURE-READY FEATURES (Planned or Optional)
+	•	AI chatbot (already in development – trigger via floating button)
+	•	Smart appointment booking
+	•	Virtual room preview (AR or 3D)
+	•	Dynamic price calculators per product
+	•	Email integration (SendGrid or Mailgun)
+	•	WhatsApp notifications (Twilio)
+	•	Loyalty program setup
+
+⸻
+
+✅ DELIVERABLES CHECKLIST FOR REPLIT									Item
+Status
+High-end homepage
+🔲 To build
+Product category structure (20)
+🔲 To build
+Multistep quote form
+🔲 To build
+Responsive layout
+🔲 To implement
+Footer with links and legal
+🔲 To build
+Promotions + Gallery pages
+🔲 To create
+Legal compliance (GDPR)
+✅ Cookiebot OK
+AI Chatbot integration zone
+🔲 Placeholder needed

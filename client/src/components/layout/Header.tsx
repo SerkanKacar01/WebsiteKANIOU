@@ -215,10 +215,106 @@ const Header = () => {
             </div>
           ) : (
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {/* Products text - non-clickable */}
-              <span className="font-body text-sm text-gray-400 cursor-default">
-                PRODUCTEN
-              </span>
+              {/* Products dropdown menu */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className="font-body text-sm bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent px-0 text-text-dark hover:text-accent transition-colors"
+                    >
+                      PRODUCTEN
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto fade-in">
+                      <div className="grid gap-2">
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/houten-jaloezieen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Houten jaloezieën
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/aluminium-jaloezieen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Aluminium jaloezieën
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/kunststof-jaloezieen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Kunststof jaloezieën
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/verticale-lamellen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Verticaal lamellen
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/plisses">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Plissés
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/duo-plisses">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Duo plissés
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/rolgordijnen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Rolgordijnen
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/duo-rolgordijnen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Duo rolgordijnen
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/gordijnen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Gordijnen
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/rails-en-roedes">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Rails & roedes
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/vouwgordijnen">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Vouwgordijnen
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="/producten/houten-shutters">
+                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
+                              Houten shutters
+                            </a>
+                          </Link>
+                        </NavigationMenuLink>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
 
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>

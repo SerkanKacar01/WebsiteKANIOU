@@ -998,7 +998,7 @@ const Home = () => {
               </p>
               
               {/* Enhanced Legal Links */}
-              <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm mb-4">
+              <div className="flex flex-wrap justify-center lg:justify-between items-center gap-x-4 gap-y-2 text-sm mb-4 lg:max-w-none lg:w-full">
                 <a href="/privacybeleid" className="footer-legal-link">Privacybeleid</a>
                 <span className="text-gray-400">|</span>
                 <a href="/algemene-voorwaarden" className="footer-legal-link">Algemene voorwaarden</a>

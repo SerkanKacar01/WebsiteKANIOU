@@ -36,10 +36,9 @@ const PremiumNavigation = () => {
   }, []);
 
   const navigationLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Products', path: '/producten' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'About', path: '/about' },
+    { name: 'Producten', path: '/producten' },
+    { name: 'Gallerij', path: '/gallerij' },
+    { name: 'Over ons', path: '/over-ons' },
     { name: 'Contact', path: '/contact' }
   ];
 
@@ -80,7 +79,7 @@ const PremiumNavigation = () => {
               onClick={() => setLocation('/quote')}
               className="btn-luxury"
             >
-              Get Quote
+              VRIJBLIJVEND OFFERTE
             </button>
           </div>
 
@@ -116,7 +115,7 @@ const PremiumNavigation = () => {
                 }}
                 className="btn-luxury mt-4"
               >
-                Get Quote
+                VRIJBLIJVEND OFFERTE
               </button>
             </div>
           </div>
@@ -140,7 +139,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>KANIOU - Premium Window Treatments & Custom Curtains | 30+ Years Experience</title>
+        <title>KANIOU ZILVERNAALD – Premium Raamdecoratie & Maatwerk Gordijnen | Meer dan 30 jaar ervaring</title>
         <meta name="description" content="KANIOU offers premium custom curtains, blinds, and window treatments in Belgium. 30+ years of expertise in tailor-made solutions for your home and business." />
         <meta property="og:title" content="KANIOU - Premium Window Treatments & Custom Curtains" />
         <meta property="og:description" content="Transform your space with our premium custom window treatments. Professional installation and 30+ years of expertise in Belgium." />
@@ -170,14 +169,15 @@ const Home = () => {
         <div className="relative z-10 text-center max-w-4xl mx-auto px-6 py-16">
           {/* Ultra-Luxury Title */}
           <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury">
-            Exquisite Window
+            Exquise raamdecoratie
             <span className="block gradient-text-luxury mt-4 text-glow">Artistry</span>
           </h1>
           
           {/* Luxury Subtitle */}
           <p className="text-subtitle text-white/85 mb-16 max-w-5xl mx-auto leading-relaxed font-light">
-            Where Belgian craftsmanship meets timeless elegance.
-            <span className="block mt-3 text-white/70">Transform your sanctuary with bespoke window treatments.</span>
+            Waar vakmanschap en verfijning samenkomen.
+            <span className="block mt-3 text-white/70">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
+            Ontdek de perfecte oplossing voor elke ruimte – vandaag nog.</span>
           </p>
 
           {/* Ultra-Premium CTA */}
@@ -186,7 +186,7 @@ const Home = () => {
               onClick={handleRequestQuote}
               className="btn-luxury-primary text-lg px-20 py-6 min-w-[360px] group"
             >
-              Begin Your Journey
+              VANDAAG NOG OFFERTE
               <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
             </button>
           </div>
@@ -195,15 +195,15 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl max-w-5xl mx-auto">
             <div className="text-center animate-float-luxury stagger-1">
               <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">30+</div>
-              <div className="text-white/70 text-body font-light tracking-wider uppercase">Years of Mastery</div>
+              <div className="text-white/70 text-body font-light tracking-wider uppercase">Jarenlange Vakmanschap</div>
             </div>
             <div className="text-center animate-float-luxury stagger-2">
-              <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">5000+</div>
-              <div className="text-white/70 text-body font-light tracking-wider uppercase">Discerning Clients</div>
+              <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">3500+</div>
+              <div className="text-white/70 text-body font-light tracking-wider uppercase">Eisvolle Klanten</div>
             </div>
             <div className="text-center animate-float-luxury stagger-3">
               <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">100%</div>
-              <div className="text-white/70 text-body font-light tracking-wider uppercase">Bespoke Creation</div>
+              <div className="text-white/70 text-body font-light tracking-wider uppercase">Maatwerk tot in Perfectie</div>
             </div>
           </div>
 
@@ -225,11 +225,10 @@ const Home = () => {
             <div className="text-center mb-24">
               <div className="divider-luxury w-40 mx-auto mb-12"></div>
               <h2 className="font-display text-headline gradient-text-subtle mb-8">
-                The Art of Excellence
+                De Kunst van Perfectie
               </h2>
               <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
-                Experience the pinnacle of Belgian craftsmanship, where three decades of devotion to perfection 
-                meets contemporary luxury in every meticulously crafted detail.
+                Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia toewijding aan perfectie samensmelten met hedendaagse luxe in elk met zorg vervaardigd detail.
               </p>
             </div>
 
@@ -243,10 +242,10 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-title font-display text-gray-900 mb-4">
-                  Precision Crafted
+                  Vakkundig Op Maat
                 </h3>
                 <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Every piece measured and crafted with Swiss precision for your unique space
+                  Elk stuk wordt nauwkeurig opgemeten en vervaardigd met Zwitserse precisie voor uw unieke interieur.
                 </p>
               </div>
 
@@ -258,10 +257,10 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-title font-display text-gray-900 mb-4">
-                  Express Excellence
+                  Uitmuntende Levering
                 </h3>
                 <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Swift delivery orchestrated with uncompromising attention to detail
+                  Snelle levering, zorgvuldig gecoördineerd met compromisloze aandacht voor elk detail. Mits beschikbaarheid van de materialen.
                 </p>
               </div>
 
@@ -273,10 +272,10 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-title font-display text-gray-900 mb-4">
-                  Master Consultation
+                  Meesterlijk Advies
                 </h3>
                 <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Personalized guidance from artisans with three decades of refined expertise
+                  Persoonlijke begeleiding door vakmensen met meer dan dertig jaar verfijnde expertise.
                 </p>
               </div>
 
@@ -288,10 +287,11 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-title font-display text-gray-900 mb-4">
-                  Luxury Materials
+                   Luxueuze Materialen
                 </h3>
                 <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Curated finest fabrics and materials for enduring beauty and sophistication
+                  Geselecteerde stoffen en hoogwaardige materialen voor blijvende schoonheid en verfijning.
+
                 </p>
               </div>
 
@@ -303,10 +303,11 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-title font-display text-gray-900 mb-4">
-                  Heritage Excellence
+                  Traditie in Perfectie
                 </h3>
                 <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Three decades of unwavering dedication to the art of window couture
+                  Dertig jaar onafgebroken toewijding aan de kunst van raamdecoratie op maat.
+
                 </p>
               </div>
           </div>
@@ -320,11 +321,10 @@ const Home = () => {
             <div className="text-center mb-24">
               <div className="divider-luxury w-40 mx-auto mb-12"></div>
               <h2 className="font-display text-headline gradient-text-subtle mb-8">
-                Curated Collections
+                Geselecteerde Collecties
               </h2>
               <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
-                Discover our meticulously curated range of premium window treatments, 
-                each piece designed to transform your space into a sanctuary of refined elegance.
+                Ontdek onze zorgvuldig samengestelde collectie premium raamdecoratie – elk stuk ontworpen om uw interieur te transformeren tot een oase van verfijnde elegantie.
               </p>
             </div>
 
@@ -343,17 +343,17 @@ const Home = () => {
                     <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
                       <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                         <div className="flex items-center text-gray-800 font-semibold">
-                          Discover Innovation <ArrowRight className="ml-2 w-4 h-4" />
+                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Duo Plissé Innovation
+                      Duo Plissé Innovatie
                     </h3>
                     <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Revolutionary dual-layer engineering for supreme light orchestration
+                      Revolutionaire dubbel-laagse technologie voor optimale lichtregeling.
                     </p>
                   </div>
                 </div>
@@ -372,17 +372,17 @@ const Home = () => {
                     <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
                       <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                         <div className="flex items-center text-gray-800 font-semibold">
-                          Explore Excellence <ArrowRight className="ml-2 w-4 h-4" />
+                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Duo Roller Mastery
+                     Duo Rolgordijn Meesterschap
                     </h3>
                     <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Versatile light orchestration crafted with contemporary elegance
+                      Veelzijdige lichtregeling met een moderne en verfijnde uitstraling.
                     </p>
                   </div>
                 </div>
@@ -401,17 +401,17 @@ const Home = () => {
                     <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
                       <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                         <div className="flex items-center text-gray-800 font-semibold">
-                          Enter Collection <ArrowRight className="ml-2 w-4 h-4" />
+                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Couture Curtains
+                      Couture Gordijnen
                     </h3>
                     <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Timeless elegance woven into bespoke masterpieces of sophistication
+                      Tijdloze elegantie, verweven tot op maat gemaakte meesterwerken van verfijning.
                     </p>
                   </div>
                 </div>
@@ -430,17 +430,17 @@ const Home = () => {
                     <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
                       <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                         <div className="flex items-center text-gray-800 font-semibold">
-                          Discover Artistry <ArrowRight className="ml-2 w-4 h-4" />
+                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Plissé Perfection
+                      Plissé Perfectie
                     </h3>
                     <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Sophisticated pleated precision engineered for architectural beauty
+                      Verfijnde geplooide precisie, ontworpen voor architectonische schoonheid.
                     </p>
                   </div>
                 </div>
@@ -459,17 +459,18 @@ const Home = () => {
                     <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
                       <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                         <div className="flex items-center text-gray-800 font-semibold">
-                          View Collection <ArrowRight className="ml-2 w-4 h-4" />
+                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Roller Excellence
+                      Rolgordijn Excellentie
+
                     </h3>
                     <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Minimalist precision meeting contemporary architectural demands
+                      Minimalistische precisie voor eigentijdse interieurwensen.
                     </p>
                   </div>
                 </div>
@@ -488,17 +489,17 @@ const Home = () => {
                     <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
                       <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                         <div className="flex items-center text-gray-800 font-semibold">
-                          Experience Protection <ArrowRight className="ml-2 w-4 h-4" />
+                          Ervaar de kunst van maatwerk <ArrowRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-title font-display gradient-text-subtle mb-4">
-                      Invisible Protection
+                      Onzichtbare Bescherming
                     </h3>
                     <p className="text-body text-gray-600 font-light leading-relaxed">
-                      Seamless air circulation systems with uncompromising aesthetic integrity
+                      Naadloze ventilatie-oplossingen met compromisloze esthetiek.
                     </p>
                   </div>
                 </div>
@@ -511,7 +512,7 @@ const Home = () => {
                 onClick={() => setLocation("/producten")}
                 className="btn-luxury-secondary group"
               >
-                Explore All Collections
+                Ontdek Alle Collecties
                 <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
               </button>
             </div>

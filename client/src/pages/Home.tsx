@@ -381,6 +381,9 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Animated Section Divider */}
+        <div className="section-divider-luxury"></div>
+
         {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
         <section className="section-spacing-luxury bg-texture-luxury">
           <div className="container-golden">
@@ -476,6 +479,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+        {/* Animated Section Divider */}
+        <div className="section-divider-luxury"></div>
 
         {/* Product Showcase - World-Class Design */}
         <section className="section-spacing-luxury gradient-luxury-subtle">
@@ -682,6 +688,8 @@ const Home = () => {
         </div>
       </section>
 
+        {/* Animated Section Divider */}
+        <div className="section-divider-luxury"></div>
 
         {/* Client Testimonials - Ultra-Luxury Social Proof */}
         <section className="section-spacing-luxury gradient-luxury-subtle">

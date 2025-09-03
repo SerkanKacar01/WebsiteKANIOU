@@ -813,6 +813,73 @@ html, body {
   position: relative;
 }
 
+/* ANIMATED SECTION DIVIDER */
+.section-divider-luxury {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  height: 2px;
+  margin: 24px auto;
+  background: linear-gradient(90deg, transparent 0%, #E6C988 20%, #D5B36A 50%, #E6C988 80%, transparent 100%);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.section-divider-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+  animation: divider-shimmer 3s ease-in-out infinite;
+}
+
+.section-divider-luxury::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #D5B36A;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(213, 179, 106, 0.4);
+  animation: divider-pulse 2s ease-in-out infinite;
+}
+
+@keyframes divider-shimmer {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: -100%; }
+}
+
+@keyframes divider-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 12px rgba(213, 179, 106, 0.4);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 20px rgba(213, 179, 106, 0.6);
+  }
+}
+
+/* Mobile responsiveness for section divider */
+@media (max-width: 768px) {
+  .section-divider-luxury {
+    max-width: 150px;
+    margin: 16px auto;
+  }
+  
+  .section-divider-luxury::after {
+    width: 4px;
+    height: 4px;
+  }
+}
+
 .divider-luxury::before {
   content: '';
   position: absolute;
@@ -1404,7 +1471,7 @@ html.rtl .right-0 {
 
 /* PREMIUM SECTION SPACING */
 .section-spacing-luxury {
-  padding: clamp(5rem, 10vw, 12rem) 0;
+  padding: clamp(3rem, 6vw, 5rem) 0;
 }
 
 .section-spacing-compact {
@@ -1469,7 +1536,7 @@ html.rtl .right-0 {
   }
   
   .section-spacing-luxury {
-    padding: clamp(3rem, 8vw, 6rem) 0;
+    padding: clamp(2rem, 6vw, 4rem) 0;
   }
   
   .container-golden {

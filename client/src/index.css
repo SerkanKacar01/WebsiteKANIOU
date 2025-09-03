@@ -390,6 +390,58 @@ html, body {
   transform: translateY(-1px);
 }
 
+/* LUXURY CTA BUTTON - Get Quote */
+.btn-luxury {
+  position: relative;
+  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 50%, var(--gold-500) 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  box-shadow: 
+    0 8px 24px rgba(213, 179, 106, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-luxury:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 16px 48px rgba(213, 179, 106, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-500) 50%, var(--gold-600) 100%);
+}
+
+.btn-luxury:hover::before {
+  left: 100%;
+}
+
+.btn-luxury:active {
+  transform: translateY(-1px) scale(1.01);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* LUXURY CARD SYSTEM */
 .card-ultra-luxury {
   background: linear-gradient(145deg, #FFFFFF 0%, var(--cream) 100%);
@@ -1221,14 +1273,16 @@ html.rtl .right-0 {
 
 .nav-luxury.scrolled {
   padding: 18px 0;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  border-bottom: 1px solid rgba(213, 179, 106, 0.08);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
+  -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
+  border-bottom: 1px solid rgba(213, 179, 106, 0.15);
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.04),
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 -1px 0 rgba(213, 179, 106, 0.05) inset;
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(213, 179, 106, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -1px 0 rgba(213, 179, 106, 0.08) inset;
+  border-radius: 0 0 24px 24px;
 }
 
 .nav-luxury.scrolled .nav-logo {
@@ -1238,6 +1292,11 @@ html.rtl .right-0 {
 .nav-logo {
   transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   cursor: pointer;
+  background: #F9F2E7;
+  border: 1px solid #D5B36A;
+  border-radius: 8px;
+  padding: 8px 16px;
+  box-shadow: 0 2px 8px rgba(213, 179, 106, 0.15);
 }
 
 .nav-logo:hover {
@@ -1248,16 +1307,17 @@ html.rtl .right-0 {
 /* HAUTE COUTURE NAVIGATION LINKS */
 .nav-link {
   position: relative;
-  color: var(--gray-700);
+  color: #FFFFFF;
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.02em;
   padding: 12px 20px;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   border-radius: 10px;
   overflow: hidden;
   text-transform: capitalize;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .nav-link::before {
@@ -1274,8 +1334,9 @@ html.rtl .right-0 {
 }
 
 .nav-link:hover {
-  color: var(--gold-600);
-  transform: translateY(-1px);
+  color: #F9F2E7;
+  transform: translateY(-2px) scale(1.02);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-link:hover::before {
@@ -1289,10 +1350,11 @@ html.rtl .right-0 {
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--gold-500) 0%, var(--gold-400) 100%);
+  background: linear-gradient(90deg, #F9F2E7 0%, #D5B36A 100%);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   transform: translateX(-50%);
   border-radius: 1px;
+  box-shadow: 0 0 8px rgba(249, 242, 231, 0.6);
 }
 
 .nav-link:hover::after {
@@ -1300,7 +1362,8 @@ html.rtl .right-0 {
 }
 
 .nav-link.active {
-  color: var(--gold-600);
+  color: #F9F2E7;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-link.active::before {

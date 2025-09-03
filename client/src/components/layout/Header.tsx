@@ -232,7 +232,15 @@ const Header = () => {
                 onMouseLeave={() => setIsProductsDropdownOpen(false)}
               >
                 <button
-                  className="font-body text-sm text-text-dark hover:text-accent transition-colors flex items-center gap-1"
+                  className="font-body text-sm text-text-dark hover:text-accent transition-colors flex items-center gap-1 bg-transparent border-none p-0 shadow-none"
+                  style={{ 
+                    background: 'transparent !important', 
+                    border: 'none !important', 
+                    boxShadow: 'none !important',
+                    borderRadius: '0 !important',
+                    padding: '0 !important',
+                    transform: 'none !important'
+                  }}
                   onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
                 >
                   PRODUCTEN

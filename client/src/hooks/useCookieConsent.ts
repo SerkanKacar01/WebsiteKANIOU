@@ -104,35 +104,49 @@ export function useCookieConsent() {
           }
         } else {
           // Fallback to localStorage only if Cookiebot is completely unavailable
-          const stored = localStorage.getItem(STORAGE_KEY);
-          if (stored) {
-            try {
-              const parsedConsent = JSON.parse(stored) as CookieConsentData;
-              setConsent(parsedConsent);
-              setShowBanner(false);
-            } catch (error) {
-              console.error('Error parsing stored consent:', error);
-              localStorage.removeItem(STORAGE_KEY);
-              // Don't show our banner - let Cookiebot handle it
+          try {
+            if (typeof Storage !== 'undefined' && localStorage) {
+              const stored = localStorage.getItem(STORAGE_KEY);
+              if (stored) {
+                try {
+                  const parsedConsent = JSON.parse(stored) as CookieConsentData;
+                  setConsent(parsedConsent);
+                  setShowBanner(false);
+                } catch (error) {
+                  console.error('Error parsing stored consent:', error);
+                  localStorage.removeItem(STORAGE_KEY);
+                  // Don't show our banner - let Cookiebot handle it
+                }
+              } else {
+                // Don't show our banner - wait for Cookiebot to load
+                console.log('🍪 No stored consent, waiting for Cookiebot to load');
+              }
+            } else {
+              console.log('🍪 localStorage not available, waiting for Cookiebot');
             }
-          } else {
-            // Don't show our banner - wait for Cookiebot to load
-            console.log('🍪 No stored consent, waiting for Cookiebot to load');
+          } catch (storageError) {
+            console.warn('🍪 Error accessing localStorage:', storageError);
           }
         }
       } catch (error) {
         console.warn('Error initializing Cookiebot:', error);
         // Minimal fallback - don't interfere with Cookiebot
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          try {
-            const parsedConsent = JSON.parse(stored) as CookieConsentData;
-            setConsent(parsedConsent);
-            setShowBanner(false);
-          } catch (parseError) {
-            localStorage.removeItem(STORAGE_KEY);
-            // Don't show our banner - let Cookiebot handle it
+        try {
+          if (typeof Storage !== 'undefined' && localStorage) {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+              try {
+                const parsedConsent = JSON.parse(stored) as CookieConsentData;
+                setConsent(parsedConsent);
+                setShowBanner(false);
+              } catch (parseError) {
+                localStorage.removeItem(STORAGE_KEY);
+                // Don't show our banner - let Cookiebot handle it
+              }
+            }
           }
+        } catch (storageError) {
+          console.warn('🍪 Error accessing localStorage in fallback:', storageError);
         }
       }
     };

@@ -1450,6 +1450,386 @@ html, body {
   animation-duration: 2s;
 }
 
+/* ULTRA-LUXURY FOOTER */
+.ultra-luxury-footer {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6rem, 10vw, 12rem) 0 clamp(2rem, 4vw, 3rem) 0;
+}
+
+.ultra-luxury-footer-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, 
+    #1a1a1a 0%, 
+    #2d2d2d 25%, 
+    #1a1a1a 50%, 
+    #252525 75%, 
+    #1a1a1a 100%
+  );
+}
+
+.ultra-luxury-footer-texture {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(213, 179, 106, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(213, 179, 106, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+  opacity: 0.6;
+}
+
+.ultra-luxury-footer-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+.ultra-luxury-footer-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(213, 179, 106, 0.3) 25%, 
+    rgba(213, 179, 106, 0.6) 50%, 
+    rgba(213, 179, 106, 0.3) 75%, 
+    transparent 100%
+  );
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+  position: relative;
+}
+
+.ultra-luxury-footer-divider::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 5px;
+  background: radial-gradient(ellipse, rgba(213, 179, 106, 0.4) 0%, transparent 70%);
+  filter: blur(3px);
+}
+
+.ultra-luxury-footer-column {
+  position: relative;
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+.ultra-luxury-footer-heading {
+  font-family: 'Bodoni Moda', 'Playfair Display', serif;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  color: #F5F5F5;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+  position: relative;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ultra-luxury-footer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    rgba(213, 179, 106, 0.8) 0%, 
+    rgba(213, 179, 106, 0.4) 100%
+  );
+  border-radius: 1px;
+}
+
+.ultra-luxury-footer-content {
+  color: #B8B8B8;
+  line-height: 1.7;
+}
+
+.ultra-luxury-brand-container {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.ultra-luxury-brand-name {
+  font-family: 'Bodoni Moda', serif;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #F5F5F5;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.9) 0%, 
+    rgba(230, 201, 136, 0.7) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ultra-luxury-brand-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  color: #A0A0A0;
+  font-style: italic;
+}
+
+.ultra-luxury-social-container {
+  display: flex;
+  gap: 16px;
+}
+
+.ultra-luxury-social-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  transform-style: preserve-3d;
+}
+
+.ultra-luxury-social-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.15) 0%, 
+    rgba(230, 201, 136, 0.1) 100%
+  );
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-social-svg {
+  position: relative;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  color: #D5B36A;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-social-icon:hover {
+  transform: translateY(-2px);
+}
+
+.ultra-luxury-social-icon:hover .ultra-luxury-social-bg {
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.3) 0%, 
+    rgba(230, 201, 136, 0.2) 100%
+  );
+  border-color: rgba(213, 179, 106, 0.4);
+  box-shadow: 
+    0 8px 24px rgba(213, 179, 106, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ultra-luxury-social-icon:hover .ultra-luxury-social-svg {
+  color: #E6C988;
+  transform: scale(1.1);
+}
+
+.ultra-luxury-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ultra-luxury-footer-link {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  color: #B8B8B8;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  position: relative;
+  padding-left: 16px;
+}
+
+.ultra-luxury-footer-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: rgba(213, 179, 106, 0.6);
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-footer-link:hover {
+  color: #F5F5F5;
+  transform: translateX(4px);
+}
+
+.ultra-luxury-footer-link:hover::before {
+  background: rgba(213, 179, 106, 1);
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.ultra-luxury-footer-link-special {
+  font-weight: 500;
+  color: #D5B36A;
+}
+
+.ultra-luxury-footer-link-special:hover {
+  color: #E6C988;
+}
+
+.ultra-luxury-newsletter-description {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  color: #B8B8B8;
+  line-height: 1.6;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.ultra-luxury-newsletter-form {
+  width: 100%;
+}
+
+.ultra-luxury-newsletter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .ultra-luxury-newsletter-container {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+.ultra-luxury-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.ultra-luxury-newsletter-input {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  border-radius: 12px;
+  color: #F5F5F5;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-newsletter-input::placeholder {
+  color: #888;
+}
+
+.ultra-luxury-newsletter-input:focus {
+  outline: none;
+  border-color: rgba(213, 179, 106, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 0 0 3px rgba(213, 179, 106, 0.1),
+    0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.ultra-luxury-input-glow {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.3) 0%, 
+    rgba(230, 201, 136, 0.2) 100%
+  );
+  border-radius: 14px;
+  opacity: 0;
+  filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  z-index: -1;
+}
+
+.ultra-luxury-newsletter-input:focus + .ultra-luxury-input-glow {
+  opacity: 0.6;
+}
+
+.ultra-luxury-newsletter-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  min-width: 140px;
+}
+
+.ultra-luxury-button-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.9) 0%, 
+    rgba(230, 201, 136, 0.8) 100%
+  );
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-button-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ultra-luxury-button-icon {
+  width: 16px;
+  height: 16px;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-button-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.ultra-luxury-newsletter-button:hover {
+  transform: translateY(-2px);
+}
+
+.ultra-luxury-newsletter-button:hover .ultra-luxury-button-bg {
+  background: linear-gradient(135deg, 
+    rgba(230, 201, 136, 0.95) 0%, 
+    rgba(213, 179, 106, 0.9) 100%
+  );
+  box-shadow: 
+    0 8px 24px rgba(213, 179, 106, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ultra-luxury-newsletter-button:hover .ultra-luxury-button-icon {
+  transform: translateX(2px);
+}
+
 .luxury-subtitle {
   font-size: clamp(1.125rem, 2vw, 1.375rem);
   font-weight: 300;

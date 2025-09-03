@@ -32,13 +32,6 @@ const Footer = () => {
               >
                 <Instagram className="h-5 w-5" />
               </a>
-              <a
-                href="mailto:info@kaniou.be"
-                className="text-white hover:text-secondary transition-colors p-2 min-w-[40px] min-h-[40px] flex items-center justify-center"
-                aria-label="Email"
-              >
-                <Mail className="h-5 w-5" />
-              </a>
             </div>
           </div>
 

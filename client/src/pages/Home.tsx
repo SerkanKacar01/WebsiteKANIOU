@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Percent, Tag, Ruler, Zap } from "lucide-react";
+import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Percent, Tag, Ruler, Zap, Phone, Mail, MapPin, Instagram, MessageCircle, Globe } from "lucide-react";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -864,6 +864,197 @@ const Home = () => {
           </p>
         </div>
       </section>
+
+      {/* Footer Section */}
+      <footer className="bg-gray-50 border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            
+            {/* Navigation Links */}
+            <div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-6">
+                Navigation
+              </h3>
+              <ul className="space-y-4">
+                <li>
+                  <button 
+                    onClick={() => setLocation("/producten")}
+                    className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                  >
+                    Products
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => setLocation("/gallery")}
+                    className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                  >
+                    Gallery
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => setLocation("/about")}
+                    className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                  >
+                    About Us
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => setLocation("/contact")}
+                    className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                  >
+                    Contact
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => setLocation("/quote")}
+                    className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                  >
+                    Request Quote
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Company Information */}
+            <div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-6">
+                Company Info
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <MapPin className="w-5 h-5 text-[#d5b36a] mr-3 mt-0.5 flex-shrink-0" />
+                  <div className="text-gray-600">
+                    <p>KANIOU</p>
+                    <p>Zilvernaald 123</p>
+                    <p>2000 Antwerp, Belgium</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <Phone className="w-5 h-5 text-[#d5b36a] mr-3" />
+                  <a href="tel:+32123456789" className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200">
+                    +32 12 345 67 89
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="w-5 h-5 text-[#d5b36a] mr-3" />
+                  <a href="mailto:info@kaniou.be" className="text-gray-600 hover:text-[#d5b36a] transition-colors duration-200">
+                    info@kaniou.be
+                  </a>
+                </div>
+                <p className="text-sm text-gray-500 mt-4">
+                  VAT: BE 0123.456.789
+                </p>
+              </div>
+            </div>
+
+            {/* Social Media & Contact */}
+            <div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-6">
+                Follow Us
+              </h3>
+              <div className="space-y-4">
+                <div className="flex space-x-4">
+                  <a 
+                    href="#" 
+                    className="w-10 h-10 bg-[#d5b36a] rounded-full flex items-center justify-center text-white hover:bg-[#c4a55a] transition-colors duration-200"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                  <a 
+                    href="#" 
+                    className="w-10 h-10 bg-[#d5b36a] rounded-full flex items-center justify-center text-white hover:bg-[#c4a55a] transition-colors duration-200"
+                    aria-label="WhatsApp"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                  </a>
+                </div>
+                <p className="text-sm text-gray-600 mt-4">
+                  Stay updated with our latest projects and exclusive offers
+                </p>
+              </div>
+            </div>
+
+            {/* Language Selector & Legal */}
+            <div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-6">
+                Languages
+              </h3>
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  <button className="flex items-center px-3 py-2 bg-white border border-gray-200 rounded-lg hover:border-[#d5b36a] transition-colors duration-200">
+                    <span className="mr-2">🇳🇱</span>
+                    <span className="text-sm">Dutch</span>
+                  </button>
+                  <button className="flex items-center px-3 py-2 bg-white border border-gray-200 rounded-lg hover:border-[#d5b36a] transition-colors duration-200">
+                    <span className="mr-2">🇫🇷</span>
+                    <span className="text-sm">French</span>
+                  </button>
+                  <button className="flex items-center px-3 py-2 bg-white border border-gray-200 rounded-lg hover:border-[#d5b36a] transition-colors duration-200">
+                    <span className="mr-2">🇹🇷</span>
+                    <span className="text-sm">Turkish</span>
+                  </button>
+                  <button className="flex items-center px-3 py-2 bg-white border border-gray-200 rounded-lg hover:border-[#d5b36a] transition-colors duration-200">
+                    <span className="mr-2">🇬🇧</span>
+                    <span className="text-sm">English</span>
+                  </button>
+                </div>
+
+                <div className="mt-8">
+                  <h4 className="text-md font-semibold text-gray-900 mb-4">Legal</h4>
+                  <ul className="space-y-2">
+                    <li>
+                      <button 
+                        onClick={() => setLocation("/privacy-policy")}
+                        className="text-sm text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                      >
+                        Privacy Policy
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => setLocation("/terms-of-service")}
+                        className="text-sm text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                      >
+                        Terms & Conditions
+                      </button>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => setLocation("/cookie-policy")}
+                        className="text-sm text-gray-600 hover:text-[#d5b36a] transition-colors duration-200"
+                      >
+                        Cookie Policy
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-gray-200 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="flex items-center mb-4 md:mb-0">
+                <div className="text-2xl font-display font-bold text-[#d5b36a] mr-4">
+                  KANIOU
+                </div>
+                <p className="text-sm text-gray-500">
+                  Premium Window Treatments Since 1992
+                </p>
+              </div>
+              <div className="text-sm text-gray-500">
+                © 2025 KANIOU. All rights reserved.
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 };

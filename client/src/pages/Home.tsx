@@ -525,96 +525,121 @@ const Home = () => {
         <div className="section-divider-luxury"></div>
 
         {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
-        <section className="section-spacing-luxury bg-texture-luxury">
-          <div className="container-golden">
-            {/* Luxury Section Header */}
-            <div className="text-center mb-24">
-              <div className="divider-luxury w-40 mx-auto mb-12"></div>
-              <h2 className="font-display text-headline gradient-text-subtle mb-8">
-                De Kunst van Perfectie
+        <section className="ultra-luxury-features-section">
+          <div className="absolute inset-0 luxury-gradient-bg"></div>
+          <div className="absolute inset-0 luxury-texture-overlay"></div>
+          <div className="container-golden relative z-10">
+            {/* Ultra-Premium Section Header */}
+            <div className="text-center mb-32">
+              <div className="luxury-section-badge-premium mb-16">
+                <div className="luxury-badge-glow-premium"></div>
+                <span className="luxury-badge-text-premium">HAUTE COUTURE EXCELLENCE</span>
+              </div>
+              <h2 className="ultra-luxury-title mb-12">
+                <span className="ultra-luxury-title-line">De Kunst van</span>
+                <span className="ultra-luxury-title-emphasis">Perfectie</span>
               </h2>
-              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
-                Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia toewijding aan perfectie samensmelten met hedendaagse luxe in elk met zorg vervaardigd detail.
+              <p className="ultra-luxury-subtitle max-w-5xl mx-auto">
+                Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia toewijding aan perfectie 
+                samensmelten met hedendaagse luxe in elk met zorg vervaardigd detail.
               </p>
             </div>
 
-            {/* Luxury USP Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-luxury-xl">
+            {/* Ultra-Luxury Features Grid */}
+            <div className="ultra-luxury-features-grid">
               {/* Perfect Fit - Ultra Luxury */}
-              <div className="text-center group hover-elegant animate-fade-in-up stagger-1">
-                <div className="mb-8 flex justify-center">
-                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
-                    <Shield className="w-9 h-9 text-white" />
+              <div className="ultra-luxury-feature-card group">
+                <div className="ultra-luxury-card-bg"></div>
+                <div className="ultra-luxury-card-glow"></div>
+                <div className="ultra-luxury-card-content">
+                  <div className="ultra-luxury-icon-container mb-8">
+                    <div className="ultra-luxury-icon-bg"></div>
+                    <div className="ultra-luxury-icon-glow"></div>
+                    <Shield className="ultra-luxury-icon" />
                   </div>
+                  <h3 className="ultra-luxury-feature-title">
+                    Vakkundig Op Maat
+                  </h3>
+                  <p className="ultra-luxury-feature-description">
+                    Elk stuk wordt nauwkeurig opgemeten en vervaardigd met Zwitserse precisie voor uw unieke interieur.
+                  </p>
                 </div>
-                <h3 className="text-title font-display text-gray-900 mb-4">
-                  Vakkundig Op Maat
-                </h3>
-                <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Elk stuk wordt nauwkeurig opgemeten en vervaardigd met Zwitserse precisie voor uw unieke interieur.
-                </p>
               </div>
 
               {/* Express Service - Ultra Luxury */}
-              <div className="text-center group hover-elegant animate-fade-in-up stagger-2">
-                <div className="mb-8 flex justify-center">
-                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
-                    <Truck className="w-9 h-9 text-white" />
+              <div className="ultra-luxury-feature-card group">
+                <div className="ultra-luxury-card-bg"></div>
+                <div className="ultra-luxury-card-glow"></div>
+                <div className="ultra-luxury-card-content">
+                  <div className="ultra-luxury-icon-container mb-8">
+                    <div className="ultra-luxury-icon-bg"></div>
+                    <div className="ultra-luxury-icon-glow"></div>
+                    <Truck className="ultra-luxury-icon" />
                   </div>
+                  <h3 className="ultra-luxury-feature-title">
+                    Uitmuntende Levering
+                  </h3>
+                  <p className="ultra-luxury-feature-description">
+                    Snelle levering, zorgvuldig gecoördineerd met compromisloze aandacht voor elk detail. Mits beschikbaarheid van de materialen.
+                  </p>
                 </div>
-                <h3 className="text-title font-display text-gray-900 mb-4">
-                  Uitmuntende Levering
-                </h3>
-                <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Snelle levering, zorgvuldig gecoördineerd met compromisloze aandacht voor elk detail. Mits beschikbaarheid van de materialen.
-                </p>
               </div>
 
               {/* Master Consultation - Ultra Luxury */}
-              <div className="text-center group hover-elegant animate-fade-in-up stagger-3">
-                <div className="mb-8 flex justify-center">
-                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
-                    <Users className="w-9 h-9 text-white" />
+              <div className="ultra-luxury-feature-card group">
+                <div className="ultra-luxury-card-bg"></div>
+                <div className="ultra-luxury-card-glow"></div>
+                <div className="ultra-luxury-card-content">
+                  <div className="ultra-luxury-icon-container mb-8">
+                    <div className="ultra-luxury-icon-bg"></div>
+                    <div className="ultra-luxury-icon-glow"></div>
+                    <Users className="ultra-luxury-icon" />
                   </div>
+                  <h3 className="ultra-luxury-feature-title">
+                    Meesterlijk Advies
+                  </h3>
+                  <p className="ultra-luxury-feature-description">
+                    Persoonlijke begeleiding door vakmensen met meer dan dertig jaar verfijnde expertise.
+                  </p>
                 </div>
-                <h3 className="text-title font-display text-gray-900 mb-4">
-                  Meesterlijk Advies
-                </h3>
-                <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Persoonlijke begeleiding door vakmensen met meer dan dertig jaar verfijnde expertise.
-                </p>
               </div>
 
               {/* Luxury Materials - Ultra Luxury */}
-              <div className="text-center group hover-elegant animate-fade-in-up stagger-4">
-                <div className="mb-8 flex justify-center">
-                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
-                    <Award className="w-9 h-9 text-white" />
+              <div className="ultra-luxury-feature-card group">
+                <div className="ultra-luxury-card-bg"></div>
+                <div className="ultra-luxury-card-glow"></div>
+                <div className="ultra-luxury-card-content">
+                  <div className="ultra-luxury-icon-container mb-8">
+                    <div className="ultra-luxury-icon-bg"></div>
+                    <div className="ultra-luxury-icon-glow"></div>
+                    <Award className="ultra-luxury-icon" />
                   </div>
+                  <h3 className="ultra-luxury-feature-title">
+                     Luxueuze Materialen
+                  </h3>
+                  <p className="ultra-luxury-feature-description">
+                    Geselecteerde stoffen en hoogwaardige materialen voor blijvende schoonheid en verfijning.
+                  </p>
                 </div>
-                <h3 className="text-title font-display text-gray-900 mb-4">
-                   Luxueuze Materialen
-                </h3>
-                <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Geselecteerde stoffen en hoogwaardige materialen voor blijvende schoonheid en verfijning.
-
-                </p>
               </div>
 
               {/* Heritage Excellence - Ultra Luxury */}
-              <div className="text-center group hover-elegant animate-fade-in-up stagger-5">
-                <div className="mb-8 flex justify-center">
-                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
-                    <Clock className="w-9 h-9 text-white" />
+              <div className="ultra-luxury-feature-card group">
+                <div className="ultra-luxury-card-bg"></div>
+                <div className="ultra-luxury-card-glow"></div>
+                <div className="ultra-luxury-card-content">
+                  <div className="ultra-luxury-icon-container mb-8">
+                    <div className="ultra-luxury-icon-bg"></div>
+                    <div className="ultra-luxury-icon-glow"></div>
+                    <Clock className="ultra-luxury-icon" />
                   </div>
+                  <h3 className="ultra-luxury-feature-title">
+                    Traditie in Perfectie
+                  </h3>
+                  <p className="ultra-luxury-feature-description">
+                    Dertig jaar onafgebroken toewijding aan de kunst van raamdecoratie op maat.
+                  </p>
                 </div>
-                <h3 className="text-title font-display text-gray-900 mb-4">
-                  Traditie in Perfectie
-                </h3>
-                <p className="text-body text-gray-600 leading-relaxed font-light">
-                  Dertig jaar onafgebroken toewijding aan de kunst van raamdecoratie op maat.
-
-                </p>
               </div>
           </div>
         </div>

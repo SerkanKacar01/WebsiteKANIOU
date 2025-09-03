@@ -986,6 +986,289 @@ html, body {
   100% { background-position: 200% 0; }
 }
 
+/* ULTRA-LUXURY FEATURES SECTION */
+.ultra-luxury-features-section {
+  position: relative;
+  padding: clamp(6rem, 12vw, 16rem) 0;
+  overflow: hidden;
+}
+
+.luxury-gradient-bg {
+  background: linear-gradient(135deg, 
+    #FAFAFA 0%, 
+    #F8F6F0 25%, 
+    #FBF8F3 50%, 
+    #F5F3F0 75%, 
+    #FAFAFA 100%
+  );
+}
+
+.luxury-texture-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(213, 179, 106, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(213, 179, 106, 0.02) 0%, transparent 50%);
+  opacity: 0.6;
+}
+
+.luxury-section-badge-premium {
+  position: relative;
+  display: inline-block;
+  padding: 12px 32px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  border-radius: 50px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(213, 179, 106, 0.08);
+  overflow: hidden;
+}
+
+.luxury-badge-glow-premium {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.2), 
+    rgba(230, 201, 136, 0.1), 
+    rgba(213, 179, 106, 0.2)
+  );
+  border-radius: 52px;
+  filter: blur(20px);
+  opacity: 0.5;
+  animation: badge-glow 4s ease-in-out infinite;
+}
+
+.luxury-badge-text-premium {
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8B6D37;
+}
+
+@keyframes badge-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.ultra-luxury-title {
+  font-family: 'Bodoni Moda', 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.1;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.ultra-luxury-title-line {
+  display: block;
+  color: #2A2A2A;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.ultra-luxury-title-emphasis {
+  display: block;
+  background: linear-gradient(135deg, 
+    #D5B36A 0%, 
+    #E6C988 25%, 
+    #D5B36A 50%, 
+    #C4A55A 75%, 
+    #D5B36A 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  text-shadow: 0 0 60px rgba(213, 179, 106, 0.3);
+  animation: title-glow-premium 6s ease-in-out infinite;
+}
+
+@keyframes title-glow-premium {
+  0%, 100% { filter: drop-shadow(0 0 30px rgba(213, 179, 106, 0.3)); }
+  50% { filter: drop-shadow(0 0 60px rgba(213, 179, 106, 0.5)); }
+}
+
+.ultra-luxury-subtitle {
+  font-family: 'Bodoni Moda', serif;
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: #6B6B6B;
+  text-align: center;
+}
+
+.ultra-luxury-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+  margin-top: 64px;
+}
+
+@media (min-width: 1024px) {
+  .ultra-luxury-features-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 32px;
+  }
+}
+
+.ultra-luxury-feature-card {
+  position: relative;
+  text-align: center;
+  padding: 48px 32px;
+  border-radius: 32px;
+  overflow: hidden;
+  cursor: default;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  transform-style: preserve-3d;
+}
+
+.ultra-luxury-card-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(145deg, 
+      rgba(255, 255, 255, 0.98) 0%, 
+      rgba(248, 246, 240, 0.95) 50%, 
+      rgba(255, 255, 255, 0.98) 100%
+    );
+  backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(213, 179, 106, 0.08);
+  border-radius: 32px;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-card-glow {
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.15) 0%, 
+    rgba(230, 201, 136, 0.08) 50%, 
+    rgba(213, 179, 106, 0.15) 100%
+  );
+  border-radius: 36px;
+  opacity: 0;
+  filter: blur(30px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.ultra-luxury-feature-card:hover .ultra-luxury-card-bg {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(213, 179, 106, 0.2);
+  box-shadow: 
+    0 32px 96px rgba(0, 0, 0, 0.08),
+    0 16px 48px rgba(213, 179, 106, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.ultra-luxury-feature-card:hover .ultra-luxury-card-glow {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.ultra-luxury-icon-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.ultra-luxury-icon-bg {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  background: linear-gradient(135deg, 
+    #D5B36A 0%, 
+    #E6C988 25%, 
+    #D5B36A 50%, 
+    #C4A55A 75%, 
+    #D5B36A 100%
+  );
+  border-radius: 50%;
+  box-shadow: 
+    0 16px 48px rgba(213, 179, 106, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-icon-glow {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  background: radial-gradient(circle, 
+    rgba(213, 179, 106, 0.4) 0%, 
+    rgba(213, 179, 106, 0.2) 50%, 
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.6;
+  animation: icon-pulse 4s ease-in-out infinite;
+}
+
+.ultra-luxury-icon {
+  position: relative;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  color: white;
+  margin: 28px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-feature-card:hover .ultra-luxury-icon-bg {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 24px 64px rgba(213, 179, 106, 0.35),
+    0 12px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.ultra-luxury-feature-card:hover .ultra-luxury-icon {
+  transform: scale(1.1);
+}
+
+@keyframes icon-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.ultra-luxury-feature-title {
+  font-family: 'Bodoni Moda', 'Playfair Display', serif;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: #2A2A2A;
+  margin-bottom: 16px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-feature-description {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: #6B6B6B;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ultra-luxury-feature-card:hover .ultra-luxury-feature-title {
+  color: #1A1A1A;
+  transform: translateY(-2px);
+}
+
+.ultra-luxury-feature-card:hover .ultra-luxury-feature-description {
+  color: #4A4A4A;
+  transform: translateY(-1px);
+}
+
 .luxury-subtitle {
   font-size: clamp(1.125rem, 2vw, 1.375rem);
   font-weight: 300;

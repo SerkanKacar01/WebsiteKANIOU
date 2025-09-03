@@ -215,38 +215,10 @@ const Header = () => {
             </div>
           ) : (
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {/* Products dropdown menu */}
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger 
-                      className={`font-body text-sm bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent px-0 ${
-                        isProductsActive()
-                          ? "text-accent font-medium"
-                          : "text-text-dark hover:text-accent"
-                      } transition-colors`}
-                    >
-                      PRODUCTEN
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto">
-                      <div className="grid gap-2">
-                        {productCategories.map((category) => (
-                          <NavigationMenuLink key={category.href} asChild>
-                            <Link href={category.href}>
-                              <a 
-                                className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer"
-                                onClick={handleNavClick}
-                              >
-                                {category.label}
-                              </a>
-                            </Link>
-                          </NavigationMenuLink>
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+              {/* Products text - non-clickable */}
+              <span className="font-body text-sm text-gray-400 cursor-default">
+                PRODUCTEN
+              </span>
 
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>

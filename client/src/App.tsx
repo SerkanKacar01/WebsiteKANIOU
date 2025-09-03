@@ -17,7 +17,6 @@ import { CookiebotSetup } from "@/components/CookiebotSetup";
 
 import Home from "@/pages/Home";
 import ProductDetail from "@/pages/ProductDetail";
-import ProductsPage from "@/pages/ProductsPage";
 
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
@@ -72,7 +71,6 @@ function Router() {
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
 
-    if (location === "/producten" || location === "/products" || location === "/shop") return "Premium Raamdecoratie - Shop" + " | " + t("app.title");
     if (location === "/gallery" || location === "/gallerij") return t("gallery.title") + " | " + t("app.title");
     if (location === "/about" || location === "/overons") return t("about.title") + " | " + t("app.title");
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
@@ -97,9 +95,7 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        {/* Product categories */}
-        <Route path="/products" component={ProductsPage} />
-        <Route path="/producten" component={ProductsPage} />
+        {/* Product categories - Disabled */}
         {/* Disabled shop route - redirect to home */}
         <Route path="/shop" component={() => {
           window.location.href = '/';

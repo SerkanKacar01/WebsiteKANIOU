@@ -163,576 +163,585 @@ const Home = () => {
 
         {/* Content Container */}
         <div className="relative z-10 text-center max-w-4xl mx-auto px-6 py-16">
-          {/* Main Title */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-            Tailor-made Window Decor That Elevates Every Space
+          {/* Ultra-Luxury Title */}
+          <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury">
+            Exquisite Window
+            <span className="block gradient-text-luxury mt-4 text-glow">Artistry</span>
           </h1>
           
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-white/90 mb-12 font-body leading-relaxed max-w-3xl mx-auto">
-            Over 30 years of expertise in curtains & sun protection.
+          {/* Luxury Subtitle */}
+          <p className="text-subtitle text-white/85 mb-16 max-w-5xl mx-auto leading-relaxed font-light">
+            Where Belgian craftsmanship meets timeless elegance.
+            <span className="block mt-3 text-white/70">Transform your sanctuary with bespoke window treatments.</span>
           </p>
 
-          {/* Action Button */}
-          <div className="flex justify-center">
-            <Button
+          {/* Ultra-Premium CTA */}
+          <div className="flex justify-center mb-20">
+            <button
               onClick={handleRequestQuote}
-              className="
-                px-12 py-6 
-                text-xl font-bold
-                bg-[#d5b36a] hover:bg-[#c4a55a] 
-                text-white 
-                border-0
-                rounded-lg
-                transition-all duration-300 
-                transform hover:scale-105 hover:-translate-y-1
-                shadow-lg hover:shadow-xl
-                min-w-[280px]
-              "
+              className="btn-luxury-primary text-lg px-20 py-6 min-w-[360px] group"
             >
-              Request a Free Quote
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+              Begin Your Journey
+              <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+            </button>
           </div>
 
-          {/* Elegant Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block">
-            <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-bounce"></div>
+          {/* Elegant Trust Indicators */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl max-w-5xl mx-auto">
+            <div className="text-center animate-float-luxury stagger-1">
+              <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">30+</div>
+              <div className="text-white/70 text-body font-light tracking-wider uppercase">Years of Mastery</div>
+            </div>
+            <div className="text-center animate-float-luxury stagger-2">
+              <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">5000+</div>
+              <div className="text-white/70 text-body font-light tracking-wider uppercase">Discerning Clients</div>
+            </div>
+            <div className="text-center animate-float-luxury stagger-3">
+              <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">100%</div>
+              <div className="text-white/70 text-body font-light tracking-wider uppercase">Bespoke Creation</div>
+            </div>
+          </div>
+
+          {/* Sophisticated Scroll Indicator */}
+          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 hidden md:block">
+            <div className="w-px h-20 bg-gradient-to-b from-white/40 to-transparent relative">
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 border border-white/50 rounded-full animate-pulse">
+                <div className="w-1 h-1 bg-white/60 rounded-full m-0.5 animate-bounce"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Why Choose KANIOU - USP Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-              Why Choose KANIOU?
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experience the difference that three decades of craftsmanship and dedication make
-            </p>
-          </div>
-
-          {/* USP Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
-            {/* Perfect Fit */}
-            <div className="text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
-                  <Shield className="w-8 h-8 text-[#d5b36a]" />
-                </div>
-              </div>
-              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
-                Perfect Fit
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Every piece is measured and crafted precisely for your windows
+        {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
+        <section className="section-spacing-luxury bg-texture-luxury">
+          <div className="container-golden">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
+              <div className="divider-luxury w-40 mx-auto mb-12"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-8">
+                The Art of Excellence
+              </h2>
+              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
+                Experience the pinnacle of Belgian craftsmanship, where three decades of devotion to perfection 
+                meets contemporary luxury in every meticulously crafted detail.
               </p>
             </div>
 
-            {/* Fast Delivery */}
-            <div className="text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
-                  <Truck className="w-8 h-8 text-[#d5b36a]" />
+            {/* Luxury USP Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-luxury-xl">
+              {/* Perfect Fit - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-1">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Shield className="w-9 h-9 text-white" />
+                  </div>
                 </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Precision Crafted
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Every piece measured and crafted with Swiss precision for your unique space
+                </p>
               </div>
-              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
-                Fast Delivery
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Quick turnaround times without compromising on quality
-              </p>
-            </div>
 
-            {/* Expert Advice */}
-            <div className="text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
-                  <Users className="w-8 h-8 text-[#d5b36a]" />
+              {/* Express Service - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-2">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Truck className="w-9 h-9 text-white" />
+                  </div>
                 </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Express Excellence
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Swift delivery orchestrated with uncompromising attention to detail
+                </p>
               </div>
-              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
-                Expert Advice
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Professional guidance to help you choose the perfect solution
-              </p>
-            </div>
 
-            {/* Premium Quality */}
-            <div className="text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
-                  <Award className="w-8 h-8 text-[#d5b36a]" />
+              {/* Master Consultation - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-3">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Users className="w-9 h-9 text-white" />
+                  </div>
                 </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Master Consultation
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Personalized guidance from artisans with three decades of refined expertise
+                </p>
               </div>
-              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
-                Premium Quality
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Top-grade materials and meticulous attention to detail
-              </p>
-            </div>
 
-            {/* 30+ Years Experience */}
-            <div className="text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-[#d5b36a]/10 rounded-full flex items-center justify-center group-hover:bg-[#d5b36a]/20 transition-all duration-300">
-                  <Clock className="w-8 h-8 text-[#d5b36a]" />
+              {/* Luxury Materials - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-4">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Award className="w-9 h-9 text-white" />
+                  </div>
                 </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Luxury Materials
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Curated finest fabrics and materials for enduring beauty and sophistication
+                </p>
               </div>
-              <h3 className="text-xl font-display font-bold text-gray-900 mb-3">
-                30+ Years Experience
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Trusted expertise built over three decades of excellence
-              </p>
-            </div>
+
+              {/* Heritage Excellence - Ultra Luxury */}
+              <div className="text-center group hover-elegant animate-fade-in-up stagger-5">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-20 h-20 gradient-luxury-gold rounded-full flex items-center justify-center shadow-luxury group-hover:shadow-luxury-hover transition-luxury animate-glow">
+                    <Clock className="w-9 h-9 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-title font-display text-gray-900 mb-4">
+                  Heritage Excellence
+                </h3>
+                <p className="text-body text-gray-600 leading-relaxed font-light">
+                  Three decades of unwavering dedication to the art of window couture
+                </p>
+              </div>
           </div>
         </div>
       </section>
 
-      {/* Product Categories Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-              Our Product Categories
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover our complete range of window treatments designed to transform any space
-            </p>
+        {/* Product Showcase - World-Class Design */}
+        <section className="section-spacing-luxury gradient-luxury-subtle">
+          <div className="container-golden">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
+              <div className="divider-luxury w-40 mx-auto mb-12"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-8">
+                Curated Collections
+              </h2>
+              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
+                Discover our meticulously curated range of premium window treatments, 
+                each piece designed to transform your space into a sanctuary of refined elegance.
+              </p>
+            </div>
+
+            {/* World-Class Product Showcase */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-luxury-xl mb-20">
+              {/* Duo Plissé - Ultra Luxury Card */}
+              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-1" onClick={() => setLocation("/producten/duo-plisse")}>
+                <div className="card-showcase">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={duoPlisseImage}
+                      alt="Duo Plissé Innovation"
+                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center text-gray-800 font-semibold">
+                          Discover Innovation <ArrowRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-title font-display gradient-text-subtle mb-4">
+                      Duo Plissé Innovation
+                    </h3>
+                    <p className="text-body text-gray-600 font-light leading-relaxed">
+                      Revolutionary dual-layer engineering for supreme light orchestration
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Duo Rolgordijnen - Ultra Luxury Card */}
+              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-2" onClick={() => setLocation("/producten/duo-rolgordijnen")}>
+                <div className="card-showcase">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={duoRolgordijnenImage}
+                      alt="Luxury Duo Roller Blinds"
+                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center text-gray-800 font-semibold">
+                          Explore Excellence <ArrowRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-title font-display gradient-text-subtle mb-4">
+                      Duo Roller Mastery
+                    </h3>
+                    <p className="text-body text-gray-600 font-light leading-relaxed">
+                      Versatile light orchestration crafted with contemporary elegance
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Overgordijnen - Ultra Luxury Card */}
+              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-3" onClick={() => setLocation("/producten/overgordijnen")}>
+                <div className="card-showcase">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={overgordijnenImage}
+                      alt="Premium Curtain Couture"
+                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center text-gray-800 font-semibold">
+                          Enter Collection <ArrowRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-title font-display gradient-text-subtle mb-4">
+                      Couture Curtains
+                    </h3>
+                    <p className="text-body text-gray-600 font-light leading-relaxed">
+                      Timeless elegance woven into bespoke masterpieces of sophistication
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Plissé - Ultra Luxury Card */}
+              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-4" onClick={() => setLocation("/producten/plisse")}>
+                <div className="card-showcase">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={plisseImage}
+                      alt="Luxury Plissé Artistry"
+                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center text-gray-800 font-semibold">
+                          Discover Artistry <ArrowRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-title font-display gradient-text-subtle mb-4">
+                      Plissé Perfection
+                    </h3>
+                    <p className="text-body text-gray-600 font-light leading-relaxed">
+                      Sophisticated pleated precision engineered for architectural beauty
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Rolgordijnen - Ultra Luxury Card */}
+              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-5" onClick={() => setLocation("/producten/rolgordijnen")}>
+                <div className="card-showcase">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={rolgordijnenImage}
+                      alt="Premium Roller Excellence"
+                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center text-gray-800 font-semibold">
+                          View Collection <ArrowRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-title font-display gradient-text-subtle mb-4">
+                      Roller Excellence
+                    </h3>
+                    <p className="text-body text-gray-600 font-light leading-relaxed">
+                      Minimalist precision meeting contemporary architectural demands
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Opzethorren - Ultra Luxury Card */}
+              <div className="group cursor-pointer hover-luxury animate-fade-in-up stagger-6" onClick={() => setLocation("/producten/opzethorren")}>
+                <div className="card-showcase">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={opzethorrenImage}
+                      alt="Invisible Protection Systems"
+                      className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-luxury">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
+                        <div className="flex items-center text-gray-800 font-semibold">
+                          Experience Protection <ArrowRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-title font-display gradient-text-subtle mb-4">
+                      Invisible Protection
+                    </h3>
+                    <p className="text-body text-gray-600 font-light leading-relaxed">
+                      Seamless air circulation systems with uncompromising aesthetic integrity
+                    </p>
+                  </div>
+                </div>
+              </div>
           </div>
 
-          {/* Product Categories Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {/* Duo Plissé */}
-            <div 
-              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              onClick={() => setLocation("/producten/duo-plisse")}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={duoPlisseImage}
-                  alt="Duo Plissé Blinds"
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
-                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
-                  Duo Plissé
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  Perfect light control with elegant pleated design
-                </p>
-              </div>
+            {/* Luxury CTA Button */}
+            <div className="text-center">
+              <button
+                onClick={() => setLocation("/producten")}
+                className="btn-luxury-secondary group"
+              >
+                Explore All Collections
+                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+              </button>
             </div>
-
-            {/* Duo Rolgordijnen */}
-            <div 
-              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              onClick={() => setLocation("/producten/duo-rolgordijnen")}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={duoRolgordijnenImage}
-                  alt="Duo Roller Blinds"
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
-                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
-                  Duo Roller Blinds
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  Versatile light filtering with modern appeal
-                </p>
-              </div>
-            </div>
-
-            {/* Overgordijnen */}
-            <div 
-              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              onClick={() => setLocation("/producten/overgordijnen")}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={overgordijnenImage}
-                  alt="Curtains"
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
-                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
-                  Curtains
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  Classic elegance for timeless interior style
-                </p>
-              </div>
-            </div>
-
-            {/* Plissé */}
-            <div 
-              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              onClick={() => setLocation("/producten/plisse")}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={plisseImage}
-                  alt="Plissé Blinds"
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
-                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
-                  Plissé Blinds
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  Sophisticated pleated window coverings
-                </p>
-              </div>
-            </div>
-
-            {/* Rolgordijnen */}
-            <div 
-              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              onClick={() => setLocation("/producten/rolgordijnen")}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={rolgordijnenImage}
-                  alt="Roller Blinds"
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
-                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
-                  Roller Blinds
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  Clean, modern lines for contemporary spaces
-                </p>
-              </div>
-            </div>
-
-            {/* Opzethorren */}
-            <div 
-              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-              onClick={() => setLocation("/producten/opzethorren")}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={opzethorrenImage}
-                  alt="Fly Screens"
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
-                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
-                  Fly Screens
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  Fresh air protection with invisible barriers
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* View All Categories Button */}
-          <div className="text-center">
-            <Button
-              onClick={() => setLocation("/producten")}
-              className="
-                px-8 py-4 
-                text-lg font-semibold
-                bg-[#d5b36a] hover:bg-[#c4a55a] 
-                text-white 
-                border-0
-                rounded-lg
-                transition-all duration-300 
-                transform hover:scale-105 hover:-translate-y-1
-                shadow-lg hover:shadow-xl
-                group
-              "
-            >
-              View All Categories
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
-          </div>
         </div>
       </section>
 
-      {/* Inspiration Gallery Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-              Our Work in Real Homes
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See how our window treatments transform living spaces with style and functionality
-            </p>
+        {/* Inspiration Gallery - Ultra-Luxury Showcase */}
+        <section className="section-spacing-luxury bg-white bg-texture-luxury">
+          <div className="container-golden">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
+              <div className="divider-luxury w-48 mx-auto mb-12"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-8">
+                Masterpieces in Residence
+              </h2>
+              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
+                Witness the transformative power of our artistry in the most discerning homes, 
+                where every window becomes a statement of refined taste and architectural harmony.
+              </p>
+            </div>
+
+            {/* Ultra-Luxury Gallery Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-luxury-lg mb-20">
+              {/* Gallery Showcase 1 - Ultra Luxury */}
+              <div className="group relative overflow-hidden card-ultra-luxury p-0 animate-fade-in-up stagger-1 hover-luxury">
+                <img 
+                  src={gallery1}
+                  alt="KANIOU luxury installation masterpiece"
+                  className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                />
+                <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                
+                {/* Sophisticated overlay with premium button */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-luxury">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-luxury">
+                    <Eye className="w-6 h-6 text-gray-700" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Gallery Showcase 2 - Ultra Luxury */}
+              <div className="group relative overflow-hidden card-ultra-luxury p-0 animate-fade-in-up stagger-2 hover-luxury">
+                <img 
+                  src={gallery2}
+                  alt="KANIOU exquisite installation artistry"
+                  className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                />
+                <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-luxury">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-luxury">
+                    <Eye className="w-6 h-6 text-gray-700" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Gallery Showcase 3 - Ultra Luxury */}
+              <div className="group relative overflow-hidden card-ultra-luxury p-0 animate-fade-in-up stagger-3 hover-luxury">
+                <img 
+                  src={gallery3}
+                  alt="KANIOU premium residential showcase"
+                  className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                />
+                <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-luxury">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-luxury">
+                    <Eye className="w-6 h-6 text-gray-700" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Gallery Showcase 4 - Ultra Luxury */}
+              <div className="group relative overflow-hidden card-ultra-luxury p-0 animate-fade-in-up stagger-4 hover-luxury">
+                <img 
+                  src={gallery4}
+                  alt="KANIOU couture transformation"
+                  className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                />
+                <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-luxury">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-luxury">
+                    <Eye className="w-6 h-6 text-gray-700" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Gallery Showcase 5 - Ultra Luxury */}
+              <div className="group relative overflow-hidden card-ultra-luxury p-0 animate-fade-in-up stagger-5 hover-luxury">
+                <img 
+                  src={gallery5}
+                  alt="KANIOU architectural excellence"
+                  className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                />
+                <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-luxury">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-luxury">
+                    <Eye className="w-6 h-6 text-gray-700" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Gallery Showcase 6 - Ultra Luxury */}
+              <div className="group relative overflow-hidden card-ultra-luxury p-0 animate-fade-in-up stagger-6 hover-luxury">
+                <img 
+                  src={gallery6}
+                  alt="KANIOU bespoke sophistication"
+                  className="w-full h-80 object-cover transition-luxury group-hover:scale-110"
+                />
+                <div className="absolute inset-0 gradient-luxury-overlay opacity-0 group-hover:opacity-100 transition-luxury"></div>
+                
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-luxury">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-luxury">
+                    <Eye className="w-6 h-6 text-gray-700" />
+                  </div>
+                </div>
+              </div>
           </div>
 
-          {/* Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {/* Gallery Image 1 */}
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <img 
-                src={gallery1}
-                alt="KANIOU window treatment installation"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              
-              {/* Hover overlay with view button */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-              </div>
+            {/* Luxury Gallery CTA */}
+            <div className="text-center">
+              <button
+                onClick={() => setLocation("/gallery")}
+                className="btn-luxury-secondary group"
+              >
+                Experience Full Portfolio
+                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+              </button>
             </div>
-
-            {/* Gallery Image 2 */}
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <img 
-                src={gallery2}
-                alt="KANIOU window treatment installation"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </div>
-
-            {/* Gallery Image 3 */}
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <img 
-                src={gallery3}
-                alt="KANIOU window treatment installation"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </div>
-
-            {/* Gallery Image 4 */}
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <img 
-                src={gallery4}
-                alt="KANIOU window treatment installation"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </div>
-
-            {/* Gallery Image 5 */}
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <img 
-                src={gallery5}
-                alt="KANIOU window treatment installation"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </div>
-
-            {/* Gallery Image 6 */}
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
-              <img 
-                src={gallery6}
-                alt="KANIOU window treatment installation"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* View Full Gallery Button */}
-          <div className="text-center">
-            <Button
-              onClick={() => setLocation("/gallery")}
-              className="
-                px-8 py-4 
-                text-lg font-semibold
-                bg-[#d5b36a] hover:bg-[#c4a55a] 
-                text-white 
-                border-0
-                rounded-lg
-                transition-all duration-300 
-                transform hover:scale-105 hover:-translate-y-1
-                shadow-lg hover:shadow-xl
-                group
-              "
-            >
-              View Full Gallery
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
-          </div>
         </div>
       </section>
 
-      {/* Customer Testimonials Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-              What Our Customers Say
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Real experiences from satisfied customers who transformed their homes with KANIOU
-            </p>
-          </div>
-
-          {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-gray-50 rounded-xl p-8 relative">
-              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#d5b36a]/30" />
-              
-              {/* Star Rating */}
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#d5b36a] fill-current" />
-                ))}
-              </div>
-
-              {/* Testimonial Text */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "Perfect service from start to finish! The roller blinds fit exactly and look amazing. The installation was quick and professional. Highly recommend KANIOU for quality window treatments."
+        {/* Client Testimonials - Ultra-Luxury Social Proof */}
+        <section className="section-spacing-luxury gradient-luxury-subtle">
+          <div className="container-golden">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
+              <div className="divider-luxury w-44 mx-auto mb-12"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-8">
+                Voices of Distinction
+              </h2>
+              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
+                Distinguished clients share their experiences of transformation, where KANIOU's artistry 
+                has elevated their most treasured spaces into sanctuaries of refined beauty.
               </p>
-
-              {/* Customer Info */}
-              <div>
-                <p className="font-semibold text-gray-900">Maria Van Der Berg</p>
-                <p className="text-sm text-gray-600">Brussels</p>
-              </div>
             </div>
 
-            {/* Testimonial 2 */}
-            <div className="bg-gray-50 rounded-xl p-8 relative">
-              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#d5b36a]/30" />
-              
-              {/* Star Rating */}
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#d5b36a] fill-current" />
-                ))}
+            {/* Ultra-Luxury Testimonials Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
+              {/* Testimonial 1 - Ultra Luxury */}
+              <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
+                <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />
+                
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-6 h-6 text-gold-500 fill-current" />
+                  ))}
+                </div>
+
+                {/* Premium Testimonial Text */}
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
+                  "An extraordinary experience from consultation to completion. The precision of craftsmanship and attention to detail exceeded our highest expectations. KANIOU has transformed our home into a masterpiece."
+                </p>
+
+                {/* Distinguished Customer Info */}
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">Maria Van Der Berg</p>
+                  <p className="text-body text-gray-600 font-light">Brussels • Interior Designer</p>
+                </div>
               </div>
 
-              {/* Testimonial Text */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "Excellent quality plissé blinds that completely transformed our living room. The consultation was thorough and the advice was spot-on. 30 years of experience really shows!"
-              </p>
+              {/* Testimonial 2 - Ultra Luxury */}
+              <div className="card-ultra-luxury animate-fade-in-up stagger-2 hover-elegant">
+                <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />
+                
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-6 h-6 text-gold-500 fill-current" />
+                  ))}
+                </div>
 
-              {/* Customer Info */}
-              <div>
-                <p className="font-semibold text-gray-900">Johan Pieters</p>
-                <p className="text-sm text-gray-600">Antwerp</p>
+                {/* Premium Testimonial Text */}
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
+                  "The artistry and sophistication of KANIOU's work speaks volumes. Our plissé collection has become the crown jewel of our residence. Three decades of mastery is evident in every detail."
+                </p>
+
+                {/* Distinguished Customer Info */}
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">Johan Pieters</p>
+                  <p className="text-body text-gray-600 font-light">Antwerp • Architect</p>
+                </div>
               </div>
-            </div>
 
-            {/* Testimonial 3 */}
-            <div className="bg-gray-50 rounded-xl p-8 relative">
-              <Quote className="absolute top-6 right-6 w-8 h-8 text-[#d5b36a]/30" />
-              
-              {/* Star Rating */}
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#d5b36a] fill-current" />
-                ))}
+              {/* Testimonial 3 - Ultra Luxury */}
+              <div className="card-ultra-luxury animate-fade-in-up stagger-3 hover-elegant">
+                <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />
+                
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-6 h-6 text-gold-500 fill-current" />
+                  ))}
+                </div>
+
+                {/* Premium Testimonial Text */}
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
+                  "Impeccable service and breathtaking results. The bespoke curtains have redefined luxury in our home. KANIOU's commitment to excellence is unmatched in Belgian craftsmanship."
+                </p>
+
+                {/* Distinguished Customer Info */}
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">Sophie Martens</p>
+                  <p className="text-body text-gray-600 font-light">Ghent • Art Collector</p>
+                </div>
               </div>
-
-              {/* Testimonial Text */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "Fast delivery and beautiful curtains that exceeded our expectations. The fabric quality is outstanding and the fit is perfect. KANIOU truly delivers premium window solutions."
-              </p>
-
-              {/* Customer Info */}
-              <div>
-                <p className="font-semibold text-gray-900">Sophie Martens</p>
-                <p className="text-sm text-gray-600">Ghent</p>
-              </div>
-            </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-6">
-              Ready to transform your space with premium window treatments?
-            </p>
-            <Button
-              onClick={() => setLocation("/quote")}
-              className="
-                px-8 py-4 
-                text-lg font-semibold
-                bg-[#d5b36a] hover:bg-[#c4a55a] 
-                text-white 
-                border-0
-                rounded-lg
-                transition-all duration-300 
-                transform hover:scale-105 hover:-translate-y-1
-                shadow-lg hover:shadow-xl
-                group
-              "
-            >
-              Get Your Free Quote
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
-          </div>
+            {/* Ultra-Luxury CTA */}
+            <div className="text-center mt-20">
+              <p className="text-body text-gray-600 mb-8 font-light max-w-3xl mx-auto leading-relaxed">
+                Ready to embark on a journey of transformation? 
+                <span className="block mt-2">Let our artisans create your bespoke window masterpiece.</span>
+              </p>
+              <button
+                onClick={() => setLocation("/quote")}
+                className="btn-luxury-primary group"
+              >
+                Commence Your Journey
+                <ArrowRight className="ml-4 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+              </button>
+            </div>
         </div>
       </section>
 

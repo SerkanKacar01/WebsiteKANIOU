@@ -500,23 +500,6 @@ const Home = () => {
               
             </div>
 
-            {/* Ultra-Luxury CTA Section */}
-            <div className="luxury-cta-container">
-              <div className="luxury-cta-background"></div>
-              <div className="luxury-cta-content">
-                <div className="luxury-cta-sparkle">✨</div>
-                <button
-                  onClick={() => setLocation("/producten")}
-                  className="luxury-cta-button group"
-                >
-                  <span className="luxury-cta-text">Bekijk alle producten</span>
-                  <div className="luxury-cta-arrow group-hover:translate-x-2">
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                </button>
-                <p className="luxury-cta-subtitle">Ontdek onze volledige collectie van artisanaal maatwerk</p>
-              </div>
-            </div>
           </div>
         </section>
 

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock, ArrowRight } from "lucide-react";
+import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye } from "lucide-react";
 import interiorImage from "@assets/image00001.jpeg";
 import duoPlisseImage from "@assets/Duoplisse.jpeg";
 import duoRolgordijnenImage from "@assets/Duorolgordijnen.jpeg";
@@ -9,6 +9,13 @@ import overgordijnenImage from "@assets/Overgordijnen.jpeg";
 import plisseImage from "@assets/Plisse.jpeg";
 import rolgordijnenImage from "@assets/Rolgordijnen.jpeg";
 import opzethorrenImage from "@assets/Opzethorren.jpeg";
+// Gallery images for real installations
+import gallery1 from "@assets/IMG_9192.jpeg";
+import gallery2 from "@assets/IMG_9204.jpeg";
+import gallery3 from "@assets/IMG_9217.jpeg";
+import gallery4 from "@assets/IMG_9219.jpeg";
+import gallery5 from "@assets/IMG_9220.jpeg";
+import gallery6 from "@assets/IMG_9221.jpeg";
 
 const Home = () => {
   const [, setLocation] = useLocation();
@@ -391,6 +398,149 @@ const Home = () => {
               "
             >
               View All Categories
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Inspiration Gallery Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Our Work in Real Homes
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              See how our window treatments transform living spaces with style and functionality
+            </p>
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {/* Gallery Image 1 */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <img 
+                src={gallery1}
+                alt="KANIOU window treatment installation"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              
+              {/* Hover overlay with view button */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gallery Image 2 */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <img 
+                src={gallery2}
+                alt="KANIOU window treatment installation"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gallery Image 3 */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <img 
+                src={gallery3}
+                alt="KANIOU window treatment installation"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gallery Image 4 */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <img 
+                src={gallery4}
+                alt="KANIOU window treatment installation"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gallery Image 5 */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <img 
+                src={gallery5}
+                alt="KANIOU window treatment installation"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gallery Image 6 */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+              <img 
+                src={gallery6}
+                alt="KANIOU window treatment installation"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+              <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-3">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* View Full Gallery Button */}
+          <div className="text-center">
+            <Button
+              onClick={() => setLocation("/gallery")}
+              className="
+                px-8 py-4 
+                text-lg font-semibold
+                bg-[#d5b36a] hover:bg-[#c4a55a] 
+                text-white 
+                border-0
+                rounded-lg
+                transition-all duration-300 
+                transform hover:scale-105 hover:-translate-y-1
+                shadow-lg hover:shadow-xl
+                group
+              "
+            >
+              View Full Gallery
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>

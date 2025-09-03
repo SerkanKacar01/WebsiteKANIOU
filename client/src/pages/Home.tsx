@@ -1,8 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock } from "lucide-react";
+import { Shield, Truck, Users, Award, Clock, ArrowRight } from "lucide-react";
 import interiorImage from "@assets/image00001.jpeg";
+import duoPlisseImage from "@assets/Duoplisse.jpeg";
+import duoRolgordijnenImage from "@assets/Duorolgordijnen.jpeg";
+import overgordijnenImage from "@assets/Overgordijnen.jpeg";
+import plisseImage from "@assets/Plisse.jpeg";
+import rolgordijnenImage from "@assets/Rolgordijnen.jpeg";
+import opzethorrenImage from "@assets/Opzethorren.jpeg";
 
 const Home = () => {
   const [, setLocation] = useLocation();
@@ -203,6 +209,190 @@ const Home = () => {
                 Trusted expertise built over three decades of excellence
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Categories Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Our Product Categories
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover our complete range of window treatments designed to transform any space
+            </p>
+          </div>
+
+          {/* Product Categories Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {/* Duo Plissé */}
+            <div 
+              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              onClick={() => setLocation("/producten/duo-plisse")}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={duoPlisseImage}
+                  alt="Duo Plissé Blinds"
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
+                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
+                  Duo Plissé
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Perfect light control with elegant pleated design
+                </p>
+              </div>
+            </div>
+
+            {/* Duo Rolgordijnen */}
+            <div 
+              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              onClick={() => setLocation("/producten/duo-rolgordijnen")}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={duoRolgordijnenImage}
+                  alt="Duo Roller Blinds"
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
+                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
+                  Duo Roller Blinds
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Versatile light filtering with modern appeal
+                </p>
+              </div>
+            </div>
+
+            {/* Overgordijnen */}
+            <div 
+              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              onClick={() => setLocation("/producten/overgordijnen")}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={overgordijnenImage}
+                  alt="Curtains"
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
+                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
+                  Curtains
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Classic elegance for timeless interior style
+                </p>
+              </div>
+            </div>
+
+            {/* Plissé */}
+            <div 
+              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              onClick={() => setLocation("/producten/plisse")}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={plisseImage}
+                  alt="Plissé Blinds"
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
+                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
+                  Plissé Blinds
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Sophisticated pleated window coverings
+                </p>
+              </div>
+            </div>
+
+            {/* Rolgordijnen */}
+            <div 
+              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              onClick={() => setLocation("/producten/rolgordijnen")}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={rolgordijnenImage}
+                  alt="Roller Blinds"
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
+                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
+                  Roller Blinds
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Clean, modern lines for contemporary spaces
+                </p>
+              </div>
+            </div>
+
+            {/* Opzethorren */}
+            <div 
+              className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              onClick={() => setLocation("/producten/opzethorren")}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={opzethorrenImage}
+                  alt="Fly Screens"
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-[#d5b36a]/20 transition-all duration-300"></div>
+                <div className="absolute inset-0 border-4 border-transparent group-hover:border-[#d5b36a] transition-all duration-300 rounded-xl"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-[#d5b36a] transition-colors duration-300">
+                  Fly Screens
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Fresh air protection with invisible barriers
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* View All Categories Button */}
+          <div className="text-center">
+            <Button
+              onClick={() => setLocation("/producten")}
+              className="
+                px-8 py-4 
+                text-lg font-semibold
+                bg-[#d5b36a] hover:bg-[#c4a55a] 
+                text-white 
+                border-0
+                rounded-lg
+                transition-all duration-300 
+                transform hover:scale-105 hover:-translate-y-1
+                shadow-lg hover:shadow-xl
+                group
+              "
+            >
+              View All Categories
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Button>
           </div>
         </div>
       </section>

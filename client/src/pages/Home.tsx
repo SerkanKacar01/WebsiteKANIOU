@@ -671,6 +671,9 @@ const Home = () => {
                   <li><a href="/retour-beleid" className="footer-link">Retour beleid</a></li>
                   <li><a href="/garantie-voorwaarden" className="footer-link">Garantie voorwaarden</a></li>
                   <li><a href="/veelgestelde-vragen" className="footer-link">Veelgestelde vragen</a></li>
+                  <li><a href="/bestelling-volgen" className="footer-link">Bestelstatus volgen</a></li>
+                  <li><a href="/contact" className="footer-link">Contact opnemen</a></li>
+                  <li><a href="/service-en-herstellingen" className="footer-link">Service & Herstellingen</a></li>
                 </ul>
               </div>
             </div>

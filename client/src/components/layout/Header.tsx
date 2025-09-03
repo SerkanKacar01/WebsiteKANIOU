@@ -26,28 +26,23 @@ const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Define product categories for dropdown - Complete list per user requirements
+  // Define product categories for dropdown - Exact list per user requirements
   const productCategories = [
-    { label: "Overgordijnen", href: "/producten/overgordijnen" },
-    { label: "Vitrages", href: "/producten/vitrages" },
+    { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
+    { label: "Aluminium jaloezieën", href: "/producten/aluminium-jaloezieen" },
+    { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
+    { label: "Verticaal lamellen", href: "/producten/verticale-lamellen" },
+    { label: "Plissés", href: "/producten/plisses" },
+    { label: "Duo plissés", href: "/producten/duo-plisses" },
     { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
     { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
-    { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
-    { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
-    { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
-    { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
-    { label: "Textiel raamfolie", href: "/producten/textiel-raamfolie" },
+    { label: "Gordijnen", href: "/producten/gordijnen" },
+    { label: "Rails & roedes", href: "/producten/rails-en-roedes" },
+    { label: "Vouwgordijnen", href: "/producten/vouwgordijnen" },
     { label: "Houten shutters", href: "/producten/houten-shutters" },
-    { label: "Inzethorren", href: "/producten/inzethorren" },
-    { label: "Opzethorren", href: "/producten/opzethorren" },
-    { label: "Plissé hordeuren", href: "/producten/plisse-hordeuren" },
-    { label: "Plissé", href: "/producten/plisse" },
-    { label: "Duo plissé", href: "/producten/duo-plisse" },
-    { label: "Dakraam zonweringen", href: "/producten/dakraam-zonweringen" },
-    { label: "Gordijnrails", href: "/producten/gordijnrails" },
-    { label: "Gordijnroedes", href: "/producten/gordijnroedes" },
-    { label: "SQUID textile folie", href: "/producten/squid-textile-foil" },
   ];
 
   // Define navigation items
@@ -57,6 +52,20 @@ const Header = () => {
     { label: t("OVER ONS"), href: "/overons" },
     { label: t("CONTACT"), href: "/contact" },
   ];
+
+  // Handle click outside dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsProductsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -215,106 +224,38 @@ const Header = () => {
             </div>
           ) : (
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {/* Products dropdown menu */}
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger 
-                      className="font-body text-sm bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent px-0 text-text-dark hover:text-accent transition-colors"
-                    >
-                      PRODUCTEN
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto fade-in">
-                      <div className="grid gap-2">
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/houten-jaloezieen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Houten jaloezieën
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/aluminium-jaloezieen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Aluminium jaloezieën
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/kunststof-jaloezieen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Kunststof jaloezieën
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/verticale-lamellen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Verticaal lamellen
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/plisses">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Plissés
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/duo-plisses">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Duo plissés
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/rolgordijnen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Rolgordijnen
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/duo-rolgordijnen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Duo rolgordijnen
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/gordijnen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Gordijnen
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/rails-en-roedes">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Rails & roedes
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/vouwgordijnen">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Vouwgordijnen
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link href="/producten/houten-shutters">
-                            <a className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer">
-                              Houten shutters
-                            </a>
-                          </Link>
-                        </NavigationMenuLink>
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+              {/* Custom Products Dropdown */}
+              <div 
+                className="relative"
+                ref={dropdownRef}
+                onMouseEnter={() => setIsProductsDropdownOpen(true)}
+                onMouseLeave={() => setIsProductsDropdownOpen(false)}
+              >
+                <button
+                  className="font-body text-sm text-text-dark hover:text-accent transition-colors flex items-center gap-1"
+                  onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
+                >
+                  PRODUCTEN
+                  <ChevronDown className={`w-3 h-3 transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {isProductsDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 bg-white shadow-lg border border-neutral-200 rounded-lg p-4 min-w-[280px] max-h-[80vh] overflow-y-auto z-50 fade-in">
+                    <div className="grid gap-2">
+                      {productCategories.map((category) => (
+                        <Link key={category.href} href={category.href}>
+                          <a 
+                            className="block px-3 py-2 text-sm text-text-dark hover:text-accent hover:bg-neutral-50 rounded-md transition-colors cursor-pointer"
+                            onClick={() => setIsProductsDropdownOpen(false)}
+                          >
+                            {category.label}
+                          </a>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>

@@ -1,5 +1,5 @@
 /* WORLD-CLASS LUXURY TYPOGRAPHY SYSTEM */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -248,10 +248,12 @@ html, body {
 }
 
 .gradient-text-luxury {
-  background: linear-gradient(135deg, var(--gold-600) 0%, var(--gold-400) 100%);
+  background: linear-gradient(135deg, #F4E4A6 0%, #E6C988 25%, #D5B36A 50%, #C4A55A 75%, #B8995C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-size: 200% 100%;
+  animation: shimmer-text 3s ease-in-out infinite;
 }
 
 /* ULTRA-PREMIUM GLASS MORPHISM */
@@ -795,14 +797,17 @@ html, body {
 
 .text-shadow-luxury {
   text-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.05),
-    0 1px 2px rgba(213, 179, 106, 0.1);
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(213, 179, 106, 0.2);
 }
 
 .text-glow {
   text-shadow: 
-    0 0 20px rgba(213, 179, 106, 0.3),
-    0 0 40px rgba(213, 179, 106, 0.1);
+    0 0 30px rgba(213, 179, 106, 0.6),
+    0 0 60px rgba(213, 179, 106, 0.3),
+    0 0 80px rgba(213, 179, 106, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* LUXURY DIVIDERS & BORDERS */
@@ -972,8 +977,13 @@ html, body {
 }
 
 @keyframes title-glow {
-  0%, 100% { filter: drop-shadow(0 0 20px rgba(213, 179, 106, 0.2)); }
-  50% { filter: drop-shadow(0 0 40px rgba(213, 179, 106, 0.4)); }
+  0%, 100% { filter: drop-shadow(0 0 30px rgba(213, 179, 106, 0.4)); }
+  50% { filter: drop-shadow(0 0 60px rgba(213, 179, 106, 0.6)); }
+}
+
+@keyframes shimmer-text {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .luxury-subtitle {
@@ -1550,10 +1560,11 @@ html, body {
 
 /* HAUTE COUTURE TYPOGRAPHY SYSTEM */
 .font-luxury-display {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  font-family: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-optical-sizing: auto;
 }
 
 .font-display {
@@ -1600,8 +1611,10 @@ html, body {
 
 /* Typography Scale - Perfect Modular Scale */
 .text-hero {
-  font-size: clamp(3rem, 8vw, 8rem);
-  line-height: 0.9;
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.85;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .text-display {
@@ -1620,8 +1633,10 @@ html, body {
 }
 
 .text-subtitle {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   line-height: 1.4;
+  font-weight: 300;
+  letter-spacing: 0.01em;
 }
 
 .text-body {

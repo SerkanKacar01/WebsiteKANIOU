@@ -137,11 +137,10 @@ const Home = () => {
   });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections(prev => {
-      const newState = { ...prev };
-      newState[section] = !newState[section];
-      return newState;
-    });
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section as keyof typeof prev]
+    }));
   };
 
   const handleExploreProducts = () => {
@@ -192,9 +191,9 @@ const Home = () => {
           </h1>
           
           {/* Luxury Subtitle */}
-          <p className="text-lg md:text-subtitle text-white/85 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-lg">
-            Waar vakmanschap en verfijning samenkomen.
-            <span className="block mt-3 text-white/70 text-base md:text-lg">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
+          <p className="text-lg md:text-subtitle text-white/90 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl font-luxury-display">
+            <span className="block text-xl md:text-2xl font-medium tracking-wide">Waar vakmanschap en verfijning samenkomen.</span>
+            <span className="block mt-4 text-white/75 text-base md:text-lg font-light tracking-wide">Breng stijl, comfort en maatwerk samen in uw interieur met exclusieve raamdecoratie.
             Ontdek de perfecte oplossing voor elke ruimte – vandaag nog.</span>
           </p>
 

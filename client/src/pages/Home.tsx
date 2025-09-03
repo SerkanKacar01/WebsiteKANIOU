@@ -4,6 +4,7 @@ import { useLocation } from "wouter";
 import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Menu, X } from "lucide-react";
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
+import plisseIcon from "@assets/plisse_1756929777496.png";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -313,7 +314,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🌊</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src={plisseIcon} 
+                        alt="Plissés" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Plissés</h3>
                   <p className="luxury-card-subtitle">Gevouwen elegantie</p>
@@ -328,7 +335,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">✨</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src={plisseIcon} 
+                        alt="Duo plissés" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Duo plissés</h3>
                   <p className="luxury-card-subtitle">Dubbele perfectie</p>

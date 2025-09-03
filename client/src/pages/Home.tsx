@@ -253,7 +253,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🪟</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/jaloezieen-icon.png" 
+                        alt="Houten jaloezieën" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Houten jaloezieën</h3>
                   <p className="luxury-card-subtitle">Natuurlijke elegantie</p>
@@ -268,7 +274,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">✨</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/jaloezieen-icon.png" 
+                        alt="Aluminium jaloezieën" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Aluminium jaloezieën</h3>
                   <p className="luxury-card-subtitle">Moderne verfijning</p>
@@ -283,7 +295,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🎯</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/jaloezieen-icon.png" 
+                        alt="Kunststof jaloezieën" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Kunststof jaloezieën</h3>
                   <p className="luxury-card-subtitle">Praktische perfectie</p>
@@ -298,7 +316,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">📐</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/verticaal-lamellen-icon.png" 
+                        alt="Verticaal lamellen" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Verticaal lamellen</h3>
                   <p className="luxury-card-subtitle">Architecturale grandeur</p>
@@ -313,7 +337,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🌊</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/plisse-icon.png" 
+                        alt="Plissés" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Plissés</h3>
                   <p className="luxury-card-subtitle">Gevouwen elegantie</p>
@@ -328,7 +358,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">✨</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/jaloezieen-icon.png" 
+                        alt="Aluminium jaloezieën" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Duo plissés</h3>
                   <p className="luxury-card-subtitle">Dubbele perfectie</p>
@@ -343,7 +379,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🌐</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/rolgordijnen-icon.png" 
+                        alt="Rolgordijnen" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Rolgordijnen</h3>
                   <p className="luxury-card-subtitle">Strakke simpliciteit</p>
@@ -358,7 +400,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🎆</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/duo-rolgordijnen-icon.png" 
+                        alt="Duo rolgordijnen" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Duo rolgordijnen</h3>
                   <p className="luxury-card-subtitle">Innovatieve functionaliteit</p>
@@ -373,7 +421,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🎨</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/gordijnen-icon.png" 
+                        alt="Gordijnen" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Gordijnen</h3>
                   <p className="luxury-card-subtitle">Klassieke grandeur</p>
@@ -388,7 +442,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">⚙️</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/rails-roedes-icon.png" 
+                        alt="Rails & roedes" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Rails & roedes</h3>
                   <p className="luxury-card-subtitle">Perfecte mechaniek</p>
@@ -403,7 +463,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🏠</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/vouwgordijnen-icon.png" 
+                        alt="Vouwgordijnen" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Vouwgordijnen</h3>
                   <p className="luxury-card-subtitle">Rustieke warmte</p>
@@ -418,7 +484,13 @@ const Home = () => {
                 <div className="luxury-card-content">
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">🏡</div>
+                    <div className="luxury-icon">
+                      <img 
+                        src="/images/houten-shutters-icon.png" 
+                        alt="Houten shutters" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
                   </div>
                   <h3 className="luxury-card-title">Houten shutters</h3>
                   <p className="luxury-card-subtitle">Tijdloze klasse</p>

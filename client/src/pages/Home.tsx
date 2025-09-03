@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star } from "lucide-react";
+import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Percent, Tag } from "lucide-react";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -654,6 +654,124 @@ const Home = () => {
               "
             >
               Get Your Free Quote
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Current Promotions Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Current Promotions
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Don't miss out on these exclusive offers for premium window treatments
+            </p>
+          </div>
+
+          {/* Promotions Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {/* Summer Promotion */}
+            <div className="bg-white rounded-xl border-2 border-[#d5b36a] p-8 relative overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <div className="absolute top-4 right-4">
+                <div className="bg-[#d5b36a] text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                  <Percent className="w-4 h-4 mr-1" />
+                  15% OFF
+                </div>
+              </div>
+              
+              <Tag className="w-8 h-8 text-[#d5b36a] mb-4" />
+              
+              <h3 className="text-2xl font-display font-bold text-gray-900 mb-4">
+                Summer Promo: Light-filtering Roller Blinds
+              </h3>
+              
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Beat the summer heat with our premium light-filtering roller blinds. Perfect balance of privacy and natural light for comfortable living spaces.
+              </p>
+              
+              <ul className="text-gray-600 mb-6 space-y-2">
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-[#d5b36a] rounded-full mr-3"></div>
+                  Free professional installation
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-[#d5b36a] rounded-full mr-3"></div>
+                  5-year warranty included
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-[#d5b36a] rounded-full mr-3"></div>
+                  Custom sizing available
+                </li>
+              </ul>
+              
+              <p className="text-sm text-gray-500 mb-4">
+                *Valid until September 30th, 2025
+              </p>
+            </div>
+
+            {/* Duo Plissé Special */}
+            <div className="bg-white rounded-xl border-2 border-[#d5b36a] p-8 relative overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <div className="absolute top-4 right-4">
+                <div className="bg-[#d5b36a] text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                  <Percent className="w-4 h-4 mr-1" />
+                  20% OFF
+                </div>
+              </div>
+              
+              <Tag className="w-8 h-8 text-[#d5b36a] mb-4" />
+              
+              <h3 className="text-2xl font-display font-bold text-gray-900 mb-4">
+                Duo Plissé Special Offer
+              </h3>
+              
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Experience ultimate light control with our innovative duo plissé blinds. Combine privacy and light in one elegant solution.
+              </p>
+              
+              <ul className="text-gray-600 mb-6 space-y-2">
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-[#d5b36a] rounded-full mr-3"></div>
+                  Dual light control system
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-[#d5b36a] rounded-full mr-3"></div>
+                  Premium fabric collection
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-[#d5b36a] rounded-full mr-3"></div>
+                  Energy-efficient design
+                </li>
+              </ul>
+              
+              <p className="text-sm text-gray-500 mb-4">
+                *Buy 2 or more and save an additional 5%
+              </p>
+            </div>
+          </div>
+
+          {/* See All Promotions Button */}
+          <div className="text-center">
+            <Button
+              onClick={() => setLocation("/acties")}
+              className="
+                px-8 py-4 
+                text-lg font-semibold
+                bg-[#d5b36a] hover:bg-[#c4a55a] 
+                text-white 
+                border-0
+                rounded-lg
+                transition-all duration-300 
+                transform hover:scale-105 hover:-translate-y-1
+                shadow-lg hover:shadow-xl
+                group
+              "
+            >
+              See All Promotions
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>

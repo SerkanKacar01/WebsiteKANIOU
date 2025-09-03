@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Menu, X } from "lucide-react";
 import React from "react";
+import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
 const interiorImage = "/images/Overgordijnen.jpeg";
 const duoPlisseImage = "/images/Duoplisse.jpeg";
@@ -46,13 +47,17 @@ const PremiumNavigation = () => {
     <nav className={`nav-luxury ${isScrolled ? 'scrolled' : ''}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Premium Logo */}
           <div className="nav-logo">
             <button 
               onClick={() => setLocation('/')}
-              className="text-3xl font-display font-bold text-gradient hover:scale-105 transition-transform duration-300"
+              className="hover-elegant"
             >
-              KANIOU
+              <img 
+                src={kaniouLogo} 
+                alt="KANIOU - Premium Window Treatments"
+                className="h-12 w-auto transition-luxury hover:scale-105"
+              />
             </button>
           </div>
 

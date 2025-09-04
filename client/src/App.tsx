@@ -13,6 +13,7 @@ import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import FloatingActionButtons from "@/components/ui/FloatingActionButtonsNew";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { CookiebotSetup } from "@/components/CookiebotSetup";
+import Footer from "@/components/layout/Footer";
 
 
 import Home from "@/pages/Home";
@@ -204,6 +205,7 @@ function Router() {
 
         <Route component={NotFound} />
       </Switch>
+      <Footer />
     </>
   );
 }

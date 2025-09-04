@@ -57,6 +57,20 @@ import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import CartPage from "@/pages/CartPage";
 
+// Simple Product Pages
+import PlissesPage from "@/pages/products/plisses";
+import DuoPlissesPage from "@/pages/products/duo-plisses";
+import RolgordijnenSimplePage from "@/pages/products/rolgordijnen-simple";
+import DuoRolgordijnenPage from "@/pages/products/duo-rolgordijnen-simple";
+import OvergordijnenSimplePage from "@/pages/products/overgordijnen-simple";
+import GordijnrailsSimplePage from "@/pages/products/gordijnrails-simple";
+import VitragesSimplePage from "@/pages/products/vitrages-simple";
+import HoutenShuttersSimplePage from "@/pages/products/houten-shutters-simple";
+import HoutenJaloezieeenSimplePage from "@/pages/products/houten-jaloezieen-simple";
+import TextielLamellenSimplePage from "@/pages/products/textiel-lamellen-simple";
+import KunststofJaloezieeenSimplePage from "@/pages/products/kunststof-jaloezieen-simple";
+import KunststofLamellenSimplePage from "@/pages/products/kunststof-lamellen-simple";
+
 
 
 
@@ -110,24 +124,24 @@ function Router() {
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
         
         {/* New /producten/ routes for all categories */}
-        <Route path="/producten/overgordijnen" component={ProductCategoryPage} />
-        <Route path="/producten/vitrages" component={ProductCategoryPage} />
-        <Route path="/producten/rolgordijnen" component={ProductCategoryPage} />
-        <Route path="/producten/duo-rolgordijnen" component={ProductCategoryPage} />
-        <Route path="/producten/textiel-lamellen" component={ProductCategoryPage} />
-        <Route path="/producten/kunststof-lamellen" component={ProductCategoryPage} />
-        <Route path="/producten/houten-jaloezieen" component={ProductCategoryPage} />
-        <Route path="/producten/kunststof-jaloezieen" component={ProductCategoryPage} />
+        <Route path="/producten/overgordijnen" component={OvergordijnenSimplePage} />
+        <Route path="/producten/vitrages" component={VitragesSimplePage} />
+        <Route path="/producten/rolgordijnen" component={RolgordijnenSimplePage} />
+        <Route path="/producten/duo-rolgordijnen" component={DuoRolgordijnenPage} />
+        <Route path="/producten/textiel-lamellen" component={TextielLamellenSimplePage} />
+        <Route path="/producten/kunststof-lamellen" component={KunststofLamellenSimplePage} />
+        <Route path="/producten/houten-jaloezieen" component={HoutenJaloezieeenSimplePage} />
+        <Route path="/producten/kunststof-jaloezieen" component={KunststofJaloezieeenSimplePage} />
         <Route path="/producten/textiel-raamfolie" component={ProductCategoryPage} />
-        <Route path="/producten/houten-shutters" component={ProductCategoryPage} />
+        <Route path="/producten/houten-shutters" component={HoutenShuttersSimplePage} />
         <Route path="/producten/horren" component={ProductCategoryPage} />
         <Route path="/producten/inzethorren" component={ProductCategoryPage} />
         <Route path="/producten/opzethorren" component={ProductCategoryPage} />
         <Route path="/producten/plisse-hordeuren" component={ProductCategoryPage} />
-        <Route path="/producten/plisse" component={ProductCategoryPage} />
-        <Route path="/producten/duo-plisse" component={ProductCategoryPage} />
+        <Route path="/producten/plisse" component={PlissesPage} />
+        <Route path="/producten/duo-plisse" component={DuoPlissesPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
-        <Route path="/producten/gordijnrails" component={ProductCategoryPage} />
+        <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
 

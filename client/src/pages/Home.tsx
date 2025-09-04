@@ -38,16 +38,33 @@ const gallery6 = gallery6Src;
 const PremiumNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 50);
+      
+      // Only check background for mobile menu when it's open
+      if (isMenuOpen && window.innerWidth < 768) {
+        // Simple logic: if scrolled past hero section (assumed to be dark),
+        // we're likely on a light background
+        const isOnLightBackground = scrollY > window.innerHeight * 0.8;
+        setMobileMenuNeedsContrast(isOnLightBackground);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMenuOpen]);
+
+  // Reset contrast when menu closes
+  React.useEffect(() => {
+    if (!isMenuOpen) {
+      setMobileMenuNeedsContrast(false);
+    }
+  }, [isMenuOpen]);
 
   const navigationLinks = [
     { name: 'Gallerij', path: '/gallerij' },
@@ -98,7 +115,11 @@ const PremiumNavigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-white hover:text-white transition-colors"
+            className={`md:hidden p-2 transition-all duration-300 rounded-lg ${
+              mobileMenuNeedsContrast
+                ? 'bg-black/80 text-white hover:bg-black/90 backdrop-blur-sm shadow-lg'
+                : 'text-white hover:text-white'
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -107,7 +128,11 @@ const PremiumNavigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 animate-fade-in-up">
+          <div className={`md:hidden mt-4 pb-4 animate-fade-in-up transition-all duration-300 rounded-lg ${
+            mobileMenuNeedsContrast 
+              ? 'bg-black/90 backdrop-blur-sm mx-2 px-4 py-3 shadow-xl' 
+              : ''
+          }`}>
             <div className="flex flex-col space-y-4">
               {navigationLinks.map((link) => (
                 <button
@@ -116,7 +141,11 @@ const PremiumNavigation = () => {
                     setLocation(link.path);
                     setIsMenuOpen(false);
                   }}
-                  className="nav-link text-left"
+                  className={`transition-all duration-300 text-left font-medium py-3 px-4 rounded-lg border border-gold-300/30 ${
+                    mobileMenuNeedsContrast
+                      ? 'text-white hover:bg-white/10 hover:border-gold-400/50'
+                      : 'nav-link'
+                  }`}
                 >
                   {link.name}
                 </button>
@@ -126,7 +155,11 @@ const PremiumNavigation = () => {
                   setLocation('/quote');
                   setIsMenuOpen(false);
                 }}
-                className="btn-luxury mt-4"
+                className={`mt-4 transition-all duration-300 ${
+                  mobileMenuNeedsContrast
+                    ? 'bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]'
+                    : 'btn-luxury'
+                }`}
               >
                 VRIJBLIJVEND OFFERTE
               </button>

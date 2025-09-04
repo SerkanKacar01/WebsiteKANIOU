@@ -1,0 +1,60 @@
+✅ GOAL
+
+Ensure the mobile navigation menu (hamburger menu) remains visible and readable even when scrolling over white/light backgrounds. The menu buttons must automatically adapt their background or text color for contrast and readability.
+
+⸻
+
+📱 AFFECTED AREA
+
+Only apply this fix to the mobile version (screens smaller than 768px) and only when the hamburger menu is open and the user scrolls.
+
+⸻
+
+🖼️ VISUAL PROBLEM
+
+You can refer to these two screenshots to explain the issue:
+	1.	❌ Problem example – File: Scherm­afbeelding 2025-09-04 om 19.59.35.png
+The menu buttons (Gallerij, Over Ons, Contact) become unreadable when they scroll over a white/light background.
+	2.	✅ Desired visibility – File: Scherm­afbeelding 2025-09-04 om 19.59.33.png
+This is how the menu should always look: clear contrast, readable buttons, background gradient or shaded container.
+
+⸻
+
+🛠️ REPLIT INSTRUCTION (NO CODE, STEP-BY-STEP)
+	1.	Detect scroll position when menu is open
+	•	Add logic that listens for scroll events only when the hamburger menu is open on mobile.
+	2.	Change background or text style on scroll
+	•	When the user scrolls down and the background behind the menu becomes white/light:
+	•	Either:
+	•	Add a semi-transparent dark overlay behind the menu buttons
+	•	Or change the button background color dynamically to something darker or slightly opaque
+	•	Optional: also change text color if needed (e.g., from white → dark gray)
+	3.	Smooth transition
+	•	Ensure that the background and/or text color transitions smoothly (e.g., 0.3s ease-in-out) when scrolling over different sections.
+	4.	Keep design consistent
+	•	The hamburger menu must retain its elegant look:
+	•	Rounded corners
+	•	Shadow if needed
+	•	Use the existing gold gradient if possible — or switch to a slightly darker variant when overlapping light sections
+	5.	Responsiveness
+	•	Test the fix across:
+	•	iPhone-sized screens
+	•	Android-sized devices
+	•	Horizontal and vertical scroll scenarios
+
+⸻
+
+🔁 BONUS OPTION (Optional for Replit)
+
+If dynamic scroll detection is too heavy, a simpler fix would be:
+	•	Keep the mobile menu in a fixed background container (dark or slightly tinted) that doesn’t allow transparency.
+	•	This ensures it always looks the same regardless of scroll position.
+
+⸻
+
+📎 FINAL NOTES
+
+✅ The mobile navigation must always remain visible and readable, no matter the page scroll background.
+❌ Avoid letting white-on-white or light-on-light overlap occur.
+📱 Apply only on mobile.
+🧱 Screenshots can be used to illustrate the before/after expectations.

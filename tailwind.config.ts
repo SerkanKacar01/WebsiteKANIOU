@@ -61,6 +61,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gold: {
+          DEFAULT: "#D5B36A",
+          50: "#FEFDF8",
+          100: "#FDF9E8",
+          200: "#F8F0D1",
+          300: "#F0E4B3",
+          400: "#E6D494",
+          500: "#D5B36A",
+          600: "#C4A55A",
+          700: "#A68947",
+          800: "#8B6D37",
+          900: "#6F5529",
+        },
       },
       keyframes: {
         "accordion-down": {

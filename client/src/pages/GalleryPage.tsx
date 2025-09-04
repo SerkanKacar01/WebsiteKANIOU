@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
@@ -10,46 +10,11 @@ type GalleryItem = {
   imageUrl: string;
   categoryId: number;
 };
-import { Button } from "@/components/ui/button";
 
 const GalleryPage = () => {
-  const { data: allGalleryItems = [], isLoading, error } = useQuery<GalleryItem[]>({
+  const { data: galleryItems = [], isLoading, error } = useQuery<GalleryItem[]>({
     queryKey: ['/api/gallery'],
   });
-
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-
-  // Filter items based on selected category
-  const galleryItems = useMemo(() => {
-    if (selectedCategory === null) return allGalleryItems;
-    return allGalleryItems.filter(item => item.categoryId === selectedCategory);
-  }, [allGalleryItems, selectedCategory]);
-
-  // Get unique categories
-  const categories = useMemo(() => {
-    const categoryMap = new Map();
-    allGalleryItems.forEach(item => {
-      if (item.categoryId && !categoryMap.has(item.categoryId)) {
-        categoryMap.set(item.categoryId, {
-          id: item.categoryId,
-          name: getCategoryName(item.categoryId)
-        });
-      }
-    });
-    return Array.from(categoryMap.values());
-  }, [allGalleryItems]);
-
-  function getCategoryName(categoryId: number): string {
-    const categoryNames: Record<number, string> = {
-      1: "Gordijnen",
-      2: "Verticale Lamellen", 
-      3: "Rolgordijnen",
-      4: "Plissé",
-      5: "Vitrage",
-      6: "Conservatory"
-    };
-    return categoryNames[categoryId] || "Overige";
-  }
 
   return (
     <>
@@ -86,7 +51,7 @@ const GalleryPage = () => {
             {/* Premium Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto mb-12">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{allGalleryItems.length}+</div>
+                <div className="text-3xl font-bold text-primary">{galleryItems.length}+</div>
                 <div className="text-sm uppercase tracking-wide text-neutral-600">Projecten</div>
               </div>
               <div className="text-center">
@@ -105,29 +70,6 @@ const GalleryPage = () => {
       {/* Gallery Section */}
       <div className="py-16 bg-white">
         <Container>
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-3 mb-16">
-            <Button
-              variant={selectedCategory === null ? "default" : "outline"}
-              size="lg"
-              onClick={() => setSelectedCategory(null)}
-              className="px-6 py-3 rounded-full transition-all duration-300 hover:scale-105"
-            >
-              Alle Projecten
-            </Button>
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={selectedCategory === category.id ? "default" : "outline"}
-                size="lg"
-                onClick={() => setSelectedCategory(category.id)}
-                className="px-6 py-3 rounded-full transition-all duration-300 hover:scale-105"
-              >
-                {category.name}
-              </Button>
-            ))}
-          </div>
-
           {/* Gallery Grid */}
           <GalleryGrid items={galleryItems} isLoading={isLoading} error={error} />
         </Container>

@@ -50,3 +50,11 @@ export const galleryImage_IMG9220 = "/src/assets/IMG_9220.jpeg";
 export const galleryImage_IMG9217 = "/src/assets/IMG_9217.jpeg";
 export const galleryImage_IMG9204 = "/src/assets/IMG_9204.jpeg";
 export const galleryImage_IMG9192 = "/src/assets/IMG_9192.jpeg";
+
+// High-end gallery images
+export const galleryImage_new1 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.49_1757018260050.png";
+export const galleryImage_new2 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.33_1757018260051.png";
+export const galleryImage_new3 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.22_1757018260051.png";
+export const galleryImage_new4 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.03_1757018260051.png";
+export const galleryImage_new5 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.10_1757018260051.png";
+export const galleryImage_new6 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.41_1757018260051.png";

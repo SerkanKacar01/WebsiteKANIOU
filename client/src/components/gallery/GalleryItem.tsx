@@ -44,6 +44,12 @@ import {
   galleryImage_IMG9217,
   galleryImage_IMG9204,
   galleryImage_IMG9192,
+  galleryImage_new1,
+  galleryImage_new2,
+  galleryImage_new3,
+  galleryImage_new4,
+  galleryImage_new5,
+  galleryImage_new6,
 } from "@/assets/fallback";
 
 interface GalleryItemProps {
@@ -96,6 +102,13 @@ const imageMap: Record<string, string> = {
   '/src/assets/IMG_9217.jpeg': galleryImage_IMG9217,
   '/src/assets/IMG_9204.jpeg': galleryImage_IMG9204,
   '/src/assets/IMG_9192.jpeg': galleryImage_IMG9192,
+  // High-end gallery images
+  '/assets/new-gallery-1': galleryImage_new1,
+  '/assets/new-gallery-2': galleryImage_new2,
+  '/assets/new-gallery-3': galleryImage_new3,
+  '/assets/new-gallery-4': galleryImage_new4,
+  '/assets/new-gallery-5': galleryImage_new5,
+  '/assets/new-gallery-6': galleryImage_new6,
 };
 
 const GalleryItem = ({ item }: GalleryItemProps) => {
@@ -107,30 +120,63 @@ const GalleryItem = ({ item }: GalleryItemProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="gallery-item group relative overflow-hidden rounded-lg cursor-pointer h-64">
-          <img
-            src={imageUrl}
-            alt={item.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {/* Removed text content to keep only the hover effect */}
+        <div className="gallery-item group relative overflow-hidden rounded-xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 h-80">
+          <div className="w-full h-full overflow-hidden">
+            <img
+              src={imageUrl}
+              alt={item.title}
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
+              loading="lazy"
+            />
+          </div>
+          
+          {/* Premium overlay with golden accent */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+          
+          {/* Golden border effect */}
+          <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-400/50 rounded-xl transition-all duration-500"></div>
+          
+          {/* Content overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+            <h3 className="font-display text-lg font-semibold mb-1 text-shadow">
+              {item.title}
+            </h3>
+            <p className="font-body text-sm opacity-90 line-clamp-2">
+              {item.description}
+            </p>
+          </div>
+          
+          {/* Premium indicator */}
+          <div className="absolute top-3 right-3 w-8 h-8 bg-yellow-400/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
+            <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl p-0 overflow-hidden">
+      
+      <DialogContent className="sm:max-w-5xl p-0 overflow-hidden bg-black/95 border-yellow-400/20">
         <div className="relative">
           <img
             src={imageUrl}
             alt={item.title}
-            className="w-full object-contain max-h-[80vh]"
+            className="w-full object-contain max-h-[85vh] mx-auto"
           />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-            <h3 className="font-display text-xl text-white font-medium mb-1">
-              {item.title}
-            </h3>
-            <p className="font-body text-white/90 text-sm">{item.description}</p>
+          
+          {/* Enhanced modal overlay */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-8">
+            <div className="max-w-3xl mx-auto">
+              <h3 className="font-display text-2xl text-white font-semibold mb-3 text-shadow-lg">
+                {item.title}
+              </h3>
+              <p className="font-body text-white/90 text-base leading-relaxed">
+                {item.description}
+              </p>
+              
+              {/* Premium badge */}
+              <div className="inline-flex items-center mt-4 px-3 py-1 bg-yellow-400/20 backdrop-blur-sm rounded-full border border-yellow-400/30">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></div>
+                <span className="text-yellow-400 text-xs font-medium uppercase tracking-wide">Premium Kwaliteit</span>
+              </div>
+            </div>
           </div>
         </div>
       </DialogContent>

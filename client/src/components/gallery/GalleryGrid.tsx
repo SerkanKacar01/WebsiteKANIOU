@@ -41,9 +41,18 @@ const GalleryGrid = ({ items, isLoading, error }: GalleryGridProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {items.map((item) => (
-        <GalleryItem key={item.id} item={item} />
+    <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+      {items.map((item, index) => (
+        <div 
+          key={item.id} 
+          className="break-inside-avoid mb-6"
+          style={{ 
+            animationDelay: `${index * 100}ms`,
+            animation: 'fadeInUp 0.6s ease-out forwards'
+          }}
+        >
+          <GalleryItem item={item} />
+        </div>
       ))}
     </div>
   );

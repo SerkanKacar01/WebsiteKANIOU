@@ -50,6 +50,7 @@ declare global {
   var memoryProducts: Product[] | undefined;
   var memoryCartItems: any[] | undefined;
   var memoryOrderDocuments: OrderDocument[] | undefined;
+  var memoryGalleryItems: GalleryItem[] | undefined;
 }
 
 export interface IStorage {
@@ -294,7 +295,76 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
       return await db.select().from(galleryItems);
     } catch (error) {
       console.warn('Database connection issue for gallery');
-      return [];
+      // Return high-end gallery items from memory
+      if (!global.memoryGalleryItems) {
+        global.memoryGalleryItems = [
+          {
+            id: 1,
+            title: "Luxe Woonkamer Gordijnen",
+            description: "Elegante beige gordijnen in moderne woonkamer met warme sfeerverlichting en stijlvolle meubels.",
+            imageUrl: "/assets/new-gallery-1",
+            categoryId: 1
+          },
+          {
+            id: 2,
+            title: "Premium Verticale Lamellen",
+            description: "Professionele verticale lamellen voor kantoor- en woonruimtes met perfecte lichtregeling.",
+            imageUrl: "/assets/new-gallery-2", 
+            categoryId: 2
+          },
+          {
+            id: 3,
+            title: "Designer Rolgordijnen",
+            description: "Moderne rolgordijnen in neutrale tinten voor een stijlvolle en functionele raamoplossing.",
+            imageUrl: "/assets/new-gallery-3",
+            categoryId: 3
+          },
+          {
+            id: 4,
+            title: "Slaapkamer Verduisterings Gordijnen",
+            description: "Complete verduistering voor optimale rust met luxe donkere gordijnen en stijlvolle plooien.",
+            imageUrl: "/assets/new-gallery-4",
+            categoryId: 1
+          },
+          {
+            id: 5,
+            title: "Dag & Nacht Rolgordijnen",
+            description: "Innovatieve duo rolgordijnen voor perfecte privacy en lichtcontrole in elke ruimte.",
+            imageUrl: "/assets/new-gallery-5",
+            categoryId: 3
+          },
+          {
+            id: 6,
+            title: "Luxe Plissé Gordijnen",
+            description: "Elegante plissé raambekleding met premium afwerking voor exclusieve interieurs.",
+            imageUrl: "/assets/new-gallery-6",
+            categoryId: 4
+          },
+          // Additional existing gallery items
+          {
+            id: 7,
+            title: "Moderne Overgordijnen",
+            description: "Stijlvolle overgordijnen voor een warme en uitnodigende woonsfeer.",
+            imageUrl: "/src/assets/Overgordijnen.jpeg",
+            categoryId: 1
+          },
+          {
+            id: 8,
+            title: "Duo Plissé Rolgordijnen",
+            description: "Innovative duo plissé voor optimale lichtregeling en privacy.",
+            imageUrl: "/src/assets/Duoplisse.jpeg",
+            categoryId: 4
+          },
+          {
+            id: 9,
+            title: "Inbetween Vitrage",
+            description: "Moderne inbetween vitrage voor subtiele privacy en lichtfiltering.",
+            imageUrl: "/src/assets/Inbetween.jpeg",
+            categoryId: 5
+          }
+        ];
+      }
+      return global.memoryGalleryItems;
     }
   }
   

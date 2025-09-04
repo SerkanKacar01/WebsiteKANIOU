@@ -3909,3 +3909,96 @@ body.cookiebot-active {
     animation: none;
   }
 }
+
+/* MOBILE RESPONSIVE STYLES FOR "DE KUNST VAN PERFECTIE" SECTION */
+@media (max-width: 767px) {
+  /* Ultra-luxury section mobile adjustments */
+  .ultra-luxury-features-section {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+
+  /* Premium badge mobile optimization */
+  .luxury-section-badge-premium {
+    padding: 8px 20px;
+    margin-bottom: 1.5rem;
+    border-radius: 40px;
+  }
+
+  .luxury-badge-text-premium {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  /* Ultra-luxury title mobile responsive */
+  .ultra-luxury-title {
+    font-size: clamp(2rem, 12vw, 3.5rem);
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .ultra-luxury-title-line {
+    font-weight: 300;
+    margin-bottom: 0.25rem;
+  }
+
+  .ultra-luxury-title-emphasis {
+    font-weight: 600;
+    text-shadow: 0 0 40px rgba(213, 179, 106, 0.4);
+  }
+
+  /* Ultra-luxury subtitle mobile optimization */
+  .ultra-luxury-subtitle {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    line-height: 1.5;
+    padding: 0 1rem;
+    max-width: 100%;
+  }
+
+  /* Section header mobile spacing */
+  .ultra-luxury-features-section .text-center.mb-32 {
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .ultra-luxury-features-section {
+    padding: 3rem 0;
+  }
+
+  .luxury-section-badge-premium {
+    padding: 6px 16px;
+    margin-bottom: 1rem;
+  }
+
+  .luxury-badge-text-premium {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .ultra-luxury-title {
+    font-size: clamp(1.75rem, 10vw, 2.75rem);
+    margin-bottom: 1rem;
+  }
+
+  .ultra-luxury-subtitle {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    padding: 0 0.75rem;
+  }
+
+  .ultra-luxury-features-section .text-center.mb-32 {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Large mobile devices */
+@media (min-width: 480px) and (max-width: 767px) {
+  .ultra-luxury-title {
+    font-size: clamp(2.25rem, 10vw, 3.25rem);
+  }
+
+  .ultra-luxury-subtitle {
+    font-size: clamp(1.05rem, 3.8vw, 1.2rem);
+    padding: 0 1.25rem;
+  }
+}

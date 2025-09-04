@@ -38,7 +38,6 @@ import Admin from "@/pages/Admin";
 import { Product360Demo } from "@/components/Product360Demo";
 import { RewardsSystem } from "@/components/RewardsSystem";
 import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
-import { OnboardingWizard } from "@/components/OnboardingWizard";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -164,21 +163,6 @@ function Router() {
         <Route path="/product-360-demo" component={Product360Demo} />
         <Route path="/rewards" component={RewardsSystem} />
         <Route path="/recommendations" component={SmartRecommendationEngine} />
-        <Route path="/onboarding" component={() => {
-          // Manual onboarding trigger for testing
-          return (
-            <OnboardingWizard 
-              onComplete={() => {
-                localStorage.setItem('kaniou_onboarding_completed', 'true');
-                window.location.href = '/';
-              }}
-              onSkip={() => {
-                localStorage.setItem('kaniou_onboarding_skipped', 'true');
-                window.location.href = '/';
-              }}
-            />
-          );
-        }} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/cookie-policy" component={CookiePolicy} />
@@ -226,35 +210,6 @@ function Router() {
 
 function App() {
   const { language } = useLanguage();
-  const [shouldShowOnboarding, setShouldShowOnboarding] = useState(false);
-
-  // GDPR-compliant onboarding check - only use localStorage after consent
-  useEffect(() => {
-    try {
-      // Only access localStorage if user has given preferences consent via Cookiebot
-      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
-        const hasCompletedOnboarding = localStorage.getItem('kaniou_onboarding_completed');
-        const hasVisitedBefore = localStorage.getItem('kaniou_has_visited');
-        
-        // Show onboarding for completely new users
-        if (!hasCompletedOnboarding && !hasVisitedBefore) {
-          setShouldShowOnboarding(true);
-          localStorage.setItem('kaniou_has_visited', 'true');
-        }
-      } else {
-        // For first-time visitors without consent, still show onboarding but don't store
-        // Check if this is a new session without any previous interaction
-        const sessionOnboarding = sessionStorage.getItem('session_onboarding_shown');
-        if (!sessionOnboarding) {
-          setShouldShowOnboarding(true);
-          sessionStorage.setItem('session_onboarding_shown', 'true');
-        }
-      }
-    } catch (error) {
-      // Silently handle any localStorage errors without breaking the app
-      console.warn('Onboarding check failed:', error);
-    }
-  }, []);
 
   // Update language-specific metadata
   useEffect(() => {
@@ -262,37 +217,6 @@ function App() {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   }, [language]);
 
-  const handleOnboardingComplete = () => {
-    setShouldShowOnboarding(false);
-    
-    // Only store preference if user has given consent
-    try {
-      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
-        localStorage.setItem('kaniou_onboarding_completed', 'true');
-      } else {
-        // Store in session for this session only
-        sessionStorage.setItem('kaniou_onboarding_completed', 'true');
-      }
-    } catch (error) {
-      console.warn('Failed to store onboarding preference:', error);
-    }
-  };
-
-  const handleOnboardingSkip = () => {
-    setShouldShowOnboarding(false);
-    
-    // Only store preference if user has given consent
-    try {
-      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
-        localStorage.setItem('kaniou_onboarding_skipped', 'true');
-      } else {
-        // Store in session for this session only
-        sessionStorage.setItem('kaniou_onboarding_skipped', 'true');
-      }
-    } catch (error) {
-      console.warn('Failed to store onboarding preference:', error);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -305,12 +229,6 @@ function App() {
           <FloatingActionButtons />
           <CookiebotSetup />
 
-          {shouldShowOnboarding && (
-            <OnboardingWizard 
-              onComplete={handleOnboardingComplete}
-              onSkip={handleOnboardingSkip}
-            />
-          )}
         </TooltipProvider>
       </QueryClientProvider>
     </div>

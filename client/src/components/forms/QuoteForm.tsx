@@ -325,10 +325,10 @@ const QuoteForm = () => {
 
         <Button
           type="submit"
-          className="w-full bg-secondary hover:bg-accent"
+          className="luxury-form-button mt-8"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Offerte aanvragen"}
+          {isSubmitting ? "Versturen..." : "Offerte aanvragen"}
         </Button>
       </form>
     </Form>

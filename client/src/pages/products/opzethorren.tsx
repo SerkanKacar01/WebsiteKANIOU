@@ -39,7 +39,7 @@ const OpzethorrenPage = () => {
               </BreadcrumbSeparator>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="/products">Producten</Link>
+                  <Link href="/">Producten</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>

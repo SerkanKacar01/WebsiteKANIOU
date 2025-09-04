@@ -18,7 +18,15 @@ import {
   TreePine,
   Wrench,
   Euro,
+  ChevronRight,
 } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const HoutenShuttersPage = () => {
   const { t } = useLanguage();
@@ -101,6 +109,33 @@ const HoutenShuttersPage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background">
+        {/* Breadcrumb */}
+        <div className="bg-neutral-100 py-4">
+          <Container>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">
+                    <Home className="h-4 w-4" />
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  <ChevronRight className="h-4 w-4" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Producten</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  <ChevronRight className="h-4 w-4" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink>Houten Shutters</BreadcrumbLink>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </Container>
+        </div>
+        
         <Container>
           {/* Hero Section */}
           <div className="py-16 md:py-24">

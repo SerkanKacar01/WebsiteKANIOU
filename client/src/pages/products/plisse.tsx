@@ -44,7 +44,7 @@ const PlissePage = () => {
                 <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products">Producten</BreadcrumbLink>
+                <BreadcrumbLink href="/">Producten</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <ChevronRight className="h-4 w-4" />

@@ -72,7 +72,7 @@ function Router() {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
 
     if (location === "/gallery" || location === "/gallerij") return t("gallery.title") + " | " + t("app.title");
-    if (location === "/about" || location === "/overons") return t("about.title") + " | " + t("app.title");
+    if (location === "/about" || location === "/overons" || location === "/over-ons") return "Over ons | Kaniou Zilvernaald";
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
     if (location === "/offerte") return "Offerte aanvragen" + " | " + t("app.title");
@@ -144,6 +144,7 @@ function Router() {
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/overons" component={AboutPage} />
+        <Route path="/over-ons" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/zakelijk" component={BusinessPage} />
         <Route path="/business" component={BusinessPage} />

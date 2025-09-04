@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { GalleryItem as GalleryItemType } from "@/lib/types";
+type GalleryItemType = {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  categoryId: number;
+};
 import {
   galleryImage1,
   galleryImage2,

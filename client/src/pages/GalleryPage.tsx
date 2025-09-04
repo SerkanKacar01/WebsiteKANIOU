@@ -3,7 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
-import { GalleryItem } from "@shared/schema";
+type GalleryItem = {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  categoryId: number;
+};
 import { Button } from "@/components/ui/button";
 
 const GalleryPage = () => {

@@ -1,18 +1,17 @@
-// KANIOU Gallery - Premium Interior Design Images
-// All new high-end gallery images
-export const galleryImage1 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.39_1757020414760.png";
-export const galleryImage2 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.16_1757020414760.png";
-export const galleryImage3 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.35_1757020414760.png";
-export const galleryImage4 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.14_1757020414760.png";
-export const galleryImage5 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.08_1757020414760.png";
-export const galleryImage6 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.03_1757020414760.png";
-export const galleryImage7 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.06_1757020414761.png";
-export const galleryImage8 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.10_1757020414761.png";
-export const galleryImage9 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.41_1757020414761.png";
-export const galleryImage10 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.22_1757020414761.png";
-export const galleryImage11 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.27_1757020414761.png";
-export const galleryImage12 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.29_1757020414761.png";
-export const galleryImage13 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.33_1757020414761.png";
-export const galleryImage14 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.18_1757020414761.png";
-export const galleryImage15 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.49_1757020414762.png";
-export const galleryImage16 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.20_1757020414762.png";
+// KANIOU Gallery - Premium Interior Design Images using existing assets
+export const galleryImage1 = "/src/assets/IMG_9293.jpg";
+export const galleryImage2 = "/src/assets/IMG_9294.jpg";
+export const galleryImage3 = "/src/assets/IMG_9295.jpg";
+export const galleryImage4 = "/src/assets/IMG_9296.jpg";
+export const galleryImage5 = "/src/assets/IMG_9297.jpg";
+export const galleryImage6 = "/src/assets/IMG_9298.jpg";
+export const galleryImage7 = "/src/assets/IMG_9299.jpg";
+export const galleryImage8 = "/src/assets/IMG_9300.jpg";
+export const galleryImage9 = "/src/assets/IMG_9301.jpg";
+export const galleryImage10 = "/src/assets/IMG_9302.jpg";
+export const galleryImage11 = "/src/assets/IMG_9303.jpg";
+export const galleryImage12 = "/src/assets/IMG_9304.jpg";
+export const galleryImage13 = "/src/assets/IMG_9305.jpg";
+export const galleryImage14 = "/src/assets/IMG_9306.jpg";
+export const galleryImage15 = "/src/assets/IMG_9308.jpg";
+export const galleryImage16 = "/src/assets/IMG_9309.jpg";

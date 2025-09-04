@@ -1,0 +1,100 @@
+✅ INSTRUCTION: CREATE A HIGH-END “ABOUT US” PAGE FOR KANIOU ZILVERNAALD
+
+⸻
+
+🎯 Objective:
+
+Build a fully designed, responsive, and professional “About Us” page for KANIOU ZILVERNAALD that reflects its high-end image, long-standing expertise, and luxury service in the curtain and window coverings industry.
+
+⸻
+
+📄 Route and File Setup:
+	•	Route: /over-ons
+	•	Component/File: AboutUsPage.jsx or similar
+	•	Title (SEO): Over ons | Kaniou Zilvernaald
+	•	Meta Description: Ontdek het verhaal achter Kaniou Zilvernaald – specialist in gordijnen, zonweringen en maatwerkoplossingen met meer dan 30 jaar ervaring.
+
+⸻
+
+🎨 Design Guidelines:
+	•	High-end look: Elegant fonts, soft color palette (gold-beige-white-grijs), spacious layout.
+	•	Use 3–4 content sections (see below)
+	•	Ensure design is consistent with homepage (same header, footer, and spacing).
+	•	Add subtle animations on scroll (optional).
+	•	Must be fully responsive (desktop, tablet, mobile).
+	•	Use TailwindCSS or existing CSS system to ensure smooth styling.
+	•	Avoid cluttered design. Use whitespace wisely.
+
+⸻
+
+📚 Page Structure & Content:
+
+1. Hero Section
+	•	Headline (NL): “Wie wij zijn”
+	•	Subtext (NL): “Bij Kaniou Zilvernaald draait alles om perfectie in maatwerk raamdecoratie.”
+	•	Background: light beige (#f9f7f3)
+	•	Add decorative line or icon if needed.
+
+⸻
+
+2. Our Story (Onze Geschiedenis)
+	•	Two-column layout: Left = image, Right = text
+	•	Text content (NL):
+
+Meer dan 30 jaar ervaring in elegantie en vakmanschap
+Kaniou Zilvernaald is opgericht vanuit een passie voor stoffen, lichtinval en interieurarchitectuur.
+Wat begon als een kleine atelier is uitgegroeid tot een vertrouwd adres voor verfijnde raamdecoratie in heel België en Nederland.
+Wij combineren traditioneel vakmanschap met moderne technieken om unieke oplossingen op maat te bieden – van klassieke overgordijnen tot innovatieve zonweringssystemen.
+
+⸻
+
+3. Waar we voor staan (Missie & Visie)
+	•	3 icon blocks with short descriptions:
+
+	1.	🔍 Precisie – Elk detail telt bij ons.
+	2.	🎨 Stijlvol Advies – Wij helpen u kiezen wat écht bij uw ruimte past.
+	3.	🛠️ Maatwerk – Geen standaardoplossingen, enkel uniek resultaat.
+
+Visie
+Onze missie is om luxe en functionaliteit samen te brengen.
+We willen dat elke klant trots kan zijn op zijn interieur, dankzij perfecte lichtregeling, sfeer en afwerking.
+
+⸻
+
+4. Waarom kiezen voor Kaniou?
+	•	Light background (#f5f5f5)
+	•	Add customer-centered bullets:
+	•	✔ Persoonlijke aanpak met gratis advies
+	•	✔ Snelle service & eigen ateliers
+	•	✔ Enkel kwaliteitsmaterialen en duurzame stoffen
+	•	✔ Elegante afwerking op maat
+
+⸻
+
+5. Afsluiting met Call to Action
+	•	Centered text:
+
+Maak kennis met Kaniou Zilvernaald.
+Wij staan klaar om uw visie tot leven te brengen. Vraag vandaag nog vrijblijvend advies aan.
+
+	•	Add button: Vrijblijvend Offerte aanvragen → /quote
+
+⸻
+
+📷 Images:
+	•	Placeholder image left side (e.g. atelier, stoffen, showroom)
+	•	Style must stay premium, clean and light-toned
+	•	Mobile: images stack under text
+
+⸻
+
+📱 Mobile Optimization:
+	•	Headings adjust to screen size
+	•	Buttons stack vertically
+	•	Spacing between icon sections
+
+⸻
+
+📌 Expected Result:
+
+A visually refined and informative “Over Ons” page that showcases your heritage, values, and luxury identity – perfect for converting visitors into customers.

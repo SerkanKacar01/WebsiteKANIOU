@@ -137,28 +137,8 @@ const GalleryItem = ({ item }: GalleryItemProps) => {
             />
           </div>
           
-          {/* Premium overlay with golden accent */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-          
           {/* Golden border effect */}
           <div className="absolute inset-0 border border-[#D5B36A]/20 group-hover:border-[#D5B36A]/60 transition-all duration-500 rounded-xl"></div>
-          
-          {/* Content overlay */}
-          <div className="absolute inset-0 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
-            <div className="text-white">
-              <h3 className="text-lg font-bold mb-2 text-shadow drop-shadow-lg">
-                {item.title}
-              </h3>
-              <p className="text-sm text-gray-200 drop-shadow">
-                {item.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Premium badge */}
-          <div className="absolute top-4 right-4 bg-gradient-to-r from-[#D5B36A] to-[#E6C988] text-black px-3 py-1 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-            PREMIUM
-          </div>
         </div>
       </DialogTrigger>
 

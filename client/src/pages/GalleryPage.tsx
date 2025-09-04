@@ -39,7 +39,8 @@ const GalleryPage = () => {
       2: "Verticale Lamellen", 
       3: "Rolgordijnen",
       4: "Plissé",
-      5: "Vitrage"
+      5: "Vitrage",
+      6: "Conservatory"
     };
     return categoryNames[categoryId] || "Overige";
   }

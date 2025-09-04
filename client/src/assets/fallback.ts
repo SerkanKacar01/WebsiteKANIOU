@@ -51,10 +51,18 @@ export const galleryImage_IMG9217 = "/src/assets/IMG_9217.jpeg";
 export const galleryImage_IMG9204 = "/src/assets/IMG_9204.jpeg";
 export const galleryImage_IMG9192 = "/src/assets/IMG_9192.jpeg";
 
-// High-end gallery images
+// High-end gallery images - First batch
 export const galleryImage_new1 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.49_1757018260050.png";
 export const galleryImage_new2 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.33_1757018260051.png";
 export const galleryImage_new3 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.22_1757018260051.png";
 export const galleryImage_new4 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.03_1757018260051.png";
 export const galleryImage_new5 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.10_1757018260051.png";
 export const galleryImage_new6 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.41_1757018260051.png";
+
+// High-end gallery images - Second batch
+export const galleryImage_premium1 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.39_1757018550853.png";
+export const galleryImage_premium2 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.35_1757018550853.png";
+export const galleryImage_premium3 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.14_1757018550853.png";
+export const galleryImage_premium4 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.06_1757018550853.png";
+export const galleryImage_premium5 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.29_1757018550853.png";
+export const galleryImage_premium6 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.18_1757018550853.png";

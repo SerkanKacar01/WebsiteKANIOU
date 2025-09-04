@@ -361,6 +361,92 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
             description: "Moderne inbetween vitrage voor subtiele privacy en lichtfiltering.",
             imageUrl: "/src/assets/Inbetween.jpeg",
             categoryId: 5
+          },
+          // Premium Collection - New High-End Projects
+          {
+            id: 10,
+            title: "Luxe Eetkamer Complex",
+            description: "Premium raambekleding in moderne eetkamer met verticale lamellen en gordijnen gecombineerd voor optimale sfeer.",
+            imageUrl: "/assets/premium-gallery-1",
+            categoryId: 2
+          },
+          {
+            id: 11,
+            title: "Executive Lounge Verticale Lamellen",
+            description: "Professionele verticale lamellen in neutral beige voor executive ruimtes met perfecte lichtregeling.",
+            imageUrl: "/assets/premium-gallery-2",
+            categoryId: 2
+          },
+          {
+            id: 12,
+            title: "Moderne Woonkamer Ensemble",
+            description: "Stijlvolle combinatie van gordijnen en vitrage in warm beige voor gezellige woonruimte.",
+            imageUrl: "/assets/premium-gallery-3",
+            categoryId: 1
+          },
+          {
+            id: 13,
+            title: "Minimalistisch Wonen",
+            description: "Clean en moderne raamdecoratie in neutrale tinten voor minimalistische interieurs.",
+            imageUrl: "/assets/premium-gallery-4",
+            categoryId: 1
+          },
+          {
+            id: 14,
+            title: "Luxe Villa Raambekleding",
+            description: "Premium gordijnen en rolgordijnen in exclusieve villa met hoogwaardige materialen.",
+            imageUrl: "/assets/premium-gallery-5",
+            categoryId: 1
+          },
+          {
+            id: 15,
+            title: "Penthouse Verticale Lamellen",
+            description: "Elegante verticale lamellen in penthouse met panoramische ramen en exclusieve afwerking.",
+            imageUrl: "/assets/premium-gallery-6",
+            categoryId: 2
+          },
+          // Premium collection - Additional high-end installations
+          {
+            id: 10,
+            title: "Luxe Appartement Raambekleding",
+            description: "Complete premium raambekleding in modern appartement met beige tonen en stijlvolle combinatie van vitrage en overgordijnen.",
+            imageUrl: "/assets/premium-gallery-1",
+            categoryId: 1
+          },
+          {
+            id: 11,
+            title: "Premium Verticale Lamellen Kantoor",
+            description: "Professionele verticale lamellen installatie in moderne kantoorruimte met optimale lichtregeling en privacy.",
+            imageUrl: "/assets/premium-gallery-2",
+            categoryId: 2
+          },
+          {
+            id: 12,
+            title: "Designer Woonkamer Combinatie",
+            description: "Exclusieve combinatie van vitrage en overgordijnen in luxe woonkamer met warme sfeerverlichting.",
+            imageUrl: "/assets/premium-gallery-3",
+            categoryId: 1
+          },
+          {
+            id: 13,
+            title: "Moderne Duo Rolgordijnen",
+            description: "Stijlvolle duo rolgordijnen met perfect licht-donker contrast voor optimale privacy en sfeer.",
+            imageUrl: "/assets/premium-gallery-4",
+            categoryId: 3
+          },
+          {
+            id: 14,
+            title: "Luxe Verticale Lamellen Systeem",
+            description: "Hoogwaardige verticale lamellen in neutrale tinten voor moderne en functionele raamoplossingen.",
+            imageUrl: "/assets/premium-gallery-5",
+            categoryId: 2
+          },
+          {
+            id: 15,
+            title: "Premium Conservatory Oplossing",
+            description: "Exclusieve raambekleding voor serres en conservatories met zonwering en stijlvolle afwerking.",
+            imageUrl: "/assets/premium-gallery-6",
+            categoryId: 6
           }
         ];
       }

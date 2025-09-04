@@ -50,6 +50,12 @@ import {
   galleryImage_new4,
   galleryImage_new5,
   galleryImage_new6,
+  galleryImage_premium1,
+  galleryImage_premium2,
+  galleryImage_premium3,
+  galleryImage_premium4,
+  galleryImage_premium5,
+  galleryImage_premium6,
 } from "@/assets/fallback";
 
 interface GalleryItemProps {
@@ -102,13 +108,20 @@ const imageMap: Record<string, string> = {
   '/src/assets/IMG_9217.jpeg': galleryImage_IMG9217,
   '/src/assets/IMG_9204.jpeg': galleryImage_IMG9204,
   '/src/assets/IMG_9192.jpeg': galleryImage_IMG9192,
-  // High-end gallery images
+  // High-end gallery images - First batch
   '/assets/new-gallery-1': galleryImage_new1,
   '/assets/new-gallery-2': galleryImage_new2,
   '/assets/new-gallery-3': galleryImage_new3,
   '/assets/new-gallery-4': galleryImage_new4,
   '/assets/new-gallery-5': galleryImage_new5,
   '/assets/new-gallery-6': galleryImage_new6,
+  // Premium gallery images - Second batch
+  '/assets/premium-gallery-1': galleryImage_premium1,
+  '/assets/premium-gallery-2': galleryImage_premium2,
+  '/assets/premium-gallery-3': galleryImage_premium3,
+  '/assets/premium-gallery-4': galleryImage_premium4,
+  '/assets/premium-gallery-5': galleryImage_premium5,
+  '/assets/premium-gallery-6': galleryImage_premium6,
 };
 
 const GalleryItem = ({ item }: GalleryItemProps) => {

@@ -300,189 +300,115 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
         global.memoryGalleryItems = [
           {
             id: 1,
-            title: "Luxe Woonkamer Gordijnen",
-            description: "Elegante beige gordijnen in moderne woonkamer met warme sfeerverlichting en stijlvolle meubels.",
-            imageUrl: "/assets/new-gallery-1",
+            title: "Luxe Eetkamer Gordijn Complex",
+            description: "Elegante moderne eetkamer met premium gordijnen, beige tonen en stijlvolle combinatie van woonkamer en eetruimte.",
+            imageUrl: "/gallery/premium-1",
             categoryId: 1
           },
           {
             id: 2,
-            title: "Premium Verticale Lamellen",
-            description: "Professionele verticale lamellen voor kantoor- en woonruimtes met perfecte lichtregeling.",
-            imageUrl: "/assets/new-gallery-2", 
+            title: "Executive Verticale Lamellen Suite",
+            description: "Professionele verticale lamellen in moderne woonruimte met optimale lichtregeling en privacy-oplossingen.",
+            imageUrl: "/gallery/premium-2",
             categoryId: 2
           },
           {
             id: 3,
-            title: "Designer Rolgordijnen",
-            description: "Moderne rolgordijnen in neutrale tinten voor een stijlvolle en functionele raamoplossing.",
-            imageUrl: "/assets/new-gallery-3",
-            categoryId: 3
+            title: "Premium Villa Woonkamer Ensemble",
+            description: "Luxe woonkamer met gecombineerde raambekleding - gordijnen en lamellen voor complete privacy en elegantie.",
+            imageUrl: "/gallery/premium-3",
+            categoryId: 1
           },
           {
             id: 4,
-            title: "Slaapkamer Verduisterings Gordijnen",
-            description: "Complete verduistering voor optimale rust met luxe donkere gordijnen en stijlvolle plooien.",
-            imageUrl: "/assets/new-gallery-4",
+            title: "Modern Living Gordijn Systeem",
+            description: "Stijlvolle woonkamer met plafondgemonteerde gordijnen in neutrale tinten voor een moderne uitstraling.",
+            imageUrl: "/gallery/premium-4",
             categoryId: 1
           },
           {
             id: 5,
-            title: "Dag & Nacht Rolgordijnen",
-            description: "Innovatieve duo rolgordijnen voor perfecte privacy en lichtcontrole in elke ruimte.",
-            imageUrl: "/assets/new-gallery-5",
-            categoryId: 3
+            title: "Minimalistisch Verticale Lamellen",
+            description: "Clean wit interieur met verticale lamellen voor optimale lichtinval en privacy in moderne woonruimte.",
+            imageUrl: "/gallery/premium-5",
+            categoryId: 2
           },
           {
             id: 6,
-            title: "Luxe Plissé Gordijnen",
-            description: "Elegante plissé raambekleding met premium afwerking voor exclusieve interieurs.",
-            imageUrl: "/assets/new-gallery-6",
-            categoryId: 4
-          },
-          // Additional existing gallery items
-          {
-            id: 7,
-            title: "Moderne Overgordijnen",
-            description: "Stijlvolle overgordijnen voor een warme en uitnodigende woonsfeer.",
-            imageUrl: "/src/assets/Overgordijnen.jpeg",
+            title: "Penthouse Gordijn Collection",
+            description: "Exclusieve beige gordijnen in penthouse setting met luxe materialen en warme sfeerverlichting.",
+            imageUrl: "/gallery/premium-6",
             categoryId: 1
           },
           {
+            id: 7,
+            title: "Executive Dining Jalouzieën",
+            description: "Elegante houten jalouzieën in executive dining area met perfecte balans tussen privacy en natuurlijk licht.",
+            imageUrl: "/gallery/premium-7",
+            categoryId: 3
+          },
+          {
             id: 8,
-            title: "Duo Plissé Rolgordijnen",
-            description: "Innovative duo plissé voor optimale lichtregeling en privacy.",
-            imageUrl: "/src/assets/Duoplisse.jpeg",
+            title: "Modern Rolgordijn Complex",
+            description: "Geavanceerde rolgordijnen in moderne woonkamer met verschillende lichtinstellingen en zonwering.",
+            imageUrl: "/gallery/premium-8",
             categoryId: 4
           },
           {
             id: 9,
-            title: "Inbetween Vitrage",
-            description: "Moderne inbetween vitrage voor subtiele privacy en lichtfiltering.",
-            imageUrl: "/src/assets/Inbetween.jpeg",
-            categoryId: 5
+            title: "Luxe Appartement Gordijnen",
+            description: "Premium gordijnensemble in luxe appartement met beige tinten en elegante plooivorming.",
+            imageUrl: "/gallery/premium-9",
+            categoryId: 1
           },
-          // Premium Collection - New High-End Projects
           {
             id: 10,
-            title: "Luxe Eetkamer Complex",
-            description: "Premium raambekleding in moderne eetkamer met verticale lamellen en gordijnen gecombineerd voor optimale sfeer.",
-            imageUrl: "/assets/premium-gallery-1",
+            title: "Designer Living Combinatie",
+            description: "Exclusieve mix van verticale lamellen en gordijnen in designer woonkamer met neutrale kleurpalette.",
+            imageUrl: "/gallery/premium-10",
             categoryId: 2
           },
           {
             id: 11,
-            title: "Executive Lounge Verticale Lamellen",
-            description: "Professionele verticale lamellen in neutral beige voor executive ruimtes met perfecte lichtregeling.",
-            imageUrl: "/assets/premium-gallery-2",
+            title: "Corporate Office Verticale Lamellen",
+            description: "Professionele verticale lamellen voor zakelijke omgevingen met optimale functionaliteit en stijl.",
+            imageUrl: "/gallery/premium-11",
             categoryId: 2
           },
           {
             id: 12,
-            title: "Moderne Woonkamer Ensemble",
-            description: "Stijlvolle combinatie van gordijnen en vitrage in warm beige voor gezellige woonruimte.",
-            imageUrl: "/assets/premium-gallery-3",
+            title: "Premium Villa Living Gordijnen",
+            description: "Hoogwaardige gordijnen in villa setting met luxe stoffen en perfecte kleurcoördinatie.",
+            imageUrl: "/gallery/premium-12",
             categoryId: 1
           },
           {
             id: 13,
-            title: "Minimalistisch Wonen",
-            description: "Clean en moderne raamdecoratie in neutrale tinten voor minimalistische interieurs.",
-            imageUrl: "/assets/premium-gallery-4",
-            categoryId: 1
+            title: "Modern Penthouse Rolgordijnen",
+            description: "Strakke rolgordijnen in penthouse met panoramische ramen en optimale zonwering functionaliteit.",
+            imageUrl: "/gallery/premium-13",
+            categoryId: 4
           },
           {
             id: 14,
-            title: "Luxe Villa Raambekleding",
-            description: "Premium gordijnen en rolgordijnen in exclusieve villa met hoogwaardige materialen.",
-            imageUrl: "/assets/premium-gallery-5",
-            categoryId: 1
+            title: "Luxe Dining Jalouzieën Suite",
+            description: "Klassieke jalouzieën in elegante dining room met warme tinten en premium houtafwerking.",
+            imageUrl: "/gallery/premium-14",
+            categoryId: 3
           },
           {
             id: 15,
-            title: "Penthouse Verticale Lamellen",
-            description: "Elegante verticale lamellen in penthouse met panoramische ramen en exclusieve afwerking.",
-            imageUrl: "/assets/premium-gallery-6",
-            categoryId: 2
+            title: "Executive Lounge Gordijn Systeem",
+            description: "Geavanceerd gordijnsysteem in executive lounge met luxe materialen en perfecte lichtregeling.",
+            imageUrl: "/gallery/premium-15",
+            categoryId: 1
           },
-          // Luxury Collection - Latest High-End Installations
           {
             id: 16,
-            title: "Grand Salon Met Panoramische Ramen",
-            description: "Luxe raambekleding in grand salon met verticale lamellen en gordijnen voor optimale privacy en stijl.",
-            imageUrl: "/assets/luxury-gallery-1",
-            categoryId: 2
-          },
-          {
-            id: 17,
-            title: "Modern Appartement Complete Oplossing",
-            description: "Complete raamdecoratieve oplossing met rolgordijnen en verticale lamellen in modern appartement.",
-            imageUrl: "/assets/luxury-gallery-2",
+            title: "Villa Jalouzieën Complex",
+            description: "Innovatief jalouzieën complex in moderne villa met meerdere raamopeningen en gecoördineerde bediening.",
+            imageUrl: "/gallery/premium-16",
             categoryId: 3
-          },
-          {
-            id: 18,
-            title: "Luxe Penthouse Lounge",
-            description: "Exclusieve raambekleding in penthouse lounge met premium materialen en perfecte afwerking.",
-            imageUrl: "/assets/luxury-gallery-3",
-            categoryId: 1
-          },
-          {
-            id: 19,
-            title: "Designer Woonkamer Complex",
-            description: "Moderne woonkamer met geïntegreerde raambekleding en premium gordijnsystemen.",
-            imageUrl: "/assets/luxury-gallery-4",
-            categoryId: 1
-          },
-          {
-            id: 20,
-            title: "Executive Office Raambekleding",
-            description: "Professionele raambekleding voor executive kantoren met stijlvolle lamellen en gordijnen.",
-            imageUrl: "/assets/luxury-gallery-5",
-            categoryId: 2
-          },
-          // Premium collection - Additional high-end installations
-          {
-            id: 10,
-            title: "Luxe Appartement Raambekleding",
-            description: "Complete premium raambekleding in modern appartement met beige tonen en stijlvolle combinatie van vitrage en overgordijnen.",
-            imageUrl: "/assets/premium-gallery-1",
-            categoryId: 1
-          },
-          {
-            id: 11,
-            title: "Premium Verticale Lamellen Kantoor",
-            description: "Professionele verticale lamellen installatie in moderne kantoorruimte met optimale lichtregeling en privacy.",
-            imageUrl: "/assets/premium-gallery-2",
-            categoryId: 2
-          },
-          {
-            id: 12,
-            title: "Designer Woonkamer Combinatie",
-            description: "Exclusieve combinatie van vitrage en overgordijnen in luxe woonkamer met warme sfeerverlichting.",
-            imageUrl: "/assets/premium-gallery-3",
-            categoryId: 1
-          },
-          {
-            id: 13,
-            title: "Moderne Duo Rolgordijnen",
-            description: "Stijlvolle duo rolgordijnen met perfect licht-donker contrast voor optimale privacy en sfeer.",
-            imageUrl: "/assets/premium-gallery-4",
-            categoryId: 3
-          },
-          {
-            id: 14,
-            title: "Luxe Verticale Lamellen Systeem",
-            description: "Hoogwaardige verticale lamellen in neutrale tinten voor moderne en functionele raamoplossingen.",
-            imageUrl: "/assets/premium-gallery-5",
-            categoryId: 2
-          },
-          {
-            id: 15,
-            title: "Premium Conservatory Oplossing",
-            description: "Exclusieve raambekleding voor serres en conservatories met zonwering en stijlvolle afwerking.",
-            imageUrl: "/assets/premium-gallery-6",
-            categoryId: 6
           }
         ];
       }

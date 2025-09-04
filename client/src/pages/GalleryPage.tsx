@@ -94,7 +94,7 @@ const GalleryPage = () => {
                 <div className="text-sm uppercase tracking-wide text-neutral-600">Maatwerk</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">15+</div>
+                <div className="text-3xl font-bold text-primary">30+</div>
                 <div className="text-sm uppercase tracking-wide text-neutral-600">Jaar Ervaring</div>
               </div>
             </div>

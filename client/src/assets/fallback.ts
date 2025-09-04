@@ -66,3 +66,10 @@ export const galleryImage_premium3 = "@assets/Scherm­afbeelding 2025-09-04 om 2
 export const galleryImage_premium4 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.06_1757018550853.png";
 export const galleryImage_premium5 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.29_1757018550853.png";
 export const galleryImage_premium6 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.18_1757018550853.png";
+
+// Luxury collection - Third batch
+export const galleryImage_luxury1 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.16_1757018579243.png";
+export const galleryImage_luxury2 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.08_1757018579243.png";
+export const galleryImage_luxury3 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.27_1757018579243.png";
+export const galleryImage_luxury4 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.45_1757018579243.png";
+export const galleryImage_luxury5 = "@assets/Scherm­afbeelding 2025-09-04 om 22.33.20_1757018579243.png";

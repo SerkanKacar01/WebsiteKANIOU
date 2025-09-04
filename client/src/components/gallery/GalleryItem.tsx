@@ -56,6 +56,11 @@ import {
   galleryImage_premium4,
   galleryImage_premium5,
   galleryImage_premium6,
+  galleryImage_luxury1,
+  galleryImage_luxury2,
+  galleryImage_luxury3,
+  galleryImage_luxury4,
+  galleryImage_luxury5,
 } from "@/assets/fallback";
 
 interface GalleryItemProps {
@@ -122,6 +127,12 @@ const imageMap: Record<string, string> = {
   '/assets/premium-gallery-4': galleryImage_premium4,
   '/assets/premium-gallery-5': galleryImage_premium5,
   '/assets/premium-gallery-6': galleryImage_premium6,
+  // Luxury gallery images - Third batch
+  '/assets/luxury-gallery-1': galleryImage_luxury1,
+  '/assets/luxury-gallery-2': galleryImage_luxury2,
+  '/assets/luxury-gallery-3': galleryImage_luxury3,
+  '/assets/luxury-gallery-4': galleryImage_luxury4,
+  '/assets/luxury-gallery-5': galleryImage_luxury5,
 };
 
 const GalleryItem = ({ item }: GalleryItemProps) => {

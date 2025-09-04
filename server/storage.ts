@@ -405,6 +405,42 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
             imageUrl: "/assets/premium-gallery-6",
             categoryId: 2
           },
+          // Luxury Collection - Latest High-End Installations
+          {
+            id: 16,
+            title: "Grand Salon Met Panoramische Ramen",
+            description: "Luxe raambekleding in grand salon met verticale lamellen en gordijnen voor optimale privacy en stijl.",
+            imageUrl: "/assets/luxury-gallery-1",
+            categoryId: 2
+          },
+          {
+            id: 17,
+            title: "Modern Appartement Complete Oplossing",
+            description: "Complete raamdecoratieve oplossing met rolgordijnen en verticale lamellen in modern appartement.",
+            imageUrl: "/assets/luxury-gallery-2",
+            categoryId: 3
+          },
+          {
+            id: 18,
+            title: "Luxe Penthouse Lounge",
+            description: "Exclusieve raambekleding in penthouse lounge met premium materialen en perfecte afwerking.",
+            imageUrl: "/assets/luxury-gallery-3",
+            categoryId: 1
+          },
+          {
+            id: 19,
+            title: "Designer Woonkamer Complex",
+            description: "Moderne woonkamer met geïntegreerde raambekleding en premium gordijnsystemen.",
+            imageUrl: "/assets/luxury-gallery-4",
+            categoryId: 1
+          },
+          {
+            id: 20,
+            title: "Executive Office Raambekleding",
+            description: "Professionele raambekleding voor executive kantoren met stijlvolle lamellen en gordijnen.",
+            imageUrl: "/assets/luxury-gallery-5",
+            categoryId: 2
+          },
           // Premium collection - Additional high-end installations
           {
             id: 10,

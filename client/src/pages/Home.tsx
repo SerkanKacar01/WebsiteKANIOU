@@ -5,20 +5,34 @@ import { Shield, Truck, Users, Award, Clock, ArrowRight, Eye, Quote, Star, Menu,
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
-const interiorImage = "/images/Overgordijnen.jpeg";
-const duoPlisseImage = "/images/Duoplisse.jpeg";
-const duoRolgordijnenImage = "/images/Duorolgordijnen.jpeg";
-const overgordijnenImage = "/images/Overgordijnen.jpeg";
-const plisseImage = "/images/Plisse.jpeg";
-const rolgordijnenImage = "/images/Rolgordijnen.jpeg";
-const opzethorrenImage = "/images/Opzethorren.jpeg";
+import interiorImageSrc from "@assets/Overgordijnen.jpeg";
+import duoPlisseImageSrc from "@assets/Duoplisse.jpeg";
+import duoRolgordijnenImageSrc from "@assets/Duorolgordijnen.jpeg";
+import overgordijnenImageSrc from "@assets/Overgordijnen.jpeg";
+import plisseImageSrc from "@assets/Plisse.jpeg";
+import rolgordijnenImageSrc from "@assets/Rolgordijnen.jpeg";
+import opzethorrenImageSrc from "@assets/Opzethorren.jpeg";
 // Gallery images for real installations
-const gallery1 = "/images/IMG_9192.jpeg";
-const gallery2 = "/images/IMG_9204.jpeg";
-const gallery3 = "/images/IMG_9217.jpeg";
-const gallery4 = "/images/IMG_9219.jpeg";
-const gallery5 = "/images/IMG_9220.jpeg";
-const gallery6 = "/images/IMG_9221.jpeg";
+import gallery1Src from "@assets/IMG_9192.jpeg";
+import gallery2Src from "@assets/IMG_9204.jpeg";
+import gallery3Src from "@assets/IMG_9217.jpeg";
+import gallery4Src from "@assets/IMG_9219.jpeg";
+import gallery5Src from "@assets/IMG_9220.jpeg";
+import gallery6Src from "@assets/IMG_9221.jpeg";
+
+const interiorImage = interiorImageSrc;
+const duoPlisseImage = duoPlisseImageSrc;
+const duoRolgordijnenImage = duoRolgordijnenImageSrc;
+const overgordijnenImage = overgordijnenImageSrc;
+const plisseImage = plisseImageSrc;
+const rolgordijnenImage = rolgordijnenImageSrc;
+const opzethorrenImage = opzethorrenImageSrc;
+const gallery1 = gallery1Src;
+const gallery2 = gallery2Src;
+const gallery3 = gallery3Src;
+const gallery4 = gallery4Src;
+const gallery5 = gallery5Src;
+const gallery6 = gallery6Src;
 
 // Premium Navigation Component
 const PremiumNavigation = () => {

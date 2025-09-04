@@ -2,7 +2,8 @@ import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import QuoteForm from "@/components/forms/QuoteForm";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Clock, Phone, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const QuotePage = () => {
   return (
@@ -15,162 +16,252 @@ const QuotePage = () => {
         />
       </Helmet>
 
-      <div className="py-12 bg-primary relative">
-        <Container className="relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="font-display text-3xl md:text-4xl text-white font-semibold mb-4">
-                Vraag vrijblijvend offerte aan
+      {/* Luxury Hero Section */}
+      <div className="relative min-h-[40vh] overflow-hidden">
+        {/* Premium Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#2C3E50] to-[#0f3460] opacity-95"></div>
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(213, 179, 106, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(224, 193, 136, 0.08) 0%, transparent 50%)'
+        }}></div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-[#D5B36A]/10 to-[#E0C188]/5 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-l from-[#E0C188]/10 to-[#D5B36A]/5 rounded-full blur-xl animate-pulse delay-1000"></div>
+        
+        <Container className="relative z-10 py-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full mb-8 shadow-2xl">
+                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                </svg>
+              </div>
+              <h1 className="font-display text-4xl md:text-6xl text-white font-light mb-6 tracking-tight">
+                <span className="bg-gradient-to-r from-white to-[#F9F2E7] bg-clip-text text-transparent">
+                  Vraag vrijblijvend offerte aan
+                </span>
               </h1>
-              <p className="font-body text-white/90 max-w-2xl mx-auto">
+              <p className="font-body text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
                 Vul onderstaand formulier in en onze specialisten nemen contact
                 met je op met een gepersonaliseerde offerte op maat van jouw
                 wensen.
               </p>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] mx-auto mt-8 rounded-full"></div>
             </div>
 
-            <Card className="shadow-xl overflow-hidden">
-              <CardContent className="p-8 md:p-10">
+            {/* Premium Form Card */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-3xl rounded-3xl border border-white/20 shadow-2xl"></div>
+              <Card className="relative bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-3xl overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D5B36A] via-[#E0C188] to-[#D5B36A]"></div>
+                <CardContent className="p-12 md:p-16">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2">
-                    <h2 className="font-display text-2xl text-primary font-semibold mb-6">
-                      Start je offerte aanvraag hier
+                    <h2 className="font-display text-3xl text-primary font-light mb-8 relative">
+                      <span className="bg-gradient-to-r from-[#2C3E50] to-[#34495E] bg-clip-text text-transparent">
+                        Start je offerte aanvraag hier
+                      </span>
+                      <div className="w-16 h-1 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] mt-3 rounded-full"></div>
                     </h2>
                     <QuoteForm />
                   </div>
 
-                  <div className="bg-neutral-100 p-6 rounded-lg">
-                    <h3 className="font-display text-xl text-primary font-medium mb-4">
-                      Wat je mag verwachten na je aanvraag
-                    </h3>
+                  <div className="bg-gradient-to-br from-[#F9F7F3] to-[#F5F2E8] p-8 rounded-2xl border border-[#D5B36A]/20 shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#D5B36A]/5 to-transparent rounded-full transform translate-x-16 -translate-y-16"></div>
+                    <div className="relative">
+                      <h3 className="font-display text-2xl text-primary font-semibold mb-6 relative">
+                        <span className="bg-gradient-to-r from-[#2C3E50] to-[#34495E] bg-clip-text text-transparent">
+                          Wat je mag verwachten na je aanvraag
+                        </span>
+                      </h3>
                     <ul className="space-y-4">
-                      <li className="flex items-start">
-                        <div className="bg-secondary rounded-full p-1 mt-0.5 mr-3 flex-shrink-0">
-                          <CheckCircle className="h-4 w-4 text-white" />
+                      <li className="flex items-start group hover:transform hover:scale-[1.02] transition-all duration-300">
+                        <div className="bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full p-2 mt-1 mr-4 flex-shrink-0 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <CheckCircle className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-text-medium">
-                          Binnen 24 uur analyseren wij je aanvraag zorgvuldig.
-                        </span>
+                        <div>
+                          <h4 className="font-display text-lg font-semibold text-primary mb-2">
+                            Binnen 24 uur contact
+                          </h4>
+                          <p className="text-base text-text-light leading-relaxed">
+                            Binnen 24 uur analyseren wij je aanvraag zorgvuldig.
+                          </p>
+                        </div>
                       </li>
-                      <li className="flex items-start">
-                        <div className="bg-secondary rounded-full p-1 mt-0.5 mr-3 flex-shrink-0">
-                          <CheckCircle className="h-4 w-4 text-white" />
+                      <li className="flex items-start group hover:transform hover:scale-[1.02] transition-all duration-300">
+                        <div className="bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full p-2 mt-1 mr-4 flex-shrink-0 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <CheckCircle className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-text-medium">
-                          Een adviseur neemt contact met je op om je wensen te
-                          bespreken.
-                        </span>
+                        <div>
+                          <h4 className="font-display text-lg font-semibold text-primary mb-2">
+                            Gratis adviesgesprek
+                          </h4>
+                          <p className="text-base text-text-light leading-relaxed">
+                            Een adviseur neemt contact met je op om je wensen te bespreken.
+                          </p>
+                        </div>
                       </li>
-                      <li className="flex items-start">
-                        <div className="bg-secondary rounded-full p-1 mt-0.5 mr-3 flex-shrink-0">
-                          <CheckCircle className="h-4 w-4 text-white" />
+                      <li className="flex items-start group hover:transform hover:scale-[1.02] transition-all duration-300">
+                        <div className="bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full p-2 mt-1 mr-4 flex-shrink-0 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <CheckCircle className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-text-medium">
-                          Indien nodig plannen we een opmeting bij je thuis in.
-                        </span>
+                        <div>
+                          <h4 className="font-display text-lg font-semibold text-primary mb-2">
+                            Maatwerk offerte
+                          </h4>
+                          <p className="text-base text-text-light leading-relaxed">
+                            Indien nodig plannen we een opmeting bij je thuis in.
+                          </p>
+                        </div>
                       </li>
-                      <li className="flex items-start">
-                        <div className="bg-secondary rounded-full p-1 mt-0.5 mr-3 flex-shrink-0">
-                          <CheckCircle className="h-4 w-4 text-white" />
+                      <li className="flex items-start group hover:transform hover:scale-[1.02] transition-all duration-300">
+                        <div className="bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full p-2 mt-1 mr-4 flex-shrink-0 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <CheckCircle className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-text-medium">
-                          Je ontvangt een duidelijke offerte met materialen,
-                          afwerkingen en prijzen.
-                        </span>
+                        <div>
+                          <h4 className="font-display text-lg font-semibold text-primary mb-2">
+                            Duidelijke prijzen
+                          </h4>
+                          <p className="text-base text-text-light leading-relaxed">
+                            Je ontvangt een duidelijke offerte met materialen, afwerkingen en prijzen.
+                          </p>
+                        </div>
                       </li>
                     </ul>
 
-                    <div className="mt-8 pt-6 border-t border-neutral-300">
-                      <h4 className="font-medium mb-2">Vragen?</h4>
-                      <p className="text-text-medium text-sm mb-2">
+                    <div className="mt-6 pt-6 border-t border-[#D5B36A]/20">
+                      <h4 className="font-display text-xl font-semibold text-primary mb-4">
+                        <span className="bg-gradient-to-r from-[#2C3E50] to-[#34495E] bg-clip-text text-transparent">
+                          Vragen?
+                        </span>
+                      </h4>
+                      <p className="text-base text-text-light mb-4">
                         Neem gerust rechtstreeks contact met ons op:
                       </p>
-                      <a
-                        href="tel:+15551234567"
-                        className="text-accent font-medium text-lg"
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start border-[#D5B36A]/30 hover:border-[#D5B36A] hover:bg-[#D5B36A]/5 transition-all duration-300 group"
+                        size="sm"
                       >
-                        +32 467 85 64 05
-                      </a>
+                        <Phone className="h-5 w-5 mr-3 text-[#D5B36A] group-hover:scale-110 transition-transform duration-300" />
+                        <span className="font-medium">+32 467 85 64 05</span>
+                      </Button>
+                    </div>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
+            </div>
+          </div>
+        </Container>
+      </div>
 
-            <div className="mt-12 bg-white p-8 rounded-lg shadow-md">
-              <h2 className="font-display text-2xl text-primary font-semibold mb-6 text-center">
-                Wat onze klanten over ons zeggen
+      {/* Premium Testimonials Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-[#F9F7F3] relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-10 left-1/4 w-64 h-64 bg-gradient-to-br from-[#D5B36A]/5 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-gradient-to-tl from-[#E0C188]/5 to-transparent rounded-full blur-3xl"></div>
+        
+        <Container className="relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full mb-6 shadow-xl">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h2 className="font-display text-3xl md:text-5xl text-primary font-light text-center mb-6 tracking-tight">
+                <span className="bg-gradient-to-r from-[#2C3E50] to-[#34495E] bg-clip-text text-transparent">
+                  Wat onze klanten over ons zeggen
+                </span>
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-neutral-100 p-6 rounded-lg">
-                  <div className="flex text-secondary mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 fill-current"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+              <div className="w-24 h-1 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] mx-auto rounded-full"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center group hover:transform hover:scale-105 transition-all duration-500">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#D5B36A]/20 to-[#E0C188]/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/80 backdrop-blur-sm border border-[#D5B36A]/20 rounded-3xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                    <div className="flex text-secondary mb-3 justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 fill-current"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="font-body text-lg text-text-medium italic mb-4">
+                      "Super te vrede! Goede prijs en goede kwaliteit en vlotte
+                      service. En super vriendelijke personen! AANRADER"
+                    </p>
+                    <h4 className="font-display text-xl font-semibold text-primary mb-1">Mr. Remm.</h4>
+                    <p className="text-text-light">Nederland</p>
                   </div>
-                  <p className="font-body text-text-medium italic mb-4">
-                    "Super te vrede! Goede prijs en goede kwaliteit en vlotte
-                    service. En super vriendelijke personen! AANRADER"
-                  </p>
-                  <p className="font-medium">Mr. Remm.</p>
-                  <p className="text-text-light text-sm">Nederland</p>
                 </div>
+              </div>
 
-                <div className="bg-neutral-100 p-6 rounded-lg">
-                  <div className="flex text-secondary mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 fill-current"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+              <div className="text-center group hover:transform hover:scale-105 transition-all duration-500">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#D5B36A]/20 to-[#E0C188]/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/80 backdrop-blur-sm border border-[#D5B36A]/20 rounded-3xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                    <div className="flex text-secondary mb-3 justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 fill-current"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="font-body text-lg text-text-medium italic mb-4">
+                      "Mooie winkel met een groot aanbod, professionele opmeting
+                      en plaatsing, snelle levering. Wij raden deze zaak zeker
+                      aan"
+                    </p>
+                    <h4 className="font-display text-xl font-semibold text-primary mb-1">Mr. Van Gelder</h4>
+                    <p className="text-text-light">België</p>
                   </div>
-                  <p className="font-body text-text-medium italic mb-4">
-                    "Mooie winkel met een groot aanbod, professionele opmeting
-                    en plaatsing, snelle levering. Wij raden deze zaak zeker
-                    aan"
-                  </p>
-                  <p className="font-medium">Mr. Van Gelder</p>
-                  <p className="text-text-light text-sm">België</p>
                 </div>
+              </div>
 
-                <div className="bg-neutral-100 p-6 rounded-lg">
-                  <div className="flex text-secondary mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 fill-current"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+              <div className="text-center group hover:transform hover:scale-105 transition-all duration-500">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#D5B36A]/20 to-[#E0C188]/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/80 backdrop-blur-sm border border-[#D5B36A]/20 rounded-3xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                    <div className="flex text-secondary mb-3 justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 fill-current"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="font-body text-lg text-text-medium italic mb-4">
+                      "Klant vriendelijk en professioneel. Ik ben goed geadviseerd
+                      in het maken van mijn keuze. Heel blij met mijn gordijnen,
+                      in een woord top!"
+                    </p>
+                    <h4 className="font-display text-xl font-semibold text-primary mb-1">Mrs. Lndra</h4>
+                    <p className="text-text-light">Nederland</p>
                   </div>
-                  <p className="font-body text-text-medium italic mb-4">
-                    "Klant vriendelijk en professioneel. Ik ben goed geadviseerd
-                    in het maken van mijn keuze. Heel blij met mijn gordijnen,
-                    in een woord top!"
-                  </p>
-                  <p className="font-medium">Mrs. Lndra</p>
-                  <p className="text-text-light text-sm">Nederland</p>
                 </div>
               </div>
             </div>
           </div>
         </Container>
-      </div>
+      </section>
     </>
   );
 };

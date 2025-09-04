@@ -14,6 +14,7 @@ const MobileLayoutWrapper = ({ children }: MobileLayoutWrapperProps) => {
 
   return (
     <div className="flex min-h-screen flex-col">
+      {isMobile ? <MobileHeader /> : <Header />}
       <main className="flex-1">
         {children}
       </main>

@@ -14,15 +14,9 @@ const MobileLayoutWrapper = ({ children }: MobileLayoutWrapperProps) => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header for all pages */}
-      {isMobile ? <MobileHeader /> : <Header />}
-      
       <main className="flex-1">
         {children}
       </main>
-      
-      {/* Footer for all pages */}
-      {isMobile ? <MobileFooter /> : <Footer />}
     </div>
   );
 };

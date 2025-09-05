@@ -63,35 +63,53 @@ const Footer: React.FC = () => {
               <ul className="ultra-luxury-footer-links">
                 <li>
                   <a
-                    href="/producten/vliegenramen"
-                    className="ultra-luxury-footer-link"
+                    href="/producten/gordijnrails"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Gordijnrails"
                   >
-                    Vliegenramen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/rolgordijnen"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Rolgordijnen
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Gordijnrails
                   </a>
                 </li>
                 <li>
                   <a
                     href="/producten/overgordijnen"
-                    className="ultra-luxury-footer-link"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Overgordijnen"
                   >
+                    <span className="ultra-luxury-product-icon">🛒</span>
                     Overgordijnen
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/quote"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-special"
+                  <span
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-upcoming"
+                    title="Coming soon online"
                   >
-                    Offerte aanvragen
-                  </a>
+                    <span className="ultra-luxury-product-icon">⏳</span>
+                    Rolgordijnen
+                    <span className="ultra-luxury-product-status">(Binnenkort online)</span>
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-upcoming"
+                    title="Coming soon online"
+                  >
+                    <span className="ultra-luxury-product-icon">⏳</span>
+                    Inzethorren
+                    <span className="ultra-luxury-product-status">(Binnenkort online)</span>
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-upcoming"
+                    title="Coming soon online"
+                  >
+                    <span className="ultra-luxury-product-icon">⏳</span>
+                    Jaloezieën
+                    <span className="ultra-luxury-product-status">(Binnenkort online)</span>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -304,35 +322,53 @@ const Footer: React.FC = () => {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="/producten/vliegenramen"
-                      className="footer-link"
+                      href="/producten/gordijnrails"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Gordijnrails"
                     >
-                      Vliegenramen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/rolgordijnen"
-                      className="footer-link"
-                    >
-                      Rolgordijnen
+                      <span className="footer-product-icon">🛒</span>
+                      Gordijnrails
                     </a>
                   </li>
                   <li>
                     <a
                       href="/producten/overgordijnen"
-                      className="footer-link"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Overgordijnen"
                     >
+                      <span className="footer-product-icon">🛒</span>
                       Overgordijnen
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="/quote"
-                      className="footer-link footer-link-special"
+                    <span
+                      className="footer-link footer-link-upcoming"
+                      title="Coming soon online"
                     >
-                      Offerte aanvragen
-                    </a>
+                      <span className="footer-product-icon">⏳</span>
+                      Rolgordijnen
+                      <span className="footer-product-status">(Binnenkort online)</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      className="footer-link footer-link-upcoming"
+                      title="Coming soon online"
+                    >
+                      <span className="footer-product-icon">⏳</span>
+                      Inzethorren
+                      <span className="footer-product-status">(Binnenkort online)</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      className="footer-link footer-link-upcoming"
+                      title="Coming soon online"
+                    >
+                      <span className="footer-product-icon">⏳</span>
+                      Jaloezieën
+                      <span className="footer-product-status">(Binnenkort online)</span>
+                    </span>
                   </li>
                 </ul>
               </div>

@@ -1724,6 +1724,81 @@ html, body {
   color: #E6C988;
 }
 
+/* Product Link Styles - Available Products */
+.ultra-luxury-footer-link-available {
+  color: #C8A85B !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.ultra-luxury-footer-link-available:hover {
+  color: #E6C988 !important;
+  text-decoration: underline;
+  text-decoration-color: #E6C988;
+  text-underline-offset: 4px;
+}
+
+.ultra-luxury-footer-link-available::before {
+  display: none;
+}
+
+/* Product Link Styles - Upcoming Products */
+.ultra-luxury-footer-link-upcoming {
+  color: #999999 !important;
+  font-style: italic;
+  cursor: default;
+  pointer-events: none;
+}
+
+.ultra-luxury-footer-link-upcoming::before {
+  display: none;
+}
+
+/* Product Icons */
+.ultra-luxury-product-icon {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+/* Product Status Text */
+.ultra-luxury-product-status {
+  margin-left: 8px;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+/* Mobile Footer Product Styles */
+.footer-link-available {
+  color: #C8A85B !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.footer-link-available:hover {
+  color: #E6C988 !important;
+  text-decoration: underline;
+  text-decoration-color: #E6C988;
+  text-underline-offset: 4px;
+}
+
+.footer-link-upcoming {
+  color: #999999 !important;
+  font-style: italic;
+  cursor: default;
+  pointer-events: none;
+}
+
+.footer-product-icon {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.footer-product-status {
+  margin-left: 8px;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
 .ultra-luxury-newsletter-description {
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.875rem, 1.5vw, 1rem);

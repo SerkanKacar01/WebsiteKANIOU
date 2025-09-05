@@ -115,13 +115,19 @@ const PremiumNavigation = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={() => setLocation("/quote")}
               className="btn-luxury"
             >
               VRIJBLIJVEND OFFERTE
+            </button>
+            <button
+              onClick={() => {/* Add action here */}}
+              className="px-6 py-3 bg-white border border-[#d6b46a] text-[#d6b46a] font-medium rounded-lg hover:bg-[#d6b46a] hover:text-white transition-all duration-300"
+            >
+              Ook Online
             </button>
           </div>
 

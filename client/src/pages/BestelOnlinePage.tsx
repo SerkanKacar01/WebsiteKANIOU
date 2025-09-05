@@ -86,30 +86,35 @@ const BestelOnlinePage = () => {
       name: "Rolgordijnen",
       href: "/rolgordijnen-configurator",
       icon: Package,
+      available: false,
     },
     {
       id: "overgordijnen",
       name: "Overgordijnen",
       href: "/producten/overgordijnen",
       icon: Settings,
+      available: false,
     },
     {
       id: "inzethorren",
       name: "Inzethorren",
       href: "/producten/inzethorren",
       icon: Shield,
+      available: false,
     },
     {
       id: "gordijnrails",
       name: "Gordijnrails",
       href: "/gordijnrails-configurator",
       icon: Ruler,
+      available: true,
     },
     {
       id: "jaloezieen",
       name: "Jaloezieën",
       href: "/producten/houten-jaloezieen",
       icon: Settings,
+      available: false,
     },
   ];
 
@@ -301,23 +306,47 @@ const BestelOnlinePage = () => {
               return (
                 <Card
                   key={product.id}
-                  className="group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border hover:border-[#C8A85B]"
+                  className={`group transition-all duration-300 border ${
+                    product.available
+                      ? "hover:shadow-xl hover:-translate-y-2 hover:border-[#C8A85B]"
+                      : "opacity-75"
+                  }`}
                 >
                   <CardHeader className="text-center pb-4">
-                    <div className="bg-gradient-to-br from-[#C8A85B] to-[#B8985B] p-6 rounded-full inline-flex mx-auto mb-4">
+                    <div className={`p-6 rounded-full inline-flex mx-auto mb-4 ${
+                      product.available
+                        ? "bg-gradient-to-br from-[#C8A85B] to-[#B8985B]"
+                        : "bg-gradient-to-br from-gray-400 to-gray-500"
+                    }`}>
                       <IconComponent className="w-8 h-8 text-white" />
                     </div>
-                    <CardTitle className="font-display text-lg text-[#2C3E50] group-hover:text-[#C8A85B] transition-colors">
+                    <CardTitle className={`font-display text-lg transition-colors ${
+                      product.available
+                        ? "text-[#2C3E50] group-hover:text-[#C8A85B]"
+                        : "text-[#2C3E50]"
+                    }`}>
                       {product.name}
                     </CardTitle>
+                    {!product.available && (
+                      <p
+                        className="font-medium text-sm text-[#777] mt-2"
+                        aria-label="Product binnenkort beschikbaar"
+                      >
+                        Binnenkort online
+                      </p>
+                    )}
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <Link href={product.href}>
-                      <Button className="w-full bg-gradient-to-r from-[#C8A85B] to-[#B8985B] text-white hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-                        Bestel dit product
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </Link>
+                    {product.available ? (
+                      <Link href={product.href}>
+                        <Button className="w-full bg-gradient-to-r from-[#C8A85B] to-[#B8985B] text-white hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                          Bestel dit product
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </Link>
+                    ) : (
+                      <div className="h-10"></div>
+                    )}
                   </CardContent>
                 </Card>
               );

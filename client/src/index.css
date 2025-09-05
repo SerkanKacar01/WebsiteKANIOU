@@ -118,6 +118,25 @@ html, body {
 
   @keyframes pulseGlow {
     0% {
+      opacity: 0.5;
+      box-shadow: 0 0 10px rgba(230, 126, 34, 0.3), 0 0 20px rgba(213, 185, 146, 0.2);
+    }
+    50% {
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(230, 126, 34, 0.6), 0 0 30px rgba(213, 185, 146, 0.4);
+    }
+    100% {
+      opacity: 0.5;
+      box-shadow: 0 0 10px rgba(230, 126, 34, 0.3), 0 0 20px rgba(213, 185, 146, 0.2);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes originalPulseGlow {
+    0% {
       opacity: 0;
       transform: scale(0.8);
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);

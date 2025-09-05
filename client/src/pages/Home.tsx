@@ -15,6 +15,8 @@ import {
   X,
   Plus,
   Minus,
+  ShoppingCart,
+  Sparkles,
 } from "lucide-react";
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
@@ -124,10 +126,21 @@ const PremiumNavigation = () => {
               VRIJBLIJVEND OFFERTE
             </button>
             <button
-              onClick={() => {/* Add action here */}}
-              className="px-6 py-3 bg-white border border-[#d6b46a] text-[#d6b46a] font-medium rounded-lg hover:bg-[#d6b46a] hover:text-white transition-all duration-300"
+              onClick={() => setLocation("/rolgordijnen-configurator")}
+              className="relative px-6 py-3 bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group overflow-hidden animate-pulse-glow"
             >
-              Ook Online
+              {/* Animated background glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#E67E22] to-[#D5B992] opacity-75 animate-pulse rounded-lg blur-sm"></div>
+              
+              {/* Content */}
+              <div className="relative flex items-center gap-2 z-10">
+                <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
+                <span>BESTEL ONLINE</span>
+                <Sparkles className="w-4 h-4 group-hover:animate-spin" />
+              </div>
+              
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 -left-full group-hover:left-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 transform skew-x-12"></div>
             </button>
           </div>
 
@@ -189,16 +202,21 @@ const PremiumNavigation = () => {
               </button>
               <button
                 onClick={() => {
-                  /* Placeholder action */
+                  setLocation("/rolgordijnen-configurator");
                   setIsMenuOpen(false);
                 }}
-                className={`mt-3 transition-all duration-300 font-medium py-3 px-6 rounded-lg border shadow-lg ${
+                className={`mt-3 transition-all duration-300 font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 group overflow-hidden relative ${
                   mobileMenuNeedsContrast
-                    ? "bg-white border-gold-400 text-gold-600 hover:bg-gold-50"
-                    : "bg-white border-[#d6b46a] text-[#d6b46a] hover:bg-[#d6b46a] hover:text-white"
+                    ? "bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white animate-pulse-glow"
+                    : "bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white animate-pulse-glow"
                 }`}
               >
-                Ook Online
+                <div className="flex items-center justify-center gap-2 relative z-10">
+                  <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
+                  <span>BESTEL ONLINE</span>
+                  <Sparkles className="w-4 h-4 group-hover:animate-spin" />
+                </div>
+                <div className="absolute inset-0 -left-full group-hover:left-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 transform skew-x-12"></div>
               </button>
             </div>
           </div>

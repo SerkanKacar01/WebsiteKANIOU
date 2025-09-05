@@ -440,43 +440,6 @@ const FloatingActionButtons = () => {
 
   return (
     <>
-      {/* Mid-Screen "Ook Online" Floating Button - Desktop Only */}
-      <div className="hidden md:block fixed right-5 top-1/2 transform -translate-y-1/2 z-[9998]">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={() => {/* Placeholder action - could navigate to products or open a modal */}}
-              aria-label="Online ordering now available"
-              className={`
-                flex items-center gap-3 px-6 py-3 bg-[#C8A85B] text-white 
-                font-bold text-sm uppercase rounded-[50px] 
-                shadow-[0_8px_20px_rgba(0,0,0,0.2)]
-                hover:bg-[#B8985B] hover:shadow-[0_12px_24px_rgba(0,0,0,0.3)] hover:shadow-[#C8A85B]/20
-                transition-all duration-300 ease-in-out
-                focus:outline-none focus:ring-2 focus:ring-[#C8A85B] focus:ring-opacity-50
-                font-['Poppins',sans-serif] tracking-wider
-                transform hover:scale-105 active:scale-95
-                ${
-                  !hasAnimated 
-                    ? 'animate-[pulseGlow_2s_ease-in-out_1] opacity-0' 
-                    : 'opacity-100'
-                }
-              `}
-              onAnimationEnd={() => setHasAnimated(true)}
-            >
-              <ShoppingCart className="h-4 w-4" />
-              Ook Online
-            </button>
-          </TooltipTrigger>
-          <TooltipContent 
-            side="left" 
-            className="bg-white text-gray-800 border border-gray-200 shadow-lg rounded-lg px-3 py-2"
-            sideOffset={15}
-          >
-            <p className="text-sm font-medium">Online bestellen nu beschikbaar</p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
 
       {/* Floating Action Buttons - Desktop & Mobile */}
       <div className="flex fixed bottom-6 right-6 z-[9999] flex-col gap-3">

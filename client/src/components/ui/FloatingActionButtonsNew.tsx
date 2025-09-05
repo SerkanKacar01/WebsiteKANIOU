@@ -439,17 +439,20 @@ const FloatingActionButtons = () => {
   return (
     <>
       {/* Mid-Screen "Ook Online" Floating Button - Desktop Only */}
-      <div className="hidden md:block fixed right-6 top-1/2 transform -translate-y-1/2 z-[9998]">
+      <div className="hidden md:block fixed right-5 top-1/2 transform -translate-y-1/2 z-[9998]">
         <Tooltip>
           <TooltipTrigger asChild>
             <button
               onClick={() => {/* Placeholder action */}}
               className="
-                px-6 py-3 bg-white border border-[#d6b46a] text-[#d6b46a] 
-                font-medium rounded-lg shadow-lg 
-                hover:bg-[#d6b46a] hover:text-white 
-                transition-all duration-300
-                focus:outline-none focus:ring-2 focus:ring-[#d6b46a] focus:ring-opacity-50
+                px-5 py-[10px] bg-white border-2 border-[#D6B36A] text-[#D6B36A] 
+                font-semibold text-[16px] rounded-[30px] 
+                shadow-[0_4px_10px_rgba(0,0,0,0.15)]
+                hover:bg-[#D6B36A] hover:text-white hover:shadow-[0_6px_16px_rgba(0,0,0,0.25)]
+                transition-all duration-300 ease-in-out
+                focus:outline-none focus:ring-2 focus:ring-[#D6B36A] focus:ring-opacity-50
+                font-['Inter',sans-serif] tracking-wide
+                transform hover:scale-105 active:scale-95
               "
             >
               Ook Online
@@ -458,7 +461,7 @@ const FloatingActionButtons = () => {
           <TooltipContent 
             side="left" 
             className="bg-white text-gray-800 border border-gray-200 shadow-lg rounded-lg px-3 py-2"
-            sideOffset={10}
+            sideOffset={15}
           >
             <p className="text-sm font-medium">Online tools en services</p>
           </TooltipContent>

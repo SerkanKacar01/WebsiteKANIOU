@@ -187,6 +187,19 @@ const PremiumNavigation = () => {
               >
                 VRIJBLIJVEND OFFERTE
               </button>
+              <button
+                onClick={() => {
+                  /* Placeholder action */
+                  setIsMenuOpen(false);
+                }}
+                className={`mt-3 transition-all duration-300 font-medium py-3 px-6 rounded-lg border shadow-lg ${
+                  mobileMenuNeedsContrast
+                    ? "bg-white border-gold-400 text-gold-600 hover:bg-gold-50"
+                    : "bg-white border-[#d6b46a] text-[#d6b46a] hover:bg-[#d6b46a] hover:text-white"
+                }`}
+              >
+                Ook Online
+              </button>
             </div>
           </div>
         )}

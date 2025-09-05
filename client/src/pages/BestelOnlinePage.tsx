@@ -481,9 +481,9 @@ const BestelOnlinePage = () => {
                         
                         {/* Coming soon label */}
                         {!product.available && (
-                          <div className="mt-4">
+                          <div className="mt-3">
                             <p
-                              className="font-semibold text-sm text-[#777] bg-gray-100 px-4 py-2 rounded-full inline-block"
+                              className="font-medium text-sm text-[#777] text-center"
                               aria-label="Product binnenkort beschikbaar"
                             >
                               Binnenkort online

@@ -93,7 +93,7 @@ const BestelOnlinePage = () => {
       name: "Overgordijnen",
       href: "/producten/overgordijnen",
       icon: Settings,
-      available: false,
+      available: true,
     },
     {
       id: "inzethorren",

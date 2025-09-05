@@ -1,0 +1,85 @@
+🧩 PART 2 — PAGE CONTENT & DESIGN INSTRUCTIONS
+
+Tone & Feel:
+Ultra-clean, premium layout. Balanced white space. Smooth animations. Neutral color palette with accents in deep gold (#C8A85B). High-end typography. Easy navigation. Visually guided steps. Modern luxury feeling.
+
+⸻
+
+📌 Section 1: Hero Section (Top Area)
+	•	Title (Large):
+Bestel exclusieve raamdecoratie online
+	•	Subtitle (Smaller):
+Maatwerk, kwaliteit en comfort – nu ook eenvoudig vanop afstand.
+	•	Design:
+Full-width elegant background image (blurred slightly)
+Deep gold CTA button: “Begin Nu”
+Rounded button with shadow
+Optional animation on load (fade-in + slight zoom)
+
+⸻
+
+📌 Section 2: Why Order Online? (3 Icon Columns)
+	•	Heading: Waarom kiezen voor online bestellen?
+	•	3 columns with icons and labels:
+	1.	🪡 100% Maatwerk – volledig op maat van jouw raam
+	2.	🚛 Thuisgeleverd – veilig & professioneel verpakt
+	3.	🏆 Showroomkwaliteit – zonder in te boeten aan stijl
+	•	Use clean icons, space between items, hover effects optional
+
+⸻
+
+📌 Section 3: How It Works (4 Steps Guide)
+	•	Heading: Hoe werkt het?
+	•	Use numbered steps (1 → 4) with soft golden icons
+	•	Keep layout horizontal on desktop, vertical on mobile
+
+Steps:
+	1.	Kies je product (rolgordijn, jaloezie, hor, …)
+	2.	Geef je afmetingen en voorkeuren door
+	3.	Kies opties zoals bediening, kleur en montage
+	4.	Ontvang bevestiging – wij starten met jouw maatwerk
+
+⸻
+
+📌 Section 4: Featured Products (Showcase Grid)
+	•	Title: Wat je nu al online kunt bestellen
+	•	Display cards (with photo + name + short line + CTA):
+	•	Rolgordijnen
+	•	Overgordijnen
+	•	Inzethorren
+	•	Gordijnrails
+	•	Jaloezieën
+	•	CTA Button on each card: “Bestel dit product”
+	•	Design: Uniform card layout, hover elevation, elegant gold accent
+
+⸻
+
+📌 Section 5: Help & Persoonlijk Contact
+	•	Background: Light gold or beige background
+	•	Text:
+Liever persoonlijk contact? Wij staan voor je klaar.
+	•	Buttons (3):
+	•	📞 Bel ons
+	•	💬 WhatsApp
+	•	📧 Stuur een e-mail
+	•	Style: Use same style as floating chat buttons, harmonized
+
+⸻
+
+📌 Section 6: Testimonials or Trust Section (Optional)
+	•	⭐⭐⭐⭐⭐
+Meer dan 3500 tevreden klanten
+	•	🏆
+30 jaar ervaring in maatwerk gordijnen
+	•	🛡️
+100% vertrouwensgarantie
+
+Design: Elegant text, aligned icons, subtle transitions on scroll
+
+⸻
+
+🔒 Accessibility + SEO
+	•	All buttons and elements must be keyboard accessible
+	•	Use aria-label="Bestel nu online bij Kaniou Zilvernaald" on main CTA
+	•	Images must include descriptive alt-text
+	•	Page must load fast, use optimized images

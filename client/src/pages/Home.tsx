@@ -126,7 +126,7 @@ const PremiumNavigation = () => {
               VRIJBLIJVEND OFFERTE
             </button>
             <button
-              onClick={() => setLocation("/rolgordijnen-configurator")}
+              onClick={() => setLocation("/bestel-online")}
               className="relative px-6 py-3 bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group overflow-hidden animate-pulse-glow"
             >
               {/* Animated background glow */}
@@ -202,7 +202,7 @@ const PremiumNavigation = () => {
               </button>
               <button
                 onClick={() => {
-                  setLocation("/rolgordijnen-configurator");
+                  setLocation("/bestel-online");
                   setIsMenuOpen(false);
                 }}
                 className={`mt-3 transition-all duration-300 font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 group overflow-hidden relative ${

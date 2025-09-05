@@ -1799,6 +1799,199 @@ html, body {
   opacity: 0.8;
 }
 
+/* Luxury Order Button - High-End Design */
+.luxury-order-button {
+  /* Base button structure */
+  position: relative;
+  width: 100%;
+  min-height: 60px;
+  padding: 16px 32px;
+  
+  /* Rounded pill shape */
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  
+  /* Gold gradient background with glossy finish */
+  background: linear-gradient(135deg, 
+    #D4AF37 0%, 
+    #F4E4BC 25%, 
+    #E6C988 50%, 
+    #C8A85B 75%, 
+    #B8941F 100%);
+  
+  /* Multiple layered shadows for depth and glow */
+  box-shadow: 
+    0 8px 32px rgba(212, 175, 55, 0.4),
+    0 4px 16px rgba(212, 175, 55, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+  
+  /* Smooth transitions */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Cursor and interaction states */
+  cursor: pointer;
+  overflow: hidden;
+  
+  /* Typography setup */
+  font-family: 'Inter', serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  
+  /* Remove default button styles */
+  appearance: none;
+  -webkit-appearance: none;
+  
+  /* Ensure contrast */
+  color: #1a1a1a;
+}
+
+/* Glossy overlay effect */
+.luxury-order-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 50px 50px 0 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Subtle shimmer effect */
+.luxury-order-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+/* Hover effects */
+.luxury-order-button:hover {
+  /* Smooth upward movement */
+  transform: translateY(-4px);
+  
+  /* Enhanced glow and shadows */
+  box-shadow: 
+    0 16px 48px rgba(212, 175, 55, 0.5),
+    0 8px 24px rgba(212, 175, 55, 0.4),
+    inset 0 3px 6px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Slightly brighter background */
+  background: linear-gradient(135deg, 
+    #E6C988 0%, 
+    #F8E8C8 25%, 
+    #F0D898 50%, 
+    #D4AF37 75%, 
+    #C8A332 100%);
+}
+
+/* Shimmer effect on hover */
+.luxury-order-button:hover::after {
+  transform: translateX(100%);
+}
+
+/* Active/pressed state */
+.luxury-order-button:active {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px rgba(212, 175, 55, 0.4),
+    0 4px 12px rgba(212, 175, 55, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Button content container */
+.luxury-order-button-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+/* Button icon styling */
+.luxury-order-button-icon {
+  width: 20px;
+  height: 20px;
+  color: #1a1a1a;
+  transition: transform 0.3s ease;
+}
+
+/* Icon animation on hover */
+.luxury-order-button:hover .luxury-order-button-icon {
+  transform: scale(1.1);
+}
+
+/* Focus state for accessibility */
+.luxury-order-button:focus {
+  outline: 3px solid rgba(212, 175, 55, 0.5);
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .luxury-order-button {
+    min-height: 56px;
+    padding: 14px 28px;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  
+  .luxury-order-button-content {
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  
+  .luxury-order-button-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-order-button {
+    min-height: 52px;
+    padding: 12px 24px;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+  }
+  
+  .luxury-order-button-content {
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+  }
+  
+  .luxury-order-button-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 .ultra-luxury-newsletter-description {
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.875rem, 1.5vw, 1rem);

@@ -496,11 +496,10 @@ const BestelOnlinePage = () => {
                       <div className="text-center">
                         {product.available ? (
                           <Link href={product.href}>
-                            <Button className="w-full bg-gradient-to-r from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] text-white font-bold py-4 px-6 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 border-2 border-white/20 hover:border-white/40">
-                              <span className="flex items-center justify-center gap-2">
-                                <ShoppingCart className="w-5 h-5" />
-                                Bestel dit product
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            <Button className="luxury-order-button">
+                              <span className="luxury-order-button-content">
+                                <Package className="luxury-order-button-icon" />
+                                BESTEL DIT PRODUCT
                               </span>
                             </Button>
                           </Link>

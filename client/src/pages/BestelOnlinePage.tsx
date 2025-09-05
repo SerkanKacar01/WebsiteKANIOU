@@ -197,7 +197,7 @@ const BestelOnlinePage = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-[#1a1a1a] via-[#2C3E50] to-[#1a1a1a] py-32 overflow-hidden">
+      <div className="relative bg-gradient-to-br from-[#1a1a1a] via-[#2C3E50] to-[#1a1a1a] py-16 md:py-20 overflow-hidden">
         {/* Premium background decorative elements */}
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#C8A85B]/5 via-transparent to-[#C8A85B]/5"></div>
@@ -249,7 +249,7 @@ const BestelOnlinePage = () => {
       </div>
 
       {/* Why Order Online Section */}
-      <div className="py-32 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">
+      <div className="py-16 md:py-20 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">
         {/* Elegant background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#C8A85B] rounded-full blur-3xl"></div>
@@ -257,13 +257,13 @@ const BestelOnlinePage = () => {
         </div>
         
         <Container className="relative z-10">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-6">
               <div className="w-8 h-0.5 bg-gradient-to-r from-transparent to-[#C8A85B]"></div>
               <Star className="w-5 h-5 text-[#C8A85B]" />
               <div className="w-8 h-0.5 bg-gradient-to-r from-[#C8A85B] to-transparent"></div>
             </div>
-            <h2 className="font-display text-4xl md:text-6xl text-[#2C3E50] font-black mb-8 tracking-tight">
+            <h2 className="font-display text-3xl md:text-5xl text-[#2C3E50] font-black mb-6 tracking-tight">
               Waarom kiezen voor 
               <span className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] bg-clip-text text-transparent">
                 online bestellen?
@@ -271,7 +271,7 @@ const BestelOnlinePage = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {onlineAdvantages.map((advantage, index) => {
               return (
                 <div
@@ -279,24 +279,24 @@ const BestelOnlinePage = () => {
                   className="text-center group relative"
                 >
                   {/* Premium card background */}
-                  <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:transform group-hover:scale-105 relative overflow-hidden">
+                  <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:transform group-hover:scale-105 relative overflow-hidden">
                     {/* Subtle background gradient */}
                     <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <div className="relative z-10">
-                      <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-8 rounded-2xl inline-flex mb-8 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:rotate-3 group-hover:scale-110">
-                        <span className="text-4xl" role="img" aria-label={advantage.title}>
+                      <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:rotate-3 group-hover:scale-110">
+                        <span className="text-3xl" role="img" aria-label={advantage.title}>
                           {advantage.emoji}
                         </span>
                       </div>
                       
-                      <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight">
+                      <h3 className="font-display text-xl text-[#2C3E50] font-black mb-3 tracking-tight">
                         {advantage.title}
                       </h3>
                       
                       <div className="w-16 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-4"></div>
                       
-                      <p className="font-body text-lg text-[#2C3E50]/80 leading-relaxed font-medium">
+                      <p className="font-body text-base text-[#2C3E50]/80 leading-snug font-medium">
                         {advantage.description}
                       </p>
                     </div>
@@ -309,7 +309,7 @@ const BestelOnlinePage = () => {
       </div>
 
       {/* How It Works Section */}
-      <div className="py-32 bg-gradient-to-br from-[#2C3E50] via-[#1a2332] to-[#2C3E50] relative overflow-hidden">
+      <div className="py-16 md:py-20 bg-gradient-to-br from-[#2C3E50] via-[#1a2332] to-[#2C3E50] relative overflow-hidden">
         {/* Luxury background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C8A85B]/10 via-transparent to-[#D4AF37]/10"></div>
@@ -379,7 +379,7 @@ const BestelOnlinePage = () => {
       </div>
 
       {/* Featured Products Section */}
-      <div id="featured-products" className="py-32 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">
+      <div id="featured-products" className="py-16 md:py-20 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">
         {/* Luxury background */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-1/3 left-1/6 w-72 h-72 bg-[#C8A85B]/20 rounded-full blur-3xl animate-pulse"></div>
@@ -387,7 +387,7 @@ const BestelOnlinePage = () => {
         </div>
         
         <Container className="relative z-10">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12">
             {/* Premium section header */}
             <div className="inline-flex items-center gap-3 mb-8">
               <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#C8A85B] to-[#D4AF37]"></div>
@@ -395,7 +395,7 @@ const BestelOnlinePage = () => {
               <div className="w-16 h-0.5 bg-gradient-to-r from-[#D4AF37] via-[#C8A85B] to-transparent"></div>
             </div>
             
-            <h2 className="font-display text-4xl md:text-6xl text-[#2C3E50] font-black mb-8 tracking-tight leading-tight">
+            <h2 className="font-display text-3xl md:text-5xl text-[#2C3E50] font-black mb-6 tracking-tight leading-tight">
               Wat je nu al 
               <span className="bg-gradient-to-r from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] bg-clip-text text-transparent">
                 online kunt bestellen
@@ -410,7 +410,7 @@ const BestelOnlinePage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
             {featuredProducts.map((product, index) => {
               const IconComponent = product.icon;
               return (
@@ -445,10 +445,10 @@ const BestelOnlinePage = () => {
                       </div>
                     )}
                     
-                    <div className="relative z-10 p-8">
+                    <div className="relative z-10 p-6">
                       {/* Premium icon container */}
                       <div className="text-center mb-6">
-                        <div className={`relative inline-flex p-6 rounded-2xl transition-all duration-500 ${
+                        <div className={`relative inline-flex p-4 rounded-2xl transition-all duration-500 ${
                           product.available
                             ? "bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] shadow-2xl group-hover:shadow-3xl group-hover:scale-110 group-hover:rotate-6"
                             : "bg-gradient-to-br from-gray-400 via-gray-500 to-gray-400 shadow-lg"

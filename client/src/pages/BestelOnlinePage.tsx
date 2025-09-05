@@ -206,19 +206,9 @@ const BestelOnlinePage = () => {
               <h1 className="font-display text-4xl md:text-6xl text-white font-bold mb-6 leading-tight">
                 Bestel exclusieve raamdecoratie online
               </h1>
-              <p className="font-body text-xl md:text-2xl text-white/90 leading-relaxed mb-12">
+              <p className="font-body text-xl md:text-2xl text-white/90 leading-relaxed">
                 Maatwerk, kwaliteit en comfort – nu ook eenvoudig vanop afstand.
               </p>
-              <Link href="#featured-products">
-                <Button
-                  size="lg"
-                  aria-label="Bestel nu online bij Kaniou Zilvernaald"
-                  className="bg-[#C8A85B] hover:bg-[#B8985B] text-white px-10 py-6 text-xl font-semibold rounded-xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 animate-pulse-glow"
-                >
-                  Begin Nu
-                  <ArrowRight className="w-6 h-6 ml-3" />
-                </Button>
-              </Link>
             </div>
           </div>
         </Container>

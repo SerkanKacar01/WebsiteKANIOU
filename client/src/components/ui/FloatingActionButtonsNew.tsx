@@ -438,6 +438,33 @@ const FloatingActionButtons = () => {
 
   return (
     <>
+      {/* Mid-Screen "Ook Online" Floating Button - Desktop Only */}
+      <div className="hidden md:block fixed right-6 top-1/2 transform -translate-y-1/2 z-[9998]">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => {/* Placeholder action */}}
+              className="
+                px-6 py-3 bg-white border border-[#d6b46a] text-[#d6b46a] 
+                font-medium rounded-lg shadow-lg 
+                hover:bg-[#d6b46a] hover:text-white 
+                transition-all duration-300
+                focus:outline-none focus:ring-2 focus:ring-[#d6b46a] focus:ring-opacity-50
+              "
+            >
+              Ook Online
+            </button>
+          </TooltipTrigger>
+          <TooltipContent 
+            side="left" 
+            className="bg-white text-gray-800 border border-gray-200 shadow-lg rounded-lg px-3 py-2"
+            sideOffset={10}
+          >
+            <p className="text-sm font-medium">Online tools en services</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+
       {/* Floating Action Buttons - Desktop & Mobile */}
       <div className="flex fixed bottom-6 right-6 z-[9999] flex-col gap-3">
         {buttons.map((button, index) => {

@@ -17,7 +17,6 @@ import {
   MessageCircle,
   FileText,
   Phone,
-  Ruler,
   HelpCircle,
   X,
   ChevronDown,
@@ -245,107 +244,6 @@ const CallbackModal = ({
   );
 };
 
-// Measuring instructions modal component
-const MeasuringModal = ({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Ruler className="h-5 w-5 text-[#D0B378]" />
-            Meetinstructies
-          </DialogTitle>
-        </DialogHeader>
-        <div className="space-y-6">
-          {/* Video embed placeholder */}
-          <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#D0B378] rounded-full flex items-center justify-center mx-auto mb-4">
-                <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[12px] border-b-white ml-1" />
-              </div>
-              <p className="text-gray-600">Video: Zo meet je correct op</p>
-              <p className="text-sm text-gray-500 mt-2">
-                YouTube instructievideo wordt hier geladen
-              </p>
-            </div>
-          </div>
-
-          {/* Step-by-step instructions */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg">
-              Stap-voor-stap instructies:
-            </h3>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">
-                  1. Gereedschap voorbereiden
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Zorg voor een goede rolmeter (minimaal 3 meter) en eventueel
-                  hulp bij grote ramen.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">2. Breedte meten</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Meet de breedte van het raam op 3 punten: boven, midden en
-                  onder. Neem altijd de kleinste maat en rond af naar beneden.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">3. Hoogte meten</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Meet de hoogte links, midden en rechts. Ook hier de kleinste
-                  maat aanhouden en naar beneden afronden.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">
-                  4. Montage type bepalen
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Bepaal of u binnen of buiten de sponning wilt monteren. Dit
-                  beïnvloedt de benodigde afmetingen.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <p className="text-sm text-amber-800">
-              <strong>Tip:</strong> Bij twijfel over de juiste maten? Onze
-              monteurs kunnen altijd langskomen voor een gratis opmeting.
-            </p>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 // FAQ preview component
 const FAQPreview = ({
@@ -541,7 +439,6 @@ const ContactModal = ({
 
 const FloatingActionButtons = () => {
   const [callbackModalOpen, setCallbackModalOpen] = useState(false);
-  const [measuringModalOpen, setMeasuringModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [faqPreviewVisible, setFaqPreviewVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -577,13 +474,6 @@ const FloatingActionButtons = () => {
       emoji: "📞",
       tooltip: "Bel ons terug",
       onClick: () => setCallbackModalOpen(true),
-    },
-    {
-      id: "measuring",
-      icon: Ruler,
-      emoji: "🛠",
-      tooltip: "Bekijk meetinstructies",
-      onClick: () => setMeasuringModalOpen(true),
     },
     {
       id: "faq",
@@ -650,10 +540,6 @@ const FloatingActionButtons = () => {
         onClose={() => setCallbackModalOpen(false)}
       />
 
-      <MeasuringModal
-        isOpen={measuringModalOpen}
-        onClose={() => setMeasuringModalOpen(false)}
-      />
 
       {/* FAQ Preview Popup */}
       <FAQPreview

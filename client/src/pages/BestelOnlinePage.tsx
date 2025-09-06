@@ -95,8 +95,8 @@ const BestelOnlinePage = () => {
       available: false,
     },
     {
-      id: "baby-products",
-      name: "Baby Products",
+      id: "baby-producten",
+      name: "Baby Producten",
       href: "#",
       icon: Baby,
       available: false,

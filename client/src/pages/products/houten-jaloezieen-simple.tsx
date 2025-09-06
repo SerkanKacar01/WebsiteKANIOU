@@ -39,7 +39,7 @@ import {
 const HoutenJaloezieeenSimplePage = () => {
   const keyFeatures = [
     "Natuurlijke look en feel met echt hout",
-    "Beschikbaar in 25 mm en 50 mm lamellen",
+    "Beschikbaar in 25 mm , 50 mm en 65 mm lamellen",
     "Keuze uit ladderkoord of ladderband",
     "Links of rechts bediening – handmatig of gemotoriseerd",
     "Geschikt voor in-de-dag of op-de-dag montage",
@@ -81,7 +81,7 @@ const HoutenJaloezieeenSimplePage = () => {
     },
     {
       title: "Gemotoriseerde optie (Optioneel)",
-      description: "Bediening via afstandsbediening of app met BREL systeem",
+      description: "Bediening via afstandsbediening of app met BREL systeem of MOTIONBLINDS met app",
       icon: Zap,
     },
   ];

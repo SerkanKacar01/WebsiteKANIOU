@@ -211,7 +211,7 @@ const KunststofLamellenSimplePage = () => {
                   <div className="text-sm text-[#6B7785] uppercase tracking-wider">Onderhoudsvrij</div>
                 </div>
                 <div className="text-center border-x border-[#dce2e8]">
-                  <div className="text-3xl font-light text-[#4A5568] mb-2">20+</div>
+                  <div className="text-3xl font-light text-[#4A5568] mb-2">5</div>
                   <div className="text-sm text-[#6B7785] uppercase tracking-wider">Jaar Garantie</div>
                 </div>
                 <div className="text-center">

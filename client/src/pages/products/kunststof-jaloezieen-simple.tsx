@@ -47,7 +47,7 @@ import {
 const KunststofJaloezieeenSimplePage = () => {
   const advantages = [
     "Vocht- en waterbestendig – ideaal voor badkamer of keuken",
-    "Verkrijgbaar in 25 mm en 50 mm lamelbreedte",
+    "Verkrijgbaar in 50 mm lamelbreedte",
     "Onderhoudsvriendelijk en krasbestendig",
     "Houtlook of effen kleuren",
     "Eenvoudige bediening en lichtregeling",
@@ -59,7 +59,6 @@ const KunststofJaloezieeenSimplePage = () => {
     {
       title: "Lamelbreedte",
       items: [
-        "25 mm (strakke, moderne look)",
         "50 mm (klassiekere uitstraling)",
       ],
       icon: Layers,
@@ -221,7 +220,7 @@ const KunststofJaloezieeenSimplePage = () => {
                   <div className="text-sm text-[#7B8FA3] uppercase tracking-wider">Vochtbestendig</div>
                 </div>
                 <div className="text-center border-x border-[#dde7ef]">
-                  <div className="text-3xl font-light text-[#5A7A95] mb-2">15+</div>
+                  <div className="text-3xl font-light text-[#5A7A95] mb-2">5</div>
                   <div className="text-sm text-[#7B8FA3] uppercase tracking-wider">Jaar Garantie</div>
                 </div>
                 <div className="text-center">

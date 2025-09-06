@@ -28,6 +28,7 @@ import {
   ArrowRight,
   Sparkles,
   Crown,
+  Baby,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -92,6 +93,14 @@ const BestelOnlinePage = () => {
       href: "/producten/houten-jaloezieen",
       icon: Settings,
       available: false,
+    },
+    {
+      id: "baby-products",
+      name: "Baby Products",
+      href: "#",
+      icon: Baby,
+      available: false,
+      isBabyProduct: true,
     },
   ];
 
@@ -329,14 +338,18 @@ const BestelOnlinePage = () => {
                   }`}
                 >
                   {/* Premium card container */}
-                  <div className={`relative bg-white rounded-3xl transition-all duration-700 border-2 overflow-hidden ${
-                    product.available
-                      ? "shadow-xl hover:shadow-2xl border-[#C8A85B]/20 hover:border-[#C8A85B]/60 group-hover:-translate-y-3 group-hover:scale-105"
-                      : "shadow-lg border-gray-200"
+                  <div className={`relative rounded-3xl transition-all duration-700 border-2 overflow-hidden ${
+                    product.isBabyProduct
+                      ? "bg-gradient-to-br from-[#DDEEFF] via-[#F0F8FF] to-[#FFE6EC] shadow-lg border-[#87CEEB]/30 hover:shadow-xl group-hover:-translate-y-2 group-hover:scale-102"
+                      : product.available
+                      ? "bg-white shadow-xl hover:shadow-2xl border-[#C8A85B]/20 hover:border-[#C8A85B]/60 group-hover:-translate-y-3 group-hover:scale-105"
+                      : "bg-white shadow-lg border-gray-200"
                   }`}>
                     {/* Luxury background gradient */}
                     <div className={`absolute inset-0 transition-opacity duration-700 ${
-                      product.available
+                      product.isBabyProduct
+                        ? "bg-gradient-to-br from-[#E6F3FF]/30 via-transparent to-[#FFF0F5]/30 opacity-60 group-hover:opacity-80"
+                        : product.available
                         ? "bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100"
                         : "bg-gradient-to-br from-gray-50 to-gray-100/50"
                     }`}></div>
@@ -357,15 +370,22 @@ const BestelOnlinePage = () => {
                       {/* Premium icon container */}
                       <div className="text-center mb-6">
                         <div className={`relative inline-flex p-4 rounded-2xl transition-all duration-500 ${
-                          product.available
+                          product.isBabyProduct
+                            ? "bg-gradient-to-br from-[#87CEEB] via-[#B0E0E6] to-[#FFC0CB] shadow-lg group-hover:shadow-xl group-hover:scale-105 group-hover:rotate-3"
+                            : product.available
                             ? "bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] shadow-2xl group-hover:shadow-3xl group-hover:scale-110 group-hover:rotate-6"
                             : "bg-gradient-to-br from-gray-400 via-gray-500 to-gray-400 shadow-lg"
                         }`}>
-                          <IconComponent className="w-10 h-10 text-white" />
+                          <IconComponent className={`w-10 h-10 ${
+                            product.isBabyProduct ? "text-white" : "text-white"
+                          }`} />
                           
                           {/* Glowing effect */}
                           {product.available && (
                             <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
+                          )}
+                          {product.isBabyProduct && (
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#87CEEB]/50 to-[#FFC0CB]/50 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10"></div>
                           )}
                         </div>
                       </div>
@@ -373,7 +393,9 @@ const BestelOnlinePage = () => {
                       {/* Product title */}
                       <div className="text-center mb-6">
                         <h3 className={`font-display text-xl font-black tracking-tight mb-3 transition-colors duration-300 ${
-                          product.available
+                          product.isBabyProduct
+                            ? "text-[#2C3E50] group-hover:text-[#6495ED]"
+                            : product.available
                             ? "text-[#2C3E50] group-hover:text-[#C8A85B]"
                             : "text-[#2C3E50]"
                         }`}>
@@ -382,7 +404,9 @@ const BestelOnlinePage = () => {
                         
                         {/* Premium divider */}
                         <div className={`w-16 h-0.5 mx-auto transition-all duration-500 ${
-                          product.available
+                          product.isBabyProduct
+                            ? "bg-gradient-to-r from-[#87CEEB] to-[#FFC0CB] group-hover:w-20"
+                            : product.available
                             ? "bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] group-hover:w-20"
                             : "bg-gray-300"
                         }`}></div>
@@ -390,12 +414,29 @@ const BestelOnlinePage = () => {
                         {/* Coming soon label */}
                         {!product.available && (
                           <div className="mt-3">
-                            <p
-                              className="font-medium text-sm text-[#777] text-center"
-                              aria-label="Product binnenkort beschikbaar"
-                            >
-                              Binnenkort online
-                            </p>
+                            {product.isBabyProduct ? (
+                              <>
+                                <p
+                                  className="font-medium text-sm text-[#6495ED] text-center mb-1"
+                                  aria-label="Baby Products Coming Soon"
+                                >
+                                  Coming Soon
+                                </p>
+                                <p
+                                  className="font-light text-xs text-[#87CEEB] text-center"
+                                  aria-label="For little ones and nurseries"
+                                >
+                                  For little ones and nurseries
+                                </p>
+                              </>
+                            ) : (
+                              <p
+                                className="font-medium text-sm text-[#777] text-center"
+                                aria-label="Product binnenkort beschikbaar"
+                              >
+                                Binnenkort online
+                              </p>
+                            )}
                           </div>
                         )}
                       </div>
@@ -413,8 +454,12 @@ const BestelOnlinePage = () => {
                           </Link>
                         ) : (
                           <div className="h-16 flex items-center justify-center">
-                            <div className="text-gray-400 text-sm font-medium">
-                              Binnenkort beschikbaar
+                            <div className={`text-sm font-medium ${
+                              product.isBabyProduct 
+                                ? "text-[#87CEEB]" 
+                                : "text-gray-400"
+                            }`}>
+                              {product.isBabyProduct ? "Coming Soon" : "Binnenkort beschikbaar"}
                             </div>
                           </div>
                         )}

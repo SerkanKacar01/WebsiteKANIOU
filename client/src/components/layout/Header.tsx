@@ -30,9 +30,10 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: "Gallerij", href: "/gallerij" },
-    { label: "Over Ons", href: "/overons" },
-    { label: "Contact", href: "/contact" },
+    { label: t("GALLERIJ"), href: "/gallerij" },
+    { label: "ZAKELIJK", href: "/zakelijk" },
+    { label: t("OVER ONS"), href: "/overons" },
+    { label: t("CONTACT"), href: "/contact" },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -145,20 +146,20 @@ const Header = () => {
                   ))}
 
                   <div className="mt-4 space-y-3">
-                    <Link href="/offerte">
+                    <Link href="/acties">
                       <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base font-medium"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
                         onClick={handleMobileNavClick}
                       >
-                        VRIJBLIJVEND OFFERTE
+                        Acties
                       </Button>
                     </Link>
-                    <Link href="/bestel-online">
+                    <Link href="/offerte">
                       <Button
-                        className="w-full bg-[#E67E22] hover:bg-[#D35400] text-white transition-colors min-h-[44px] text-base font-medium flex items-center justify-center gap-2"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
                         onClick={handleMobileNavClick}
                       >
-                        🛒 BESTEL ONLINE
+                        Offerte
                       </Button>
                     </Link>
 
@@ -185,20 +186,20 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3">
-                <Link href="/offerte">
+                <Link href="/acties">
                   <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors font-medium"
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
                     onClick={handleNavClick}
                   >
-                    VRIJBLIJVEND OFFERTE
+                    Acties
                   </Button>
                 </Link>
-                <Link href="/bestel-online">
+                <Link href="/offerte">
                   <Button 
-                    className="bg-[#E67E22] hover:bg-[#D35400] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors font-medium flex items-center gap-2"
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
                     onClick={handleNavClick}
                   >
-                    🛒 BESTEL ONLINE
+                    Offerte
                   </Button>
                 </Link>
 

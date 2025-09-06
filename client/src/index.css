@@ -1780,8 +1780,7 @@ html, body {
   position: relative;
   width: 100%;
   min-height: 60px;
-  min-width: 220px;
-  padding: 18px 36px;
+  padding: 16px 32px;
   
   /* Rounded pill shape */
   border-radius: 50px;
@@ -1813,10 +1812,9 @@ html, body {
   /* Typography setup */
   font-family: 'Inter', serif;
   font-weight: 800;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  white-space: nowrap;
   
   /* Remove default button styles */
   appearance: none;
@@ -1904,12 +1902,9 @@ html, body {
   gap: 12px;
   color: #1a1a1a;
   font-weight: 800;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  white-space: nowrap;
-  width: 100%;
-  text-align: center;
 }
 
 /* Button icon styling */
@@ -1935,15 +1930,14 @@ html, body {
 @media (max-width: 768px) {
   .luxury-order-button {
     min-height: 56px;
-    min-width: 200px;
-    padding: 16px 32px;
-    font-size: 14px;
+    padding: 14px 28px;
+    font-size: 13px;
     letter-spacing: 1px;
   }
   
   .luxury-order-button-content {
     gap: 10px;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
   }
   
@@ -1956,15 +1950,14 @@ html, body {
 @media (max-width: 480px) {
   .luxury-order-button {
     min-height: 52px;
-    min-width: 180px;
-    padding: 14px 28px;
-    font-size: 13px;
+    padding: 12px 24px;
+    font-size: 12px;
     letter-spacing: 0.8px;
   }
   
   .luxury-order-button-content {
     gap: 8px;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.8px;
   }
   

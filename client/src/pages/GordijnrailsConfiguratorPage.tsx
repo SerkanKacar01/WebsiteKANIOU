@@ -160,7 +160,9 @@ const curveModels: CurveModel[] = [
 ];
 
 const GordijnrailsConfiguratorPage = () => {
-  const [expandedSections, setExpandedSections] = useState<string[]>(["step-1"]);  // Start with step 1 expanded
+  const [expandedSections, setExpandedSections] = useState<string[]>([
+    "step-1",
+  ]); // Start with step 1 expanded
   const [showAllSections, setShowAllSections] = useState(false);
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [gliderAdded, setGliderAdded] = useState(false);
@@ -241,19 +243,19 @@ const GordijnrailsConfiguratorPage = () => {
     }
 
     // Different prices for different rail types and colors
-    let pricePerMeter = 8.95; // Default price
+    let pricePerMeter = 0.0; // Default price
 
     if (configuration.profileType === "KS") {
       if (configuration.color === "white") {
-        pricePerMeter = 9.95; // KS Rail - Wit
+        pricePerMeter = 11.0; // KS Rail - Wit
       } else if (configuration.color === "black") {
-        pricePerMeter = 9.95; // KS Rail - Zwart
+        pricePerMeter = 11.0; // KS Rail - Zwart
       }
     } else if (configuration.profileType === "DS") {
       if (configuration.color === "white") {
-        pricePerMeter = 11.95; // DS Rail - Wit
+        pricePerMeter = 12.5; // DS Rail - Wit
       } else if (configuration.color === "black") {
-        pricePerMeter = 11.95; // DS Rail - Zwart
+        pricePerMeter = 12.5; // DS Rail - Zwart
       }
     }
 
@@ -263,7 +265,8 @@ const GordijnrailsConfiguratorPage = () => {
 
     // Extra rails pricing
     if (configuration.extraRails > 0) {
-      extras += pricePerMeter * (pricingLength / 100) * configuration.extraRails;
+      extras +=
+        pricePerMeter * (pricingLength / 100) * configuration.extraRails;
     }
 
     // New curve model pricing
@@ -325,7 +328,14 @@ const GordijnrailsConfiguratorPage = () => {
       setExpandedSections(["step-1"]); // Close all except step 1
       setShowAllSections(false);
     } else {
-      setExpandedSections(["step-1", "step-2", "step-3", "step-4", "step-5", "step-6"]); // Open all
+      setExpandedSections([
+        "step-1",
+        "step-2",
+        "step-3",
+        "step-4",
+        "step-5",
+        "step-6",
+      ]); // Open all
       setShowAllSections(true);
     }
   };
@@ -341,7 +351,7 @@ const GordijnrailsConfiguratorPage = () => {
     if (stepId < 6) {
       const nextStepKey = `step-${stepId + 1}`;
       if (!expandedSections.includes(nextStepKey)) {
-        setExpandedSections(prev => [...prev, nextStepKey]);
+        setExpandedSections((prev) => [...prev, nextStepKey]);
       }
     }
   };
@@ -392,24 +402,6 @@ const GordijnrailsConfiguratorPage = () => {
 
   const getAvailableCeilingComponents = (): CeilingComponent[] => [
     {
-      id: "standard-clip",
-      name: "KS-DS smartklick plafondsteun wit",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 1.2,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.30_1750277424680.png",
-      quantity: 2,
-    },
-    {
-      id: "black-clip",
-      name: "KS-DS plafondsteun met sleuf zwart",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 0.65,
-      image: "Scherm­afbeelding 2025-06-18 om 21.25.08_1750277424680.png",
-      quantity: 2,
-    },
-    {
       id: "double-clip",
       name: "KS-DS smartklick plafondsteun incl. afdekkap zwart",
       description:
@@ -419,30 +411,12 @@ const GordijnrailsConfiguratorPage = () => {
       quantity: 2,
     },
     {
-      id: "suspension-adapter",
-      name: "KS-DS smartklick plafondsteun zwart",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 1.2,
-      image: "Scherm­afbeelding 2025-06-18 om 20.59.38_1750277424680.png",
-      quantity: 2,
-    },
-    {
       id: "white-cover-clip",
       name: "KS-DS smartklick plafondsteun met afdekkap wit",
       description:
         "Aanbevolen: 2 clips per meter voor een veilige installatie.",
       price: 1.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750277424680.png",
-      quantity: 2,
-    },
-    {
-      id: "long-white-clip",
-      name: "KS-DS plafondsteun met sleuf wit",
-      description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
-      price: 0.65,
-      image: "Scherm­afbeelding 2025-06-18 om 21.24.50_1750277424680.png",
       quantity: 2,
     },
   ];
@@ -471,86 +445,7 @@ const GordijnrailsConfiguratorPage = () => {
   ];
 
   const getAvailableWallComponents = (): WallComponent[] => [
-    {
-      id: "ks-wall-bracket-white",
-      name: "KS-DS basic afstandsteun 35 mm zwart",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.15,
-      image: "Scherm­afbeelding 2025-06-18 om 22.35.11_1750279422495.png",
-      quantity: 0,
-    },
-    {
-      id: "ks-wall-bracket-white-short",
-      name: "KS-DS basic afsandsteun 60 mm wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.42,
-      image: "Scherm­afbeelding 2025-06-18 om 22.35.32_1750279422495.png",
-      quantity: 0,
-    },
-    {
-      id: "ks-wall-bracket-white-long",
-      name: "KS-DS basic afsandsteun 60 mm zwart",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.42,
-      image: "Scherm­afbeelding 2025-06-18 om 22.35.42_1750279422495.png",
-      quantity: 0,
-    },
-    {
-      id: "ks-wall-bracket-black",
-      name: "KS-DS smartklick afstandsteun 75 mm.+ klem wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 3.91,
-      image: "Scherm­afbeelding 2025-06-18 om 22.36.15_1750279422494.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-white",
-      name: "KS-DS smartklick afstandsteun 100 mm. + klem wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 4.36,
-      image: "Scherm­afbeelding 2025-06-18 om 22.36.33_1750279422495.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-white-short",
-      name: "KS-DS smartklick afstandsteun 125 mm. + klem wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 4.5,
-      image: "Scherm­afbeelding 2025-06-18 om 22.37.07_1750279422495.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-white-long",
-      name: "KS-DS smartklick afstandsteun 150 mm. + klem wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 4.73,
-      image: "Scherm­afbeelding 2025-06-18 om 22.37.24_1750279422494.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-black",
-      name: "KS-DS smartklick afstandsteun 250 mm. + klem wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 8.62,
-      image: "Scherm­afbeelding 2025-06-18 om 22.37.38_1750279422494.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-black-adapter",
-      name: "KS-DS smartklick afstandsteun 300 mm. + klem wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 8.95,
-      image: "Scherm­afbeelding 2025-06-18 om 22.37.55_1750279422494.png",
-      quantity: 0,
-    },
-    {
-      id: "ds-wall-bracket-white-adapter",
-      name: "KS-DS basic afstandsteun 35 mm wit",
-      description: "Recommended: 2 brackets per meter for stable installation",
-      price: 1.15,
-      image: "Scherm­afbeelding 2025-06-18 om 22.34.54_1750279422496.png",
-      quantity: 0,
-    },
+    
   ];
 
   const updateWallComponent = (componentId: string, quantity: number) => {
@@ -647,7 +542,7 @@ const GordijnrailsConfiguratorPage = () => {
 
   const handleMolliePayment = async () => {
     setIsProcessingPayment(true);
-    
+
     try {
       const paymentData = {
         amount: price.total.toFixed(2),
@@ -657,17 +552,17 @@ const GordijnrailsConfiguratorPage = () => {
         productDetails: {
           configuration,
           specificationItems: generateSpecificationItems(),
-          totalPrice: price.total
-        }
+          totalPrice: price.total,
+        },
       };
 
-      const response = await fetch('/api/create-payment', {
-        method: 'POST',
+      const response = await fetch("/api/create-payment", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'x-session-id': Date.now().toString()
+          "Content-Type": "application/json",
+          "x-session-id": Date.now().toString(),
         },
-        body: JSON.stringify(paymentData)
+        body: JSON.stringify(paymentData),
       });
 
       const result = await response.json();
@@ -676,11 +571,13 @@ const GordijnrailsConfiguratorPage = () => {
         // Redirect to Mollie checkout
         window.location.href = result.checkoutUrl;
       } else {
-        throw new Error(result.message || 'Payment creation failed');
+        throw new Error(result.message || "Payment creation failed");
       }
     } catch (error) {
-      console.error('Payment error:', error);
-      alert('Er is een fout opgetreden bij het verwerken van de betaling. Probeer het opnieuw.');
+      console.error("Payment error:", error);
+      alert(
+        "Er is een fout opgetreden bij het verwerken van de betaling. Probeer het opnieuw.",
+      );
     } finally {
       setIsProcessingPayment(false);
     }
@@ -713,7 +610,7 @@ const GordijnrailsConfiguratorPage = () => {
 
     items.push({
       name: railName,
-      description: `${pricingLength} cm × ${totalRails} stuks${configuration.extraRails > 0 ? ` (${configuration.quantity} basis + ${configuration.extraRails} extra)` : ''}`,
+      description: `${pricingLength} cm × ${totalRails} stuks${configuration.extraRails > 0 ? ` (${configuration.quantity} basis + ${configuration.extraRails} extra)` : ""}`,
       unitPrice: pricePerMeter,
       quantity: (pricingLength / 100) * totalRails,
       total: railPrice,
@@ -1205,7 +1102,7 @@ const GordijnrailsConfiguratorPage = () => {
                   Aantal extra rails bovenop de standaard keuze
                 </p>
               </div>
-              
+
               <div className="relative">
                 <Input
                   id="extraRails"
@@ -1216,7 +1113,7 @@ const GordijnrailsConfiguratorPage = () => {
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     const value = parseInt(inputValue) || 0;
-                    
+
                     // Show warning if value exceeds 99
                     if (value > 99) {
                       setShowRailLimitWarning(true);
@@ -1227,7 +1124,7 @@ const GordijnrailsConfiguratorPage = () => {
                     } else {
                       setShowRailLimitWarning(false);
                     }
-                    
+
                     // Only update state if within valid range
                     if (value >= 0 && value <= 99) {
                       updateConfiguration("extraRails", value);
@@ -1240,7 +1137,7 @@ const GordijnrailsConfiguratorPage = () => {
                   rails
                 </span>
               </div>
-              
+
               {/* Warning for exceeding 99 */}
               {showRailLimitWarning && (
                 <div className="text-center text-sm text-red-600 bg-red-50 p-2 rounded border border-red-200">
@@ -1250,13 +1147,15 @@ const GordijnrailsConfiguratorPage = () => {
 
               <div className="text-center text-sm text-blue-600 bg-blue-50 p-3 rounded-lg">
                 <p>
-                  <strong>Advies:</strong> meestal 1 rail per raam, maar u kunt extra rails bestellen voor meerdere ruimtes.
+                  <strong>Advies:</strong> meestal 1 rail per raam, maar u kunt
+                  extra rails bestellen voor meerdere ruimtes.
                 </p>
               </div>
 
               {configuration.extraRails > 0 && (
                 <div className="text-center text-sm text-green-600 bg-green-50 p-2 rounded">
-                  ✓ {configuration.extraRails} extra rail{configuration.extraRails > 1 ? "s" : ""} toegevoegd
+                  ✓ {configuration.extraRails} extra rail
+                  {configuration.extraRails > 1 ? "s" : ""} toegevoegd
                 </div>
               )}
             </div>
@@ -2309,8 +2208,10 @@ const GordijnrailsConfiguratorPage = () => {
               </p>
             </div>
 
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" ref={configuratorRef}>
+            <div
+              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+              ref={configuratorRef}
+            >
               {/* Configuration Steps - Accordion Layout */}
               <div className="lg:col-span-2">
                 <Card>
@@ -2342,31 +2243,45 @@ const GordijnrailsConfiguratorPage = () => {
                           key={`step-${step.id}`}
                           value={`step-${step.id}`}
                           className={`border border-gray-200 rounded-lg mb-4 ${
-                            expandedSections.includes(`step-${step.id}`) 
-                              ? 'bg-[#d5c096]/5 border-[#d5c096]/30' 
-                              : 'bg-white'
+                            expandedSections.includes(`step-${step.id}`)
+                              ? "bg-[#d5c096]/5 border-[#d5c096]/30"
+                              : "bg-white"
                           }`}
                         >
                           <AccordionTrigger className="px-4 py-3 hover:no-underline">
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center gap-3">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                                  step.completed 
-                                    ? 'bg-green-500 text-white' 
-                                    : 'bg-gray-200 text-gray-600'
-                                }`}>
-                                  {step.completed ? <Check className="h-4 w-4" /> : step.id}
+                                <div
+                                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                                    step.completed
+                                      ? "bg-green-500 text-white"
+                                      : "bg-gray-200 text-gray-600"
+                                  }`}
+                                >
+                                  {step.completed ? (
+                                    <Check className="h-4 w-4" />
+                                  ) : (
+                                    step.id
+                                  )}
                                 </div>
                                 <div className="text-left">
-                                  <h3 className="font-semibold">Stap {step.id} – {step.title}</h3>
-                                  <p className="text-sm text-gray-600">{step.description}</p>
+                                  <h3 className="font-semibold">
+                                    Stap {step.id} – {step.title}
+                                  </h3>
+                                  <p className="text-sm text-gray-600">
+                                    {step.description}
+                                  </p>
                                 </div>
                               </div>
                               <Badge
-                                variant={step.completed ? "default" : "secondary"}
+                                variant={
+                                  step.completed ? "default" : "secondary"
+                                }
                                 className="ml-2"
                               >
-                                {step.completed ? "✅ Voltooid" : "⚠️ Nog niet ingevuld"}
+                                {step.completed
+                                  ? "✅ Voltooid"
+                                  : "⚠️ Nog niet ingevuld"}
                               </Badge>
                             </div>
                           </AccordionTrigger>
@@ -2426,7 +2341,11 @@ const GordijnrailsConfiguratorPage = () => {
                           {configuration.quantity} rail
                           {configuration.quantity > 1 ? "s" : ""}
                           {configuration.extraRails > 0 && (
-                            <span> + {configuration.extraRails} extra rail{configuration.extraRails > 1 ? "s" : ""}</span>
+                            <span>
+                              {" "}
+                              + {configuration.extraRails} extra rail
+                              {configuration.extraRails > 1 ? "s" : ""}
+                            </span>
                           )}
                         </span>
                       </div>
@@ -2592,24 +2511,41 @@ const GordijnrailsConfiguratorPage = () => {
                             : effectiveLength;
                           return billingLength;
                         })()}{" "}
-                        cm × {configuration.quantity + configuration.extraRails})
+                        cm × {configuration.quantity + configuration.extraRails}
+                        )
                         {configuration.customLength && (
                           <div className="text-xs text-gray-500 mt-1">
                             Exact maat: {configuration.customLength} cm
                           </div>
                         )}
                       </span>
-                      <span>€{(price.base + (configuration.extraRails > 0 ? (() => {
-                        const effectiveLength = configuration.customLength || configuration.length;
-                        const pricingLength = configuration.customLength ? Math.ceil(effectiveLength / 10) * 10 : effectiveLength;
-                        let pricePerMeter = 8.95;
-                        if (configuration.profileType === "KS") {
-                          pricePerMeter = 9.95;
-                        } else if (configuration.profileType === "DS") {
-                          pricePerMeter = 11.95;
-                        }
-                        return pricePerMeter * (pricingLength / 100) * configuration.extraRails;
-                      })() : 0)).toFixed(2)}</span>
+                      <span>
+                        €
+                        {(
+                          price.base +
+                          (configuration.extraRails > 0
+                            ? (() => {
+                                const effectiveLength =
+                                  configuration.customLength ||
+                                  configuration.length;
+                                const pricingLength = configuration.customLength
+                                  ? Math.ceil(effectiveLength / 10) * 10
+                                  : effectiveLength;
+                                let pricePerMeter = 8.95;
+                                if (configuration.profileType === "KS") {
+                                  pricePerMeter = 9.95;
+                                } else if (configuration.profileType === "DS") {
+                                  pricePerMeter = 11.95;
+                                }
+                                return (
+                                  pricePerMeter *
+                                  (pricingLength / 100) *
+                                  configuration.extraRails
+                                );
+                              })()
+                            : 0)
+                        ).toFixed(2)}
+                      </span>
                     </div>
 
                     {price.extras > 0 && (
@@ -2704,14 +2640,17 @@ const GordijnrailsConfiguratorPage = () => {
                     )}
 
                     <div className="flex justify-between text-lg font-bold">
-                      <span>Totaalprijs: €{price.total.toFixed(2)} (incl. 21% BTW)</span>
+                      <span>
+                        Totaalprijs: €{price.total.toFixed(2)} (incl. 21% BTW)
+                      </span>
                       <span className="text-[#d5c096]">
                         €{price.total.toFixed(2)}
                       </span>
                     </div>
-                    
+
                     <p className="text-xs text-gray-500">
-                      Inclusief btw-bedrag: €{(price.total * 0.21 / 1.21).toFixed(2)}
+                      Inclusief btw-bedrag: €
+                      {((price.total * 0.21) / 1.21).toFixed(2)}
                     </p>
                   </CardContent>
                 </Card>
@@ -2720,7 +2659,7 @@ const GordijnrailsConfiguratorPage = () => {
                 {steps[5].completed && (
                   <div className="space-y-3">
                     {/* Mollie Payment Button */}
-                    <Button 
+                    <Button
                       onClick={handleMolliePayment}
                       disabled={isProcessingPayment}
                       className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white font-semibold text-lg py-4 px-8 rounded-md"
@@ -2738,9 +2677,10 @@ const GordijnrailsConfiguratorPage = () => {
                       )}
                     </Button>
                     <p className="text-xs text-gray-500 text-center">
-                      Je wordt veilig doorgestuurd naar onze betaalpartner Mollie
+                      Je wordt veilig doorgestuurd naar onze betaalpartner
+                      Mollie
                     </p>
-                    
+
                     <Dialog
                       open={showSpecificationModal}
                       onOpenChange={setShowSpecificationModal}
@@ -2874,7 +2814,8 @@ const GordijnrailsConfiguratorPage = () => {
                                       Inclusief btw-bedrag:
                                     </td>
                                     <td className="px-4 py-3 text-sm font-bold text-gray-600 text-right">
-                                      €{(price.total * 0.21 / 1.21).toFixed(2)}
+                                      €
+                                      {((price.total * 0.21) / 1.21).toFixed(2)}
                                     </td>
                                   </tr>
                                 </tfoot>

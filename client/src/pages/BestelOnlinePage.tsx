@@ -420,13 +420,13 @@ const BestelOnlinePage = () => {
                                   className="font-medium text-sm text-[#6495ED] text-center mb-1"
                                   aria-label="Baby Products Coming Soon"
                                 >
-                                  Coming Soon
+                                  Binnenkort online
                                 </p>
                                 <p
                                   className="font-light text-xs text-[#87CEEB] text-center"
                                   aria-label="For little ones and nurseries"
                                 >
-                                  For little ones and nurseries
+                                  Voor baby’s en kinderkamers
                                 </p>
                               </>
                             ) : (
@@ -448,7 +448,7 @@ const BestelOnlinePage = () => {
                             <Button className="luxury-order-button">
                               <span className="luxury-order-button-content">
                                 <Package className="luxury-order-button-icon" />
-                                BESTEL DIT PRODUCT
+                                Bekijk 
                               </span>
                             </Button>
                           </Link>

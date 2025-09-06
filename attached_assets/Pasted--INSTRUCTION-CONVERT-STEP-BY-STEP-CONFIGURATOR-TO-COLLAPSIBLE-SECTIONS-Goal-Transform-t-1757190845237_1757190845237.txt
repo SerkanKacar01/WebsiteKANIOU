@@ -1,0 +1,56 @@
+🔧 INSTRUCTION — CONVERT STEP-BY-STEP CONFIGURATOR TO COLLAPSIBLE SECTIONS
+
+⸻
+
+🎯 Goal:
+
+Transform the current 6-step curtain rail configurator into a vertical layout with collapsible sections — so users can open, review, and complete each step from top to bottom on one page, instead of going through “Next” buttons.
+
+⸻
+
+✅ 1. Layout Change
+	•	Replace the current step-by-step navigation (with “Volgende” button) by a single scrollable page.
+	•	Each of the 6 steps must be presented under each other in a vertical flow.
+	•	Each step becomes a collapsible (accordion-style) section that users can open/close.
+	•	At the top: display an optional “Toon alles” / “Verberg alles” toggle for user convenience.
+
+⸻
+
+📦 2. Each Collapsible Block Must Include:
+	•	Step number and title as header (e.g. “Stap 1 – Kies je profieltype”)
+	•	Exact same content as current version inside each step.
+	•	Optional: small status badge (✅ Completed / ⚠️ Nog niet ingevuld)
+
+⸻
+
+📋 3. Responsive Behavior:
+	•	On desktop: all sections start collapsed except step 1.
+	•	On mobile: show all collapsed (optional: step 1 open).
+	•	Accordion animation must be smooth and clean.
+
+⸻
+
+🎨 4. Styling Requirements:
+	•	Use same fonts, icons, and spacing as the current configurator.
+	•	Ensure consistent width and alignment for a professional look.
+	•	Highlight the opened section with a subtle background color or border.
+	•	Add scroll-to-next section when one is completed (optional).
+
+⸻
+
+🔁 5. Interaction Logic:
+	•	If a user completes a step (e.g. selects profieltype), auto mark the section as “✅ voltooid”.
+	•	Clicking on the section title toggles open/close.
+	•	Disable jumping between steps unless the previous is completed (optional but recommended for UX).
+
+⸻
+
+🛠️ 6. Developer Notes (Replit):
+	•	Maintain current selection logic and pricing calculations — just refactor layout.
+	•	Keep the “Jouw Configuratie” + Prijskaart fixed in sidebar on desktop (like now).
+	•	Do not change URLs or logic for submitting the order.
+
+⸻
+
+📍 Important:
+The current structure with “Volgende” button must be completely removed. All 6 steps will now live on one long, collapsible page with smooth UX.

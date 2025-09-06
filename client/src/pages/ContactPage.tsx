@@ -60,7 +60,6 @@ const ContactPage = () => {
                 </span>
               </h1>
               
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#C8A85B] to-transparent mx-auto mb-6 rounded-full"></div>
               
               <p className="font-body text-xl md:text-2xl text-white/80 leading-relaxed font-light tracking-wide max-w-3xl mx-auto">
                 Ervaar <span className="text-[#C8A85B] font-medium">persoonlijke service</span> op het hoogste niveau. 

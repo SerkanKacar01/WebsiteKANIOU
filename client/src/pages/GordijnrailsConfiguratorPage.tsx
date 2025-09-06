@@ -1207,26 +1207,6 @@ const GordijnrailsConfiguratorPage = () => {
                   </div>
                 </Card>
 
-                {/* Custom Design Option */}
-                <Card className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="eigen-model" id="eigen-model" />
-                    <Label
-                      htmlFor="eigen-model"
-                      className="flex-1 cursor-pointer"
-                    >
-                      <div>
-                        <p className="font-medium">Eigen model</p>
-                        <p className="text-sm text-gray-600">
-                          Op maat gebogen - op aanvraag
-                        </p>
-                        <p className="text-sm font-medium text-blue-600">
-                          Op aanvraag
-                        </p>
-                      </div>
-                    </Label>
-                  </div>
-                </Card>
               </div>
             </RadioGroup>
 

@@ -187,7 +187,7 @@ const Header = () => {
               <div className="flex items-center gap-3">
                 <Link href="/offerte">
                   <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors"
+                    className="bg-[#D5B992] hover:bg-[#C5A565] text-white text-sm font-medium px-4 py-2 h-10 transition-colors rounded-md"
                     onClick={handleNavClick}
                   >
                     VRIJBLIJVEND OFFERTE
@@ -195,7 +195,7 @@ const Header = () => {
                 </Link>
                 <Link href="/bestel-online">
                   <Button 
-                    className="bg-gradient-to-r from-[#E67E22] to-[#E74C3C] hover:from-[#D35400] hover:to-[#C0392B] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors flex items-center gap-2"
+                    className="bg-gradient-to-r from-[#E67E22] to-[#E74C3C] hover:from-[#D35400] hover:to-[#C0392B] text-white text-sm font-medium px-4 py-2 h-10 transition-colors flex items-center gap-2 rounded-md"
                     onClick={handleNavClick}
                   >
                     <ShoppingCart className="h-4 w-4" />

@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import Container from '@/components/ui/container';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSelector from '@/components/layout/LanguageSelector';
-import { CookiebotDeclaration } from '@/components/CookiebotDeclaration';
 
 const PrivacyPolicyPage = () => {
   const { t, language } = useLanguage();
@@ -287,9 +286,6 @@ const PrivacyPolicyPage = () => {
                 </p>
               </>
             )}
-            
-            {/* Cookiebot Declaration - only shows on privacy/cookie related pages */}
-            <CookiebotDeclaration />
           </div>
         </Container>
       </div>

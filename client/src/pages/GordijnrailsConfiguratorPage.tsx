@@ -236,11 +236,8 @@ const GordijnrailsConfiguratorPage = () => {
   const calculatePrice = () => {
     const effectiveLength = configuration.customLength || configuration.length;
 
-    // Round up to nearest 10cm for pricing calculations when using custom length
-    let pricingLength = effectiveLength;
-    if (configuration.customLength) {
-      pricingLength = Math.ceil(effectiveLength / 10) * 10;
-    }
+    // Use exact length for pricing calculations - no rounding
+    const pricingLength = effectiveLength;
 
     // Different prices for different rail types and colors
     let pricePerMeter = 0.0; // Default price
@@ -576,9 +573,8 @@ const GordijnrailsConfiguratorPage = () => {
   const generateSpecificationItems = () => {
     const items = [];
     const effectiveLength = configuration.customLength || configuration.length;
-    const pricingLength = configuration.customLength
-      ? Math.ceil(effectiveLength / 10) * 10
-      : effectiveLength;
+    // Use exact length for pricing - no rounding
+    const pricingLength = effectiveLength;
 
     // Rail pricing
     let pricePerMeter = 8.95;
@@ -600,7 +596,7 @@ const GordijnrailsConfiguratorPage = () => {
 
     items.push({
       name: railName,
-      description: `${pricingLength} cm × ${totalRails} stuks${configuration.extraRails > 0 ? ` (${configuration.quantity} basis + ${configuration.extraRails} extra)` : ""}`,
+      description: `${effectiveLength} cm × ${totalRails} stuks${configuration.extraRails > 0 ? ` (${configuration.quantity} basis + ${configuration.extraRails} extra)` : ""}`,
       unitPrice: pricePerMeter,
       quantity: (pricingLength / 100) * totalRails,
       total: railPrice,

@@ -41,7 +41,7 @@ import {
   Calculator,
   Minimize2,
   Maximize2,
-  ChainIcon as Chain,
+  Link2 as Chain,
 } from "lucide-react";
 
 const RolgordijnenSimplePage = () => {

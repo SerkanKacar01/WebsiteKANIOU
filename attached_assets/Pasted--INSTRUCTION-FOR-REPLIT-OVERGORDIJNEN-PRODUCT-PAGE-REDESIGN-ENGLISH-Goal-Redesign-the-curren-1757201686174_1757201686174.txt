@@ -1,0 +1,131 @@
+🔧 INSTRUCTION FOR REPLIT – OVERGORDIJNEN PRODUCT PAGE REDESIGN (ENGLISH)
+
+Goal: Redesign the current product page for “Overgordijnen” into a clear, informative, and conversion-focused layout for the Bestel Online experience. The design must combine both product education and strong call-to-action elements.
+
+⸻
+
+✅ Page Layout Structure:
+
+1. Hero Section (Top of Page)
+	•	Large title with elegant font (same as homepage hero).
+	•	Subtitle below in smaller text.
+	•	A visually styled button: “Start uw bestelling”
+	•	Background: warm beige gradient or soft textured fabric background.
+
+⸻
+
+2. Section: Why Choose Our Overgordijnen
+	•	6 benefit blocks with icons, equal size
+	•	Use checkmark-style icons like already present
+	•	Two rows (3 per row), nicely spaced
+	•	Smooth animation on scroll-in
+
+⸻
+
+3. Section: Stoffen & Plooien (Options Block)
+	•	Heading: “Personaliseer uw overgordijnen”
+	•	Use 7 equal option cards:
+	•	Velours stoffen
+	•	Linnenlook stoffen
+	•	Dimout stoffen
+	•	Blackout stoffen
+	•	Kleuren: van neutraal tot opvallend
+	•	Bevestiging: rail, roede of ringen
+	•	Voering (optioneel)
+	•	Icons above, label + short text
+	•	Hover effect with subtle shadow
+
+⸻
+
+4. Section: Onderhoud & Advies
+	•	Heading: “Zorg voor langdurige schoonheid”
+	•	Left: 4 bullet points in a block
+	•	Right: small card: Professionele reiniging aanbevolen (with icon)
+
+⸻
+
+5. FAQ Section (Accordion Style)
+	•	Title: “Veelgestelde vragen over overgordijnen”
+	•	Use modern dropdowns
+	•	Styled consistently with the rest of the site
+
+⸻
+
+6. Bottom CTA (Full-width Banner)
+	•	Dark background (navy blue or deep grey)
+	•	Big question headline: “Klaar voor uw perfecte overgordijnen?”
+	•	Button: “Start direct uw bestelling”
+	•	Subtext: “Gratis advies & persoonlijke service”
+
+⸻
+
+🔗 URL:
+
+/producten/overgordijnen
+
+⸻
+
+📄 INHOUD TEKSTEN (IN HET NEDERLANDS):
+
+⸻
+
+🪟 Hero:
+
+Overgordijnen
+Sfeer, privacy en isolatie in één stijlvolle oplossing
+Overgordijnen zorgen voor een warme uitstraling in elke ruimte. Ze zijn ideaal voor het creëren van privacy, het tegenhouden van licht en het verbeteren van de akoestiek. Verkrijgbaar in diverse stoffen, kleuren en plooistijlen.
+
+🎯 CTA: Offerte aanvragen / Start uw bestelling
+
+⸻
+
+✔️ Waarom kiezen voor onze overgordijnen?
+	•	Verduisterend of lichtdempend mogelijk
+	•	Akoestische en isolerende werking
+	•	Diverse plooien: enkele, dubbele, wave-plooien
+	•	Op maat gemaakt voor elk interieur
+	•	Combineerbaar met vitrages of inbetween
+	•	Professionele afwerking en plaatsing
+
+⸻
+
+🎨 Personaliseer uw overgordijnen:								Optie
+Uitleg
+Velours stoffen
+Luxueuze velours stoffen voor een rijke uitstraling en warme sfeer.
+Linnenlook stoffen
+Natuurlijke linnenlook voor een casual maar elegante uitstraling.
+Dimout stoffen
+Lichtdimmende stoffen die het meeste licht tegenhouden maar niet volledig verduisteren.
+Blackout stoffen
+Volledig verduisterende stoffen voor optimale rust en privacy.
+Kleuren
+Uitgebreide kleurenkeuze van subtiele tinten tot statement kleuren.
+Bevestiging
+Verschillende bevestigingsmogelijkheden voor elke interieurstijl.
+Voering (optioneel)
+Extra voering voor verbeterde verduistering en isolatie.																🧼 Onderhoud & advies:
+	•	Regelmatig uitkloppen of zacht stofzuigen
+	•	Sommige stoffen zijn wasbaar of stoomreinbaar
+	•	Professionele reiniging voor optimaal resultaat
+	•	Vermijd direct zonlicht bij het drogen
+
+🛠️ Professionele service:
+Voor optimaal resultaat adviseren wij professionele reiniging die de kwaliteit en kleur van uw gordijnen behoudt.
+
+⸻
+
+❓ Veelgestelde vragen:
+	1.	Wat is het verschil tussen enkele en dubbele plooi?
+	2.	Wat zijn wave-plooi gordijnen?
+	3.	Kunnen overgordijnen gecombineerd worden met andere raamdecoratie?
+	4.	Hoe verbeteren overgordijnen de akoestiek?
+
+⸻
+
+🔲 Slotbanner:
+
+Klaar voor uw perfecte overgordijnen?
+Vraag nu jouw offerte op maat aan en ontdek hoe overgordijnen uw interieur kunnen transformeren met sfeer, privacy en isolatie.
+
+🎯 CTA: Offerte aanvragen / Start uw bestelling

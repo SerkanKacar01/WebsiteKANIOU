@@ -86,9 +86,7 @@ const ContactPage = () => {
           {/* Premium section header */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-8">
-              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#C8A85B] to-[#D4AF37]"></div>
               <MessageCircle className="w-6 h-6 text-[#C8A85B]" />
-              <div className="w-16 h-0.5 bg-gradient-to-r from-[#D4AF37] via-[#C8A85B] to-transparent"></div>
             </div>
             
             <h2 className="font-display text-3xl md:text-5xl text-[#2C3E50] font-black mb-6 tracking-tight leading-tight">
@@ -287,9 +285,7 @@ const ContactPage = () => {
             <div className="relative z-10">
               <div className="text-center mb-12">
                 <div className="inline-flex items-center gap-3 mb-8">
-                  <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#C8A85B]"></div>
                   <Crown className="w-6 h-6 text-[#C8A85B]" />
-                  <div className="w-12 h-0.5 bg-gradient-to-r from-[#C8A85B] to-transparent"></div>
                 </div>
                 
                 <h2 className="font-display text-3xl md:text-5xl text-white font-black mb-6 tracking-tight">

@@ -1926,11 +1926,15 @@ const GordijnrailsConfiguratorPage = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-        <Container>
-          <div className="pt-8 pb-12">
-            {/* Header */}
-            <div className="text-center mb-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-100 relative overflow-hidden">
+        {/* Luxury Background Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(213,192,150,0.03),transparent_50%)]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(45deg,transparent_25%,rgba(213,192,150,0.02)_25%,rgba(213,192,150,0.02)_50%,transparent_50%,transparent_75%,rgba(213,192,150,0.02)_75%)] bg-[length:60px_60px]" />
+        <Container className="relative z-10">
+          <div className="pt-12 pb-16">
+            {/* Luxury Header */}
+            <div className="text-center mb-12 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#d5c096]/10 to-transparent blur-3xl" />
               <Link
                 href="/producten"
                 className="inline-flex items-center text-[#d5c096] hover:text-[#c4b183] mb-4"
@@ -1938,76 +1942,80 @@ const GordijnrailsConfiguratorPage = () => {
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Terug naar producten
               </Link>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent mb-6 tracking-tight relative z-10">
                 Gordijnrails Configurator
               </h1>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-light relative z-10">
                 Stel je perfecte gordijnrail samen. KS & DS profielen, volledig
                 op maat en inclusief professioneel montagemateriaal.
               </p>
             </div>
 
             <div
-              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative"
               ref={configuratorRef}
             >
-              {/* Configuration Steps - Accordion Layout */}
+              {/* Configuration Steps - Luxury Accordion Layout */}
               <div className="lg:col-span-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 justify-between">
-                      <div className="flex items-center gap-2">
-                        <Settings className="h-5 w-5" />
+                <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100/50 pb-6">
+                    <CardTitle className="flex items-center gap-3 justify-between text-2xl font-bold text-gray-900">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
+                          <Settings className="h-5 w-5 text-white" />
+                        </div>
                         Gordijnrails Configurator
                       </div>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={toggleAllSections}
-                        className="text-xs"
+                        className="text-xs border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-300 rounded-xl px-4 py-2 font-medium"
                       >
                         {showAllSections ? "Verberg alles" : "Toon alles"}
                       </Button>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-8">
                     <Accordion
                       type="multiple"
                       value={expandedSections}
                       onValueChange={handleSectionChange}
-                      className="w-full"
+                      className="w-full space-y-4"
                     >
                       {steps.map((step, index) => (
                         <AccordionItem
                           key={`step-${step.id}`}
                           value={`step-${step.id}`}
-                          className={`border border-gray-200 rounded-lg mb-4 ${
+                          className={`border-0 rounded-2xl mb-6 shadow-lg transition-all duration-300 overflow-hidden ${
                             expandedSections.includes(`step-${step.id}`)
-                              ? "bg-[#d5c096]/5 border-[#d5c096]/30"
-                              : "bg-white"
+                              ? "bg-gradient-to-r from-[#d5c096]/10 to-[#d5c096]/5 shadow-xl scale-[1.02]"
+                              : "bg-white hover:shadow-xl hover:scale-[1.01]"
                           }`}
                         >
-                          <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                          <AccordionTrigger className="px-6 py-5 hover:no-underline group transition-all duration-300">
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center gap-3">
                                 <div
-                                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 shadow-lg ${
                                     step.completed
-                                      ? "bg-green-500 text-white"
-                                      : "bg-gray-200 text-gray-600"
+                                      ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-200"
+                                      : expandedSections.includes(`step-${step.id}`)
+                                        ? "bg-gradient-to-br from-[#d5c096] to-[#c4b183] text-white shadow-[#d5c096]/20"
+                                        : "bg-gradient-to-br from-gray-100 to-gray-200 text-gray-600 shadow-gray-100 group-hover:from-[#d5c096]/20 group-hover:to-[#d5c096]/10"
                                   }`}
                                 >
                                   {step.completed ? (
-                                    <Check className="h-4 w-4" />
+                                    <Check className="h-5 w-5" />
                                   ) : (
                                     step.id
                                   )}
                                 </div>
                                 <div className="text-left">
-                                  <h3 className="font-semibold">
+                                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-[#d5c096] transition-colors duration-300">
                                     Stap {step.id} – {step.title}
                                   </h3>
-                                  <p className="text-sm text-gray-600">
+                                  <p className="text-sm text-gray-600 font-medium">
                                     {step.description}
                                   </p>
                                 </div>
@@ -2016,7 +2024,11 @@ const GordijnrailsConfiguratorPage = () => {
                                 variant={
                                   step.completed ? "default" : "secondary"
                                 }
-                                className="ml-2"
+                                className={`ml-2 px-3 py-1 rounded-full font-semibold shadow-sm transition-all duration-300 ${
+                                  step.completed
+                                    ? "bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-800 border border-emerald-200"
+                                    : "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-800 border border-amber-200"
+                                }`}
                               >
                                 {step.completed
                                   ? "✅ Voltooid"
@@ -2024,8 +2036,8 @@ const GordijnrailsConfiguratorPage = () => {
                               </Badge>
                             </div>
                           </AccordionTrigger>
-                          <AccordionContent className="px-4 pb-4">
-                            <div className="pt-4">
+                          <AccordionContent className="px-6 pb-6">
+                            <div className="pt-4 bg-gradient-to-br from-gray-50/50 to-white rounded-xl p-6 mx-2 mb-2 border border-gray-100/50">
                               {renderStepContent(step.id)}
                             </div>
                           </AccordionContent>
@@ -2036,21 +2048,23 @@ const GordijnrailsConfiguratorPage = () => {
                 </Card>
               </div>
 
-              {/* Summary & Pricing */}
-              <div className="space-y-6">
+              {/* Luxury Summary & Pricing */}
+              <div className="space-y-8">
                 {/* Configuration Summary */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Package className="h-5 w-5" />
+                <Card className="border-0 shadow-2xl bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-[#d5c096]/10 to-[#d5c096]/5 border-b border-[#d5c096]/20 pb-6">
+                    <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
+                      <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
+                        <Package className="h-5 w-5 text-white" />
+                      </div>
                       Jouw Configuratie
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-6 p-8">
                     {configuration.profileType && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Profiel:</span>
-                        <span className="font-medium">
+                      <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                        <span className="font-semibold text-gray-700">Profiel:</span>
+                        <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.profileType} -{" "}
                           {configuration.color === "white" ? "Wit" : "Zwart"}
                         </span>
@@ -2059,14 +2073,14 @@ const GordijnrailsConfiguratorPage = () => {
 
                     {(configuration.length > 0 ||
                       configuration.customLength) && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Lengte:</span>
-                        <span className="font-medium">
+                      <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                        <span className="font-semibold text-gray-700">Lengte:</span>
+                        <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.customLength || configuration.length}{" "}
                           cm
                           {configuration.customLength && (
-                            <span className="text-xs text-green-600 ml-1">
-                              (exact)
+                            <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full ml-2 font-semibold">
+                              exact
                             </span>
                           )}
                         </span>
@@ -2074,9 +2088,9 @@ const GordijnrailsConfiguratorPage = () => {
                     )}
 
                     {configuration.quantity > 0 && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Aantal:</span>
-                        <span className="font-medium">
+                      <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                        <span className="font-semibold text-gray-700">Aantal:</span>
+                        <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.quantity} rail
                           {configuration.quantity > 1 ? "s" : ""}
                           {configuration.extraRails > 0 && (
@@ -2135,9 +2149,9 @@ const GordijnrailsConfiguratorPage = () => {
                       )}
 
                     {configuration.mounting && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Montage:</span>
-                        <span className="font-medium">
+                      <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                        <span className="font-semibold text-gray-700">Montage:</span>
+                        <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.mounting === "ceiling"
                             ? "Plafond"
                             : configuration.mounting === "wall"
@@ -2188,20 +2202,16 @@ const GordijnrailsConfiguratorPage = () => {
                       )}
 
                     {configuration.selectedGlider && (
-                      <div>
-                        <span className="text-gray-600">Glijders:</span>
-                        <div className="mt-1">
-                          <span className="font-medium">
-                            {configuration.selectedGlider.name} –{" "}
-                            {configuration.selectedGlider.selectedColor ||
-                              "wit"}{" "}
-                            ({configuration.selectedGlider.quantity}{" "}
-                            {configuration.selectedGlider.id ===
-                            "ks-silent-gliders"
-                              ? "strips"
-                              : "stuks"}
-                            )
+                      <div className="py-3 border-b border-gray-100">
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-gray-700">Glijders:</span>
+                          <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
+                            {configuration.selectedGlider.name}
                           </span>
+                        </div>
+                        <div className="mt-2 text-sm text-gray-600">
+                          {configuration.selectedGlider.selectedColor || "wit"} – {configuration.selectedGlider.quantity}{" "}
+                          {configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks"}
                         </div>
                       </div>
                     )}
@@ -2233,57 +2243,37 @@ const GordijnrailsConfiguratorPage = () => {
                   </CardContent>
                 </Card>
 
-                {/* Pricing */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Prijsoverzicht</CardTitle>
+                {/* Luxury Pricing */}
+                <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 border-b border-[#d5c096]/30 pb-6">
+                    <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
+                      <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
+                        <CreditCard className="h-5 w-5 text-white" />
+                      </div>
+                      Prijsoverzicht
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex justify-between">
-                      <span>
-                        Basis rail (
-                        {(() => {
-                          const effectiveLength =
-                            configuration.customLength || configuration.length;
-                          const billingLength = configuration.customLength
-                            ? Math.ceil(effectiveLength / 10) * 10
-                            : effectiveLength;
-                          return billingLength;
-                        })()}{" "}
-                        cm × {configuration.quantity + configuration.extraRails}
-                        )
+                  <CardContent className="space-y-6 p-8">
+                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100">
+                      <div>
+                        <span className="font-semibold text-gray-900">
+                          Basis rail (
+                          {(() => {
+                            const effectiveLength =
+                              configuration.customLength || configuration.length;
+                            return effectiveLength;
+                          })()}{" "}
+                          cm × {configuration.quantity + configuration.extraRails}
+                          )
+                        </span>
                         {configuration.customLength && (
-                          <div className="text-xs text-gray-500 mt-1">
+                          <div className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full mt-1 inline-block font-semibold">
                             Exact maat: {configuration.customLength} cm
                           </div>
                         )}
-                      </span>
-                      <span>
-                        €
-                        {(
-                          price.base +
-                          (configuration.extraRails > 0
-                            ? (() => {
-                                const effectiveLength =
-                                  configuration.customLength ||
-                                  configuration.length;
-                                const pricingLength = configuration.customLength
-                                  ? Math.ceil(effectiveLength / 10) * 10
-                                  : effectiveLength;
-                                let pricePerMeter = 8.95;
-                                if (configuration.profileType === "KS") {
-                                  pricePerMeter = 9.95;
-                                } else if (configuration.profileType === "DS") {
-                                  pricePerMeter = 11.95;
-                                }
-                                return (
-                                  pricePerMeter *
-                                  (pricingLength / 100) *
-                                  configuration.extraRails
-                                );
-                              })()
-                            : 0)
-                        ).toFixed(2)}
+                      </div>
+                      <span className="text-2xl font-bold bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
+                        €{price.base.toFixed(2)}
                       </span>
                     </div>
 
@@ -2378,39 +2368,39 @@ const GordijnrailsConfiguratorPage = () => {
                       </>
                     )}
 
-                    <div className="flex justify-between text-lg font-bold">
-                      <span>
-                        Totaalprijs: €{price.total.toFixed(2)} (incl. 21% BTW)
-                      </span>
-                      <span className="text-[#d5c096]">
-                        €{price.total.toFixed(2)}
-                      </span>
+                    <div className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 p-6 rounded-2xl border-2 border-[#d5c096]/30 shadow-lg">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xl font-bold text-gray-900">
+                          Totaalprijs (incl. 21% BTW)
+                        </span>
+                        <span className="text-3xl font-extrabold bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
+                          €{price.total.toFixed(2)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 text-right">
+                        BTW-bedrag: €{((price.total * 0.21) / 1.21).toFixed(2)}
+                      </p>
                     </div>
-
-                    <p className="text-xs text-gray-500">
-                      Inclusief btw-bedrag: €
-                      {((price.total * 0.21) / 1.21).toFixed(2)}
-                    </p>
                   </CardContent>
                 </Card>
 
-                {/* Action Buttons - Always show when step 6 is completed */}
+                {/* Luxury Action Buttons - Always show when step 6 is completed */}
                 {steps[5].completed && (
-                  <div className="space-y-3">
-                    {/* Mollie Payment Button */}
+                  <div className="space-y-4">
+                    {/* Premium Mollie Payment Button */}
                     <Button
                       onClick={handleMolliePayment}
                       disabled={isProcessingPayment}
-                      className="w-full bg-[#cc0000] hover:bg-[#b30000] text-white font-semibold text-lg py-4 px-8 rounded-md"
+                      className="w-full bg-gradient-to-r from-[#cc0000] via-[#e60000] to-[#cc0000] hover:from-[#b30000] hover:via-[#cc0000] hover:to-[#b30000] text-white font-bold text-xl py-6 px-8 rounded-2xl shadow-2xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-red-200/50"
                     >
                       {isProcessingPayment ? (
                         <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          <Loader2 className="h-6 w-6 mr-3 animate-spin" />
                           Bezig met betaling...
                         </>
                       ) : (
                         <>
-                          <CreditCard className="h-4 w-4 mr-2" />
+                          <CreditCard className="h-6 w-6 mr-3" />
                           Betaal veilig via Mollie
                         </>
                       )}
@@ -2425,8 +2415,8 @@ const GordijnrailsConfiguratorPage = () => {
                       onOpenChange={setShowSpecificationModal}
                     >
                       <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full">
-                          <FileText className="h-4 w-4 mr-2" />
+                        <Button variant="outline" className="w-full border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-300 rounded-xl py-3 font-semibold">
+                          <FileText className="h-5 w-5 mr-2" />
                           Bekijk totaalspecificatie
                         </Button>
                       </DialogTrigger>

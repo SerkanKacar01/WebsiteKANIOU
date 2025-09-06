@@ -36,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 
 ### System Design Choices
 - **AI Integration**: AI chatbot components have been removed; traditional contact forms and quote systems are maintained.
-- **GDPR Compliance**: Cookiebot integration for consent management, server-side cookie blocking, proper cookie classification, and user consent tracking for analytics/marketing. Enhanced mobile cookie banner with bottom-sheet design, iPhone safe-area support, vertical button layout, and improved touch targets for optimal mobile user experience.
+- **GDPR Compliance**: Fresh Cookiebot integration (2025) for consent management with auto-blocking mode, proper cookie classification, and user consent tracking for analytics/marketing. Clean implementation without legacy code, configured for Dutch locale with mobile-responsive design.
 - **Data Flow**: Defined flows for customer journey, inquiries, quote processing, and order processing, emphasizing human follow-up for complex interactions.
 
 ## External Dependencies

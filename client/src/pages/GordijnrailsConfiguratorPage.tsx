@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -355,72 +355,14 @@ const GordijnrailsConfiguratorPage = () => {
   };
 
   const updateConfiguration = (key: keyof Configuration, value: any) => {
-    setConfiguration((prev) => {
-      const newConfig = { ...prev, [key]: value };
-      
-      // Check if any step was just completed and trigger auto-expand
-      setTimeout(() => {
-        checkStepCompletionAndAdvance(newConfig);
-      }, 100); // Small delay to ensure state is updated
-      
-      return newConfig;
-    });
+    setConfiguration((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Check if a step was just completed and auto-advance to next
-  const checkStepCompletionAndAdvance = (config: Configuration) => {
-    const newSteps: ConfigStep[] = [
-      {
-        id: 1,
-        title: "Kies profieltype",
-        description: "Selecteer KS of DS rail",
-        completed: !!config.profileType,
-      },
-      {
-        id: 2,
-        title: "Kies lengte",
-        description: "Op maat gezaagd",
-        completed: config.length > 0,
-      },
-      {
-        id: 3,
-        title: "Kies aantal",
-        description: "Aantal railstukken",
-        completed: config.quantity > 0,
-      },
-      {
-        id: 4,
-        title: "Kies bochten",
-        description: "Optioneel",
-        completed:
-          config.corners === "none" ||
-          config.corners === "eigen-model" ||
-          (config.corners === "custom" &&
-            !!config.curveModel &&
-            !!config.curveMeasurements &&
-            config.curveModel.segments.every(
-              (segment) =>
-                !!config.curveMeasurements![segment] &&
-                config.curveMeasurements![segment] > 0,
-            )),
-      },
-      {
-        id: 5,
-        title: "Kies montage",
-        description: "Montagemateriaal",
-        completed: !!config.mounting,
-      },
-      {
-        id: 6,
-        title: "Kies accessoires",
-        description: "Bediening & extra's",
-        completed: true,
-      },
-    ];
-
+  // Watch for configuration changes and auto-advance when steps are completed
+  useEffect(() => {
     // Find the first completed step that is currently expanded
-    for (let i = 0; i < newSteps.length; i++) {
-      const step = newSteps[i];
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i];
       const stepKey = `step-${step.id}`;
       
       if (step.completed && expandedSections.includes(stepKey)) {
@@ -429,7 +371,7 @@ const GordijnrailsConfiguratorPage = () => {
         break;
       }
     }
-  };
+  }, [configuration, expandedSections]); // Watch both configuration and expanded sections
 
   const updateCeilingComponent = (componentId: string, quantity: number) => {
     setConfiguration((prev) => {

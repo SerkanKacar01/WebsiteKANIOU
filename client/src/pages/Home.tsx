@@ -680,6 +680,86 @@ const Home = () => {
                   <div className="luxury-card-arrow">→</div>
                 </div>
               </div>
+
+              {/* Vouwgordijnen - Premium Card */}
+              <div
+                className="luxury-product-card group"
+                onClick={() => setLocation("/vouwgordijnen")}
+              >
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">
+                      <div className="w-12 h-12 flex items-center justify-center text-2xl">📐</div>
+                    </div>
+                  </div>
+                  <h3 className="luxury-card-title">Vouwgordijnen</h3>
+                  <p className="luxury-card-subtitle">Zachte plooien, strakke lijnen</p>
+                  <div className="luxury-card-arrow">→</div>
+                </div>
+              </div>
+
+              {/* Gordijnroedes - Premium Card */}
+              <div
+                className="luxury-product-card group"
+                onClick={() => setLocation("/gordijnroedes")}
+              >
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">
+                      <div className="w-12 h-12 flex items-center justify-center text-2xl">🚪</div>
+                    </div>
+                  </div>
+                  <h3 className="luxury-card-title">Gordijnroedes</h3>
+                  <p className="luxury-card-subtitle">Sterke ondersteuning</p>
+                  <div className="luxury-card-arrow">→</div>
+                </div>
+              </div>
+
+              {/* Squid - Premium Card */}
+              <div
+                className="luxury-product-card group"
+                onClick={() => setLocation("/squid")}
+              >
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">
+                      <div className="w-12 h-12 flex items-center justify-center text-2xl">🪟</div>
+                    </div>
+                  </div>
+                  <h3 className="luxury-card-title">Squid</h3>
+                  <p className="luxury-card-subtitle">Moderne privacy</p>
+                  <div className="luxury-card-arrow">→</div>
+                </div>
+              </div>
+
+              {/* Horren - Premium Card */}
+              <div
+                className="luxury-product-card group"
+                onClick={() => setLocation("/horren")}
+              >
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">
+                      <div className="w-12 h-12 flex items-center justify-center text-2xl">🐞</div>
+                    </div>
+                  </div>
+                  <h3 className="luxury-card-title">Horren</h3>
+                  <p className="luxury-card-subtitle">Insectvrij comfort</p>
+                  <div className="luxury-card-arrow">→</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

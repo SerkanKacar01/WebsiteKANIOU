@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
@@ -30,10 +30,9 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t("GALLERIJ"), href: "/gallerij" },
-    { label: "ZAKELIJK", href: "/zakelijk" },
-    { label: t("OVER ONS"), href: "/overons" },
-    { label: t("CONTACT"), href: "/contact" },
+    { label: "Galerij", href: "/gallerij" },
+    { label: "Over Ons", href: "/overons" },
+    { label: "Contact", href: "/contact" },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -146,23 +145,23 @@ const Header = () => {
                   ))}
 
                   <div className="mt-4 space-y-3">
-                    <Link href="/acties">
-                      <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
-                        onClick={handleMobileNavClick}
-                      >
-                        Acties
-                      </Button>
-                    </Link>
                     <Link href="/offerte">
                       <Button
                         className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
                         onClick={handleMobileNavClick}
                       >
-                        Offerte
+                        VRIJBLIJVEND OFFERTE
                       </Button>
                     </Link>
-
+                    <Link href="/bestel-online">
+                      <Button
+                        className="w-full bg-gradient-to-r from-[#E67E22] to-[#E74C3C] hover:from-[#D35400] hover:to-[#C0392B] text-white transition-colors min-h-[44px] text-base flex items-center justify-center gap-2"
+                        onClick={handleMobileNavClick}
+                      >
+                        <ShoppingCart className="h-4 w-4" />
+                        BESTEL ONLINE
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </SheetContent>
@@ -186,23 +185,23 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3">
-                <Link href="/acties">
-                  <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
-                    onClick={handleNavClick}
-                  >
-                    Acties
-                  </Button>
-                </Link>
                 <Link href="/offerte">
                   <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors"
                     onClick={handleNavClick}
                   >
-                    Offerte
+                    VRIJBLIJVEND OFFERTE
                   </Button>
                 </Link>
-
+                <Link href="/bestel-online">
+                  <Button 
+                    className="bg-gradient-to-r from-[#E67E22] to-[#E74C3C] hover:from-[#D35400] hover:to-[#C0392B] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors flex items-center gap-2"
+                    onClick={handleNavClick}
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    BESTEL ONLINE
+                  </Button>
+                </Link>
               </div>
             </nav>
           )}

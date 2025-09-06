@@ -716,7 +716,11 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <div className="w-12 h-12 flex items-center justify-center text-2xl">🚪</div>
+                      <img
+                        src="/images/gordijnroedes-icon.png"
+                        alt="Gordijnroedes"
+                        className="w-12 h-12 object-contain"
+                      />
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Gordijnroedes</h3>

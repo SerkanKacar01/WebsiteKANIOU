@@ -3,403 +3,300 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Helmet } from "react-helmet-async";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import {
   CheckCircle,
+  HomeIcon,
+  ChevronRight,
   Palette,
   Settings,
   Wrench,
   Euro,
   Phone,
   Mail,
+  Shield,
+  Droplets,
+  Sparkles,
+  HelpCircle,
 } from "lucide-react";
 import { Link } from "wouter";
 import houtenJaloezieeenImage from "@assets/image00006.jpeg";
 
 const HoutenJaloezieen = () => {
-  const benefits = [
-    "Gemaakt van echt hout of bamboe",
-    "Warme en natuurlijke uitstraling",
-    "Beschikbaar in lamelbreedtes van 25, 50 en 65 mm",
-    "Duurzaam, sterk en vormvast",
-    "Leverbaar in diverse houtsoorten en kleuren",
-    "Ook geschikt voor vochtige ruimtes bij keuze voor bamboe of behandeld hout",
+  const keyFeatures = [
+    "Natuurlijke look en feel met echt hout",
+    "Beschikbaar in 25 mm en 50 mm lamellen",
+    "Keuze uit ladderkoord of ladderband",
+    "Links of rechts bediening – handmatig of gemotoriseerd",
+    "Geschikt voor in-de-dag of op-de-dag montage",
+    "Breed kleurenpalet: wit, zwart, grijs, houttinten",
+    "Volledig op maat gemaakt en nauwkeurig opgemeten",
+    "Perfect voor lichtregulatie en privacy",
   ];
 
-  const materials = [
-    { name: "Paulowniahout", description: "Duurzaam en lichtgewicht" },
-    { name: "Abachi", description: "Tropisch hardhout" },
-    { name: "Bamboe", description: "Duurzaam en vochtbestendig" },
-    { name: "Basswood", description: "Licht en fijn lindehout" },
-  ];
-
-  const colors = [
-    "Natuurlijke houtkleuren",
-    "Wit",
-    "Zwart",
-    "Antraciet",
-    "Taupe",
-  ];
-
-  const finishes = [
-    "Mat afwerking",
-    "Zijdeglans afwerking",
-    "Geborstelde afwerking",
-    "Hoogglans afwerking",
-  ];
-
-  const operations = [
-    { name: "Ladderkoord", description: "Standaard uitvoering" },
-    { name: "Ladderband 10 / 25 / 38 mm", description: "+10% / 15% meerprijs" },
-    { name: "Handmatige bediening", description: "Met trekkoord of ketting" },
+  const customizationOptions = [
     {
-      name: "Elektrische uitvoering",
-      description: "Met afstandsbediening (optioneel)",
+      title: "Ladderkoord (Standaard)",
+      description: "Dunne en subtiele afwerking. Past bij elk interieur.",
+    },
+    {
+      title: "Ladderband (+10%)",
+      description: "Luxere en gedurfde uitstraling. Vergroot de visuele diepte.",
+    },
+    {
+      title: "Bedieningszijde",
+      description: "Links of rechts – afhankelijk van uw kamerindeling.",
+    },
+    {
+      title: "Kettingmateriaal",
+      description: "Kunststof (wit, zwart of grijs) of metalen ketting (+€12,50)",
+    },
+    {
+      title: "Montagetype",
+      description: "In-de-dag (in de raamopening) of op-de-dag (op de muur/kozijn)",
+    },
+    {
+      title: "Zijgeleiders (Optioneel)",
+      description: "Voor extra stabiliteit bij draai-kiepramen of deuren (+€35)",
+    },
+    {
+      title: "Gemotoriseerde optie (Optioneel)",
+      description: "Bediening via afstandsbediening of app met BREL systeem",
     },
   ];
 
-  const mounting = [
-    "In-de-dag montage",
-    "Op-de-dag montage",
-    "Cassette uitvoering",
-    "Open profiel",
-    "Losse steunen",
+  const maintenanceInfo = [
+    "Gemaakt van duurzaam echt hout",
+    "Eenvoudig schoon te maken met droge of licht vochtige doek",
+    "Niet geschikt voor ruimtes met hoge luchtvochtigheid (bijv. badkamers)",
   ];
 
-  const maintenance = [
-    "Afstoffen met plumeau of zachte borstel",
-    "Af en toe reinigen met licht vochtige doek",
+  const faqs = [
+    {
+      question: "Wat is het verschil tussen ladderkoord en ladderband?",
+      answer: "Ladderkoord is dunner en minimalistischer. Ladderband is breder en geeft een luxere visuele uitstraling.",
+    },
+    {
+      question: "Zijn houten jaloezieën geschikt voor badkamers?",
+      answer: "Wij raden houten jaloezieën niet aan in vochtige ruimtes. Overweeg in plaats daarvan PVC jaloezieën voor dergelijke ruimtes.",
+    },
+    {
+      question: "Kunnen de jaloezieën gemotoriseerd worden?",
+      answer: "Ja, elektrische bediening via afstandsbediening of mobiele app (BREL) is beschikbaar.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-amber-100 to-orange-50">
-        <Container>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 animate-fade-in">
-              <div>
-                <Badge
-                  variant="secondary"
-                  className="mb-4 bg-amber-200 text-amber-800"
-                >
-                  Premium Houten Raamdecoratie
-                </Badge>
-                <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                  Houten Jaloezieën
-                  <span className="block text-3xl lg:text-4xl text-primary mt-2">
-                    Natuurlijke Warmte & Tijdloze Luxe
-                  </span>
-                </h1>
-                <p className="text-xl text-gray-700 leading-relaxed">
-                  Houten jaloezieën voegen een elegante en natuurlijke sfeer toe
-                  aan elk interieur. Ze combineren stijl, functionaliteit en
-                  duurzaamheid, en zijn geschikt voor zowel moderne als
-                  klassieke ruimtes.
-                </p>
-              </div>
+    <>
+      <Helmet>
+        <title>Custom Wooden Venetian Blinds – Timeless, Elegant, and Warm | KANIOU Zilvernaald</title>
+        <meta
+          name="description"
+          content="Add warmth and sophistication to your interior with made-to-measure wooden Venetian blinds. Crafted from high-quality wood and tailored to your exact window dimensions."
+        />
+      </Helmet>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+      {/* Breadcrumb */}
+      <div className="bg-neutral-100 py-4">
+        <Container>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">
+                  <HomeIcon className="h-4 w-4" />
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <ChevronRight className="h-4 w-4" />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Producten</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <ChevronRight className="h-4 w-4" />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink>Houten Jaloezieën</BreadcrumbLink>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </Container>
+      </div>
+
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+        {/* Hero Section */}
+        <section className="py-20 bg-[#f9f7f3]">
+          <Container>
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-semibold mb-6">
+                Custom Wooden Venetian Blinds – Timeless, Elegant, and Warm
+              </h1>
+              <div className="w-24 h-0.5 bg-[#D5B992] mx-auto mb-8"></div>
+              <p className="font-body text-xl text-[#2C3E50] leading-relaxed">
+                Add warmth and sophistication to your interior with made-to-measure wooden Venetian blinds. 
+                Crafted from high-quality wood and tailored to your exact window dimensions. 
+                Choose your finish, operation, and mounting options — down to the finest detail.
+              </p>
+            </div>
+          </Container>
+        </section>
+
+        {/* Key Features & Benefits */}
+        <section className="py-16">
+          <Container>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Key Features & Benefits
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {keyFeatures.map((feature, index) => (
+                <Card
+                  key={index}
+                  className="border-none shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700 leading-relaxed">{feature}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* Customization Options */}
+        <section className="py-16 bg-[#f9f7f3]">
+          <Container>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Customization Options
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Personalize your wooden Venetian blinds with our extensive range of options
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {customizationOptions.map((option, index) => (
+                <Card
+                  key={index}
+                  className="border-none shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-3 mb-3">
+                      <Settings className="h-6 w-6 text-[#D5B992] mt-1 flex-shrink-0" />
+                      <h3 className="font-semibold text-[#2C3E50] text-lg">
+                        {option.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 leading-relaxed">
+                      {option.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* Maintenance & Durability */}
+        <section className="py-16">
+          <Container>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Maintenance & Durability
+              </h2>
+            </div>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-6">
+                {maintenanceInfo.map((info, index) => (
+                  <Card
+                    key={index}
+                    className="border-none shadow-md hover:shadow-lg transition-all duration-300"
+                  >
+                    <CardContent className="p-6 text-center">
+                      <div className="flex justify-center mb-4">
+                        {index === 0 && <Shield className="h-8 w-8 text-green-600" />}
+                        {index === 1 && <Sparkles className="h-8 w-8 text-blue-600" />}
+                        {index === 2 && <Droplets className="h-8 w-8 text-red-600" />}
+                      </div>
+                      <p className="text-gray-700 leading-relaxed">{info}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-16 bg-[#f9f7f3]">
+          <Container>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Frequently Asked Questions
+              </h2>
+            </div>
+            <div className="max-w-4xl mx-auto">
+              <Accordion type="single" collapsible className="w-full">
+                {faqs.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger className="text-left text-[#2C3E50] font-medium">
+                      <div className="flex items-center gap-3">
+                        <HelpCircle className="h-5 w-5 text-[#D5B992]" />
+                        {faq.question}
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600 pl-8">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </Container>
+        </section>
+
+        {/* Call-to-Action Section */}
+        <section className="py-16 bg-gradient-to-r from-[#2C3E50] to-[#34495e]">
+          <Container>
+            <div className="text-center text-white">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                Request Your Free Quote Now
+              </h2>
+              <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+                Get your custom wooden Venetian blinds made to measure. Enter your dimensions 
+                and receive a personalized offer — with no obligation.
+              </p>
+              <Link href="/offerte">
                 <Button
                   size="lg"
-                  className="bg-primary hover:bg-primary text-white px-8 py-3"
+                  className="bg-[#D5B992] hover:bg-[#C4A882] text-white px-8 py-4 text-lg font-medium rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
                 >
                   <Mail className="mr-2 h-5 w-5" />
-                  Vraag een offerte aan
+                  Request Your Quote
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-primary text-primary hover:bg-primary/10 px-8 py-3"
-                >
-                  <Phone className="mr-2 h-5 w-5" />
-                  Plan een gratis adviesgesprek
-                </Button>
-              </div>
+              </Link>
             </div>
-
-            <div className="relative">
-              <img
-                src={houtenJaloezieeenImage}
-                alt="Stijlvolle houten jaloezieën in moderne woonkamer"
-                className="rounded-2xl shadow-2xl w-full h-[500px] object-cover"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
-                <div className="flex items-center gap-2">
-                  <Euro className="h-6 w-6 text-primary" />
-                  <div>
-                    <p className="text-sm text-gray-600">Vanaf</p>
-                    <p className="text-xl font-bold text-gray-900">
-                      €135 per m²
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-16">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Belangrijkste voordelen
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => (
-              <Card
-                key={index}
-                className="border-none shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700 leading-relaxed">{benefit}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Materials & Colors Section */}
-      <section className="py-16 bg-amber-50">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Materialen & Kleuren
-            </h2>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Materials */}
-            <Card className="border-none shadow-lg">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-amber-100 rounded-lg">
-                    <Wrench className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Materialen
-                  </h3>
-                </div>
-                <div className="space-y-4">
-                  {materials.map((material, index) => (
-                    <div
-                      key={index}
-                      className="border-l-4 border-amber-200 pl-4"
-                    >
-                      <h4 className="font-medium text-gray-900">
-                        {material.name}
-                      </h4>
-                      <p className="text-sm text-gray-600">
-                        {material.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Colors */}
-            <Card className="border-none shadow-lg">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-amber-100 rounded-lg">
-                    <Palette className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Kleuren
-                  </h3>
-                </div>
-                <div className="space-y-3">
-                  {colors.map((color, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-4 h-4 rounded-full bg-gradient-to-r from-amber-200 to-amber-300 border-2 border-amber-400"></div>
-                      <span className="text-gray-700">{color}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Finishes */}
-            <Card className="border-none shadow-lg">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-amber-100 rounded-lg">
-                    <Settings className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Afwerking
-                  </h3>
-                </div>
-                <div className="space-y-3">
-                  {finishes.map((finish, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                      <span className="text-gray-700">{finish}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </section>
-
-      {/* Operation & Options Section */}
-      <section className="py-16">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Bediening & Opties
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {operations.map((operation, index) => (
-              <Card
-                key={index}
-                className="border-none shadow-md hover:shadow-lg transition-all duration-300"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">
-                        {operation.name}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        {operation.description}
-                      </p>
-                    </div>
-                    <Settings className="h-5 w-5 text-primary" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Installation & Finishing Section */}
-      <section className="py-16 bg-gray-50">
-        <Container>
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                Montage & Afwerking
-              </h2>
-              <div className="grid gap-4">
-                {mounting.map((option, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm"
-                  >
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                    <span className="text-gray-700">{option}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 p-4 bg-amber-100 rounded-lg">
-                <p className="text-sm text-gray-700">
-                  <strong>Inclusief:</strong> bevestigingsmateriaal en
-                  montagehandleiding
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                Onderhoud
-              </h2>
-              <div className="space-y-4">
-                {maintenance.map((tip, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-3 p-4 bg-white rounded-lg shadow-sm"
-                  >
-                    <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                    <span className="text-gray-700">{tip}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-gray-700">
-                  <strong>Tip:</strong> Regelmatig onderhoud verlengt de
-                  levensduur van uw houten jaloezieën aanzienlijk.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-16">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Prijsindicatie
-            </h2>
-          </div>
-
-          <Card className="max-w-2xl mx-auto border-none shadow-xl">
-            <CardContent className="p-8 text-center">
-              <div className="mb-6">
-                <div className="text-4xl font-bold text-primary mb-2">
-                  €135
-                </div>
-                <div className="text-lg text-gray-600">per m²</div>
-              </div>
-              <Separator className="my-6" />
-              <p className="text-gray-700 leading-relaxed">
-                Inclusief maatwerk en standaard montageprofiel. Prijs
-                afhankelijk van houtsoort, lamelbreedte en opties.
-              </p>
-            </CardContent>
-          </Card>
-        </Container>
-      </section>
-
-      {/* Personal Advice & CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-primary to-orange-600">
-        <Container>
-          <div className="text-center text-white">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Persoonlijk advies
-            </h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              Onze specialisten staan klaar om u te begeleiden in uw keuze.
-              Vraag een offerte aan of plan een gratis adviesgesprek voor
-              professioneel advies op maat.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-white text-primary hover:bg-gray-100 px-8 py-3"
-              >
-                <Mail className="mr-2 h-5 w-5" />
-                Vraag een offerte aan
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary px-8 py-3"
-              >
-                <Phone className="mr-2 h-5 w-5" />
-                Plan een gratis adviesgesprek
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
-    </div>
+          </Container>
+        </section>
+      </div>
+    </>
   );
 };
 

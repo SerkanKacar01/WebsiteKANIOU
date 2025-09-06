@@ -55,29 +55,6 @@ const BestelOnlinePage = () => {
     },
   ];
 
-  // How it works steps
-  const howItWorksSteps = [
-    {
-      number: "1",
-      title: "Kies je product",
-      description: "rolgordijn, jaloezie, hor, …",
-    },
-    {
-      number: "2",
-      title: "Geef je afmetingen en voorkeuren door",
-      description: "nauwkeurige maten voor perfect maatwerk",
-    },
-    {
-      number: "3",
-      title: "Kies opties",
-      description: "zoals bediening, kleur en montage",
-    },
-    {
-      number: "4",
-      title: "Ontvang bevestiging",
-      description: "wij starten met jouw maatwerk",
-    },
-  ];
 
   // Featured products for online ordering
   const featuredProducts = [
@@ -308,75 +285,6 @@ const BestelOnlinePage = () => {
         </Container>
       </div>
 
-      {/* How It Works Section */}
-      <div className="py-16 md:py-20 bg-gradient-to-br from-[#2C3E50] via-[#1a2332] to-[#2C3E50] relative overflow-hidden">
-        {/* Luxury background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C8A85B]/10 via-transparent to-[#D4AF37]/10"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#C8A85B]/5 to-transparent"></div>
-        </div>
-        
-        <Container className="relative z-10">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-3 mb-8">
-              <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#C8A85B]"></div>
-              <Crown className="w-6 h-6 text-[#C8A85B]" />
-              <div className="w-12 h-0.5 bg-gradient-to-r from-[#C8A85B] to-transparent"></div>
-            </div>
-            
-            <h2 className="font-display text-4xl md:text-6xl text-white font-black mb-8 tracking-tight">
-              Hoe werkt het?
-            </h2>
-            
-            <p className="text-white/70 text-xl font-light max-w-2xl mx-auto">
-              Vier eenvoudige stappen naar uw perfecte raamdecoratie
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {howItWorksSteps.map((step, index) => (
-              <div
-                key={index}
-                className="text-center group relative"
-              >
-                <div className="relative mb-8">
-                  {/* Premium number circle */}
-                  <div className="relative">
-                    <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-2xl group-hover:shadow-3xl transition-all duration-500 border-4 border-white/20 group-hover:scale-110 group-hover:rotate-12">
-                      <span className="text-white text-2xl font-black">
-                        {step.number}
-                      </span>
-                    </div>
-                    
-                    {/* Connecting line */}
-                    {index < howItWorksSteps.length - 1 && (
-                      <div className="hidden lg:block absolute top-10 left-24 w-full">
-                        <div className="h-0.5 bg-gradient-to-r from-[#C8A85B]/50 via-[#D4AF37]/30 to-transparent"></div>
-                        <div className="absolute right-0 top-0 w-0 h-0 border-l-4 border-l-[#C8A85B]/50 border-t-2 border-t-transparent border-b-2 border-b-transparent"></div>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Glowing background effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/10 to-[#D4AF37]/10 rounded-full w-32 h-32 mx-auto -top-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                </div>
-                
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 group-hover:border-[#C8A85B]/30 transition-all duration-500">
-                  <h3 className="font-display text-xl text-white font-bold mb-4 tracking-tight">
-                    {step.title}
-                  </h3>
-                  
-                  <div className="w-12 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-4"></div>
-                  
-                  <p className="font-body text-white/80 leading-relaxed font-medium">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </div>
 
       {/* Featured Products Section */}
       <div id="featured-products" className="py-16 md:py-20 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">

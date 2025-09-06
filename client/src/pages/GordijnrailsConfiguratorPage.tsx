@@ -348,7 +348,7 @@ const GordijnrailsConfiguratorPage = () => {
     if (stepId < 6) {
       const currentStepKey = `step-${stepId}`;
       const nextStepKey = `step-${stepId + 1}`;
-      
+
       // Only keep the next step expanded, collapse all others including current
       setExpandedSections([nextStepKey]);
     }
@@ -364,7 +364,7 @@ const GordijnrailsConfiguratorPage = () => {
     for (let i = 0; i < steps.length; i++) {
       const step = steps[i];
       const stepKey = `step-${step.id}`;
-      
+
       if (step.completed && expandedSections.includes(stepKey)) {
         // This step is completed and currently expanded, advance to next
         autoExpandNextStep(step.id);
@@ -447,9 +447,7 @@ const GordijnrailsConfiguratorPage = () => {
     },
   ];
 
-  const getAvailableWallComponents = (): WallComponent[] => [
-    
-  ];
+  const getAvailableWallComponents = (): WallComponent[] => [];
 
   const updateWallComponent = (componentId: string, quantity: number) => {
     setConfiguration((prev) => {
@@ -1218,7 +1216,6 @@ const GordijnrailsConfiguratorPage = () => {
                     </Label>
                   </div>
                 </Card>
-
               </div>
             </RadioGroup>
 
@@ -1609,7 +1606,6 @@ const GordijnrailsConfiguratorPage = () => {
                 )}
               </Card>
 
-
               <Card className="p-4">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="rail-only" id="rail-only" />
@@ -1672,7 +1668,6 @@ const GordijnrailsConfiguratorPage = () => {
                 </p>
 
                 <div className="grid gap-4 md:grid-cols-3">
-
                   {/* Wave Gliders 6cm */}
                   <Card
                     className={`cursor-pointer border-2 transition-all ${
@@ -1959,7 +1954,7 @@ const GordijnrailsConfiguratorPage = () => {
                 Terug naar producten
               </Link>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent mb-6 tracking-tight relative z-10">
-                Gordijnrails Configurator
+                Gordijnrails
               </h1>
               <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-light relative z-10">
                 Stel je perfecte gordijnrail samen. KS & DS profielen, volledig
@@ -2016,7 +2011,9 @@ const GordijnrailsConfiguratorPage = () => {
                                   className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 shadow-lg ${
                                     step.completed
                                       ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-200"
-                                      : expandedSections.includes(`step-${step.id}`)
+                                      : expandedSections.includes(
+                                            `step-${step.id}`,
+                                          )
                                         ? "bg-gradient-to-br from-[#d5c096] to-[#c4b183] text-white shadow-[#d5c096]/20"
                                         : "bg-gradient-to-br from-gray-100 to-gray-200 text-gray-600 shadow-gray-100 group-hover:from-[#d5c096]/20 group-hover:to-[#d5c096]/10"
                                   }`}
@@ -2079,7 +2076,9 @@ const GordijnrailsConfiguratorPage = () => {
                   <CardContent className="space-y-6 p-8">
                     {configuration.profileType && (
                       <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                        <span className="font-semibold text-gray-700">Profiel:</span>
+                        <span className="font-semibold text-gray-700">
+                          Profiel:
+                        </span>
                         <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.profileType} -{" "}
                           {configuration.color === "white" ? "Wit" : "Zwart"}
@@ -2090,7 +2089,9 @@ const GordijnrailsConfiguratorPage = () => {
                     {(configuration.length > 0 ||
                       configuration.customLength) && (
                       <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                        <span className="font-semibold text-gray-700">Lengte:</span>
+                        <span className="font-semibold text-gray-700">
+                          Lengte:
+                        </span>
                         <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.customLength || configuration.length}{" "}
                           cm
@@ -2105,7 +2106,9 @@ const GordijnrailsConfiguratorPage = () => {
 
                     {configuration.quantity > 0 && (
                       <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                        <span className="font-semibold text-gray-700">Aantal:</span>
+                        <span className="font-semibold text-gray-700">
+                          Aantal:
+                        </span>
                         <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.quantity} rail
                           {configuration.quantity > 1 ? "s" : ""}
@@ -2166,7 +2169,9 @@ const GordijnrailsConfiguratorPage = () => {
 
                     {configuration.mounting && (
                       <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                        <span className="font-semibold text-gray-700">Montage:</span>
+                        <span className="font-semibold text-gray-700">
+                          Montage:
+                        </span>
                         <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                           {configuration.mounting === "ceiling"
                             ? "Plafond"
@@ -2220,14 +2225,20 @@ const GordijnrailsConfiguratorPage = () => {
                     {configuration.selectedGlider && (
                       <div className="py-3 border-b border-gray-100">
                         <div className="flex justify-between items-center">
-                          <span className="font-semibold text-gray-700">Glijders:</span>
+                          <span className="font-semibold text-gray-700">
+                            Glijders:
+                          </span>
                           <span className="font-bold text-lg bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
                             {configuration.selectedGlider.name}
                           </span>
                         </div>
                         <div className="mt-2 text-sm text-gray-600">
-                          {configuration.selectedGlider.selectedColor || "wit"} – {configuration.selectedGlider.quantity}{" "}
-                          {configuration.selectedGlider.id === "ks-silent-gliders" ? "strips" : "stuks"}
+                          {configuration.selectedGlider.selectedColor || "wit"}{" "}
+                          – {configuration.selectedGlider.quantity}{" "}
+                          {configuration.selectedGlider.id ===
+                          "ks-silent-gliders"
+                            ? "strips"
+                            : "stuks"}
                         </div>
                       </div>
                     )}
@@ -2276,11 +2287,12 @@ const GordijnrailsConfiguratorPage = () => {
                           Basis rail (
                           {(() => {
                             const effectiveLength =
-                              configuration.customLength || configuration.length;
+                              configuration.customLength ||
+                              configuration.length;
                             return effectiveLength;
                           })()}{" "}
-                          cm × {configuration.quantity + configuration.extraRails}
-                          )
+                          cm ×{" "}
+                          {configuration.quantity + configuration.extraRails})
                         </span>
                         {configuration.customLength && (
                           <div className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full mt-1 inline-block font-semibold">
@@ -2431,7 +2443,10 @@ const GordijnrailsConfiguratorPage = () => {
                       onOpenChange={setShowSpecificationModal}
                     >
                       <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-300 rounded-xl py-3 font-semibold">
+                        <Button
+                          variant="outline"
+                          className="w-full border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-300 rounded-xl py-3 font-semibold"
+                        >
                           <FileText className="h-5 w-5 mr-2" />
                           Bekijk totaalspecificatie
                         </Button>

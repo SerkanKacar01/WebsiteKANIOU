@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 
-export type ConsentStatus = 'pending' | 'accepted' | 'declined' | 'customized';
-
 export interface CookieConsentData {
-  status: ConsentStatus;
+  status: 'pending' | 'accepted' | 'declined';
   essential: boolean;
   analytics: boolean;
   marketing: boolean;
   timestamp: number;
 }
 
-// Cookiebot integration
 declare global {
   interface Window {
     Cookiebot?: {
@@ -49,127 +46,84 @@ export function useCookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Initialize Cookiebot callbacks with minimal interference
-    const initializeCookiebot = () => {
+    // Update consent state from Cookiebot
+    const updateConsentFromCookiebot = () => {
       try {
-        if (window.Cookiebot) {
-          console.log('🍪 Cookiebot detected, setting up non-intrusive callbacks');
-          
-          // Update our state based on Cookiebot consent
-          const updateConsentFromCookiebot = () => {
-            try {
-              const cookiebotConsent = window.Cookiebot?.consent;
-              if (cookiebotConsent) {
-                const newConsent: CookieConsentData = {
-                  status: 'accepted',
-                  essential: cookiebotConsent.necessary,
-                  analytics: cookiebotConsent.statistics,
-                  marketing: cookiebotConsent.marketing,
-                  timestamp: Date.now(),
-                };
-                setConsent(newConsent);
-                setShowBanner(false);
-                
-                // Load scripts based on consent
-                if (cookiebotConsent.statistics && !consent.analytics) {
-                  loadAnalytics();
-                }
-                if (cookiebotConsent.marketing && !consent.marketing) {
-                  loadMarketingScripts();
-                }
-              }
-            } catch (error) {
-              console.warn('Error updating consent from Cookiebot:', error);
-            }
+        if (window.Cookiebot?.consent) {
+          const cookiebotConsent = window.Cookiebot.consent;
+          const newConsent: CookieConsentData = {
+            status: 'accepted',
+            essential: cookiebotConsent.necessary,
+            analytics: cookiebotConsent.statistics,
+            marketing: cookiebotConsent.marketing,
+            timestamp: Date.now(),
           };
-
-          // Set up Cookiebot callbacks - but don't interfere with banner display
-          window.CookiebotCallback_OnAccept = updateConsentFromCookiebot;
-          window.CookiebotCallback_OnDecline = updateConsentFromCookiebot;
+          setConsent(newConsent);
+          setShowBanner(false);
           
-          // IMPORTANT: Don't hide banner or interfere with Cookiebot's display logic
-          window.CookiebotCallback_OnDialogInit = () => {
-            console.log('🍪 Cookiebot dialog initialized - not interfering with display');
-            // Don't set setShowBanner(false) here - let Cookiebot handle it
-          };
-
-          // Only update consent if user has already consented
-          const hasCookieConsent = document.cookie.includes('CookieConsent=');
-          if (hasCookieConsent) {
-            console.log('🍪 Existing consent found, updating state');
-            updateConsentFromCookiebot();
-          } else {
-            console.log('🍪 No existing consent - letting Cookiebot handle banner display');
-            // Don't interfere with Cookiebot's banner display logic
+          // Load scripts based on consent
+          if (cookiebotConsent.statistics) {
+            loadAnalytics();
           }
-        } else {
-          // Fallback to localStorage only if Cookiebot is completely unavailable
-          try {
-            if (typeof Storage !== 'undefined' && localStorage) {
-              const stored = localStorage.getItem(STORAGE_KEY);
-              if (stored) {
-                try {
-                  const parsedConsent = JSON.parse(stored) as CookieConsentData;
-                  setConsent(parsedConsent);
-                  setShowBanner(false);
-                } catch (error) {
-                  console.error('Error parsing stored consent:', error);
-                  localStorage.removeItem(STORAGE_KEY);
-                  // Don't show our banner - let Cookiebot handle it
-                }
-              } else {
-                // Don't show our banner - wait for Cookiebot to load
-                console.log('🍪 No stored consent, waiting for Cookiebot to load');
-              }
-            } else {
-              console.log('🍪 localStorage not available, waiting for Cookiebot');
-            }
-          } catch (storageError) {
-            console.warn('🍪 Error accessing localStorage:', storageError);
+          if (cookiebotConsent.marketing) {
+            loadMarketingScripts();
           }
         }
       } catch (error) {
-        console.warn('Error initializing Cookiebot:', error);
-        // Minimal fallback - don't interfere with Cookiebot
+        console.warn('🍪 Error updating consent from Cookiebot:', error);
+      }
+    };
+
+    // Set up Cookiebot callbacks
+    window.CookiebotCallback_OnAccept = updateConsentFromCookiebot;
+    window.CookiebotCallback_OnDecline = updateConsentFromCookiebot;
+    window.CookiebotCallback_OnDialogInit = () => {
+      console.log('🍪 Cookiebot dialog initialized');
+    };
+
+    // Check for existing consent or wait for Cookiebot
+    const initializeCookieConsent = () => {
+      if (window.Cookiebot?.consent) {
+        updateConsentFromCookiebot();
+      } else {
+        // Fallback to localStorage if Cookiebot not available
         try {
-          if (typeof Storage !== 'undefined' && localStorage) {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-              try {
-                const parsedConsent = JSON.parse(stored) as CookieConsentData;
-                setConsent(parsedConsent);
-                setShowBanner(false);
-              } catch (parseError) {
-                localStorage.removeItem(STORAGE_KEY);
-                // Don't show our banner - let Cookiebot handle it
-              }
-            }
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            const parsedConsent = JSON.parse(stored) as CookieConsentData;
+            setConsent(parsedConsent);
+            setShowBanner(false);
+          } else {
+            console.log('🍪 No consent found - consent required');
+            setShowBanner(false); // Let Cookiebot handle banner display
           }
-        } catch (storageError) {
-          console.warn('🍪 Error accessing localStorage in fallback:', storageError);
+        } catch (error) {
+          console.warn('🍪 Error accessing localStorage:', error);
+          setShowBanner(false); // Let Cookiebot handle banner display
         }
       }
     };
 
-    // Wait for Cookiebot to load with longer timeout
+    // Initialize immediately if Cookiebot is ready
     if (window.Cookiebot) {
-      initializeCookiebot();
+      initializeCookieConsent();
     } else {
-      // Poll for Cookiebot availability with longer timeout
+      // Poll for Cookiebot availability
       const checkCookiebot = setInterval(() => {
         if (window.Cookiebot) {
           clearInterval(checkCookiebot);
-          initializeCookiebot();
+          initializeCookieConsent();
         }
       }, 200);
 
-      // Cleanup interval after 20 seconds (give Cookiebot more time to load)
+      // Cleanup interval after 10 seconds
       setTimeout(() => {
         clearInterval(checkCookiebot);
         if (!window.Cookiebot) {
-          console.warn('🍪 Cookiebot failed to load after 20 seconds');
+          console.warn('🍪 Cookiebot failed to load, using fallback');
+          initializeCookieConsent();
         }
-      }, 20000);
+      }, 10000);
     }
   }, []);
 
@@ -177,40 +131,41 @@ export function useCookieConsent() {
     // If Cookiebot is available, let it handle consent
     if (window.Cookiebot) {
       // Use Cookiebot's renew function to show preferences
-      window.Cookiebot.renew();
+      try {
+        window.Cookiebot.renew();
+      } catch (error) {
+        console.warn('🍪 Error showing Cookiebot preferences:', error);
+      }
       return;
     }
 
-    // Fallback to localStorage for testing/development
+    // Fallback implementation
     const updatedConsent: CookieConsentData = {
       ...consent,
       ...newConsent,
-      essential: true, // Always true
       timestamp: Date.now(),
     };
-    
+
     setConsent(updatedConsent);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedConsent));
     setShowBanner(false);
 
-    // Trigger analytics loading if accepted
-    if (updatedConsent.analytics && !consent.analytics) {
-      loadAnalytics();
+    // Save to localStorage
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedConsent));
+    } catch (error) {
+      console.warn('🍪 Error saving consent to localStorage:', error);
     }
 
-    // Trigger marketing scripts loading if accepted
-    if (updatedConsent.marketing && !consent.marketing) {
+    // Load scripts based on consent
+    if (updatedConsent.analytics) {
+      loadAnalytics();
+    }
+    if (updatedConsent.marketing) {
       loadMarketingScripts();
     }
   };
 
   const acceptAll = () => {
-    if (window.Cookiebot) {
-      // Cookiebot handles this through its UI
-      window.Cookiebot.show();
-      return;
-    }
-    
     saveConsent({
       status: 'accepted',
       analytics: true,
@@ -219,12 +174,6 @@ export function useCookieConsent() {
   };
 
   const declineAll = () => {
-    if (window.Cookiebot) {
-      // Cookiebot handles this through its UI
-      window.Cookiebot.show();
-      return;
-    }
-    
     saveConsent({
       status: 'declined',
       analytics: false,
@@ -232,108 +181,83 @@ export function useCookieConsent() {
     });
   };
 
-  const acceptCustom = (analytics: boolean, marketing: boolean) => {
-    if (window.Cookiebot) {
-      // Show Cookiebot preferences dialog
-      window.Cookiebot.renew();
-      return;
-    }
-    
-    saveConsent({
-      status: 'customized',
-      analytics,
-      marketing,
-    });
-  };
-
   const resetConsent = () => {
-    if (window.Cookiebot) {
-      // Use Cookiebot's renew function
-      window.Cookiebot.renew();
-      return;
+    // Clear localStorage
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.warn('🍪 Error clearing consent from localStorage:', error);
     }
-    
-    localStorage.removeItem(STORAGE_KEY);
+
+    // Reset state
     setConsent(defaultConsent);
     setShowBanner(true);
+
+    // If Cookiebot is available, show its dialog
+    if (window.Cookiebot) {
+      try {
+        window.Cookiebot.renew();
+      } catch (error) {
+        console.warn('🍪 Error showing Cookiebot dialog:', error);
+      }
+    }
   };
 
-  // Force show banner for new visitors or testing
-  const forceShowBanner = () => {
+  const openCookieSettings = () => {
     if (window.Cookiebot) {
-      window.Cookiebot.show();
-      return;
+      try {
+        window.Cookiebot.show();
+      } catch (error) {
+        console.warn('🍪 Error showing Cookiebot settings:', error);
+      }
+    } else {
+      // Fallback: show our banner
+      setShowBanner(true);
     }
-    
-    localStorage.removeItem(STORAGE_KEY);
-    setConsent(defaultConsent);
-    setShowBanner(true);
   };
 
   return {
     consent,
     showBanner,
+    saveConsent,
     acceptAll,
     declineAll,
-    acceptCustom,
     resetConsent,
-    forceShowBanner,
-    hasConsented: consent.status !== 'pending',
+    openCookieSettings,
   };
 }
 
-// Load Google Analytics with Cookiebot compliance
+// Script loading functions
 function loadAnalytics() {
-  // Check if already loaded or if Cookiebot doesn't allow statistics
-  if (window.gtag || (window.Cookiebot && !window.Cookiebot.consent.statistics)) return;
-
-  const GA_ID = import.meta.env.VITE_GA_ID;
+  const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
   
-  if (GA_ID) {
-    // Use Cookiebot's getScript method for GDPR compliance if available
-    if (window.Cookiebot && window.Cookiebot.getScript) {
-      window.Cookiebot.getScript(
-        `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`,
-        true,
-        () => {
-          const script = document.createElement('script');
-          script.type = 'text/plain';
-          script.setAttribute('data-cookieconsent', 'statistics');
-          script.textContent = `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}');
-          `;
-          document.head.appendChild(script);
-        }
-      );
-    } else {
-      // Fallback method with proper data attributes
-      const script1 = document.createElement('script');
-      script1.type = 'text/plain';
-      script1.setAttribute('data-cookieconsent', 'statistics');
-      script1.async = true;
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-      document.head.appendChild(script1);
+  if (GA_MEASUREMENT_ID) {
+    // Load Google Analytics with proper data attributes for Cookiebot
+    const gtagScript = document.createElement('script');
+    gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    gtagScript.async = true;
+    gtagScript.type = 'text/plain';
+    gtagScript.setAttribute('data-cookieconsent', 'statistics');
+    document.head.appendChild(gtagScript);
 
-      const script2 = document.createElement('script');
-      script2.type = 'text/plain';
-      script2.setAttribute('data-cookieconsent', 'statistics');
-      script2.textContent = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${GA_ID}');
-      `;
-      document.head.appendChild(script2);
-    }
+    // Initialize gtag
+    const gtagConfig = document.createElement('script');
+    gtagConfig.type = 'text/plain';
+    gtagConfig.setAttribute('data-cookieconsent', 'statistics');
+    gtagConfig.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${GA_MEASUREMENT_ID}', {
+        cookie_flags: 'SameSite=None;Secure'
+      });
+    `;
+    document.head.appendChild(gtagConfig);
   }
 }
 
-// Load marketing scripts with Cookiebot compliance
 function loadMarketingScripts() {
-  // Check if Cookiebot doesn't allow marketing
+  // Prevent multiple loading
   if (window.Cookiebot && !window.Cookiebot.consent.marketing) return;
 
   const FB_PIXEL_ID = import.meta.env.VITE_FB_PIXEL_ID;
@@ -343,7 +267,7 @@ function loadMarketingScripts() {
     const baseScript = document.createElement('script');
     baseScript.type = 'text/plain';
     baseScript.setAttribute('data-cookieconsent', 'marketing');
-    baseScript.textContent = `
+    baseScript.innerHTML = `
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -352,12 +276,14 @@ function loadMarketingScripts() {
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      
-      if (window.fbq) {
-        window.fbq('init', '${FB_PIXEL_ID}');
-        window.fbq('track', 'PageView');
-      }
+      fbq('init', '${FB_PIXEL_ID}');
+      fbq('track', 'PageView');
     `;
     document.head.appendChild(baseScript);
+
+    // Add noscript fallback
+    const noscript = document.createElement('noscript');
+    noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1" />`;
+    document.body.appendChild(noscript);
   }
 }

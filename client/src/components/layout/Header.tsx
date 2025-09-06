@@ -30,10 +30,9 @@ const Header = () => {
 
   // Define navigation items
   const navItems = [
-    { label: t("GALLERIJ"), href: "/gallerij" },
-    { label: "ZAKELIJK", href: "/zakelijk" },
-    { label: t("OVER ONS"), href: "/overons" },
-    { label: t("CONTACT"), href: "/contact" },
+    { label: "Gallerij", href: "/gallerij" },
+    { label: "Over Ons", href: "/overons" },
+    { label: "Contact", href: "/contact" },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -146,20 +145,20 @@ const Header = () => {
                   ))}
 
                   <div className="mt-4 space-y-3">
-                    <Link href="/acties">
-                      <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
-                        onClick={handleMobileNavClick}
-                      >
-                        Acties
-                      </Button>
-                    </Link>
                     <Link href="/offerte">
                       <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
+                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base font-medium"
                         onClick={handleMobileNavClick}
                       >
-                        Offerte
+                        VRIJBLIJVEND OFFERTE
+                      </Button>
+                    </Link>
+                    <Link href="/bestel-online">
+                      <Button
+                        className="w-full bg-[#E67E22] hover:bg-[#D35400] text-white transition-colors min-h-[44px] text-base font-medium flex items-center justify-center gap-2"
+                        onClick={handleMobileNavClick}
+                      >
+                        🛒 BESTEL ONLINE
                       </Button>
                     </Link>
 
@@ -186,20 +185,20 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3">
-                <Link href="/acties">
-                  <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
-                    onClick={handleNavClick}
-                  >
-                    Acties
-                  </Button>
-                </Link>
                 <Link href="/offerte">
                   <Button 
-                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-3 py-1 h-8 transition-colors"
+                    className="bg-[#D0B378] hover:bg-[#C5A565] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors font-medium"
                     onClick={handleNavClick}
                   >
-                    Offerte
+                    VRIJBLIJVEND OFFERTE
+                  </Button>
+                </Link>
+                <Link href="/bestel-online">
+                  <Button 
+                    className="bg-[#E67E22] hover:bg-[#D35400] text-white text-xs md:text-xs px-4 py-2 h-9 transition-colors font-medium flex items-center gap-2"
+                    onClick={handleNavClick}
+                  >
+                    🛒 BESTEL ONLINE
                   </Button>
                 </Link>
 

@@ -95,12 +95,20 @@ const OvergordijnenPage = () => {
             <p className="text-2xl text-primary/80 mb-8 font-medium">
               Sfeer, privacy en isolatie in één stijlvolle oplossing
             </p>
-            <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               Overgordijnen zorgen voor een warme uitstraling in elke ruimte. Ze zijn ideaal voor het creëren van privacy, het tegenhouden van licht en het verbeteren van de akoestiek. Verkrijgbaar in diverse stoffen, kleuren en plooistijlen.
             </p>
-            <Button size="lg" asChild className="text-lg px-10 py-6 bg-primary hover:bg-primary/90">
-              <Link href="/quote">Start uw bestelling</Link>
-            </Button>
+            <p className="text-lg font-semibold text-primary mb-12">
+              💻 Nu ook online te bestellen - Eenvoudig, snel en op maat!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" asChild className="text-lg px-10 py-6 bg-primary hover:bg-primary/90">
+                <Link href="/quote">🛒 Bestel nu online</Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild className="text-lg px-10 py-6">
+                <Link href="/contact">💬 Gratis advies</Link>
+              </Button>
+            </div>
           </div>
         </Container>
       </div>
@@ -342,13 +350,13 @@ const OvergordijnenPage = () => {
               Klaar voor uw perfecte overgordijnen?
             </h2>
             <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
-              Vraag nu jouw offerte op maat aan en ontdek hoe overgordijnen uw interieur kunnen transformeren met sfeer, privacy en isolatie.
+              Bestel nu online uw overgordijnen op maat en ontdek hoe ze uw interieur kunnen transformeren met sfeer, privacy en isolatie. Eenvoudig configureren, direct bestellen!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" asChild className="text-lg px-10 py-6 bg-primary hover:bg-primary/90">
-                <Link href="/quote">Start direct uw bestelling</Link>
+                <Link href="/quote">🛒 Bestel direct online</Link>
               </Button>
-              <p className="text-slate-400 text-sm">Gratis advies & persoonlijke service</p>
+              <p className="text-slate-400 text-sm">💻 Online bestellen • Gratis advies • Persoonlijke service</p>
             </div>
           </div>
         </Container>

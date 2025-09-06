@@ -160,7 +160,8 @@ const curveModels: CurveModel[] = [
 ];
 
 const GordijnrailsConfiguratorPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [expandedSections, setExpandedSections] = useState<string[]>(["step-1"]);  // Start with step 1 expanded
+  const [showAllSections, setShowAllSections] = useState(false);
   const [showSpecificationModal, setShowSpecificationModal] = useState(false);
   const [gliderAdded, setGliderAdded] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -318,33 +319,30 @@ const GordijnrailsConfiguratorPage = () => {
 
   const price = calculatePrice();
 
-  // Utility function to scroll to configurator section smoothly
-  const scrollToConfigurator = () => {
-    if (configuratorRef.current) {
-      configuratorRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
+  // Toggle all sections open/closed
+  const toggleAllSections = () => {
+    if (showAllSections) {
+      setExpandedSections(["step-1"]); // Close all except step 1
+      setShowAllSections(false);
+    } else {
+      setExpandedSections(["step-1", "step-2", "step-3", "step-4", "step-5", "step-6"]); // Open all
+      setShowAllSections(true);
     }
   };
 
-  const nextStep = () => {
-    if (currentStep < 6) {
-      setCurrentStep(currentStep + 1);
-      // Add small delay to ensure DOM update, then scroll
-      setTimeout(() => {
-        scrollToConfigurator();
-      }, 100);
-    }
+  // Handle accordion section changes
+  const handleSectionChange = (value: string[]) => {
+    setExpandedSections(value);
+    setShowAllSections(value.length === 6);
   };
 
-  const prevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-      // Add small delay to ensure DOM update, then scroll
-      setTimeout(() => {
-        scrollToConfigurator();
-      }, 100);
+  // Auto-expand next step when current step is completed
+  const autoExpandNextStep = (stepId: number) => {
+    if (stepId < 6) {
+      const nextStepKey = `step-${stepId + 1}`;
+      if (!expandedSections.includes(nextStepKey)) {
+        setExpandedSections(prev => [...prev, nextStepKey]);
+      }
     }
   };
 
@@ -795,8 +793,8 @@ const GordijnrailsConfiguratorPage = () => {
     return items;
   };
 
-  const renderStep = () => {
-    switch (currentStep) {
+  const renderStepContent = (stepId: number) => {
+    switch (stepId) {
       case 1:
         return (
           <div className="space-y-6">
@@ -2311,94 +2309,75 @@ const GordijnrailsConfiguratorPage = () => {
               </p>
             </div>
 
-            {/* Progress Steps */}
-            <div className="mb-8">
-              <div className="flex justify-between items-center max-w-4xl mx-auto">
-                {steps.map((step, index) => (
-                  <div
-                    key={step.id}
-                    className="flex flex-col items-center flex-1"
-                  >
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${
-                        step.id === currentStep
-                          ? "bg-[#d5c096] text-white"
-                          : step.completed
-                            ? "bg-green-500 text-white"
-                            : "bg-gray-200 text-gray-600"
-                      }`}
-                    >
-                      {step.completed && step.id !== currentStep ? (
-                        <Check className="h-5 w-5" />
-                      ) : (
-                        step.id
-                      )}
-                    </div>
-                    <div className="text-center">
-                      <p
-                        className={`text-sm font-medium ${
-                          step.id === currentStep
-                            ? "text-[#d5c096]"
-                            : "text-gray-600"
-                        }`}
-                      >
-                        {step.title}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {step.description}
-                      </p>
-                    </div>
-                    {index < steps.length - 1 && (
-                      <div
-                        className={`absolute h-px w-16 ${
-                          step.completed ? "bg-green-500" : "bg-gray-200"
-                        }`}
-                        style={{
-                          left: `${((index + 1) / steps.length) * 100 - 5}%`,
-                          top: "20px",
-                        }}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" ref={configuratorRef}>
-              {/* Configuration Steps */}
+              {/* Configuration Steps - Accordion Layout */}
               <div className="lg:col-span-2">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 scroll-indicator" key={`header-${currentStep}`}>
-                      <Settings className="h-5 w-5" />
-                      Stap {currentStep} van 6
+                    <CardTitle className="flex items-center gap-2 justify-between">
+                      <div className="flex items-center gap-2">
+                        <Settings className="h-5 w-5" />
+                        Gordijnrails Configurator
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={toggleAllSections}
+                        className="text-xs"
+                      >
+                        {showAllSections ? "Verberg alles" : "Toon alles"}
+                      </Button>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="step-transition" key={currentStep}>
-                      {renderStep()}
-                    </div>
-
-                    {/* Navigation Buttons */}
-                    <div className="flex justify-between mt-8 pt-6 border-t">
-                      <Button
-                        variant="outline"
-                        onClick={prevStep}
-                        disabled={currentStep === 1}
-                      >
-                        <ArrowLeft className="h-4 w-4 mr-2" />
-                        Vorige
-                      </Button>
-                      {currentStep < 6 && (
-                        <Button
-                          onClick={nextStep}
-                          className="bg-[#d5c096] hover:bg-[#c4b183]"
+                    <Accordion
+                      type="multiple"
+                      value={expandedSections}
+                      onValueChange={handleSectionChange}
+                      className="w-full"
+                    >
+                      {steps.map((step, index) => (
+                        <AccordionItem
+                          key={`step-${step.id}`}
+                          value={`step-${step.id}`}
+                          className={`border border-gray-200 rounded-lg mb-4 ${
+                            expandedSections.includes(`step-${step.id}`) 
+                              ? 'bg-[#d5c096]/5 border-[#d5c096]/30' 
+                              : 'bg-white'
+                          }`}
                         >
-                          Volgende
-                          <ArrowRight className="h-4 w-4 ml-2" />
-                        </Button>
-                      )}
-                    </div>
+                          <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                            <div className="flex items-center justify-between w-full">
+                              <div className="flex items-center gap-3">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                                  step.completed 
+                                    ? 'bg-green-500 text-white' 
+                                    : 'bg-gray-200 text-gray-600'
+                                }`}>
+                                  {step.completed ? <Check className="h-4 w-4" /> : step.id}
+                                </div>
+                                <div className="text-left">
+                                  <h3 className="font-semibold">Stap {step.id} – {step.title}</h3>
+                                  <p className="text-sm text-gray-600">{step.description}</p>
+                                </div>
+                              </div>
+                              <Badge
+                                variant={step.completed ? "default" : "secondary"}
+                                className="ml-2"
+                              >
+                                {step.completed ? "✅ Voltooid" : "⚠️ Nog niet ingevuld"}
+                              </Badge>
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent className="px-4 pb-4">
+                            <div className="pt-4">
+                              {renderStepContent(step.id)}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
                   </CardContent>
                 </Card>
               </div>
@@ -2737,8 +2716,8 @@ const GordijnrailsConfiguratorPage = () => {
                   </CardContent>
                 </Card>
 
-                {/* Action Buttons */}
-                {currentStep === 6 && (
+                {/* Action Buttons - Always show when step 6 is completed */}
+                {steps[5].completed && (
                   <div className="space-y-3">
                     {/* Mollie Payment Button */}
                     <Button 

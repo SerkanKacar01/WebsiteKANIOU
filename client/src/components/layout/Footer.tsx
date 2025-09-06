@@ -22,8 +22,6 @@ const Footer: React.FC = () => {
       <div className="ultra-luxury-footer-bg"></div>
       <div className="ultra-luxury-footer-texture"></div>
       <div className="ultra-luxury-footer-container">
-        {/* Luxury Divider */}
-        <div className="ultra-luxury-footer-divider"></div>
 
         {/* Main Footer Content */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">

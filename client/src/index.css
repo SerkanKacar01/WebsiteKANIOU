@@ -1524,31 +1524,6 @@ html, body {
   padding: 0 clamp(1.5rem, 4vw, 3rem);
 }
 
-.ultra-luxury-footer-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(213, 179, 106, 0.3) 25%, 
-    rgba(213, 179, 106, 0.6) 50%, 
-    rgba(213, 179, 106, 0.3) 75%, 
-    transparent 100%
-  );
-  margin-bottom: clamp(3rem, 6vw, 5rem);
-  position: relative;
-}
-
-.ultra-luxury-footer-divider::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 5px;
-  background: radial-gradient(ellipse, rgba(213, 179, 106, 0.4) 0%, transparent 70%);
-  filter: blur(3px);
-}
 
 .ultra-luxury-footer-column {
   position: relative;

@@ -95,6 +95,7 @@ function Router() {
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
     if (location === "/privacybeleid") return "📄 Privacybeleid" + " | " + t("app.title");
     if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
+    if (location === "/gebruiksvoorwaarden") return "📄 Gebruiksvoorwaarden" + " | " + t("app.title");
     if (location === "/disclaimer") return "Legal Disclaimer" + " | " + t("app.title");
     return t("app.title") + " | " + t("app.subtitle");
   };
@@ -183,6 +184,7 @@ function Router() {
         <Route path="/privacybeleid" component={PrivacyPolicyPage} />
         <Route path="/cookiebeleid" component={CookiePolicyPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
+        <Route path="/gebruiksvoorwaarden" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />

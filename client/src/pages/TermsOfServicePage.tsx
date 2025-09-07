@@ -10,11 +10,11 @@ const TermsOfServicePage = () => {
     <>
       <Helmet>
         <title>
-          Algemene voorwaarden - KANIOU zilvernaald {t("app.title")}
+          📄 Gebruiksvoorwaarden | {t("app.title")}
         </title>
         <meta
           name="description"
-          content="Terms of Service and conditions for using our products and services."
+          content="Gebruiksvoorwaarden voor het gebruik van Kaniou.be website en diensten."
         />
       </Helmet>
 
@@ -26,212 +26,174 @@ const TermsOfServicePage = () => {
 
           <div className="text-center mb-12">
             <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              Algemene voorwaarden - KANIOU zilvernaald
+              📄 Gebruiksvoorwaarden – Kaniou.be
             </h1>
+            <p className="text-text-medium">
+              Laatst bijgewerkt op: 07-09-2025
+            </p>
           </div>
 
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 lg:p-10">
-            {/* For now, only English version is implemented */}
-            <div className="prose prose-headings:font-display prose-headings:text-primary prose-headings:font-semibold prose-p:font-body prose-p:text-text-medium max-w-none">
-              <h2 className="text-xl mb-4">Algemene voorwaarden</h2>
-
-              <p className="text-sm text-neutral-500 mb-6">
-                INGANGSDATUM: 20-05-2025
-                <br />
-                LAATSTE WIJZIGING: 20-05-2025
+            <div className="prose prose-lg max-w-none">
+              <p className="font-body text-text-medium mb-8">
+                Welkom op Kaniou.be, de officiële website van KANIOU Zilvernaald. Door deze website te bezoeken of te gebruiken, verklaar je je akkoord met de onderstaande gebruiksvoorwaarden. Lees deze voorwaarden zorgvuldig door voordat je gebruikmaakt van onze website.
               </p>
 
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">
-                1. Identiteit van de onderneming
-              </h3>
-              <p className="mb-4">
-                KANIOU Zilvernaald Ondernemingsnummer: BE 0721.785.413
-                Vestigingsadres: Pauwengraaf 66, 3630 Maasmechelen, België
-                E-mailadres: info@kaniou.be Telefoon: +32 467 85 64 05
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                1. Toepasselijkheid
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                Deze gebruiksvoorwaarden zijn van toepassing op iedere bezoeker of gebruiker van Kaniou.be, ongeacht of er een bestelling of aanvraag wordt geplaatst. Door onze website te gebruiken, stem je in met deze voorwaarden.
               </p>
-              <p className="mb-6"></p>
-              <p className="mb-6"></p>
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg mb-6">
+                <p className="font-body text-text-medium font-semibold">
+                  Indien je niet akkoord gaat, verzoeken wij je deze website niet te gebruiken.
+                </p>
+              </div>
 
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">2. Toepasselijkheid</h3>
-              <p className="mb-4">
-                Deze algemene voorwaarden zijn van toepassing op elk bezoek aan
-                en gebruik van de website www.kaniou.be, alsook op alle
-                offertes, overeenkomsten, aankopen, leveringen en diensten van
-                KANIOU Zilvernaald, zowel online als offline. Door gebruik te
-                maken van onze diensten of website verklaart u zich akkoord met
-                deze voorwaarden.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                2. Gebruik van de website
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                Je mag deze website uitsluitend gebruiken voor persoonlijke en niet-commerciële doeleinden.
               </p>
-              <ul className="list-disc pl-6 mb-6"></ul>
-              <p className="mb-6"></p>
-
-              <hr className="my-6" />
-
-              <h3 className="text-lg mt-8 mb-3">3. Aanbod en informatie</h3>
-              <p className="mb-6">
-                Wij doen er alles aan om de informatie op deze website correct,
-                volledig en actueel te houden. Toch kunnen onopzettelijke fouten
-                of onvolledigheden voorkomen. Prijzen, producten en voorwaarden
-                zijn steeds indicatief en kunnen zonder voorafgaande melding
-                worden aangepast. Aan kennelijke fouten in prijs- of
-                productweergave kunnen geen rechten worden ontleend.
+              <p className="font-body text-text-medium mb-4">
+                Het is niet toegestaan om:
               </p>
-              <p className="mb-6"></p>
+              <ul className="list-disc pl-6 font-body text-text-medium mb-6">
+                <li>Inhoud te kopiëren, distribueren, wijzigen of hergebruiken zonder schriftelijke toestemming.</li>
+                <li>De website te gebruiken op een manier die de werking ervan schaadt of verstoort.</li>
+                <li>Geautomatiseerde systemen (zoals bots, scrapers of spiders) te gebruiken voor het verzamelen van data.</li>
+                <li>Pogingen te doen om beveiligingsmaatregelen te omzeilen of ongeautoriseerde toegang te verkrijgen.</li>
+              </ul>
 
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">
-                4. Bestellingen en overeenkomstens
-              </h3>
-              <p className="mb-6">
-                Een bestelling is pas bindend nadat u een schriftelijke
-                orderbevestiging of offertebevestiging van ons heeft ontvangen.
-                De overeenkomst komt pas tot stand na onze expliciete
-                aanvaarding. Bij maatwerk is herroepingsrecht uitgesloten
-                conform artikel VI.53 van het Belgische Wetboek van Economisch
-                Recht (WER) en Europese richtlijn 2011/83/EU.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                3. Intellectuele eigendom
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                Alle inhoud op deze website – waaronder teksten, afbeeldingen, logo's, foto's, productomschrijvingen en ontwerpen – is eigendom van KANIOU Zilvernaald of haar licentiegevers en wordt beschermd door auteursrechten, merkenrechten en andere intellectuele eigendomsrechten.
               </p>
-              <p className="mb-6"></p>
-
-              <hr className="my-6" />
-
-              <h3 className="text-lg mt-8 mb-3">
-                5. Herroepingsrecht (voor niet-maatwerk)
-              </h3>
-              <p className="mb-4"> </p>
-              <ul className="list-disc pl-6 mb-6"></ul>
-              <p className="mb-6">
-                Indien u als consument een niet op maat gemaakt product bestelt
-                via de website, heeft u recht op een herroepingstermijn van 14
-                kalenderdagen vanaf de dag van levering. U dient ons binnen die
-                termijn per e-mail op de hoogte te stellen van uw beslissing. U
-                dient het product binnen 14 dagen na melding op eigen kosten
-                terug te zenden in originele staat en verpakking. Het
-                herroepingsrecht geldt niet voor: • Maatwerkproducten (bv.
-                gordijnen, jaloezieën, shutters op maat) • Beschadigde of
-                gebruikte producten
+              <p className="font-body text-text-medium mb-6">
+                Zonder voorafgaande schriftelijke toestemming mag geen enkel onderdeel van de website worden gebruikt voor andere doeleinden dan het bekijken van de website.
               </p>
 
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">6. Betaling</h3>
-              <p className="mb-6">
-                Betaling kan geschieden via overschrijving of betaalmethodes
-                aangeboden op de website. Bestellingen worden pas verwerkt na
-                volledige betaling, tenzij anders overeengekomen. Bij
-                laattijdige betaling behouden wij ons het recht voor om de
-                levering of installatie uit te stellen.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                4. Beschikbaarheid en wijzigingen
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                We streven ernaar om de website 24/7 beschikbaar te houden, maar we kunnen geen garantie geven op ononderbroken toegang of foutloze werking.
               </p>
-              <p className="mb-6"></p>
-
-              <hr className="my-6" />
-
-              <h3 className="text-lg mt-8 mb-3">7. Levering en plaatsingy</h3>
-              <p className="mb-6">
-                Levertermijnen zijn indicatief en niet bindend. Vertraging kan
-                geen aanleiding geven tot schadevergoeding of annulering, tenzij
-                schriftelijk overeengekomen. Indien installatie of plaatsing
-                inbegrepen is, wordt een datum in overleg met de klant
-                afgesproken. De klant dient de ruimte toegankelijk en klaar te
-                maken voor plaatsing.
+              <p className="font-body text-text-medium mb-4">
+                KANIOU Zilvernaald behoudt zich het recht voor om:
               </p>
-              <p className="mb-4">We are not liable for:</p>
-              <ul className="list-disc pl-6 mb-6"></ul>
-
-              <hr className="my-6" />
-
-              <h3 className="text-lg mt-8 mb-3">8. Aansprakelijkheid</h3>
-              <p className="mb-6">
-                <li>
-                  {" "}
-                  Wij zijn niet aansprakelijk voor: • Indirecte schade (zoals
-                  verlies van gebruik, winst, of gegevens)
-                </li>
-                <li>
-                  {" "}
-                  Schade ontstaan door verkeerd gebruik of foutieve montage
-                </li>
-                <li> Gebrek aan onderhoud of wijziging door derden</li>
-                Onze aansprakelijkheid is in elk geval beperkt tot het bedrag
-                van de bestelling.
+              <ul className="list-disc pl-6 font-body text-text-medium mb-4">
+                <li>De inhoud van de website op elk moment te wijzigen of te verwijderen zonder voorafgaande kennisgeving.</li>
+                <li>Functionaliteiten tijdelijk of permanent stop te zetten.</li>
+              </ul>
+              <p className="font-body text-text-medium mb-6">
+                Wij zijn niet aansprakelijk voor schade als gevolg van het niet beschikbaar zijn van (onderdelen van) de website.
               </p>
 
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">9. Garantie</h3>
-              <p className="mb-6">
-                Wij leveren conform de wettelijke garantie van 2 jaar op
-                fabricagefouten of gebreken bij normaal gebruik. Voor maatwerk
-                geldt deze garantie ook, mits normaal onderhoud. Defecten
-                ontstaan door onoordeelkundig gebruik, vocht, onjuiste
-                installatie of overmacht vallen buiten garantie.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                5. Externe links
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                Deze website kan links bevatten naar websites van derden. Deze links worden enkel ter informatie aangeboden. KANIOU Zilvernaald heeft geen controle over de inhoud van deze externe websites en is niet verantwoordelijk of aansprakelijk voor hun inhoud of praktijken.
+              </p>
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg mb-6">
+                <p className="font-body text-text-medium font-semibold">
+                  Het gebruik van externe websites is geheel op eigen risico.
+                </p>
+              </div>
+
+              <hr className="border-neutral-200 my-8" />
+
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                6. Aansprakelijkheid
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                Wij doen ons best om correcte en actuele informatie aan te bieden, maar wij geven geen garanties met betrekking tot de volledigheid, nauwkeurigheid of actualiteit van de inhoud.
+              </p>
+              <p className="font-body text-text-medium mb-4">
+                KANIOU Zilvernaald is niet aansprakelijk voor:
+              </p>
+              <ul className="list-disc pl-6 font-body text-text-medium mb-6">
+                <li>Directe of indirecte schade door gebruik of onmogelijkheid tot gebruik van de website.</li>
+                <li>Fouten in prijzen, afbeeldingen of specificaties.</li>
+                <li>Virussen, bugs of andere technische problemen die via deze website worden verkregen.</li>
+              </ul>
+
+              <hr className="border-neutral-200 my-8" />
+
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                7. Beveiliging en privacy
+              </h2>
+              <p className="font-body text-text-medium mb-6">
+                Jouw gegevens worden met zorg behandeld. Raadpleeg hiervoor ons <a href="/privacybeleid" className="text-accent hover:underline">Privacybeleid</a> voor meer informatie over hoe wij jouw persoonsgegevens verwerken, beveiligen en opslaan in overeenstemming met de Algemene Verordening Gegevensbescherming (GDPR).
               </p>
 
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">10. Intellectuele eigendom</h3>
-              <p className="mb-6">
-                Alle teksten, foto’s, logo’s, grafisch werk en codering op deze
-                site zijn beschermd door intellectuele eigendomsrechten. Zonder
-                schriftelijke toestemming is het verboden om materiaal van deze
-                website geheel of gedeeltelijk te kopiëren, verspreiden of
-                hergebruiken. Overtredingen worden juridisch vervolgd op basis
-                van de Belgische Auteurswet en het EU-recht.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                8. Wijzigingen in deze voorwaarden
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                KANIOU Zilvernaald behoudt zich het recht voor om deze gebruiksvoorwaarden op elk moment aan te passen. De meest recente versie is altijd beschikbaar op deze pagina.
               </p>
-              <hr className="my-6" />
+              <p className="font-body text-text-medium mb-6">
+                Wij raden je aan deze voorwaarden regelmatig opnieuw te bekijken. Bij wezenlijke wijzigingen zullen wij dit duidelijk aankondigen op de website.
+              </p>
 
-              <h3 className="text-lg mt-8 mb-3">11. Klachten en geschillen</h3>
-              <p className="mb-6">
-                Klachten kunnen schriftelijk worden ingediend via
-                info@kaniou.be. Wij trachten klachten binnen 7 werkdagen
-                inhoudelijk te beantwoorden. In geval van geschil is uitsluitend
-                het Belgisch recht van toepassing. Geschillen vallen onder de
-                bevoegdheid van de rechtbanken van het arrondissement waarin
-                onze maatschappelijke zetel is gevestigd. Als consument kan u
-                ook terecht bij het Europees ODR-platform:
-                https://ec.europa.eu/consumers/odr
-              </p>
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">
-                12. Gegevensbescherming (GDPR)
-              </h3>
-              <p className="mb-6">
-                Uw persoonsgegevens worden verwerkt conform de Algemene
-                Verordening Gegevensbescherming (EU 2016/679). Raadpleeg ons
-                [Privacybeleid] voor meer informatie over hoe wij uw gegevens
-                verwerken, bewaren en beschermen.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                9. Toepasselijk recht en geschillen
+              </h2>
+              <p className="font-body text-text-medium mb-6">
+                Op deze gebruiksvoorwaarden is het Belgisch recht van toepassing. In geval van een geschil zijn enkel de rechtbanken van Limburg (België) bevoegd.
               </p>
-              <hr className="my-6" />
 
-              <h3 className="text-lg mt-8 mb-3">13. Overmacht</h3>
-              <p className="mb-6">
-                In geval van overmacht (zoals brand, staking, pandemie, oorlog,
-                elektriciteitsuitval, overstroming, vertraging bij leveranciers)
-                behouden wij het recht om de levering op te schorten of de
-                overeenkomst te beëindigen zonder enige schadevergoeding.
-              </p>
-              <hr className="my-6" />
+              <hr className="border-neutral-200 my-8" />
 
-              <h3 className="text-lg mt-8 mb-3">14. Slotbepalingen</h3>
-              <p className="mb-6">
-                Indien een bepaling uit deze algemene voorwaarden nietig of
-                onafdwingbaar blijkt, blijven de overige bepalingen volledig van
-                kracht. Wij behouden ons het recht voor deze voorwaarden op elk
-                moment te wijzigen. De actuele versie is steeds raadpleegbaar op
-                onze website.
+              <h2 className="font-display text-2xl text-primary font-semibold mb-4">
+                10. Contact
+              </h2>
+              <p className="font-body text-text-medium mb-4">
+                Voor vragen over deze gebruiksvoorwaarden kun je contact met ons opnemen via:
               </p>
-              <p className="mb-6">
-                {" "}
-                <a
-                  href="/privacy-policy"
-                  className="text-primary hover:text-secondary underline"
-                ></a>
-              </p>
-              <p className="mb-6"></p>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                <h3 className="font-display text-lg text-primary font-semibold mb-3">
+                  KANIOU Zilvernaald
+                </h3>
+                <p className="font-body text-text-medium mb-2">
+                  E-mail: <a href="mailto:info@kaniou.be" className="text-accent hover:underline">info@kaniou.be</a>
+                </p>
+                <p className="font-body text-text-medium mb-2">
+                  Adres: Pauwengraaf 66 - 3630 Maasmechelen te België
+                </p>
+                <p className="font-body text-text-medium">
+                  Website: <a href="https://kaniou.be" className="text-accent hover:underline">https://kaniou.be</a>
+                </p>
+              </div>
+
+              <hr className="border-neutral-200 my-8" />
+
+              <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg text-center">
+                <p className="font-body text-text-medium">
+                  🔐 <strong>Gebruik deze website op een veilige, respectvolle en eerlijke manier. Bedankt voor je vertrouwen in KANIOU.</strong>
+                </p>
+              </div>
             </div>
           </div>
         </Container>

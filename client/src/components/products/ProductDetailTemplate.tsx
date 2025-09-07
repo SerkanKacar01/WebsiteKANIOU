@@ -124,7 +124,7 @@ const ProductDetailTemplate = ({
                   Transparant vanaf €{startingPrice.toFixed(2)}
                 </span>
                 <span className="text-text-medium ml-2 text-base">
-                  {priceUnit} (incl. Gemaakt volgens exacte specificaties)
+                  {priceUnit} (incl. Gemaakt volgens exacte specificaties)__ Minimale afname 100 cm .
                 </span>
               </p>
             </div>
@@ -133,16 +133,85 @@ const ProductDetailTemplate = ({
             <div className="bg-neutral-100 p-4 rounded-lg mb-6">
               <p className="font-body text-2xl">
                 <span className="font-bold text-accent">
-                  Begint vanaf €{secondPrice ? secondPrice.toFixed(2) : startingPrice.toFixed(2)}
+                  Opaque vanaf €{secondPrice ? secondPrice.toFixed(2) : startingPrice.toFixed(2)}
                 </span>
                 <span className="text-text-medium ml-2 text-base">
-                  {secondPriceUnit || priceUnit} (incl. Gemaakt volgens exacte specificaties)
+                  {secondPriceUnit || priceUnit} (incl. Gemaakt volgens exacte specificaties)__ Minimale afname 100 cm .
                 </span>
               </p>
             </div>
 
             {/* Short Description */}
             <p className="text-text-medium mb-6">{productDescription}</p>
+
+            {/* Product Variants Section - Only for SQUID */}
+            {productName.includes("SQUID") && (
+              <div className="mb-8">
+                <h3 className="font-display text-xl font-medium mb-6 text-primary">
+                  Beschikbare Varianten
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Transparant Variant */}
+                  <div className="border border-neutral-200 rounded-lg p-6 bg-white">
+                    <h4 className="font-display text-lg font-semibold mb-3 text-accent">
+                      Transparant
+                    </h4>
+                    <p className="text-sm text-text-medium mb-4 italic">
+                      SQUID Transparant is ons standaardproduct dat privacy creëert terwijl het zicht naar buiten behouden blijft.
+                    </p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>Gelijkaardig privacy-effect als een voile-gordijn</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>Maximaal behoud van zicht naar buiten</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>Laat meer natuurlijk licht binnen</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>Verkoelend effect tot 3°C in de zomer</span>
+                      </li>
+                    </ul>
+                    <p className="text-xs text-text-light mt-3 italic">
+                      Meestal gebruikt in gemeenschappelijke leefruimtes: woonkamers, keukens, gangen...
+                    </p>
+                  </div>
+                  
+                  {/* Opaak Variant */}
+                  <div className="border border-neutral-200 rounded-lg p-6 bg-white">
+                    <h4 className="font-display text-lg font-semibold mb-3 text-accent">
+                      Opaak
+                    </h4>
+                    <p className="text-sm text-text-medium mb-4 italic">
+                      SQUID Opaak is iets dichter geweven en blokkeert twee keer meer licht dan de transparante versie.
+                    </p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>2x hoger privacy effect</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>Blokkeert 2x meer natuurlijk licht</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mr-2 mt-0.5" />
+                        <span>Hoger koeleffect</span>
+                      </li>
+                    </ul>
+                    <p className="text-xs text-text-light mt-3 italic">
+                      Meestal gebruikt op plaatsen met de hoogste privacyvereisten: badkamers en slaapkamers...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Key Features List */}
             <div className="mb-8">

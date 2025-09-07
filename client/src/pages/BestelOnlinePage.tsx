@@ -71,7 +71,7 @@ const BestelOnlinePage = () => {
       name: "Overgordijnen",
       href: "/producten/overgordijnen",
       icon: Settings,
-      available: true,
+      available: false,
     },
     {
       id: "inzethorren",
@@ -85,7 +85,7 @@ const BestelOnlinePage = () => {
       name: "Gordijnrails",
       href: "/gordijnrails-configurator",
       icon: Ruler,
-      available: true,
+      available: false,
     },
     {
       id: "jaloezieen",

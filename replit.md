@@ -36,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 
 ### System Design Choices
 - **AI Integration**: AI chatbot components have been removed; traditional contact forms and quote systems are maintained.
-- **GDPR Compliance**: Fresh Cookiebot integration (2025) for consent management with auto-blocking mode, proper cookie classification, and user consent tracking for analytics/marketing. Clean implementation without legacy code, configured for Dutch locale with mobile-responsive design.
+- **GDPR Compliance**: No cookie consent system currently implemented. Session-based functionality only without persistent storage to ensure privacy compliance.
 - **Data Flow**: Defined flows for customer journey, inquiries, quote processing, and order processing, emphasizing human follow-up for complex interactions.
 
 ## External Dependencies
@@ -49,4 +49,3 @@ Preferred communication style: Simple, everyday language.
 ### Third-Party Services
 - **Payment Gateway**: Mollie
 - **Email Service**: SendGrid (for transactional and marketing emails), Mailgun (for specific email notifications like order confirmations and status updates)
-- **GDPR Compliance**: Cookiebot

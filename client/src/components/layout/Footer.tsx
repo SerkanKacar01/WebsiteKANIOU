@@ -80,34 +80,34 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <span
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-upcoming"
-                    title="Coming soon online"
+                  <a
+                    href="/producten/rolgordijnen"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Rolgordijnen"
                   >
-                    <span className="ultra-luxury-product-icon">⏳</span>
+                    <span className="ultra-luxury-product-icon">🛒</span>
                     Rolgordijnen
-                    <span className="ultra-luxury-product-status">(Binnenkort online)</span>
-                  </span>
+                  </a>
                 </li>
                 <li>
-                  <span
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-upcoming"
-                    title="Coming soon online"
+                  <a
+                    href="/producten/inzethorren"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Inzethorren"
                   >
-                    <span className="ultra-luxury-product-icon">⏳</span>
+                    <span className="ultra-luxury-product-icon">🛒</span>
                     Inzethorren
-                    <span className="ultra-luxury-product-status">(Binnenkort online)</span>
-                  </span>
+                  </a>
                 </li>
                 <li>
-                  <span
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-upcoming"
-                    title="Coming soon online"
+                  <a
+                    href="/producten/jaloezieen"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Jaloezieën"
                   >
-                    <span className="ultra-luxury-product-icon">⏳</span>
+                    <span className="ultra-luxury-product-icon">🛒</span>
                     Jaloezieën
-                    <span className="ultra-luxury-product-status">(Binnenkort online)</span>
-                  </span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -339,34 +339,34 @@ const Footer: React.FC = () => {
                     </a>
                   </li>
                   <li>
-                    <span
-                      className="footer-link footer-link-upcoming"
-                      title="Coming soon online"
+                    <a
+                      href="/producten/rolgordijnen"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Rolgordijnen"
                     >
-                      <span className="footer-product-icon">⏳</span>
+                      <span className="footer-product-icon">🛒</span>
                       Rolgordijnen
-                      <span className="footer-product-status">(Binnenkort online)</span>
-                    </span>
+                    </a>
                   </li>
                   <li>
-                    <span
-                      className="footer-link footer-link-upcoming"
-                      title="Coming soon online"
+                    <a
+                      href="/producten/inzethorren"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Inzethorren"
                     >
-                      <span className="footer-product-icon">⏳</span>
+                      <span className="footer-product-icon">🛒</span>
                       Inzethorren
-                      <span className="footer-product-status">(Binnenkort online)</span>
-                    </span>
+                    </a>
                   </li>
                   <li>
-                    <span
-                      className="footer-link footer-link-upcoming"
-                      title="Coming soon online"
+                    <a
+                      href="/producten/jaloezieen"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Jaloezieën"
                     >
-                      <span className="footer-product-icon">⏳</span>
+                      <span className="footer-product-icon">🛒</span>
                       Jaloezieën
-                      <span className="footer-product-status">(Binnenkort online)</span>
-                    </span>
+                    </a>
                   </li>
                 </ul>
               </div>

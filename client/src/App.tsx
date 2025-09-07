@@ -129,6 +129,7 @@ function Router() {
         <Route path="/producten/duo-rolgordijnen" component={DuoRolgordijnenPage} />
         <Route path="/producten/textiel-lamellen" component={TextielLamellenSimplePage} />
         <Route path="/producten/kunststof-lamellen" component={KunststofLamellenSimplePage} />
+        <Route path="/producten/jaloezieen" component={ProductCategoryPage} />
         <Route path="/producten/houten-jaloezieen" component={HoutenJaloezieeenSimplePage} />
         <Route path="/producten/kunststof-jaloezieen" component={KunststofJaloezieeenSimplePage} />
         <Route path="/producten/textiel-raamfolie" component={ProductCategoryPage} />

@@ -751,6 +751,31 @@ const Home = () => {
                   <div className="luxury-card-arrow">→</div>
                 </div>
               </div>
+
+              {/* Screen - Buiten Zonwering - Premium Card */}
+              <div
+                className="luxury-product-card group"
+                onClick={() => setLocation("/screen")}
+              >
+                <div className="luxury-card-background"></div>
+                <div className="luxury-card-glow"></div>
+                <div className="luxury-card-content">
+                  <div className="luxury-icon-container">
+                    <div className="luxury-icon-glow"></div>
+                    <div className="luxury-icon">
+                      <div className="relative">
+                        <Shield className="w-8 h-8 text-white" />
+                        <div className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs px-2 py-1 rounded-full font-bold">
+                          BUITEN
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="luxury-card-title">Screen</h3>
+                  <p className="luxury-card-subtitle">Buiten zonwering</p>
+                  <div className="luxury-card-arrow">→</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

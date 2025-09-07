@@ -129,19 +129,17 @@ const ProductDetailTemplate = ({
               </p>
             </div>
             
-            {/* Second Price Display - Independent */}
-            {secondPrice && secondPriceUnit && (
-              <div className="bg-neutral-100 p-4 rounded-lg mb-6">
-                <p className="font-body text-2xl">
-                  <span className="font-bold text-accent">
-                    Begint vanaf €{secondPrice.toFixed(2)}
-                  </span>
-                  <span className="text-text-medium ml-2 text-base">
-                    {secondPriceUnit} (incl. Gemaakt volgens exacte specificaties)
-                  </span>
-                </p>
-              </div>
-            )}
+            {/* Second Price Display - Always Show */}
+            <div className="bg-neutral-100 p-4 rounded-lg mb-6">
+              <p className="font-body text-2xl">
+                <span className="font-bold text-accent">
+                  Begint vanaf €{secondPrice ? secondPrice.toFixed(2) : startingPrice.toFixed(2)}
+                </span>
+                <span className="text-text-medium ml-2 text-base">
+                  {secondPriceUnit || priceUnit} (incl. Gemaakt volgens exacte specificaties)
+                </span>
+              </p>
+            </div>
 
             {/* Short Description */}
             <p className="text-text-medium mb-6">{productDescription}</p>

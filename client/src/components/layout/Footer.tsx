@@ -61,22 +61,62 @@ const Footer: React.FC = () => {
               <ul className="ultra-luxury-footer-links">
                 <li>
                   <a
-                    href="/producten/gordijnrails"
+                    href="/producten/houten-jaloezieen"
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Gordijnrails"
+                    aria-label="Go to product page for Houten jaloezieën"
                   >
                     <span className="ultra-luxury-product-icon">🛒</span>
-                    Gordijnrails
+                    Houten jaloezieën
                   </a>
                 </li>
                 <li>
                   <a
-                    href="/producten/overgordijnen"
+                    href="/producten/textiel-lamellen"
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Overgordijnen"
+                    aria-label="Go to product page for Textiel lamellen"
                   >
                     <span className="ultra-luxury-product-icon">🛒</span>
-                    Overgordijnen
+                    Textiel lamellen
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/kunststof-jaloezieen"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Kunststof jaloezieën"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Kunststof jaloezieën
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/kunststof-lamellen"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Kunststof lamellen"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Kunststof lamellen
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/plisse"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Plissés"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Plissés
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/duo-plisse"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Duo plissés"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Duo plissés
                   </a>
                 </li>
                 <li>
@@ -91,22 +131,92 @@ const Footer: React.FC = () => {
                 </li>
                 <li>
                   <a
-                    href="/producten/inzethorren"
+                    href="/producten/duo-rolgordijnen"
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Inzethorren"
+                    aria-label="Go to product page for Duo rolgordijnen"
                   >
                     <span className="ultra-luxury-product-icon">🛒</span>
-                    Inzethorren
+                    Duo rolgordijnen
                   </a>
                 </li>
                 <li>
                   <a
-                    href="/producten/jaloezieen"
+                    href="/producten/overgordijnen"
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Jaloezieën"
+                    aria-label="Go to product page for Overgordijnen"
                   >
                     <span className="ultra-luxury-product-icon">🛒</span>
-                    Jaloezieën
+                    Overgordijnen
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/gordijnrails"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Gordijnrails"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Gordijnrails
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/vitrages"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Vitrages"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Vitrages
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/houten-shutters"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Houten shutters"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Houten shutters
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/producten/vonwgordijnen"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Vonwgordijnen"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Vonwgordijnen
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/gordijnroedes"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Gordijnroedes"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Gordijnroedes
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/squid"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Squid"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Squid
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/horren"
+                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
+                    aria-label="Go to product page for Horren"
+                  >
+                    <span className="ultra-luxury-product-icon">🛒</span>
+                    Horren
                   </a>
                 </li>
               </ul>
@@ -320,22 +430,62 @@ const Footer: React.FC = () => {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="/producten/gordijnrails"
+                      href="/producten/houten-jaloezieen"
                       className="footer-link footer-link-available"
-                      aria-label="Go to product page for Gordijnrails"
+                      aria-label="Go to product page for Houten jaloezieën"
                     >
                       <span className="footer-product-icon">🛒</span>
-                      Gordijnrails
+                      Houten jaloezieën
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/producten/overgordijnen"
+                      href="/producten/textiel-lamellen"
                       className="footer-link footer-link-available"
-                      aria-label="Go to product page for Overgordijnen"
+                      aria-label="Go to product page for Textiel lamellen"
                     >
                       <span className="footer-product-icon">🛒</span>
-                      Overgordijnen
+                      Textiel lamellen
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/kunststof-jaloezieen"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Kunststof jaloezieën"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Kunststof jaloezieën
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/kunststof-lamellen"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Kunststof lamellen"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Kunststof lamellen
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/plisse"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Plissés"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Plissés
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/duo-plisse"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Duo plissés"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Duo plissés
                     </a>
                   </li>
                   <li>
@@ -350,22 +500,92 @@ const Footer: React.FC = () => {
                   </li>
                   <li>
                     <a
-                      href="/producten/inzethorren"
+                      href="/producten/duo-rolgordijnen"
                       className="footer-link footer-link-available"
-                      aria-label="Go to product page for Inzethorren"
+                      aria-label="Go to product page for Duo rolgordijnen"
                     >
                       <span className="footer-product-icon">🛒</span>
-                      Inzethorren
+                      Duo rolgordijnen
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/producten/jaloezieen"
+                      href="/producten/overgordijnen"
                       className="footer-link footer-link-available"
-                      aria-label="Go to product page for Jaloezieën"
+                      aria-label="Go to product page for Overgordijnen"
                     >
                       <span className="footer-product-icon">🛒</span>
-                      Jaloezieën
+                      Overgordijnen
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/gordijnrails"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Gordijnrails"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Gordijnrails
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/vitrages"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Vitrages"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Vitrages
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/houten-shutters"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Houten shutters"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Houten shutters
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/producten/vonwgordijnen"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Vonwgordijnen"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Vonwgordijnen
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/gordijnroedes"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Gordijnroedes"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Gordijnroedes
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/squid"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Squid"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Squid
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/horren"
+                      className="footer-link footer-link-available"
+                      aria-label="Go to product page for Horren"
+                    >
+                      <span className="footer-product-icon">🛒</span>
+                      Horren
                     </a>
                   </li>
                 </ul>

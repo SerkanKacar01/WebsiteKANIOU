@@ -103,12 +103,40 @@ const ProductDetailTemplate = ({
       <Container className="py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Image */}
-          <div className="rounded-lg overflow-hidden shadow-md">
-            <img
-              src={imageUrl}
-              alt={productName}
-              className="w-full h-auto object-cover aspect-[4/3]"
-            />
+          <div className="space-y-4">
+            <div className="rounded-lg overflow-hidden shadow-md">
+              <img
+                src={imageUrl}
+                alt={productName}
+                className="w-full h-auto object-cover aspect-[4/3]"
+              />
+            </div>
+            
+            {/* Compact price info under image */}
+            <div className="bg-gradient-to-r from-accent/10 to-accent/5 border border-accent/20 p-4 rounded-lg">
+              <div className="text-center">
+                <p className="font-display text-xl font-semibold text-accent mb-1">
+                  Begint vanaf €{startingPrice.toFixed(2)}
+                </p>
+                <p className="text-sm text-text-medium">
+                  {priceUnit} (incl. Gemaakt volgens exacte specificaties)
+                </p>
+              </div>
+            </div>
+            
+            {/* Second price under image if available */}
+            {secondPrice && secondPriceUnit && (
+              <div className="bg-gradient-to-r from-accent/10 to-accent/5 border border-accent/20 p-4 rounded-lg">
+                <div className="text-center">
+                  <p className="font-display text-xl font-semibold text-accent mb-1">
+                    Begint vanaf €{secondPrice.toFixed(2)}
+                  </p>
+                  <p className="text-sm text-text-medium">
+                    {secondPriceUnit} (incl. Gemaakt volgens exacte specificaties)
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Product Details */}

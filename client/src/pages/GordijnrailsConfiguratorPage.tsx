@@ -43,6 +43,7 @@ import {
   ChevronDown,
   CreditCard,
   Loader2,
+  RotateCcw,
 } from "lucide-react";
 import modelAImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.48.41_1750271431612.png";
 import modelB1Image from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.58_1750271431612.png";
@@ -169,11 +170,12 @@ const GordijnrailsConfiguratorPage = () => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showRailLimitWarning, setShowRailLimitWarning] = useState(false);
   const configuratorRef = useRef<HTMLDivElement>(null);
-  const [configuration, setConfiguration] = useState<Configuration>({
+  // Initial empty configuration - completely reset on each page load
+  const getInitialConfiguration = (): Configuration => ({
     profileType: "",
     color: "",
-    length: 100,
-    quantity: 1,
+    length: 0, // Start with 0 instead of 100
+    quantity: 0, // Start with 0 instead of 1
     extraRails: 0,
     corners: "none",
     mounting: "",
@@ -182,6 +184,8 @@ const GordijnrailsConfiguratorPage = () => {
     selectedGlider: undefined,
     accessories: [],
   });
+
+  const [configuration, setConfiguration] = useState<Configuration>(getInitialConfiguration());
 
   const steps: ConfigStep[] = [
     {
@@ -238,6 +242,15 @@ const GordijnrailsConfiguratorPage = () => {
 
     // Use exact length for pricing calculations - no rounding
     const pricingLength = effectiveLength;
+
+    // Don't calculate price if essential selections are missing
+    if (!configuration.profileType || !configuration.color || configuration.length === 0 || configuration.quantity === 0) {
+      return {
+        base: 0,
+        extras: 0,
+        total: 0,
+      };
+    }
 
     // Different prices for different rail types and colors
     let pricePerMeter = 0.0; // Default price
@@ -356,6 +369,22 @@ const GordijnrailsConfiguratorPage = () => {
 
   const updateConfiguration = (key: keyof Configuration, value: any) => {
     setConfiguration((prev) => ({ ...prev, [key]: value }));
+  };
+
+  // Complete reset function - clears all selections and UI state
+  const resetConfigurator = () => {
+    setConfiguration(getInitialConfiguration());
+    setExpandedSections(["step-1"]); // Reset to only step 1 expanded
+    setShowAllSections(false);
+    setGliderAdded(false);
+    setShowRailLimitWarning(false);
+    setShowSpecificationModal(false);
+    setIsProcessingPayment(false);
+    
+    // Scroll to top of configurator
+    if (configuratorRef.current) {
+      configuratorRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   // Watch for configuration changes and auto-advance when steps are completed
@@ -1977,14 +2006,25 @@ const GordijnrailsConfiguratorPage = () => {
                         </div>
                         Gordijnrails Configurator
                       </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={toggleAllSections}
-                        className="text-xs border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-300 rounded-xl px-4 py-2 font-medium"
-                      >
-                        {showAllSections ? "Verberg alles" : "Toon alles"}
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={resetConfigurator}
+                          className="text-xs border-orange-300 text-orange-600 hover:bg-orange-50 hover:border-orange-400 transition-all duration-300 rounded-xl px-3 py-2 font-medium flex items-center gap-1"
+                        >
+                          <RotateCcw className="h-3 w-3" />
+                          🔄 Alles wissen
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={toggleAllSections}
+                          className="text-xs border-[#d5c096]/30 text-[#d5c096] hover:bg-[#d5c096]/10 hover:border-[#d5c096] transition-all duration-300 rounded-xl px-4 py-2 font-medium"
+                        >
+                          {showAllSections ? "Verberg alles" : "Toon alles"}
+                        </Button>
+                      </div>
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-8">
@@ -2270,17 +2310,18 @@ const GordijnrailsConfiguratorPage = () => {
                   </CardContent>
                 </Card>
 
-                {/* Luxury Pricing */}
-                <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
-                  <CardHeader className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 border-b border-[#d5c096]/30 pb-6">
-                    <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
-                      <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
-                        <CreditCard className="h-5 w-5 text-white" />
-                      </div>
-                      Prijsoverzicht
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6 p-8">
+                {/* Luxury Pricing - Only show when valid selections are made */}
+                {price.total > 0 ? (
+                  <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
+                    <CardHeader className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 border-b border-[#d5c096]/30 pb-6">
+                      <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
+                        <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
+                          <CreditCard className="h-5 w-5 text-white" />
+                        </div>
+                        Prijsoverzicht
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6 p-8">
                     <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100">
                       <div>
                         <span className="font-semibold text-gray-900">
@@ -2411,6 +2452,37 @@ const GordijnrailsConfiguratorPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+                ) : (
+                  {/* Show placeholder when no valid pricing */}
+                  <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100/50 pb-6">
+                      <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
+                        <div className="p-2 bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl shadow-lg">
+                          <CreditCard className="h-5 w-5 text-white" />
+                        </div>
+                        Prijsoverzicht
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6 p-8">
+                      <div className="text-center py-12">
+                        <div className="mb-4">
+                          <Settings className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                          Maak eerst je selecties
+                        </h3>
+                        <p className="text-gray-500">
+                          Zodra je alle keuzes hebt gemaakt, verschijnt hier je prijsoverzicht.
+                        </p>
+                        <div className="mt-6 space-y-2 text-sm text-gray-400">
+                          <p>✓ Profieltype en kleur</p>
+                          <p>✓ Lengte en aantal</p>
+                          <p>✓ Montage en accessoires</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}}
 
                 {/* Luxury Action Buttons - Always show when step 6 is completed */}
                 {steps[5].completed && (

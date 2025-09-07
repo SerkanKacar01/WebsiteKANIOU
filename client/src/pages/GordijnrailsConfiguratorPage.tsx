@@ -29,22 +29,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Check,
-  ArrowRight,
-  ArrowLeft,
-  ShoppingCart,
-  FileText,
-  Info,
-  Ruler,
-  Settings,
-  Wrench,
-  Package,
-  ChevronDown,
-  CreditCard,
-  Loader2,
-  RotateCcw,
-} from "lucide-react";
 import modelAImage from "@assets/Scherm­afbeelding 2025-06-18 om 19.48.41_1750271431612.png";
 import modelB1Image from "@assets/Scherm­afbeelding 2025-06-18 om 19.47.58_1750271431612.png";
 import modelB2Image from "@assets/Scherm­afbeelding 2025-06-18 om 19.48.24_1750271431612.png";
@@ -914,7 +898,7 @@ const GordijnrailsConfiguratorPage = () => {
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-start gap-3">
-                <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+                <span className="h-5 w-5 text-blue-600 mt-0.5 flex items-center justify-center">ℹ️</span>
                 <div>
                   <p className="text-sm text-blue-800">
                     <strong>KS = Stille en functionele rail</strong> |{" "}
@@ -1473,7 +1457,7 @@ const GordijnrailsConfiguratorPage = () => {
 
                     <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
                       <div className="flex items-start gap-3">
-                        <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+                        <span className="h-5 w-5 text-blue-600 mt-0.5 flex items-center justify-center">ℹ️</span>
                         <div>
                           <p className="text-sm text-blue-800 font-medium">
                             Offerte op maat
@@ -1910,7 +1894,7 @@ const GordijnrailsConfiguratorPage = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-2">
-                        <Check className="h-5 w-5 text-green-600" />
+                        <span className="h-5 w-5 text-green-600 flex items-center justify-center">✅</span>
                         <p className="font-medium text-gray-900">
                           Eindstop met eindkapje (Advies: 2 stuks per rail)
                         </p>
@@ -2069,7 +2053,7 @@ const GordijnrailsConfiguratorPage = () => {
                                   }`}
                                 >
                                   {step.completed ? (
-                                    <Check className="h-5 w-5" />
+                                    <span className="h-5 w-5 flex items-center justify-center">✅</span>
                                   ) : (
                                     step.id
                                   )}
@@ -2496,7 +2480,7 @@ const GordijnrailsConfiguratorPage = () => {
                     >
                       {isProcessingPayment ? (
                         <>
-                          <Loader2 className="h-6 w-6 mr-3 animate-spin" />
+                          <span className="h-6 w-6 mr-3 animate-spin flex items-center justify-center">⏳</span>
                           Bezig met betaling...
                         </>
                       ) : (
@@ -2658,7 +2642,7 @@ const GordijnrailsConfiguratorPage = () => {
 
                           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                             <div className="flex items-start gap-3">
-                              <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+                              <span className="h-5 w-5 text-blue-600 mt-0.5 flex items-center justify-center">ℹ️</span>
                               <div>
                                 <p className="text-sm text-blue-800 font-medium">
                                   Informatie

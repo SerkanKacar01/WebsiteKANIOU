@@ -139,7 +139,7 @@ const VouwgordijnenPage = () => {
         </Container>
       </div>
 
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white w-full">
         {/* Hero Section */}
         <section className="py-20 bg-[#f9f7f3]">
           <Container>

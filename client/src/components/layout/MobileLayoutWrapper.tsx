@@ -20,10 +20,16 @@ const MobileLayoutWrapper = ({ children }: MobileLayoutWrapperProps) => {
   const showHeader = !isHomePage && !isAdminPage;
 
   return (
-    <div className="flex min-h-screen flex-col">
-      {showHeader && <Header />}
-      <main className="flex-1">
-        {children}
+    <div className="flex min-h-screen flex-col w-full">
+      {showHeader && (
+        <div className="w-full">
+          <Header />
+        </div>
+      )}
+      <main className="flex-1 w-full">
+        <div className="w-full">
+          {children}
+        </div>
       </main>
     </div>
   );

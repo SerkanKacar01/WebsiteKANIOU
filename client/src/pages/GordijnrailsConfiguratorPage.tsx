@@ -2310,160 +2310,149 @@ const GordijnrailsConfiguratorPage = () => {
                   </CardContent>
                 </Card>
 
-                {/* Luxury Pricing - Only show when valid selections are made */}
-                {price.total > 0 ? (
-                  <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
-                    <CardHeader className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 border-b border-[#d5c096]/30 pb-6">
-                      <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
-                        <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
-                          <CreditCard className="h-5 w-5 text-white" />
-                        </div>
-                        Prijsoverzicht
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6 p-8">
-                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100">
-                      <div>
-                        <span className="font-semibold text-gray-900">
-                          Basis rail (
-                          {(() => {
-                            const effectiveLength =
-                              configuration.customLength ||
-                              configuration.length;
-                            return effectiveLength;
-                          })()}{" "}
-                          cm ×{" "}
-                          {configuration.quantity + configuration.extraRails})
-                        </span>
-                        {configuration.customLength && (
-                          <div className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full mt-1 inline-block font-semibold">
-                            Exact maat: {configuration.customLength} cm
-                          </div>
-                        )}
+                {/* Luxury Pricing */}
+                <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 border-b border-[#d5c096]/30 pb-6">
+                    <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
+                      <div className="p-2 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded-xl shadow-lg">
+                        <CreditCard className="h-5 w-5 text-white" />
                       </div>
-                      <span className="text-2xl font-bold bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
-                        €{price.base.toFixed(2)}
-                      </span>
-                    </div>
-
-                    {price.extras > 0 && (
+                      Prijsoverzicht
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6 p-8">
+                    {price.total > 0 ? (
                       <>
-                        {configuration.corners === "custom" &&
-                          configuration.curveModel && (
-                            <div className="flex justify-between text-sm text-gray-600">
-                              <span>
-                                Curve Model ({configuration.curveModel.name})
-                              </span>
-                              <span>
-                                €{configuration.curveModel.price.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
+                        <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100">
+                          <div>
+                            <span className="font-semibold text-gray-900">
+                              Basis rail (
+                              {(() => {
+                                const effectiveLength =
+                                  configuration.customLength ||
+                                  configuration.length;
+                                return effectiveLength;
+                              })()}{" "}
+                              cm ×{" "}
+                              {configuration.quantity + configuration.extraRails})
+                            </span>
+                            {configuration.customLength && (
+                              <div className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full mt-1 inline-block font-semibold">
+                                Exact maat: {configuration.customLength} cm
+                              </div>
+                            )}
+                          </div>
+                          <span className="text-2xl font-bold bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
+                            €{price.base.toFixed(2)}
+                          </span>
+                        </div>
 
-                        {configuration.mounting === "ceiling" &&
-                          configuration.ceilingComponents.length > 0 && (
-                            <>
-                              {configuration.ceilingComponents.map((comp) => (
-                                <div
-                                  key={comp.id}
-                                  className="flex justify-between text-sm text-gray-600"
-                                >
-                                  <span>
-                                    {comp.name} (×{comp.quantity})
-                                  </span>
-                                  <span>
-                                    €{(comp.price * comp.quantity).toFixed(2)}
-                                  </span>
-                                </div>
-                              ))}
-                            </>
-                          )}
-
-                        {configuration.mounting === "wall" &&
-                          configuration.wallComponents.length > 0 && (
-                            <>
-                              {configuration.wallComponents.map((comp) => (
-                                <div
-                                  key={comp.id}
-                                  className="flex justify-between text-sm text-gray-600"
-                                >
-                                  <span>
-                                    {comp.name} (×{comp.quantity})
-                                  </span>
-                                  <span>
-                                    €{(comp.price * comp.quantity).toFixed(2)}
-                                  </span>
-                                </div>
-                              ))}
-                            </>
-                          )}
-
-                        {configuration.selectedGlider && (
+                        {price.extras > 0 && (
                           <>
-                            <div className="text-sm text-gray-600">
-                              <span>
-                                {configuration.selectedGlider.name} –{" "}
-                                {configuration.selectedGlider.selectedColor ||
-                                  "wit"}{" "}
-                                ({configuration.selectedGlider.quantity}{" "}
-                                {configuration.selectedGlider.id ===
-                                "ks-silent-gliders"
-                                  ? "strips"
-                                  : "stuks"}
-                                )
-                              </span>
-                            </div>
-                            <div className="flex justify-between text-sm text-gray-600 ml-4">
-                              <span></span>
-                              <span>
-                                +€
-                                {(
-                                  configuration.selectedGlider.price *
-                                  configuration.selectedGlider.quantity
-                                ).toFixed(2)}
-                              </span>
-                            </div>
+                            {configuration.corners === "custom" &&
+                              configuration.curveModel && (
+                                <div className="flex justify-between text-sm text-gray-600">
+                                  <span>
+                                    Curve Model ({configuration.curveModel.name})
+                                  </span>
+                                  <span>
+                                    €{configuration.curveModel.price.toFixed(2)}
+                                  </span>
+                                </div>
+                              )}
+
+                            {configuration.mounting === "ceiling" &&
+                              configuration.ceilingComponents.length > 0 && (
+                                <>
+                                  {configuration.ceilingComponents.map((comp) => (
+                                    <div
+                                      key={comp.id}
+                                      className="flex justify-between text-sm text-gray-600"
+                                    >
+                                      <span>
+                                        {comp.name} (×{comp.quantity})
+                                      </span>
+                                      <span>
+                                        €{(comp.price * comp.quantity).toFixed(2)}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </>
+                              )}
+
+                            {configuration.mounting === "wall" &&
+                              configuration.wallComponents.length > 0 && (
+                                <>
+                                  {configuration.wallComponents.map((comp) => (
+                                    <div
+                                      key={comp.id}
+                                      className="flex justify-between text-sm text-gray-600"
+                                    >
+                                      <span>
+                                        {comp.name} (×{comp.quantity})
+                                      </span>
+                                      <span>
+                                        €{(comp.price * comp.quantity).toFixed(2)}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </>
+                              )}
+
+                            {configuration.selectedGlider && (
+                              <>
+                                <div className="text-sm text-gray-600">
+                                  <span>
+                                    {configuration.selectedGlider.name} –{" "}
+                                    {configuration.selectedGlider.selectedColor ||
+                                      "wit"}{" "}
+                                    ({configuration.selectedGlider.quantity}{" "}
+                                    {configuration.selectedGlider.id ===
+                                    "ks-silent-gliders"
+                                      ? "strips"
+                                      : "stuks"}
+                                    )
+                                  </span>
+                                </div>
+                                <div className="flex justify-between text-sm text-gray-600 ml-4">
+                                  <span></span>
+                                  <span>
+                                    +€
+                                    {(
+                                      configuration.selectedGlider.price *
+                                      configuration.selectedGlider.quantity
+                                    ).toFixed(2)}
+                                  </span>
+                                </div>
+                              </>
+                            )}
+
+                            {configuration.accessories.includes("cord") && (
+                              <div className="flex justify-between text-sm text-gray-600">
+                                <span>Cord Accessories</span>
+                                <span>€6.95</span>
+                              </div>
+                            )}
+
+                            <Separator />
                           </>
                         )}
 
-                        {configuration.accessories.includes("cord") && (
-                          <div className="flex justify-between text-sm text-gray-600">
-                            <span>Cord Accessories</span>
-                            <span>€6.95</span>
+                        <div className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 p-6 rounded-2xl border-2 border-[#d5c096]/30 shadow-lg">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-xl font-bold text-gray-900">
+                              Totaalprijs (incl. 21% BTW)
+                            </span>
+                            <span className="text-3xl font-extrabold bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
+                              €{price.total.toFixed(2)}
+                            </span>
                           </div>
-                        )}
-
-                        <Separator />
-                      </>
-                    )}
-
-                    <div className="bg-gradient-to-r from-[#d5c096]/20 to-[#d5c096]/10 p-6 rounded-2xl border-2 border-[#d5c096]/30 shadow-lg">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-xl font-bold text-gray-900">
-                          Totaalprijs (incl. 21% BTW)
-                        </span>
-                        <span className="text-3xl font-extrabold bg-gradient-to-r from-[#d5c096] to-[#c4b183] bg-clip-text text-transparent">
-                          €{price.total.toFixed(2)}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 text-right">
-                        BTW-bedrag: €{((price.total * 0.21) / 1.21).toFixed(2)}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-                ) : (
-                  {/* Show placeholder when no valid pricing */}
-                  <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl overflow-hidden">
-                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100/50 pb-6">
-                      <CardTitle className="flex items-center gap-3 text-xl font-bold text-gray-900">
-                        <div className="p-2 bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl shadow-lg">
-                          <CreditCard className="h-5 w-5 text-white" />
+                          <p className="text-sm text-gray-600 text-right">
+                            BTW-bedrag: €{((price.total * 0.21) / 1.21).toFixed(2)}
+                          </p>
                         </div>
-                        Prijsoverzicht
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6 p-8">
+                      </>
+                    ) : (
                       <div className="text-center py-12">
                         <div className="mb-4">
                           <Settings className="h-16 w-16 text-gray-300 mx-auto mb-4" />
@@ -2480,9 +2469,9 @@ const GordijnrailsConfiguratorPage = () => {
                           <p>✓ Montage en accessoires</p>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                )}}
+                    )}
+                  </CardContent>
+                </Card>
 
                 {/* Luxury Action Buttons - Always show when step 6 is completed */}
                 {steps[5].completed && (

@@ -177,7 +177,7 @@ const GordijnrailsConfiguratorPage = () => {
     length: 0, // Start with 0 instead of 100
     quantity: 0, // Start with 0 instead of 1
     extraRails: 0,
-    corners: "none",
+    corners: "", // Start empty instead of "none"
     mounting: "",
     ceilingComponents: [],
     wallComponents: [],
@@ -210,7 +210,7 @@ const GordijnrailsConfiguratorPage = () => {
       id: 4,
       title: "Kies bochten",
       description: "Optioneel",
-      completed:
+      completed: !!configuration.corners && (
         configuration.corners === "none" ||
         configuration.corners === "eigen-model" ||
         (configuration.corners === "custom" &&
@@ -220,7 +220,8 @@ const GordijnrailsConfiguratorPage = () => {
             (segment) =>
               !!configuration.curveMeasurements![segment] &&
               configuration.curveMeasurements![segment] > 0,
-          )),
+          ))
+      ),
     },
     {
       id: 5,
@@ -232,7 +233,7 @@ const GordijnrailsConfiguratorPage = () => {
       id: 6,
       title: "Kies accessoires",
       description: "Bediening & extra's",
-      completed: true,
+      completed: configuration.accessories.length > 0 || !!configuration.selectedGlider,
     },
   ];
 

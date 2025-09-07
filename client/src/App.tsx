@@ -71,6 +71,7 @@ import KunststofLamellenSimplePage from "@/pages/products/kunststof-lamellen-sim
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import GordijnroedesPage from "@/pages/products/gordijnroedes";
 import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
+import HorrenPage from "@/pages/products/horren";
 
 
 
@@ -126,6 +127,7 @@ function Router() {
         <Route path="/products/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/products/squid-textiel-folie" component={SquidTextielFoliePage} />
         <Route path="/products/squid-textile-foil" component={SquidTextielFoliePage} />
+        <Route path="/products/horren" component={HorrenPage} />
         <Route path="/products/plisse" component={ProductCategoryPage} />
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
         
@@ -141,7 +143,7 @@ function Router() {
         <Route path="/producten/kunststof-jaloezieen" component={KunststofJaloezieeenSimplePage} />
         <Route path="/producten/textiel-raamfolie" component={ProductCategoryPage} />
         <Route path="/producten/houten-shutters" component={HoutenShuttersSimplePage} />
-        <Route path="/producten/horren" component={ProductCategoryPage} />
+        <Route path="/producten/horren" component={HorrenPage} />
         <Route path="/producten/inzethorren" component={ProductCategoryPage} />
         <Route path="/producten/opzethorren" component={ProductCategoryPage} />
         <Route path="/producten/plisse-hordeuren" component={ProductCategoryPage} />

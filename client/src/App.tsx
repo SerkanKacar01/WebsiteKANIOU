@@ -127,6 +127,7 @@ function Router() {
         <Route path="/products/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/products/squid-textiel-folie" component={SquidTextielFoliePage} />
         <Route path="/products/squid-textile-foil" component={SquidTextielFoliePage} />
+        <Route path="/products/squid" component={SquidTextielFoliePage} />
         <Route path="/products/horren" component={HorrenPage} />
         <Route path="/products/plisse" component={ProductCategoryPage} />
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
@@ -158,6 +159,8 @@ function Router() {
         <Route path="/producten/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/producten/squid-textiel-folie" component={SquidTextielFoliePage} />
         <Route path="/producten/squid-textile-foil" component={SquidTextielFoliePage} />
+        <Route path="/producten/squid" component={SquidTextielFoliePage} />
+        <Route path="/squid" component={SquidTextielFoliePage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
         <Route path="/reiniging" component={CleaningProductsPage} />
 

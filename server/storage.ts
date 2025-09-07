@@ -751,7 +751,7 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
       molliePaymentId: `manual_${Date.now()}`,
       orderNumber: order.orderNumber || null, // Use the provided order number or null
       status: 'pending',
-      bonnummer: order.bonnummer,
+      bonnummer: order.bonnummer || SecureBonnummerGenerator.generateSecureBonnummer(),
       clientNote: order.clientNote || null,
       noteFromEntrepreneur: order.noteFromEntrepreneur || null,
       customerNote: order.customerNote || null,

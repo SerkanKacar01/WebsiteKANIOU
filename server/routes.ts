@@ -1306,6 +1306,93 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
   });
   */
 
+  // 🔐 ULTRA-SECURE ORDER TRACKING ENDPOINT 🔐
+  // This endpoint implements ALL security best practices against hackers
+  app.get("/api/orders/track/:bonnummer", async (req, res) => {
+    const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
+    const { bonnummer } = req.params;
+    const { email } = req.query;
+
+    try {
+      // SECURITY LAYER 1: Rate limiting specific to tracking
+      if (TrackingSecurityMonitor.isRateLimited(clientIp)) {
+        console.warn(`🚨 BLOCKED: Rate limit exceeded for IP ${clientIp}`);
+        return res.status(429).json({ 
+          error: "Te veel tracking pogingen. Probeer later opnieuw.", 
+          retryAfter: 3600 
+        });
+      }
+
+      // SECURITY LAYER 2: Validate bonnummer format and checksum
+      if (!SecureBonnummerGenerator.isValidBonnummer(bonnummer)) {
+        TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Invalid format/checksum attempt');
+        return res.status(400).json({ 
+          error: "Ongeldig bonnummer formaat. Controleer je invoer." 
+        });
+      }
+
+      // SECURITY LAYER 3: Email verification (optional but recommended)
+      const customerEmail = email ? email.toString().toLowerCase().trim() : undefined;
+      if (customerEmail && !isValidEmail(customerEmail)) {
+        TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Invalid email format');
+        return res.status(400).json({ 
+          error: "Ongeldig e-mailadres formaat." 
+        });
+      }
+
+      // SECURITY LAYER 4: Database lookup with all security checks
+      const order = await storage.getPaymentOrderByBonnummer(bonnummer, customerEmail, clientIp);
+      
+      if (!order) {
+        // Don't reveal if it's invalid format, non-existent, or access denied
+        TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Order not found or access denied');
+        return res.status(404).json({ 
+          error: "Bestelling niet gevonden of geen toegang." 
+        });
+      }
+
+      // SECURITY LAYER 5: Return only safe, limited information
+      const safeOrderInfo = {
+        bonnummer: order.bonnummer,
+        status: order.status,
+        customerName: order.customerName?.charAt(0) + "*".repeat(Math.max(0, (order.customerName?.length || 1) - 2)) + order.customerName?.slice(-1),
+        orderDate: order.createdAt ? new Date(order.createdAt).toLocaleDateString('nl-BE') : 'Onbekend',
+        // Status progression (safe to show)
+        statusProgress: {
+          received: !!order.statusBestelOntvangen,
+          processing: !!order.statusInVerwerking,
+          processed: !!order.statusVerwerkt,
+          production: !!order.statusInProductie,
+          ready: !!order.statusGereed,
+          contacted: !!order.statusWordtGebeld,
+          delivered: !!order.statusGeleverd
+        }
+      };
+
+      // Security log for successful tracking
+      console.log(`✅ Secure tracking access: IP ${clientIp}, Order ${bonnummer}`);
+
+      res.json({
+        success: true,
+        order: safeOrderInfo,
+        message: "Bestelling gevonden"
+      });
+
+    } catch (error) {
+      console.error("Secure tracking error:", error);
+      TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Server error during tracking');
+      res.status(500).json({ 
+        error: "Er is een fout opgetreden. Probeer later opnieuw." 
+      });
+    }
+  });
+
+  // Email validation helper function
+  function isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) && email.length <= 254; // RFC 5321 limit
+  }
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -1,7 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import { cookieConsentMiddleware } from "./middleware/cookieConsent";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
 const app = express();
@@ -11,8 +10,6 @@ app.use(express.urlencoded({ extended: false }));
 // Serve attached assets statically
 app.use('/attached_assets', express.static('attached_assets'));
 
-// GDPR Cookie Consent Middleware - must be before other middlewares
-app.use(cookieConsentMiddleware);
 
 app.use((req, res, next) => {
   const start = Date.now();

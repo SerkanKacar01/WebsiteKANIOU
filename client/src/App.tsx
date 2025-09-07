@@ -11,8 +11,6 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import FloatingActionButtons from "@/components/ui/FloatingActionButtonsNew";
-import { CookieConsentBanner } from "@/components/CookieConsentBanner";
-import { CookiebotSetup } from "@/components/CookiebotSetup";
 import Footer from "@/components/layout/Footer";
 
 
@@ -43,8 +41,6 @@ import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngin
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
-import CookiePolicy from "@/pages/CookiePolicy";
-import CookiePreferencesPage from "@/pages/CookiePreferencesPage";
 import BusinessPage from "@/pages/BusinessPage";
 import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import CleaningProductsPage from "@/pages/CleaningProductsPage";
@@ -96,8 +92,6 @@ function Router() {
 
     if (location === "/zakelijk" || location === "/business") return "Business Solutions" + " | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
-    if (location === "/cookie-policy") return "Cookie Policy" + " | " + t("app.title");
-    if (location === "/cookie-preferences") return "Cookies beheren" + " | " + t("app.title");
     if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
     if (location === "/disclaimer") return "Legal Disclaimer" + " | " + t("app.title");
     return t("app.title") + " | " + t("app.subtitle");
@@ -184,8 +178,6 @@ function Router() {
         <Route path="/recommendations" component={SmartRecommendationEngine} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
-        <Route path="/cookie-policy" component={CookiePolicy} />
-        <Route path="/cookie-preferences" component={CookiePreferencesPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/payment/success" component={PaymentSuccessPage} />
@@ -247,7 +239,6 @@ function App() {
             <Router />
           </MobileLayoutWrapper>
           <FloatingActionButtons />
-          <CookiebotSetup />
 
         </TooltipProvider>
       </QueryClientProvider>

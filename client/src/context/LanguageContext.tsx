@@ -78,57 +78,18 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       document.documentElement.classList.remove('rtl');
     }
     
-    // GDPR-compliant language storage - no cookies without consent
+    // No persistent storage - session-based language only for GDPR compliance
     if (typeof window !== 'undefined') {
-      // Only attempt to store if user has given explicit preferences consent
-      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
-        // Set language cookie via API to respect server-side GDPR controls
-        fetch('/api/set-language', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ language })
-        }).then(response => response.json())
-        .then(result => {
-          if (!result.success) {
-            console.log('🚫 Language cookie blocked:', result.reason);
-          }
-        })
-        .catch(err => console.warn('Language API error:', err));
-      } else {
-        // Do NOT store language preference without consent (GDPR requirement)
-        console.log('🚫 Language preference not stored - consent required');
-      }
-      
       // Remove any legacy localStorage entries to ensure GDPR compliance
       localStorage.removeItem('language');
       sessionStorage.removeItem('language');
     }
   }, [language]);
 
-  // GDPR-compliant language setting function - blocks cookies without consent
+  // Session-only language setting function for GDPR compliance
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    
-    // Only attempt to store if explicit consent is available
-    if (typeof window !== 'undefined') {
-      if (window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.preferences) {
-        fetch('/api/set-language', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ language: lang })
-        }).then(response => response.json())
-        .then(result => {
-          if (result.success) {
-            console.log(`✅ Language preference stored: ${lang}`);
-          } else {
-            console.log(`🚫 Language blocked: ${result.reason}`);
-          }
-        })
-        .catch(err => console.warn('Language API error:', err));
-      } else {
-        console.log(`🚫 Language ${lang} not stored - preferences consent required`);
-      }
-    }
+    console.log(`🔄 Language set to ${lang} (session only - no persistent storage)`);
   };
 
   // Translation function that handles nested keys

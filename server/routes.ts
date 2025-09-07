@@ -115,7 +115,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
-  // GDPR-compliant language preference endpoint
+  // Language preference endpoint - no persistent storage for GDPR compliance
   app.post("/api/set-language", (req: any, res) => {
     try {
       const { language } = req.body;
@@ -124,34 +124,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Invalid language code" });
       }
 
-      // Check if user has given preferences consent (GDPR requirement)
-      if (req.cookieConsent?.preferences) {
-        res.cookie("kaniou-language", language, {
-          httpOnly: false,
-          secure: false,
-          maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
-          sameSite: 'lax',
-          // Add purpose description for Cookiebot classification
-          domain: process.env.NODE_ENV === 'production' ? '.kaniou.be' : undefined,
-        });
-        
-        res.json({ 
-          success: true, 
-          message: `Language set to ${language}`,
-          cookieSet: true,
-          category: "preferences"
-        });
-      } else {
-        // Completely block cookie setting until consent (GDPR compliance)
-        console.log(`🚫 Blocked kaniou-language cookie - no preferences consent`);
-        
-        res.json({ 
-          success: false, 
-          message: `Language preference blocked - consent required`,
-          cookieSet: false,
-          reason: "GDPR compliance - preferences consent required"
-        });
-      }
+      // No cookies stored - session-based language only for GDPR compliance
+      console.log(`🔄 Language set to ${language} (session only - no persistent storage)`);
+      
+      res.json({ 
+        success: true, 
+        message: `Language set to ${language} (session only)`,
+        cookieSet: false,
+        reason: "GDPR compliance - no persistent storage without explicit consent system"
+      });
     } catch (error) {
       console.error("Language setting error:", error);
       res.status(500).json({ error: "Server error setting language" });

@@ -70,6 +70,7 @@ import KunststofJaloezieeenSimplePage from "@/pages/products/kunststof-jaloeziee
 import KunststofLamellenSimplePage from "@/pages/products/kunststof-lamellen-simple";
 import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
+import GordijnroedesPage from "@/pages/products/gordijnroedes";
 
 
 
@@ -146,6 +147,8 @@ function Router() {
         <Route path="/producten/duo-plisse" component={DuoPlissesPage} />
         <Route path="/producten/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/vouwgordijnen" component={VouwgordijnenPage} />
+        <Route path="/producten/gordijnroedes" component={GordijnroedesPage} />
+        <Route path="/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />

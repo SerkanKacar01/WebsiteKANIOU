@@ -1,0 +1,147 @@
+📜 Privacybeleid – KANIOU Zilvernaald
+
+Bij KANIOU Zilvernaald hechten wij veel waarde aan de bescherming van uw persoonsgegevens. In dit privacybeleid leggen wij uit welke gegevens wij verzamelen, waarom wij dat doen, hoe lang wij deze bewaren, en welke rechten u heeft onder de Algemene Verordening Gegevensbescherming (AVG/GDPR).
+
+⸻
+
+1. Wie zijn wij?
+
+KANIOU Zilvernaald
+🌐 Website: https://kaniou.be
+✉️ E-mail: info@kaniou.be
+📍 Vestigingsadres: Pauwengraaf 66, 3630 Maasmechelen - België
+🧾 Ondernemingsnummer: 0785.273.582
+🛡️ Verantwoordelijke voor gegevensverwerking: KANIOU
+
+⸻
+
+2. Welke persoonsgegevens verzamelen wij?
+
+Wij verwerken enkel de gegevens die noodzakelijk zijn voor het verlenen van onze diensten.
+
+a. Ingevulde formulieren (contact, offerte, bestelling):
+	•	Voor- en achternaam
+	•	E-mailadres
+	•	Telefoonnummer
+	•	Adresgegevens (indien opgegeven)
+	•	Project- of bestellingsdetails
+
+b. Technische gegevens (via cookies en logbestanden):
+	•	IP-adres
+	•	Browser- en apparaattype
+	•	Bezochte pagina’s
+	•	Taalvoorkeur
+	•	Sessieduur en klikgedrag
+	•	Cookie-ID’s (via Cookiebot, Replit, Cloudflare)
+
+c. Bestellingen en klantrelaties:
+	•	Bestelgegevens
+	•	Bezorgadres
+	•	Betalingsstatus (geen creditcardgegevens)
+	•	Correspondentiegeschiedenis
+
+⸻
+
+3. Waarvoor gebruiken wij deze gegevens?
+
+Wij gebruiken uw gegevens uitsluitend voor:
+	•	Het verwerken van uw offerteaanvraag of bestelling
+	•	Communicatie en klantenservice
+	•	Het leveren van onze producten en diensten
+	•	Interne administratie en boekhouding
+	•	Het verbeteren van de website en gebruikerservaring
+	•	Naleving van wettelijke verplichtingen
+
+⸻
+
+4. Cookies en tracking
+
+Wij gebruiken Cookiebot by Usercentrics voor het beheer van uw cookietoestemming, in overeenstemming met de GDPR.
+
+🍪 Cookiecategorieën:
+	•	Noodzakelijk: voor basisfunctionaliteit van de website
+	•	Voorkeuren: zoals taalkeuze of pop-ups
+	•	Statistieken (optioneel): geanonimiseerde bezoekanalyse via o.a. Google Analytics
+	•	Marketing (optioneel): enkel indien expliciet goedgekeurd
+
+➡️ U kunt uw toestemming op elk moment wijzigen via de cookie-instellingen.
+Voor gedetailleerde informatie, raadpleeg onze Cookieverklaring.
+
+⸻
+
+5. Met wie delen wij uw gegevens?
+
+Uw gegevens worden nooit verkocht. Ze worden uitsluitend gedeeld met onderstaande verwerkers indien noodzakelijk:
+	•	Onze websitehostingpartner(s)
+	•	Replit (back- en frontendontwikkeling)
+	•	Cloudflare (beveiliging en CDN)
+	•	SendGrid / SMTP-server (mailverzending)
+	•	Boekhoudsoftware (voor facturatie)
+	•	Bezorgdiensten indien van toepassing
+
+📃 Met elk van deze partijen is een verwerkersovereenkomst afgesloten conform de AVG.
+
+⸻
+
+6. Hoe lang bewaren wij uw gegevens?					Gegevenstype
+Bewaartermijn
+Contactaanvragen
+Max. 12 maanden
+Bestel- en klantgegevens
+Tot 7 jaar (wettelijke verplichting)
+Cookiegegevens
+Volgens cookie-vervaldatum
+Nieuwsbriefinschrijvingen
+Tot uitschrijving
+													7. Uw rechten
+
+U heeft als betrokkene de volgende rechten:
+	•	Recht op inzage
+	•	Recht op correctie
+	•	Recht op verwijdering
+	•	Recht op beperking van verwerking
+	•	Recht op bezwaar
+	•	Recht op dataportabiliteit
+
+📧 Uitoefenen? Stuur een e-mail naar info@kaniou.be met onderwerp “Privacyverzoek”.
+
+⸻
+
+8. Beveiliging van uw gegevens
+
+Wij nemen passende technische en organisatorische maatregelen:
+	•	SSL-encryptie (HTTPS)
+	•	Firewall via Cloudflare
+	•	Regelmatige updates en patches
+	•	Interne toegangsbeperkingen
+	•	Gegevensversleuteling indien nodig
+
+🛡️ Bestelvolgsysteem
+Wij gebruiken een veilig en cryptografisch gegenereerd bestelnummer. Gegevens worden afgeschermd, brute-force aanvallen worden geblokkeerd en sessies zijn beveiligd tegen onderschepping.
+
+⸻
+
+9. Minderjarigen
+
+Onze diensten zijn niet gericht op personen jonger dan 16 jaar. Indien wij onbewust gegevens van een minderjarige verwerken, verwijderen wij deze onmiddellijk.
+
+⸻
+
+10. Vragen of klachten?
+
+📧 info@kaniou.be
+📍 (adres optioneel invullen)
+
+U heeft tevens het recht een klacht in te dienen bij de Gegevensbeschermingsautoriteit (GBA):
+🔗 https://www.gegevensbeschermingsautoriteit.be
+
+⸻
+
+11. Wijzigingen in dit beleid
+
+Wij behouden ons het recht voor om dit beleid aan te passen. Controleer deze pagina regelmatig. Bij belangrijke wijzigingen informeren wij u via pop-up of e-mail.
+
+⸻
+
+🔒 Uw privacy is onze prioriteit.
+Bij KANIOU Zilvernaald staan transparantie, vertrouwen en veiligheid centraal.

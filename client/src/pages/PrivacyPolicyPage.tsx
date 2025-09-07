@@ -28,7 +28,7 @@ const PrivacyPolicyPage = () => {
               📄 Privacybeleid – KANIOU Zilvernaald
             </h1>
             <p className="text-text-medium">
-              Laatst bijgewerkt op: 7 september 2025
+              Bij KANIOU Zilvernaald hechten wij veel waarde aan de bescherming van uw persoonsgegevens
             </p>
           </div>
           
@@ -36,7 +36,7 @@ const PrivacyPolicyPage = () => {
             {language === 'nl' ? (
               <>
                 <p className="font-body text-text-medium mb-8">
-                  Bij KANIOU Zilvernaald hechten wij veel waarde aan de bescherming van uw persoonsgegevens. In dit privacybeleid leggen wij uit welke gegevens wij verzamelen, waarom we dat doen, hoe lang we deze bewaren, en welke rechten u heeft volgens de Algemene Verordening Gegevensbescherming (AVG/GDPR).
+                  Bij KANIOU Zilvernaald hechten wij veel waarde aan de bescherming van uw persoonsgegevens. In dit privacybeleid leggen wij uit welke gegevens wij verzamelen, waarom wij dat doen, hoe lang wij deze bewaren, en welke rechten u heeft onder de Algemene Verordening Gegevensbescherming (AVG/GDPR).
                 </p>
                 
                 <hr className="border-neutral-200 my-8" />
@@ -49,19 +49,19 @@ const PrivacyPolicyPage = () => {
                     <strong>KANIOU Zilvernaald</strong>
                   </p>
                   <p className="font-body text-text-medium mb-2">
-                    Website: https://kaniou.be
+                    🌐 Website: https://kaniou.be
                   </p>
                   <p className="font-body text-text-medium mb-2">
-                    E-mail: info@kaniou.be
+                    ✉️ E-mail: info@kaniou.be
                   </p>
                   <p className="font-body text-text-medium mb-2">
-                    Ondernemingsnummer: (optioneel invullen)
+                    📍 Vestigingsadres: Pauwengraaf 66, 3630 Maasmechelen - België
                   </p>
                   <p className="font-body text-text-medium mb-2">
-                    Vestigingsadres: (optioneel invullen)
+                    🧾 Ondernemingsnummer: 0785.273.582
                   </p>
                   <p className="font-body text-text-medium">
-                    Verantwoordelijke voor gegevensverwerking: KANIOU
+                    🛡️ Verantwoordelijke voor gegevensverwerking: KANIOU
                   </p>
                 </div>
                 
@@ -71,11 +71,11 @@ const PrivacyPolicyPage = () => {
                   2. Welke persoonsgegevens verzamelen wij?
                 </h2>
                 <p className="font-body text-text-medium mb-4">
-                  Wij verzamelen en verwerken alleen de gegevens die strikt noodzakelijk zijn voor het leveren van onze diensten:
+                  Wij verwerken enkel de gegevens die noodzakelijk zijn voor het verlenen van onze diensten.
                 </p>
                 
                 <h3 className="font-display text-lg text-primary font-semibold mb-3 mt-6">
-                  a. Gegevens via contact- of offerteformulieren:
+                  a. Ingevulde formulieren (contact, offerte, bestelling):
                 </h3>
                 <ul className="list-disc pl-6 font-body text-text-medium mb-4">
                   <li>Voor- en achternaam</li>
@@ -98,12 +98,12 @@ const PrivacyPolicyPage = () => {
                 </ul>
                 
                 <h3 className="font-display text-lg text-primary font-semibold mb-3 mt-6">
-                  c. Klantgegevens bij bestelling of dienst:
+                  c. Bestellingen en klantrelaties:
                 </h3>
                 <ul className="list-disc pl-6 font-body text-text-medium mb-6">
                   <li>Bestelgegevens</li>
-                  <li>Betalingsstatus (geen creditcardgegevens)</li>
                   <li>Bezorgadres</li>
+                  <li>Betalingsstatus (geen creditcardgegevens)</li>
                   <li>Correspondentiegeschiedenis</li>
                 </ul>
                 
@@ -113,82 +113,70 @@ const PrivacyPolicyPage = () => {
                   3. Waarvoor gebruiken wij deze gegevens?
                 </h2>
                 <p className="font-body text-text-medium mb-4">
-                  Wij gebruiken uw gegevens voor de volgende doeleinden:
+                  Wij gebruiken uw gegevens uitsluitend voor:
                 </p>
                 <ul className="list-disc pl-6 font-body text-text-medium mb-6">
-                  <li>Om uw aanvraag of bestelling te verwerken</li>
-                  <li>Voor het beantwoorden van uw vragen</li>
-                  <li>Voor het leveren van onze producten en diensten</li>
-                  <li>Voor het beheren van klantrelaties</li>
-                  <li>Voor het verbeteren van onze website en gebruikerservaring</li>
-                  <li>Om te voldoen aan wettelijke verplichtingen (boekhouding, facturatie)</li>
+                  <li>Het verwerken van uw offerteaanvraag of bestelling</li>
+                  <li>Communicatie en klantenservice</li>
+                  <li>Het leveren van onze producten en diensten</li>
+                  <li>Interne administratie en boekhouding</li>
+                  <li>Het verbeteren van de website en gebruikerservaring</li>
+                  <li>Naleving van wettelijke verplichtingen</li>
                 </ul>
                 
                 <hr className="border-neutral-200 my-8" />
                 
                 <h2 className="font-display text-2xl text-primary font-semibold mb-4">
-                  4. Cookies en trackingtechnologieën
+                  4. Cookies en tracking
                 </h2>
                 <p className="font-body text-text-medium mb-4">
-                  Wij maken gebruik van Cookiebot by Usercentrics om uw toestemming voor cookies correct te beheren.
+                  Wij gebruiken Cookiebot by Usercentrics voor het beheer van uw cookietoestemming, in overeenstemming met de GDPR.
                 </p>
                 
                 <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
                   <h3 className="font-display text-lg text-primary font-semibold mb-3">
-                    🔧 Noodzakelijke cookies (functioneel):
+                    🍪 Cookiecategorieën:
                   </h3>
-                  <p className="font-body text-text-medium mb-4">
-                    Deze zijn nodig voor de werking van de website.
+                  <p className="font-body text-text-medium mb-2">
+                    <strong>• Noodzakelijk:</strong> voor basisfunctionaliteit van de website
                   </p>
-                  
-                  <h3 className="font-display text-lg text-primary font-semibold mb-3">
-                    ⚙️ Voorkeuren:
-                  </h3>
-                  <p className="font-body text-text-medium mb-4">
-                    Bijvoorbeeld uw taalkeuze of of u een popup al gezien heeft.
+                  <p className="font-body text-text-medium mb-2">
+                    <strong>• Voorkeuren:</strong> zoals taalkeuze of pop-ups
                   </p>
-                  
-                  <h3 className="font-display text-lg text-primary font-semibold mb-3">
-                    📊 Statistieken (optioneel):
-                  </h3>
-                  <p className="font-body text-text-medium mb-4">
-                    Om anonieme gebruikersstatistieken te analyseren via bijvoorbeeld Google Analytics.
+                  <p className="font-body text-text-medium mb-2">
+                    <strong>• Statistieken (optioneel):</strong> geanonimiseerde bezoekanalyse via o.a. Google Analytics
                   </p>
-                  
-                  <h3 className="font-display text-lg text-primary font-semibold mb-3">
-                    🎯 Marketing (optioneel):
-                  </h3>
                   <p className="font-body text-text-medium">
-                    Wordt alleen gebruikt als u toestemming heeft gegeven.
+                    <strong>• Marketing (optioneel):</strong> enkel indien expliciet goedgekeurd
                   </p>
                 </div>
                 
                 <p className="font-body text-text-medium mb-4">
-                  ➡️ U kunt uw cookie-instellingen op elk moment wijzigen via de cookie-instellingenpagina.
+                  ➡️ U kunt uw toestemming op elk moment wijzigen via de cookie-instellingen.
                 </p>
                 
                 <p className="font-body text-text-medium mb-4">
-                  Voor meer informatie over gebruikte cookies verwijzen wij naar onze Cookieverklaring.
+                  Voor gedetailleerde informatie, raadpleeg onze Cookieverklaring.
                 </p>
                 
                 <hr className="border-neutral-200 my-8" />
                 
                 <h2 className="font-display text-2xl text-primary font-semibold mb-4">
-                  5. Wie heeft toegang tot uw gegevens?
+                  5. Met wie delen wij uw gegevens?
                 </h2>
                 <p className="font-body text-text-medium mb-4">
-                  Uw gegevens worden nooit verkocht. Ze worden enkel gedeeld met de volgende partijen indien noodzakelijk:
+                  Uw gegevens worden nooit verkocht. Ze worden uitsluitend gedeeld met onderstaande verwerkers indien noodzakelijk:
                 </p>
                 <ul className="list-disc pl-6 font-body text-text-medium mb-4">
                   <li>Onze websitehostingpartner(s)</li>
+                  <li>Replit (back- en frontendontwikkeling)</li>
                   <li>Cloudflare (beveiliging en CDN)</li>
-                  <li>Replit (ontwikkeling backend + frontend site)</li>
-                  <li>Mailverzending via SendGrid of SMTP-server</li>
-                  <li>Eventuele boekhoudkundige software (bij betalingen)</li>
-                  <li>Bezorgdiensten indien levering van toepassing is</li>
+                  <li>SendGrid / SMTP-server (mailverzending)</li>
+                  <li>Boekhoudsoftware (voor facturatie)</li>
+                  <li>Bezorgdiensten indien van toepassing</li>
                 </ul>
                 <p className="font-body text-text-medium mb-6">
-                  Met elke derde partij is een verwerkersovereenkomst afgesloten conform de AVG.
+                  📃 Met elk van deze partijen is een verwerkersovereenkomst afgesloten conform de AVG.
                 </p>
                 
                 <hr className="border-neutral-200 my-8" />
@@ -200,21 +188,21 @@ const PrivacyPolicyPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h3 className="font-display text-base text-primary font-semibold mb-2">
-                        Type gegevens
+                        Gegevenstype
                       </h3>
                       <p className="font-body text-text-medium mb-2">Contactaanvragen</p>
                       <p className="font-body text-text-medium mb-2">Bestel- en klantgegevens</p>
                       <p className="font-body text-text-medium mb-2">Cookiegegevens</p>
-                      <p className="font-body text-text-medium">Nieuwsbriefabonnement</p>
+                      <p className="font-body text-text-medium">Nieuwsbriefinschrijvingen</p>
                     </div>
                     <div>
                       <h3 className="font-display text-base text-primary font-semibold mb-2">
                         Bewaartermijn
                       </h3>
                       <p className="font-body text-text-medium mb-2">Max. 12 maanden</p>
-                      <p className="font-body text-text-medium mb-2">Tot 7 jaar (wettelijke bewaartermijn)</p>
-                      <p className="font-body text-text-medium mb-2">Volgens opgegeven vervaldatum in cookies</p>
-                      <p className="font-body text-text-medium">Tot afmelding</p>
+                      <p className="font-body text-text-medium mb-2">Tot 7 jaar (wettelijke verplichting)</p>
+                      <p className="font-body text-text-medium mb-2">Volgens cookie-vervaldatum</p>
+                      <p className="font-body text-text-medium">Tot uitschrijving</p>
                     </div>
                   </div>
                 </div>
@@ -222,22 +210,22 @@ const PrivacyPolicyPage = () => {
                 <hr className="border-neutral-200 my-8" />
                 
                 <h2 className="font-display text-2xl text-primary font-semibold mb-4">
-                  7. Uw rechten als betrokkene
+                  7. Uw rechten
                 </h2>
                 <p className="font-body text-text-medium mb-4">
-                  U heeft als gebruiker de volgende rechten:
+                  U heeft als betrokkene de volgende rechten:
                 </p>
                 <ul className="list-disc pl-6 font-body text-text-medium mb-4">
-                  <li>Recht op inzage in uw persoonsgegevens</li>
-                  <li>Recht op rectificatie (aanpassing)</li>
-                  <li>Recht op verwijdering (recht om vergeten te worden)</li>
-                  <li>Recht op beperking van de verwerking</li>
-                  <li>Recht op bezwaar tegen verwerking</li>
-                  <li>Recht op gegevensoverdraagbaarheid</li>
+                  <li>Recht op inzage</li>
+                  <li>Recht op correctie</li>
+                  <li>Recht op verwijdering</li>
+                  <li>Recht op beperking van verwerking</li>
+                  <li>Recht op bezwaar</li>
+                  <li>Recht op dataportabiliteit</li>
                 </ul>
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-6">
                   <p className="font-body text-text-medium">
-                    Wilt u gebruik maken van uw rechten? Stuur dan een e-mail naar <a href="mailto:info@kaniou.be" className="text-accent hover:underline">info@kaniou.be</a> met als onderwerp "Privacyverzoek".
+                    📧 Uitoefenen? Stuur een e-mail naar <a href="mailto:info@kaniou.be" className="text-accent hover:underline">info@kaniou.be</a> met onderwerp "Privacyverzoek".
                   </p>
                 </div>
                 
@@ -247,15 +235,24 @@ const PrivacyPolicyPage = () => {
                   8. Beveiliging van uw gegevens
                 </h2>
                 <p className="font-body text-text-medium mb-4">
-                  Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beschermen:
+                  Wij nemen passende technische en organisatorische maatregelen:
                 </p>
-                <ul className="list-disc pl-6 font-body text-text-medium mb-6">
-                  <li>SSL-encryptie via HTTPS</li>
-                  <li>Firewallbescherming via Cloudflare</li>
-                  <li>Regelmatige updates en beveiligingspatches</li>
-                  <li>Interne toegangsbeperking tot klantgegevens</li>
-                  <li>Versleutelde opslag van persoonsgegevens indien nodig</li>
+                <ul className="list-disc pl-6 font-body text-text-medium mb-4">
+                  <li>SSL-encryptie (HTTPS)</li>
+                  <li>Firewall via Cloudflare</li>
+                  <li>Regelmatige updates en patches</li>
+                  <li>Interne toegangsbeperkingen</li>
+                  <li>Gegevensversleuteling indien nodig</li>
                 </ul>
+                
+                <div className="p-6 bg-green-50 border border-green-200 rounded-lg mb-6">
+                  <h3 className="font-display text-lg text-primary font-semibold mb-3">
+                    🛡️ Bestelvolgsysteem
+                  </h3>
+                  <p className="font-body text-text-medium">
+                    Wij gebruiken een veilig en cryptografisch gegenereerd bestelnummer. Gegevens worden afgeschermd, brute-force aanvallen worden geblokkeerd en sessies zijn beveiligd tegen onderschepping.
+                  </p>
+                </div>
                 
                 <hr className="border-neutral-200 my-8" />
                 
@@ -263,7 +260,7 @@ const PrivacyPolicyPage = () => {
                   9. Minderjarigen
                 </h2>
                 <p className="font-body text-text-medium mb-6">
-                  Onze website en diensten zijn niet gericht op kinderen onder de 16 jaar. Wij verzamelen bewust geen gegevens van minderjarigen. Indien we er per ongeluk toch gegevens van een minderjarige ontvangen, zullen wij deze verwijderen zodra we dit vaststellen.
+                  Onze diensten zijn niet gericht op personen jonger dan 16 jaar. Indien wij onbewust gegevens van een minderjarige verwerken, verwijderen wij deze onmiddellijk.
                 </p>
                 
                 <hr className="border-neutral-200 my-8" />
@@ -271,23 +268,19 @@ const PrivacyPolicyPage = () => {
                 <h2 className="font-display text-2xl text-primary font-semibold mb-4">
                   10. Klachten of vragen?
                 </h2>
-                <p className="font-body text-text-medium mb-4">
-                  Heeft u vragen over dit privacybeleid of wilt u een klacht indienen? Neem contact met ons op via:
-                </p>
-                
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-4">
                   <p className="font-body text-text-medium mb-2">
                     📧 <a href="mailto:info@kaniou.be" className="text-accent hover:underline">info@kaniou.be</a>
                   </p>
                   <p className="font-body text-text-medium">
-                    📍 Eventueel adres hier invullen
+                    📍 (adres optioneel invullen)
                   </p>
                 </div>
                 
                 <p className="font-body text-text-medium mb-6">
-                  U heeft ook het recht een klacht in te dienen bij de Belgische Gegevensbeschermingsautoriteit (GBA):
+                  U heeft tevens het recht een klacht in te dienen bij de Gegevensbeschermingsautoriteit (GBA):
                   <br />
-                  <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://www.gegevensbeschermingsautoriteit.be</a>
+                  🔗 <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://www.gegevensbeschermingsautoriteit.be</a>
                 </p>
                 
                 <hr className="border-neutral-200 my-8" />
@@ -296,17 +289,17 @@ const PrivacyPolicyPage = () => {
                   11. Wijzigingen
                 </h2>
                 <p className="font-body text-text-medium mb-6">
-                  Wij behouden ons het recht voor dit privacybeleid te wijzigen. Raadpleeg deze pagina regelmatig voor updates. Bij substantiële wijzigingen zullen wij u hierover informeren via e-mail of pop-up.
+                  Wij behouden ons het recht voor om dit beleid aan te passen. Controleer deze pagina regelmatig. Bij belangrijke wijzigingen informeren wij u via pop-up of e-mail.
                 </p>
                 
                 <hr className="border-neutral-200 my-8" />
                 
                 <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg text-center">
                   <p className="font-body text-text-medium mb-2">
-                    🛡️ <strong>Wij nemen privacy serieus. Uw gegevens zijn bij ons in veilige handen.</strong>
+                    🔒 <strong>Uw privacy is onze prioriteit.</strong>
                   </p>
                   <p className="font-body text-text-medium">
-                    Bij KANIOU Zilvernaald staat transparantie, vertrouwen en veiligheid centraal.
+                    Bij KANIOU Zilvernaald staan transparantie, vertrouwen en veiligheid centraal.
                   </p>
                 </div>
               </>

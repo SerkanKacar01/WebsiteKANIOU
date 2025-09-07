@@ -1,26 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import {
-  Shield,
-  Truck,
-  Users,
-  Award,
-  Clock,
-  ArrowRight,
-  Eye,
-  Quote,
-  Star,
-  Menu,
-  X,
-  Plus,
-  Minus,
-  ShoppingCart,
-  Sparkles,
-  AlignJustify,
-  Layers,
-  EyeOff,
-} from "lucide-react";
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
@@ -137,9 +117,7 @@ const PremiumNavigation = () => {
               
               {/* Content */}
               <div className="relative flex items-center gap-2 z-10">
-                <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
                 <span>BESTEL ONLINE</span>
-                <Sparkles className="w-4 h-4 group-hover:animate-spin" />
               </div>
               
               {/* Shimmer effect */}
@@ -157,9 +135,9 @@ const PremiumNavigation = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6" />
+              <span className="text-2xl">×</span>
             ) : (
-              <Menu className="w-6 h-6" />
+              <span className="text-2xl">☰</span>
             )}
           </button>
         </div>
@@ -215,9 +193,7 @@ const PremiumNavigation = () => {
                 }`}
               >
                 <div className="flex items-center justify-center gap-2 relative z-10">
-                  <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
                   <span>BESTEL ONLINE</span>
-                  <Sparkles className="w-4 h-4 group-hover:animate-spin" />
                 </div>
                 <div className="absolute inset-0 -left-full group-hover:left-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 transform skew-x-12"></div>
               </button>
@@ -320,7 +296,7 @@ const Home = () => {
                     VANDAAG NOG OFFERTE
                   </span>
                   <div className="ultra-luxury-cta-icon">
-                    <ArrowRight className="w-6 h-6" />
+                    →
                   </div>
                 </div>
               </button>
@@ -405,7 +381,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <Menu className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">☰</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Houten jaloezieën</h3>
@@ -545,7 +521,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <AlignJustify className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">☰</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Rolgordijnen</h3>
@@ -591,7 +567,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <Layers className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">☄</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Overgordijnen</h3>
@@ -611,7 +587,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <Minus className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">−</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Gordijnrails</h3>
@@ -703,7 +679,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <Minus className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">−</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Gordijnroedes</h3>
@@ -723,7 +699,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <EyeOff className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">×</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Squid</h3>
@@ -743,7 +719,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <Shield className="w-8 h-8 text-white" />
+                      <span className="text-white text-2xl">⛄</span>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Horren</h3>
@@ -764,7 +740,7 @@ const Home = () => {
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
                       <div className="relative">
-                        <Shield className="w-8 h-8 text-white" />
+                        <span className="text-white text-2xl">⛄</span>
                         <div className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs px-2 py-1 rounded-full font-bold">
                           BUITEN ZONWERING
                         </div>
@@ -817,7 +793,7 @@ const Home = () => {
                   <div className="ultra-luxury-icon-container mb-8">
                     <div className="ultra-luxury-icon-bg"></div>
                     <div className="ultra-luxury-icon-glow"></div>
-                    <Shield className="ultra-luxury-icon" />
+                    <span className="ultra-luxury-icon text-2xl">⛄</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Vakkundig Op Maat
@@ -837,7 +813,7 @@ const Home = () => {
                   <div className="ultra-luxury-icon-container mb-8">
                     <div className="ultra-luxury-icon-bg"></div>
                     <div className="ultra-luxury-icon-glow"></div>
-                    <Truck className="ultra-luxury-icon" />
+                    <span className="ultra-luxury-icon text-2xl">🚚</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Uitmuntende Levering
@@ -858,7 +834,7 @@ const Home = () => {
                   <div className="ultra-luxury-icon-container mb-8">
                     <div className="ultra-luxury-icon-bg"></div>
                     <div className="ultra-luxury-icon-glow"></div>
-                    <Users className="ultra-luxury-icon" />
+                    <span className="ultra-luxury-icon text-2xl">👥</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Meesterlijk Advies
@@ -878,7 +854,7 @@ const Home = () => {
                   <div className="ultra-luxury-icon-container mb-8">
                     <div className="ultra-luxury-icon-bg"></div>
                     <div className="ultra-luxury-icon-glow"></div>
-                    <Award className="ultra-luxury-icon" />
+                    <span className="ultra-luxury-icon text-2xl">🏆</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Luxueuze Materialen
@@ -898,7 +874,7 @@ const Home = () => {
                   <div className="ultra-luxury-icon-container mb-8">
                     <div className="ultra-luxury-icon-bg"></div>
                     <div className="ultra-luxury-icon-glow"></div>
-                    <Clock className="ultra-luxury-icon" />
+                    <span className="ultra-luxury-icon text-2xl">⏰</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Traditie in Perfectie
@@ -1048,15 +1024,15 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
               {/* Testimonial 1 - Ultra Luxury */}
               <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
                 {/* Luxury Star Rating */}
                 <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star
+                    <span
                       key={i}
-                      className="w-6 h-6 text-gold-500 fill-current"
-                    />
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
+                    >★</span>
                   ))}
                 </div>
 
@@ -1080,15 +1056,15 @@ const Home = () => {
 
               {/* Testimonial 2 - Ultra Luxury */}
               <div className="card-ultra-luxury animate-fade-in-up stagger-2 hover-elegant">
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
                 {/* Luxury Star Rating */}
                 <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star
+                    <span
                       key={i}
-                      className="w-6 h-6 text-gold-500 fill-current"
-                    />
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
+                    >★</span>
                   ))}
                 </div>
 
@@ -1111,15 +1087,15 @@ const Home = () => {
 
               {/* Testimonial 3 - Ultra Luxury */}
               <div className="card-ultra-luxury animate-fade-in-up stagger-3 hover-elegant">
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40" />
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
                 {/* Luxury Star Rating */}
                 <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star
+                    <span
                       key={i}
-                      className="w-6 h-6 text-gold-500 fill-current"
-                    />
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
+                    >★</span>
                   ))}
                 </div>
 

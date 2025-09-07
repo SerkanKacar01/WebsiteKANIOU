@@ -110,7 +110,7 @@ export default function GordijnroedesPage() {
                 Onze gordijnroedes zijn verkrijgbaar in verschillende materialen en stijlen:
               </p>
               
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <h4 className="font-semibold text-[#2C3E50] text-lg">Metalen Roedes</h4>
                   <div className="space-y-2">
@@ -129,32 +129,6 @@ export default function GordijnroedesPage() {
                     <div className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
                       <span className="text-gray-700">Messing</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-[#2C3E50] text-lg">Houten Roedes</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Wit gelakt</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Eiken</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Notelaar</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Walnoot</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Naturel</span>
                     </div>
                   </div>
                 </div>

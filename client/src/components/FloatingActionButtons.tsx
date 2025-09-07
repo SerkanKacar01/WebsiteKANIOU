@@ -56,6 +56,15 @@ const FloatingActionButtons = () => {
                 <span className="text-lg">📑</span>
                 <span className="text-sm">Vrijblijvende Offerte</span>
               </button>
+
+              {/* Button 3: Bestelling Volgen */}
+              <button
+                onClick={() => setLocation("/bestelling-volgen")}
+                className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg border border-white/20 flex items-center gap-3"
+              >
+                <span className="text-lg">📦</span>
+                <span className="text-sm">Bestelling Volgen</span>
+              </button>
             </div>
           </div>
         </div>
@@ -89,6 +98,13 @@ const FloatingActionButtons = () => {
                 >
                   <span>📑</span>
                   <span>Vrijblijvende Offerte</span>
+                </button>
+                <button
+                  onClick={() => setLocation("/bestelling-volgen")}
+                  className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm"
+                >
+                  <span>📦</span>
+                  <span>Bestelling Volgen</span>
                 </button>
               </div>
             </div>

@@ -144,9 +144,30 @@ const PrivacyPolicyPage = () => {
                 <h3 className="font-display text-lg text-primary font-semibold mt-8 mb-3">
                   8. Cookies
                 </h3>
-                <p className="font-body text-text-medium mb-6">
-                  Onze website gebruikt cookies om jouw ervaring te verbeteren. Bij je eerste bezoek vragen wij je toestemming. Lees meer in ons cookiebeleid.
+                <p className="font-body text-text-medium mb-4">
+                  Onze website gebruikt cookies om jouw ervaring te verbeteren. Bij je eerste bezoek vragen wij je toestemming.
                 </p>
+                
+                <h4 className="font-display text-base text-primary font-semibold mt-6 mb-3">
+                  Cookiedeclaratie
+                </h4>
+                <p className="font-body text-text-medium mb-4">
+                  Hieronder vind je een volledig overzicht van alle cookies die op onze website worden gebruikt:
+                </p>
+                
+                {/* Cookiebot Cookie Declaration Script */}
+                <div className="my-6" dangerouslySetInnerHTML={{
+                  __html: '<script id="CookieDeclaration" src="https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/cd.js" type="text/javascript" async></script>'
+                }} />
+                
+                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="font-body text-text-medium mb-2">
+                    <strong>Cookievoorkeuren aanpassen:</strong>
+                  </p>
+                  <p className="font-body text-text-medium">
+                    Je kunt je cookievoorkeuren op elk moment aanpassen door op het Cookiebot-icoon te klikken dat linksonder of rechtsonder op de pagina verschijnt.
+                  </p>
+                </div>
                 
                 <hr className="border-neutral-200 my-6" />
                 
@@ -272,9 +293,30 @@ const PrivacyPolicyPage = () => {
                 <h3 className="font-display text-lg text-primary font-semibold mt-8 mb-3">
                   8. Cookies
                 </h3>
-                <p className="font-body text-text-medium mb-6">
-                  Our website uses cookies to improve your experience. We ask for your permission during your first visit. Read more in our cookie policy.
+                <p className="font-body text-text-medium mb-4">
+                  Our website uses cookies to improve your experience. We ask for your permission during your first visit.
                 </p>
+                
+                <h4 className="font-display text-base text-primary font-semibold mt-6 mb-3">
+                  Cookie Declaration
+                </h4>
+                <p className="font-body text-text-medium mb-4">
+                  Below you will find a complete overview of all cookies used on our website:
+                </p>
+                
+                {/* Cookiebot Cookie Declaration Script */}
+                <div className="my-6" dangerouslySetInnerHTML={{
+                  __html: '<script id="CookieDeclaration" src="https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/cd.js" type="text/javascript" async></script>'
+                }} />
+                
+                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="font-body text-text-medium mb-2">
+                    <strong>Adjust Cookie Preferences:</strong>
+                  </p>
+                  <p className="font-body text-text-medium">
+                    You can adjust your cookie preferences at any time by clicking on the Cookiebot icon that appears in the bottom-left or bottom-right corner of the page.
+                  </p>
+                </div>
                 
                 <hr className="border-neutral-200 my-6" />
                 

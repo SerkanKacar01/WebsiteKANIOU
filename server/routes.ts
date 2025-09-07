@@ -71,6 +71,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isValidCredentials(email, password)) {
         const { sessionId, expiresAt } = createSession(email);
 
+        console.log('🔑 Creating session:', {
+          sessionId: sessionId.substring(0, 8) + '...',
+          email: email,
+          expiresAt: expiresAt
+        });
+
         // Only set cookies for admin authentication (essential cookies)
         (req.session as any).sessionId = sessionId;
         res.cookie("sessionId", sessionId, {
@@ -78,8 +84,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           secure: false,
           maxAge: 2 * 60 * 60 * 1000,
           sameSite: 'lax',
+          path: '/',
           // This is an essential cookie for admin functionality
         });
+
+        console.log('✅ Session created and cookie set successfully');
 
         res.json({
           success: true,
@@ -426,22 +435,33 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
   // Admin authentication status route
   app.get("/api/admin/auth-status", async (req: any, res) => {
     try {
-      const sessionId = req.session?.sessionId || req.cookies?.sessionId;
+      // Check multiple sources for session ID
+      const sessionId = req.cookies?.sessionId || req.session?.sessionId || req.headers?.authorization;
+      
+      console.log('🔍 Auth status check:', {
+        cookieSessionId: req.cookies?.sessionId ? 'present' : 'missing',
+        requestSessionId: req.session?.sessionId ? 'present' : 'missing',
+        sessionId: sessionId ? sessionId.substring(0, 8) + '...' : 'none'
+      });
 
       if (!sessionId) {
+        console.log('❌ No session ID found');
         return res.json({ authenticated: false });
       }
 
       const session = validateSession(sessionId);
       if (!session) {
+        console.log('❌ Session validation failed');
         return res.json({ authenticated: false });
       }
 
+      console.log('✅ Session validated for:', session.email);
       res.json({
         authenticated: true,
         email: session.email,
       });
     } catch (error) {
+      console.error('Auth status error:', error);
       res.json({ authenticated: false });
     }
   });

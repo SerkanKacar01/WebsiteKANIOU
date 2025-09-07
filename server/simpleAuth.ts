@@ -8,18 +8,39 @@ export function createSession(email: string): { sessionId: string; expiresAt: Da
   const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
   
   sessionStore.set(sessionId, { email, expiresAt });
+  console.log('💾 Session stored in memory:', {
+    sessionId: sessionId.substring(0, 8) + '...',
+    email,
+    storeSize: sessionStore.size
+  });
   return { sessionId, expiresAt };
 }
 
 export function validateSession(sessionId: string): { email: string } | null {
-  if (!sessionId) return null;
-  
-  const session = sessionStore.get(sessionId);
-  if (!session || session.expiresAt < new Date()) {
-    if (session) sessionStore.delete(sessionId);
+  if (!sessionId) {
+    console.log('🔍 Session validation: no sessionId provided');
     return null;
   }
   
+  console.log('🔍 Validating session:', {
+    sessionId: sessionId.substring(0, 8) + '...',
+    storeSize: sessionStore.size,
+    hasSession: sessionStore.has(sessionId)
+  });
+  
+  const session = sessionStore.get(sessionId);
+  if (!session) {
+    console.log('❌ Session not found in store');
+    return null;
+  }
+  
+  if (session.expiresAt < new Date()) {
+    console.log('❌ Session expired, deleting');
+    sessionStore.delete(sessionId);
+    return null;
+  }
+  
+  console.log('✅ Session valid for:', session.email);
   return { email: session.email };
 }
 

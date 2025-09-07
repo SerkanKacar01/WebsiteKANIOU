@@ -67,7 +67,7 @@ const ProductDetailTemplate = ({
               </BreadcrumbSeparator>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="/products">Products</Link>
+                  <Link href="/products">Producten</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {categoryName && categoryPath && (
@@ -116,7 +116,7 @@ const ProductDetailTemplate = ({
             <div className="bg-neutral-100 p-4 rounded-lg mb-6">
               <p className="font-body text-2xl">
                 <span className="font-bold text-accent">
-                  Starting at €{startingPrice.toFixed(2)}
+                  Begint vanaf €{startingPrice.toFixed(2)}
                 </span>
                 <span className="text-text-medium ml-2 text-base">
                   {priceUnit} (incl. Gemaakt volgens exacte specificaties)
@@ -162,16 +162,6 @@ const ProductDetailTemplate = ({
                 </Button>
               </Link>
             </div>
-          </div>
-        </div>
-        
-        {/* Duplicate Price Display at Bottom */}
-        <div className="mt-12 flex justify-center">
-          <div className="bg-neutral-100 p-4 rounded-lg">
-            <p className="font-body text-2xl">
-              <span className="font-bold text-accent">Starting at €{startingPrice.toFixed(2)}</span>
-              <span className="text-text-medium ml-2 text-base">{priceUnit} (incl. Gemaakt volgens exacte specificaties)</span>
-            </p>
           </div>
         </div>
 

@@ -7,7 +7,7 @@ const SquidTextielFoliePage = () => {
       productName="SQUID® raamtextiel"
       productDescription="Minimalistische privacy met een luxueuze look - SQUID® is een revolutionaire zelfklevende textielfolie voor ramen die privacy combineert met stijl. Het materiaal is semi-transparant, kleeft rechtstreeks op het raam, en biedt overdag voldoende privacy zonder het zicht volledig te blokkeren. SQUID® is een premium product en enkel geschikt voor gladde ramen zonder structuurglas. We adviseren steeds een professionele plaatsing of gedetailleerde instructie bij zelfplaatsing."
       imageUrl={squidImage}
-      startingPrice={73.00}
+      startingPrice={69.90}
       priceUnit="per lopende meter"
       features={[
         "Elegante textieluitstraling, in verschillende neutrale kleuren",

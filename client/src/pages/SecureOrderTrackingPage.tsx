@@ -46,8 +46,8 @@ const SecureOrderTrackingPage = () => {
 
   const { data: trackingResult, isLoading, refetch } = useQuery<OrderTrackingResult>({
     queryKey: ['/api/orders/track', bonnummer],
-    queryFn: async () => {
-      if (!bonnummer.trim()) return null;
+    queryFn: async (): Promise<OrderTrackingResult> => {
+      if (!bonnummer.trim()) return { success: false, error: 'Geen bonnummer' };
       
       const response = await fetch(`/api/orders/track/${bonnummer}`);
       if (!response.ok) {

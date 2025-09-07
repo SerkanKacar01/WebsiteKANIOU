@@ -244,7 +244,7 @@ const GordijnrailsConfiguratorPage = () => {
     const pricingLength = effectiveLength;
 
     // Don't calculate price if essential selections are missing
-    if (!configuration.profileType || !configuration.color || configuration.length === 0 || configuration.quantity === 0) {
+    if (!configuration.profileType || !configuration.color || !configuration.length || !configuration.quantity) {
       return {
         base: 0,
         extras: 0,
@@ -1096,9 +1096,10 @@ const GordijnrailsConfiguratorPage = () => {
             <div className="max-w-xs mx-auto">
               <Select
                 value={configuration.quantity > 0 ? configuration.quantity.toString() : ""}
-                onValueChange={(value) =>
-                  updateConfiguration("quantity", parseInt(value))
-                }
+                onValueChange={(value) => {
+                  const numValue = parseInt(value);
+                  updateConfiguration("quantity", numValue);
+                }}
               >
                 <SelectTrigger className="h-12 text-lg">
                   <SelectValue placeholder="-- Kies aantal rails --" />

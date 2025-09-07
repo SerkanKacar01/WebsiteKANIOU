@@ -404,11 +404,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <img
-                        src="/images/jaloezieen-icon.png"
-                        alt="Houten jaloezieën"
-                        className="w-8 h-8 object-contain"
-                      />
+                      <Menu className="w-8 h-8 text-white" />
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Houten jaloezieën</h3>

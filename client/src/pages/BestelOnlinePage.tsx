@@ -29,6 +29,10 @@ import {
   Sparkles,
   Crown,
   Baby,
+  AlignJustify,
+  Layers,
+  Minus,
+  Menu,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -63,14 +67,14 @@ const BestelOnlinePage = () => {
       id: "rolgordijnen",
       name: "Rolgordijnen",
       href: "/rolgordijnen-configurator",
-      icon: Package,
+      icon: AlignJustify,
       available: false,
     },
     {
       id: "overgordijnen",
       name: "Overgordijnen",
       href: "/producten/overgordijnen",
-      icon: Settings,
+      icon: Layers,
       available: false,
     },
     {
@@ -84,14 +88,14 @@ const BestelOnlinePage = () => {
       id: "gordijnrails",
       name: "Gordijnrails",
       href: "/gordijnrails-configurator",
-      icon: Ruler,
+      icon: Minus,
       available: false,
     },
     {
       id: "jaloezieen",
       name: "Jaloezieën",
       href: "/producten/houten-jaloezieen",
-      icon: Settings,
+      icon: Menu,
       available: false,
     },
     {

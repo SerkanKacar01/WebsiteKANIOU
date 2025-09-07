@@ -39,6 +39,7 @@ import { RewardsSystem } from "@/components/RewardsSystem";
 import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
+import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import BusinessPage from "@/pages/BusinessPage";
@@ -178,6 +179,7 @@ function Router() {
         <Route path="/recommendations" component={SmartRecommendationEngine} />
 
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+        <Route path="/cookiebeleid" component={CookiePolicyPage} />
         <Route path="/terms-of-service" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/payment/success" component={PaymentSuccessPage} />

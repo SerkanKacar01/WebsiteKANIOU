@@ -11,6 +11,7 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import Footer from "@/components/layout/Footer";
+import FloatingActionButtons from "@/components/FloatingActionButtons";
 
 
 import Home from "@/pages/Home";
@@ -53,6 +54,7 @@ import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import CartPage from "@/pages/CartPage";
 import BestelOnlinePage from "@/pages/BestelOnlinePage";
+import AfspraakPage from "@/pages/AfspraakPage";
 
 // Simple Product Pages
 import PlissesPage from "@/pages/products/plisses";
@@ -180,6 +182,7 @@ function Router() {
         <Route path="/business" component={BusinessPage} />
         <Route path="/quote" component={QuotePage} />
         <Route path="/offerte" component={OffertePage} />
+        <Route path="/afspraak" component={AfspraakPage} />
         <Route path="/bestel-online" component={BestelOnlinePage} />
         <Route path="/acties" component={ActiesPage} />
         <Route path="/smart-quote" component={SmartQuote} />
@@ -238,6 +241,7 @@ function Router() {
 
         <Route component={NotFound} />
       </Switch>
+      <FloatingActionButtons />
       <Footer />
     </>
   );

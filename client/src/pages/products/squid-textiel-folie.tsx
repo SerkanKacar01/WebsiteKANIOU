@@ -9,8 +9,6 @@ const SquidTextielFoliePage = () => {
       imageUrl={squidImage}
       startingPrice={69.90}
       priceUnit="per lopende meter"
-      secondPrice={69.90}
-      secondPriceUnit="per lopende meter"
       features={[
         "Elegante textieluitstraling, in verschillende neutrale kleuren",
         "Eenvoudige montage – zonder boren of schroeven", 
@@ -19,7 +17,8 @@ const SquidTextielFoliePage = () => {
         "Kan op maat gesneden worden voor elk raamtype",
         "Perfect voor badkamers, leefruimtes, kantoren en etalages",
         "Compatibel met draai-kiepramen, dakramen, ramen met onregelmatige vormen",
-        "Zowel voor tijdelijke als permanente toepassingen"
+        "Zowel voor tijdelijke als permanente toepassingen",
+        "Beschikbaar in kleuren: "
       ]}
       categoryName="SQUID® Textielfolie"
       categoryPath="squid-textiel-folie"

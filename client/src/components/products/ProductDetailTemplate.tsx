@@ -149,7 +149,7 @@ const ProductDetailTemplate = ({
             {/* Key Features List */}
             <div className="mb-8">
               <h3 className="font-display text-xl font-medium mb-4">
-                Key Features
+                Kenmerken van dit product
               </h3>
               <ul className="space-y-2">
                 {features.map((feature, index) => (

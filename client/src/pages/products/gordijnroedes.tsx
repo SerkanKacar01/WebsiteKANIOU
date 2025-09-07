@@ -164,16 +164,18 @@ export default function GordijnroedesPage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Vierkant vorm</span>
+                      <span className="text-gray-700">Verfijnt eindkappen</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 bg-[#D5B992] rounded-full"></div>
-                      <span className="text-gray-700">Omega vorm</span>
-                      <span className="text-gray-700">Omega vorm</span>
+                      <span className="text-gray-700">Klassiek tot Modern</span>
+                      
                     </div>
+                    
                   </div>
                 </div>
               </div>
+              
               
               <p className="text-gray-600 mt-6 italic">
                 Elke roede wordt met precisie afgewerkt voor een duurzaam en esthetisch resultaat.

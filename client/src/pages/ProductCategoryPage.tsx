@@ -37,6 +37,8 @@ const productCategories = [
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },
   { label: "SQUID textile folie", urlPath: "squid-textile-foil" },
+  { label: "Horren", urlPath: "horren" },
+  { label: "Screen", urlPath: "screen" },
 ];
 
 const ProductCategoryPage = () => {
@@ -81,6 +83,8 @@ const ProductCategoryPage = () => {
     gordijnrails: "Gordijnrails",
     gordijnroedes: "Gordijnroedes",
     "squid-textile-foil": "SQUID textile folie",
+    horren: "Horren",
+    screen: "Screen",
   };
 
   // Get the matching category name or default to the first one
@@ -267,6 +271,24 @@ const ProductCategoryPage = () => {
         benefits: ["Privacy zonder lichtbeperking", "Innovatieve technologie", "Eenvoudige applicatie", "Modern design", "Herbruikbaar", "Onderhoudsarm"],
         colors: ["Transparant", "Wit", "Grijs", "Frosted effect", "Custom patronen"],
         materials: ["SQUID textile composiet", "Zelfklevende backing", "UV-filter", "Anti-statisch materiaal"]
+      },
+      "horren": {
+        name: "Horren",
+        description: "Horren op maat voor comfort en bescherming in stijl",
+        detailedDescription: "Onze horren op maat combineren subtiele vormgeving met betrouwbare bescherming. Frisse lucht naar binnen, ongewenste insecten buiten. Perfect afgestemd op jouw ramen en deuren.",
+        applications: ["Draaikiepramen", "Vaste ramen", "Schuifpuien", "Balkondeuren", "Terrasdeuren", "Dakramen"],
+        benefits: ["Tot op de millimeter nauwkeurig", "Geruisloze bediening", "Duurzame materialen", "Subtiel design", "Eenvoudig onderhoud"],
+        colors: ["Wit", "Crème", "Antraciet", "Zwart"],
+        materials: ["UV-bestendig gaas", "Aluminium frames", "Kunststof profielen"]
+      },
+      "screen": {
+        name: "Screen - Buiten Zonwering", 
+        description: "Moderne buitenzonwering voor optimale bescherming",
+        detailedDescription: "Screen buiten zonwering biedt stijlvolle bescherming tegen zon en wind. Perfect voor moderne woningen en bedrijven die zoeken naar hoogwaardige buitenzonwering.",
+        applications: ["Moderne woningen", "Bedrijfspanden", "Terrasdeuren", "Grote raampartijen", "Kantoren"],
+        benefits: ["Optimale zonwering", "Windbescherming", "Energiebesparing", "UV-bescherming", "Moderne uitstraling"],
+        colors: ["Antraciet", "Wit", "Grijs", "Zwart", "Crème"],
+        materials: ["Screendoek", "Aluminium profielen", "Weerbestendige coating"]
       }
     };
 

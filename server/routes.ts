@@ -4,6 +4,8 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
+// Import security classes for ultra-secure tracking
+import { SecureBonnummerGenerator, TrackingSecurityMonitor } from "./storage";
 import {
   createSession,
   validateSession,

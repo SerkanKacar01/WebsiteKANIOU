@@ -1338,3 +1338,6 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
 }
 
 export const storage = new DatabaseStorage();
+
+// Export security classes for use in routes
+export { SecureBonnummerGenerator, OrderAccessValidator, TrackingSecurityMonitor };

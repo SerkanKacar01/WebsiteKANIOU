@@ -23,32 +23,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import {
-  Loader2,
-  LogOut,
-  Package,
-  Users,
-  Euro,
-  TrendingUp,
-  Edit,
-  Upload,
-  FileText,
-  Check,
-  X,
-  Eye,
-  EyeOff,
-  Save,
-  Lock as LockIcon,
-  Search,
-  Download,
-  Trash2,
-  RotateCcw,
-  Clock,
-  CheckCircle,
-  Truck,
-  Phone,
-  Home,
-} from "lucide-react";
 
 interface OrderStatus {
   status: string;
@@ -1070,7 +1044,7 @@ export default function EntrepreneurDashboardPage() {
   if (authLoading || dashboardLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-[#E6C988]" />
+        <div className="h-8 w-8 flex items-center justify-center text-[#E6C988] text-2xl animate-pulse">⏳</div>
       </div>
     );
   }
@@ -1079,7 +1053,7 @@ export default function EntrepreneurDashboardPage() {
     console.log("User not authenticated, showing loading while redirect timer runs...");
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-[#E6C988]" />
+        <div className="h-8 w-8 flex items-center justify-center text-[#E6C988] text-2xl animate-pulse">⏳</div>
       </div>
     );
   }
@@ -1092,7 +1066,7 @@ export default function EntrepreneurDashboardPage() {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 bg-[#E6C988] rounded-lg flex items-center justify-center">
-                <Package className="h-5 w-5 text-black" />
+                <span className="h-5 w-5 flex items-center justify-center text-black text-xl">📦</span>
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-black">
@@ -1110,9 +1084,9 @@ export default function EntrepreneurDashboardPage() {
               className="flex items-center gap-2 border-gray-300 hover:bg-gray-50"
             >
               {isLoggingOut ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="h-4 w-4 flex items-center justify-center animate-pulse">⏳</span>
               ) : (
-                <LogOut className="h-4 w-4" />
+                <span className="h-4 w-4 flex items-center justify-center">⤋</span>
               )}
               Uitloggen
             </Button>
@@ -1129,7 +1103,7 @@ export default function EntrepreneurDashboardPage() {
                 Totaal Orders
               </CardTitle>
               <div className="w-8 h-8 bg-[#E6C988] rounded-full flex items-center justify-center">
-                <Package className="h-4 w-4 text-black" />
+                <span className="h-4 w-4 flex items-center justify-center text-black text-lg">📦</span>
               </div>
             </CardHeader>
             <CardContent>
@@ -1146,7 +1120,7 @@ export default function EntrepreneurDashboardPage() {
                 In Behandeling
               </CardTitle>
               <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-orange-600" />
+                <span className="h-4 w-4 flex items-center justify-center text-orange-600 text-lg">📊</span>
               </div>
             </CardHeader>
             <CardContent>
@@ -1163,7 +1137,7 @@ export default function EntrepreneurDashboardPage() {
                 Totale Omzet
               </CardTitle>
               <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                <Euro className="h-4 w-4 text-green-600" />
+                <span className="h-4 w-4 flex items-center justify-center text-green-600 text-lg">€</span>
               </div>
             </CardHeader>
             <CardContent>
@@ -1180,7 +1154,7 @@ export default function EntrepreneurDashboardPage() {
                 Klanten
               </CardTitle>
               <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                <Users className="h-4 w-4 text-blue-600" />
+                <span className="h-4 w-4 flex items-center justify-center text-blue-600 text-lg">👥</span>
               </div>
             </CardHeader>
             <CardContent>
@@ -1203,7 +1177,7 @@ export default function EntrepreneurDashboardPage() {
             {/* Search Bar */}
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 flex items-center justify-center">🔍</span>
                 <input
                   type="text"
                   placeholder="Zoek op klantnaam, ordernummer of productnaam..."
@@ -1300,7 +1274,7 @@ export default function EntrepreneurDashboardPage() {
                   variant="outline"
                   className="w-full border-gray-300 hover:bg-gray-50 text-gray-700"
                 >
-                  <RotateCcw className="h-4 w-4 mr-2" />
+                  <span className="h-4 w-4 mr-2 flex items-center justify-center">↻</span>
                   Reset
                 </Button>
               </div>
@@ -1337,7 +1311,7 @@ export default function EntrepreneurDashboardPage() {
                   onClick={() => setIsNewOrderModalOpen(true)}
                   className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium px-4 py-2 rounded-lg flex items-center gap-2"
                 >
-                  <Package className="h-4 w-4" />+ Nieuwe Order
+                  <span className="h-4 w-4 flex items-center justify-center">📦</span>+ Nieuwe Order
                 </Button>
               </div>
             </div>
@@ -1455,9 +1429,9 @@ export default function EntrepreneurDashboardPage() {
                             title="Status opslaan"
                           >
                             {updatingOrderId === order.id ? (
-                              <Loader2 className="h-3 w-3 animate-spin" />
+                              <span className="h-3 w-3 flex items-center justify-center animate-pulse">⏳</span>
                             ) : (
-                              <Save className="h-3 w-3" />
+                              <span className="h-3 w-3 flex items-center justify-center">💾</span>
                             )}
                           </Button>
                         </div>
@@ -1469,7 +1443,7 @@ export default function EntrepreneurDashboardPage() {
                           onClick={() => handleViewDocuments(order.id)}
                           className="flex items-center gap-2 text-[#E6C988] border-[#E6C988] hover:bg-[#E6C988] hover:text-black"
                         >
-                          <FileText className="h-3 w-3" />
+                          <span className="h-3 w-3 flex items-center justify-center">📄</span>
                           {/* For now showing legacy PDF count - will be replaced with actual document count */}
                           {(order.pdfFileName ? 1 : 0) +
                             (order.invoiceUrl ? 1 : 0)}{" "}
@@ -1508,7 +1482,7 @@ export default function EntrepreneurDashboardPage() {
                             onClick={() => openEditModal(order)}
                             className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium"
                           >
-                            <Edit className="h-3 w-3 mr-1" />
+                            <span className="h-3 w-3 mr-1 flex items-center justify-center">✏️</span>
                             Bewerk
                           </Button>
                           <Button
@@ -1552,7 +1526,7 @@ export default function EntrepreneurDashboardPage() {
                 size="sm"
                 className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium px-3 py-2 rounded-lg flex items-center gap-1"
               >
-                <Package className="h-3 w-3" />+ Nieuw
+                <span className="h-3 w-3 flex items-center justify-center">📦</span>+ Nieuw
               </Button>
             </div>
           </div>
@@ -1971,7 +1945,7 @@ export default function EntrepreneurDashboardPage() {
                   <div className="space-y-3">
                     <div className="p-3 bg-green-50 border border-green-200 rounded-lg flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-600" />
+                        <span className="h-4 w-4 text-green-600 flex items-center justify-center">✅</span>
                         <span className="text-sm text-green-800 font-medium">
                           {selectedOrder.pdfFileName}
                         </span>
@@ -2023,9 +1997,9 @@ export default function EntrepreneurDashboardPage() {
                       className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium w-full"
                     >
                       {uploadPdfMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        <span className="h-4 w-4 animate-spin mr-2 flex items-center justify-center">⏳</span>
                       ) : (
-                        <Upload className="h-4 w-4 mr-2" />
+                        <span className="h-4 w-4 mr-2 flex items-center justify-center">⬆️</span>
                       )}
                       PDF Uploaden
                     </Button>
@@ -2073,9 +2047,9 @@ export default function EntrepreneurDashboardPage() {
                         className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium w-full"
                       >
                         {uploadPdfMutation.isPending ? (
-                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          <span className="h-4 w-4 animate-spin mr-2 flex items-center justify-center">⏳</span>
                         ) : (
-                          <Upload className="h-4 w-4 mr-2" />
+                          <span className="h-4 w-4 mr-2 flex items-center justify-center">⬆️</span>
                         )}
                         Receipt PDF Uploaden
                       </Button>
@@ -2121,9 +2095,9 @@ export default function EntrepreneurDashboardPage() {
                         className="bg-[#E6C988] hover:bg-[#D5B992] text-black font-medium w-full"
                       >
                         {uploadInvoiceMutation.isPending ? (
-                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          <span className="h-4 w-4 animate-spin mr-2 flex items-center justify-center">⏳</span>
                         ) : (
-                          <Upload className="h-4 w-4 mr-2" />
+                          <span className="h-4 w-4 mr-2 flex items-center justify-center">⬆️</span>
                         )}
                         Invoice PDF Uploaden
                       </Button>
@@ -2790,7 +2764,7 @@ export default function EntrepreneurDashboardPage() {
                           onClick={() => deleteDocument(doc.id)}
                           className="bg-red-500 hover:bg-red-600"
                         >
-                          <Trash2 className="h-3 w-3 mr-1" />
+                          <span className="h-3 w-3 mr-1 flex items-center justify-center">🗑️</span>
                           Verwijderen
                         </Button>
                       </div>

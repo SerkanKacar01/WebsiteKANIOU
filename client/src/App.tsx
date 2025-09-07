@@ -49,6 +49,7 @@ import BedanktPage from "@/pages/BedanktPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
+import SecureOrderTrackingPage from "@/pages/SecureOrderTrackingPage";
 import CartPage from "@/pages/CartPage";
 import BestelOnlinePage from "@/pages/BestelOnlinePage";
 import AfspraakPage from "@/pages/AfspraakPage";
@@ -231,6 +232,11 @@ function Router() {
         <Route path="/admin-login" component={AdminLoginPage} />
         <Route path="/test-login" component={AdminLoginTest} />
         <Route path="/entrepreneur-dashboard" component={EntrepreneurDashboardPage} />
+        
+        {/* Secure Order Tracking for Customers */}
+        <Route path="/bestelling-volgen" component={SecureOrderTrackingPage} />
+        <Route path="/order-tracking" component={SecureOrderTrackingPage} />
+        <Route path="/track-order" component={SecureOrderTrackingPage} />
         
         <Route path="/admin/gallery" component={AdminGallery} />
         <Route path="/admin" component={Admin} />

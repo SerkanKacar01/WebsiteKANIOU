@@ -41,6 +41,145 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";
+import { randomBytes, createHash } from 'crypto';
+
+// SECURITY: Ultra-secure bonnummer generation system
+class SecureBonnummerGenerator {
+  private static readonly PREFIX = 'KAN';
+  private static readonly YEAR = new Date().getFullYear().toString().slice(-2);
+  
+  /**
+   * Generate cryptographically secure bonnummer
+   * Format: KAN-25-XXXXXX-CC (PREFIX-YEAR-RANDOM-CHECKSUM)
+   * Example: KAN-25-A7B9M3-XR
+   */
+  static generateSecureBonnummer(): string {
+    // Generate 6 random characters (letters + numbers)
+    const chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ23456789'; // No 0,O,1,I for readability
+    let randomPart = '';
+    
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = randomBytes(1)[0] % chars.length;
+      randomPart += chars[randomIndex];
+    }
+    
+    // Create base bonnummer
+    const base = `${this.PREFIX}-${this.YEAR}-${randomPart}`;
+    
+    // Generate 2-digit checksum for validation
+    const checksum = this.generateChecksum(base);
+    
+    return `${base}-${checksum}`;
+  }
+  
+  /**
+   * Generate secure checksum for bonnummer validation
+   */
+  private static generateChecksum(base: string): string {
+    const hash = createHash('sha256').update(base + process.env.BONNUMMER_SECRET || 'KANIOU_SECRET_2025').digest('hex');
+    const chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ23456789';
+    return chars[parseInt(hash.slice(0, 1), 16) % chars.length] + 
+           chars[parseInt(hash.slice(1, 2), 16) % chars.length];
+  }
+  
+  /**
+   * Validate bonnummer format and checksum
+   */
+  static isValidBonnummer(bonnummer: string): boolean {
+    if (!bonnummer || typeof bonnummer !== 'string') return false;
+    
+    // Check format: KAN-YY-XXXXXX-CC
+    const pattern = /^KAN-\d{2}-[A-Z2-9]{6}-[A-Z2-9]{2}$/;
+    if (!pattern.test(bonnummer)) return false;
+    
+    // Validate checksum
+    const parts = bonnummer.split('-');
+    if (parts.length !== 4) return false;
+    
+    const base = `${parts[0]}-${parts[1]}-${parts[2]}`;
+    const expectedChecksum = this.generateChecksum(base);
+    
+    return parts[3] === expectedChecksum;
+  }
+}
+
+// SECURITY: Order access validation
+class OrderAccessValidator {
+  /**
+   * Check if order can be accessed by customer
+   */
+  static isOrderAccessible(order: PaymentOrder, customerEmail?: string): boolean {
+    if (!order) return false;
+    
+    // Order must not be cancelled or expired
+    if (order.status === 'cancelled' || order.status === 'expired') {
+      return false;
+    }
+    
+    // If email provided, it must match
+    if (customerEmail && order.customerEmail !== customerEmail) {
+      return false;
+    }
+    
+    // Orders older than 2 years are not accessible for security
+    if (order.createdAt) {
+      const twoYearsAgo = new Date();
+      twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+      
+      if (new Date(order.createdAt) < twoYearsAgo) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+}
+
+// SECURITY: Tracking attempt monitoring
+class TrackingSecurityMonitor {
+  private static readonly MAX_ATTEMPTS_PER_IP = 10;
+  private static readonly TIME_WINDOW = 60 * 60 * 1000; // 1 hour
+  
+  static isRateLimited(ip: string): boolean {
+    if (!global.trackingAttempts) {
+      global.trackingAttempts = new Map();
+    }
+    
+    const now = Date.now();
+    const record = global.trackingAttempts.get(ip);
+    
+    if (!record) {
+      global.trackingAttempts.set(ip, { count: 1, lastAttempt: now });
+      return false;
+    }
+    
+    // Reset if window expired
+    if (now - record.lastAttempt > this.TIME_WINDOW) {
+      global.trackingAttempts.set(ip, { count: 1, lastAttempt: now });
+      return false;
+    }
+    
+    // Check if over limit
+    if (record.count >= this.MAX_ATTEMPTS_PER_IP) {
+      console.warn(`🚨 SECURITY: IP ${ip} rate limited for order tracking (${record.count} attempts)`);
+      return true;
+    }
+    
+    // Increment counter
+    record.count++;
+    record.lastAttempt = now;
+    global.trackingAttempts.set(ip, record);
+    
+    return false;
+  }
+  
+  static logSuspiciousActivity(ip: string, bonnummer: string, reason: string): void {
+    console.warn(`🚨 SECURITY ALERT: Suspicious tracking attempt from IP ${ip}`);
+    console.warn(`   Bonnummer: ${bonnummer}`);
+    console.warn(`   Reason: ${reason}`);
+    console.warn(`   Time: ${new Date().toISOString()}`);
+  }
+}
 
 declare global {
   var memoryOrders: PaymentOrder[] | undefined;
@@ -51,6 +190,7 @@ declare global {
   var memoryCartItems: any[] | undefined;
   var memoryOrderDocuments: OrderDocument[] | undefined;
   var memoryGalleryItems: GalleryItem[] | undefined;
+  var trackingAttempts: Map<string, {count: number, lastAttempt: number}> | undefined;
 }
 
 export interface IStorage {
@@ -734,15 +874,51 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
     }
   }
 
-  async getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined> {
+  async getPaymentOrderByBonnummer(bonnummer: string, customerEmail?: string, clientIp?: string): Promise<PaymentOrder | undefined> {
+    // SECURITY: Enhanced order tracking with multiple protection layers
+    
+    // Rate limiting check
+    if (clientIp && TrackingSecurityMonitor.isRateLimited(clientIp)) {
+      TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Rate limit exceeded');
+      return undefined;
+    }
+    
+    // Validate bonnummer format and checksum
+    if (!SecureBonnummerGenerator.isValidBonnummer(bonnummer)) {
+      if (clientIp) {
+        TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Invalid bonnummer format or checksum');
+      }
+      return undefined;
+    }
+    
     try {
       const result = await db.select().from(paymentOrders).where(eq(paymentOrders.bonnummer, bonnummer));
-      return result[0];
+      const order = result[0];
+      
+      // Additional access validation
+      if (order && !OrderAccessValidator.isOrderAccessible(order, customerEmail)) {
+        if (clientIp) {
+          TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Order access validation failed');
+        }
+        return undefined;
+      }
+      
+      return order;
     } catch (error) {
       console.warn('Database connection issue for bonnummer lookup');
-      // Check memory orders
+      
+      // Check memory orders with same security
       const memoryOrders = global.memoryOrders || [];
-      return memoryOrders.find(order => order.bonnummer === bonnummer);
+      const order = memoryOrders.find(order => order.bonnummer === bonnummer);
+      
+      if (order && !OrderAccessValidator.isOrderAccessible(order, customerEmail)) {
+        if (clientIp) {
+          TrackingSecurityMonitor.logSuspiciousActivity(clientIp, bonnummer, 'Memory order access validation failed');
+        }
+        return undefined;
+      }
+      
+      return order;
     }
   }
 

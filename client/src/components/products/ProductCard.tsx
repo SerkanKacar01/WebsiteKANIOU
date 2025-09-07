@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "@shared/schema";
-import { ArrowRight } from "lucide-react";
 import { ColorSwatch } from "@/lib/types";
 
 interface ProductCardProps {
@@ -82,7 +81,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
           <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
             <a className="font-body inline-flex items-center text-primary hover:text-accent text-sm sm:text-base">
-              View Details <ArrowRight className="ml-2 h-4 w-4" />
+              View Details →
             </a>
           </Link>
         </div>

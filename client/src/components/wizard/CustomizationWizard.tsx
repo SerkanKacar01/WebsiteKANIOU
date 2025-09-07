@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ArrowLeft, CheckCircle, Home, Palette, Settings, Quote, Wand2 } from "lucide-react";
 import { Link } from "wouter";
 import RoomTypeStep from "./steps/RoomTypeStep";
 import PurposeStep from "./steps/PurposeStep";
@@ -23,12 +22,12 @@ export interface WizardData {
 }
 
 const STEPS = [
-  { id: 'room', title: 'Ruimte', icon: Home },
-  { id: 'purpose', title: 'Gebruik', icon: Settings },
-  { id: 'style', title: 'Stijl', icon: Palette },
-  { id: 'budget', title: 'Budget', icon: Quote },
-  { id: 'features', title: 'Opties', icon: Wand2 },
-  { id: 'result', title: 'Resultaat', icon: CheckCircle }
+  { id: 'room', title: 'Ruimte', emoji: '🏠' },
+  { id: 'purpose', title: 'Gebruik', emoji: '⚙️' },
+  { id: 'style', title: 'Stijl', emoji: '🎨' },
+  { id: 'budget', title: 'Budget', emoji: '💰' },
+  { id: 'features', title: 'Opties', emoji: '✨' },
+  { id: 'result', title: 'Resultaat', emoji: '✅' }
 ];
 
 const CustomizationWizard = () => {
@@ -140,7 +139,6 @@ const CustomizationWizard = () => {
         <CardContent>
           <div className="flex justify-between items-center">
             {STEPS.map((step, index) => {
-              const Icon = step.icon;
               const isCompleted = index < currentStep;
               const isCurrent = index === currentStep;
               
@@ -156,9 +154,9 @@ const CustomizationWizard = () => {
                     }`}
                   >
                     {isCompleted ? (
-                      <CheckCircle className="h-5 w-5" />
+                      <span className="text-xl">✓</span>
                     ) : (
-                      <Icon className="h-5 w-5" />
+                      <span className="text-xl">{step.emoji}</span>
                     )}
                   </div>
                   <span
@@ -192,7 +190,7 @@ const CustomizationWizard = () => {
           disabled={currentStep === 0}
           className="flex items-center gap-2"
         >
-          <ArrowLeft className="h-4 w-4" />
+          ←
           Vorige
         </Button>
 
@@ -204,13 +202,13 @@ const CustomizationWizard = () => {
               className="flex items-center gap-2"
             >
               Volgende
-              <ArrowRight className="h-4 w-4" />
+              →
             </Button>
           ) : (
             <Link href="/quote">
               <Button className="flex items-center gap-2">
                 Offerte Aanvragen
-                <ArrowRight className="h-4 w-4" />
+                →
               </Button>
             </Link>
           )}

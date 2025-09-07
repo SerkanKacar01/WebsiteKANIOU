@@ -1026,7 +1026,7 @@ html, body {
 /* ULTRA-LUXURY FEATURES SECTION */
 .ultra-luxury-features-section {
   position: relative;
-  padding: clamp(6rem, 12vw, 16rem) 0;
+  padding: clamp(3rem, 8vw, 6rem) 0;
   overflow: hidden;
 }
 
@@ -3034,11 +3034,11 @@ html.rtl .right-0 {
 
 /* PREMIUM SECTION SPACING */
 .section-spacing-luxury {
-  padding: clamp(3rem, 6vw, 5rem) 0;
+  padding: clamp(2rem, 4vw, 3rem) 0;
 }
 
 .section-spacing-compact {
-  padding: clamp(3rem, 6vw, 8rem) 0;
+  padding: clamp(2rem, 4vw, 4rem) 0;
 }
 
 /* GOLDEN RATIO CONTAINERS */
@@ -3123,7 +3123,7 @@ html.rtl .right-0 {
   }
   
   .section-spacing-luxury {
-    padding: clamp(2rem, 6vw, 4rem) 0;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0;
   }
   
   .container-golden {
@@ -4258,7 +4258,7 @@ html.rtl .right-0 {
 @media (max-width: 767px) {
   /* Ultra-luxury section mobile adjustments */
   .ultra-luxury-features-section {
-    padding: clamp(4rem, 8vw, 6rem) 0;
+    padding: clamp(2rem, 6vw, 4rem) 0;
   }
 
   /* Premium badge mobile optimization */
@@ -4307,7 +4307,7 @@ html.rtl .right-0 {
 /* Extra small mobile devices */
 @media (max-width: 480px) {
   .ultra-luxury-features-section {
-    padding: 3rem 0;
+    padding: 2rem 0;
   }
 
   .luxury-section-badge-premium {

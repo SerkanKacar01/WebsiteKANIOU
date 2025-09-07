@@ -129,7 +129,8 @@ const BudgetStep = ({ data, updateData }: BudgetStepProps) => {
       <div className="bg-blue-50 p-4 rounded-lg">
         <p className="text-blue-700 text-sm">
           <strong>💡 Tip:</strong> Alle prijzen zijn inclusief professionele montage en 
-          2 jaar garantie. We bieden altijd een gratis vrijblijvend adviesgesprek aan huis.
+          <strong>5 jaar</strong> garantie. We bieden altijd een gratis vrijblijvend adviesgesprek aan huis.
+          <br /><small className="text-blue-600">op de geselecteerde collectie</small>
         </p>
       </div>
     </div>

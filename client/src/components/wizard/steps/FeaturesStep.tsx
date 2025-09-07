@@ -68,7 +68,7 @@ const FEATURES = [
   {
     id: 'warranty_plus',
     name: 'Uitgebreide Garantie',
-    description: '5 jaar volledige garantie',
+    description: '5 jaar volledige garantie (op de geselecteerde collectie)',
     icon: Star,
     premium: true,
     color: 'bg-yellow-50 hover:bg-yellow-100 border-yellow-200'

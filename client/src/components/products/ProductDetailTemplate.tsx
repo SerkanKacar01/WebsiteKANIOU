@@ -188,8 +188,10 @@ const ProductDetailTemplate = ({
                 Is there a warranty on this product?
               </h3>
               <p className="text-text-medium">
-                All our products come with a 3-year warranty covering manufacturing defects and 
-                mechanical issues. Extended warranties are also available.
+                All our products come with a <strong>5 jaar</strong> warranty covering manufacturing defects and 
+                mechanical issues.
+                <br />
+                <small className="text-gray-500">op de geselecteerde collectie</small>
               </p>
             </div>
             

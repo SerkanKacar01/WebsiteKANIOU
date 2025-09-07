@@ -2686,7 +2686,8 @@ const GordijnrailsConfiguratorPage = () => {
                   <ul className="text-sm space-y-1">
                     <li>✓ Vakkundig op maat gezaagd in eigen atelier</li>
                     <li>✓ Inclusief exclusief, hoogwaardig montagemateriaal</li>
-                    <li>✓ 5 jaar premium garantie op kwaliteit & werking</li>
+                    <li>✓ <strong>5 jaar</strong> premium garantie op kwaliteit & werking
+                      <br /><small className="text-gray-500 ml-4">op de geselecteerde collectie</small></li>
                     <li>✓ Snelle, discrete en zorgvuldige levering</li>
                   </ul>
                 </div>

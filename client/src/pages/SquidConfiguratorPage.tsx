@@ -846,7 +846,8 @@ const SquidConfiguratorPage = () => {
                     <ul className="space-y-2 text-sm">
                       <li>✓ Vakkundig op maat gemaakt in eigen atelier</li>
                       <li>✓ Exclusief hoogwaardige materialen</li>
-                      <li>✓ 2 jaar garantie op kwaliteit & materialen</li>
+                      <li>✓ <strong>5 jaar</strong> garantie op kwaliteit & materialen
+                        <br /><small className="text-gray-500 ml-4">op de geselecteerde collectie</small></li>
                       <li>✓ Snelle, discrete en zorgvuldige levering</li>
                     </ul>
                   </CardContent>

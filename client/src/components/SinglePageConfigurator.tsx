@@ -700,7 +700,10 @@ const SinglePageConfigurator: React.FC = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-600 font-bold">✓</span>
-                    <span>5 jaar garantie op werking & onderdelen</span>
+                    <div>
+                      <span><strong>5 jaar</strong> garantie op werking & onderdelen</span>
+                      <br /><small className="text-gray-400">op de geselecteerde collectie</small>
+                    </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-600 font-bold">✓</span>

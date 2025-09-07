@@ -119,6 +119,7 @@ interface Configuration {
   wallComponents: WallComponent[];
   selectedGlider?: GliderOption;
   accessories: string[];
+  gliderChoiceMade: boolean;
 }
 
 const curveModels: CurveModel[] = [
@@ -183,6 +184,7 @@ const GordijnrailsConfiguratorPage = () => {
     wallComponents: [],
     selectedGlider: undefined,
     accessories: [],
+    gliderChoiceMade: false, // Track if user has actively made a glider choice
   });
 
   const [configuration, setConfiguration] = useState<Configuration>(getInitialConfiguration());
@@ -233,7 +235,7 @@ const GordijnrailsConfiguratorPage = () => {
       id: 6,
       title: "Kies accessoires",
       description: "Bediening & extra's",
-      completed: configuration.accessories.length > 0 || !!configuration.selectedGlider,
+      completed: configuration.gliderChoiceMade || configuration.accessories.length > 0,
     },
   ];
 
@@ -522,11 +524,11 @@ const GordijnrailsConfiguratorPage = () => {
   const selectGlider = (gliderId: string | null) => {
     setConfiguration((prev) => {
       if (!gliderId) {
-        return { ...prev, selectedGlider: undefined };
+        return { ...prev, selectedGlider: undefined, gliderChoiceMade: true };
       }
 
       const glider = getAvailableGliders().find((g) => g.id === gliderId);
-      return { ...prev, selectedGlider: glider };
+      return { ...prev, selectedGlider: glider, gliderChoiceMade: true };
     });
   };
 
@@ -1849,7 +1851,7 @@ const GordijnrailsConfiguratorPage = () => {
                           type="radio"
                           id="no-glider"
                           name="glider-selection"
-                          checked={!configuration.selectedGlider}
+                          checked={configuration.gliderChoiceMade && !configuration.selectedGlider}
                           onChange={() => selectGlider(null)}
                           className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
                         />

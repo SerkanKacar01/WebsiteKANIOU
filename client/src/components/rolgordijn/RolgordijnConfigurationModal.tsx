@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ArrowLeft, ShoppingCart, X } from "lucide-react";
+import { ArrowRight, ArrowLeft, ShoppingCart, X, RotateCcw } from "lucide-react";
 
 interface RolgordijnConfigurationModalProps {
   isOpen: boolean;
@@ -53,8 +53,26 @@ const chainTypes = [
 ];
 
 export const RolgordijnConfigurationModal = ({ isOpen, onClose, onComplete }: RolgordijnConfigurationModalProps) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [configuration, setConfiguration] = useState<Partial<RolgordijnConfiguration>>({});
+  // Initial empty configuration - completely reset on each modal open
+  const getInitialConfiguration = (): Partial<RolgordijnConfiguration> => ({});
+  const getInitialStep = () => 0;
+
+  const [currentStep, setCurrentStep] = useState(getInitialStep());
+  const [configuration, setConfiguration] = useState<Partial<RolgordijnConfiguration>>(getInitialConfiguration());
+
+  // Reset everything when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentStep(getInitialStep());
+      setConfiguration(getInitialConfiguration());
+    }
+  }, [isOpen]);
+
+  // Complete reset function
+  const resetConfigurator = () => {
+    setCurrentStep(getInitialStep());
+    setConfiguration(getInitialConfiguration());
+  };
 
   const steps = [
     "Afmetingen",
@@ -394,9 +412,20 @@ export const RolgordijnConfigurationModal = ({ isOpen, onClose, onComplete }: Ro
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl font-bold">Stel je rolgordijn samen</DialogTitle>
-            <Button variant="ghost" size="sm" onClick={onClose}>
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={resetConfigurator}
+                className="text-xs border-orange-300 text-orange-600 hover:bg-orange-50 hover:border-orange-400 transition-all duration-300 rounded-xl px-3 py-2 font-medium flex items-center gap-1"
+              >
+                <RotateCcw className="h-3 w-3" />
+                🔄 Alles wissen
+              </Button>
+              <Button variant="ghost" size="sm" onClick={onClose}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </DialogHeader>
 

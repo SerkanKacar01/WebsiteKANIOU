@@ -948,18 +948,20 @@ const GordijnrailsConfiguratorPage = () => {
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#d5c096] mb-2">
-                    {configuration.customLength || configuration.length} cm
+                    {configuration.customLength || (configuration.length > 0 ? configuration.length : 100)} cm
                   </div>
                   <p className="text-gray-600">
                     {configuration.customLength
                       ? "Uw exacte maat wordt gebruikt voor de berekening"
-                      : "Kies de railmaat die het best past bij uw ruimte."}
+                      : configuration.length > 0 
+                        ? "Kies de railmaat die het best past bij uw ruimte." 
+                        : "Kies eerst een lengte"}
                   </p>
                 </div>
 
                 <div className="px-4">
                   <Slider
-                    value={[configuration.customLength || configuration.length]}
+                    value={[configuration.customLength || (configuration.length > 0 ? configuration.length : 100)]}
                     onValueChange={([value]) => {
                       updateConfiguration("length", value);
                       updateConfiguration("customLength", undefined);
@@ -1093,13 +1095,13 @@ const GordijnrailsConfiguratorPage = () => {
 
             <div className="max-w-xs mx-auto">
               <Select
-                value={configuration.quantity.toString()}
+                value={configuration.quantity > 0 ? configuration.quantity.toString() : ""}
                 onValueChange={(value) =>
                   updateConfiguration("quantity", parseInt(value))
                 }
               >
                 <SelectTrigger className="h-12 text-lg">
-                  <SelectValue placeholder="Selecteer aantal" />
+                  <SelectValue placeholder="-- Kies aantal rails --" />
                 </SelectTrigger>
                 <SelectContent>
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
@@ -1113,12 +1115,16 @@ const GordijnrailsConfiguratorPage = () => {
 
             <div className="text-center">
               <div className="text-2xl font-semibold text-[#d5c096]">
-                {configuration.quantity} × {configuration.length} cm
+                {configuration.quantity > 0 && configuration.length > 0 
+                  ? `${configuration.quantity} × ${configuration.length} cm`
+                  : "Maak eerst je selecties"}
               </div>
-              <p className="text-gray-600 mt-1">
-                Totale raillengte:{" "}
-                {configuration.quantity * configuration.length} cm
-              </p>
+              {configuration.quantity > 0 && configuration.length > 0 && (
+                <p className="text-gray-600 mt-1">
+                  Totale raillengte:{" "}
+                  {configuration.quantity * configuration.length} cm
+                </p>
+              )}
             </div>
 
             {/* Extra Rails Input Field */}

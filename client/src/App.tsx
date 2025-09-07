@@ -46,9 +46,6 @@ import BusinessPage from "@/pages/BusinessPage";
 import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import CleaningProductsPage from "@/pages/CleaningProductsPage";
 import BedanktPage from "@/pages/BedanktPage";
-import VolgBestellingPage from "@/pages/VolgBestellingPage";
-import BestellingStatusPage from "@/pages/BestellingStatusPage";
-import TrackOrderPage from "@/pages/TrackOrderPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
@@ -208,9 +205,6 @@ function Router() {
         <Route path="/disclaimer" component={DisclaimerPage} />
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
-        <Route path="/volg-bestelling" component={VolgBestellingPage} />
-        <Route path="/bestelling-status/:id" component={BestellingStatusPage} />
-        <Route path="/track-order" component={TrackOrderPage} />
         
         {/* Disabled shopping cart routes - redirect to home */}
         <Route path="/cart" component={() => {

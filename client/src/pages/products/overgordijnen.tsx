@@ -98,12 +98,38 @@ const OvergordijnenPage = () => {
             <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               Overgordijnen zorgen voor een warme uitstraling in elke ruimte. Ze zijn ideaal voor het creëren van privacy, het tegenhouden van licht en het verbeteren van de akoestiek. Verkrijgbaar in diverse stoffen, kleuren en plooistijlen.
             </p>
-            <p className="text-lg font-semibold text-primary mb-12">
-              💻 Nu ook online te bestellen - Eenvoudig, snel en op maat!
-            </p>
+            
+            {/* Badges */}
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <div className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full">
+                <span>🛍️</span>
+                <span className="font-medium">Online bestelbaar</span>
+              </div>
+              <div className="flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
+                <span>🔧</span>
+                <span className="font-medium">Op maat gemaakt</span>
+              </div>
+              <div className="flex items-center gap-2 bg-amber-100 text-amber-800 px-4 py-2 rounded-full">
+                <span>🚚</span>
+                <span className="font-medium">Levering in België & Nederland</span>
+              </div>
+            </div>
+
+            {/* CTA Block */}
+            <div className="bg-gradient-to-r from-amber-400 to-yellow-400 rounded-2xl p-8 mb-8 shadow-xl">
+              <p className="text-center text-gray-800 font-semibold mb-4">
+                Online op maat bestellen – eenvoudig & snel!
+              </p>
+              <div className="text-center">
+                <Button size="lg" asChild className="text-lg px-12 py-6 bg-white text-gray-800 hover:bg-gray-50 shadow-lg">
+                  <Link href="/configurator/overgordijnen">🔧 Stel jouw overgordijnen samen</Link>
+                </Button>
+              </div>
+            </div>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="text-lg px-10 py-6 bg-primary hover:bg-primary/90">
-                <Link href="/quote">🛒 Bestel nu online</Link>
+                <Link href="/quote">📋 Vraag offerte aan</Link>
               </Button>
               <Button variant="outline" size="lg" asChild className="text-lg px-10 py-6">
                 <Link href="/contact">💬 Gratis advies</Link>
@@ -217,7 +243,7 @@ const OvergordijnenPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105">
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Palette className="w-6 h-6 text-amber-600" />
@@ -240,6 +266,28 @@ const OvergordijnenPage = () => {
               </div>
               <h3 className="font-display text-lg font-semibold mb-2 text-center">Voering (optioneel)</h3>
               <p className="text-gray-600 text-sm text-center">Extra voering voor verbeterde verduistering en isolatie.</p>
+            </div>
+          </div>
+
+          {/* Bestelproces uitleg */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Settings className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="font-display text-2xl font-semibold mb-4 text-blue-900">
+                🛒 Online bestellen - Zo eenvoudig is het!
+              </h3>
+              <p className="text-lg text-blue-800 leading-relaxed max-w-3xl mx-auto">
+                U kunt uw overgordijnen volledig op maat samenstellen en online bestellen via onze eenvoudige configurator. 
+                Kies uw gewenste stof, plooi, kleur en afwerking – en ontvang direct een prijs en levertermijn. 
+                Wij zorgen voor een perfecte afwerking en snelle levering.
+              </p>
+              <div className="mt-6">
+                <Button size="lg" asChild className="text-lg px-10 py-4 bg-blue-600 hover:bg-blue-700">
+                  <Link href="/configurator/overgordijnen">🔧 Start online configurator</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </Container>
@@ -353,13 +401,23 @@ const OvergordijnenPage = () => {
               Bestel nu online uw overgordijnen op maat en ontdek hoe ze uw interieur kunnen transformeren met sfeer, privacy en isolatie. Eenvoudig configureren, direct bestellen!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" asChild className="text-lg px-10 py-6 bg-primary hover:bg-primary/90">
-                <Link href="/quote">🛒 Bestel direct online</Link>
+              <Button size="lg" asChild className="text-lg px-10 py-6 bg-amber-500 hover:bg-amber-600">
+                <Link href="/configurator/overgordijnen">🔧 Online samenstellen & bestellen</Link>
               </Button>
-              <p className="text-slate-400 text-sm">💻 Online bestellen • Gratis advies • Persoonlijke service</p>
+              <Button size="lg" variant="outline" asChild className="text-lg px-10 py-6 border-white text-white hover:bg-white hover:text-gray-800">
+                <Link href="/quote">📋 Vraag offerte aan</Link>
+              </Button>
             </div>
+            <p className="text-slate-400 text-sm mt-4">💻 Online bestellen • Gratis advies • Persoonlijke service</p>
           </div>
         </Container>
+      </div>
+
+      {/* Sticky Mobile Button */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-primary p-4 shadow-lg md:hidden">
+        <Button asChild className="w-full text-lg py-4 bg-amber-500 hover:bg-amber-600">
+          <Link href="/configurator/overgordijnen">🛒 Bestel overgordijnen op maat</Link>
+        </Button>
       </div>
     </>
   );

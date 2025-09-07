@@ -295,83 +295,137 @@ const BestelOnlinePage = () => {
       </div>
 
 
-      {/* Featured Products Section */}
-      <div id="featured-products" className="py-16 md:py-20 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">
-        {/* Luxury background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/3 left-1/6 w-72 h-72 bg-[#C8A85B]/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/6 w-80 h-80 bg-[#D4AF37]/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      {/* Featured Products Section - ULTRA HIGH-END DESIGN */}
+      <div id="featured-products" className="relative py-24 md:py-32 overflow-hidden">
+        {/* Revolutionary Background with Multiple Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50"></div>
+          
+          {/* Animated mesh gradient */}
+          <div className="absolute inset-0 opacity-60">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-100/30 via-transparent to-amber-100/30 animate-pulse"></div>
+            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-100/30 via-transparent to-rose-100/30 animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
+          
+          {/* Premium floating orbs */}
+          <div className="absolute top-1/4 left-1/12 w-96 h-96 bg-gradient-to-r from-amber-200/20 to-yellow-300/20 rounded-full blur-3xl animate-float opacity-40"></div>
+          <div className="absolute top-3/4 right-1/12 w-80 h-80 bg-gradient-to-r from-blue-200/20 to-indigo-300/20 rounded-full blur-3xl animate-float opacity-40" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-200/15 to-pink-300/15 rounded-full blur-3xl animate-float opacity-30" style={{animationDelay: '4s'}}></div>
+          
+          {/* Glassmorphism overlay */}
+          <div className="absolute inset-0 backdrop-blur-[0.5px] bg-white/20"></div>
         </div>
         
         <Container className="relative z-10">
-          <div className="text-center mb-12">
-            {/* Premium section header */}
-            <div className="inline-flex items-center gap-3 mb-8">
-              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#C8A85B] to-[#D4AF37]"></div>
-              <Package className="w-6 h-6 text-[#C8A85B]" />
-              <div className="w-16 h-0.5 bg-gradient-to-r from-[#D4AF37] via-[#C8A85B] to-transparent"></div>
+          <div className="text-center mb-20">
+            {/* Ultra-Premium Section Badge */}
+            <div className="relative inline-flex items-center gap-4 mb-12">
+              <div className="flex items-center gap-3 px-8 py-4 rounded-full bg-white/60 backdrop-blur-md border border-white/40 shadow-2xl">
+                <div className="w-2 h-2 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full animate-pulse"></div>
+                <Package className="w-5 h-5 text-amber-600" />
+                <span className="text-sm font-semibold text-slate-700 tracking-wider uppercase">Premium Collectie</span>
+                <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+              </div>
             </div>
             
-            <h2 className="font-display text-3xl md:text-5xl text-[#2C3E50] font-black mb-6 tracking-tight leading-tight">
-              Wat je nu al 
-              <span className="bg-gradient-to-r from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] bg-clip-text text-transparent">
-                online kunt bestellen
-              </span>
-            </h2>
+            {/* Revolutionary Title with 3D Effect */}
+            <div className="relative mb-8">
+              <h2 className="font-display text-4xl md:text-7xl font-black mb-6 tracking-tight leading-none">
+                <span className="block text-slate-800 drop-shadow-sm">Wat je nu al</span>
+                <span className="block relative">
+                  <span className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 bg-clip-text text-transparent drop-shadow-lg">
+                    online kunt bestellen
+                  </span>
+                  {/* Subtle glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 bg-clip-text text-transparent opacity-40 blur-sm">
+                    online kunt bestellen
+                  </div>
+                </span>
+              </h2>
+            </div>
             
-            <div className="max-w-3xl mx-auto">
-              <p className="text-xl text-[#2C3E50]/70 font-light leading-relaxed">
-                Ontdek onze exclusieve collectie van premium raamdecoratie, 
-                vakkundig vervaardigd en perfect op maat voor uw ruimte
-              </p>
+            {/* Premium Description with Glassmorphism */}
+            <div className="relative max-w-4xl mx-auto">
+              <div className="bg-white/50 backdrop-blur-md rounded-3xl border border-white/30 shadow-2xl p-8">
+                <p className="text-xl md:text-2xl text-slate-700 font-light leading-relaxed">
+                  Ontdek onze <span className="font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">exclusieve collectie</span> van premium raamdecoratie, 
+                  vakkundig vervaardigd en <span className="font-semibold">perfect op maat</span> voor uw verfijnde ruimte
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
+          {/* Revolutionary Product Grid with Advanced Layouts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 md:gap-10">
             {featuredProducts.map((product, index) => {
               const IconComponent = product.icon;
               return (
                 <div
                   key={product.id}
-                  className={`group relative ${
-                    product.available ? "" : "opacity-80"
+                  className={`group relative transform transition-all duration-700 hover:z-10 animate-premium-card-entrance premium-3d-transform ${
+                    product.available ? "" : "opacity-75"
                   }`}
+                  style={{animationDelay: `${index * 150}ms`}}
                 >
-                  {/* Premium card container */}
-                  <div className={`relative rounded-3xl transition-all duration-700 border-2 overflow-hidden ${
+                  {/* Ultra-Premium 3D Card Container */}
+                  <div className={`relative rounded-3xl transition-all duration-700 overflow-hidden ${
                     product.isBabyProduct
-                      ? "bg-gradient-to-br from-[#DDEEFF] via-[#F0F8FF] to-[#FFE6EC] shadow-lg border-[#87CEEB]/30 hover:shadow-xl group-hover:-translate-y-2 group-hover:scale-102"
+                      ? "bg-gradient-to-br from-sky-50/80 via-white/90 to-rose-50/80 backdrop-blur-md border-2 border-sky-200/50 shadow-2xl hover:shadow-sky-200/40 group-hover:-translate-y-4 group-hover:scale-110 group-hover:rotate-1"
                       : product.available
-                      ? "bg-white shadow-xl hover:shadow-2xl border-[#C8A85B]/20 hover:border-[#C8A85B]/60 group-hover:-translate-y-3 group-hover:scale-105"
-                      : "bg-white shadow-lg border-gray-200"
+                      ? "bg-white/80 backdrop-blur-md border-2 border-amber-200/30 shadow-2xl hover:shadow-amber-200/40 group-hover:-translate-y-6 group-hover:scale-110 group-hover:rotate-2"
+                      : "bg-white/60 backdrop-blur-sm border-2 border-gray-200/50 shadow-lg hover:shadow-xl"
                   }`}>
-                    {/* Luxury background gradient */}
-                    <div className={`absolute inset-0 transition-opacity duration-700 ${
+                    
+                    {/* Advanced Glassmorphism Background */}
+                    <div className={`absolute inset-0 transition-all duration-700 ${
                       product.isBabyProduct
-                        ? "bg-gradient-to-br from-[#E6F3FF]/30 via-transparent to-[#FFF0F5]/30 opacity-60 group-hover:opacity-80"
+                        ? "bg-gradient-to-br from-sky-100/40 via-white/20 to-rose-100/40 opacity-60 group-hover:opacity-90"
                         : product.available
-                        ? "bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100"
-                        : "bg-gradient-to-br from-gray-50 to-gray-100/50"
+                        ? "bg-gradient-to-br from-amber-100/30 via-white/20 to-yellow-100/30 opacity-0 group-hover:opacity-100"
+                        : "bg-gradient-to-br from-gray-50/50 to-gray-100/30 opacity-50"
                     }`}></div>
                     
-                    {/* Available badge */}
+                    {/* Premium Shine Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 group-hover:animate-pulse"></div>
+                    
+                    {/* Ultra-Premium Status Badge */}
                     {product.available && (
                       <div className="absolute top-4 right-4 z-20">
-                        <div className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                          <div className="flex items-center gap-1">
-                            <CheckCircle className="w-3 h-3" />
-                            <span>Beschikbaar</span>
+                        <div className="relative animate-luxury-badge-glow">
+                          <div className="bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-white/30 backdrop-blur-sm ultra-luxury-shadow">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                              <CheckCircle className="w-3 h-3" />
+                              <span className="tracking-wide">BESCHIKBAAR</span>
+                            </div>
+                          </div>
+                          {/* Enhanced Glow effect */}
+                          <div className="absolute inset-0 bg-emerald-400 rounded-full blur-md opacity-40 animate-pulse"></div>
+                          <div className="absolute inset-0 bg-emerald-300 rounded-full blur-lg opacity-20 animate-float"></div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Coming Soon Badge */}
+                    {!product.available && (
+                      <div className="absolute top-4 right-4 z-20">
+                        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-white/30 backdrop-blur-sm">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                            <Sparkles className="w-3 h-3" />
+                            <span className="tracking-wide">BINNENKORT</span>
                           </div>
                         </div>
                       </div>
                     )}
                     
-                    <div className="relative z-10 p-6">
-                      {/* Premium icon container */}
-                      <div className="text-center mb-6">
-                        <div className={`relative inline-flex p-4 rounded-2xl transition-all duration-500 ${
+                    <div className="relative z-10 p-8">
+                      {/* Revolutionary 3D Icon Container */}
+                      <div className="text-center mb-8">
+                        <div className={`relative inline-flex p-6 rounded-3xl transition-all duration-700 transform ${
                           product.isBabyProduct
-                            ? "bg-gradient-to-br from-[#87CEEB] via-[#B0E0E6] to-[#FFC0CB] shadow-lg group-hover:shadow-xl group-hover:scale-105 group-hover:rotate-3"
+                            ? "bg-gradient-to-br from-sky-400 via-blue-300 to-rose-400 shadow-2xl group-hover:shadow-sky-300/60 group-hover:scale-125 group-hover:rotate-12 group-hover:-translate-y-2"
                             : product.available
                             ? "bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] shadow-2xl group-hover:shadow-3xl group-hover:scale-110 group-hover:rotate-6"
                             : "bg-gradient-to-br from-gray-400 via-gray-500 to-gray-400 shadow-lg"

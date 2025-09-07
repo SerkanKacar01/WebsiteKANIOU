@@ -2173,7 +2173,7 @@ const GordijnrailsConfiguratorPage = () => {
                       </div>
                     )}
 
-                    {configuration.corners !== "none" && (
+                    {configuration.corners && configuration.corners !== "" && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Bochten:</span>
                         <span className="font-medium">
@@ -2184,7 +2184,9 @@ const GordijnrailsConfiguratorPage = () => {
                               ? "Kies een model"
                               : configuration.corners === "eigen-model"
                                 ? "Eigen model (op aanvraag)"
-                                : "Op maat gebogen"}
+                                : configuration.corners === "none"
+                                  ? "Geen bocht"
+                                  : "Op maat gebogen"}
                         </span>
                       </div>
                     )}

@@ -70,6 +70,7 @@ import KunststofJaloezieeenSimplePage from "@/pages/products/kunststof-jaloeziee
 import KunststofLamellenSimplePage from "@/pages/products/kunststof-lamellen-simple";
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import GordijnroedesPage from "@/pages/products/gordijnroedes";
+import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 
 
 
@@ -123,6 +124,8 @@ function Router() {
         <Route path="/products/overgordijnen" component={ProductCategoryPage} />
         <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/gordijnroedes" component={GordijnroedesPage} />
+        <Route path="/products/squid-textiel-folie" component={SquidTextielFoliePage} />
+        <Route path="/products/squid-textile-foil" component={SquidTextielFoliePage} />
         <Route path="/products/plisse" component={ProductCategoryPage} />
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
         
@@ -151,7 +154,8 @@ function Router() {
         <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
 
         <Route path="/producten/gordijnroedes" component={GordijnroedesPage} />
-        <Route path="/producten/squid-textile-foil" component={ProductCategoryPage} />
+        <Route path="/producten/squid-textiel-folie" component={SquidTextielFoliePage} />
+        <Route path="/producten/squid-textile-foil" component={SquidTextielFoliePage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
         <Route path="/reiniging" component={CleaningProductsPage} />
 

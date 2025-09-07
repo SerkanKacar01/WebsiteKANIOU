@@ -91,11 +91,45 @@ const CookiePolicyPage = () => {
                 2. Welke cookies gebruiken wij?
               </h2>
               <p className="font-body text-text-medium mb-4">
-                Op onze website maken wij gebruik van de dienst Cookiebot van Usercentrics A/S om alle cookies te beheren. U kunt op elk moment uw toestemming beheren via de knop "Cookie-instellingen" onderaan de pagina of via het zwevend icoon rechtsonder.
+                Wij maken gebruik van Cookiebot by Usercentrics om uw toestemming voor cookies correct te beheren. De volgende categorieën cookies worden gebruikt:
+              </p>
+              
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+                <h3 className="font-display text-lg text-primary font-semibold mb-3">
+                  🔧 Noodzakelijke cookies (functioneel)
+                </h3>
+                <p className="font-body text-text-medium mb-3">
+                  Deze zijn nodig voor de werking van de website en kunnen niet worden uitgeschakeld.
+                </p>
+                
+                <h3 className="font-display text-lg text-primary font-semibold mb-3 mt-6">
+                  ⚙️ Voorkeuren
+                </h3>
+                <p className="font-body text-text-medium mb-3">
+                  Bijvoorbeeld uw taalkeuze of of u een popup al gezien heeft.
+                </p>
+                
+                <h3 className="font-display text-lg text-primary font-semibold mb-3 mt-6">
+                  📊 Statistieken (optioneel)
+                </h3>
+                <p className="font-body text-text-medium mb-3">
+                  Om anonieme gebruikersstatistieken te analyseren via bijvoorbeeld Google Analytics.
+                </p>
+                
+                <h3 className="font-display text-lg text-primary font-semibold mb-3 mt-6">
+                  🎯 Marketing (optioneel)
+                </h3>
+                <p className="font-body text-text-medium">
+                  Wordt alleen gebruikt als u toestemming heeft gegeven.
+                </p>
+              </div>
+              
+              <p className="font-body text-text-medium mb-4">
+                ➡️ U kunt uw cookie-instellingen op elk moment wijzigen via de cookie-instellingenpagina.
               </p>
               
               <p className="font-body text-text-medium mb-4">
-                Een gedetailleerd overzicht van de actieve cookies vindt u hier:
+                Voor meer informatie over gebruikte cookies verwijzen wij naar onze Cookieverklaring hieronder:
               </p>
               
               {/* Cookiebot Cookie Declaration Script */}
@@ -128,19 +162,22 @@ const CookiePolicyPage = () => {
               <hr className="border-neutral-200 my-8" />
               
               <h2 className="font-display text-2xl text-primary font-semibold mb-4">
-                4. Cookies van derden
+                4. Wie heeft toegang tot uw gegevens?
               </h2>
               <p className="font-body text-text-medium mb-4">
-                Wij maken mogelijk gebruik van diensten van derden, zoals:
+                Uw gegevens worden nooit verkocht. Ze worden enkel gedeeld met de volgende partijen indien noodzakelijk:
               </p>
               <ul className="list-disc pl-6 font-body text-text-medium mb-4">
-                <li>Google Analytics</li>
-                <li>Meta Pixel (Facebook)</li>
-                <li>YouTube, Vimeo of andere videospelers</li>
+                <li>Onze websitehostingpartner(s)</li>
+                <li>Cloudflare (beveiliging en CDN)</li>
+                <li>Replit (ontwikkeling backend + frontend site)</li>
+                <li>Mailverzending via SendGrid of SMTP-server</li>
+                <li>Eventuele boekhoudkundige software (bij betalingen)</li>
+                <li>Bezorgdiensten indien levering van toepassing is</li>
               </ul>
               
               <p className="font-body text-text-medium mb-6">
-                Deze externe diensten kunnen cookies op uw apparaat plaatsen en uw gebruik volgen over verschillende websites heen. U wordt hierover geïnformeerd via Cookiebot en kunt per dienst toestemming geven of weigeren.
+                Met elke derde partij is een verwerkersovereenkomst afgesloten conform de AVG. Deze externe diensten kunnen cookies op uw apparaat plaatsen. U wordt hierover geïnformeerd via Cookiebot en kunt per dienst toestemming geven of weigeren.
               </p>
               
               <hr className="border-neutral-200 my-8" />

@@ -34,7 +34,6 @@ interface OrderTrackingResult {
 
 const SecureOrderTrackingPage = () => {
   const [bonnummer, setBonnummer] = useState('');
-  const [email, setEmail] = useState('');
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(true);
   const { toast } = useToast();
@@ -46,7 +45,36 @@ const SecureOrderTrackingPage = () => {
   }, []);
 
   const { data: trackingResult, isLoading, refetch } = useQuery<OrderTrackingResult>({
-    queryKey: ['/api/orders/track', bonnummer, email],
+    queryKey: ['/api/orders/track', bonnummer],
+    queryFn: async () => {
+      if (!bonnummer.trim()) return null;
+      
+      const response = await fetch(`/api/orders/track/${bonnummer}`);
+      if (!response.ok) {
+        const error = await response.json();
+        return { success: false, error: error.error || 'Tracking failed' };
+      }
+      
+      const data = await response.json();
+      return {
+        success: true,
+        order: {
+          bonnummer: data.bonnummer,
+          status: data.status,
+          customerName: data.customerName,
+          orderDate: data.createdAt ? new Date(data.createdAt).toLocaleDateString('nl-NL') : 'Onbekend',
+          statusProgress: {
+            received: !!data.statusBestelOntvangen,
+            processing: !!data.statusInVerwerking,
+            processed: !!data.statusVerwerkt,
+            production: !!data.statusInProductie,
+            ready: !!data.statusGereed,
+            contacted: !!data.statusWordtGebeld,
+            delivered: !!data.statusGeleverd
+          }
+        }
+      };
+    },
     enabled: false, // Only run when manually triggered
     retry: false,
   });
@@ -184,27 +212,6 @@ const SecureOrderTrackingPage = () => {
                       </p>
                     </div>
 
-                    <div className="space-y-3">
-                      <Label htmlFor="email" className="text-white font-semibold flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-emerald-300" />
-                        E-mailadres (extra beveiliging)
-                      </Label>
-                      <div className="relative group">
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="uw.email@voorbeeld.be"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="bg-white/10 backdrop-blur-sm border-white/30 text-white placeholder-slate-300 py-4 rounded-xl focus:bg-white/20 focus:border-emerald-300/50 focus:ring-2 focus:ring-emerald-300/25 transition-all duration-300 group-hover:bg-white/15"
-                        />
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                      </div>
-                      <p className="text-slate-400 text-sm flex items-center gap-1">
-                        <Crown className="w-3 h-3" />
-                        Voor onze VIP verificatie service
-                      </p>
-                    </div>
 
                     <div className="relative">
                       <Button

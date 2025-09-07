@@ -73,6 +73,11 @@ export default function ScreenPage() {
                 </p>
                 <p className="text-gray-500 text-sm mt-2">
                   Neem contact op voor meer informatie over onze screen producten.
+                  Betaalbare Buiten Zonwering met Premium Kwaliteit
+
+                  Bij KANIOU Zilvernaald geloven we dat kwaliteit niet onbereikbaar hoeft te zijn. Onze screen zonwering is niet alleen stijlvol en functioneel, maar ook toegankelijk geprijsd. Dankzij onze rechtstreekse samenwerking met fabrikanten kunnen we maatwerk bieden tegen eerlijke en betaalbare tarieven — zonder in te leveren op duurzaamheid of design.
+
+                  👉 Investeer slim in comfort én uitstraling, zonder je budget te overschrijden.
                 </p>
               </div>
             </CardContent>

@@ -766,7 +766,7 @@ const Home = () => {
                       <div className="relative">
                         <Shield className="w-8 h-8 text-white" />
                         <div className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs px-2 py-1 rounded-full font-bold">
-                          BUITEN
+                          BUITEN ZONWERING
                         </div>
                       </div>
                     </div>

@@ -161,6 +161,8 @@ function Router() {
         <Route path="/producten/squid-textile-foil" component={SquidTextielFoliePage} />
         <Route path="/producten/squid" component={SquidTextielFoliePage} />
         <Route path="/squid" component={SquidTextielFoliePage} />
+        <Route path="/gordijnroedes" component={GordijnroedesPage} />
+        <Route path="/horren" component={HorrenPage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
         <Route path="/reiniging" component={CleaningProductsPage} />
 

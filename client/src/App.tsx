@@ -145,6 +145,7 @@ function Router() {
         <Route path="/producten/plisse" component={PlissesPage} />
         <Route path="/producten/duo-plisse" component={DuoPlissesPage} />
         <Route path="/producten/vouwgordijnen" component={VouwgordijnenPage} />
+        <Route path="/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />

@@ -123,6 +123,18 @@ const ProductDetailTemplate = ({
                 </span>
               </p>
             </div>
+            
+            {/* Second identical Price Display */}
+            <div className="bg-neutral-100 p-4 rounded-lg mb-6">
+              <p className="font-body text-2xl">
+                <span className="font-bold text-accent">
+                  Begint vanaf €{startingPrice.toFixed(2)}
+                </span>
+                <span className="text-text-medium ml-2 text-base">
+                  {priceUnit} (incl. Gemaakt volgens exacte specificaties)
+                </span>
+              </p>
+            </div>
 
             {/* Short Description */}
             <p className="text-text-medium mb-6">{productDescription}</p>

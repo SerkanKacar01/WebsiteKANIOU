@@ -9,6 +9,8 @@ const SquidTextielFoliePage = () => {
       imageUrl={squidImage}
       startingPrice={69.90}
       priceUnit="per lopende meter"
+      secondPrice={69.90}
+      secondPriceUnit="per lopende meter"
       features={[
         "Elegante textieluitstraling, in verschillende neutrale kleuren",
         "Eenvoudige montage – zonder boren of schroeven", 

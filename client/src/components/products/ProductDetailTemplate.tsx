@@ -24,6 +24,8 @@ interface ProductDetailTemplateProps {
   // Second price block (optional)
   secondPrice?: number;
   secondPriceUnit?: string;
+  // Second image (optional)
+  secondImageUrl?: string;
 }
 
 const ProductDetailTemplate = ({
@@ -37,6 +39,7 @@ const ProductDetailTemplate = ({
   categoryPath,
   secondPrice,
   secondPriceUnit,
+  secondImageUrl,
 }: ProductDetailTemplateProps) => {
   const { t } = useLanguage();
 
@@ -102,13 +105,26 @@ const ProductDetailTemplate = ({
 
       <Container className="py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Product Image */}
-          <div className="rounded-lg overflow-hidden shadow-md">
-            <img
-              src={imageUrl}
-              alt={productName}
-              className="w-full h-auto object-cover aspect-[4/3]"
-            />
+          {/* Product Images */}
+          <div className="space-y-4">
+            <div className="rounded-lg overflow-hidden shadow-md">
+              <img
+                src={imageUrl}
+                alt={productName}
+                className="w-full h-auto object-cover aspect-[4/3]"
+              />
+            </div>
+            
+            {/* Second Image if provided */}
+            {secondImageUrl && (
+              <div className="rounded-lg overflow-hidden shadow-md">
+                <img
+                  src={secondImageUrl}
+                  alt={`${productName} - Additional view`}
+                  className="w-full h-auto object-cover aspect-[4/3]"
+                />
+              </div>
+            )}
           </div>
 
           {/* Product Details */}

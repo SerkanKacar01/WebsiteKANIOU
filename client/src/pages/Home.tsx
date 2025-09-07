@@ -614,11 +614,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <img
-                        src="/images/rails-roedes-icon.png"
-                        alt="Gordijnrails"
-                        className="w-8 h-8 object-contain"
-                      />
+                      <Minus className="w-8 h-8 text-white" />
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Gordijnrails</h3>

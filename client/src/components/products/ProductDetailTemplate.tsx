@@ -202,7 +202,7 @@ const ProductDetailTemplate = ({
                   {/* Opaak Variant */}
                   <div className="border border-neutral-200 rounded-lg p-6 bg-white">
                     <h4 className="font-display text-lg font-semibold mb-3 text-accent">
-                      Opaak
+                      Opaque
                     </h4>
                     <p className="text-sm text-text-medium mb-4 italic">
                       SQUID Opaak is iets dichter geweven en blokkeert twee keer meer licht dan de transparante versie.

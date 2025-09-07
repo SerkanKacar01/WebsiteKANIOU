@@ -56,8 +56,27 @@ const Footer: React.FC = () => {
 
           {/* Column 2: Producten */}
           <div className="ultra-luxury-footer-column">
-            <h3 className="ultra-luxury-footer-heading">Producten</h3>
-            <div className="ultra-luxury-footer-content">
+            <button
+              onClick={() => toggleSection("producten")}
+              className="w-full flex justify-between items-center text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded mb-4"
+            >
+              <h3 className="ultra-luxury-footer-heading">Producten</h3>
+              <div className="ml-2 transition-transform duration-300">
+                {expandedSections.producten ? (
+                  <Minus className="w-5 h-5 text-[#C8A85B]" />
+                ) : (
+                  <Plus className="w-5 h-5 text-[#C8A85B]" />
+                )}
+              </div>
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                expandedSections.producten
+                  ? "max-h-[800px] opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="ultra-luxury-footer-content">
               <ul className="ultra-luxury-footer-links">
                 <li>
                   <a
@@ -65,7 +84,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Houten jaloezieën"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Houten jaloezieën
                   </a>
                 </li>
@@ -75,7 +94,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Textiel lamellen"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Textiel lamellen
                   </a>
                 </li>
@@ -85,7 +104,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Kunststof jaloezieën"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Kunststof jaloezieën
                   </a>
                 </li>
@@ -95,7 +114,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Kunststof lamellen"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Kunststof lamellen
                   </a>
                 </li>
@@ -105,7 +124,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Plissés"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Plissés
                   </a>
                 </li>
@@ -115,7 +134,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Duo plissés"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Duo plissés
                   </a>
                 </li>
@@ -125,7 +144,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Rolgordijnen"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Rolgordijnen
                   </a>
                 </li>
@@ -135,7 +154,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Duo rolgordijnen"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Duo rolgordijnen
                   </a>
                 </li>
@@ -145,7 +164,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Overgordijnen"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Overgordijnen
                   </a>
                 </li>
@@ -155,7 +174,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Gordijnrails"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Gordijnrails
                   </a>
                 </li>
@@ -165,7 +184,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Vitrages"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Vitrages
                   </a>
                 </li>
@@ -175,7 +194,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Houten shutters"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Houten shutters
                   </a>
                 </li>
@@ -185,7 +204,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Vonwgordijnen"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Vonwgordijnen
                   </a>
                 </li>
@@ -195,7 +214,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Gordijnroedes"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Gordijnroedes
                   </a>
                 </li>
@@ -205,7 +224,7 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Squid"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Squid
                   </a>
                 </li>
@@ -215,11 +234,12 @@ const Footer: React.FC = () => {
                     className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
                     aria-label="Go to product page for Horren"
                   >
-                    <span className="ultra-luxury-product-icon">🛒</span>
+
                     Horren
                   </a>
                 </li>
               </ul>
+              </div>
             </div>
           </div>
 
@@ -434,7 +454,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Houten jaloezieën"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Houten jaloezieën
                     </a>
                   </li>
@@ -444,7 +464,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Textiel lamellen"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Textiel lamellen
                     </a>
                   </li>
@@ -454,7 +474,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Kunststof jaloezieën"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Kunststof jaloezieën
                     </a>
                   </li>
@@ -464,7 +484,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Kunststof lamellen"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Kunststof lamellen
                     </a>
                   </li>
@@ -474,7 +494,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Plissés"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Plissés
                     </a>
                   </li>
@@ -484,7 +504,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Duo plissés"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Duo plissés
                     </a>
                   </li>
@@ -494,7 +514,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Rolgordijnen"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Rolgordijnen
                     </a>
                   </li>
@@ -504,7 +524,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Duo rolgordijnen"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Duo rolgordijnen
                     </a>
                   </li>
@@ -514,7 +534,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Overgordijnen"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Overgordijnen
                     </a>
                   </li>
@@ -524,7 +544,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Gordijnrails"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Gordijnrails
                     </a>
                   </li>
@@ -534,7 +554,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Vitrages"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Vitrages
                     </a>
                   </li>
@@ -544,7 +564,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Houten shutters"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Houten shutters
                     </a>
                   </li>
@@ -554,7 +574,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Vonwgordijnen"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Vonwgordijnen
                     </a>
                   </li>
@@ -564,7 +584,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Gordijnroedes"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Gordijnroedes
                     </a>
                   </li>
@@ -574,7 +594,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Squid"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Squid
                     </a>
                   </li>
@@ -584,7 +604,7 @@ const Footer: React.FC = () => {
                       className="footer-link footer-link-available"
                       aria-label="Go to product page for Horren"
                     >
-                      <span className="footer-product-icon">🛒</span>
+
                       Horren
                     </a>
                   </li>

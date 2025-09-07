@@ -18,7 +18,8 @@ const SquidTextielFoliePage = () => {
         "Perfect voor badkamers, leefruimtes, kantoren en etalages",
         "Compatibel met draai-kiepramen, dakramen, ramen met onregelmatige vormen",
         "Zowel voor tijdelijke als permanente toepassingen",
-        "Beschikbaar in kleuren: "
+        "Beschikbaar in kleuren: Chalk - Bone - Ash - Oak - Rock - Coal",
+        "Beschikbaar in 2 transparanties: Transparant - Opaque"
       ]}
       categoryName="SQUID® Textielfolie"
       categoryPath="squid-textiel-folie"

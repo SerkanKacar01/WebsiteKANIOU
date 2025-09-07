@@ -26,6 +26,8 @@ interface ProductDetailTemplateProps {
   secondPriceUnit?: string;
   // Second image (optional)
   secondImageUrl?: string;
+  // Third image (optional)  
+  thirdImageUrl?: string;
 }
 
 const ProductDetailTemplate = ({
@@ -40,6 +42,7 @@ const ProductDetailTemplate = ({
   secondPrice,
   secondPriceUnit,
   secondImageUrl,
+  thirdImageUrl,
 }: ProductDetailTemplateProps) => {
   const { t } = useLanguage();
 
@@ -121,6 +124,17 @@ const ProductDetailTemplate = ({
                 <img
                   src={secondImageUrl}
                   alt={`${productName} - Additional view`}
+                  className="w-full h-auto object-cover aspect-[4/3]"
+                />
+              </div>
+            )}
+            
+            {/* Third Image if provided */}
+            {thirdImageUrl && (
+              <div className="rounded-lg overflow-hidden shadow-md">
+                <img
+                  src={thirdImageUrl}
+                  alt={`${productName} - Third view`}
                   className="w-full h-auto object-cover aspect-[4/3]"
                 />
               </div>

@@ -72,6 +72,7 @@ import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import GordijnroedesPage from "@/pages/products/gordijnroedes";
 import HorrenPage from "@/pages/products/horren";
+import ScreenPage from "@/pages/products/screen";
 
 
 
@@ -152,6 +153,8 @@ function Router() {
         <Route path="/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/producten/horren" component={HorrenPage} />
         <Route path="/horren" component={HorrenPage} />
+        <Route path="/producten/screen" component={ScreenPage} />
+        <Route path="/screen" component={ScreenPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />

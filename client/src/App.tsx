@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
-import FloatingActionButtons from "@/components/ui/FloatingActionButtonsNew";
 import Footer from "@/components/layout/Footer";
 
 
@@ -262,7 +261,6 @@ function App() {
           <MobileLayoutWrapper>
             <Router />
           </MobileLayoutWrapper>
-          <FloatingActionButtons />
 
         </TooltipProvider>
       </QueryClientProvider>

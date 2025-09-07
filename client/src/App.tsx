@@ -68,6 +68,7 @@ import HoutenJaloezieeenSimplePage from "@/pages/products/houten-jaloezieen-simp
 import TextielLamellenSimplePage from "@/pages/products/textiel-lamellen-simple";
 import KunststofJaloezieeenSimplePage from "@/pages/products/kunststof-jaloezieen-simple";
 import KunststofLamellenSimplePage from "@/pages/products/kunststof-lamellen-simple";
+import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 
 
 
@@ -119,6 +120,7 @@ function Router() {
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
 
         <Route path="/products/overgordijnen" component={ProductCategoryPage} />
+        <Route path="/products/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/products/plisse" component={ProductCategoryPage} />
         <Route path="/products/jaloezieen" component={ProductCategoryPage} />
         
@@ -140,6 +142,7 @@ function Router() {
         <Route path="/producten/plisse-hordeuren" component={ProductCategoryPage} />
         <Route path="/producten/plisse" component={PlissesPage} />
         <Route path="/producten/duo-plisse" component={DuoPlissesPage} />
+        <Route path="/producten/vouwgordijnen" component={VouwgordijnenPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
         <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />

@@ -17,6 +17,7 @@ import {
   Minus,
   ShoppingCart,
   Sparkles,
+  AlignJustify,
 } from "lucide-react";
 import React from "react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
@@ -546,11 +547,7 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <img
-                        src="/images/rolgordijnen-icon.png"
-                        alt="Rolgordijnen"
-                        className="w-8 h-8 object-contain"
-                      />
+                      <AlignJustify className="w-8 h-8 text-white" />
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Rolgordijnen</h3>

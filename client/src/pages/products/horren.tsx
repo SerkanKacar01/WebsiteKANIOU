@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import Container from '@/components/ui/container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { CheckCircle, Target, Grid3x3, Square, Door, RotateCcw, Settings, Recycle, Shield, Ruler, Phone, Mail, MapPin } from 'lucide-react';
+import { CheckCircle, Target, Grid3x3, Square, DoorOpen, RotateCcw, Settings, Recycle, Shield, Ruler, Phone, Mail, MapPin } from 'lucide-react';
 
 export default function HorrenPage() {
   return (
@@ -124,7 +124,7 @@ export default function HorrenPage() {
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-[#F8F9FA] p-6 rounded-lg">
                     <div className="flex items-center gap-3 mb-3">
-                      <Door className="h-6 w-6 text-[#D5B992]" />
+                      <DoorOpen className="h-6 w-6 text-[#D5B992]" />
                       <h4 className="font-semibold text-[#2C3E50] text-lg">Plissé Hordeuren</h4>
                     </div>
                     <p className="text-gray-700">

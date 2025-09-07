@@ -32,6 +32,7 @@ const productCategories = [
   { label: "Plissé hordeuren", urlPath: "plisse-hordeuren" },
   { label: "Plissé", urlPath: "plisse" },
   { label: "Duo plissé", urlPath: "duo-plisse" },
+  { label: "Vouwgordijnen", urlPath: "vouwgordijnen" },
   { label: "Dakraam zonweringen", urlPath: "dakraam-zonweringen" },
   { label: "Gordijnrails", urlPath: "gordijnrails" },
   { label: "Gordijnroedes", urlPath: "gordijnroedes" },

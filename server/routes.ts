@@ -647,9 +647,9 @@ Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaa
 📦 Bestelnummer: ${existingOrder.bonnummer || existingOrder.orderNumber}
 📋 Huidige status: ${statusMessage}
 
-📦 **Volg uw bestelling**  
+📞 **Contact**  
 ━━━━━━━━━━━━━━━━━━━  
-U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${orderId}
+Voor vragen over uw bestelling kunt u contact opnemen via info@kaniou.be of telefonisch.
 
 🛠 **Over uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
@@ -806,7 +806,7 @@ Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaa
 
 📦 **Volg uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
-U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${newOrder.id}
+Voor vragen over uw bestelling kunt u contact opnemen via info@kaniou.be of +32 467 85 64 05.
 ${description ? `Beschrijving: ${description}` : ""}
 
 🛠 **Over uw bestelling**  
@@ -873,7 +873,7 @@ ${internalNote || 'Geen interne notitie opgegeven'}
 🌐 **DIRECTE ACTIES**
 • Dashboard: https://kaniou.be/entrepreneur-dashboard
 • Order bewerken: https://kaniou.be/entrepreneur-dashboard (zoek order ${bonnummer})
-• Klant status: https://kaniou.be/bestelling-status/${newOrder.id}
+• Klant contact: info@kaniou.be
 
 ⚡ **VOLGENDE STAPPEN**
 1. Log in op het admin dashboard
@@ -1052,67 +1052,8 @@ Tijd: ${new Date().toLocaleString('nl-BE')}
     }
   });
 
-  // Track order by bonnummer
-  app.get("/api/orders/track/bonnummer/:bonnummer", async (req, res) => {
-    try {
-      const { bonnummer } = req.params;
-      const order = await storage.getPaymentOrderByBonnummer(bonnummer);
 
-      if (!order) {
-        return res.status(404).json({ 
-          error: "Bestelling niet gevonden",
-          message: "Het ingevoerde bonnummer is niet gevonden. Controleer het nummer en probeer opnieuw."
-        });
-      }
 
-      res.json(order);
-    } catch (error: any) {
-      console.error("Track order by bonnummer error:", error);
-      res.status(500).json({ error: "Fout bij ophalen bestellingsstatus" });
-    }
-  });
-
-  // Get order details by orderId for status page
-  app.get("/api/orders/:orderId", async (req, res) => {
-    try {
-      const orderId = parseInt(req.params.orderId);
-      
-      if (isNaN(orderId)) {
-        return res.status(400).json({ error: "Ongeldig order ID" });
-      }
-
-      const order = await storage.getPaymentOrderById(orderId);
-
-      if (!order) {
-        return res.status(404).json({ 
-          error: "Bestelling niet gevonden",
-          message: "Deze bestelling bestaat niet of is niet toegankelijk."
-        });
-      }
-
-      res.json(order);
-    } catch (error: any) {
-      console.error("Get order by ID error:", error);
-      res.status(500).json({ error: "Fout bij ophalen bestellingsinformatie" });
-    }
-  });
-
-  // Legacy endpoint - Track order by orderNumber
-  app.get("/api/orders/:orderNumber/track", async (req, res) => {
-    try {
-      const { orderNumber } = req.params;
-      const order = await storage.getOrderByOrderNumber(orderNumber);
-
-      if (!order) {
-        return res.status(404).json({ error: "Bestelling niet gevonden" });
-      }
-
-      res.json(order);
-    } catch (error: any) {
-      console.error("Track order error:", error);
-      res.status(500).json({ error: "Fout bij ophalen bestellingsstatus" });
-    }
-  });
 
   // Add customer note endpoint
   app.post("/api/orders/add-customer-note", async (req, res) => {

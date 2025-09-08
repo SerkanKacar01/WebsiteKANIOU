@@ -847,10 +847,13 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
       const allOrders = [...dbOrders, ...memoryOrders];
       return allOrders.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
     } catch (error: any) {
-      if (error.message?.includes('Control plane request failed') || error.message?.includes('endpoint is disabled')) {
+      if (error.message?.includes('Control plane request failed') || 
+          error.message?.includes('endpoint is disabled') ||
+          error.message?.includes('The endpoint has been disabled')) {
         console.warn('🔄 Database unavailable, returning memory orders only');
         return global.memoryOrders || [];
       }
+      console.error('getPaymentOrders error:', error.message);
       throw error;
     }
   }

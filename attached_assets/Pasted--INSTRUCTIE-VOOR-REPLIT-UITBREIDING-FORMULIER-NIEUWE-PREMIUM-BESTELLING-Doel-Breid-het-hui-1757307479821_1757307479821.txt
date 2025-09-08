@@ -1,0 +1,63 @@
+✅ INSTRUCTIE VOOR REPLIT – UITBREIDING FORMULIER “NIEUWE PREMIUM BESTELLING”
+
+🎯 Doel
+
+Breid het huidige formulier uit met alle ontbrekende velden zodat een volledige bestelling kan worden ingevoerd inclusief productdetails, montagekeuzes, interne notities, verwachte leverdatum en optionele PDF-upload. Alle gegevens moeten correct worden opgeslagen en het systeem moet klaar zijn voor automatische klantmelding.
+
+⸻
+
+🔧 STAP 1 – Voeg de volgende velden toe aan het formulier	Status van bestelling
+Dropdown <select>
+✅
+Opties: In behandeling, In productie, Verzonden, Geleverd
+Verwachte leverdatum
+Datumkiezer <input type="date">
+❌
+Vrij invulbaar												Upload PDF (offerte, factuur)
+Bestand upload <input type="file" multiple>
+❌
+Max 3 bestanden van max 5MB
+Notificatie verzenden?
+Checkbox <input type="checkbox">
+❌
+Als aangevinkt → klant e-mail krijgen bij toevoegen
+													🗃️ STAP 2 – Valideer het formulier
+	•	Verplicht: naam, e-mailadres, productcategorie, model, status
+	•	PDF-bestanden: max 3, max 5MB per stuk
+	•	Datum: optioneel, maar moet correct formaat hebben (yyyy-mm-dd)
+
+⸻
+
+💾 STAP 3 – Backendverwerking bij klikken op “Premium Order Aanmaken”
+	1.	Genereer automatisch een bonnummer (bijv. KAN-25-XXXXX-XX)
+	2.	Sla alle formuliergegevens op in de backend/database
+	3.	Als “Notificatie verzenden” is aangevinkt:
+	•	Verstuur automatisch een e-mail naar de klant met:
+	•	Voornaam + bevestiging
+	•	Bonnummer
+	•	Eventuele PDF als bijlage
+	4.	Upload PDF-bestanden naar een veilige locatie in backend, koppel ze aan de order
+
+⸻
+
+📊 STAP 4 – Koppel bestelling aan dashboard overzicht
+	•	Toon de nieuwe bestelling direct in het blok “Exclusive Orders Management”
+	•	Laat de kolommen zien: klantnaam, product, status, bonnummer
+	•	Voeg een knop toe voor “Details bekijken” per bestelling
+	•	Laat toe om status handmatig aan te passen in detailoverzicht
+
+⸻
+
+💡 STAP 5 – UX-verbeteringen (optioneel)
+	•	Onderverdeling in secties:
+	•	Klantgegevens
+	•	Productinformatie
+	•	Levering & beheer
+	•	Tooltip icoontjes toevoegen bij lastige termen (bijv. info bij ‘montage’ of ‘bediening’)
+	•	Kleuraccenten bij statusvelden: groen = geleverd, oranje = in productie, rood = vertraagd
+
+⸻
+
+🔐 EXTRA (optioneel)
+	•	Voeg validatie toe zodat alleen admin toegang heeft tot dit formulier
+	•	Zorg dat PDF’s alleen zichtbaar zijn voor admin-gebruikers

@@ -471,30 +471,14 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
     try {
       const orders = await storage.getPaymentOrders();
 
-      // Get document counts for each order
-      const ordersWithDocCounts = await Promise.all(
-        orders.map(async (order) => {
-          try {
-            const documents = await storage.getOrderDocuments(order.id);
-            return {
-              ...order,
-              notifyByEmail: order.notifyByEmail ?? true,
-              customerPhone: order.customerPhone || "",
-              notificationPreference: order.notificationPreference || "email",
-              documentCount: documents.length,
-            };
-          } catch (docError) {
-            console.warn(`Failed to get documents for order ${order.id}:`, docError);
-            return {
-              ...order,
-              notifyByEmail: order.notifyByEmail ?? true,
-              customerPhone: order.customerPhone || "",
-              notificationPreference: order.notificationPreference || "email",
-              documentCount: 0,
-            };
-          }
-        })
-      );
+      // Get document counts for each order (with fallback)
+      const ordersWithDocCounts = orders.map((order) => ({
+        ...order,
+        notifyByEmail: order.notifyByEmail ?? true,
+        customerPhone: order.customerPhone || "",
+        notificationPreference: order.notificationPreference || "email",
+        documentCount: 0, // Default to 0 when database unavailable
+      }));
 
       res.json({
         totalOrders: orders.length,

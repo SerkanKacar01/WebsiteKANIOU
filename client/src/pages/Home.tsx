@@ -34,7 +34,7 @@ const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
 // Premium Navigation Component
-const PremiumNavigation = () => {
+const ProfessionalNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] =
@@ -81,8 +81,8 @@ const PremiumNavigation = () => {
             <button onClick={() => setLocation("/")} className="hover-elegant">
               <img
                 src={kaniouLogo}
-                alt="KANIOU - Premium Window Treatments"
-                className="h-12 w-auto transition-luxury hover:scale-105"
+                alt="KANIOU - Professional Window Treatments"
+                className="h-12 w-auto transition-professional hover:scale-105"
               />
             </button>
           </div>
@@ -234,13 +234,13 @@ const Home = () => {
         />
         <meta
           property="og:description"
-          content="Transform your space with our premium custom window treatments. Professional installation and 30+ years of expertise in Belgium."
+          content="Transform your space with our professional custom window treatments. Expert installation and 30+ years of expertise in Belgium."
         />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      {/* Premium Navigation */}
-      <PremiumNavigation />
+      {/* Professional Navigation */}
+      <ProfessionalNavigation />
 
       <div className="content-offset">
         {/* Hero Section */}
@@ -261,18 +261,18 @@ const Home = () => {
 
           {/* Content Container */}
           <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
-            {/* Ultra-Luxury Title */}
-            <h1 className="font-luxury-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-luxury drop-shadow-2xl">
+            {/* Professional Title */}
+            <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl">
               <span className="block text-4xl md:text-hero">
                 Exquise raamdecoratie
               </span>
-              <span className="block gradient-text-luxury mt-2 md:mt-4 text-glow text-3xl md:text-hero">
+              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero">
                 Artistry
               </span>
             </h1>
 
-            {/* Luxury Subtitle */}
-            <p className="text-lg md:text-subtitle text-white/90 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl font-luxury-display">
+            {/* Professional Subtitle */}
+            <p className="text-lg md:text-subtitle text-white/90 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl font-professional-display">
               <span className="block text-xl md:text-3xl font-medium tracking-wide">
                 Waar vakmanschap en verfijning samenkomen.
               </span>
@@ -283,19 +283,19 @@ const Home = () => {
               </span>
             </p>
 
-            {/* Ultra-Premium CTA */}
+            {/* Professional CTA */}
             <div className="flex justify-center mb-12 md:mb-20">
               <button
                 onClick={handleRequestQuote}
-                className="ultra-luxury-cta-button group"
+                className="professional-cta-button group"
               >
-                <div className="ultra-luxury-cta-bg"></div>
-                <div className="ultra-luxury-cta-glow"></div>
-                <div className="ultra-luxury-cta-content">
-                  <span className="ultra-luxury-cta-text">
+                <div className="professional-cta-bg"></div>
+                <div className="professional-cta-glow"></div>
+                <div className="professional-cta-content">
+                  <span className="professional-cta-text">
                     VANDAAG NOG OFFERTE
                   </span>
-                  <div className="ultra-luxury-cta-icon">
+                  <div className="professional-cta-icon">
                     →
                   </div>
                 </div>
@@ -303,25 +303,25 @@ const Home = () => {
             </div>
 
             {/* Elegant Trust Indicators */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl max-w-5xl mx-auto">
-              <div className="text-center animate-float-luxury stagger-1">
-                <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-professional-xl max-w-5xl mx-auto">
+              <div className="text-center animate-float-professional stagger-1">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4">
                   30+
                 </div>
                 <div className="text-white/70 text-body font-light tracking-wider uppercase">
                   Jarenlange Vakmanschap
                 </div>
               </div>
-              <div className="text-center animate-float-luxury stagger-2">
-                <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">
+              <div className="text-center animate-float-professional stagger-2">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4">
                   3500+
                 </div>
                 <div className="text-white/70 text-body font-light tracking-wider uppercase">
                   Eisvolle Klanten
                 </div>
               </div>
-              <div className="text-center animate-float-luxury stagger-3">
-                <div className="text-5xl md:text-6xl font-luxury-display gradient-text-luxury mb-4">
+              <div className="text-center animate-float-professional stagger-3">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4">
                   100%
                 </div>
                 <div className="text-white/70 text-body font-light tracking-wider uppercase">
@@ -372,35 +372,35 @@ const Home = () => {
             <div className="luxury-product-grid mb-16">
               {/* Houten jaloezieën - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/houten-jaloezieen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">☰</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Houten jaloezieën</h3>
-                  <p className="luxury-card-subtitle">Natuurlijke elegantie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Houten jaloezieën</h3>
+                  <p className="professional-card-subtitle">Natuurlijke elegantie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Aluminium jaloezieën - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/textiel-lamellen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/verticaal-lamellen-icon.png"
                         alt="Textiel lamellen"
@@ -408,23 +408,23 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Textiel lamellen</h3>
-                  <p className="luxury-card-subtitle">Zachte elegantie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Textiel lamellen</h3>
+                  <p className="professional-card-subtitle">Zachte elegantie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Kunststof jaloezieën - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/kunststof-jaloezieen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/jaloezieen-icon.png"
                         alt="Kunststof jaloezieën"
@@ -432,23 +432,23 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Kunststof jaloezieën</h3>
-                  <p className="luxury-card-subtitle">Praktische perfectie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Kunststof jaloezieën</h3>
+                  <p className="professional-card-subtitle">Praktische perfectie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Verticaal lamellen - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/kunststof-lamellen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/verticaal-lamellen-icon.png"
                         alt="Kunststof lamellen"
@@ -456,23 +456,23 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Kunststof lamellen</h3>
-                  <p className="luxury-card-subtitle">Praktische perfectie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Kunststof lamellen</h3>
+                  <p className="professional-card-subtitle">Praktische perfectie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Plissés - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/plisse")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/plisse-icon.png"
                         alt="Plissés"
@@ -480,23 +480,23 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Plissés</h3>
-                  <p className="luxury-card-subtitle">Gevouwen elegantie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Plissés</h3>
+                  <p className="professional-card-subtitle">Gevouwen elegantie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Duo plissés - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/duo-plisse")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/plisse-icon.png"
                         alt="Duo plissé"
@@ -504,43 +504,43 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Duo plissés</h3>
-                  <p className="luxury-card-subtitle">Dubbele perfectie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Duo plissés</h3>
+                  <p className="professional-card-subtitle">Dubbele perfectie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Rolgordijnen - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/rolgordijnen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">☰</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Rolgordijnen</h3>
-                  <p className="luxury-card-subtitle">Strakke simpliciteit</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Rolgordijnen</h3>
+                  <p className="professional-card-subtitle">Strakke simpliciteit</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Duo rolgordijnen - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/duo-rolgordijnen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/duo-rolgordijnen-icon.png"
                         alt="Duo rolgordijnen"
@@ -548,65 +548,65 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Duo rolgordijnen</h3>
-                  <p className="luxury-card-subtitle">
+                  <h3 className="professional-card-title">Duo rolgordijnen</h3>
+                  <p className="professional-card-subtitle">
                     Innovatieve functionaliteit
                   </p>
-                  <div className="luxury-card-arrow">→</div>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Gordijnen - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/overgordijnen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">☄</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Overgordijnen</h3>
-                  <p className="luxury-card-subtitle">Klassieke grandeur</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Overgordijnen</h3>
+                  <p className="professional-card-subtitle">Klassieke grandeur</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Rails & roedes - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/gordijnrails")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">−</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Gordijnrails</h3>
-                  <p className="luxury-card-subtitle">Perfecte mechaniek</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Gordijnrails</h3>
+                  <p className="professional-card-subtitle">Perfecte mechaniek</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Vouwgordijnen - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/vitrages")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/vouwgordijnen-icon.png"
                         alt="Vitrages"
@@ -614,23 +614,23 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Vitrages</h3>
-                  <p className="luxury-card-subtitle">Lichte elegantie</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Vitrages</h3>
+                  <p className="professional-card-subtitle">Lichte elegantie</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Houten shutters - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/houten-shutters")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/houten-shutters-icon.png"
                         alt="Houten shutters"
@@ -638,23 +638,23 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Houten shutters</h3>
-                  <p className="luxury-card-subtitle">Tijdloze klasse</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Houten shutters</h3>
+                  <p className="professional-card-subtitle">Tijdloze klasse</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Vouwgordijnen - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/vouwgordijnen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <img
                         src="/images/vouwgordijnen-icon.png"
                         alt="Vouwgordijnen"
@@ -662,83 +662,83 @@ const Home = () => {
                       />
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Vouwgordijnen</h3>
-                  <p className="luxury-card-subtitle">Zachte plooien, strakke lijnen</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Vouwgordijnen</h3>
+                  <p className="professional-card-subtitle">Zachte plooien, strakke lijnen</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Gordijnroedes - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/gordijnroedes")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">−</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Gordijnroedes</h3>
-                  <p className="luxury-card-subtitle">Sterke ondersteuning</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Gordijnroedes</h3>
+                  <p className="professional-card-subtitle">Sterke ondersteuning</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Squid - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/squid")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">×</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Squid</h3>
-                  <p className="luxury-card-subtitle">Moderne privacy</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Squid</h3>
+                  <p className="professional-card-subtitle">Moderne privacy</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Horren - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/horren")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <span className="text-white text-2xl">🛏️</span>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Horren</h3>
-                  <p className="luxury-card-subtitle">Insectvrij comfort</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Horren</h3>
+                  <p className="professional-card-subtitle">Insectvrij comfort</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
 
               {/* Screen - Buiten Zonwering - Premium Card */}
               <div
-                className="luxury-product-card group"
+                className="professional-product-card group"
                 onClick={() => setLocation("/screen")}
               >
-                <div className="luxury-card-background"></div>
-                <div className="luxury-card-glow"></div>
-                <div className="luxury-card-content">
-                  <div className="luxury-icon-container">
-                    <div className="luxury-icon-glow"></div>
-                    <div className="luxury-icon">
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
                       <div className="relative">
                         <span className="text-white text-2xl">⛄</span>
                         <div className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs px-2 py-1 rounded-full font-bold">
@@ -747,9 +747,9 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                  <h3 className="luxury-card-title">Screen</h3>
-                  <p className="luxury-card-subtitle">Buiten zonwering</p>
-                  <div className="luxury-card-arrow">→</div>
+                  <h3 className="professional-card-title">Screen</h3>
+                  <p className="professional-card-subtitle">Buiten zonwering</p>
+                  <div className="professional-card-arrow">→</div>
                 </div>
               </div>
             </div>
@@ -788,12 +788,12 @@ const Home = () => {
               {/* Perfect Fit - Ultra Luxury */}
               <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
-                <div className="ultra-luxury-card-glow"></div>
-                <div className="ultra-luxury-card-content">
-                  <div className="ultra-luxury-icon-container mb-8">
-                    <div className="ultra-luxury-icon-bg"></div>
-                    <div className="ultra-luxury-icon-glow"></div>
-                    <span className="ultra-luxury-icon text-2xl">⛄</span>
+                <div className="ultra-professional-card-glow"></div>
+                <div className="ultra-professional-card-content">
+                  <div className="ultra-professional-icon-container mb-8">
+                    <div className="ultra-professional-icon-bg"></div>
+                    <div className="ultra-professional-icon-glow"></div>
+                    <span className="ultra-professional-icon text-2xl">⛄</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Vakkundig Op Maat
@@ -808,12 +808,12 @@ const Home = () => {
               {/* Express Service - Ultra Luxury */}
               <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
-                <div className="ultra-luxury-card-glow"></div>
-                <div className="ultra-luxury-card-content">
-                  <div className="ultra-luxury-icon-container mb-8">
-                    <div className="ultra-luxury-icon-bg"></div>
-                    <div className="ultra-luxury-icon-glow"></div>
-                    <span className="ultra-luxury-icon text-2xl">🚚</span>
+                <div className="ultra-professional-card-glow"></div>
+                <div className="ultra-professional-card-content">
+                  <div className="ultra-professional-icon-container mb-8">
+                    <div className="ultra-professional-icon-bg"></div>
+                    <div className="ultra-professional-icon-glow"></div>
+                    <span className="ultra-professional-icon text-2xl">🚚</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Uitmuntende Levering
@@ -829,12 +829,12 @@ const Home = () => {
               {/* Master Consultation - Ultra Luxury */}
               <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
-                <div className="ultra-luxury-card-glow"></div>
-                <div className="ultra-luxury-card-content">
-                  <div className="ultra-luxury-icon-container mb-8">
-                    <div className="ultra-luxury-icon-bg"></div>
-                    <div className="ultra-luxury-icon-glow"></div>
-                    <span className="ultra-luxury-icon text-2xl">👥</span>
+                <div className="ultra-professional-card-glow"></div>
+                <div className="ultra-professional-card-content">
+                  <div className="ultra-professional-icon-container mb-8">
+                    <div className="ultra-professional-icon-bg"></div>
+                    <div className="ultra-professional-icon-glow"></div>
+                    <span className="ultra-professional-icon text-2xl">👥</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Meesterlijk Advies
@@ -849,12 +849,12 @@ const Home = () => {
               {/* Luxury Materials - Ultra Luxury */}
               <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
-                <div className="ultra-luxury-card-glow"></div>
-                <div className="ultra-luxury-card-content">
-                  <div className="ultra-luxury-icon-container mb-8">
-                    <div className="ultra-luxury-icon-bg"></div>
-                    <div className="ultra-luxury-icon-glow"></div>
-                    <span className="ultra-luxury-icon text-2xl">🏆</span>
+                <div className="ultra-professional-card-glow"></div>
+                <div className="ultra-professional-card-content">
+                  <div className="ultra-professional-icon-container mb-8">
+                    <div className="ultra-professional-icon-bg"></div>
+                    <div className="ultra-professional-icon-glow"></div>
+                    <span className="ultra-professional-icon text-2xl">🏆</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Luxueuze Materialen
@@ -869,12 +869,12 @@ const Home = () => {
               {/* Heritage Excellence - Ultra Luxury */}
               <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
-                <div className="ultra-luxury-card-glow"></div>
-                <div className="ultra-luxury-card-content">
-                  <div className="ultra-luxury-icon-container mb-8">
-                    <div className="ultra-luxury-icon-bg"></div>
-                    <div className="ultra-luxury-icon-glow"></div>
-                    <span className="ultra-luxury-icon text-2xl">⏰</span>
+                <div className="ultra-professional-card-glow"></div>
+                <div className="ultra-professional-card-content">
+                  <div className="ultra-professional-icon-container mb-8">
+                    <div className="ultra-professional-icon-bg"></div>
+                    <div className="ultra-professional-icon-glow"></div>
+                    <span className="ultra-professional-icon text-2xl">⏰</span>
                   </div>
                   <h3 className="ultra-luxury-feature-title">
                     Traditie in Perfectie

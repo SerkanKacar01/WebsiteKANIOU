@@ -238,6 +238,25 @@ html, body {
   transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+.font-professional-display {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.animate-float-professional {
+  animation: float 6s ease-in-out infinite;
+}
+
+.gap-professional-xl {
+  gap: 3rem;
+}
+
+.professional-cta-button {
+  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 /* PROFESSIONAL COLOR PALETTE */
 :root {
   /* Primary Professional Gold */

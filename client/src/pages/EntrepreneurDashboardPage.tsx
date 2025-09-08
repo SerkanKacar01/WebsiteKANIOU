@@ -178,6 +178,42 @@ export default function EntrepreneurDashboardPage() {
   // Individual order update tracking
   const [updatingOrderId, setUpdatingOrderId] = useState<number | null>(null);
 
+  // Update order mutation
+  const updateOrderMutation = useMutation({
+    mutationFn: async ({ orderId, updateData }: { orderId: number, updateData: any }) => {
+      const response = await fetch(`/api/admin/orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/dashboard"] });
+      toast({
+        title: "✨ Order Bijgewerkt",
+        description: "De ordergegevens zijn succesvol aangepast.",
+      });
+      setIsEditModalOpen(false);
+    },
+    onError: (error) => {
+      toast({
+        title: "❌ Update Fout",
+        description: "Er is een probleem opgetreden bij het bijwerken van de order.",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Search and filter state (Step 15.8)
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -985,9 +1021,155 @@ export default function EntrepreneurDashboardPage() {
             </DialogHeader>
             
             <div className="relative space-y-6 pt-6">
-              <p className="text-slate-300 text-center">
-                Premium bewerking interface wordt geladen...
-              </p>
+              {/* Customer Information Section */}
+              <div className="border-b border-white/20 pb-6">
+                <h3 className="text-lg font-semibold text-emerald-300 mb-4 flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  Klantgegevens
+                </h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="text-slate-400 mb-1">Naam</p>
+                    <p className="text-white font-semibold">{selectedOrder?.customerName}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-400 mb-1">Email</p>
+                    <p className="text-white font-semibold">{selectedOrder?.customerEmail}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-400 mb-1">Telefoon</p>
+                    <p className="text-white font-semibold">{selectedOrder?.customerPhone || 'Niet opgegeven'}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-400 mb-1">Bonnummer</p>
+                    <p className="text-amber-300 font-mono font-semibold">{selectedOrder?.bonnummer}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Status Management */}
+              <div className="border-b border-white/20 pb-6">
+                <h3 className="text-lg font-semibold text-cyan-300 mb-4 flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                  Status Beheer
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-white font-semibold mb-2 block">Order Status</Label>
+                    <select
+                      value={editForm.status}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, status: e.target.value }))}
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-md px-3 py-2 focus:bg-white/20 focus:border-cyan-400"
+                    >
+                      <option value="pending" className="bg-slate-800 text-white">In behandeling</option>
+                      <option value="processing" className="bg-slate-800 text-white">In verwerking</option>
+                      <option value="production" className="bg-slate-800 text-white">In productie</option>
+                      <option value="ready" className="bg-slate-800 text-white">Gereed voor levering</option>
+                      <option value="shipped" className="bg-slate-800 text-white">Verzonden</option>
+                      <option value="delivered" className="bg-slate-800 text-white">Geleverd</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <Label className="text-white font-semibold mb-2 block">Notificatie voorkeur</Label>
+                    <select
+                      value={editForm.notificationPreference}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, notificationPreference: e.target.value as "email" | "whatsapp" | "both" }))}
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-md px-3 py-2 focus:bg-white/20 focus:border-cyan-400"
+                    >
+                      <option value="email" className="bg-slate-800 text-white">Email</option>
+                      <option value="whatsapp" className="bg-slate-800 text-white">WhatsApp</option>
+                      <option value="both" className="bg-slate-800 text-white">Email + WhatsApp</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Notes Section */}
+              <div className="border-b border-white/20 pb-6">
+                <h3 className="text-lg font-semibold text-purple-300 mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Notities & Opmerkingen
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-white font-semibold mb-2 block">Klant notitie (zichtbaar voor klant)</Label>
+                    <Textarea
+                      value={editForm.clientNote}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, clientNote: e.target.value }))}
+                      placeholder="Voeg een notitie toe die de klant kan zien..."
+                      rows={3}
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white placeholder-slate-300 focus:bg-white/20 focus:border-purple-400"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="text-white font-semibold mb-2 block">Interne notitie (alleen voor team)</Label>
+                    <Textarea
+                      value={editForm.noteFromEntrepreneur}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, noteFromEntrepreneur: e.target.value }))}
+                      placeholder="Interne opmerkingen voor het team..."
+                      rows={3}
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white placeholder-slate-300 focus:bg-white/20 focus:border-purple-400"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Product Information Display */}
+              {selectedOrder?.productDetails && (
+                <div className="border-b border-white/20 pb-6">
+                  <h3 className="text-lg font-semibold text-emerald-300 mb-4 flex items-center gap-2">
+                    <Package className="w-5 h-5" />
+                    Product Informatie
+                  </h3>
+                  <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                    <p className="text-white">{selectedOrder.productType}</p>
+                    {selectedOrder.description && (
+                      <p className="text-slate-300 text-sm mt-2">{selectedOrder.description}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-4 pt-4">
+                <Button
+                  onClick={() => setIsEditModalOpen(false)}
+                  variant="outline"
+                  className="flex-1 bg-white/10 border-white/30 text-white hover:bg-white/20"
+                >
+                  Annuleren
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (!selectedOrder) return;
+                    
+                    const updateData = {
+                      status: editForm.status,
+                      clientNote: editForm.clientNote,
+                      noteFromEntrepreneur: editForm.noteFromEntrepreneur,
+                      notificationPreference: editForm.notificationPreference,
+                    };
+                    
+                    updateOrderMutation.mutate({ orderId: selectedOrder.id, updateData });
+                  }}
+                  disabled={updateOrderMutation.isPending}
+                  className="flex-1 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-bold"
+                >
+                  {updateOrderMutation.isPending ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                      Opslaan...
+                    </>
+                  ) : (
+                    <>
+                      <Settings className="w-4 h-4 mr-2" />
+                      Wijzigingen Opslaan
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>

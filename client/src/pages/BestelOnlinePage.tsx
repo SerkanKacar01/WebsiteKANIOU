@@ -89,7 +89,7 @@ const BestelOnlinePage = () => {
       name: "Gordijnrails",
       href: "/gordijnrails-configurator",
       icon: Minus,
-      available: false,
+      available: true,
     },
     {
       id: "jaloezieen",

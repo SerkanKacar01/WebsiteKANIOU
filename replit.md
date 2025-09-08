@@ -22,8 +22,11 @@ Preferred communication style: Simple, everyday language.
 - **API Design**: RESTful endpoints with validation
 - **Session Management**: Session-based user tracking
 - **File Uploads**: Multer for image processing
-- **Rate Limiting**: Express rate limiting
-- **Technical Implementations**: Secure admin authentication with bcryptjs, memory-based fallbacks for database operations during downtime, smart notification system for order updates, comprehensive document management.
+- **Rate Limiting**: Enhanced multi-layer rate limiting with specialized admin login protection (max 3 attempts per 15 min)
+- **Security Headers**: Advanced security headers (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy)
+- **Session Security**: Production-aware secure cookie configuration with strong session secret generation
+- **Security Monitoring**: Comprehensive security event logging for admin activities and suspicious behavior detection
+- **Technical Implementations**: Secure admin authentication with bcryptjs, memory-based fallbacks for database operations during downtime, smart notification system for order updates, comprehensive document management, enhanced IP blocking for suspicious activities.
 
 ### Feature Specifications
 - **E-commerce System (Informational)**: Product catalog (curtains, blinds, shutters), smart quote system, image gallery, customer testimonials. All e-commerce purchasing capabilities (cart, checkout, payment integration) have been removed, transforming product pages into informational displays.
@@ -36,7 +39,8 @@ Preferred communication style: Simple, everyday language.
 
 ### System Design Choices
 - **AI Integration**: AI chatbot components have been removed; traditional contact forms and quote systems are maintained.
-- **GDPR Compliance**: No cookie consent system currently implemented. Session-based functionality only without persistent storage to ensure privacy compliance.
+- **GDPR Compliance**: Cookiebot integration for GDPR-compliant cookie consent management. Session-based functionality with production-aware secure cookie settings to ensure privacy compliance.
+- **Security Posture**: Multi-layered security architecture with rate limiting, IP blocking, security headers, secure session management, and comprehensive audit logging.
 - **Data Flow**: Defined flows for customer journey, inquiries, quote processing, and order processing, emphasizing human follow-up for complex interactions.
 
 ## External Dependencies

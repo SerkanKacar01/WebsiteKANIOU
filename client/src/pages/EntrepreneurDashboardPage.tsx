@@ -46,7 +46,8 @@ import {
   Zap,
   Star,
   Gem,
-  Award
+  Award,
+  Bell
 } from "lucide-react";
 
 interface OrderStatus {

@@ -436,10 +436,19 @@ const GordijnrailsConfiguratorPage = () => {
 
   const getAvailableCeilingComponents = (): CeilingComponent[] => [
     {
+      id: "standard-ceiling-mount",
+      name: "Standaard plafondmontage set",
+      description:
+        "Basis plafondmontage met standaard clips en schroeven. Geschikt voor de meeste toepassingen.",
+      price: 1.25,
+      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750277424680.png",
+      quantity: 2,
+    },
+    {
       id: "double-clip",
       name: "KS-DS smartklick plafondsteun incl. afdekkap zwart",
       description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+        "Premium optie: 2 clips per meter voor een veilige installatie. Luxe afwerking.",
       price: 1.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750277424680.png",
       quantity: 2,
@@ -448,7 +457,7 @@ const GordijnrailsConfiguratorPage = () => {
       id: "white-cover-clip",
       name: "KS-DS smartklick plafondsteun met afdekkap wit",
       description:
-        "Aanbevolen: 2 clips per meter voor een veilige installatie.",
+        "Premium optie: 2 clips per meter voor een veilige installatie. Luxe afwerking.",
       price: 1.65,
       image: "Scherm­afbeelding 2025-06-18 om 21.01.06_1750277424680.png",
       quantity: 2,

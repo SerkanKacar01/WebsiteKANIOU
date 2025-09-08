@@ -1,5 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
+import path from "path";
+import fs from "fs";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
@@ -52,7 +54,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  await registerRoutes(app);
   
   // Initialize admin user and start session cleanup
   await initializeAdminUser();
@@ -264,23 +266,41 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  // Use NODE_ENV directly for Express 2.x compatibility
-  if (process.env.NODE_ENV === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
-
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = 5000;
   
   // Express 2.x compatibility - use app.listen() directly
-  app.listen(port, "0.0.0.0", () => {
+  const server = app.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
   });
+
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
+  // Use NODE_ENV directly for Express 2.x compatibility
+  if (process.env.NODE_ENV === "development") {
+    // Simple static file serving for Express 2.x compatibility
+    if (express.static) {
+      app.use(express.static('client'));
+      
+      // Fallback for SPA routing - serve index.html for non-API routes
+      app.get('*', (req: Request, res: Response) => {
+        if (!req.path.startsWith('/api')) {
+          try {
+            const filePath = path.join(process.cwd(), 'client/index.html');
+            const html = fs.readFileSync(filePath, 'utf8');
+            res.setHeader('Content-Type', 'text/html');
+            res.end(html);
+          } catch (error) {
+            console.error('Error serving index.html:', error);
+            res.status(500).end('Server Error');
+          }
+        }
+      });
+    }
+  } else {
+    serveStatic(app);
+  }
 })();

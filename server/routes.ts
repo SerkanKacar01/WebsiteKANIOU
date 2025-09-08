@@ -1480,6 +1480,6 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     return emailRegex.test(email) && email.length <= 254; // RFC 5321 limit
   }
 
-  const httpServer = createServer(app);
-  return httpServer;
+  // Routes are now registered, return the app
+  return app;
 }

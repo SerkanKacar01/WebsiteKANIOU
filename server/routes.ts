@@ -20,19 +20,41 @@ import {
 } from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
+import { randomBytes } from "crypto";
+import { adminLoginRateLimiter } from "./middleware/rateLimiter";
+
+// Generate a secure session secret as fallback
+function generateSecureSessionSecret(): string {
+  const secret = randomBytes(64).toString('hex');
+  console.warn('⚠️  SECURITY: Using generated session secret. Set SESSION_SECRET environment variable for production!');
+  return secret;
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
   app.use(cookieParser());
 
-  // GDPR-compliant session configuration
+  // Enhanced security middleware - Add security headers
+  app.use((req, res, next) => {
+    // Security headers for enhanced protection
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    next();
+  });
+
+  // GDPR-compliant session configuration with enhanced security
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
+  const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
+  
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || "fallback-secret-key",
+      secret: sessionSecret,
       resave: false,
       saveUninitialized: false, // Critical: Don't create sessions without user action
       cookie: {
-        secure: false, // Set to true in production with HTTPS
+        secure: isProduction, // Automatically true in production with HTTPS
         httpOnly: true,
         maxAge: 2 * 60 * 60 * 1000, // 2 hours
         sameSite: 'lax', // GDPR compliance
@@ -57,8 +79,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   };
 
-  // Admin login route
-  app.post("/api/admin/login", async (req, res) => {
+  // Admin login route with enhanced rate limiting
+  app.post("/api/admin/login", adminLoginRateLimiter, async (req, res) => {
     try {
       const { email, password } = req.body;
 
@@ -71,17 +93,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isValidCredentials(email, password)) {
         const { sessionId, expiresAt } = createSession(email);
 
-        console.log('🔑 Creating session:', {
+        // Enhanced security logging
+        console.log('🔑 SECURITY: Successful admin login:', {
           sessionId: sessionId.substring(0, 8) + '...',
           email: email,
-          expiresAt: expiresAt
+          ip: req.ip || 'unknown',
+          userAgent: req.get('user-agent'),
+          timestamp: new Date().toISOString()
         });
 
         // Only set cookies for admin authentication (essential cookies)
         (req.session as any).sessionId = sessionId;
         res.cookie("sessionId", sessionId, {
           httpOnly: true,
-          secure: false,
+          secure: isProduction, // Enhanced: Use same production detection
           maxAge: 2 * 60 * 60 * 1000,
           sameSite: 'lax',
           path: '/',
@@ -96,6 +121,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           admin: { email },
         });
       } else {
+        // Enhanced security logging for failed attempts
+        console.warn('🚨 SECURITY: Failed admin login attempt:', {
+          email: email,
+          ip: req.ip || 'unknown',
+          userAgent: req.get('user-agent'),
+          timestamp: new Date().toISOString()
+        });
         res.status(401).json({ error: "Ongeldige inloggegevens" });
       }
     } catch (error) {
@@ -110,6 +142,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     if (sessionId) {
       deleteSession(sessionId);
+      
+      // Enhanced security logging for logout
+      console.log('🔓 SECURITY: Admin logout:', {
+        sessionId: sessionId.substring(0, 8) + '...',
+        ip: req.ip || 'unknown',
+        timestamp: new Date().toISOString()
+      });
     }
 
     req.session.destroy((err: any) => {

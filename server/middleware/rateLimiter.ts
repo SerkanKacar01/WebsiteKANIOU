@@ -152,3 +152,71 @@ function cleanupExpiredRecords() {
     }
   });
 }
+
+/**
+ * Enhanced rate limiter specifically for admin login attempts
+ * Provides stronger protection for sensitive authentication endpoints
+ */
+export function adminLoginRateLimiter(req: Request, res: Response, next: NextFunction) {
+  const ip = req.ip || 'unknown';
+  const now = Date.now();
+  
+  // Stricter limits for admin login attempts
+  const ADMIN_MAX_REQUESTS = 3; // Maximum login attempts per window
+  const ADMIN_WINDOW_MS = 15 * 60 * 1000; // 15 minutes window
+  
+  // Check if IP is marked as suspicious
+  if (suspiciousIPs.has(ip)) {
+    console.warn(`🚨 SECURITY: Blocked admin login attempt from suspicious IP ${ip}`);
+    return res.status(429).json({
+      error: "Toegang geweigerd vanwege verdachte activiteit. Probeer later opnieuw.",
+      retryAfter: 900 // 15 minutes
+    });
+  }
+  
+  // Get current rate limit record for this IP
+  let record = rateLimitStore.get(ip);
+  if (!record) {
+    record = { 
+      count: 0, 
+      resetTime: now + ADMIN_WINDOW_MS,
+      suspiciousAttempts: 0,
+      lastAttempt: now
+    };
+  }
+  
+  // If the record has expired, reset it
+  if (now > record.resetTime) {
+    record.count = 1;
+    record.resetTime = now + ADMIN_WINDOW_MS;
+    record.suspiciousAttempts = 0;
+    record.lastAttempt = now;
+  } else {
+    record.count += 1;
+    record.lastAttempt = now;
+    
+    // Check if exceeded admin login attempts
+    if (record.count > ADMIN_MAX_REQUESTS) {
+      // Mark IP as suspicious for longer period
+      suspiciousIPs.add(ip);
+      setTimeout(() => suspiciousIPs.delete(ip), 60 * 60 * 1000); // 1 hour
+      
+      console.warn(`🚨 SECURITY: Admin login rate limit exceeded for IP ${ip} (${record.count} attempts)`);
+      
+      return res.status(429).json({
+        error: "Te veel inlogpogingen. Probeer over 15 minuten opnieuw.",
+        retryAfter: Math.ceil((record.resetTime - now) / 1000)
+      });
+    }
+  }
+  
+  // Update the record
+  rateLimitStore.set(ip, record);
+  
+  // Add security headers for admin endpoints
+  res.setHeader('X-RateLimit-Limit', ADMIN_MAX_REQUESTS.toString());
+  res.setHeader('X-RateLimit-Remaining', Math.max(0, ADMIN_MAX_REQUESTS - record.count).toString());
+  res.setHeader('X-RateLimit-Reset', new Date(record.resetTime).toISOString());
+  
+  next();
+}

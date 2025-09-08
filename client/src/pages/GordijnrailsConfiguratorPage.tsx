@@ -441,7 +441,7 @@ const GordijnrailsConfiguratorPage = () => {
       description:
         "Basis plafondmontage met standaard clips en schroeven. Geschikt voor de meeste toepassingen.",
       price: 1.25,
-      image: "Scherm­afbeelding 2025-06-18 om 21.00.38_1750277424680.png",
+      image: "Scherm­afbeelding 2025-08-15 om 17.18.14_1757370410570.png",
       quantity: 2,
     },
     {

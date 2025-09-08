@@ -4018,6 +4018,12 @@ html.rtl .right-0 {
     gap: 16px;
   }
   
+  /* Mobile footer headings - white and bold */
+  .footer-heading {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+  }
+  
   /* Mobile footer links - white and bold */
   .footer-link {
     color: #FFFFFF !important;

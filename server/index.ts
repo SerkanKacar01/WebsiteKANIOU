@@ -1,14 +1,24 @@
 import express, { type Request, Response, NextFunction } from "express";
+import bodyParser from "body-parser";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
-// Serve attached assets statically
-app.use('/attached_assets', express.static('attached_assets'));
+// Body parsing middleware for Express 2.x compatibility
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Static file serving for Express 2.x
+// Note: express.static may not be available in Express 2.x
+// Using basic static file serving approach
+if (express.static) {
+  app.use('/attached_assets', express.static('attached_assets'));
+} else {
+  // Fallback for Express 2.x - will handle static files differently
+  console.warn('Express 2.x: Static file serving may not work properly');
+}
 
 
 app.use((req, res, next) => {

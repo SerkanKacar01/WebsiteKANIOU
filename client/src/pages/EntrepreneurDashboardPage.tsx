@@ -27,6 +27,9 @@ import { apiRequest } from "@/lib/queryClient";
 import { 
   Building, 
   Crown,
+  Diamond,
+  Gem,
+  Zap,
   FileText, 
   Package, 
   Shield, 

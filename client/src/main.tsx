@@ -19,19 +19,15 @@ if (rootElement) {
     root.render(
       <HelmetProvider>
         <Helmet>
-          <title>KANIOU | Professional Raamdecoratie & Window Treatments</title>
-          <meta name="description" content="Professional raamdecoratie op maat bij KANIOU. Ontdek onze collectie rolgordijnen, plissé gordijnen, jaloezieen en meer. Vakkundige installatie en advies." />
+          <title>KANIOU | Professionele Raamdecoratie & Window Treatments</title>
+          <meta name="description" content="Professionele raamdecoratie op maat bij KANIOU. Ontdek onze collectie rolgordijnen, plissé gordijnen, jaloezieen en meer. Vakkundige installatie en advies." />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
           <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
         </Helmet>
         <LanguageProvider>
-          <div style={{ background: 'white', minHeight: '100vh', padding: '20px', color: 'black' }}>
-            <h1 style={{ fontSize: '32px', marginBottom: '20px', color: '#D5B36A' }}>KANIOU - Professional Window Treatments</h1>
-            <p style={{ fontSize: '18px', marginBottom: '20px' }}>Website successfully transformed to professional design</p>
-            <App />
-          </div>
+          <App />
         </LanguageProvider>
       </HelmetProvider>
     );

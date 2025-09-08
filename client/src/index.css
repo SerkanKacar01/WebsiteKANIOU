@@ -1967,6 +1967,209 @@ html, body {
   }
 }
 
+/* ============= ULTRA-LUXURY ORDER TRACKING BUTTON ============= */
+.ultra-luxury-tracking-button {
+  @apply relative block w-full;
+  
+  /* High-end positioning and dimensions */
+  max-width: 300px;
+  height: 60px;
+  
+  /* Premium backdrop filter with glassmorphism */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  
+  /* Luxurious golden glow animation on hover */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  
+  /* Elite depth shadows */
+  box-shadow: 
+    0 8px 32px rgba(213, 179, 90, 0.15),
+    0 4px 16px rgba(213, 179, 90, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.ultra-luxury-tracking-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 16px 48px rgba(213, 179, 90, 0.25),
+    0 8px 24px rgba(213, 179, 90, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.ultra-luxury-tracking-bg {
+  @apply absolute inset-0;
+  
+  /* Premium golden gradient background */
+  background: linear-gradient(
+    135deg,
+    rgba(213, 179, 90, 0.95) 0%,
+    rgba(224, 193, 136, 0.90) 50%,
+    rgba(200, 168, 91, 0.95) 100%
+  );
+  
+  /* Sophisticated glassmorphism overlay */
+  border-radius: 16px;
+  
+  /* Luxury border with golden accent */
+  border: 1px solid rgba(213, 179, 90, 0.3);
+  
+  /* High-end animated shine effect */
+  position: relative;
+  overflow: hidden;
+}
+
+.ultra-luxury-tracking-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  animation: luxuryShine 3s ease-in-out infinite;
+}
+
+@keyframes luxuryShine {
+  0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.ultra-luxury-tracking-border {
+  @apply absolute inset-0 pointer-events-none;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(213, 179, 90, 0.4) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.ultra-luxury-tracking-content {
+  @apply relative z-10 flex items-center justify-center gap-3 h-full px-6;
+  
+  /* Premium white text with luxury font */
+  color: #FFFFFF;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.ultra-luxury-tracking-icon {
+  @apply flex items-center justify-center;
+  
+  /* Golden icon with premium glow */
+  color: #FFFFFF;
+  filter: drop-shadow(0 2px 4px rgba(213, 179, 90, 0.3));
+}
+
+.ultra-luxury-tracking-text {
+  @apply font-bold text-sm tracking-wider;
+  
+  /* Elite typography styling */
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ultra-luxury-tracking-arrow {
+  @apply opacity-70;
+  transition: all 0.3s ease;
+  color: #FFFFFF;
+}
+
+.ultra-luxury-tracking-button:hover .ultra-luxury-tracking-arrow {
+  @apply opacity-100;
+  filter: drop-shadow(0 2px 4px rgba(213, 179, 90, 0.4));
+}
+
+/* ============= MOBILE LUXURY TRACKING BUTTON ============= */
+.mobile-luxury-tracking-button {
+  @apply relative block w-full;
+  
+  /* Mobile-optimized dimensions */
+  height: 56px;
+  border-radius: 14px;
+  
+  /* Premium mobile backdrop filter */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Smooth mobile transitions */
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+  
+  /* Mobile-optimized shadows */
+  box-shadow: 
+    0 6px 24px rgba(213, 179, 90, 0.12),
+    0 3px 12px rgba(213, 179, 90, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.mobile-luxury-tracking-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 36px rgba(213, 179, 90, 0.20),
+    0 6px 18px rgba(213, 179, 90, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.mobile-tracking-bg {
+  @apply absolute inset-0;
+  
+  /* Mobile golden gradient */
+  background: linear-gradient(
+    135deg,
+    rgba(213, 179, 90, 0.92) 0%,
+    rgba(224, 193, 136, 0.88) 50%,
+    rgba(200, 168, 91, 0.92) 100%
+  );
+  
+  border-radius: 14px;
+  border: 1px solid rgba(213, 179, 90, 0.25);
+}
+
+.mobile-tracking-content {
+  @apply relative z-10 flex items-center justify-center gap-3 h-full px-5;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.mobile-tracking-icon {
+  @apply flex items-center justify-center;
+  color: #FFFFFF;
+  filter: drop-shadow(0 1px 3px rgba(213, 179, 90, 0.3));
+}
+
+.mobile-tracking-text {
+  @apply font-bold text-sm tracking-wide;
+  letter-spacing: 1.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-tracking-arrow {
+  @apply opacity-60;
+  transition: all 0.3s ease;
+  color: #FFFFFF;
+}
+
+.mobile-luxury-tracking-button:hover .mobile-tracking-arrow {
+  @apply opacity-90;
+  filter: drop-shadow(0 1px 3px rgba(213, 179, 90, 0.4));
+}
+
 .ultra-luxury-newsletter-description {
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.875rem, 1.5vw, 1rem);

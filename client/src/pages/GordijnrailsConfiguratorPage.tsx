@@ -439,10 +439,10 @@ const GordijnrailsConfiguratorPage = () => {
       id: "standard-ceiling-mount",
       name: "Standaard plafondmontage set",
       description:
-        "Basis plafondmontage met standaard clips en schroeven. Geschikt voor de meeste toepassingen.",
-      price: 1.25,
+        "Deze set wordt standaard meegeleverd. Het benodigde aantal wordt door ons bepaald, zodat de montage altijd passend is. De plafondsteunen met sleuf worden geleverd in dezelfde kleur als de gekozen rail kleur, zodat alles mooi aansluit.",
+      price: 0.0,
       image: "Scherm­afbeelding 2025-08-15 om 17.18.14_1757370410570.png",
-      quantity: 2,
+      quantity: 0,
     },
     {
       id: "double-clip",

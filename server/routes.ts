@@ -747,25 +747,28 @@ Mr. Serkan KACAR
         customerAddress = "",
         customerCity = "",
         productType,
+        productModel,
+        productDetails,
         amount,
         description,
         status = "pending",
+        expectedDeliveryDate,
+        sendNotification = false,
         notifyByEmail = true,
         customerNote,
         internalNote,
         bonnummer,
       } = req.body;
 
-      if (
-        !customerName ||
-        !customerEmail ||
-        !bonnummer
-      ) {
-        return res.status(400).json({ error: "Vereiste velden ontbreken: klantnaam, email en bonnummer" });
+      if (!customerName || !customerEmail) {
+        return res.status(400).json({ error: "Vereiste velden ontbreken: klantnaam en email" });
       }
 
+      // Generate bonnummer if not provided
+      const finalBonnummer = bonnummer || `KAN-25-${Math.random().toString(36).substring(2, 8).toUpperCase()}-${Math.random().toString(36).substring(2, 4).toUpperCase()}`;
+
       const orderData = {
-        orderNumber: bonnummer, // Use the custom reference number instead of auto-generated ID
+        orderNumber: finalBonnummer, // Use the custom reference number instead of auto-generated ID
         customerName,
         customerEmail,
         customerPhone,
@@ -779,7 +782,12 @@ Mr. Serkan KACAR
         status,
         redirectUrl: "",
         webhookUrl: "",
-        productDetails: JSON.stringify({ productType: productType || "Zie PDF voor productdetails" }),
+        productDetails: JSON.stringify({ 
+          productType: productType || "Zie PDF voor productdetails",
+          productModel: productModel || null,
+          productDetails: productDetails || null,
+          expectedDeliveryDate: expectedDeliveryDate || null,
+        }),
         customerDetails: JSON.stringify({ customerNote, internalNote }),
         molliePaymentId: `manual_${Date.now()}`,
         clientNote: customerNote || null,
@@ -788,15 +796,15 @@ Mr. Serkan KACAR
         invoiceUrl: null,
         notificationPreference: "email" as const,
         notifyByEmail: true,
-        bonnummer,
+        bonnummer: finalBonnummer,
       };
 
       const newOrder = await storage.createPaymentOrder(orderData);
 
-      // Send order confirmation email to customer
-      if (customerEmail && notifyByEmail) {
+      // Send order confirmation email to customer (if notification enabled)
+      if (customerEmail && sendNotification && (notifyByEmail || sendNotification)) {
         try {
-          const subject = `KANIOU Zilvernaald | Orderbevestiging en besteloverzicht ${bonnummer}`;
+          const subject = `KANIOU Zilvernaald | Orderbevestiging en besteloverzicht ${finalBonnummer}`;
           const emailBody = `
 Geachte ${customerName},
 
@@ -807,8 +815,12 @@ Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaa
 
 🧾 **Bestelgegevens**
 ━━━━━━━━━━━━━━━━━━━  
-📦 Bestelnummer: ${bonnummer}
-📋 Status: Bestelling ontvangen
+📦 Bestelnummer: ${finalBonnummer}
+📋 Status: ${status || 'In behandeling'}
+${productType ? `🏷️ Categorie: ${productType}` : ''}
+${productModel ? `📋 Model: ${productModel}` : ''}
+${productDetails ? `📝 Details: ${productDetails}` : ''}
+${expectedDeliveryDate ? `📅 Verwachte levering: ${expectedDeliveryDate}` : ''}
 
 📦 **Volg uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  

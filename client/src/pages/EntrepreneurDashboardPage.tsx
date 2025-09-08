@@ -1117,14 +1117,14 @@ export default function EntrepreneurDashboardPage() {
               </div>
 
               {/* Product Information Display */}
-              {selectedOrder?.productDetails && (
+              {selectedOrder && (
                 <div className="border-b border-white/20 pb-6">
                   <h3 className="text-lg font-semibold text-emerald-300 mb-4 flex items-center gap-2">
                     <Package className="w-5 h-5" />
                     Product Informatie
                   </h3>
                   <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                    <p className="text-white">{selectedOrder.productType}</p>
+                    <p className="text-white">{selectedOrder.productType || 'Geen product informatie'}</p>
                     {selectedOrder.description && (
                       <p className="text-slate-300 text-sm mt-2">{selectedOrder.description}</p>
                     )}

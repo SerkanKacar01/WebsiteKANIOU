@@ -719,11 +719,36 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <img 
-                        src="/attached_assets/Scherm­afbeelding 2025-09-07 om 14.24.55_1757362734979.png" 
-                        alt="Horren icoon" 
-                        className="w-8 h-8 filter brightness-0 invert"
-                      />
+                      <svg 
+                        className="w-8 h-8 text-white" 
+                        viewBox="0 0 64 64" 
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        {/* Bed frame */}
+                        <rect x="8" y="32" width="48" height="20" rx="2" fill="currentColor" opacity="0.8"/>
+                        <rect x="6" y="28" width="4" height="28" rx="1" fill="currentColor"/>
+                        <rect x="54" y="28" width="4" height="28" rx="1" fill="currentColor"/>
+                        
+                        {/* Pillow */}
+                        <ellipse cx="20" cy="36" rx="8" ry="4" fill="currentColor" opacity="0.6"/>
+                        
+                        {/* Person sleeping */}
+                        <circle cx="24" cy="34" r="3" fill="currentColor" opacity="0.9"/>
+                        <rect x="28" y="36" width="16" height="8" rx="4" fill="currentColor" opacity="0.7"/>
+                        
+                        {/* Insects being blocked - with dotted lines showing protection */}
+                        <g opacity="0.5">
+                          {/* Flying insects */}
+                          <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
+                          <circle cx="52" cy="18" r="1.5" fill="currentColor"/>
+                          <circle cx="48" cy="12" r="1.5" fill="currentColor"/>
+                          
+                          {/* Dotted protection barrier */}
+                          <path d="M 6 24 Q 32 20 58 24" stroke="currentColor" strokeWidth="2" strokeDasharray="2,2" fill="none" opacity="0.6"/>
+                          <path d="M 4 26 Q 32 22 60 26" stroke="currentColor" strokeWidth="1" strokeDasharray="1,2" fill="none" opacity="0.4"/>
+                        </g>
+                      </svg>
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Horren</h3>

@@ -353,15 +353,20 @@ const GordijnrailsConfiguratorPage = () => {
     setShowAllSections(value.length === 6);
   };
 
-  // Function to expand next step
+  // Function to expand next step and collapse current step
   const goToNextStep = (currentStepId: number) => {
     if (currentStepId < 6) {
+      const currentStepKey = `step-${currentStepId}`;
       const nextStepKey = `step-${currentStepId + 1}`;
       
-      // Add the next step to expanded sections if not already included
-      if (!expandedSections.includes(nextStepKey)) {
-        setExpandedSections(prev => [...prev, nextStepKey]);
-      }
+      // Remove current step and add next step to expanded sections
+      setExpandedSections(prev => {
+        const filtered = prev.filter(key => key !== currentStepKey);
+        if (!filtered.includes(nextStepKey)) {
+          return [...filtered, nextStepKey];
+        }
+        return filtered;
+      });
     }
   };
 

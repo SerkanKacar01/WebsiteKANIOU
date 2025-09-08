@@ -490,27 +490,41 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
   // Admin authentication status route
   app.get("/api/admin/auth-status", async (req: any, res) => {
     try {
-      // Check multiple sources for session ID
+      // Check multiple sources for session ID with priority order
       const sessionId = req.cookies?.sessionId || req.session?.sessionId || req.headers?.authorization;
       
       console.log('🔍 Auth status check:', {
         cookieSessionId: req.cookies?.sessionId ? 'present' : 'missing',
         requestSessionId: req.session?.sessionId ? 'present' : 'missing',
-        sessionId: sessionId ? sessionId.substring(0, 8) + '...' : 'none'
+        sessionId: sessionId ? sessionId.substring(0, 8) + '...' : 'none',
+        sessionStore: req.session ? 'available' : 'missing'
       });
 
       if (!sessionId) {
-        console.log('❌ No session ID found');
+        console.log('❌ No session ID found in any source');
         return res.json({ authenticated: false });
       }
 
       const session = validateSession(sessionId);
       if (!session) {
-        console.log('❌ Session validation failed');
+        console.log('❌ Session validation failed - clearing cookies');
+        // Clear invalid session cookie
+        res.clearCookie('sessionId', { path: '/' });
+        if (req.session) {
+          delete req.session.sessionId;
+          delete req.session.adminEmail;
+        }
         return res.json({ authenticated: false });
       }
 
       console.log('✅ Session validated for:', session.email);
+      
+      // Refresh session in request if valid
+      if (req.session && !req.session.sessionId) {
+        req.session.sessionId = sessionId;
+        req.session.adminEmail = session.email;
+      }
+      
       res.json({
         authenticated: true,
         email: session.email,

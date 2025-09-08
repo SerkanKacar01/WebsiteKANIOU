@@ -280,27 +280,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
   // Use NODE_ENV directly for Express 2.x compatibility
-  if (process.env.NODE_ENV === "development") {
-    // Simple static file serving for Express 2.x compatibility
-    if (express.static) {
-      app.use(express.static('client'));
-      
-      // Fallback for SPA routing - serve index.html for non-API routes
-      app.get('*', (req: Request, res: Response) => {
-        if (!req.path.startsWith('/api')) {
-          try {
-            const filePath = path.join(process.cwd(), 'client/index.html');
-            const html = fs.readFileSync(filePath, 'utf8');
-            res.setHeader('Content-Type', 'text/html');
-            res.end(html);
-          } catch (error) {
-            console.error('Error serving index.html:', error);
-            res.status(500).end('Server Error');
-          }
-        }
-      });
-    }
-  } else {
-    serveStatic(app);
-  }
+  // Always serve built files for now - development and production
+  serveStatic(app);
 })();

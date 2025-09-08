@@ -43,14 +43,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     
-    // Content Security Policy voor extra browser beveiliging
+    // Content Security Policy voor extra browser beveiliging - relaxed for development
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://consent.cookiebot.com https://fonts.googleapis.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com https://fonts.googleapis.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: https:",
-      "connect-src 'self'",
+      "connect-src 'self' ws: wss:",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'"

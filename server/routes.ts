@@ -22,6 +22,7 @@ import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
 import { randomBytes } from "crypto";
 import { adminLoginRateLimiter } from "./middleware/rateLimiter";
+import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
 
 // Generate a secure session secret as fallback
 function generateSecureSessionSecret(): string {
@@ -34,13 +35,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
   app.use(cookieParser());
 
-  // Enhanced security middleware - Add security headers
+  // Enhanced security middleware - Add security headers including CSP
   app.use((req, res, next) => {
-    // Security headers for enhanced protection
+    // Security headers voor maximale bescherming
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Content Security Policy voor extra browser beveiliging
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://consent.cookiebot.com https://fonts.googleapis.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: https:",
+      "connect-src 'self'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'"
+    ].join('; ');
+    
+    res.setHeader('Content-Security-Policy', csp);
     next();
   });
 

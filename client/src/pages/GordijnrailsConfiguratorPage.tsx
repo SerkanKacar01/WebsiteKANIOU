@@ -44,6 +44,16 @@ import dsRailPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 00.26.08_
 import dsRailTechnicalImageBlack from "@assets/Scherm­afbeelding 2025-06-18 om 00.27.20_1750371210898.png";
 import dsRailBlackPhotoImage from "@assets/Scherm­afbeelding 2025-06-18 om 23.19.08_1750371210898.png";
 import { Link } from "wouter";
+import { 
+  Ruler, 
+  Wrench, 
+  ArrowLeft, 
+  Settings, 
+  RotateCcw, 
+  Package, 
+  CreditCard, 
+  FileText 
+} from "lucide-react";
 
 interface ConfigStep {
   id: number;

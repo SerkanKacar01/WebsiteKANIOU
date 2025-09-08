@@ -141,16 +141,25 @@ export default function EntrepreneurDashboardPage() {
     customerAddress: "",
     customerCity: "",
     orderDate: new Date().toISOString().split("T")[0],
-    status: "Bestelling ontvangen",
+    status: "In behandeling",
     customerNote: "",
     internalNote: "",
     bonnummer: "",
+    // New fields
+    productCategory: "",
+    productModel: "",
+    productDetails: "",
+    expectedDeliveryDate: "",
+    sendNotification: false,
   });
 
   // Premium Animation State
   const [isAnimating, setIsAnimating] = useState(true);
 
-  // PDF upload state
+  // PDF upload state for new orders
+  const [newOrderPDFs, setNewOrderPDFs] = useState<File[]>([]);
+  
+  // PDF upload state for existing orders
   const [selectedPDFs, setSelectedPDFs] = useState<File[]>([]);
   const [documentTypes, setDocumentTypes] = useState<string[]>([]);
   const [documentVisibility, setDocumentVisibility] = useState<boolean[]>([]);
@@ -274,7 +283,7 @@ export default function EntrepreneurDashboardPage() {
   };
 
   // Check authentication status
-  const { data: authStatus, isLoading: isLoadingAuth } = useQuery({
+  const { data: authStatus, isLoading: isLoadingAuth } = useQuery<{authenticated: boolean, email?: string}>({
     queryKey: ["/api/admin/auth-status"],
     retry: false,
   });
@@ -330,10 +339,14 @@ export default function EntrepreneurDashboardPage() {
         customerCity: orderData.customerCity || null,
         amount: 0,
         currency: "EUR",
-        description: "Premium KANIOU Bestelling - Details in PDF",
-        productType: "Zie PDF voor exclusieve productdetails",
-        status: orderData.status || "Bestelling ontvangen",
-        notifyByEmail: true,
+        description: `${orderData.productCategory} - ${orderData.productModel}`,
+        productType: orderData.productCategory,
+        productModel: orderData.productModel,
+        productDetails: orderData.productDetails || null,
+        status: orderData.status || "In behandeling",
+        expectedDeliveryDate: orderData.expectedDeliveryDate || null,
+        sendNotification: orderData.sendNotification || false,
+        notifyByEmail: orderData.sendNotification || false,
         customerNote: orderData.customerNote || null,
         internalNote: orderData.internalNote || null,
         bonnummer: orderData.bonnummer,
@@ -372,10 +385,16 @@ export default function EntrepreneurDashboardPage() {
         customerAddress: "",
         customerCity: "",
         orderDate: new Date().toISOString().split("T")[0],
-        status: "Bestelling ontvangen",
+        status: "In behandeling",
         customerNote: "",
         internalNote: "",
         bonnummer: "",
+        // New fields
+        productCategory: "",
+        productModel: "",
+        productDetails: "",
+        expectedDeliveryDate: "",
+        sendNotification: false,
       });
     },
     onError: (error) => {
@@ -1027,6 +1046,157 @@ export default function EntrepreneurDashboardPage() {
                 </div>
               </div>
 
+              {/* STAP 1: Nieuwe velden zoals gevraagd */}
+              
+              {/* Productinformatie Sectie */}
+              <div className="border-t border-white/20 pt-6">
+                <h3 className="text-lg font-semibold text-emerald-300 mb-4 flex items-center gap-2">
+                  <Package className="w-5 h-5" />
+                  Productinformatie
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-white font-semibold">Productcategorie *</Label>
+                    <select
+                      value={newOrderForm.productCategory}
+                      onChange={(e) => setNewOrderForm(prev => ({ ...prev, productCategory: e.target.value }))}
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-md px-3 py-2 focus:bg-white/20 focus:border-emerald-400"
+                    >
+                      <option value="" className="bg-slate-800 text-white">Selecteer categorie</option>
+                      <option value="gordijnen" className="bg-slate-800 text-white">Gordijnen</option>
+                      <option value="jalouzieën" className="bg-slate-800 text-white">Jalouzieën</option>
+                      <option value="rolgordijnen" className="bg-slate-800 text-white">Rolgordijnen</option>
+                      <option value="verticale-lamellen" className="bg-slate-800 text-white">Verticale Lamellen</option>
+                      <option value="plissé" className="bg-slate-800 text-white">Plissé gordijnen</option>
+                      <option value="shutters" className="bg-slate-800 text-white">Shutters</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-white font-semibold">Model/Type *</Label>
+                    <Input
+                      value={newOrderForm.productModel}
+                      onChange={(e) => setNewOrderForm(prev => ({ ...prev, productModel: e.target.value }))}
+                      placeholder="Bijv. Premium Blackout, Luxe Houten Jaloezie"
+                      className="bg-white/10 backdrop-blur-sm border-white/30 text-white placeholder-slate-300 focus:bg-white/20"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2 mt-4">
+                  <Label className="text-white font-semibold">Productdetails</Label>
+                  <textarea
+                    value={newOrderForm.productDetails}
+                    onChange={(e) => setNewOrderForm(prev => ({ ...prev, productDetails: e.target.value }))}
+                    placeholder="Specificaties, afmetingen, kleur, bediening, montage-instructies..."
+                    rows={3}
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white placeholder-slate-300 rounded-md px-3 py-2 focus:bg-white/20 focus:border-emerald-400"
+                  />
+                </div>
+              </div>
+
+              {/* Status en Levering Sectie */}
+              <div className="border-t border-white/20 pt-6">
+                <h3 className="text-lg font-semibold text-cyan-300 mb-4 flex items-center gap-2">
+                  <Package className="w-5 h-5" />
+                  Status & Levering
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-white font-semibold">Status van bestelling *</Label>
+                    <select
+                      value={newOrderForm.status}
+                      onChange={(e) => setNewOrderForm(prev => ({ ...prev, status: e.target.value }))}
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-md px-3 py-2 focus:bg-white/20 focus:border-cyan-400"
+                    >
+                      <option value="In behandeling" className="bg-slate-800 text-white">In behandeling</option>
+                      <option value="In productie" className="bg-slate-800 text-white">In productie</option>
+                      <option value="Verzonden" className="bg-slate-800 text-white">Verzonden</option>
+                      <option value="Geleverd" className="bg-slate-800 text-white">Geleverd</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-white font-semibold">Verwachte leverdatum</Label>
+                    <Input
+                      type="date"
+                      value={newOrderForm.expectedDeliveryDate}
+                      onChange={(e) => setNewOrderForm(prev => ({ ...prev, expectedDeliveryDate: e.target.value }))}
+                      className="bg-white/10 backdrop-blur-sm border-white/30 text-white focus:bg-white/20"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* PDF Upload Sectie */}
+              <div className="border-t border-white/20 pt-6">
+                <h3 className="text-lg font-semibold text-purple-300 mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Documenten
+                </h3>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-white font-semibold">Upload PDF (offerte, factuur)</Label>
+                    <Input
+                      type="file"
+                      multiple
+                      accept=".pdf"
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        if (files.length > 3) {
+                          toast({
+                            title: "⚠️ Te veel bestanden",
+                            description: "Maximaal 3 PDF-bestanden toegestaan.",
+                            variant: "destructive",
+                          });
+                          return;
+                        }
+                        const oversizedFiles = files.filter(file => file.size > 5 * 1024 * 1024);
+                        if (oversizedFiles.length > 0) {
+                          toast({
+                            title: "⚠️ Bestand te groot",
+                            description: "Elk PDF-bestand mag maximaal 5MB zijn.",
+                            variant: "destructive",
+                          });
+                          return;
+                        }
+                        setNewOrderPDFs(files);
+                      }}
+                      className="bg-white/10 backdrop-blur-sm border-white/30 text-white file:bg-emerald-500/80 file:text-white file:border-0 file:rounded-md file:px-3 file:py-1 file:mr-3 focus:bg-white/20"
+                    />
+                    {newOrderPDFs.length > 0 && (
+                      <div className="text-sm text-slate-300 mt-2">
+                        <p>{newOrderPDFs.length} bestand(en) geselecteerd:</p>
+                        <ul className="list-disc list-inside ml-2">
+                          {newOrderPDFs.map((file, index) => (
+                            <li key={index} className="truncate">
+                              {file.name} ({Math.round(file.size / 1024)} KB)
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Notificatie Checkbox */}
+                  <div className="flex items-center space-x-3 bg-white/5 p-4 rounded-lg border border-white/10">
+                    <input
+                      type="checkbox"
+                      id="sendNotification"
+                      checked={newOrderForm.sendNotification}
+                      onChange={(e) => setNewOrderForm(prev => ({ ...prev, sendNotification: e.target.checked }))}
+                      className="w-4 h-4 accent-emerald-500"
+                    />
+                    <Label htmlFor="sendNotification" className="text-white font-semibold flex items-center gap-2">
+                      <Bell className="w-4 h-4 text-emerald-400" />
+                      Notificatie verzenden naar klant?
+                    </Label>
+                  </div>
+                  {newOrderForm.sendNotification && (
+                    <p className="text-sm text-emerald-300 ml-7">
+                      ✅ Klant ontvangt automatisch een e-mail met bonnummer en PDF's als bijlage
+                    </p>
+                  )}
+                </div>
+              </div>
+
               <div className="flex gap-4">
                 <Button
                   onClick={() => setIsNewOrderModalOpen(false)}
@@ -1037,7 +1207,14 @@ export default function EntrepreneurDashboardPage() {
                 </Button>
                 <Button
                   onClick={() => createOrderMutation.mutate(newOrderForm)}
-                  disabled={createOrderMutation.isPending || !newOrderForm.customerName}
+                  disabled={
+                    createOrderMutation.isPending || 
+                    !newOrderForm.customerName || 
+                    !newOrderForm.customerEmail ||
+                    !newOrderForm.productCategory ||
+                    !newOrderForm.productModel ||
+                    !newOrderForm.status
+                  }
                   className="flex-1 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-bold"
                 >
                   {createOrderMutation.isPending ? (

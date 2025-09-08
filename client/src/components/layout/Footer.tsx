@@ -426,7 +426,7 @@ const Footer: React.FC = () => {
               onClick={() => toggleSection("bedrijf")}
               className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
             >
-              <h3 className="footer-heading text-lg font-semibold text-gray-900">
+              <h3 className="footer-heading text-lg font-bold text-white">
                 Bedrijf
               </h3>
               <div className="ml-2 transition-transform duration-300">
@@ -445,10 +445,10 @@ const Footer: React.FC = () => {
               }`}
             >
               <div className="px-2 pb-4">
-                <p className="text-lg font-semibold text-gray-900 mb-2">
+                <p className="text-lg font-bold text-white mb-2">
                   KANIOU zilvernaald
                 </p>
-                <p className="text-gray-700 mb-4">
+                <p className="text-white font-medium mb-4">
                   Premium Gordijnen & Zonweringen
                 </p>
 
@@ -517,7 +517,7 @@ const Footer: React.FC = () => {
               onClick={() => toggleSection("producten")}
               className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
             >
-              <h3 className="footer-heading text-lg font-semibold text-gray-900">
+              <h3 className="footer-heading text-lg font-bold text-white">
                 Producten
               </h3>
               <div className="ml-2 transition-transform duration-300">
@@ -708,7 +708,7 @@ const Footer: React.FC = () => {
               onClick={() => toggleSection("klantenservice")}
               className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
             >
-              <h3 className="footer-heading text-lg font-semibold text-gray-900">
+              <h3 className="footer-heading text-lg font-bold text-white">
                 Klantenservice
               </h3>
               <div className="ml-2 transition-transform duration-300">
@@ -793,7 +793,7 @@ const Footer: React.FC = () => {
               onClick={() => toggleSection("nieuwsbrief")}
               className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
             >
-              <h3 className="footer-heading text-lg font-semibold text-gray-900">
+              <h3 className="footer-heading text-lg font-bold text-white">
                 Nieuwsbrief
               </h3>
               <div className="ml-2 transition-transform duration-300">
@@ -812,7 +812,7 @@ const Footer: React.FC = () => {
               }`}
             >
               <div className="px-2 pb-4">
-                <p className="text-gray-700 mb-4 leading-relaxed">
+                <p className="text-white font-medium mb-4 leading-relaxed">
                   Blijf op de hoogte van nieuwe collecties, aanbiedingen en
                   inspiratie voor uw interieur.
                 </p>
@@ -855,7 +855,7 @@ const Footer: React.FC = () => {
             onClick={() => toggleSection("legal")}
             className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
           >
-            <h3 className="footer-heading text-lg font-semibold text-gray-900">
+            <h3 className="footer-heading text-lg font-bold text-white">
               Wettelijke documenten
             </h3>
             <div className="ml-2 transition-transform duration-300">
@@ -971,7 +971,7 @@ const Footer: React.FC = () => {
 
         {/* Mobile Copyright - Always visible */}
         <div className="md:hidden text-center mt-6">
-          <p className="text-gray-600 text-sm">
+          <p className="text-white font-medium text-sm">
             © 2025 KANIOU Zilvernaald – Alle rechten voorbehouden
           </p>
         </div>

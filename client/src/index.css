@@ -4018,6 +4018,25 @@ html.rtl .right-0 {
     gap: 16px;
   }
   
+  /* Mobile footer links - white and bold */
+  .footer-link {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+  }
+  
+  .footer-link:hover {
+    color: #E6C988 !important;
+  }
+  
+  .footer-legal-link {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+  }
+  
+  .footer-legal-link:hover {
+    color: #E6C988 !important;
+  }
+  
   .footer-social-icon {
     width: 44px;
     height: 44px;

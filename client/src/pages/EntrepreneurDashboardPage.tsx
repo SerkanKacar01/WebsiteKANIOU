@@ -26,6 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { 
   Building, 
+  Crown,
   FileText, 
   Package, 
   Shield, 

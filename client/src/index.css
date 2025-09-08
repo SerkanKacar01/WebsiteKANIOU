@@ -1,4 +1,4 @@
-/* WORLD-CLASS LUXURY TYPOGRAPHY SYSTEM */
+/* PROFESSIONAL TYPOGRAPHY SYSTEM */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&display=swap');
 
 @tailwind base;
@@ -37,11 +37,11 @@ html, body {
     --card-foreground: 20 14.3% 4.1%;
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
-    --primary: 43 31% 62%;  /* #D5B36A - Premium Gold */
+    --primary: 43 31% 62%;  /* #D5B36A - Professional Gold */
     --primary-foreground: 0 0% 100%;
     --secondary: 45 36% 70%;  /* #E0C188 - Light Gold */
     --secondary-foreground: 0 0% 13%;
-    --accent: 43 31% 62%;  /* #D5B36A - Premium Gold */
+    --accent: 43 31% 62%;  /* #D5B36A - Professional Gold */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
@@ -225,22 +225,22 @@ html, body {
   }
 }
 
-/* WORLD-CLASS LUXURY DESIGN SYSTEM */
+/* PROFESSIONAL DESIGN SYSTEM */
 .transition-custom {
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.transition-luxury {
+.transition-professional {
   transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.transition-premium {
+.transition-elegant {
   transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* PREMIUM COLOR PALETTE */
+/* PROFESSIONAL COLOR PALETTE */
 :root {
-  /* Primary Luxury Gold */
+  /* Primary Professional Gold */
   --gold-50: #FEFDF8;
   --gold-100: #FDF9E8;
   --gold-200: #F8F0D1;
@@ -252,7 +252,7 @@ html, body {
   --gold-800: #8B6D37;
   --gold-900: #6F5529;
   
-  /* Neutral Luxury Grays */
+  /* Neutral Professional Grays */
   --gray-50: #FAFAFA;
   --gray-100: #F5F5F5;
   --gray-200: #E8E8E8;
@@ -264,27 +264,27 @@ html, body {
   --gray-800: #2A2A2A;
   --gray-900: #1A1A1A;
   
-  /* Luxury Accent Colors */
+  /* Professional Accent Colors */
   --cream: #FBF8F3;
   --ivory: #FFFFF0;
   --champagne: #F7E7CE;
   --pearl: #F8F6F0;
 }
 
-/* PREMIUM GRADIENTS */
-.gradient-luxury-gold {
+/* PROFESSIONAL GRADIENTS */
+.gradient-professional-gold {
   background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-600) 50%, var(--gold-500) 100%);
 }
 
-.gradient-luxury-subtle {
+.gradient-professional-subtle {
   background: linear-gradient(135deg, #FFFFFF 0%, var(--cream) 30%, #FFFFFF 100%);
 }
 
-.gradient-luxury-overlay {
+.gradient-professional-overlay {
   background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(213,179,106,0.05) 50%, rgba(255,255,255,0.98) 100%);
 }
 
-.gradient-text-luxury {
+.gradient-text-professional {
   background: linear-gradient(135deg, #F4E4A6 0%, #E6C988 25%, #D5B36A 50%, #C4A55A 75%, #B8995C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -293,7 +293,7 @@ html, body {
   animation: shimmer-text 3s ease-in-out infinite;
 }
 
-/* ULTRA-PREMIUM GLASS MORPHISM */
+/* PROFESSIONAL GLASS MORPHISM */
 .glass-nav {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(40px) saturate(200%);
@@ -305,22 +305,22 @@ html, body {
     0 -1px 0 rgba(213, 179, 106, 0.05) inset;
 }
 
-/* HAUTE COUTURE SHADOWS */
-.shadow-luxury {
+/* PROFESSIONAL SHADOWS */
+.shadow-professional {
   box-shadow: 
     0 20px 64px rgba(0, 0, 0, 0.08),
     0 8px 32px rgba(213, 179, 106, 0.04),
     0 1px 0 rgba(255, 255, 255, 0.8) inset;
 }
 
-.shadow-luxury-hover {
+.shadow-professional-hover {
   box-shadow: 
     0 32px 96px rgba(0, 0, 0, 0.12),
     0 16px 48px rgba(213, 179, 106, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
-.shadow-luxury-pressed {
+.shadow-professional-pressed {
   box-shadow: 
     0 8px 24px rgba(0, 0, 0, 0.06),
     0 4px 12px rgba(213, 179, 106, 0.04),

@@ -719,7 +719,11 @@ const Home = () => {
                   <div className="luxury-icon-container">
                     <div className="luxury-icon-glow"></div>
                     <div className="luxury-icon">
-                      <span className="text-white text-2xl">⛄</span>
+                      <img 
+                        src="/attached_assets/Scherm­afbeelding 2025-09-07 om 14.24.55_1757362734979.png" 
+                        alt="Horren icoon" 
+                        className="w-8 h-8 filter brightness-0 invert"
+                      />
                     </div>
                   </div>
                   <h3 className="luxury-card-title">Horren</h3>

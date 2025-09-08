@@ -1,12 +1,10 @@
-import express from "express";
-import type { Request, Response, NextFunction } from "express";
+import express, { type Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
-// Express 2.x compatibility
-const app = (express as any).createServer();
+const app = express.createServer();
 
 // Body parsing middleware for Express 2.x compatibility
 app.use(bodyParser.json());
@@ -23,15 +21,15 @@ if (express.static) {
 }
 
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   const start = Date.now();
   const path = req.path;
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
   const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
+  res.json = function (bodyJson: any) {
     capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
+    return originalResJson.call(this, bodyJson);
   };
 
   res.on("finish", () => {

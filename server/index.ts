@@ -1,10 +1,12 @@
-import express, { type Request, Response, NextFunction } from "express";
+import express from "express";
+import type { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
-const app = express();
+// Express 2.x compatibility
+const app = (express as any).createServer();
 
 // Body parsing middleware for Express 2.x compatibility
 app.use(bodyParser.json());
@@ -267,7 +269,8 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
+  // Use NODE_ENV directly for Express 2.x compatibility
+  if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);

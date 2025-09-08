@@ -353,6 +353,18 @@ const GordijnrailsConfiguratorPage = () => {
     setShowAllSections(value.length === 6);
   };
 
+  // Function to expand next step
+  const goToNextStep = (currentStepId: number) => {
+    if (currentStepId < 6) {
+      const nextStepKey = `step-${currentStepId + 1}`;
+      
+      // Add the next step to expanded sections if not already included
+      if (!expandedSections.includes(nextStepKey)) {
+        setExpandedSections(prev => [...prev, nextStepKey]);
+      }
+    }
+  };
+
   // Removed autoExpandNextStep function - manual step control only
 
   const updateConfiguration = (key: keyof Configuration, value: any) => {
@@ -694,6 +706,23 @@ const GordijnrailsConfiguratorPage = () => {
     return items;
   };
 
+  // Component for next step button
+  const NextStepButton = ({ currentStepId }: { currentStepId: number }) => {
+    if (currentStepId >= 6) return null; // Don't show on last step
+    
+    return (
+      <div className="flex justify-end mt-6 pt-4 border-t border-gray-100">
+        <Button
+          onClick={() => goToNextStep(currentStepId)}
+          className="bg-[#d5c096] hover:bg-[#c4b183] text-white text-sm px-4 py-2 h-auto font-medium"
+          size="sm"
+        >
+          Volgende →
+        </Button>
+      </div>
+    );
+  };
+
   const renderStepContent = (stepId: number) => {
     switch (stepId) {
       case 1:
@@ -901,6 +930,7 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               </div>
             </div>
+            <NextStepButton currentStepId={1} />
           </div>
         );
 
@@ -1055,6 +1085,7 @@ const GordijnrailsConfiguratorPage = () => {
                 </p>
               </div>
             </div>
+            <NextStepButton currentStepId={2} />
           </div>
         );
 
@@ -1170,6 +1201,7 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               )}
             </div>
+            <NextStepButton currentStepId={3} />
           </div>
         );
 
@@ -1462,6 +1494,7 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               </div>
             )}
+            <NextStepButton currentStepId={4} />
           </div>
         );
 
@@ -1648,6 +1681,7 @@ const GordijnrailsConfiguratorPage = () => {
                 </div>
               </div>
             </div>
+            <NextStepButton currentStepId={5} />
           </div>
         );
 

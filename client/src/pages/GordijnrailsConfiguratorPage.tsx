@@ -1610,32 +1610,41 @@ const GordijnrailsConfiguratorPage = () => {
                                 </p>
                               </div>
 
-                              <div className="flex items-center gap-2">
-                                <Label className="text-sm font-medium">
-                                  Quantity:
-                                </Label>
-                                <input
-                                  type="number"
-                                  min="0"
-                                  max="20"
-                                  value={currentQuantity}
-                                  onChange={(e) => {
-                                    const quantity =
-                                      parseInt(e.target.value) || 0;
-                                    updateCeilingComponent(
-                                      component.id,
-                                      quantity,
-                                    );
-                                  }}
-                                  className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
-                                />
-                                <span className="text-sm text-gray-500">
-                                  = €
-                                  {(component.price * currentQuantity).toFixed(
-                                    2,
-                                  )}
-                                </span>
-                              </div>
+                              {component.id === "standard-ceiling-mount" ? (
+                                // Standaard plafondmontage set - geen keuze aantal, wordt automatisch berekend
+                                <div className="flex items-center">
+                                  <span className="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                                    ✓ Standaard inbegrepen
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium">
+                                    Quantity:
+                                  </Label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="20"
+                                    value={currentQuantity}
+                                    onChange={(e) => {
+                                      const quantity =
+                                        parseInt(e.target.value) || 0;
+                                      updateCeilingComponent(
+                                        component.id,
+                                        quantity,
+                                      );
+                                    }}
+                                    className="w-16 px-2 py-1 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#d5c096] focus:border-transparent"
+                                  />
+                                  <span className="text-sm text-gray-500">
+                                    = €
+                                    {(component.price * currentQuantity).toFixed(
+                                      2,
+                                    )}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </Card>
                         );

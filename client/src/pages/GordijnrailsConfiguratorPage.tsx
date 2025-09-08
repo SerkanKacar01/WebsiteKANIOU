@@ -353,16 +353,7 @@ const GordijnrailsConfiguratorPage = () => {
     setShowAllSections(value.length === 6);
   };
 
-  // Auto-expand next step and collapse current step when completed
-  const autoExpandNextStep = (stepId: number) => {
-    if (stepId < 6) {
-      const currentStepKey = `step-${stepId}`;
-      const nextStepKey = `step-${stepId + 1}`;
-
-      // Only keep the next step expanded, collapse all others including current
-      setExpandedSections([nextStepKey]);
-    }
-  };
+  // Removed autoExpandNextStep function - manual step control only
 
   const updateConfiguration = (key: keyof Configuration, value: any) => {
     setConfiguration((prev) => ({ ...prev, [key]: value }));
@@ -384,20 +375,7 @@ const GordijnrailsConfiguratorPage = () => {
     }
   };
 
-  // Watch for configuration changes and auto-advance when steps are completed
-  useEffect(() => {
-    // Find the first completed step that is currently expanded
-    for (let i = 0; i < steps.length; i++) {
-      const step = steps[i];
-      const stepKey = `step-${step.id}`;
-
-      if (step.completed && expandedSections.includes(stepKey)) {
-        // This step is completed and currently expanded, advance to next
-        autoExpandNextStep(step.id);
-        break;
-      }
-    }
-  }, [configuration, expandedSections]); // Watch both configuration and expanded sections
+  // Automatic step advancement disabled - users control step expansion manually
 
   const updateCeilingComponent = (componentId: string, quantity: number) => {
     setConfiguration((prev) => {

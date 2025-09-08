@@ -73,7 +73,7 @@ const ProfessionalNavigation = () => {
   ];
 
   return (
-    <nav className={`nav-luxury ${isScrolled ? "scrolled" : ""}`}>
+    <nav className={`nav-professional ${isScrolled ? "scrolled" : ""}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Premium Logo */}
@@ -264,22 +264,22 @@ const Home = () => {
             {/* Professional Title */}
             <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl">
               <span className="block text-4xl md:text-hero">
-                Exquise raamdecoratie
+                Professionele raamdecoratie
               </span>
               <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero">
-                Artistry
+                Expertise
               </span>
             </h1>
 
             {/* Professional Subtitle */}
             <p className="text-lg md:text-subtitle text-white/90 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl font-professional-display">
               <span className="block text-xl md:text-3xl font-medium tracking-wide">
-                Waar vakmanschap en verfijning samenkomen.
+                Waar kwaliteit en vakmanschap samenkomen.
               </span>
               <span className="block mt-4 text-white/75 text-base md:text-xl font-light tracking-wide">
-                Breng stijl, comfort en maatwerk samen in uw interieur met
-                exclusieve raamdecoratie. Ontdek de perfecte oplossing voor elke
-                ruimte – vandaag nog.
+                Transformeer uw ruimte met hoogwaardige, op maat gemaakte raamdecoratie.
+                Ontdek de perfecte oplossing voor elke ruimte – professioneel advies
+                en installatie inbegrepen.
               </span>
             </p>
 

@@ -1326,7 +1326,7 @@ html, body {
 }
 
 /* ULTRA-LUXURY CTA BUTTON */
-.ultra-luxury-cta-button {
+.professional-cta-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1344,14 +1344,14 @@ html, body {
 }
 
 @media (min-width: 768px) {
-  .ultra-luxury-cta-button {
+  .professional-cta-button {
     min-width: 400px;
     min-height: 80px;
     border-radius: 20px;
   }
 }
 
-.ultra-luxury-cta-bg {
+.professional-cta-bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, 
@@ -1372,7 +1372,7 @@ html, body {
   transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.ultra-luxury-cta-glow {
+.professional-cta-glow {
   position: absolute;
   inset: -4px;
   background: linear-gradient(135deg, 
@@ -1388,14 +1388,14 @@ html, body {
 }
 
 @media (min-width: 768px) {
-  .ultra-luxury-cta-glow {
+  .professional-cta-glow {
     inset: -6px;
     border-radius: 26px;
     filter: blur(24px);
   }
 }
 
-.ultra-luxury-cta-content {
+.professional-cta-content {
   position: relative;
   z-index: 2;
   display: flex;
@@ -1408,13 +1408,13 @@ html, body {
 }
 
 @media (min-width: 768px) {
-  .ultra-luxury-cta-content {
+  .professional-cta-content {
     padding: 24px 48px;
     gap: 20px;
   }
 }
 
-.ultra-luxury-cta-text {
+.professional-cta-text {
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.875rem, 2vw, 1.125rem);
   font-weight: 700;
@@ -1425,7 +1425,7 @@ html, body {
   transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.ultra-luxury-cta-icon {
+.professional-cta-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1435,11 +1435,11 @@ html, body {
 }
 
 /* Hover Effects */
-.ultra-luxury-cta-button:hover {
+.professional-cta-button:hover {
   transform: translateY(-3px) scale(1.02);
 }
 
-.ultra-luxury-cta-button:hover .ultra-luxury-cta-bg {
+.professional-cta-button:hover .professional-cta-bg {
   background: linear-gradient(135deg, 
     rgba(230, 201, 136, 0.98) 0%, 
     rgba(213, 179, 106, 0.95) 25%, 
@@ -1455,28 +1455,28 @@ html, body {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-.ultra-luxury-cta-button:hover .ultra-luxury-cta-glow {
+.professional-cta-button:hover .professional-cta-glow {
   opacity: 1;
   transform: scale(1.1);
   filter: blur(30px);
 }
 
-.ultra-luxury-cta-button:hover .ultra-luxury-cta-text {
+.professional-cta-button:hover .professional-cta-text {
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   letter-spacing: 0.12em;
 }
 
-.ultra-luxury-cta-button:hover .ultra-luxury-cta-icon {
+.professional-cta-button:hover .professional-cta-icon {
   transform: translateX(4px) scale(1.1);
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Active/Press Effects */
-.ultra-luxury-cta-button:active {
+.professional-cta-button:active {
   transform: translateY(-1px) scale(1.01);
 }
 
-.ultra-luxury-cta-button:active .ultra-luxury-cta-bg {
+.professional-cta-button:active .professional-cta-bg {
   box-shadow: 
     0 12px 32px rgba(0, 0, 0, 0.25),
     0 8px 16px rgba(213, 179, 106, 0.4),
@@ -1496,12 +1496,12 @@ html, body {
 }
 
 /* Focus States for Accessibility */
-.ultra-luxury-cta-button:focus-visible {
+.professional-cta-button:focus-visible {
   outline: 2px solid rgba(213, 179, 106, 0.6);
   outline-offset: 4px;
 }
 
-.ultra-luxury-cta-button:focus-visible .ultra-luxury-cta-glow {
+.professional-cta-button:focus-visible .professional-cta-glow {
   opacity: 1;
   animation-duration: 2s;
 }
@@ -3112,7 +3112,7 @@ html.rtl .right-0 {
 }
 
 /* WORLD-CLASS NAVIGATION SYSTEM */
-.nav-luxury {
+.nav-professional {
   position: fixed;
   top: 0;
   left: 0;
@@ -3123,7 +3123,7 @@ html.rtl .right-0 {
   background: rgba(255, 255, 255, 0.0);
 }
 
-.nav-luxury.scrolled {
+.nav-professional.scrolled {
   padding: 18px 0;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
@@ -3137,7 +3137,7 @@ html.rtl .right-0 {
   border-radius: 0 0 24px 24px;
 }
 
-.nav-luxury.scrolled .nav-logo {
+.nav-professional.scrolled .nav-logo {
   transform: scale(0.95);
 }
 
@@ -3302,11 +3302,11 @@ html.rtl .right-0 {
 
 /* MOBILE LUXURY OPTIMIZATIONS */
 @media (max-width: 768px) {
-  .nav-luxury {
+  .nav-professional {
     padding: 20px 0;
   }
   
-  .nav-luxury.scrolled {
+  .nav-professional.scrolled {
     padding: 16px 0;
   }
   

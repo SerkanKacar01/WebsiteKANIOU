@@ -25,13 +25,12 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { 
-  Crown, 
-  Diamond, 
-  Sparkles, 
+  Building, 
+  FileText, 
+  Package, 
   Shield, 
   TrendingUp, 
   Users, 
-  Package, 
   Euro, 
   Search, 
   Filter, 
@@ -40,12 +39,11 @@ import {
   Trash2, 
   Eye, 
   Download,
-  FileText,
   Settings,
   BarChart3,
-  Zap,
+  CheckCircle,
   Star,
-  Gem,
+  Calendar,
   Award,
   Bell
 } from "lucide-react";
@@ -89,7 +87,7 @@ const PRODUCT_CATEGORIES = [
   "Plissé gordijnen",
   "Overgordijnen",
   "Inbetween gordijnen",
-  "Luxaflex",
+  "Zonwering",
   "Shutters",
   "Horren",
 ];

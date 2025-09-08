@@ -87,7 +87,7 @@ const SecureOrderTrackingPage = () => {
   };
 
   const getStatusIcon = (isActive: boolean, isCompleted: boolean, index: number) => {
-    const icons = [Package, Clock, CheckCircle, Package, CheckCircle, Phone, Truck];
+    const icons = [Package, Clock, CheckCircle, Package, CheckCircle, Truck, CheckCircle, Clock];
     const IconComponent = icons[index] || CheckCircle;
     
     if (isCompleted) return <IconComponent className="w-5 h-5 text-[#D5B36A]" />;
@@ -102,13 +102,14 @@ const SecureOrderTrackingPage = () => {
   };
 
   const getStatusSteps = (statusProgress: any) => [
-    { key: 'received', label: 'Bestelling Ontvangen', description: 'Uw order is bij ons aangekomen', completed: statusProgress.received },
-    { key: 'processing', label: 'In Behandeling', description: 'We bekijken uw bestelling', completed: statusProgress.processing },
-    { key: 'processed', label: 'Verwerkt', description: 'Alle details zijn beoordeeld', completed: statusProgress.processed },
-    { key: 'production', label: 'In Productie', description: 'Uw bestelling wordt gemaakt', completed: statusProgress.production },
-    { key: 'ready', label: 'Klaar voor Levering', description: 'Kwaliteitscontrole afgerond', completed: statusProgress.ready },
-    { key: 'contacted', label: 'Contact Opgenomen', description: 'We nemen contact met u op', completed: statusProgress.contacted },
-    { key: 'delivered', label: 'Geleverd', description: 'Uw bestelling is voltooid', completed: statusProgress.delivered },
+    { key: 'received', label: 'Ontvangen', description: 'Je bestelling is succesvol ontvangen.', completed: statusProgress.received },
+    { key: 'processing', label: 'In Behandeling', description: 'We zijn je bestelling aan het controleren.', completed: statusProgress.processing },
+    { key: 'processed', label: 'Goedgekeurd & Bevestigd', description: 'Alles is bevestigd en gaat naar productie.', completed: statusProgress.processed },
+    { key: 'production', label: 'In Productie', description: 'Je bestelling is in productie.', completed: statusProgress.production },
+    { key: 'quality', label: 'Kwaliteitscontrole', description: 'We controleren of alles in perfecte staat is.', completed: statusProgress.ready },
+    { key: 'ready', label: 'Klaar voor Levering', description: 'De bestelling is verpakt en klaar om te leveren.', completed: statusProgress.contacted },
+    { key: 'delivered', label: 'Geleverd', description: 'Je bestelling is bezorgd of opgehaald.', completed: statusProgress.delivered },
+    { key: 'delayed', label: 'Vertraagd', description: 'Er is een kleine vertraging, we houden je op de hoogte.', completed: false },
   ];
 
   return (

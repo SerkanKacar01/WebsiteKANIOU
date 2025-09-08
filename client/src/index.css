@@ -1,6 +1,11 @@
 /* PROFESSIONAL TYPOGRAPHY SYSTEM */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&display=swap');
 
+/* Professional text utilities */
+.text-shadow-professional {
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -310,6 +315,11 @@ html, body {
   background-clip: text;
   background-size: 200% 100%;
   animation: shimmer-text 3s ease-in-out infinite;
+}
+
+/* Text glow effect for professional text */
+.text-glow {
+  text-shadow: 0 0 20px rgba(213, 179, 106, 0.4), 0 0 40px rgba(213, 179, 106, 0.2);
 }
 
 /* PROFESSIONAL GLASS MORPHISM */
@@ -4759,4 +4769,160 @@ html.rtl .right-0 {
     0 20px 40px rgba(0, 0, 0, 0.06),
     0 10px 20px rgba(0, 0, 0, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Professional Product Cards */
+.professional-product-card {
+  position: relative;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  transform-style: preserve-3d;
+}
+
+.professional-card-background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(249, 242, 231, 0.9) 50%, 
+    rgba(255, 255, 255, 0.95) 100%
+  );
+  border: 1px solid rgba(213, 179, 106, 0.15);
+  border-radius: inherit;
+  backdrop-filter: blur(20px) saturate(150%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(213, 179, 106, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.professional-card-glow {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.2) 0%, 
+    rgba(230, 201, 136, 0.1) 50%, 
+    rgba(213, 179, 106, 0.2) 100%
+  );
+  border-radius: 22px;
+  opacity: 0;
+  filter: blur(16px);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.professional-card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  height: 100%;
+  text-align: center;
+}
+
+.professional-icon-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.professional-icon-glow {
+  position: absolute;
+  inset: -8px;
+  background: radial-gradient(circle, rgba(213, 179, 106, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.professional-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, rgba(213, 179, 106, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.professional-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2A2A2A;
+  margin-bottom: 8px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.professional-card-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6B6B6B;
+  margin-bottom: 16px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.professional-card-arrow {
+  font-size: 20px;
+  color: #D5B36A;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  opacity: 0.7;
+}
+
+.professional-product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.professional-product-card:hover .professional-card-background {
+  background: linear-gradient(135deg, 
+    rgba(213, 179, 106, 0.1) 0%, 
+    rgba(249, 242, 231, 0.95) 50%, 
+    rgba(213, 179, 106, 0.1) 100%
+  );
+  border-color: rgba(213, 179, 106, 0.3);
+  box-shadow: 
+    0 20px 64px rgba(0, 0, 0, 0.12),
+    0 8px 32px rgba(213, 179, 106, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.professional-product-card:hover .professional-card-glow {
+  opacity: 1;
+}
+
+.professional-product-card:hover .professional-icon-glow {
+  opacity: 1;
+}
+
+.professional-product-card:hover .professional-icon {
+  background: linear-gradient(135deg, rgba(213, 179, 106, 0.2) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-color: rgba(213, 179, 106, 0.4);
+  transform: scale(1.1);
+}
+
+.professional-product-card:hover .professional-card-title {
+  color: #1A1A1A;
+  transform: translateY(-2px);
+}
+
+.professional-product-card:hover .professional-card-subtitle {
+  color: #4A4A4A;
+  transform: translateY(-2px);
+}
+
+.professional-product-card:hover .professional-card-arrow {
+  opacity: 1;
+  transform: translateX(4px);
 }

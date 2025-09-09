@@ -1214,7 +1214,7 @@ html, body {
     rgba(213, 179, 106, 0.15) 100%
   );
   border-radius: 36px;
-  opacity: 0;
+  opacity: 0.6;
   filter: blur(30px);
   transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
 }
@@ -1235,7 +1235,7 @@ html, body {
 
 .ultra-luxury-feature-card:hover .ultra-luxury-card-glow {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .ultra-luxury-icon-container {

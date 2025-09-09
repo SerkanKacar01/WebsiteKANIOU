@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React from "react";
+import { useCart } from "@/context/CartContext";
+import { ShoppingCart } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";

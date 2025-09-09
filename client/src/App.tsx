@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
-import { CartProvider } from "@/context/CartContext";
 
 import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
@@ -239,14 +238,12 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       <QueryClientProvider client={queryClient}>
-        <CartProvider>
           <TooltipProvider>
             <Toaster />
             <MobileLayoutWrapper>
               <Router />
             </MobileLayoutWrapper>
           </TooltipProvider>
-        </CartProvider>
       </QueryClientProvider>
     </div>
   );

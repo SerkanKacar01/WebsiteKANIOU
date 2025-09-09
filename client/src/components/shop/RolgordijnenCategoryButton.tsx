@@ -12,7 +12,7 @@ export const RolgordijnenCategoryButton = () => {
 
   const handleConfigurationComplete = (configuration: RolgordijnConfiguration) => {
     console.log('Rolgordijn configuration from category:', configuration);
-    // Here you would typically add to cart or save the configuration
+    // Configuration complete - redirect to quote request
   };
 
   const startConfiguration = () => {

@@ -1163,6 +1163,8 @@ html, body {
   line-height: 1.6;
   color: #6B6B6B;
   text-align: center;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .ultra-luxury-features-grid {

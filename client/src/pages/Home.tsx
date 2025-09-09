@@ -612,7 +612,7 @@ const Home = () => {
               {/* Rails & roedes - Premium Card */}
               <div
                 className="professional-product-card group"
-                onClick={() => setLocation("/gordijnrails-configurator")}
+                onClick={() => setLocation("/producten/gordijnrails")}
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>

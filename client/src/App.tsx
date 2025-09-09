@@ -20,7 +20,6 @@ import ProductDetail from "@/pages/ProductDetail";
 
 import ProductCategoryPage from "@/pages/ProductCategoryPage";
 import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
-import GordijnrailsConfiguratorPage from "@/pages/GordijnrailsConfiguratorPage";
 
 import GalleryPage from "@/pages/GalleryPage";
 import AdminGallery from "@/pages/AdminGallery";
@@ -158,8 +157,6 @@ function Router() {
         <Route path="/screen" component={ScreenPage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
-        <Route path="/producten/gordijnrails/configurator" component={GordijnrailsConfiguratorPage} />
-        <Route path="/gordijnrails-configurator" component={GordijnrailsConfiguratorPage} />
 
         <Route path="/producten/squid-textiel-folie" component={SquidTextielFoliePage} />
         <Route path="/producten/squid-textile-foil" component={SquidTextielFoliePage} />

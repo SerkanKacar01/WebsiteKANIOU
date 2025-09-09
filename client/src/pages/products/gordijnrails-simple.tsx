@@ -246,7 +246,7 @@ const GordijnrailsSimplePage = () => {
               
               {/* Premium CTA */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link href="/gordijnrails-configurator">
+                <Link href="/offerte">
                   <Button
                     size="lg"
                     className="bg-gradient-to-r from-[#2C3E50] to-[#34495e] hover:from-[#34495e] hover:to-[#2C3E50] text-white px-12 py-6 text-lg font-medium rounded-full shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-105 border border-[#D5B992]/20"
@@ -471,7 +471,7 @@ const GordijnrailsSimplePage = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link href="/gordijnrails-configurator">
+                <Link href="/offerte">
                   <Button
                     size="lg"
                     className="bg-gradient-to-r from-[#D5B992] to-[#E6C988] hover:from-[#E6C988] hover:to-[#D5B992] text-[#2C3E50] px-12 py-6 text-lg font-medium rounded-full shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-105 border-2 border-transparent hover:border-white/20"

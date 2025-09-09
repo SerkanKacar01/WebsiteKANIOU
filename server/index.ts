@@ -1,5 +1,4 @@
 import express, { type Request, Response, NextFunction } from "express";
-import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs";
 import { registerRoutes } from "./routes";
@@ -8,19 +7,12 @@ import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
 const app = express();
 
-// Body parsing middleware for Express 2.x compatibility
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// Built-in body parsing middleware for Express 4.16+ and 5.x
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static file serving for Express 2.x
-// Note: express.static may not be available in Express 2.x
-// Using basic static file serving approach
-if (express.static) {
-  app.use('/attached_assets', express.static('attached_assets'));
-} else {
-  // Fallback for Express 2.x - will handle static files differently
-  console.warn('Express 2.x: Static file serving may not work properly');
-}
+// Static file serving for Express 5.x
+app.use('/attached_assets', express.static('attached_assets'));
 
 
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -271,15 +263,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // It is the only port that is not firewalled.
   const port = 5000;
   
-  // Express 2.x compatibility - use app.listen() directly
+  // Express 5.x - use app.listen() with proper callback
   const server = app.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  // Use NODE_ENV directly for Express 2.x compatibility
-  // Always serve built files for now - development and production
+  // Setup Vite after all other routes to prevent catch-all interference
+  // Serve built files in all environments
   serveStatic(app);
 })();

@@ -3,10 +3,9 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
-import { useCart } from "@/context/CartContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
 import LanguageSelector from "./LanguageSelector";
 import NewsletterSignup from "./NewsletterSignup";
@@ -27,7 +26,6 @@ const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
-  const { summary } = useCart();
 
 
   // Define navigation items
@@ -147,23 +145,6 @@ const Header = () => {
                   ))}
 
                   <div className="mt-4 space-y-3">
-                    <Link href="/winkelwagen">
-                      <Button
-                        variant="outline"
-                        className="w-full border-[#E67E22] text-[#E67E22] hover:bg-[#E67E22] hover:text-white transition-colors min-h-[44px] text-base flex items-center justify-center gap-2"
-                        onClick={handleMobileNavClick}
-                      >
-                        <div className="relative">
-                          <ShoppingCart className="h-4 w-4" />
-                          {summary.totalItems > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold">
-                              {summary.totalItems}
-                            </span>
-                          )}
-                        </div>
-                        WINKELWAGEN ({summary.totalItems})
-                      </Button>
-                    </Link>
                     <Link href="/offerte">
                       <Button
                         className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
@@ -195,21 +176,6 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3">
-                <Link href="/winkelwagen">
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    className="relative text-[#2C3E50] hover:text-[#E67E22] transition-colors"
-                    onClick={handleNavClick}
-                  >
-                    <ShoppingCart className="h-5 w-5" />
-                    {summary.totalItems > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
-                        {summary.totalItems}
-                      </span>
-                    )}
-                  </Button>
-                </Link>
                 <Link href="/offerte">
                   <Button 
                     className="bg-[#D5B992] hover:bg-[#C5A565] text-white text-sm font-medium px-4 py-2 h-10 transition-colors rounded-md"

@@ -611,7 +611,7 @@ const ModernRollerBlindConfigurator = () => {
 
             <div className="text-center space-y-4">
               <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8">
-                Toevoegen aan winkelwagen
+                Offerte aanvragen
               </Button>
               <p className="text-sm text-gray-500">
                 Of <button className="text-blue-600 hover:underline">vraag een offerte aan</button> voor maatwerk

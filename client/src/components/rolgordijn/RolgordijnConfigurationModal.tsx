@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ArrowLeft, ShoppingCart, X, RotateCcw } from "lucide-react";
+import { ArrowRight, ArrowLeft, FileText, X, RotateCcw } from "lucide-react";
 
 interface RolgordijnConfigurationModalProps {
   isOpen: boolean;
@@ -503,8 +503,8 @@ export const RolgordijnConfigurationModal = ({ isOpen, onClose, onComplete }: Ro
                     disabled={!canProceedFromStep(currentStep)}
                     className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
                   >
-                    <ShoppingCart className="h-4 w-4" />
-                    Toevoegen aan winkelwagen
+                    <FileText className="h-4 w-4" />
+                    Offerte aanvragen
                   </Button>
                 )}
               </div>

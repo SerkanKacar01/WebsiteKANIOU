@@ -4,17 +4,11 @@ import { Link, useLocation } from "wouter";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCart } from "@/context/CartContext";
 import { CheckCircle, ShoppingBag, Home, Mail } from "lucide-react";
 
 export default function BedanktPage() {
-  const { clearCart } = useCart();
   const [location] = useLocation();
 
-  useEffect(() => {
-    // Clear cart when arriving at success page
-    clearCart();
-  }, [clearCart]);
 
   return (
     <>

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2, Package, ShoppingCart } from "lucide-react";
+import { Loader2, Package, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PRICE_MATRIX, getRollerBlindPrice, getAvailableWidths } from "@/data/rollerBlindPrices";
 
@@ -258,9 +258,9 @@ const SimpleRollerBlindConfigurator: React.FC<SimpleRollerBlindConfiguratorProps
             className="w-full bg-[#d5c096] hover:bg-[#c5b086] text-white"
             size="lg"
           >
-            <ShoppingCart className="h-4 w-4 mr-2" />
+            <FileText className="h-4 w-4 mr-2" />
             {isConfigurationComplete() 
-              ? `Toevoegen aan winkelwagen - €${configuration.price.toFixed(2)}`
+              ? `Offerte aanvragen - €${configuration.price.toFixed(2)}`
               : "Selecteer alle afmetingen"
             }
           </Button>

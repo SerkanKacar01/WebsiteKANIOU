@@ -6,7 +6,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
-const app = express.createServer();
+const app = express();
 
 // Body parsing middleware for Express 2.x compatibility
 app.use(bodyParser.json());

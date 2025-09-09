@@ -132,7 +132,7 @@ const SquidConfiguratorPage = () => {
     {
       id: 4,
       title: "Bestelling afronden",
-      description: "Toevoegen aan winkelwagen",
+      description: "Offerte aanvragen",
       completed: false,
     },
   ];

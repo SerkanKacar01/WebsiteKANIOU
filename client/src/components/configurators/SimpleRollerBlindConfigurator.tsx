@@ -129,7 +129,7 @@ const SimpleRollerBlindConfigurator: React.FC<SimpleRollerBlindConfiguratorProps
 
     const height = getSelectedHeight();
     toast({
-      title: "Toegevoegd aan winkelwagen",
+      title: "Offerte aangevraagd",
       description: `Rolgordijn ${configuration.width}cm × ${height}cm voor €${configuration.price.toFixed(2)}`,
     });
   };

@@ -173,8 +173,8 @@ const ShoppingCartComponent: React.FC<ShoppingCartProps> = ({
 
   const content = {
     nl: {
-      title: "Winkelwagen",
-      empty: "Uw winkelwagen is leeg",
+      title: "Offerte",
+      empty: "Uw offerte is leeg",
       emptyDesc: "Voeg producten toe om te beginnen met winkelen",
       quantity: "Aantal",
       remove: "Verwijderen",

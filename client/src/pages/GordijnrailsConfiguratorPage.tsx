@@ -468,6 +468,16 @@ const GordijnrailsConfiguratorPage = () => {
 
   const getAvailableGliders = (): GliderOption[] => [
     {
+      id: "standaard-glijder",
+      name: "Standaard Glijder",
+      description: "Dit krijg je standaard meegeleverd - hoogwaardige kwaliteit glijders die perfect passen bij jouw gordijnrail",
+      price: 0.0,
+      image: "standaard-glijder-preview.png",
+      hasColorOptions: false,
+      selectedColor: "white",
+      quantity: 0,
+    },
+    {
       id: "wave-gliders-6cm",
       name: "Wave Glijders 6 cm Wit",
       description: "Voor wave-gordijnplooien met een afstand van 6 cm",
@@ -1738,134 +1748,137 @@ const GordijnrailsConfiguratorPage = () => {
                 </p>
 
                 <div className="grid gap-4 md:grid-cols-3">
-                  {/* Wave Gliders 6cm */}
-                  <Card
-                    className={`cursor-pointer border-2 transition-all ${
-                      configuration.selectedGlider?.id === "wave-gliders-6cm"
-                        ? "border-[#d5c096] bg-[#d5c096]/5"
-                        : "border-gray-200 hover:border-[#d5c096]/50"
-                    }`}
-                    onClick={() => selectGlider("wave-gliders-6cm")}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <input
-                          type="radio"
-                          id="wave-gliders-6cm"
-                          name="glider-selection"
-                          checked={
-                            configuration.selectedGlider?.id ===
-                            "wave-gliders-6cm"
-                          }
-                          onChange={() => selectGlider("wave-gliders-6cm")}
-                          className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
-                        />
-                        <label
-                          htmlFor="wave-gliders-6cm"
-                          className="font-medium cursor-pointer"
-                        >
-                          Wave Glijders 6 cm Wit
-                        </label>
-                      </div>
-
-                      <div className="mb-3">
-                        <img
-                          src="/images/Scherm­afbeelding 2025-06-18 om 23.21.45_1750282933193.png"
-                          alt="Wave Gliders 6cm"
-                          className="w-full h-24 object-contain bg-gray-50 rounded border"
-                        />
-                      </div>
-
-                      <p className="text-sm text-gray-600 mb-3">
-                        Voor wave-gordijnplooien met een afstand van 6 cm _
-                        Geschikt voor KS-DS gordijnrails.
-                      </p>
-
-                      {configuration.selectedGlider?.id ===
-                        "wave-gliders-6cm" && (
-                        <div className="space-y-3 mb-3">
-                          <div>
-                            <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Kleur:
-                            </label>
-                            <select
-                              value={
-                                configuration.selectedGlider.selectedColor ||
-                                "white"
-                              }
-                              onChange={(e) =>
-                                updateGliderColor(
-                                  "wave-gliders-6cm",
-                                  e.target.value,
-                                )
-                              }
-                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
-                            >
-                              <option value="white">Wit</option>
-                              <option value="black">Zwart</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-medium text-gray-700 mb-1">
-                              Aantal stuks:
-                            </label>
-                            <input
-                              type="number"
-                              min="0"
-                              step="1"
-                              value={
-                                configuration.selectedGlider.quantity || ""
-                              }
-                              onChange={(e) =>
-                                updateGliderQuantity(
-                                  parseInt(e.target.value) || 0,
-                                )
-                              }
-                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
-                              placeholder="Voer aantal stuks in"
-                            />
-                            <p className="text-xs text-gray-500 mt-1">
-                              Advies: Breedte in cm ÷ 6, voeg 2 tot 4 extra
-                              stuks toe
-                            </p>
-                          </div>
-
-                          <Button
-                            size="sm"
-                            className={`w-full mt-3 text-white transition-all ${
-                              gliderAdded
-                                ? "bg-green-600 hover:bg-green-700"
-                                : "bg-[#d5c096] hover:bg-[#c4b183]"
-                            }`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              confirmGliderSelection();
-                              if (configuration.selectedGlider) {
-                                console.log("Wave Glijders added:", {
-                                  name: configuration.selectedGlider.name,
-                                  color:
-                                    configuration.selectedGlider
-                                      .selectedColor || "white",
-                                  quantity:
-                                    configuration.selectedGlider.quantity,
-                                  price:
-                                    configuration.selectedGlider.price *
-                                    configuration.selectedGlider.quantity,
-                                });
-                              }
-                            }}
+                  {/* Dynamic Glider Options */}
+                  {getAvailableGliders().map((glider) => (
+                    <Card
+                      key={glider.id}
+                      className={`cursor-pointer border-2 transition-all ${
+                        configuration.selectedGlider?.id === glider.id
+                          ? "border-[#d5c096] bg-[#d5c096]/5"
+                          : "border-gray-200 hover:border-[#d5c096]/50"
+                      }`}
+                      onClick={() => selectGlider(glider.id)}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-center space-x-2 mb-3">
+                          <input
+                            type="radio"
+                            id={glider.id}
+                            name="glider-selection"
+                            checked={configuration.selectedGlider?.id === glider.id}
+                            onChange={() => selectGlider(glider.id)}
+                            className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
+                          />
+                          <label
+                            htmlFor={glider.id}
+                            className="font-medium cursor-pointer"
                           >
-                            {gliderAdded ? "✓ Toegevoegd" : "Toevoegen"}
-                          </Button>
+                            {glider.name}
+                          </label>
+                          {glider.id === "standaard-glijder" && (
+                            <span className="ml-2 px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
+                              STANDAARD
+                            </span>
+                          )}
                         </div>
-                      )}
 
-                      <p className="font-medium text-[#d5c096]">
-                        € 0.50 per/stuk
-                      </p>
-                    </CardContent>
-                  </Card>
+                        <div className="mb-3">
+                          {glider.id === "standaard-glijder" ? (
+                            <div className="w-full h-24 bg-gradient-to-br from-[#d5c096] to-[#c4b183] rounded border flex items-center justify-center">
+                              <span className="text-white font-semibold text-sm">STANDAARD MEEGELEVERD</span>
+                            </div>
+                          ) : (
+                            <img
+                              src={`/images/${glider.image}`}
+                              alt={glider.name}
+                              className="w-full h-24 object-contain bg-gray-50 rounded border"
+                            />
+                          )}
+                        </div>
+
+                        <p className="text-sm text-gray-600 mb-3">
+                          {glider.description}
+                        </p>
+
+                        {configuration.selectedGlider?.id === glider.id && glider.hasColorOptions && (
+                          <div className="space-y-3 mb-3">
+                            <div>
+                              <label className="block text-xs font-medium text-gray-700 mb-1">
+                                Kleur:
+                              </label>
+                              <select
+                                value={configuration.selectedGlider.selectedColor || "white"}
+                                onChange={(e) =>
+                                  updateGliderColor(glider.id, e.target.value)
+                                }
+                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                              >
+                                <option value="white">Wit</option>
+                                <option value="black">Zwart</option>
+                              </select>
+                            </div>
+                          </div>
+                        )}
+
+                        {configuration.selectedGlider?.id === glider.id && glider.price > 0 && (
+                          <div className="space-y-3 mb-3">
+                            <div>
+                              <label className="block text-xs font-medium text-gray-700 mb-1">
+                                Aantal stuks:
+                              </label>
+                              <input
+                                type="number"
+                                min="0"
+                                step="1"
+                                value={configuration.selectedGlider.quantity || ""}
+                                onChange={(e) =>
+                                  updateGliderQuantity(parseInt(e.target.value) || 0)
+                                }
+                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-[#d5c096] focus:border-[#d5c096]"
+                                placeholder="Voer aantal stuks in"
+                              />
+                              {glider.id === "wave-gliders-6cm" && (
+                                <p className="text-xs text-gray-500 mt-1">
+                                  Advies: Breedte in cm ÷ 6, voeg 2 tot 4 extra stuks toe
+                                </p>
+                              )}
+                            </div>
+
+                            <Button
+                              size="sm"
+                              className={`w-full mt-3 text-white transition-all ${
+                                gliderAdded
+                                  ? "bg-green-600 hover:bg-green-700"
+                                  : "bg-[#d5c096] hover:bg-[#c4b183]"
+                              }`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                confirmGliderSelection();
+                                if (configuration.selectedGlider) {
+                                  console.log("Glijder toegevoegd:", {
+                                    name: configuration.selectedGlider.name,
+                                    color: configuration.selectedGlider.selectedColor || "white",
+                                    quantity: configuration.selectedGlider.quantity,
+                                    price: configuration.selectedGlider.price * configuration.selectedGlider.quantity,
+                                  });
+                                }
+                              }}
+                            >
+                              {gliderAdded ? "✓ Toegevoegd" : "Toevoegen"}
+                            </Button>
+                          </div>
+                        )}
+
+                        <p className="font-medium text-[#d5c096]">
+                          {glider.price === 0 ? (
+                            <span className="text-green-600 font-semibold">GRATIS MEEGELEVERD</span>
+                          ) : (
+                            `€ ${glider.price.toFixed(2)} per/stuk`
+                          )}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))}
 
                   {/* No Gliders Option */}
                   <Card

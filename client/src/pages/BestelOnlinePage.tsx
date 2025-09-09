@@ -86,8 +86,8 @@ const BestelOnlinePage = () => {
     },
     {
       id: "gordijnrails",
-      name: "Gordijnrails",
-      href: "/producten/gordijnrails",
+      name: "Rails & Roedes",
+      href: "/producten/rails&roedes",
       icon: Minus,
       available: true,
     },

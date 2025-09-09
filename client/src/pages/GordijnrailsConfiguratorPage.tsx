@@ -2032,6 +2032,45 @@ const GordijnrailsConfiguratorPage = () => {
               </p>
             </div>
 
+            {/* Delivery Time Information Box - Always Visible */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <Clock className="h-6 w-6 text-blue-600" />
+                  <h3 className="text-lg font-semibold text-blue-900">
+                    ⏱ Levertijd
+                  </h3>
+                </div>
+                <p className="text-blue-800 mb-4">
+                  Onze gordijnrails worden op maat gezaagd en zorgvuldig gecontroleerd in ons atelier.
+                </p>
+                <div className="space-y-2 text-sm text-blue-700 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">•</span>
+                    <span>Productie & verwerking: 2–4 werkdagen</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">•</span>
+                    <span>Levering: 1–2 werkdagen (BE & NL)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">•</span>
+                    <span><strong>Totale levertijd: gemiddeld 3–6 werkdagen</strong></span>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 text-sm">
+                  <div className="flex items-center gap-2 text-green-700">
+                    <CheckCircle className="h-4 w-4" />
+                    <span>Snelle, zorgvuldige verzending</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-700">
+                    <CheckCircle className="h-4 w-4" />
+                    <span>Discreet verpakt en direct leverbaar uit voorraad</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div
               className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative"
               ref={configuratorRef}
@@ -2495,42 +2534,6 @@ const GordijnrailsConfiguratorPage = () => {
                           </p>
                         </div>
 
-                        {/* Delivery Time Information Box - Always visible when price is calculated */}
-                        <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-6 mt-4">
-                          <div className="flex items-center gap-3 mb-4">
-                            <Clock className="h-6 w-6 text-blue-600" />
-                            <h3 className="text-lg font-semibold text-blue-900">
-                              ⏱ Levertijd
-                            </h3>
-                          </div>
-                          <p className="text-blue-800 mb-4">
-                            Onze gordijnrails worden op maat gezaagd en zorgvuldig gecontroleerd in ons atelier.
-                          </p>
-                          <div className="space-y-2 text-sm text-blue-700 mb-4">
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">•</span>
-                              <span>Productie & verwerking: 2–4 werkdagen</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">•</span>
-                              <span>Levering: 1–2 werkdagen (BE & NL)</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">•</span>
-                              <span><strong>Totale levertijd: gemiddeld 3–6 werkdagen</strong></span>
-                            </div>
-                          </div>
-                          <div className="flex flex-col sm:flex-row gap-3 text-sm">
-                            <div className="flex items-center gap-2 text-green-700">
-                              <CheckCircle className="h-4 w-4" />
-                              <span>Snelle, zorgvuldige verzending</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-green-700">
-                              <CheckCircle className="h-4 w-4" />
-                              <span>Discreet verpakt en direct leverbaar uit voorraad</span>
-                            </div>
-                          </div>
-                        </div>
                       </>
                     ) : (
                       <div className="text-center py-12">

@@ -325,25 +325,6 @@ export const insertPaymentOrderSchema = createInsertSchema(paymentOrders).omit({
 
 
 
-// Shopping Cart Items
-export const shoppingCartItems = pgTable("shopping_cart_items", {
-  id: serial("id").primaryKey(),
-  sessionId: text("session_id").notNull(),
-  productId: integer("product_id").notNull().references(() => products.id, { onDelete: 'cascade' }),
-  quantity: integer("quantity").notNull().default(1),
-  customizations: jsonb("customizations"), // Store custom options like color, size, etc.
-  addedAt: timestamp("added_at").defaultNow(),
-});
-
-export const insertShoppingCartItemSchema = createInsertSchema(shoppingCartItems).omit({
-  id: true,
-  addedAt: true,
-}).extend({
-  productType: z.string().min(1, "Product type is required"),
-  productName: z.string().min(1, "Product name is required"),
-  quantity: z.number().min(1, "Quantity must be at least 1").max(50, "Quantity cannot exceed 50"),
-  unitPrice: z.number().min(0.01, "Unit price must be at least €0.01"),
-});
 
 // Define relations between tables
 export const categoriesRelations = relations(categories, ({ many }) => ({
@@ -409,8 +390,6 @@ export type InsertPaymentOrder = z.infer<typeof insertPaymentOrderSchema>;
 // Order type alias for tracking (based on payment_orders table)
 export type Order = PaymentOrder;
 
-export type ShoppingCartItem = typeof shoppingCartItems.$inferSelect;
-export type InsertShoppingCartItem = z.infer<typeof insertShoppingCartItemSchema>;
 
 // Notification Log
 export const notificationLogs = pgTable("notification_logs", {

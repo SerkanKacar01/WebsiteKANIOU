@@ -35,9 +35,6 @@ import {
   colorSampleRequests,
   ColorSampleRequest,
   InsertColorSampleRequest,
-  shoppingCartItems,
-  ShoppingCartItem,
-  InsertShoppingCartItem,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";

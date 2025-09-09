@@ -50,7 +50,6 @@ import AdminLoginPage from "@/pages/AdminLoginPage";
 import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import SecureOrderTrackingPage from "@/pages/SecureOrderTrackingPage";
-import CartPage from "@/pages/CartPage";
 import AfspraakPage from "@/pages/AfspraakPage";
 
 // Simple Product Pages
@@ -204,9 +203,6 @@ function Router() {
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
         
-        {/* Shopping cart routes */}
-        <Route path="/cart" component={CartPage} />
-        <Route path="/winkelwagen" component={CartPage} />
         
         {/* Hidden Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />

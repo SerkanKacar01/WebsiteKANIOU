@@ -31,7 +31,7 @@ function generateSecureSessionSecret(): string {
   return secret;
 }
 
-export async function registerRoutes(app: Express): Promise<void> {
+export async function registerRoutes(app: Express): Promise<Server> {
   // Session and cookie middleware
   app.use(cookieParser());
 
@@ -1480,5 +1480,6 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     return emailRegex.test(email) && email.length <= 254; // RFC 5321 limit
   }
 
-  // Routes are now registered
+  // Routes are now registered, return the app
+  return app;
 }

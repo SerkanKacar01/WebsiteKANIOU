@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
+import { CartProvider } from "@/context/CartContext";
 
 import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
@@ -209,23 +210,9 @@ function Router() {
         <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
         
-        {/* Disabled shopping cart routes - redirect to home */}
-        <Route path="/cart" component={() => {
-          window.location.href = '/';
-          return <div>Deze pagina is niet beschikbaar.</div>;
-        }} />
-        <Route path="/winkelwagen" component={() => {
-          window.location.href = '/';
-          return <div>Deze pagina is niet beschikbaar.</div>;
-        }} />
-        <Route path="/checkout" component={() => {
-          window.location.href = '/';
-          return <div>Deze pagina is niet beschikbaar.</div>;
-        }} />
-        <Route path="/afrekenen" component={() => {
-          window.location.href = '/';
-          return <div>Deze pagina is niet beschikbaar.</div>;
-        }} />
+        {/* Shopping cart routes */}
+        <Route path="/cart" component={CartPage} />
+        <Route path="/winkelwagen" component={CartPage} />
         
         {/* Hidden Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
@@ -262,13 +249,14 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <MobileLayoutWrapper>
-            <Router />
-          </MobileLayoutWrapper>
-
-        </TooltipProvider>
+        <CartProvider>
+          <TooltipProvider>
+            <Toaster />
+            <MobileLayoutWrapper>
+              <Router />
+            </MobileLayoutWrapper>
+          </TooltipProvider>
+        </CartProvider>
       </QueryClientProvider>
     </div>
   );

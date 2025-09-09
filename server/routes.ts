@@ -1356,43 +1356,6 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     }
   });
 
-  // Shopping Cart API endpoints - DISABLED (E-commerce functionality removed)
-  /*
-  app.post("/api/cart/add", async (req, res) => {
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-
-  app.get("/api/cart/:sessionId", async (req, res) => {
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-
-  app.patch("/api/cart/item/:itemId", async (req, res) => {
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-
-  app.delete("/api/cart/item/:itemId", async (req, res) => {
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-
-  app.delete("/api/cart/:sessionId", async (req, res) => {
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-  */
-
-  // Payment Routes - DISABLED (E-commerce functionality removed)
-  /*
-  app.post("/api/payment/create", async (req, res) => {
-    // Payment functionality has been disabled
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-  */
-
-  /*
-  app.post("/api/payment/webhook", async (req, res) => {
-    // Payment webhook disabled - e-commerce functionality removed
-    res.status(404).json({ error: "Deze functionaliteit is niet beschikbaar" });
-  });
-  */
 
   // 🔐 ULTRA-SECURE ORDER TRACKING ENDPOINT 🔐
   // This endpoint implements ALL security best practices against hackers

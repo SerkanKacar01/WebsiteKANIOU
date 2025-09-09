@@ -195,7 +195,6 @@ declare global {
   var memoryColorSampleRequests: ColorSampleRequest[] | undefined;
   var memoryCategories: Category[] | undefined;
   var memoryProducts: Product[] | undefined;
-  var memoryCartItems: any[] | undefined;
   var memoryOrderDocuments: OrderDocument[] | undefined;
   var memoryGalleryItems: GalleryItem[] | undefined;
   var trackingAttempts: Map<string, {count: number, lastAttempt: number}> | undefined;
@@ -270,12 +269,6 @@ export interface IStorage {
   getColorSampleRequestById(id: number): Promise<ColorSampleRequest | undefined>;
   updateColorSampleRequestStatus(id: number, status: string): Promise<void>;
   
-  // Shopping Cart
-  addToCart(item: any): Promise<any>;
-  getCartBySession(sessionId: string): Promise<{ items: any[], summary: { totalAmount: number, totalItems: number, currency: string } }>;
-  updateCartItemQuantity(itemId: number, quantity: number): Promise<any>;
-  removeFromCart(itemId: number): Promise<void>;
-  clearCart(sessionId: string): Promise<void>;
 }
 
 class DatabaseStorage implements IStorage {
@@ -1243,109 +1236,6 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
     }
   }
 
-  // Shopping Cart Methods
-  async addToCart(item: any): Promise<any> {
-    try {
-      // For simplified cart implementation, we'll use memory storage with database fallback
-      const cartItem = {
-        id: Date.now(), // Simple ID generation for memory storage
-        sessionId: item.sessionId,
-        productType: item.productType,
-        productName: item.productName,
-        material: item.material || '',
-        color: item.color || '',
-        width: item.width || 0,
-        height: item.height || 0,
-        quantity: item.quantity || 1,
-        unitPrice: item.unitPrice,
-        totalPrice: (item.quantity || 1) * item.unitPrice,
-        customizations: item.customizations || {},
-        imageUrl: item.imageUrl || '',
-        addedAt: new Date()
-      };
-
-      if (!global.memoryCartItems) {
-        global.memoryCartItems = [];
-      }
-      
-      global.memoryCartItems.push(cartItem);
-      return cartItem;
-    } catch (error) {
-      console.error('Add to cart error:', error);
-      throw error;
-    }
-  }
-
-  async getCartBySession(sessionId: string): Promise<{ items: any[], summary: { totalAmount: number, totalItems: number, currency: string } }> {
-    try {
-      const cartItems = global.memoryCartItems?.filter(item => item.sessionId === sessionId) || [];
-      
-      const totalAmount = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-      
-      return {
-        items: cartItems,
-        summary: {
-          totalAmount: parseFloat(totalAmount.toFixed(2)),
-          totalItems,
-          currency: 'EUR'
-        }
-      };
-    } catch (error) {
-      console.error('Get cart error:', error);
-      return { items: [], summary: { totalAmount: 0, totalItems: 0, currency: 'EUR' } };
-    }
-  }
-
-  async updateCartItemQuantity(itemId: number, quantity: number): Promise<any> {
-    try {
-      if (!global.memoryCartItems) {
-        throw new Error('Cart item not found');
-      }
-      
-      const itemIndex = global.memoryCartItems.findIndex(item => item.id === itemId);
-      if (itemIndex === -1) {
-        throw new Error('Cart item not found');
-      }
-      
-      global.memoryCartItems[itemIndex].quantity = quantity;
-      global.memoryCartItems[itemIndex].totalPrice = quantity * global.memoryCartItems[itemIndex].unitPrice;
-      
-      return global.memoryCartItems[itemIndex];
-    } catch (error) {
-      console.error('Update cart item error:', error);
-      throw error;
-    }
-  }
-
-  async removeFromCart(itemId: number): Promise<void> {
-    try {
-      if (!global.memoryCartItems) {
-        return;
-      }
-      
-      const itemIndex = global.memoryCartItems.findIndex(item => item.id === itemId);
-      if (itemIndex > -1) {
-        global.memoryCartItems.splice(itemIndex, 1);
-      }
-    } catch (error) {
-      console.error('Remove from cart error:', error);
-      throw error;
-    }
-  }
-
-  async clearCart(sessionId: string): Promise<void> {
-    try {
-      if (!global.memoryCartItems) {
-        return;
-      }
-      
-      global.memoryCartItems = global.memoryCartItems.filter(item => item.sessionId !== sessionId);
-    } catch (error) {
-      console.error('Clear cart error:', error);
-      throw error;
-    }
-  }
 }
 
 export const storage = new DatabaseStorage();

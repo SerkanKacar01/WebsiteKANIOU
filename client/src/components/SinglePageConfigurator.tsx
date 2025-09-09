@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Check, ShoppingCart, FileText, Info } from "lucide-react";
+import { Check, FileText, Info } from "lucide-react";
 
 interface Configuration {
   fabricType: string;

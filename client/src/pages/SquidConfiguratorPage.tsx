@@ -35,7 +35,6 @@ import {
   Check,
   ArrowRight,
   ArrowLeft,
-  ShoppingCart,
   Info,
   Ruler,
   Package,

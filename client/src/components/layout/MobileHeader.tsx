@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Search, ShoppingBag, Phone, MessageCircle, ChevronRight } from "lucide-react";
+import { Menu, X, Search, Phone, MessageCircle, ChevronRight, FileText } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
 import { kaniouLogo } from "@/assets";
@@ -68,7 +68,7 @@ const MobileHeader = () => {
     { icon: Phone, label: "Bellen", href: "/contact", color: "text-green-600" },
     { icon: MessageCircle, label: "Contact", href: "/contact", color: "text-blue-600" },
     { icon: Search, label: "Zoeken", href: "/products", color: "text-purple-600" },
-    { icon: ShoppingBag, label: "Offerte", href: "/quote", color: "text-orange-600" },
+    { icon: FileText, label: "Offerte", href: "/quote", color: "text-orange-600" },
   ];
 
 

@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, ShoppingBag, Home, Mail } from "lucide-react";
+import { CheckCircle, Package, Home, Mail } from "lucide-react";
 
 export default function BedanktPage() {
   const [location] = useLocation();
@@ -72,8 +72,8 @@ export default function BedanktPage() {
                     
                     <Button asChild variant="outline">
                       <Link href="/producten">
-                        <ShoppingBag className="w-4 h-4 mr-2" />
-                        Verder winkelen
+                        <Package className="w-4 h-4 mr-2" />
+                        Bekijk producten
                       </Link>
                     </Button>
                   </div>

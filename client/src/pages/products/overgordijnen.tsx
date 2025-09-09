@@ -102,8 +102,8 @@ const OvergordijnenPage = () => {
             {/* Badges */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <div className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full">
-                <span>🛍️</span>
-                <span className="font-medium">Online bestelbaar</span>
+                <span>📋</span>
+                <span className="font-medium">Offerte aanvragen</span>
               </div>
               <div className="flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
                 <span>🔧</span>
@@ -276,7 +276,7 @@ const OvergordijnenPage = () => {
                 <Settings className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display text-2xl font-semibold mb-4 text-blue-900">
-                🛒 Online bestellen - Zo eenvoudig is het!
+                📋 Offerte aanvragen - Zo eenvoudig is het!
               </h3>
               <p className="text-lg text-blue-800 leading-relaxed max-w-3xl mx-auto">
                 U kunt uw overgordijnen volledig op maat samenstellen en online bestellen via onze eenvoudige configurator. 

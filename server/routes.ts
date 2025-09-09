@@ -64,16 +64,17 @@ export async function registerRoutes(app: Express): Promise<void> {
   const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
   const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
   
-  // Simplified session configuration for express-session 1.0.0 compatibility
+  // Modern session configuration for Express 5.x
   app.use(
     session({
       secret: sessionSecret,
-      // Note: express-session 1.0.0 may not support all modern options
-      // Keeping minimal configuration for compatibility
+      resave: false,
+      saveUninitialized: false,
       cookie: {
         httpOnly: true,
+        secure: isProduction,
         maxAge: 2 * 60 * 60 * 1000, // 2 hours
-        // Note: secure, sameSite may not be available in express-session 1.0.0
+        sameSite: 'lax',
       },
     }),
   );

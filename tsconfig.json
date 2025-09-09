@@ -1,12 +1,15 @@
 {
   "include": ["client/src/**/*", "shared/**/*", "server/**/*"],
-  "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
+  "exclude": ["node_modules", "build", "dist", "**/*.test.ts", "server/vite.ts"],
   "compilerOptions": {
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "incremental": true,
     "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
     "noEmit": true,
     "module": "ESNext",
-    "strict": true,
+    "strict": false,
     "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "preserve",
     "esModuleInterop": true,

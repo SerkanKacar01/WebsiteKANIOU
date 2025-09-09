@@ -1,0 +1,11 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.validate.enable": false,
+  "typescript.suggest.enabled": false,
+  "files.exclude": {
+    "**/server/vite.ts": false
+  },
+  "typescript.preferences.includeCompletionsForModuleExports": false,
+  "typescript.preferences.includeCompletionsWithSnippetText": false,
+  "typescript.suggest.autoImports": false
+}

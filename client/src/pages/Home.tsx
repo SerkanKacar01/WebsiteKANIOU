@@ -2,8 +2,6 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React from "react";
-import { useCart } from "@/context/CartContext";
-import { ShoppingCart } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
@@ -42,7 +40,6 @@ const ProfessionalNavigation = () => {
   const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] =
     React.useState(false);
   const [, setLocation] = useLocation();
-  const { summary } = useCart();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -106,17 +103,6 @@ const ProfessionalNavigation = () => {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <button
-              onClick={() => setLocation("/winkelwagen")}
-              className="relative p-3 text-white hover:text-gold-300 transition-all duration-300 group"
-            >
-              <ShoppingCart className="h-6 w-6" />
-              {summary.totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#E67E22] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
-                  {summary.totalItems}
-                </span>
-              )}
-            </button>
-            <button
               onClick={() => setLocation("/quote")}
               className="btn-luxury"
             >
@@ -167,27 +153,6 @@ const ProfessionalNavigation = () => {
                   {link.name}
                 </button>
               ))}
-              <button
-                onClick={() => {
-                  setLocation("/winkelwagen");
-                  setIsMenuOpen(false);
-                }}
-                className={`mt-4 flex items-center justify-center gap-2 font-semibold py-3 px-6 rounded-lg border border-white/30 transition-all duration-300 ${
-                  mobileMenuNeedsContrast
-                    ? "text-white hover:bg-white/10 hover:border-white/50"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                <div className="relative">
-                  <ShoppingCart className="h-5 w-5" />
-                  {summary.totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-semibold">
-                      {summary.totalItems}
-                    </span>
-                  )}
-                </div>
-                WINKELWAGEN ({summary.totalItems})
-              </button>
               <button
                 onClick={() => {
                   setLocation("/quote");

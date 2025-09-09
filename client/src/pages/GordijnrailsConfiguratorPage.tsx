@@ -1930,6 +1930,41 @@ const GordijnrailsConfiguratorPage = () => {
                       <p className="font-medium text-green-600">€ 0.00</p>
                     </CardContent>
                   </Card>
+
+                  {/* Custom/Own Gliders Option */}
+                  <Card
+                    className={`cursor-pointer border-2 transition-all border-gray-200 hover:border-[#d5c096]/50"`}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <input
+                          type="radio"
+                          id="own-gliders"
+                          name="glider-selection"
+                          disabled
+                          className="w-4 h-4 text-[#d5c096] border-gray-300 focus:ring-[#d5c096]"
+                        />
+                        <label
+                          htmlFor="own-gliders"
+                          className="font-medium cursor-pointer"
+                        >
+                          Eigen glijders
+                        </label>
+                      </div>
+
+                      <div className="mb-3">
+                        <div className="w-full h-24 bg-gradient-to-br from-blue-100 to-blue-50 rounded border flex items-center justify-center">
+                          <span className="text-sm text-blue-600 font-semibold">EIGEN KEUZE</span>
+                        </div>
+                      </div>
+
+                      <p className="text-sm text-gray-600 mb-3">
+                        Gebruik je eigen glijders of bestel ze elders - wij zorgen voor de perfecte rail
+                      </p>
+
+                      <p className="font-medium text-blue-600">€ 0.00</p>
+                    </CardContent>
+                  </Card>
                 </div>
 
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">

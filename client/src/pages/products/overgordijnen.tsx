@@ -398,17 +398,17 @@ const OvergordijnenPage = () => {
               Klaar voor uw perfecte overgordijnen?
             </h2>
             <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
-              Bestel nu online uw overgordijnen op maat en ontdek hoe ze uw interieur kunnen transformeren met sfeer, privacy en isolatie. Eenvoudig configureren, direct bestellen!
+              Ontdek uw overgordijnen op maat en zie hoe ze uw interieur kunnen transformeren met sfeer, privacy en isolatie. Bekijk onze opties!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" asChild className="text-lg px-10 py-6 bg-amber-500 hover:bg-amber-600">
-                <Link href="/configurator/overgordijnen">🔧 Online samenstellen & bestellen</Link>
+                <Link href="/quote">📋 Vraag offerte aan</Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="text-lg px-10 py-6 border-white text-white hover:bg-white hover:text-gray-800">
                 <Link href="/quote">📋 Vraag offerte aan</Link>
               </Button>
             </div>
-            <p className="text-slate-400 text-sm mt-4">💻 Online bestellen • Gratis advies • Persoonlijke service</p>
+            <p className="text-slate-400 text-sm mt-4">📞 Gratis advies • Persoonlijke service • Vakmanschap</p>
           </div>
         </Container>
       </div>
@@ -416,7 +416,7 @@ const OvergordijnenPage = () => {
       {/* Sticky Mobile Button */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-primary p-4 shadow-lg md:hidden">
         <Button asChild className="w-full text-lg py-4 bg-amber-500 hover:bg-amber-600">
-          <Link href="/configurator/overgordijnen">🛒 Bestel overgordijnen op maat</Link>
+          <Link href="/quote">📋 Offerte aanvragen</Link>
         </Button>
       </div>
     </>

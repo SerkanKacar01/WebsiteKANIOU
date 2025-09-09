@@ -117,11 +117,11 @@ const SimpleRollerBlindConfigurator: React.FC<SimpleRollerBlindConfiguratorProps
     );
   };
 
-  const handleAddToCart = () => {
+  const handleRequestQuote = () => {
     if (!isConfigurationComplete()) {
       toast({
         title: "Configuratie onvolledig",
-        description: "Selecteer eerst alle afmetingen voordat u het product toevoegt.",
+        description: "Selecteer eerst alle afmetingen voordat u een offerte kunt aanvragen.",
         variant: "destructive",
       });
       return;
@@ -251,9 +251,9 @@ const SimpleRollerBlindConfigurator: React.FC<SimpleRollerBlindConfiguratorProps
             </div>
           </div>
 
-          {/* Add to Cart Button */}
+          {/* Request Quote Button */}
           <Button
-            onClick={handleAddToCart}
+            onClick={handleRequestQuote}
             disabled={!isConfigurationComplete() || isLoading}
             className="w-full bg-[#d5c096] hover:bg-[#c5b086] text-white"
             size="lg"

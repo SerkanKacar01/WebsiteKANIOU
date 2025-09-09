@@ -263,10 +263,10 @@ const Home = () => {
           <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
             {/* Professional Title */}
             <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl">
-              <span className="block text-4xl md:text-hero">
+              <span className="block text-4xl md:text-hero text-visible-fallback">
                 Professionele raamdecoratie
               </span>
-              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero">
+              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback">
                 Expertise
               </span>
             </h1>
@@ -305,7 +305,7 @@ const Home = () => {
             {/* Elegant Trust Indicators */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-professional-xl max-w-5xl mx-auto">
               <div className="text-center animate-float-professional stagger-1">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
                   30+
                 </div>
                 <div className="text-white/70 text-body font-light tracking-wider uppercase">
@@ -313,7 +313,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="text-center animate-float-professional stagger-2">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
                   3500+
                 </div>
                 <div className="text-white/70 text-body font-light tracking-wider uppercase">
@@ -321,7 +321,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="text-center animate-float-professional stagger-3">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
                   100%
                 </div>
                 <div className="text-white/70 text-body font-light tracking-wider uppercase">

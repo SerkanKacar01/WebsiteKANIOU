@@ -315,11 +315,37 @@ html, body {
   background-clip: text;
   background-size: 200% 100%;
   animation: shimmer-text 3s ease-in-out infinite;
+  /* Fallback for browsers that don't support background-clip: text */
+  color: #D5B36A;
+}
+
+/* Ensure fallback colors work */
+@supports not (-webkit-background-clip: text) {
+  .gradient-text-professional {
+    color: #D5B36A !important;
+    background: none !important;
+  }
 }
 
 /* Text glow effect for professional text */
 .text-glow {
   text-shadow: 0 0 20px rgba(213, 179, 106, 0.4), 0 0 40px rgba(213, 179, 106, 0.2);
+}
+
+/* Ensure text is always visible */
+.text-visible-fallback {
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Shimmer animation for gradient text */
+@keyframes shimmer-text {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* PROFESSIONAL GLASS MORPHISM */

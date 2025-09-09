@@ -172,15 +172,6 @@ const Header = () => {
                         VRIJBLIJVEND OFFERTE
                       </Button>
                     </Link>
-                    <Link href="/bestel-online">
-                      <Button
-                        className="w-full bg-gradient-to-r from-[#E67E22] to-[#E74C3C] hover:from-[#D35400] hover:to-[#C0392B] text-white transition-colors min-h-[44px] text-base flex items-center justify-center gap-2"
-                        onClick={handleMobileNavClick}
-                      >
-                        <ShoppingCart className="h-4 w-4" />
-                        BESTEL ONLINE
-                      </Button>
-                    </Link>
                   </div>
                 </div>
               </SheetContent>
@@ -225,15 +216,6 @@ const Header = () => {
                     onClick={handleNavClick}
                   >
                     VRIJBLIJVEND OFFERTE
-                  </Button>
-                </Link>
-                <Link href="/bestel-online">
-                  <Button 
-                    className="bg-gradient-to-r from-[#E67E22] to-[#E74C3C] hover:from-[#D35400] hover:to-[#C0392B] text-white text-sm font-medium px-4 py-2 h-10 transition-colors flex items-center gap-2 rounded-md"
-                    onClick={handleNavClick}
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                    BESTEL ONLINE
                   </Button>
                 </Link>
               </div>

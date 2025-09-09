@@ -51,7 +51,6 @@ import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import SecureOrderTrackingPage from "@/pages/SecureOrderTrackingPage";
 import CartPage from "@/pages/CartPage";
-import BestelOnlinePage from "@/pages/BestelOnlinePage";
 import AfspraakPage from "@/pages/AfspraakPage";
 
 // Simple Product Pages
@@ -93,7 +92,6 @@ function Router() {
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
     if (location === "/offerte") return "Offerte aanvragen" + " | " + t("app.title");
     if (location === "/acties") return "Acties & Aanbiedingen" + " | " + t("app.title");
-    if (location === "/bestel-online") return "Bestel Online – Kaniou Zilvernaald";
 
     if (location === "/zakelijk" || location === "/business") return "Business Solutions" + " | " + t("app.title");
     if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
@@ -180,7 +178,6 @@ function Router() {
         <Route path="/quote" component={QuotePage} />
         <Route path="/offerte" component={OffertePage} />
         <Route path="/afspraak" component={AfspraakPage} />
-        <Route path="/bestel-online" component={BestelOnlinePage} />
         <Route path="/acties" component={ActiesPage} />
         <Route path="/smart-quote" component={SmartQuote} />
         <Route path="/slimme-offerte" component={SmartQuote} />

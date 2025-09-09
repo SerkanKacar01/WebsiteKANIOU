@@ -120,21 +120,6 @@ const ProfessionalNavigation = () => {
             >
               VRIJBLIJVEND OFFERTE
             </button>
-            <button
-              onClick={() => setLocation("/bestel-online")}
-              className="relative px-6 py-3 bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group overflow-hidden animate-pulse-glow"
-            >
-              {/* Animated background glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#E67E22] to-[#D5B992] opacity-75 animate-pulse rounded-lg blur-sm"></div>
-              
-              {/* Content */}
-              <div className="relative flex items-center gap-2 z-10">
-                <span>BESTEL ONLINE</span>
-              </div>
-              
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 -left-full group-hover:left-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 transform skew-x-12"></div>
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -213,22 +198,6 @@ const ProfessionalNavigation = () => {
                 }`}
               >
                 VRIJBLIJVEND OFFERTE
-              </button>
-              <button
-                onClick={() => {
-                  setLocation("/bestel-online");
-                  setIsMenuOpen(false);
-                }}
-                className={`mt-3 transition-all duration-300 font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 group overflow-hidden relative ${
-                  mobileMenuNeedsContrast
-                    ? "bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white animate-pulse-glow"
-                    : "bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white animate-pulse-glow"
-                }`}
-              >
-                <div className="flex items-center justify-center gap-2 relative z-10">
-                  <span>BESTEL ONLINE</span>
-                </div>
-                <div className="absolute inset-0 -left-full group-hover:left-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 transform skew-x-12"></div>
               </button>
             </div>
           </div>

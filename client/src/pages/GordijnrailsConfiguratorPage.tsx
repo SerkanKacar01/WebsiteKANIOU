@@ -487,6 +487,16 @@ const GordijnrailsConfiguratorPage = () => {
       selectedColor: "white",
       quantity: 0,
     },
+    {
+      id: "premium-glijders-zwart",
+      name: "Premium Glijders Zwart",
+      description: "Luxe zwarte glijders voor een elegante afwerking - geschikt voor alle gordijnstijlen",
+      price: 0.75,
+      image: "premium-glijders-zwart.png",
+      hasColorOptions: false,
+      selectedColor: "black",
+      quantity: 0,
+    },
   ];
 
   const getAvailableWallComponents = (): WallComponent[] => [];

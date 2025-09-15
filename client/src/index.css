@@ -536,6 +536,354 @@ html, body {
   transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* =============================================
+   ADVANCED LUXURY NAVIGATION SYSTEM
+   ============================================= */
+
+/* Adaptive Glassmorphism Navigation */
+.nav-luxury-glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border-bottom: 1px solid rgba(213, 179, 106, 0.1);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.nav-luxury-glass-scrolled {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-bottom: 1px solid rgba(213, 179, 106, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -1px 0 rgba(213, 179, 106, 0.08) inset;
+}
+
+/* Advanced Navigation Link Animations */
+.nav-link-luxury {
+  position: relative;
+  padding: 12px 16px;
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+.nav-link-luxury::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    var(--gold-400) 0%, 
+    var(--gold-500) 50%, 
+    var(--gold-600) 100%);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.nav-link-luxury::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, 
+    rgba(213, 179, 106, 0.04) 0%, 
+    transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.nav-link-luxury:hover {
+  transform: translateY(-2px) scale(1.02);
+  text-shadow: 0 2px 8px rgba(213, 179, 106, 0.2);
+}
+
+.nav-link-luxury:hover::before {
+  width: 80%;
+  box-shadow: 0 4px 12px rgba(213, 179, 106, 0.3);
+}
+
+.nav-link-luxury:hover::after {
+  opacity: 1;
+}
+
+/* Active Navigation Link */
+.nav-link-luxury-active {
+  color: var(--gold-600);
+  font-weight: 600;
+}
+
+.nav-link-luxury-active::before {
+  width: 100%;
+  background: linear-gradient(90deg, 
+    var(--gold-500) 0%, 
+    var(--gold-400) 50%, 
+    var(--gold-500) 100%);
+  box-shadow: 0 4px 16px rgba(213, 179, 106, 0.4);
+  animation: pulse-glow-nav 2s ease-in-out infinite;
+}
+
+/* Staggered Navigation Animation */
+.nav-staggered-item {
+  animation: nav-item-enter 0.6s cubic-bezier(0.23, 1, 0.320, 1) both;
+}
+
+.nav-staggered-item:nth-child(1) { animation-delay: 0.1s; }
+.nav-staggered-item:nth-child(2) { animation-delay: 0.2s; }
+.nav-staggered-item:nth-child(3) { animation-delay: 0.3s; }
+.nav-staggered-item:nth-child(4) { animation-delay: 0.4s; }
+.nav-staggered-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* Logo Hover Animation */
+.logo-luxury {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  filter: drop-shadow(0 0 0 transparent);
+}
+
+.logo-luxury:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 8px 16px rgba(213, 179, 106, 0.15));
+}
+
+/* Mobile Menu Animations */
+.mobile-sheet-luxury {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.mobile-nav-item {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(180deg, var(--gold-400), var(--gold-600));
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.mobile-nav-item:hover {
+  background: rgba(213, 179, 106, 0.05);
+  transform: translateX(8px);
+  border-radius: 8px;
+}
+
+.mobile-nav-item:hover::before {
+  height: 100%;
+}
+
+/* Premium Touch Feedback */
+.touch-feedback {
+  position: relative;
+  overflow: hidden;
+}
+
+.touch-feedback::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(213, 179, 106, 0.3) 0%, transparent 70%);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.touch-feedback:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Quick Action Buttons */
+.quick-action-luxury {
+  position: relative;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(255, 255, 255, 0.8) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+.quick-action-luxury::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, 
+    rgba(213, 179, 106, 0.1) 0%, 
+    transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.quick-action-luxury:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 
+    0 12px 32px rgba(213, 179, 106, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: rgba(213, 179, 106, 0.4);
+}
+
+.quick-action-luxury:hover::before {
+  opacity: 1;
+  animation: rotate-glow 3s linear infinite;
+}
+
+/* Bottom Navigation Bar */
+.bottom-nav-luxury {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-top: 1px solid rgba(213, 179, 106, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.bottom-nav-item {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+.bottom-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-400), var(--gold-600));
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  transform: translateX(-50%);
+}
+
+.bottom-nav-item-active::before {
+  width: 80%;
+}
+
+.bottom-nav-item:hover {
+  transform: scale(1.1);
+}
+
+/* =============================================
+   KEYFRAME ANIMATIONS
+   ============================================= */
+
+@keyframes nav-item-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-5px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse-glow-nav {
+  0% {
+    box-shadow: 0 4px 16px rgba(213, 179, 106, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(213, 179, 106, 0.6);
+  }
+  100% {
+    box-shadow: 0 4px 16px rgba(213, 179, 106, 0.4);
+  }
+}
+
+@keyframes rotate-glow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mobile-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobile-fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =============================================
+   RESPONSIVE OPTIMIZATIONS
+   ============================================= */
+
+/* Prefers Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link-luxury,
+  .mobile-nav-item,
+  .quick-action-luxury,
+  .bottom-nav-item,
+  .logo-luxury,
+  .nav-luxury-glass {
+    transition: none;
+    animation: none;
+  }
+  
+  .nav-staggered-item {
+    animation: none;
+  }
+}
+
+/* High Performance Mobile Optimizations */
+@media (max-width: 768px) {
+  .nav-luxury-glass,
+  .mobile-sheet-luxury,
+  .bottom-nav-luxury {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .quick-action-luxury:hover::before {
+    animation: none;
+  }
+}
+
 /* LUXURY CARD SYSTEM */
 .card-ultra-luxury {
   background: linear-gradient(145deg, #FFFFFF 0%, var(--cream) 100%);

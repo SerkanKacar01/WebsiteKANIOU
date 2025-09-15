@@ -217,8 +217,8 @@ const MobileHeader = () => {
                   <div className="flex items-center space-x-3">
                     <img src={kaniouLogo} alt="KANIOU" className="h-8 logo-luxury" />
                     <div className="flex flex-col">
-                      <span className="font-semibold text-lg text-gold-800">Menu</span>
-                      <span className="text-xs text-gold-600">Luxe Raamdecoratie</span>
+                      <span className="text-title-lg font-bold text-gold-800 text-shadow-luxury-medium">Menu</span>
+                      <span className="text-caption text-gold-600 text-shadow-luxury-soft">Luxe Raamdecoratie</span>
                     </div>
                   </div>
                   <Button 
@@ -253,7 +253,7 @@ const MobileHeader = () => {
                             {action.emoji}
                           </div>
                           <action.icon className={`h-4 w-4 ${action.color} opacity-80`} />
-                          <span className="text-xs font-semibold text-gray-700">{action.label}</span>
+                          <span className="text-caption font-bold text-gray-700 text-shadow-luxury-soft">{action.label}</span>
                         </div>
                       </Button>
                     </Link>
@@ -279,8 +279,8 @@ const MobileHeader = () => {
                               {item.icon}
                             </div>
                             <div className="flex-1">
-                              <div className={`text-base font-medium text-gray-800 group-hover:${item.color}`}>
-                                {item.label}
+                              <div className={`text-body font-semibold text-gray-800 group-hover:${item.color} text-shadow-luxury-soft`}>
+                                <span className="text-gradient-subtle">{item.label}</span>
                               </div>
                               <div className={`text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${prefersReducedMotion.current ? 'transition-none' : ''}`}>
                                 {item.href === "/gallerij" && "Bekijk onze portfolio"}
@@ -307,13 +307,13 @@ const MobileHeader = () => {
                     >
                       <span className="relative z-10 flex items-center">
                         <Sparkles className={`h-5 w-5 mr-3 ${prefersReducedMotion.current ? '' : 'group-hover:animate-pulse'}`} />
-                        Gratis Offerte Aanvragen
+<span className="text-body font-bold text-shadow-luxury-medium text-glow-subtle">Gratis Offerte Aanvragen</span>
                         <Star className={`h-4 w-4 ml-3 opacity-70 group-hover:opacity-100 ${prefersReducedMotion.current ? '' : 'group-hover:animate-bounce'}`} />
                       </span>
                     </Button>
                   </Link>
                   <p className="text-xs text-center text-gray-500 mt-3">
-                    Binnen 24 uur een persoonlijk advies
+<span className="text-caption text-shadow-luxury-soft">Binnen 24 uur een persoonlijk advies</span>
                   </p>
                 </div>
               </div>
@@ -376,7 +376,7 @@ const MobileHeader = () => {
               <span className={`text-xs font-semibold transition-all duration-300 ${
                 location === "/" ? "text-gold-800" : "text-gray-600 group-hover:text-gold-700"
               }`}>
-                Home
+<span className="text-caption font-bold text-shadow-luxury-soft">Home</span>
               </span>
             </div>
           </Link>
@@ -401,7 +401,7 @@ const MobileHeader = () => {
               <span className={`text-xs font-semibold transition-all duration-300 ${
                 location.startsWith("/gallerij") ? "text-purple-800" : "text-gray-600 group-hover:text-purple-700"
               }`}>
-                Gallerij
+<span className="text-caption font-bold text-shadow-luxury-soft">Gallerij</span>
               </span>
             </div>
           </Link>
@@ -426,7 +426,7 @@ const MobileHeader = () => {
               <span className={`text-xs font-semibold transition-all duration-300 ${
                 location.startsWith("/contact") ? "text-blue-800" : "text-gray-600 group-hover:text-blue-700"
               }`}>
-                Contact
+<span className="text-caption font-bold text-shadow-luxury-soft">Contact</span>
               </span>
             </div>
           </Link>
@@ -460,7 +460,7 @@ const MobileHeader = () => {
                 location.startsWith("/offerte") || location.startsWith("/quote") 
                   ? "text-gold-900" : "text-gray-600 group-hover:text-gold-800"
               }`}>
-                Offerte
+<span className="text-caption font-bold text-shadow-luxury-soft text-gradient-luxury">Offerte</span>
               </span>
               
               {/* Premium CTA pulse indicator */}

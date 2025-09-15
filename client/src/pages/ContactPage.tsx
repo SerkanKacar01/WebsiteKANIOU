@@ -47,24 +47,26 @@ const ContactPage = () => {
         <Container className="py-20 md:py-24 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <div className="animate-fade-in-up">
-              {/* Premium badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B]/20 to-[#D4AF37]/20 backdrop-blur-sm border border-[#C8A85B]/30 rounded-full px-6 py-2 mb-8">
-                <Crown className="w-4 h-4 text-[#C8A85B]" />
-                <span className="text-[#C8A85B] text-sm font-semibold tracking-wide uppercase">Premium Service</span>
-                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+              {/* Premium badge with enhanced typography */}
+              <div className="luxury-section-badge mb-12">
+                <div className="luxury-badge-glow"></div>
+                <div className="luxury-badge-text flex items-center gap-2">
+                  <Crown className="w-4 h-4" />
+                  <span className="text-caption">Premium Service</span>
+                  <Sparkles className="w-4 h-4" />
+                </div>
               </div>
               
-              <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-white font-black mb-6 leading-none tracking-tight">
-                <span className="bg-gradient-to-r from-white via-[#C8A85B] to-white bg-clip-text text-transparent animate-shimmer">
+              <h1 className="text-display-1 text-white font-black mb-8 leading-none text-center animate-text-reveal-scale">
+                <span className="text-gradient-hero text-glow-hero">
                   Contact met ons luxe team
                 </span>
               </h1>
               
-              
-              <p className="font-body text-xl md:text-2xl text-white/80 leading-relaxed font-light tracking-wide max-w-3xl mx-auto">
-                Ervaar <span className="text-[#C8A85B] font-medium">persoonlijke service</span> op het hoogste niveau. 
+              <p className="text-body-lg text-white/85 leading-relaxed font-light text-center max-w-4xl mx-auto animate-text-reveal-up text-reveal-delay-2">
+                Ervaar <span className="text-gradient-luxury font-semibold text-shadow-luxury-soft">persoonlijke service</span> op het hoogste niveau. 
                 <br className="hidden md:block" />
-                Ons team van <span className="text-[#D4AF37] font-medium">interieurspecialisten</span> staat voor u klaar.
+                Ons team van <span className="text-gradient-premium font-semibold text-shadow-luxury-soft">interieurspecialisten</span> staat voor u klaar.
               </p>
             </div>
           </div>
@@ -89,11 +91,11 @@ const ContactPage = () => {
               <MessageCircle className="w-6 h-6 text-[#C8A85B]" />
             </div>
             
-            <h2 className="font-display text-3xl md:text-5xl text-[#2C3E50] font-black mb-6 tracking-tight leading-tight">
-              Neem <span className="bg-gradient-to-r from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] bg-clip-text text-transparent">contact</span> op
+            <h2 className="text-hero text-[#2C3E50] font-black mb-8 tracking-tight leading-tight animate-text-reveal-scale">
+              Neem <span className="text-gradient-luxury animate-text-glow-pulse">contact</span> op
             </h2>
             
-            <p className="text-xl text-[#2C3E50]/70 font-light leading-relaxed max-w-3xl mx-auto">
+            <p className="text-subtitle text-[#2C3E50]/70 font-light leading-relaxed max-w-3xl mx-auto animate-text-reveal-up text-reveal-delay-1">
               Ons deskundige team staat klaar om u te voorzien van het beste advies voor uw raamdecoratie
             </p>
           </div>
@@ -111,15 +113,15 @@ const ContactPage = () => {
                     <MapPin className="text-white w-8 h-8" />
                   </div>
                   
-                  <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors">
+                  <h3 className="text-title-lg text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors text-shadow-luxury-soft">
                     Bezoek onze luxe showroom
                   </h3>
                   
                   <div className="w-16 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-6 group-hover:w-20 transition-all duration-500"></div>
                   
                   <div className="space-y-2 mb-6">
-                    <p className="font-body text-lg text-[#2C3E50] font-medium">Pauwengraaf 66</p>
-                    <p className="font-body text-lg text-[#2C3E50] font-medium">3630 Maasmechelen, België</p>
+                    <p className="text-body text-[#2C3E50] font-medium text-shadow-luxury-soft">Pauwengraaf 66</p>
+                    <p className="text-body text-[#2C3E50] font-medium text-shadow-luxury-soft">3630 Maasmechelen, België</p>
                   </div>
                   
                   <div className="border-t border-[#C8A85B]/20 pt-6">
@@ -151,7 +153,7 @@ const ContactPage = () => {
                     <Phone className="text-white w-8 h-8" />
                   </div>
                   
-                  <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors">
+                  <h3 className="text-title-lg text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors text-shadow-luxury-soft">
                     Bel ons direct
                   </h3>
                   
@@ -160,7 +162,7 @@ const ContactPage = () => {
                   <div className="mb-6">
                     <a
                       href="tel:+32467856405"
-                      className="font-display text-2xl text-[#C8A85B] font-bold hover:text-[#D4AF37] transition-colors group-hover:scale-110 inline-block transform transition-transform"
+                      className="text-title-lg text-[#C8A85B] font-bold hover:text-[#D4AF37] transition-colors group-hover:scale-110 inline-block transform transition-transform text-shadow-luxury-medium"
                     >
                       +32 467 85 64 05
                     </a>
@@ -195,7 +197,7 @@ const ContactPage = () => {
                     <Mail className="text-white w-8 h-8" />
                   </div>
                   
-                  <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors">
+                  <h3 className="text-title-lg text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors text-shadow-luxury-soft">
                     Stuur ons een e-mail
                   </h3>
                   
@@ -204,7 +206,7 @@ const ContactPage = () => {
                   <div className="mb-6">
                     <a
                       href="mailto:info@kaniou.be"
-                      className="font-display text-xl text-[#C8A85B] font-bold hover:text-[#D4AF37] transition-colors group-hover:scale-110 inline-block transform transition-transform"
+                      className="text-body-lg text-[#C8A85B] font-bold hover:text-[#D4AF37] transition-colors group-hover:scale-110 inline-block transform transition-transform text-shadow-luxury-medium"
                     >
                       info@kaniou.be
                     </a>

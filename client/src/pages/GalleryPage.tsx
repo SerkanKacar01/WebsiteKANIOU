@@ -30,37 +30,40 @@ const GalleryPage = () => {
       <div className="relative bg-gradient-to-br from-neutral-50 via-white to-yellow-50/30 pt-20 pb-16">
         <Container>
           <div className="text-center mb-16">
-            {/* Premium Badge */}
-            <div className="inline-flex items-center mb-8 px-4 py-2 bg-gradient-to-r from-yellow-400/20 to-yellow-500/20 backdrop-blur-sm rounded-full border border-yellow-400/30">
-              <div className="w-2 h-2 bg-yellow-400 rounded-full mr-3 animate-pulse"></div>
-              <span className="text-yellow-700 text-sm font-medium uppercase tracking-wider">Premium Galerij</span>
+            {/* Premium Badge with enhanced typography */}
+            <div className="luxury-section-badge mb-12">
+              <div className="luxury-badge-glow"></div>
+              <div className="luxury-badge-text flex items-center gap-2">
+                <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
+                <span className="text-caption">Premium Galerij</span>
+              </div>
             </div>
             
-            <h1 className="font-display text-5xl md:text-7xl text-primary font-bold mb-6 bg-gradient-to-br from-primary to-yellow-600 bg-clip-text text-transparent">
-              Onze Exclusieve
+            <h1 className="text-display-2 font-bold mb-6 text-center animate-text-reveal-scale">
+              <span className="text-gradient-luxury text-glow-premium">Onze Exclusieve</span>
             </h1>
-            <h2 className="font-display text-4xl md:text-6xl text-neutral-800 font-semibold mb-8">
-              Realisaties
+            <h2 className="text-hero text-neutral-800 font-semibold mb-10 text-center animate-text-reveal-scale text-reveal-delay-1">
+              <span className="text-gradient-subtle text-shadow-luxury-medium">Realisaties</span>
             </h2>
             
-            <p className="text-xl md:text-2xl text-neutral-600 max-w-4xl mx-auto leading-relaxed mb-12">
+            <p className="text-body-lg text-neutral-600 max-w-4xl mx-auto leading-relaxed mb-16 text-center animate-text-reveal-up text-reveal-delay-2">
               Ontdek onze mooiste projecten en laat u inspireren door de oneindige mogelijkheden van 
-              <span className="text-primary font-semibold"> premium raambekleding op maat</span>.
+              <span className="text-gradient-premium font-semibold text-glow-subtle"> premium raambekleding op maat</span>.
             </p>
 
-            {/* Premium Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{galleryItems.length}+</div>
-                <div className="text-sm uppercase tracking-wide text-neutral-600">Projecten</div>
+            {/* Premium Stats with enhanced typography */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto mb-16">
+              <div className="text-center animate-text-reveal-up text-reveal-delay-3">
+                <div className="text-title-xl font-bold text-gradient-luxury text-shadow-luxury-medium animate-text-glow-pulse">{galleryItems.length}+</div>
+                <div className="text-caption text-neutral-600 mt-2">Projecten</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">100%</div>
-                <div className="text-sm uppercase tracking-wide text-neutral-600">Maatwerk</div>
+              <div className="text-center animate-text-reveal-up text-reveal-delay-4">
+                <div className="text-title-xl font-bold text-gradient-luxury text-shadow-luxury-medium animate-text-glow-pulse">100%</div>
+                <div className="text-caption text-neutral-600 mt-2">Maatwerk</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">30+</div>
-                <div className="text-sm uppercase tracking-wide text-neutral-600">Jaar Ervaring</div>
+              <div className="text-center animate-text-reveal-up text-reveal-delay-5">
+                <div className="text-title-xl font-bold text-gradient-luxury text-shadow-luxury-medium animate-text-glow-pulse">30+</div>
+                <div className="text-caption text-neutral-600 mt-2">Jaar Ervaring</div>
               </div>
             </div>
           </div>

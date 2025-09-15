@@ -366,10 +366,10 @@ const ProductCategoryPage = () => {
       >
         <Container>
           <div className="text-center text-white">
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">
-              {categoryData.name}
+            <h1 className="text-display-2 font-bold mb-8 text-center animate-text-reveal-scale">
+              <span className="text-gradient-hero text-glow-hero">{categoryData.name}</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            <p className="text-body-lg mb-10 max-w-4xl mx-auto text-center animate-text-reveal-up text-reveal-delay-1">
               {productInfo.detailedDescription}
             </p>
             <Button
@@ -385,17 +385,17 @@ const ProductCategoryPage = () => {
       {/* Products Grid Section */}
       <div className="py-16 bg-gray-50">
         <Container>
-          <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
-            Onze {categoryData.name} Collectie
+          <h2 className="text-title-xl text-primary font-bold text-center mb-16 animate-text-reveal-scale">
+            <span className="text-gradient-luxury text-shadow-luxury-medium">Onze {categoryData.name} Collectie</span>
           </h2>
 
           {/* Product Information Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Applications Card */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+              <h3 className="text-title-lg font-bold text-primary mb-6 flex items-center text-shadow-luxury-soft">
                 <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
-                Toepassingen
+                <span className="text-gradient-subtle">Toepassingen</span>
               </h3>
               <ul className="space-y-2">
                 {productInfo.applications.map((app, index) => (
@@ -409,9 +409,9 @@ const ProductCategoryPage = () => {
 
             {/* Benefits Card */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+              <h3 className="text-title-lg font-bold text-primary mb-6 flex items-center text-shadow-luxury-soft">
                 <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
-                Voordelen
+                <span className="text-gradient-subtle">Voordelen</span>
               </h3>
               <ul className="space-y-2">
                 {productInfo.benefits.map((benefit, index) => (
@@ -425,9 +425,9 @@ const ProductCategoryPage = () => {
 
             {/* Colors/Materials Card */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+              <h3 className="text-title-lg font-bold text-primary mb-6 flex items-center text-shadow-luxury-soft">
                 <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
-                {productInfo.colors ? "Beschikbare Kleuren" : "Materialen"}
+                <span className="text-gradient-subtle">{productInfo.colors ? "Beschikbare Kleuren" : "Materialen"}</span>
               </h3>
               <ul className="space-y-2">
                 {(productInfo.colors || productInfo.materials || []).map((item, index) => (

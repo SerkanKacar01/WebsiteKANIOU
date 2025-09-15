@@ -20,12 +20,12 @@ const AboutPage = () => {
       <div className="bg-[#f9f7f3] py-20">
         <Container>
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-semibold mb-6">
-              Wie wij zijn
+            <h1 className="text-hero text-[#2C3E50] font-bold mb-8 text-center animate-text-reveal-scale">
+              <span className="text-gradient-elegant text-shadow-luxury-medium">Wie wij zijn</span>
             </h1>
-            <div className="w-24 h-0.5 bg-[#D5B992] mx-auto mb-8"></div>
-            <p className="font-body text-xl text-[#2C3E50] leading-relaxed">
-              Bij Kaniou Zilvernaald draait alles om perfectie in maatwerk raamdecoratie.
+            <div className="section-divider-luxury mb-12"></div>
+            <p className="text-body-lg text-[#2C3E50] leading-relaxed text-center animate-text-reveal-up text-reveal-delay-1">
+              Bij <span className="text-gradient-luxury font-semibold">Kaniou Zilvernaald</span> draait alles om perfectie in <span className="text-gradient-subtle font-semibold">maatwerk raamdecoratie</span>.
             </p>
           </div>
         </Container>
@@ -43,18 +43,18 @@ const AboutPage = () => {
               />
             </div>
             <div className="order-1 lg:order-2">
-              <h2 className="font-display text-3xl text-[#2C3E50] font-semibold mb-8">
-                Meer dan 30 jaar ervaring in elegantie en vakmanschap
+              <h2 className="text-title-xl text-[#2C3E50] font-bold mb-10 animate-text-reveal-scale">
+                <span className="text-gradient-subtle text-shadow-luxury-soft">Meer dan 30 jaar ervaring in elegantie en vakmanschap</span>
               </h2>
-              <div className="space-y-6 text-[#2C3E50] font-body leading-relaxed">
-                <p>
-                  Kaniou Zilvernaald is opgericht vanuit een passie voor stoffen, lichtinval en interieurarchitectuur.
-                  Wat begon als een kleine atelier is uitgegroeid tot een vertrouwd adres voor verfijnde raamdecoratie 
+              <div className="space-y-8 text-[#2C3E50] leading-relaxed">
+                <p className="text-body leading-relaxed animate-text-reveal-up text-reveal-delay-2">
+                  <span className="text-gradient-premium font-semibold">Kaniou Zilvernaald</span> is opgericht vanuit een passie voor stoffen, lichtinval en interieurarchitectuur.
+                  Wat begon als een kleine atelier is uitgegroeid tot een vertrouwd adres voor <span className="text-gradient-subtle font-medium">verfijnde raamdecoratie</span> 
                   in heel België en Nederland.
                 </p>
-                <p>
-                  Wij combineren traditioneel vakmanschap met moderne technieken om unieke oplossingen op maat te bieden – 
-                  van klassieke overgordijnen tot innovatieve zonweringssystemen.
+                <p className="text-body leading-relaxed animate-text-reveal-up text-reveal-delay-3">
+                  Wij combineren <span className="text-gradient-elegant font-medium">traditioneel vakmanschap</span> met moderne technieken om unieke oplossingen op maat te bieden – 
+                  van klassieke overgordijnen tot <span className="text-gradient-luxury font-medium">innovatieve zonweringssystemen</span>.
                 </p>
               </div>
             </div>
@@ -66,10 +66,10 @@ const AboutPage = () => {
       <div className="py-20 bg-[#f9f7f3]">
         <Container>
           <div className="text-center mb-16">
-            <h2 className="font-display text-3xl text-[#2C3E50] font-semibold mb-6">
-              Waar we voor staan
+            <h2 className="text-title-xl text-[#2C3E50] font-bold mb-8 text-center animate-text-reveal-scale">
+              <span className="text-gradient-luxury text-shadow-luxury-medium">Waar we voor staan</span>
             </h2>
-            <div className="w-24 h-0.5 bg-[#D5B992] mx-auto mb-8"></div>
+            <div className="section-divider-luxury mb-12"></div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
@@ -77,10 +77,10 @@ const AboutPage = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#E6C988] rounded-full mb-6">
                 <Search className="w-8 h-8 text-[#2C3E50]" />
               </div>
-              <h3 className="font-display text-xl text-[#2C3E50] font-semibold mb-4">
+              <h3 className="text-title-lg text-[#2C3E50] font-bold mb-4 text-shadow-luxury-soft animate-text-reveal-up text-reveal-delay-2">
                 Precisie
               </h3>
-              <p className="font-body text-[#2C3E50] leading-relaxed">
+              <p className="text-body text-[#2C3E50] leading-relaxed animate-text-reveal-up text-reveal-delay-3">
                 Elk detail telt bij ons.
               </p>
             </div>
@@ -89,11 +89,11 @@ const AboutPage = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#E6C988] rounded-full mb-6">
                 <Palette className="w-8 h-8 text-[#2C3E50]" />
               </div>
-              <h3 className="font-display text-xl text-[#2C3E50] font-semibold mb-4">
+              <h3 className="text-title-lg text-[#2C3E50] font-bold mb-4 text-shadow-luxury-soft animate-text-reveal-up text-reveal-delay-2">
                 Stijlvol Advies
               </h3>
-              <p className="font-body text-[#2C3E50] leading-relaxed">
-                Wij helpen u kiezen wat écht bij uw ruimte past.
+              <p className="text-body text-[#2C3E50] leading-relaxed animate-text-reveal-up text-reveal-delay-3">
+                Wij helpen u kiezen wat <span className="text-gradient-luxury font-medium">écht bij uw ruimte past</span>.
               </p>
             </div>
             
@@ -101,22 +101,22 @@ const AboutPage = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#E6C988] rounded-full mb-6">
                 <Wrench className="w-8 h-8 text-[#2C3E50]" />
               </div>
-              <h3 className="font-display text-xl text-[#2C3E50] font-semibold mb-4">
+              <h3 className="text-title-lg text-[#2C3E50] font-bold mb-4 text-shadow-luxury-soft animate-text-reveal-up text-reveal-delay-2">
                 Maatwerk
               </h3>
-              <p className="font-body text-[#2C3E50] leading-relaxed">
-                Geen standaardoplossingen, enkel uniek resultaat.
+              <p className="text-body text-[#2C3E50] leading-relaxed animate-text-reveal-up text-reveal-delay-3">
+                Geen standaardoplossingen, enkel <span className="text-gradient-premium font-medium">uniek resultaat</span>.
               </p>
             </div>
           </div>
 
           <div className="text-center max-w-3xl mx-auto">
-            <h3 className="font-display text-2xl text-[#2C3E50] font-semibold mb-6">
-              Visie
+            <h3 className="text-title-lg text-[#2C3E50] font-bold mb-8 text-center animate-text-reveal-scale text-reveal-delay-4">
+              <span className="text-gradient-elegant text-shadow-luxury-medium">Visie</span>
             </h3>
-            <p className="font-body text-lg text-[#2C3E50] leading-relaxed">
-              Onze missie is om luxe en functionaliteit samen te brengen.
-              We willen dat elke klant trots kan zijn op zijn interieur, dankzij perfecte lichtregeling, sfeer en afwerking.
+            <p className="text-body-lg text-[#2C3E50] leading-relaxed text-center animate-text-reveal-up text-reveal-delay-5">
+              Onze missie is om <span className="text-gradient-luxury font-semibold">luxe en functionaliteit</span> samen te brengen.
+              We willen dat elke klant trots kan zijn op zijn interieur, dankzij <span className="text-gradient-premium font-medium">perfecte lichtregeling, sfeer en afwerking</span>.
             </p>
           </div>
         </Container>

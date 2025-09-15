@@ -39,17 +39,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
       <CardContent className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1">
-          <h3 className="font-display text-lg sm:text-xl text-primary font-medium">
-            {product.name}
+          <h3 className="text-title-lg text-primary font-bold text-shadow-luxury-soft animate-text-reveal-up">
+            <span className="text-gradient-subtle">{product.name}</span>
           </h3>
-          <div className="text-accent font-semibold">€{product.price.toFixed(2)}</div>
+          <div className="text-body font-bold text-gradient-luxury text-shadow-luxury-medium animate-text-reveal-scale text-reveal-delay-1">€{product.price.toFixed(2)}</div>
         </div>
-        <p className="font-body text-text-medium text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
+        <p className="text-body text-text-medium mb-4 line-clamp-3 leading-relaxed animate-text-reveal-up text-reveal-delay-2">
           {product.description}
         </p>
         <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
           {product.material && (
-            <span className="text-xs bg-neutral-100 text-text-medium px-2 py-1 rounded">
+            <span className="text-caption bg-neutral-100 text-text-medium px-2 py-1 rounded text-shadow-luxury-soft">
               {product.material}
             </span>
           )}
@@ -57,7 +57,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             product.features.map((feature, index) => (
               <span
                 key={index}
-                className="text-xs bg-neutral-100 text-text-medium px-2 py-1 rounded"
+                className="text-caption bg-neutral-100 text-text-medium px-2 py-1 rounded text-shadow-luxury-soft"
               >
                 {feature}
               </span>
@@ -80,7 +80,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             ))}
           </div>
           <Link href={`/products/${product.name.toLowerCase().replace(/\s+/g, "-")}`}>
-            <a className="font-body inline-flex items-center text-primary hover:text-accent text-sm sm:text-base">
+            <a className="text-body inline-flex items-center font-semibold text-gradient-elegant hover:text-gradient-luxury transition-all duration-300 text-shadow-luxury-soft">
               View Details →
             </a>
           </Link>

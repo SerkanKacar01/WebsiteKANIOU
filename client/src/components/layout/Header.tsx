@@ -197,10 +197,10 @@ const Header = () => {
                     {navItems.map((item, index) => (
                       <Link key={item.href} href={item.href}>
                         <div
-                          className={`mobile-nav-item py-4 px-4 border-b border-neutral-200 block text-base cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:bg-gold-50 ${
+                          className={`mobile-nav-item py-4 px-4 border-b border-neutral-200 block text-body font-semibold text-shadow-luxury-soft cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:bg-gold-50 ${
                             isActive(item.href)
-                              ? "text-accent font-medium bg-gold-50"
-                              : "text-text-dark"
+                              ? "text-gradient-luxury bg-gold-50"
+                              : "text-text-dark hover:text-gradient-subtle"
                           }`}
                           onClick={handleMobileNavClick}
                           style={{
@@ -209,8 +209,8 @@ const Header = () => {
                           }}
                           data-testid={`link-${item.label.toLowerCase().replace(' ', '-')}`}
                         >
-                          <span className="mr-3 text-lg">{item.icon}</span>
-                          {item.label}
+                          <span className="mr-3 text-lg animate-text-glow-pulse">{item.icon}</span>
+                          <span className="text-shadow-luxury-soft">{item.label}</span>
                         </div>
                       </Link>
                     ))}
@@ -222,8 +222,8 @@ const Header = () => {
                           onClick={handleMobileNavClick}
                           data-testid="button-offerte-mobile"
                         >
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          VRIJBLIJVEND OFFERTE
+                          <Sparkles className="h-4 w-4 mr-2 animate-text-glow-pulse" />
+                          <span className="text-body font-bold text-shadow-luxury-medium">VRIJBLIJVEND OFFERTE</span>
                         </Button>
                       </Link>
                     </div>
@@ -244,19 +244,19 @@ const Header = () => {
                 >
                   <Link href={item.href}>
                     <div
-                      className={`nav-link-luxury text-sm cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:bg-gold-50 ${
+                      className={`nav-link-luxury text-body font-semibold text-shadow-luxury-soft cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:bg-gold-50 ${
                         isActive(item.href)
-                          ? "nav-link-luxury-active"
-                          : "text-gray-700 hover:text-gold-600"
+                          ? "nav-link-luxury-active text-gradient-luxury"
+                          : "text-gray-700 hover:text-gradient-subtle"
                       }`}
                       onClick={handleNavClick}
                       data-testid={`link-${item.label.toLowerCase().replace(' ', '-')}`}
                     >
                       <span className="relative z-10 flex items-center">
-                        <span className={`mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${prefersReducedMotion.current ? 'transition-none' : ''}`}>
+                        <span className={`mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-text-glow-pulse ${prefersReducedMotion.current ? 'transition-none' : ''}`}>
                           {item.icon}
                         </span>
-                        {item.label}
+                        <span className="text-shadow-luxury-soft">{item.label}</span>
                       </span>
                     </div>
                   </Link>
@@ -277,8 +277,8 @@ const Header = () => {
                     data-testid="button-offerte-desktop"
                   >
                     <span className="relative z-10 flex items-center">
-                      <Sparkles className={`h-4 w-4 mr-2 ${prefersReducedMotion.current ? '' : 'group-hover:animate-spin'}`} />
-                      VRIJBLIJVEND OFFERTE
+                      <Sparkles className={`h-4 w-4 mr-2 animate-text-glow-pulse ${prefersReducedMotion.current ? '' : 'group-hover:animate-spin'}`} />
+                      <span className="text-body font-bold text-shadow-luxury-medium">VRIJBLIJVEND OFFERTE</span>
                     </span>
                     {/* Luxury shine effect */}
                     <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out ${prefersReducedMotion.current ? 'hidden' : ''}`}></div>

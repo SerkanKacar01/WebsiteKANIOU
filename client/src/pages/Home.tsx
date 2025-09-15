@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 import React from "react";
 
 // Import standardized scroll animations
-import { useAdvancedScrollAnimation } from "@/hooks/useAdvancedInteractions";
+import { useAdvancedScrollAnimation } from "@/hooks/useAdvancedScrollAnimations";
 
 // Optimized parallax scroll effect hook with performance improvements
 const useParallaxEffect = () => {
@@ -291,7 +291,7 @@ const Home = () => {
       {/* Professional Navigation */}
       <ProfessionalNavigation />
 
-      <div className="content-offset" ref={mainContentRef} style={mainContentStyles}>
+      <div className="content-offset">
         {/* Hero Section - Ultra Luxury with Parallax */}
         <div className="hero-luxury parallax-container">
           {/* Parallax Background with Ultra Luxury Effects */}

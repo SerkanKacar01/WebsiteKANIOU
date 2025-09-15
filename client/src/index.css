@@ -1,3 +1,9 @@
+/* Defensive fallback against content-hiding scripts (Cookiebot in development) */
+html, body {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 /* OPTIMIZED TYPOGRAPHY SYSTEM - 2 FONT FAMILIES MAX */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
@@ -765,7 +771,6 @@ html, body {
     --destructive-foreground: 0 0% 98%;
     --ring: 240 4.9% 83.9%;
   }
-}
 
 @layer base {
   * {
@@ -7547,6 +7552,7 @@ html.rtl .right-0 {
   background: linear-gradient(135deg, rgba(213, 179, 106, 0.2) 0%, rgba(255, 255, 255, 0.9) 100%);
   border-color: rgba(213, 179, 106, 0.4);
   transform: scale(1.1);
+}
 
 /* ===============================================
    MISSING LUXURY UTILITY CLASSES & PERFORMANCE OPTIMIZATION

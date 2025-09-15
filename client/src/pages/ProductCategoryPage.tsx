@@ -624,7 +624,7 @@ const ProductCategoryPage = () => {
               </div>
             </div>
           </div>
-        </Container>
+        </div>
       </div>
 
       {/* Features Section */}

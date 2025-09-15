@@ -17,7 +17,6 @@ const buttonVariants = cva(
         className: "focus-visible:ring-[#D5B36A] focus-visible:ring-offset-white"
       }
     ],
-  {
     variants: {
       variant: {
         default: "bg-gradient-to-r from-[#D5B36A] to-[#C4A55A] text-white font-semibold shadow-gold-medium hover:shadow-gold-strong hover:translate-y-[-2px] hover:scale-105 active:translate-y-[-1px] active:scale-102 text-shadow-luxury-soft focus-visible:translate-y-[-2px] focus-visible:shadow-gold-strong focus-visible:scale-105",

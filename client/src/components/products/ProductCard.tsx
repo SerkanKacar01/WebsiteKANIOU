@@ -3,7 +3,8 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "@shared/schema";
 import { ColorSwatch } from "@/lib/types";
-import { useIntersectionObserver, useContentVisibility } from "@/hooks/useIntersectionObserver";
+// Removed unused imports - functionality integrated into advanced hooks
+import { useAdvancedHover, useScrollAnimation, useRippleEffect } from "@/hooks/useAdvancedInteractions";
 
 interface ProductCardProps {
   product: Product;
@@ -14,14 +15,39 @@ const ProductCard = ({ product }: ProductCardProps) => {
     product.colors && product.colors.length > 0 ? product.colors[0] : null
   );
 
-  // Intersection observer for entrance animations
-  const { elementRef: cardRef, isIntersecting } = useIntersectionObserver({
-    threshold: 0.1,
-    triggerOnce: true
+  // Advanced hover effects with sophisticated interactions
+  const { elementRef: hoverRef, isHovered, handlers: hoverHandlers, styles: hoverStyles } = useAdvancedHover({
+    scale: 1.05,
+    translateY: -12,
+    glow: true,
+    glowColor: '#D5B36A',
+    shadowIntensity: 1.2,
+    duration: 400,
+    magnetic: true,
+    magneticRadius: 60
   });
 
-  // Content visibility optimization
-  const { elementRef: contentRef, contentVisibility } = useContentVisibility();
+  // Advanced scroll-triggered animations
+  const { elementRef: scrollRef, isIntersecting, styles: scrollStyles } = useScrollAnimation({
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px',
+    triggerOnce: true,
+    delay: 100,
+    duration: 600,
+    transform: { y: 50, scale: 0.95 },
+    opacity: { from: 0, to: 1 }
+  });
+
+  // Ripple effect for interactive feedback
+  const { createRipple, ripples, getRippleContainerStyles, getRippleStyles } = useRippleEffect();
+
+  // Content visibility removed - integrated into scroll animation
+
+  // Combine refs for multiple effects
+  const combinedRef = (el: HTMLElement | null) => {
+    hoverRef.current = el;
+    scrollRef.current = el;
+  };
 
   // Convert the color hex values to ColorSwatch objects
   const colorSwatches: ColorSwatch[] = product.colors
@@ -30,9 +56,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div 
-      ref={cardRef}
-      className="group relative"
-      style={{ contentVisibility }}
+      ref={combinedRef}
+      className="group relative card-advanced glow-luxury"
+      style={{ 
+        ...scrollStyles,
+        ...hoverStyles 
+      }}
+      {...hoverHandlers}
+      onClick={createRipple}
       data-testid={`card-product-${product.id}`}
     >
       {/* Enhanced Link wrapper for full keyboard accessibility */}
@@ -43,14 +74,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
         data-testid={`link-product-${product.id}`}
       >
         {/* Advanced Luxury Card Container with GPU acceleration */}
-        <div className={`card-ultra-luxury glass-luxury-hover overflow-hidden transform transition-all duration-700 group-hover:-translate-y-6 group-hover:shadow-depth-5 hover:scale-[1.03] relative gpu-accelerated ${
-          isIntersecting ? 'animate-luxury-fade-in' : 'opacity-0'
+        <div className={`card-ultra-luxury glass-luxury-hover overflow-hidden relative gpu-accelerated hover-lift-advanced ${
+          isIntersecting ? 'scroll-reveal revealed' : 'scroll-reveal'
         }`}>
+          {/* Ripple Effect Container */}
+          <div style={getRippleContainerStyles()}>
+            {ripples.map((ripple) => (
+              <div key={ripple.id} style={getRippleStyles(ripple)} />
+            ))}
+          </div>
           {/* Optimized Glassmorphism Background */}
           <div className="absolute inset-0 glass-luxury-medium opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-3xl" aria-hidden="true" />
           
           {/* Premium Image Container with Enhanced Effects */}
-          <div className="relative h-80 overflow-hidden rounded-t-3xl">
+          <div className="relative h-80 overflow-hidden rounded-t-3xl img-advanced">
             {/* Consolidated overlay for better performance */}
             <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-[#D5B36A]/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" aria-hidden="true"></div>
             
@@ -58,7 +95,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <img
               src={product.imageUrl}
               alt={`${product.name} - Premium window covering`}
-              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-115 group-hover:brightness-110 group-hover:contrast-105 gpu-accelerated"
+              className="w-full h-full object-cover gpu-accelerated"
               loading="lazy"
               decoding="async"
               data-testid={`img-product-${product.id}`}
@@ -101,7 +138,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
           
           {/* Premium Content Section */}
-          <div ref={contentRef} className="p-luxury-lg space-y-6 relative">
+          <div className="p-luxury-lg space-y-6 relative card-content transition-all duration-400">
             {/* Header Section with Price */}
             <div className="space-y-4">
               <div className="flex items-start justify-between gap-4">

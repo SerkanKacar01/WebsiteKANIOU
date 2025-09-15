@@ -3,31 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React from "react";
 
-// Ultra-luxury scroll animations hook
-const useScrollAnimations = () => {
-  React.useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    // Observe all animated elements
-    const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .scale-in');
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => {
-      animatedElements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
-};
+// Import standardized scroll animations
+import { useAdvancedScrollAnimation } from "@/hooks/useAdvancedInteractions";
 
 // Optimized parallax scroll effect hook with performance improvements
 const useParallaxEffect = () => {
@@ -271,8 +248,15 @@ const Home = () => {
   const [, setLocation] = useLocation();
   
   // Initialize ultra-luxury effects
-  useScrollAnimations();
   useParallaxEffect();
+  
+  // Advanced scroll animation for main content
+  const { elementRef: mainContentRef, styles: mainContentStyles } = useAdvancedScrollAnimation({
+    threshold: 0.1,
+    triggerOnce: true,
+    duration: 800,
+    animationType: 'fadeUp'
+  });
 
   const handleExploreProducts = () => {
     setLocation("/producten/overgordijnen");
@@ -307,7 +291,7 @@ const Home = () => {
       {/* Professional Navigation */}
       <ProfessionalNavigation />
 
-      <div className="content-offset">
+      <div className="content-offset" ref={mainContentRef} style={mainContentStyles}>
         {/* Hero Section - Ultra Luxury with Parallax */}
         <div className="hero-luxury parallax-container">
           {/* Parallax Background with Ultra Luxury Effects */}
@@ -326,7 +310,7 @@ const Home = () => {
           </div>
 
           {/* Ultra Luxury Content Container */}
-          <div className="hero-content-luxury parallax-content max-w-5xl mx-auto px-4 md:px-8 py-20 md:pt-20 pt-28 fade-in-up">
+          <div className="hero-content-luxury parallax-content max-w-5xl mx-auto px-4 md:px-8 py-20 md:pt-20 pt-28">
             {/* Ultra Premium Title with Advanced Effects */}
             <h1 className="font-professional-display text-hero text-white mb-12 leading-[0.85] tracking-tight luxury-float">
               <span className="block text-4xl md:text-8xl xl:text-9xl text-visible-fallback text-shadow-luxury mb-4">

@@ -15,7 +15,7 @@ const Card = React.forwardRef<
     <Component
       ref={ref as any}
       className={cn(
-        "relative card-ultra-luxury group overflow-hidden transition-all duration-500 hover:shadow-depth-4 hover:translate-y-[-4px] hover:scale-[1.02] gpu-accelerated mobile-optimized",
+        "relative card-ultra-luxury group overflow-hidden transition-all duration-500 hover:shadow-depth-4 hover:translate-y-[-4px] hover:scale-[1.02] gpu-accelerated mobile-optimized texture-luxury-noise gradient-mesh-luxury surface-embossed luxury-element",
         asButton && "focus:outline-none focus:ring-2 focus:ring-[#D5B36A] focus:ring-offset-2 focus:shadow-depth-4 focus:translate-y-[-4px] focus:scale-[1.02] cursor-pointer",
         !asButton && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D5B36A] focus-visible:ring-offset-2",
         className
@@ -24,7 +24,8 @@ const Card = React.forwardRef<
       role={asButton ? 'button' : props.role}
       {...props}
     >
-      {/* Consolidated luxury overlay for better performance */}
+      {/* Enhanced luxury overlay with premium gradients */}
+      <div className="absolute inset-0 gradient-overlay-premium opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-br from-[#D5B36A]/6 via-transparent to-[#E0C188]/6 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
       {/* Premium border glow */}
       <div className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-[#D5B36A]/20 group-focus:border-[#D5B36A]/30 transition-all duration-500 pointer-events-none" aria-hidden="true" />

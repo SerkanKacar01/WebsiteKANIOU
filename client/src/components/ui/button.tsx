@@ -55,14 +55,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, className }), "luxury-element focus-luxury micro-bounce")}
+        data-cursor={variant === "default" || variant === "outline" ? "premium" : "pointer"}
         ref={ref}
         {...props}
       >
         {(variant === "default" || variant === "outline") && (
           <>
+            {/* Enhanced textures and patterns */}
+            <div className="absolute inset-0 texture-premium-grain" aria-hidden="true" />
             {/* Performance-optimized shimmer effect with reduced motion support */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-700 group-hover:translate-x-full group-focus-visible:translate-x-full shimmer-gpu" aria-hidden="true" />
+            {/* Enhanced gradient overlay */}
+            <div className="absolute inset-0 gradient-luxury-animated opacity-20" aria-hidden="true" />
             {/* Inner highlight for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/10 rounded-xl" aria-hidden="true" />
           </>

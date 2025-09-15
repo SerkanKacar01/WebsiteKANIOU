@@ -1,51 +1,52 @@
 /* OPTIMIZED TYPOGRAPHY SYSTEM - 2 FONT FAMILIES MAX */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
-/* ACCESSIBILITY-FIRST TEXT EFFECTS */
-/* Respect user motion preferences */
+/* ACCESSIBILITY-FIRST TEXT EFFECTS - PERFORMANCE OPTIMIZED */
+/* Base text shadows - always applied for readability */
+.text-shadow-luxury-soft {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.text-shadow-luxury-medium {
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.text-shadow-luxury-strong {
+  text-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Enhanced effects only for users who don't prefer reduced motion */
 @media (prefers-reduced-motion: no-preference) {
-  .text-shadow-luxury-soft {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-  }
-
-  .text-shadow-luxury-medium {
-    text-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.12),
-      0 1px 2px rgba(0, 0, 0, 0.06);
-  }
-
-  .text-shadow-luxury-strong {
-    text-shadow: 
-      0 4px 8px rgba(0, 0, 0, 0.15),
-      0 2px 4px rgba(0, 0, 0, 0.08);
-  }
-
   /* Only apply glow effects to large text (h1, h2) for accessibility */
   .text-glow-hero {
     text-shadow: 
-      0 0 20px rgba(213, 179, 106, 0.3),
-      0 4px 8px rgba(0, 0, 0, 0.15);
+      0 0 15px rgba(213, 179, 106, 0.2),
+      0 2px 4px rgba(0, 0, 0, 0.12);
   }
 
   .text-glow-premium {
     text-shadow: 
-      0 0 15px rgba(213, 179, 106, 0.25),
-      0 2px 4px rgba(0, 0, 0, 0.1);
+      0 0 10px rgba(213, 179, 106, 0.15),
+      0 1px 2px rgba(0, 0, 0, 0.08);
   }
 }
 
-/* Simplified effects for users who prefer reduced motion */
+/* Fallback for reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
+  .text-glow-hero,
+  .text-glow-premium {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Ensure all text is highly readable */
   .text-shadow-luxury-soft,
   .text-shadow-luxury-medium,
   .text-shadow-luxury-strong {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .text-glow-hero,
-  .text-glow-premium,
-  .text-glow-subtle {
-    text-shadow: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -170,23 +171,26 @@ html, body {
     }
   }
 
+  /* Performance-optimized pulse glow animation */
   @keyframes pulseGlow {
     0% {
-      opacity: 0.7;
-      box-shadow: 0 0 8px rgba(230, 126, 34, 0.2), 0 0 16px rgba(213, 185, 146, 0.15);
+      opacity: 0.8;
+      transform: scale(1);
     }
     50% {
-      opacity: 0.95;
-      box-shadow: 0 0 16px rgba(230, 126, 34, 0.4), 0 0 24px rgba(213, 185, 146, 0.25);
+      opacity: 1;
+      transform: scale(1.01);
     }
     100% {
-      opacity: 0.7;
-      box-shadow: 0 0 8px rgba(230, 126, 34, 0.2), 0 0 16px rgba(213, 185, 146, 0.15);
+      opacity: 0.8;
+      transform: scale(1);
     }
   }
 
+  /* Optimized pulse glow using transform instead of box-shadow */
   .animate-pulse-glow {
-    animation: pulseGlow 4s ease-in-out infinite;
+    animation: pulseGlow 6s ease-in-out infinite;
+    will-change: transform, opacity;
   }
 
   @keyframes originalPulseGlow {
@@ -385,36 +389,42 @@ html, body {
   }
 }
 
-/* ACCESSIBLE ANIMATION SYSTEM */
-/* Respect user motion preferences */
+/* PERFORMANCE-OPTIMIZED ANIMATION SYSTEM */
+/* Base transitions - fast and efficient */
+.transition-custom {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.transition-professional {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.transition-elegant {
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.professional-cta-button {
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.3s ease;
+}
+
+/* Enhanced animations only for users who don't prefer reduced motion */
 @media (prefers-reduced-motion: no-preference) {
-  .transition-custom {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .transition-professional {
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-  }
-
   .transition-elegant {
-    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .animate-float-professional {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .professional-cta-button {
     transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  /* Only animate pulse glow for users who don't prefer reduced motion */
+  .animate-float-professional {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  /* Optimized pulse glow with GPU acceleration */
   .animate-pulse-glow {
-    animation: pulseGlow 4s ease-in-out infinite;
+    animation: pulseGlow 6s ease-in-out infinite;
+    will-change: transform;
   }
 }
 
-/* Reduced motion alternatives */
+/* Reduced motion - instant changes */
 @media (prefers-reduced-motion: reduce) {
   .transition-custom,
   .transition-professional,
@@ -426,8 +436,20 @@ html, body {
   .animate-float-professional,
   .animate-pulse-glow,
   .step-transition,
-  .scroll-indicator {
+  .scroll-indicator,
+  .animate-fade-in-up,
+  .animate-text-reveal-scale,
+  .animate-text-reveal-up {
     animation: none;
+  }
+
+  /* Ensure immediate state changes for accessibility */
+  *[class*="animate-"] {
+    animation: none !important;
+  }
+
+  *[class*="transition-"] {
+    transition: none !important;
   }
 }
 
@@ -1104,7 +1126,11 @@ html, body {
   border-color: rgba(213, 179, 106, 0.15);
 }
 
-/* PREMIUM SPACING SYSTEM - Golden Ratio Based */
+/* ======================================================
+   SOPHISTICATED LUXURY SPACING SYSTEM - Golden Ratio Based
+   ====================================================== */
+
+/* Primary Golden Ratio Spacing Scale */
 .space-luxury-xs { margin: 8px; }
 .space-luxury-sm { margin: 13px; }
 .space-luxury-md { margin: 21px; }
@@ -1112,35 +1138,135 @@ html, body {
 .space-luxury-xl { margin: 55px; }
 .space-luxury-2xl { margin: 89px; }
 .space-luxury-3xl { margin: 144px; }
+.space-luxury-4xl { margin: 233px; }
 
+/* Enhanced Gap System */
 .gap-luxury-xs { gap: 8px; }
 .gap-luxury-sm { gap: 13px; }
 .gap-luxury-md { gap: 21px; }
 .gap-luxury-lg { gap: 34px; }
 .gap-luxury-xl { gap: 55px; }
+.gap-luxury-2xl { gap: 89px; }
+.gap-luxury-3xl { gap: 144px; }
 
+/* Enhanced Padding System */
 .p-luxury-xs { padding: 8px; }
 .p-luxury-sm { padding: 13px; }
 .p-luxury-md { padding: 21px; }
 .p-luxury-lg { padding: 34px; }
 .p-luxury-xl { padding: 55px; }
+.p-luxury-2xl { padding: 89px; }
+.p-luxury-3xl { padding: 144px; }
 
-/* LUXURY LAYOUT SYSTEM */
+/* Asymmetrical Padding for Premium Layouts */
+.px-luxury-xs { padding-left: 8px; padding-right: 8px; }
+.px-luxury-sm { padding-left: 13px; padding-right: 13px; }
+.px-luxury-md { padding-left: 21px; padding-right: 21px; }
+.px-luxury-lg { padding-left: 34px; padding-right: 34px; }
+.px-luxury-xl { padding-left: 55px; padding-right: 55px; }
+.px-luxury-2xl { padding-left: 89px; padding-right: 89px; }
+
+.py-luxury-xs { padding-top: 8px; padding-bottom: 8px; }
+.py-luxury-sm { padding-top: 13px; padding-bottom: 13px; }
+.py-luxury-md { padding-top: 21px; padding-bottom: 21px; }
+.py-luxury-lg { padding-top: 34px; padding-bottom: 34px; }
+.py-luxury-xl { padding-top: 55px; padding-bottom: 55px; }
+.py-luxury-2xl { padding-top: 89px; padding-bottom: 89px; }
+
+/* Asymmetrical Margins for Dynamic Layouts */
+.mx-luxury-xs { margin-left: 8px; margin-right: 8px; }
+.mx-luxury-sm { margin-left: 13px; margin-right: 13px; }
+.mx-luxury-md { margin-left: 21px; margin-right: 21px; }
+.mx-luxury-lg { margin-left: 34px; margin-right: 34px; }
+.mx-luxury-xl { margin-left: 55px; margin-right: 55px; }
+
+.my-luxury-xs { margin-top: 8px; margin-bottom: 8px; }
+.my-luxury-sm { margin-top: 13px; margin-bottom: 13px; }
+.my-luxury-md { margin-top: 21px; margin-bottom: 21px; }
+.my-luxury-lg { margin-top: 34px; margin-bottom: 34px; }
+.my-luxury-xl { margin-top: 55px; margin-bottom: 55px; }
+
+/* Responsive Fluid Spacing - Premium Clamp System */
+.space-fluid-xs { margin: clamp(4px, 1vw, 8px); }
+.space-fluid-sm { margin: clamp(8px, 1.5vw, 13px); }
+.space-fluid-md { margin: clamp(13px, 2vw, 21px); }
+.space-fluid-lg { margin: clamp(21px, 3vw, 34px); }
+.space-fluid-xl { margin: clamp(34px, 4vw, 55px); }
+.space-fluid-2xl { margin: clamp(55px, 6vw, 89px); }
+
+.gap-fluid-xs { gap: clamp(4px, 1vw, 8px); }
+.gap-fluid-sm { gap: clamp(8px, 1.5vw, 13px); }
+.gap-fluid-md { gap: clamp(13px, 2vw, 21px); }
+.gap-fluid-lg { gap: clamp(21px, 3vw, 34px); }
+.gap-fluid-xl { gap: clamp(34px, 4vw, 55px); }
+.gap-fluid-2xl { gap: clamp(55px, 6vw, 89px); }
+
+/* ======================================================
+   SOPHISTICATED LUXURY LAYOUT ARCHITECTURE
+   ====================================================== */
+
+/* Premium Container System */
 .container-luxury {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 clamp(1.5rem, 4vw, 6rem);
 }
 
+.container-luxury-wide {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(2rem, 5vw, 8rem);
+}
+
+.container-luxury-narrow {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 4rem);
+}
+
+/* Advanced Section Spacing */
 .section-luxury {
   padding: clamp(4rem, 8vw, 12rem) 0;
 }
 
+.section-luxury-compact {
+  padding: clamp(3rem, 6vw, 8rem) 0;
+}
+
+.section-luxury-spacious {
+  padding: clamp(6rem, 12vw, 18rem) 0;
+}
+
+/* Asymmetrical Section Padding */
+.section-asymmetrical-top {
+  padding: clamp(8rem, 15vw, 20rem) 0 clamp(4rem, 8vw, 12rem) 0;
+}
+
+.section-asymmetrical-bottom {
+  padding: clamp(4rem, 8vw, 12rem) 0 clamp(8rem, 15vw, 20rem) 0;
+}
+
+/* ======================================================
+   PREMIUM GRID SYSTEM - Advanced Layouts
+   ====================================================== */
+
+/* Base Grid System */
 .grid-luxury {
   display: grid;
   gap: clamp(2rem, 4vw, 4rem);
 }
 
+.grid-luxury-tight {
+  display: grid;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.grid-luxury-loose {
+  display: grid;
+  gap: clamp(3rem, 6vw, 6rem);
+}
+
+/* Standard Responsive Grids */
 .grid-luxury-2 {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
@@ -1157,9 +1283,135 @@ html, body {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+/* Asymmetrical Grid Layouts */
+.grid-asymmetrical-hero {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: clamp(3rem, 6vw, 8rem);
+  align-items: center;
+}
+
+.grid-asymmetrical-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 4vw, 6rem);
+  align-items: start;
+}
+
+.grid-asymmetrical-showcase {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: clamp(3rem, 5vw, 7rem);
+  align-items: center;
+}
+
+/* Advanced Layout Grids */
+.grid-masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: masonry;
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.grid-staggered {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.grid-staggered > :nth-child(2n) {
+  transform: translateY(clamp(2rem, 4vw, 4rem));
+}
+
+.grid-gallery-premium {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: start;
+}
+
+/* Feature Grid Layouts */
+.grid-feature-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(3rem, 5vw, 6rem);
+}
+
+.grid-feature-showcase > :first-child {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.grid-feature-showcase > :nth-child(2) {
+  grid-column: 1 / 2;
+  grid-row: 2;
+}
+
+.grid-feature-showcase > :nth-child(3) {
+  grid-column: 2 / -1;
+  grid-row: 2;
+}
+
+/* Product Grid Enhancements */
+.grid-products-luxury {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: stretch;
+}
+
+.grid-products-premium {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 3vw, 4rem);
+  align-items: start;
+}
+
+/* Responsive Grid Adjustments */
 @media (max-width: 1024px) {
   .grid-luxury-5 {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .grid-asymmetrical-hero,
+  .grid-asymmetrical-content,
+  .grid-asymmetrical-showcase {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+  
+  .grid-staggered {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-staggered > :nth-child(2n) {
+    transform: translateY(clamp(1rem, 2vw, 2rem));
+  }
+  
+  .grid-feature-showcase {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-feature-showcase > :first-child,
+  .grid-feature-showcase > :nth-child(2),
+  .grid-feature-showcase > :nth-child(3) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-staggered {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-staggered > :nth-child(2n) {
+    transform: none;
+  }
+  
+  .grid-gallery-premium {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
   }
 }
 
@@ -4206,8 +4458,9 @@ html, body {
   }
 }
 
-/* Mobile-specific chatbot container fixes */
+/* COMPREHENSIVE MOBILE OPTIMIZATIONS */
 @media (max-width: 640px) {
+  /* Chatbot container fixes */
   .chatbot-container {
     width: calc(100vw - 1rem) !important;
     max-width: none !important;
@@ -4244,6 +4497,34 @@ html, body {
   .chatbot-welcome-message {
     font-size: 0.95rem !important;
     line-height: 1.5 !important;
+  }
+  
+  /* General performance optimizations for small screens */
+  *[class*="blur-"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Disable heavy animations on small screens */
+  .animate-float-professional,
+  .luxury-float,
+  .animate-pulse-glow {
+    animation: none !important;
+  }
+  
+  /* Optimize text shadows for mobile */
+  .text-glow-hero,
+  .text-glow-premium {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  /* Reduce section padding for mobile */
+  .section-asymmetrical-top {
+    padding: clamp(4rem, 8vw, 8rem) 0 clamp(2rem, 4vw, 4rem) 0;
+  }
+  
+  .section-asymmetrical-bottom {
+    padding: clamp(2rem, 4vw, 4rem) 0 clamp(4rem, 8vw, 8rem) 0;
   }
 }
 
@@ -4682,14 +4963,15 @@ html.rtl .right-0 {
   }
 }
 
-/* MOBILE LUXURY OPTIMIZATIONS */
+/* COMPREHENSIVE MOBILE LUXURY OPTIMIZATIONS */
 @media (max-width: 768px) {
+  /* Navigation optimizations */
   .nav-professional {
-    padding: 20px 0;
+    padding: 16px 0;
   }
   
   .nav-professional.scrolled {
-    padding: 16px 0;
+    padding: 12px 0;
   }
   
   .nav-link {
@@ -4698,31 +4980,51 @@ html.rtl .right-0 {
     margin: 2px 0;
     border: 1px solid rgba(213, 179, 106, 0.8);
     background: rgba(255, 255, 255, 0.08);
+    /* Remove transform on mobile for performance */
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
   
   .nav-link:hover {
-    transform: translateY(-1px) scale(1.01);
     border-color: #E0C188;
     background: rgba(213, 179, 106, 0.12);
   }
   
+  /* Card optimizations */
   .card-ultra-luxury {
     padding: clamp(1.5rem, 4vw, 2rem);
     border-radius: 16px;
+    transition: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   }
   
+  .card-ultra-luxury:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Button optimizations */
   .btn-luxury-primary {
-    padding: 14px 32px;
+    padding: 14px 28px;
     font-size: 15px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-luxury-primary:hover {
+    transform: none;
   }
   
   .btn-luxury-secondary {
-    padding: 12px 30px;
+    padding: 12px 26px;
     font-size: 15px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-luxury-secondary:hover {
+    transform: none;
   }
   
   .btn-luxury {
-    padding: 10px 24px;
+    padding: 10px 20px;
     font-size: 15px;
   }
   
@@ -6320,6 +6622,251 @@ html.rtl .right-0 {
   background: linear-gradient(135deg, rgba(213, 179, 106, 0.2) 0%, rgba(255, 255, 255, 0.9) 100%);
   border-color: rgba(213, 179, 106, 0.4);
   transform: scale(1.1);
+
+/* ===============================================
+   MISSING LUXURY UTILITY CLASSES & PERFORMANCE OPTIMIZATION
+   =============================================== */
+
+/* Luxury spacing system - completing the golden ratio scale */
+.p-luxury-xs { padding: 8px; }
+.p-luxury-sm { padding: 13px; }
+.p-luxury-md { padding: 21px; }
+.p-luxury-xl { padding: 55px; }
+.p-luxury-2xl { padding: 89px; }
+
+.my-luxury-xs { margin-top: 8px; margin-bottom: 8px; }
+.my-luxury-sm { margin-top: 13px; margin-bottom: 13px; }
+.my-luxury-md { margin-top: 21px; margin-bottom: 21px; }
+.my-luxury-xl { margin-top: 55px; margin-bottom: 55px; }
+.my-luxury-2xl { margin-top: 89px; margin-bottom: 89px; }
+
+/* Text reveal animations with performance optimization */
+@keyframes text-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes text-reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation classes with performance optimization */
+.animate-text-reveal-up {
+  animation: text-reveal-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-text-reveal-scale {
+  animation: text-reveal-scale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+/* Enhanced luxury badge system */
+.luxury-section-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.luxury-badge-glow {
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, transparent, rgba(213, 179, 106, 0.1), transparent);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.luxury-section-badge:hover .luxury-badge-glow {
+  opacity: 1;
+}
+
+.luxury-badge-text {
+  position: relative;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #D5B36A;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  z-index: 1;
+}
+
+/* Mobile optimization for badges */
+@media (max-width: 768px) {
+  .luxury-section-badge {
+    padding: 6px 20px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.95);
+  }
+  
+  .luxury-badge-text {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+}
+
+/* ===============================================
+   ACCESSIBILITY IMPROVEMENTS
+   =============================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gradient-luxury,
+  .text-gradient-hero,
+  .text-gradient-premium,
+  .text-gradient-subtle,
+  .text-gradient-elegant {
+    color: #8B6D37 !important;
+    background: none !important;
+    -webkit-text-fill-color: unset !important;
+  }
+  
+  .luxury-section-badge {
+    border: 2px solid #8B6D37;
+    background: #FFFFFF;
+  }
+  
+  .card-ultra-luxury {
+    border: 2px solid #8B6D37;
+  }
+}
+
+/* Focus indicators for interactive elements */
+.luxury-section-badge:focus-visible,
+.card-ultra-luxury:focus-visible,
+.btn-luxury-primary:focus-visible,
+.btn-luxury-secondary:focus-visible {
+  outline: 2px solid #D5B36A;
+  outline-offset: 2px;
+}
+
+/* Ensure proper color contrast */
+.text-contrast-safe {
+  color: #2C3E50;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.bg-contrast-safe {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(213, 179, 106, 0.3);
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===============================================
+   COMPREHENSIVE REDUCED MOTION SUPPORT
+   =============================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all custom animations */
+  .animate-text-reveal-up,
+  .animate-text-reveal-scale,
+  .animate-fade-in-up,
+  .luxury-float,
+  .animate-float-professional,
+  .animate-pulse-glow {
+    animation: none !important;
+  }
+  
+  /* Simplify hover effects */
+  .card-ultra-luxury:hover {
+    transform: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+  }
+  
+  .btn-luxury-primary:hover,
+  .btn-luxury-secondary:hover {
+    transform: none !important;
+  }
+  
+  /* Remove all backdrop filters for performance */
+  .glass-nav,
+  .luxury-section-badge,
+  .luxury-form-input,
+  .luxury-form-select,
+  .luxury-form-textarea {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Instant transitions */
+  * {
+    transition-duration: 0.01s !important;
+    animation-duration: 0.01s !important;
+  }
+}
+
+/* ===============================================
+   BATTERY SAVING MODE
+   =============================================== */
+
+@media (max-width: 480px) and (max-resolution: 144dpi) {
+  /* Aggressive optimization for low-end devices */
+  .animate-pulse-glow,
+  .luxury-float,
+  .animate-float-professional {
+    animation: none !important;
+  }
+  
+  .card-ultra-luxury::before,
+  .luxury-badge-glow {
+    display: none !important;
+  }
+  
+  .text-glow-hero,
+  .text-glow-premium {
+    text-shadow: none !important;
+  }
 }
 
 .professional-product-card:hover .professional-card-title {

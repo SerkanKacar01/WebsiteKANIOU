@@ -1992,7 +1992,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  isolation: isolate;
 }
 
 .hero-gradient-luxury {
@@ -3308,7 +3308,8 @@ html, body {
 .parallax-bg {
   position: absolute;
   inset: 0;
-  transform: translateZ(-10px) scale(1.1);
+  z-index: 0;
+  pointer-events: none;
   transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
@@ -3538,7 +3539,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  isolation: isolate;
   transform-style: preserve-3d;
   perspective: 2000px;
 }
@@ -3557,6 +3558,8 @@ html, body {
 .hero-overlay-luxury {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  pointer-events: none;
   background: 
     radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 70%),
     linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);

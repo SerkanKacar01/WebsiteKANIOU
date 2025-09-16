@@ -39,7 +39,7 @@ const useParallaxEffect = () => {
         
         elementsRef.current.forEach(({ element, speed }) => {
           const yPos = -(scrolled * speed);
-          element.style.transform = `translateZ(-20px) scale(1.2) translateY(${yPos}px)`;
+          element.style.transform = `translate3d(0, ${yPos}px, 0)`;
         });
         
         rafRef.current = null;

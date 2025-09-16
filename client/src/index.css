@@ -1985,14 +1985,22 @@ html, body {
   }
 }
 
+/* FIRST SECTION AFTER HERO - ENSURE ABOVE HERO */
+.section-spacing-luxury {
+  position: relative;
+  z-index: 1;
+}
+
 /* ULTRA-LUXURY HERO SYSTEM */
 .hero-luxury {
-  position: relative;
+  position: relative !important;
   min-height: 100vh;
+  height: min(100svh, 900px);
   display: flex;
   align-items: center;
   justify-content: center;
-  isolation: isolate;
+  z-index: 0 !important;
+  overflow: visible !important;
 }
 
 .hero-gradient-luxury {
@@ -3306,10 +3314,10 @@ html, body {
 }
 
 .parallax-bg {
-  position: absolute;
+  position: absolute !important;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  z-index: -1 !important;
+  pointer-events: none !important;
   transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
@@ -3558,8 +3566,8 @@ html, body {
 .hero-overlay-luxury {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  z-index: -1 !important;
+  pointer-events: none !important;
   background: 
     radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 70%),
     linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);

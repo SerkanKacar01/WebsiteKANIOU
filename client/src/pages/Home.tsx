@@ -836,19 +836,19 @@ const Home = () => {
               </div>
 
               {/* Express Service - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group">
-                <div className="ultra-luxury-card-bg"></div>
+              <div className="ultra-luxury-feature-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow">
+                <div className="ultra-luxury-card-bg ultra-premium-glass"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
                   <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
-                    <div className="ultra-professional-icon-glow"></div>
-                    <span className="ultra-professional-icon text-2xl">🚚</span>
+                    <div className="ultra-professional-icon-glow animate-pulse"></div>
+                    <span className="ultra-professional-icon text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">🚚</span>
                   </div>
-                  <h3 className="ultra-luxury-feature-title">
+                  <h3 className="ultra-luxury-feature-title ultra-luxury-text-effect">
                     Uitmuntende Levering
                   </h3>
-                  <p className="ultra-luxury-feature-description">
+                  <p className="ultra-luxury-feature-description group-hover:text-gold-600 transition-colors duration-500">
                     Snelle levering, zorgvuldig gecoördineerd met compromisloze
                     aandacht voor elk detail. Mits beschikbaarheid van de
                     materialen.
@@ -857,19 +857,19 @@ const Home = () => {
               </div>
 
               {/* Master Consultation - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group">
-                <div className="ultra-luxury-card-bg"></div>
+              <div className="ultra-luxury-feature-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow">
+                <div className="ultra-luxury-card-bg ultra-premium-glass"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
                   <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
-                    <div className="ultra-professional-icon-glow"></div>
-                    <span className="ultra-professional-icon text-2xl">👥</span>
+                    <div className="ultra-professional-icon-glow animate-pulse"></div>
+                    <span className="ultra-professional-icon text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">👥</span>
                   </div>
-                  <h3 className="ultra-luxury-feature-title">
+                  <h3 className="ultra-luxury-feature-title ultra-luxury-text-effect">
                     Meesterlijk Advies
                   </h3>
-                  <p className="ultra-luxury-feature-description">
+                  <p className="ultra-luxury-feature-description group-hover:text-gold-600 transition-colors duration-500">
                     Persoonlijke begeleiding door vakmensen met meer dan dertig
                     jaar verfijnde expertise.
                   </p>
@@ -877,19 +877,19 @@ const Home = () => {
               </div>
 
               {/* Luxury Materials - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group">
-                <div className="ultra-luxury-card-bg"></div>
+              <div className="ultra-luxury-feature-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow">
+                <div className="ultra-luxury-card-bg ultra-premium-glass"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
                   <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
-                    <div className="ultra-professional-icon-glow"></div>
-                    <span className="ultra-professional-icon text-2xl">🏆</span>
+                    <div className="ultra-professional-icon-glow animate-pulse"></div>
+                    <span className="ultra-professional-icon text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">🏆</span>
                   </div>
-                  <h3 className="ultra-luxury-feature-title">
+                  <h3 className="ultra-luxury-feature-title ultra-luxury-text-effect">
                     Luxueuze Materialen
                   </h3>
-                  <p className="ultra-luxury-feature-description">
+                  <p className="ultra-luxury-feature-description group-hover:text-gold-600 transition-colors duration-500">
                     Geselecteerde stoffen en hoogwaardige materialen voor
                     blijvende schoonheid en verfijning.
                   </p>
@@ -897,19 +897,19 @@ const Home = () => {
               </div>
 
               {/* Heritage Excellence - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group">
-                <div className="ultra-luxury-card-bg"></div>
+              <div className="ultra-luxury-feature-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow">
+                <div className="ultra-luxury-card-bg ultra-premium-glass"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
                   <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
-                    <div className="ultra-professional-icon-glow"></div>
-                    <span className="ultra-professional-icon text-2xl">⏰</span>
+                    <div className="ultra-professional-icon-glow animate-pulse"></div>
+                    <span className="ultra-professional-icon text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">⏰</span>
                   </div>
-                  <h3 className="ultra-luxury-feature-title">
+                  <h3 className="ultra-luxury-feature-title ultra-luxury-text-effect">
                     Traditie in Perfectie
                   </h3>
-                  <p className="ultra-luxury-feature-description">
+                  <p className="ultra-luxury-feature-description group-hover:text-gold-600 transition-colors duration-500">
                     Dertig jaar onafgebroken toewijding aan de kunst van
                     raamdecoratie op maat.
                   </p>

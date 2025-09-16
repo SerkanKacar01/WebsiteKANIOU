@@ -212,30 +212,37 @@ const Home = () => {
       <ProfessionalNavigation />
 
       <div className="content-offset">
-        {/* Hero Section */}
-        <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          {/* Background Image with Overlay */}
+        {/* Hero Section - Ultra Luxury Enhanced */}
+        <div className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive">
+          {/* Ultra Particle System */}
+          <div className="ultra-particle-system">
+            <div className="absolute inset-0 opacity-60">
+              <div className="luxury-particles"></div>
+            </div>
+          </div>
+          
+          {/* Background Image with Ultra Luxury Overlay */}
           <div className="absolute inset-0">
             <img
               src={interiorImage}
               alt="Modern interior with elegant window treatments"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-all duration-1000 hover:scale-105"
             />
-            {/* Elegant transparent overlay for better text contrast */}
-            <div className="absolute inset-0 bg-black/20"></div>
+            {/* Ultra-Premium Glassmorphism Overlay */}
+            <div className="absolute inset-0 ultra-premium-glass"></div>
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
-            {/* Additional mobile overlay for better text readability */}
+            {/* Advanced Mobile Overlay */}
             <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
           </div>
 
           {/* Content Container */}
           <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
-            {/* Professional Title */}
-            <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl">
-              <span className="block text-4xl md:text-hero text-visible-fallback">
+            {/* Ultra-Luxury Title with Revolutionary Effects */}
+            <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow">
+              <span className="block text-4xl md:text-hero text-visible-fallback ultra-luxury-text-effect">
                 Professionele raamdecoratie
               </span>
-              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback">
+              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback ultra-luxury-text-effect animate-pulse">
                 Expertise
               </span>
             </h1>
@@ -252,48 +259,48 @@ const Home = () => {
               </span>
             </p>
 
-            {/* Professional CTA */}
+            {/* Ultra-Premium CTA with Micro-interactions */}
             <div className="flex justify-center mb-12 md:mb-20">
               <button
                 onClick={handleRequestQuote}
-                className="professional-cta-button group"
+                className="professional-cta-button group ultra-micro-interaction ultra-sophisticated-glow"
               >
                 <div className="professional-cta-bg"></div>
                 <div className="professional-cta-glow"></div>
                 <div className="professional-cta-content">
-                  <span className="professional-cta-text">
+                  <span className="professional-cta-text ultra-luxury-text-effect">
                     VANDAAG NOG OFFERTE
                   </span>
-                  <div className="professional-cta-icon">
+                  <div className="professional-cta-icon transform group-hover:rotate-45 transition-transform duration-500">
                     →
                   </div>
                 </div>
               </button>
             </div>
 
-            {/* Elegant Trust Indicators */}
+            {/* Ultra-Luxury Trust Indicators with Sophisticated Effects */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-professional-xl max-w-5xl mx-auto">
-              <div className="text-center animate-float-professional stagger-1">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
+              <div className="text-center animate-float-professional stagger-1 ultra-micro-interaction">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
                   30+
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
                   Jarenlange Vakmanschap
                 </div>
               </div>
-              <div className="text-center animate-float-professional stagger-2">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
+              <div className="text-center animate-float-professional stagger-2 ultra-micro-interaction">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
                   3500+
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
                   Eisvolle Klanten
                 </div>
               </div>
-              <div className="text-center animate-float-professional stagger-3">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
+              <div className="text-center animate-float-professional stagger-3 ultra-micro-interaction">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
                   100%
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
                   Maatwerk tot in Perfectie
                 </div>
               </div>
@@ -310,59 +317,67 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Product Categories Section - Ultra Luxury Design */}
-        <section className="section-spacing-luxury relative overflow-hidden">
-          {/* Luxury Background with Animated Particles */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3]">
-            <div className="absolute inset-0 opacity-60">
-              <div className="luxury-particles"></div>
+        {/* Product Categories Section - Revolutionary Ultra Luxury Design */}
+        <section className="section-spacing-luxury relative overflow-hidden ultra-premium-interactive">
+          {/* Ultra-Advanced Particle System */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3] ultra-premium-glass">
+            <div className="ultra-particle-system">
+              <div className="absolute inset-0 opacity-60">
+                <div className="luxury-particles"></div>
+              </div>
             </div>
           </div>
 
           <div className="container-golden relative z-10">
-            {/* Ultra-Premium Section Header */}
+            {/* Ultra-Premium Section Header with Revolutionary Effects */}
             <div className="text-center mb-20">
-              <div className="luxury-section-badge">
+              <div className="luxury-section-badge ultra-sophisticated-glow ultra-micro-interaction">
                 <div className="luxury-badge-glow"></div>
-                <span className="luxury-badge-text">PREMIUM COLLECTIE</span>
+                <span className="luxury-badge-text ultra-luxury-text-effect">PREMIUM COLLECTIE</span>
               </div>
-              <h2 className="luxury-mega-title mb-8">
-                <span className="luxury-title-line">Ontdek onze</span>
-                <span className="luxury-title-emphasis">collectie</span>
+              <h2 className="luxury-mega-title mb-8 ultra-sophisticated-glow">
+                <span className="luxury-title-line ultra-luxury-text-effect">Ontdek onze</span>
+                <span className="luxury-title-emphasis ultra-luxury-text-effect animate-pulse">collectie</span>
               </h2>
-              <p className="luxury-subtitle max-w-4xl mx-auto">
+              <p className="luxury-subtitle max-w-4xl mx-auto hover:scale-105 transition-transform duration-700">
                 Verken onze exclusieve collectie van artisanaal vervaardigde
                 raamdecoratie. Elk meesterwerk wordt met uitzonderlijke precisie
                 en devotie gecreëerd voor uw verfijnde interieur.
               </p>
             </div>
 
-            {/* Revolutionary Product Showcase Grid */}
+            {/* Revolutionary Product Showcase Grid with Ultra Luxury Effects */}
             <div className="luxury-product-grid mb-16">
-              {/* Houten jaloezieën - Premium Card */}
-              <div
-                className="professional-product-card group"
+              {/* Houten jaloezieën - Ultra Premium Card */}
+              <button
+                className="professional-product-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow"
                 onClick={() => setLocation("/producten/houten-jaloezieen")}
+                data-testid="button-product-houten-jaloezieen"
+                type="button"
+                aria-label="Houten jaloezieën - Natuurlijke elegantie"
               >
-                <div className="professional-card-background"></div>
+                <div className="professional-card-background ultra-premium-glass"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
                   <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">☰</span>
+                    <div className="professional-icon-glow animate-pulse"></div>
+                    <div className="professional-icon group-hover:rotate-12 transition-transform duration-500">
+                      <span className="text-white text-2xl group-hover:scale-110 transition-transform duration-300">☰</span>
                     </div>
                   </div>
-                  <h3 className="professional-card-title">Houten jaloezieën</h3>
-                  <p className="professional-card-subtitle">Natuurlijke elegantie</p>
-                  <div className="professional-card-arrow">→</div>
+                  <h3 className="professional-card-title ultra-luxury-text-effect">Houten jaloezieën</h3>
+                  <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Natuurlijke elegantie</p>
+                  <div className="professional-card-arrow group-hover:translate-x-2 group-hover:scale-125 transition-all duration-300">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Aluminium jaloezieën - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/textiel-lamellen")}
+                data-testid="button-product-textiel-lamellen"
+                type="button"
+                aria-label="Textiel lamellen - Zachte elegantie"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -381,12 +396,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Zachte elegantie</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Kunststof jaloezieën - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/kunststof-jaloezieen")}
+                data-testid="button-product-kunststof-jaloezieen"
+                type="button"
+                aria-label="Kunststof jaloezieën - Praktische perfectie"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -405,12 +423,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Praktische perfectie</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Verticaal lamellen - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/kunststof-lamellen")}
+                data-testid="button-product-kunststof-lamellen"
+                type="button"
+                aria-label="Kunststof lamellen - Praktische perfectie"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -429,12 +450,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Praktische perfectie</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Plissés - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/plisse")}
+                data-testid="button-product-plisse"
+                type="button"
+                aria-label="Plissés - Gevouwen elegantie"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -453,12 +477,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Gevouwen elegantie</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Duo plissés - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/duo-plisse")}
+                data-testid="button-product-duo-plisse"
+                type="button"
+                aria-label="Duo plissés - Dubbele perfectie"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -477,12 +504,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Dubbele perfectie</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Rolgordijnen - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/rolgordijnen")}
+                data-testid="button-product-rolgordijnen"
+                type="button"
+                aria-label="Rolgordijnen - Strakke simpliciteit"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -497,12 +527,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Strakke simpliciteit</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Duo rolgordijnen - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/duo-rolgordijnen")}
+                data-testid="button-product-duo-rolgordijnen"
+                type="button"
+                aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -523,12 +556,15 @@ const Home = () => {
                   </p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Gordijnen - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/overgordijnen")}
+                data-testid="button-product-overgordijnen"
+                type="button"
+                aria-label="Overgordijnen - Klassieke grandeur"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -543,12 +579,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Klassieke grandeur</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Rails & roedes - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/gordijnrails")}
+                data-testid="button-product-gordijnrails"
+                type="button"
+                aria-label="Gordijnrails - Perfecte mechaniek"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -563,12 +602,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Perfecte mechaniek</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Vouwgordijnen - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/vitrages")}
+                data-testid="button-product-vitrages"
+                type="button"
+                aria-label="Vitrages - Lichte elegantie"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -587,12 +629,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Lichte elegantie</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Houten shutters - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/producten/houten-shutters")}
+                data-testid="button-product-houten-shutters"
+                type="button"
+                aria-label="Houten shutters - Tijdloze klasse"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -611,12 +656,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Tijdloze klasse</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Vouwgordijnen - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/vouwgordijnen")}
+                data-testid="button-product-vouwgordijnen"
+                type="button"
+                aria-label="Vouwgordijnen - Zachte plooien, strakke lijnen"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -635,12 +683,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Zachte plooien, strakke lijnen</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Gordijnroedes - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/gordijnroedes")}
+                data-testid="button-product-gordijnroedes"
+                type="button"
+                aria-label="Gordijnroedes - Sterke ondersteuning"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -655,12 +706,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Sterke ondersteuning</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Squid - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/squid")}
+                data-testid="button-product-squid"
+                type="button"
+                aria-label="Squid - Moderne privacy"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -675,12 +729,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Moderne privacy</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Horren - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/horren")}
+                data-testid="button-product-horren"
+                type="button"
+                aria-label="Horren - Insectvrij comfort"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -695,12 +752,15 @@ const Home = () => {
                   <p className="professional-card-subtitle">Insectvrij comfort</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
 
               {/* Screen - Buiten Zonwering - Premium Card */}
-              <div
+              <button
                 className="professional-product-card group"
                 onClick={() => setLocation("/screen")}
+                data-testid="button-product-screen"
+                type="button"
+                aria-label="Screen - Buiten zonwering"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
@@ -720,7 +780,7 @@ const Home = () => {
                   <p className="professional-card-subtitle">Buiten zonwering</p>
                   <div className="professional-card-arrow">→</div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </section>
@@ -728,24 +788,25 @@ const Home = () => {
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>
 
-        {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
-        <section className="ultra-luxury-features-section">
-          <div className="absolute inset-0 luxury-gradient-bg"></div>
+        {/* Why Choose KANIOU - Revolutionary Ultra-Luxury USP Section */}
+        <section className="ultra-luxury-features-section ultra-premium-interactive">
+          <div className="absolute inset-0 luxury-gradient-bg ultra-premium-glass"></div>
           <div className="absolute inset-0 luxury-texture-overlay"></div>
+          <div className="ultra-particle-system"></div>
           <div className="container-golden relative z-10">
-            {/* Ultra-Premium Section Header */}
+            {/* Ultra-Premium Section Header with Revolutionary Effects */}
             <div className="text-center mb-32">
-              <div className="luxury-section-badge-premium mb-16">
+              <div className="luxury-section-badge-premium mb-16 ultra-sophisticated-glow ultra-micro-interaction">
                 <div className="luxury-badge-glow-premium"></div>
-                <span className="luxury-badge-text-premium">
+                <span className="luxury-badge-text-premium ultra-luxury-text-effect">
                   HAUTE COUTURE EXCELLENCE
                 </span>
               </div>
-              <h2 className="ultra-luxury-title mb-12">
-                <span className="ultra-luxury-title-line">De Kunst van</span>
-                <span className="ultra-luxury-title-emphasis">Perfectie</span>
+              <h2 className="ultra-luxury-title mb-12 ultra-sophisticated-glow">
+                <span className="ultra-luxury-title-line ultra-luxury-text-effect">De Kunst van</span>
+                <span className="ultra-luxury-title-emphasis ultra-luxury-text-effect animate-pulse">Perfectie</span>
               </h2>
-              <p className="ultra-luxury-subtitle max-w-5xl mx-auto">
+              <p className="ultra-luxury-subtitle max-w-5xl mx-auto hover:scale-105 transition-transform duration-700">
                 Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia
                 toewijding aan perfectie samensmelten met hedendaagse luxe in
                 elk met zorg vervaardigd detail.
@@ -754,20 +815,20 @@ const Home = () => {
 
             {/* Ultra-Luxury Features Grid */}
             <div className="ultra-luxury-features-grid">
-              {/* Perfect Fit - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group">
-                <div className="ultra-luxury-card-bg"></div>
+              {/* Perfect Fit - Revolutionary Ultra Luxury */}
+              <div className="ultra-luxury-feature-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow">
+                <div className="ultra-luxury-card-bg ultra-premium-glass"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
                   <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
-                    <div className="ultra-professional-icon-glow"></div>
-                    <span className="ultra-professional-icon text-2xl">⛄</span>
+                    <div className="ultra-professional-icon-glow animate-pulse"></div>
+                    <span className="ultra-professional-icon text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">⛄</span>
                   </div>
-                  <h3 className="ultra-luxury-feature-title">
+                  <h3 className="ultra-luxury-feature-title ultra-luxury-text-effect">
                     Vakkundig Op Maat
                   </h3>
-                  <p className="ultra-luxury-feature-description">
+                  <p className="ultra-luxury-feature-description group-hover:text-gold-600 transition-colors duration-500">
                     Elk stuk wordt nauwkeurig opgemeten en vervaardigd met
                     Zwitserse precisie voor uw unieke interieur.
                   </p>

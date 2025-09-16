@@ -326,305 +326,149 @@ const ProductCategoryPage = () => {
         />
       </Helmet>
 
-      {/* Premium Breadcrumb Navigation */}
-      <div className="bg-gradient-to-r from-[#fafaf9] via-[#f9f7f3] to-[#fafaf9] py-luxury-sm border-b border-[#D5B36A]/10">
-        <div className="container-luxury">
-          <Breadcrumb className="luxury-breadcrumb">
-            <BreadcrumbList className="flex items-center gap-3 text-[#2C3E50]/70">
+      {/* Breadcrumb Navigation */}
+      <div className="bg-gray-50 py-4">
+        <Container>
+          <Breadcrumb>
+            <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/" className="flex items-center gap-2 text-gradient-subtle hover:text-gradient-luxury transition-all duration-300 group">
-                  <HomeIcon className="h-4 w-4 group-hover:scale-110 transition-transform" />
-                  <span className="sr-only">Home</span>
+                <BreadcrumbLink href="/">
+                  <HomeIcon className="h-4 w-4" />
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
-                <ChevronRight className="h-4 w-4 text-[#D5B36A]" />
+                <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/producten" className="text-gradient-elegant hover:text-gradient-luxury transition-all duration-300">
-                  Producten
-                </BreadcrumbLink>
+                <BreadcrumbLink href="/producten">Producten</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
-                <ChevronRight className="h-4 w-4 text-[#D5B36A]" />
+                <ChevronRight className="h-4 w-4" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <span className="text-gradient-luxury font-semibold text-shadow-luxury-soft">
+                <BreadcrumbLink href={`/producten/${category}`}>
                   {productCategories.find(
                     (cat) => cat.urlPath === category,
                   )?.label || categoryData.name}
-                </span>
+                </BreadcrumbLink>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-        </div>
+        </Container>
       </div>
 
-      {/* Sophisticated Asymmetrical Hero Section */}
-      <div className="section-asymmetrical-top bg-gradient-to-br from-[#fafaf9] via-[#f9f7f3] to-[#fdfcf8] relative overflow-hidden">
-        {/* Premium Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-radial from-[#D5B36A]/5 to-transparent rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-gradient-radial from-[#E0C188]/3 to-transparent rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#C8A85B]/3 to-transparent rounded-full"></div>
+      {/* Standard Category Hero Section */}
+      <div
+        className="relative bg-cover bg-center py-24"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${categoryData.imageUrl})`,
+        }}
+      >
+        <Container>
+          <div className="text-center text-white">
+            <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              {categoryData.name}
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+              {productInfo.detailedDescription}
+            </p>
+            <Button
+              size="lg"
+              className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+            >
+              Bekijk Collectie
+            </Button>
           </div>
-        </div>
-        
-        <div className="container-luxury-wide relative z-10">
-          <div className="grid-asymmetrical-hero items-center min-h-[80vh]">
-            {/* Left Column - Premium Content */}
-            <div className="space-y-8 animate-fade-in-up">
-              <div className="space-y-6">
-                <div className="luxury-section-badge">
-                  <div className="luxury-badge-glow"></div>
-                  <div className="luxury-badge-text flex items-center gap-2">
-                    <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-                    <span className="text-caption">Premium Collectie</span>
-                  </div>
-                </div>
-                
-                <h1 className="text-display-1 text-[#2C3E50] font-black leading-none animate-text-reveal-scale">
-                  <span className="text-gradient-luxury text-glow-hero block">{categoryData.name}</span>
-                </h1>
-                
-                <div className="w-32 h-1 bg-gradient-to-r from-[#D5B36A] via-[#E0C188] to-[#D5B36A] rounded-full my-luxury-lg"></div>
-              </div>
-              
-              <div className="space-y-6 max-w-2xl">
-                <p className="text-subtitle text-[#2C3E50] leading-relaxed animate-text-reveal-up text-reveal-delay-1">
-                  {productInfo.detailedDescription}
-                </p>
-                
-                <div className="pt-6 animate-text-reveal-up text-reveal-delay-2">
-                  <Link href="/quote">
-                    <button className="btn-luxury-primary group">
-                      <span className="relative z-10 flex items-center gap-3">
-                        <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
-                        </svg>
-                        Bekijk Collectie
-                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </span>
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            
-            {/* Right Column - Premium Visual Showcase */}
-            <div className="relative animate-fade-in-up text-reveal-delay-3">
-              <div className="relative">
-                {/* Premium Showcase Card */}
-                <div className="card-ultra-luxury p-luxury-xl">
-                  <div className="space-y-8">
-                    <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full mb-6 shadow-professional">
-                        <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-title-xl text-gradient-luxury font-bold text-shadow-luxury-soft mb-4">Premium Kwaliteit</h3>
-                      <p className="text-body text-[#2C3E50]/70 leading-relaxed">Ontdek de perfecte combinatie van stijl en functionaliteit</p>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-6">
-                      <div className="text-center">
-                        <div className="text-title-lg font-bold text-gradient-luxury text-shadow-luxury-medium mb-2">30+</div>
-                        <div className="text-caption text-[#2C3E50]/60">Jaar Ervaring</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-title-lg font-bold text-gradient-luxury text-shadow-luxury-medium mb-2">100%</div>
-                        <div className="text-caption text-[#2C3E50]/60">Op Maat</div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full"></div>
-                        <span className="text-body text-[#2C3E50]/70">Gratis advies op locatie</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full"></div>
-                        <span className="text-body text-[#2C3E50]/70">Professionele installatie</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full"></div>
-                        <span className="text-body text-[#2C3E50]/70">Jarenlange garantie</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Floating Elements */}
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-[#E0C188] to-[#D5B36A] rounded-full flex items-center justify-center shadow-professional animate-float-luxury">
-                  <Check className="w-8 h-8 text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </Container>
       </div>
 
-      {/* Premium Products Information Section */}
-      <div className="section-luxury bg-white relative">
-        <div className="container-luxury">
-          {/* Premium Section Header */}
-          <div className="text-center mb-luxury-2xl">
-            <div className="luxury-section-badge mb-8">
-              <div className="luxury-badge-glow"></div>
-              <div className="luxury-badge-text flex items-center gap-2">
-                <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-                <span className="text-caption">Product Details</span>
-              </div>
-            </div>
-            
-            <h2 className="text-display-2 text-[#2C3E50] font-bold text-center mb-8 animate-text-reveal-scale">
-              <span className="text-gradient-luxury text-glow-premium">Onze {categoryData.name}</span>
-              <span className="block text-gradient-elegant text-shadow-luxury-strong mt-2">Collectie</span>
-            </h2>
-            
-            <div className="w-32 h-1 bg-gradient-to-r from-[#D5B36A] via-[#E0C188] to-[#D5B36A] rounded-full mx-auto"></div>
-          </div>
+      {/* Products Grid Section */}
+      <div className="py-16 bg-gray-50">
+        <Container>
+          <h2 className="font-display text-3xl text-primary font-semibold text-center mb-12">
+            Onze {categoryData.name} Collectie
+          </h2>
 
-          {/* Enhanced Feature Grid Layout */}
-          <div className="grid-feature-showcase">
-            {/* Main Feature Card - Applications */}
-            <div className="card-ultra-luxury group animate-fade-in-up">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full flex items-center justify-center shadow-professional group-hover:scale-110 transition-transform duration-300">
-                    <Check className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-title-xl text-gradient-luxury font-bold text-shadow-luxury-soft">
-                    Toepassingen
-                  </h3>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {productInfo.applications.map((app, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-gradient-to-r from-[#D5B36A]/5 to-[#E0C188]/3 rounded-lg border border-[#D5B36A]/10">
-                      <div className="w-2 h-2 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full flex-shrink-0"></div>
-                      <span className="text-body text-[#2C3E50] font-medium">{app}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Product Information Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Applications Card */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+                <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
+                Toepassingen
+              </h3>
+              <ul className="space-y-2">
+                {productInfo.applications.map((app, index) => (
+                  <li key={index} className="text-text-medium flex items-center">
+                    <Check className="h-4 w-4 mr-2 text-[#d5c096]" />
+                    {app}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Secondary Feature Cards */}
-            <div className="card-luxury group animate-fade-in-up text-reveal-delay-1">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#E0C188] to-[#D5B36A] rounded-full flex items-center justify-center shadow-professional group-hover:scale-110 transition-transform duration-300">
-                    <Check className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-title-lg text-gradient-elegant font-bold text-shadow-luxury-soft">
-                    Voordelen
-                  </h3>
-                </div>
-                
-                <div className="space-y-3">
-                  {productInfo.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-start gap-3 p-2">
-                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-body text-[#2C3E50]">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {/* Benefits Card */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+                <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
+                Voordelen
+              </h3>
+              <ul className="space-y-2">
+                {productInfo.benefits.map((benefit, index) => (
+                  <li key={index} className="text-text-medium flex items-center">
+                    <Check className="h-4 w-4 mr-2 text-[#d5c096]" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="card-luxury group animate-fade-in-up text-reveal-delay-2">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full flex items-center justify-center shadow-professional group-hover:scale-110 transition-transform duration-300">
-                    <Check className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-title-lg text-gradient-premium font-bold text-shadow-luxury-soft">
-                    {productInfo.colors ? "Beschikbare Kleuren" : "Materialen"}
-                  </h3>
-                </div>
-                
-                <div className="space-y-3">
-                  {(productInfo.colors || productInfo.materials || []).map((item, index) => (
-                    <div key={index} className="flex items-start gap-3 p-2">
-                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-body text-[#2C3E50]">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+
+            {/* Colors/Materials Card */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="font-display text-xl font-semibold text-primary mb-4 flex items-center">
+                <Check className="h-5 w-5 mr-2 text-[#d5c096]" />
+                {productInfo.colors ? "Beschikbare Kleuren" : "Materialen"}
+              </h3>
+              <ul className="space-y-2">
+                {(productInfo.colors || productInfo.materials || []).map((item, index) => (
+                  <li key={index} className="text-text-medium flex items-center">
+                    <Check className="h-4 w-4 mr-2 text-[#d5c096]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          {/* Premium Call to Action Section */}
-          <div className="mt-luxury-2xl">
-            <div className="card-showcase p-luxury-2xl text-center animate-fade-in-up text-reveal-delay-3">
-              <div className="space-y-8 max-w-4xl mx-auto">
-                <div className="space-y-4">
-                  <h3 className="text-title-xl text-gradient-luxury font-bold text-shadow-luxury-medium">
-                    Interesse in {categoryData.name}?
-                  </h3>
-                  <div className="w-24 h-1 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] rounded-full mx-auto"></div>
-                </div>
-                
-                <p className="text-body-lg text-[#2C3E50] leading-relaxed max-w-3xl mx-auto">
-                  Neem contact met ons op voor een vrijblijvende offerte of kom langs in onze showroom voor persoonlijk advies. 
-                  Onze experts staan klaar om u te helpen met de perfecte raamdecoratie op maat.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6">
-                  <Link href="/quote">
-                    <button className="btn-luxury-primary group">
-                      <span className="relative z-10 flex items-center gap-3">
-                        <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
-                        </svg>
-                        Vraag Offerte Aan
-                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </span>
-                    </button>
-                  </Link>
-                  
-                  <Link href="/contact">
-                    <button className="btn-luxury-secondary group">
-                      <span className="relative z-10 flex items-center gap-3">
-                        <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        Neem Contact Op
-                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </span>
-                    </button>
-                  </Link>
-                </div>
-                
-                {/* Premium Trust Indicators */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-[#D5B36A]/20">
-                  <div className="text-center">
-                    <div className="text-title-lg font-bold text-gradient-luxury text-shadow-luxury-medium mb-2">Gratis</div>
-                    <div className="text-caption text-[#2C3E50]/60">Thuisadvies</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-title-lg font-bold text-gradient-luxury text-shadow-luxury-medium mb-2">100%</div>
-                    <div className="text-caption text-[#2C3E50]/60">Op Maat</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-title-lg font-bold text-gradient-luxury text-shadow-luxury-medium mb-2">5 Jaar</div>
-                    <div className="text-caption text-[#2C3E50]/60">Garantie</div>
-                  </div>
-                </div>
-              </div>
+          {/* Call to Action Section */}
+          <div className="text-center mt-12 py-8 bg-white rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Interesse in {categoryData.name}?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              Neem contact met ons op voor een vrijblijvende offerte of kom langs in onze showroom voor persoonlijk advies.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/offerte">
+                <Button
+                  size="lg"
+                  className="bg-[#d5c096] hover:bg-[#c4b183] text-white"
+                >
+                  Vraag Offerte Aan
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-[#d5c096] text-[#d5c096] hover:bg-[#d5c096] hover:text-white"
+                >
+                  Neem Contact Op
+                </Button>
+              </Link>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
 
       {/* Features Section */}

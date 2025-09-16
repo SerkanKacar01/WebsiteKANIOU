@@ -268,10 +268,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     log(`serving on port ${port}`);
   });
 
-  // Setup appropriate serving based on environment
-  if (process.env.NODE_ENV === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+  // Setup Vite after all other routes to prevent catch-all interference
+  // Serve built files in all environments
+  serveStatic(app);
 })();

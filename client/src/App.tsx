@@ -12,8 +12,6 @@ import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import Footer from "@/components/layout/Footer";
 import FloatingActionButtons from "@/components/FloatingActionButtons";
-import LuxuryCursor from "@/components/ui/LuxuryCursor";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
 
 
 import Home from "@/pages/Home";
@@ -109,10 +107,6 @@ function Router() {
         <title>{getPageTitle()}</title>
         <meta name="description" content={t("app.subtitle")} />
       </Helmet>
-      {/* Luxury enhancements */}
-      <LuxuryCursor />
-      <ScrollIndicator />
-      
       <Switch>
         <Route path="/" component={Home} />
         {/* Product categories - Disabled */}
@@ -242,7 +236,7 @@ function App() {
 
 
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="min-h-screen bg-white">
       <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />

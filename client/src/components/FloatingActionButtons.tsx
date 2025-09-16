@@ -13,8 +13,6 @@ const FloatingActionButtons = () => {
           className="fixed right-0 top-1/2 -translate-y-1/2 z-50 group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          role="complementary"
-          aria-label="Contactmogelijkheden menu"
         >
           {/* Sidebar Container */}
           <div 
@@ -24,7 +22,7 @@ const FloatingActionButtons = () => {
           >
             {/* Collapsed State - Icon Only */}
             <div className={`${isHovered ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 absolute inset-0 flex items-center justify-center`}>
-              <div className="text-white text-2xl transform rotate-90 whitespace-nowrap font-medium tracking-wider" aria-hidden="true">
+              <div className="text-white text-2xl transform rotate-90 whitespace-nowrap font-medium tracking-wider">
                 💬
               </div>
               {/* Vertical Label */}
@@ -37,7 +35,7 @@ const FloatingActionButtons = () => {
             <div className={`${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'} transition-all duration-300 ease-in-out p-4 flex flex-col gap-3`}>
               {/* Header */}
               <div className="text-white text-center mb-2">
-                <div className="text-lg mb-1" aria-hidden="true">💬</div>
+                <div className="text-lg mb-1">💬</div>
                 <div className="text-sm font-medium">Contactmogelijkheden</div>
               </div>
 
@@ -45,9 +43,8 @@ const FloatingActionButtons = () => {
               <button
                 onClick={() => setLocation("/afspraak")}
                 className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg border border-white/20 flex items-center gap-3"
-                aria-label="Plan een afspraak - ga naar afspraak maken pagina"
               >
-                <span className="text-lg" aria-hidden="true">📅</span>
+                <span className="text-lg">📅</span>
                 <span className="text-sm">Plan een Afspraak</span>
               </button>
 
@@ -55,9 +52,8 @@ const FloatingActionButtons = () => {
               <button
                 onClick={() => setLocation("/offerte")}
                 className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg border border-white/20 flex items-center gap-3"
-                aria-label="Vraag vrijblijvende offerte aan - ga naar offerte pagina"
               >
-                <span className="text-lg" aria-hidden="true">📑</span>
+                <span className="text-lg">📑</span>
                 <span className="text-sm">Vrijblijvende Offerte</span>
               </button>
 
@@ -65,9 +61,8 @@ const FloatingActionButtons = () => {
               <button
                 onClick={() => setLocation("/bestelling-volgen")}
                 className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg border border-white/20 flex items-center gap-3"
-                aria-label="Volg uw bestelling - ga naar bestelling volgen pagina"
               >
-                <span className="text-lg" aria-hidden="true">📦</span>
+                <span className="text-lg">📦</span>
                 <span className="text-sm">Bestelling Volgen</span>
               </button>
             </div>
@@ -83,10 +78,8 @@ const FloatingActionButtons = () => {
             <button 
               className="bg-gradient-to-r from-[#E67E22] to-[#D5B992] text-white w-14 h-14 rounded-full shadow-2xl hover:shadow-xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center text-xl"
               onClick={() => {/* Toggle mobile menu logic would go here */}}
-              aria-label="Contact menu openen"
-              aria-expanded="false"
             >
-              <span className="group-hover:rotate-45 transition-transform duration-300" aria-hidden="true">💬</span>
+              <span className="group-hover:rotate-45 transition-transform duration-300">💬</span>
             </button>
 
             {/* Mobile Menu (appears on tap) */}
@@ -95,25 +88,22 @@ const FloatingActionButtons = () => {
                 <button
                   onClick={() => setLocation("/afspraak")}
                   className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm"
-                  aria-label="Plan een afspraak"
                 >
-                  <span aria-hidden="true">📅</span>
+                  <span>📅</span>
                   <span>Plan een Afspraak</span>
                 </button>
                 <button
                   onClick={() => setLocation("/offerte")}
                   className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm"
-                  aria-label="Vraag vrijblijvende offerte aan"
                 >
-                  <span aria-hidden="true">📑</span>
+                  <span>📑</span>
                   <span>Vrijblijvende Offerte</span>
                 </button>
                 <button
                   onClick={() => setLocation("/bestelling-volgen")}
                   className="w-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm"
-                  aria-label="Volg uw bestelling"
                 >
-                  <span aria-hidden="true">📦</span>
+                  <span>📦</span>
                   <span>Bestelling Volgen</span>
                 </button>
               </div>

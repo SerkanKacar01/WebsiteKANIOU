@@ -207,7 +207,7 @@ export const QuoteRequestModal = ({ isOpen, onClose, previewData }: QuoteRequest
                 className="bg-yellow-600 hover:bg-yellow-700"
               >
                 {isSubmitting ? (
-                  "Versturen..."
+                  "Sending..."
                 ) : (
                   <>
                     <Send className="mr-2 w-4 h-4" />

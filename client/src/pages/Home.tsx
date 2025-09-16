@@ -2,76 +2,6 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React from "react";
-
-// Import standardized scroll animations
-import { useAdvancedScrollAnimation } from "@/hooks/useAdvancedScrollAnimations";
-
-// Optimized parallax scroll effect hook with performance improvements
-const useParallaxEffect = () => {
-  const elementsRef = React.useRef([]);
-  const rafRef = React.useRef();
-  const isMobileRef = React.useRef(false);
-  const prefersReducedMotionRef = React.useRef(false);
-
-  React.useEffect(() => {
-    // Check for mobile and reduced motion preferences
-    const checkMobile = () => window.innerWidth < 768;
-    const checkReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    isMobileRef.current = checkMobile();
-    prefersReducedMotionRef.current = checkReducedMotion();
-
-    // Cache parallax elements once
-    elementsRef.current = Array.from(document.querySelectorAll('.parallax-bg')).map(element => ({
-      element,
-      speed: parseFloat(element.getAttribute('data-speed')) || 0.5
-    }));
-
-    // Throttled scroll handler using requestAnimationFrame
-    const handleScroll = () => {
-      // Skip parallax on mobile or reduced motion
-      if (isMobileRef.current || prefersReducedMotionRef.current) return;
-      
-      if (rafRef.current) return; // Already scheduled
-      
-      rafRef.current = requestAnimationFrame(() => {
-        const scrolled = window.pageYOffset;
-        
-        elementsRef.current.forEach(({ element, speed }) => {
-          const yPos = -(scrolled * speed);
-          element.style.transform = `translate3d(0, ${yPos}px, 0)`;
-        });
-        
-        rafRef.current = null;
-      });
-    };
-
-    // Optimized resize handler
-    const handleResize = () => {
-      isMobileRef.current = checkMobile();
-      
-      // Reset transforms on mobile
-      if (isMobileRef.current) {
-        elementsRef.current.forEach(({ element }) => {
-          element.style.transform = '';
-        });
-      }
-    };
-
-    // Event listeners
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, []);
-};
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
@@ -246,17 +176,7 @@ const ProfessionalNavigation = () => {
 
 const Home = () => {
   const [, setLocation] = useLocation();
-  
-  // Initialize ultra-luxury effects
-  useParallaxEffect();
-  
-  // Advanced scroll animation for main content
-  const { elementRef: mainContentRef, styles: mainContentStyles } = useAdvancedScrollAnimation({
-    threshold: 0.1,
-    triggerOnce: true,
-    duration: 800,
-    animationType: 'fadeUp'
-  });
+
 
   const handleExploreProducts = () => {
     setLocation("/producten/overgordijnen");
@@ -292,55 +212,51 @@ const Home = () => {
       <ProfessionalNavigation />
 
       <div className="content-offset">
-        {/* Hero Section - Ultra Luxury with Parallax */}
-        <div className="hero-luxury parallax-container">
-          {/* Parallax Background with Ultra Luxury Effects */}
-          <div className="parallax-bg hero-bg-luxury" data-speed="0.3" style={{backgroundImage: `url(${interiorImage})`}}></div>
-          
-          {/* Ultra Luxury Overlay System */}
-          <div className="hero-overlay-luxury"></div>
+        {/* Hero Section */}
+        <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          {/* Background Image with Overlay */}
           <div className="absolute inset-0">
-            {/* Advanced gradient overlays */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/15 via-transparent to-black/35"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent"></div>
-            {/* Premium mobile overlay */}
-            <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/50 via-black/20 to-black/60"></div>
-            {/* Luxury texture overlay */}
-            <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-transparent via-gold-500/5 to-transparent"></div>
+            <img
+              src={interiorImage}
+              alt="Modern interior with elegant window treatments"
+              className="w-full h-full object-cover"
+            />
+            {/* Elegant transparent overlay for better text contrast */}
+            <div className="absolute inset-0 bg-black/20"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+            {/* Additional mobile overlay for better text readability */}
+            <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
           </div>
 
-          {/* Ultra Luxury Content Container */}
-          <div className="hero-content-luxury parallax-content max-w-5xl mx-auto px-4 md:px-8 py-20 md:pt-20 pt-28">
-            {/* Ultra Premium Title with Advanced Effects */}
-            <h1 className="font-professional-display text-hero text-white mb-12 leading-[0.85] tracking-tight luxury-float">
-              <span className="block text-4xl md:text-8xl xl:text-9xl text-visible-fallback text-shadow-luxury mb-4">
+          {/* Content Container */}
+          <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
+            {/* Professional Title */}
+            <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl">
+              <span className="block text-4xl md:text-hero text-visible-fallback">
                 Professionele raamdecoratie
               </span>
-              <span className="block text-shimmer text-glow-premium mt-6 md:mt-8 text-4xl md:text-8xl xl:text-9xl text-visible-fallback luxury-float-delayed">
+              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback">
                 Expertise
               </span>
             </h1>
 
-            {/* Ultra Premium Subtitle */}
-            <div className="fade-in-up luxury-float-slow" style={{animationDelay: '0.3s'}}>
-              <p className="text-lg md:text-subtitle text-white/95 mb-16 md:mb-20 max-w-6xl mx-auto leading-relaxed font-light font-professional-display">
-                <span className="block text-2xl md:text-4xl xl:text-5xl font-medium tracking-wide text-shadow-luxury mb-6">
-                  Waar kwaliteit en vakmanschap samenkomen.
-                </span>
-                <span className="block text-white/80 text-lg md:text-2xl xl:text-3xl font-light tracking-wide text-shadow-professional leading-relaxed">
-                  Transformeer uw ruimte met hoogwaardige, op maat gemaakte raamdecoratie.
-                  Ontdek de perfecte oplossing voor elke ruimte – professioneel advies
-                  en installatie inbegrepen.
-                </span>
-              </p>
-            </div>
+            {/* Professional Subtitle */}
+            <p className="text-lg md:text-subtitle text-white/90 mb-12 md:mb-16 max-w-5xl mx-auto leading-relaxed font-light drop-shadow-xl font-professional-display">
+              <span className="block text-xl md:text-3xl font-medium tracking-wide">
+                Waar kwaliteit en vakmanschap samenkomen.
+              </span>
+              <span className="block mt-4 text-white/75 text-base md:text-xl font-light tracking-wide">
+                Transformeer uw ruimte met hoogwaardige, op maat gemaakte raamdecoratie.
+                Ontdek de perfecte oplossing voor elke ruimte – professioneel advies
+                en installatie inbegrepen.
+              </span>
+            </p>
 
-            {/* Ultra Luxury CTA */}
-            <div className="flex justify-center mb-16 md:mb-24 fade-in-up" style={{animationDelay: '0.6s'}}>
+            {/* Professional CTA */}
+            <div className="flex justify-center mb-12 md:mb-20">
               <button
                 onClick={handleRequestQuote}
-                className="professional-cta-button group scale-in"
-                data-testid="button-quote-hero"
+                className="professional-cta-button group"
               >
                 <div className="professional-cta-bg"></div>
                 <div className="professional-cta-glow"></div>
@@ -355,42 +271,39 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Ultra Luxury Trust Indicators */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl max-w-6xl mx-auto fade-in-up" style={{animationDelay: '0.9s'}}>
-              <div className="text-center luxury-float scale-in" style={{animationDelay: '1s'}} data-testid="stat-experience">
-                <div className="text-6xl md:text-7xl xl:text-8xl font-professional-display text-shimmer mb-6 text-visible-fallback text-glow-premium">
+            {/* Elegant Trust Indicators */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-professional-xl max-w-5xl mx-auto">
+              <div className="text-center animate-float-professional stagger-1">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
                   30+
                 </div>
-                <div className="text-white/80 text-lg md:text-xl font-light tracking-widest uppercase text-shadow-professional">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase">
                   Jarenlange Vakmanschap
                 </div>
               </div>
-              <div className="text-center luxury-float-delayed scale-in" style={{animationDelay: '1.2s'}} data-testid="stat-clients">
-                <div className="text-6xl md:text-7xl xl:text-8xl font-professional-display text-shimmer mb-6 text-visible-fallback text-glow-premium">
+              <div className="text-center animate-float-professional stagger-2">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
                   3500+
                 </div>
-                <div className="text-white/80 text-lg md:text-xl font-light tracking-widest uppercase text-shadow-professional">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase">
                   Eisvolle Klanten
                 </div>
               </div>
-              <div className="text-center luxury-float-slow scale-in" style={{animationDelay: '1.4s'}} data-testid="stat-quality">
-                <div className="text-6xl md:text-7xl xl:text-8xl font-professional-display text-shimmer mb-6 text-visible-fallback text-glow-premium">
+              <div className="text-center animate-float-professional stagger-3">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback">
                   100%
                 </div>
-                <div className="text-white/80 text-lg md:text-xl font-light tracking-widest uppercase text-shadow-professional">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase">
                   Maatwerk tot in Perfectie
                 </div>
               </div>
             </div>
 
-            {/* Ultra Sophisticated Scroll Indicator */}
-            <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 hidden md:block fade-in-up" style={{animationDelay: '1.6s'}}>
-              <div className="w-px h-24 bg-gradient-to-b from-white/50 via-gold-300/30 to-transparent relative">
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4 h-4 border-2 border-white/60 rounded-full animate-pulse">
-                  <div className="w-1.5 h-1.5 bg-gradient-to-br from-white to-gold-200 rounded-full m-0.5 animate-bounce shadow-lg"></div>
-                </div>
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-white/60 text-xs uppercase tracking-widest font-light">
-                  Scroll
+            {/* Sophisticated Scroll Indicator */}
+            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 hidden md:block">
+              <div className="w-px h-20 bg-gradient-to-b from-white/40 to-transparent relative">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 border border-white/50 rounded-full animate-pulse">
+                  <div className="w-1 h-1 bg-white/60 rounded-full m-0.5 animate-bounce"></div>
                 </div>
               </div>
             </div>
@@ -398,26 +311,26 @@ const Home = () => {
         </div>
 
         {/* Product Categories Section - Ultra Luxury Design */}
-        <section className="section-spacing-luxury relative overflow-hidden luxury-texture-bg luxury-pattern">
-          {/* Ultra Luxury Background with Advanced Effects */}
-          <div className="absolute inset-0 luxury-texture-bg">
-            <div className="absolute inset-0 opacity-70">
+        <section className="section-spacing-luxury relative overflow-hidden">
+          {/* Luxury Background with Animated Particles */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3]">
+            <div className="absolute inset-0 opacity-60">
               <div className="luxury-particles"></div>
             </div>
           </div>
 
-          <div className="container-golden relative z-10 parallax-content">
+          <div className="container-golden relative z-10">
             {/* Ultra-Premium Section Header */}
-            <div className="text-center mb-24 fade-in-up">
-              <div className="luxury-section-badge mb-8 scale-in">
+            <div className="text-center mb-20">
+              <div className="luxury-section-badge">
                 <div className="luxury-badge-glow"></div>
                 <span className="luxury-badge-text">PREMIUM COLLECTIE</span>
               </div>
-              <h2 className="luxury-mega-title mb-12 fade-in-up" style={{animationDelay: '0.2s'}}>
+              <h2 className="luxury-mega-title mb-8">
                 <span className="luxury-title-line">Ontdek onze</span>
-                <span className="luxury-title-emphasis text-shimmer">collectie</span>
+                <span className="luxury-title-emphasis">collectie</span>
               </h2>
-              <p className="luxury-subtitle max-w-5xl mx-auto fade-in-up" style={{animationDelay: '0.4s'}}>
+              <p className="luxury-subtitle max-w-4xl mx-auto">
                 Verken onze exclusieve collectie van artisanaal vervaardigde
                 raamdecoratie. Elk meesterwerk wordt met uitzonderlijke precisie
                 en devotie gecreëerd voor uw verfijnde interieur.
@@ -425,18 +338,16 @@ const Home = () => {
             </div>
 
             {/* Revolutionary Product Showcase Grid */}
-            <div className="luxury-product-grid mb-20 fade-in-up" style={{animationDelay: '0.6s'}}>
-              {/* Houten jaloezieën - Ultra Luxury Card */}
+            <div className="luxury-product-grid mb-16">
+              {/* Houten jaloezieën - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.1s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/houten-jaloezieen")}
-                data-testid="card-product-houten-jaloezieen"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <span className="text-white text-2xl">☰</span>
@@ -448,17 +359,15 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Textiel lamellen - Ultra Luxury Card */}
+              {/* Aluminium jaloezieën - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.2s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/textiel-lamellen")}
-                data-testid="card-product-textiel-lamellen"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float-delayed">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <img
@@ -474,17 +383,15 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Kunststof jaloezieën - Ultra Luxury Card */}
+              {/* Kunststof jaloezieën - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.3s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/kunststof-jaloezieen")}
-                data-testid="card-product-kunststof-jaloezieen"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float-slow">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <img
@@ -500,17 +407,15 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Kunststof lamellen - Ultra Luxury Card */}
+              {/* Verticaal lamellen - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.4s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/kunststof-lamellen")}
-                data-testid="card-product-kunststof-lamellen"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <img
@@ -526,17 +431,15 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Plissés - Ultra Luxury Card */}
+              {/* Plissés - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.5s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/plisse")}
-                data-testid="card-product-plisse"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float-delayed">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <img
@@ -552,17 +455,15 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Duo plissés - Ultra Luxury Card */}
+              {/* Duo plissés - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.6s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/duo-plisse")}
-                data-testid="card-product-duo-plisse"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float-slow">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <img
@@ -578,17 +479,15 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Rolgordijnen - Ultra Luxury Card */}
+              {/* Rolgordijnen - Premium Card */}
               <div
-                className="professional-product-card group fade-in-up"
-                style={{animationDelay: '0.7s'}}
+                className="professional-product-card group"
                 onClick={() => setLocation("/producten/rolgordijnen")}
-                data-testid="card-product-rolgordijnen"
               >
                 <div className="professional-card-background"></div>
                 <div className="professional-card-glow"></div>
                 <div className="professional-card-content">
-                  <div className="professional-icon-container luxury-float">
+                  <div className="professional-icon-container">
                     <div className="professional-icon-glow"></div>
                     <div className="professional-icon">
                       <span className="text-white text-2xl">☰</span>
@@ -827,26 +726,26 @@ const Home = () => {
         </section>
 
         {/* Animated Section Divider */}
-        <div className="section-divider-luxury fade-in-up"></div>
+        <div className="section-divider-luxury"></div>
 
         {/* Why Choose KANIOU - Ultra-Luxury USP Section */}
-        <section className="ultra-luxury-features-section parallax-container">
+        <section className="ultra-luxury-features-section">
           <div className="absolute inset-0 luxury-gradient-bg"></div>
           <div className="absolute inset-0 luxury-texture-overlay"></div>
-          <div className="container-golden relative z-10 parallax-content">
+          <div className="container-golden relative z-10">
             {/* Ultra-Premium Section Header */}
-            <div className="text-center mb-36 fade-in-up">
-              <div className="luxury-section-badge-premium mb-20 scale-in">
+            <div className="text-center mb-32">
+              <div className="luxury-section-badge-premium mb-16">
                 <div className="luxury-badge-glow-premium"></div>
                 <span className="luxury-badge-text-premium">
                   HAUTE COUTURE EXCELLENCE
                 </span>
               </div>
-              <h2 className="ultra-luxury-title mb-16 fade-in-up" style={{animationDelay: '0.2s'}}>
+              <h2 className="ultra-luxury-title mb-12">
                 <span className="ultra-luxury-title-line">De Kunst van</span>
-                <span className="ultra-luxury-title-emphasis text-shimmer">Perfectie</span>
+                <span className="ultra-luxury-title-emphasis">Perfectie</span>
               </h2>
-              <p className="ultra-luxury-subtitle max-w-6xl mx-auto fade-in-up" style={{animationDelay: '0.4s'}}>
+              <p className="ultra-luxury-subtitle max-w-5xl mx-auto">
                 Ervaar het toppunt van Belgisch vakmanschap – waar drie decennia
                 toewijding aan perfectie samensmelten met hedendaagse luxe in
                 elk met zorg vervaardigd detail.
@@ -854,13 +753,13 @@ const Home = () => {
             </div>
 
             {/* Ultra-Luxury Features Grid */}
-            <div className="ultra-luxury-features-grid fade-in-up" style={{animationDelay: '0.6s'}}>
+            <div className="ultra-luxury-features-grid">
               {/* Perfect Fit - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group fade-in-up" style={{animationDelay: '0.1s'}} data-testid="feature-custom-fit">
+              <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
-                  <div className="ultra-professional-icon-container mb-8 luxury-float">
+                  <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
                     <div className="ultra-professional-icon-glow"></div>
                     <span className="ultra-professional-icon text-2xl">⛄</span>
@@ -876,11 +775,11 @@ const Home = () => {
               </div>
 
               {/* Express Service - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group fade-in-up" style={{animationDelay: '0.2s'}} data-testid="feature-delivery">
+              <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
-                  <div className="ultra-professional-icon-container mb-8 luxury-float-delayed">
+                  <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
                     <div className="ultra-professional-icon-glow"></div>
                     <span className="ultra-professional-icon text-2xl">🚚</span>
@@ -897,11 +796,11 @@ const Home = () => {
               </div>
 
               {/* Master Consultation - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group fade-in-up" style={{animationDelay: '0.3s'}} data-testid="feature-consultation">
+              <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
-                  <div className="ultra-professional-icon-container mb-8 luxury-float-slow">
+                  <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
                     <div className="ultra-professional-icon-glow"></div>
                     <span className="ultra-professional-icon text-2xl">👥</span>
@@ -917,11 +816,11 @@ const Home = () => {
               </div>
 
               {/* Luxury Materials - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group fade-in-up" style={{animationDelay: '0.4s'}} data-testid="feature-materials">
+              <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
-                  <div className="ultra-professional-icon-container mb-8 luxury-float">
+                  <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
                     <div className="ultra-professional-icon-glow"></div>
                     <span className="ultra-professional-icon text-2xl">🏆</span>
@@ -937,11 +836,11 @@ const Home = () => {
               </div>
 
               {/* Heritage Excellence - Ultra Luxury */}
-              <div className="ultra-luxury-feature-card group fade-in-up" style={{animationDelay: '0.5s'}} data-testid="feature-heritage">
+              <div className="ultra-luxury-feature-card group">
                 <div className="ultra-luxury-card-bg"></div>
                 <div className="ultra-professional-card-glow"></div>
                 <div className="ultra-professional-card-content">
-                  <div className="ultra-professional-icon-container mb-8 luxury-float-delayed">
+                  <div className="ultra-professional-icon-container mb-8">
                     <div className="ultra-professional-icon-bg"></div>
                     <div className="ultra-professional-icon-glow"></div>
                     <span className="ultra-professional-icon text-2xl">⏰</span>
@@ -961,60 +860,58 @@ const Home = () => {
 
 
         {/* Animated Section Divider */}
-        <div className="section-divider-luxury fade-in-up"></div>
+        <div className="section-divider-luxury"></div>
 
         {/* Client Testimonials - Ultra-Luxury Social Proof */}
-        <section className="section-spacing-luxury luxury-texture-bg luxury-pattern parallax-container">
-          <div className="container-golden parallax-content">
-            {/* Ultra Luxury Section Header */}
-            <div className="text-center mb-28 fade-in-up">
-              <div className="divider-luxury w-48 mx-auto mb-16 scale-in"></div>
-              <h2 className="font-display text-6xl md:text-7xl xl:text-8xl font-professional-display text-shimmer mb-12 fade-in-up" style={{animationDelay: '0.2s'}}>
+        <section className="section-spacing-luxury gradient-luxury-subtle">
+          <div className="container-golden">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
+              <div className="divider-luxury w-44 mx-auto mb-12"></div>
+              <h2 className="font-display text-headline gradient-text-subtle mb-8">
                 Stemmen van Klasse
               </h2>
-              <p className="text-lg md:text-2xl xl:text-3xl text-gray-600 max-w-5xl mx-auto font-light leading-relaxed luxury-subtitle fade-in-up" style={{animationDelay: '0.4s'}}>
+              <p className="text-body text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
                 Veeleisende klanten delen hun ervaringen van transformatie,
                 waarbij het vakmanschap van KANIOU hun meest gekoesterde ruimtes
                 heeft verheven tot ware oases van verfijnde schoonheid.
               </p>
 
-              {/* Ultra Luxury Google Reviews Link */}
-              <div className="text-center mt-12 fade-in-up" style={{animationDelay: '0.6s'}}>
+              {/* Google Reviews Link */}
+              <div className="text-center mt-6">
                 <a
                   href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-lg md:text-xl font-semibold text-shimmer hover:text-gold-600 transition-all duration-500 hover:underline hover:scale-105 luxury-float"
-                  data-testid="link-google-reviews"
+                  className="inline-flex items-center text-body font-semibold text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
                 >
-                  <span className="mr-3 text-2xl">⭐</span>
+                  <span className="mr-2">⭐</span>
                   Bekijk onze Google reviews
                 </a>
-                <p className="text-gray-500 mt-3 text-lg">
+                <p className="text-sm text-gray-500 mt-1">
                   (Link opent in een nieuw tabblad)
                 </p>
               </div>
             </div>
 
             {/* Ultra-Luxury Testimonials Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl fade-in-up" style={{animationDelay: '0.8s'}}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
               {/* Testimonial 1 - Ultra Luxury */}
-              <div className="ultra-glass fade-in-up luxury-float" style={{animationDelay: '0.1s', padding: '2rem', borderRadius: '1.5rem'}} data-testid="testimonial-ramadani">
-                <span className="absolute top-8 right-8 w-12 h-12 text-shimmer opacity-60 text-3xl flex items-center justify-center font-serif">"</span>
+              <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
-                {/* Ultra Luxury Star Rating */}
-                <div className="flex mb-8 gap-2 justify-center">
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="w-8 h-8 text-shimmer text-xl flex items-center justify-center luxury-float-delayed"
-                      style={{animationDelay: `${0.1 + i * 0.1}s`}}
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
                     >★</span>
                   ))}
                 </div>
 
                 {/* Premium Testimonial Text */}
-                <p className="text-gray-700 mb-10 leading-relaxed font-light text-lg md:text-xl italic">
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
                   "We stellen enorm op prijs dat je tijd hebt genomen om jouw
                   ervaring te delen. Het doet ons plezier te horen dat je
                   tevreden bent - jouw vertrouwen en postieve woorden motiveren
@@ -1023,11 +920,11 @@ const Home = () => {
                 </p>
 
                 {/* Distinguished Customer Info */}
-                <div className="pt-6 border-t border-gold-300/30">
-                  <p className="font-semibold text-gray-900 text-xl font-professional-display">
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">
                     Ramadani
                   </p>
-                  <p className="text-gray-600 font-light text-lg">België</p>
+                  <p className="text-body text-gray-600 font-light">België</p>
                 </div>
               </div>
 

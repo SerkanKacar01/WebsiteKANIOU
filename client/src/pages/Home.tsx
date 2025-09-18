@@ -148,7 +148,7 @@ const ProfessionalNavigation = () => {
           setMousePosition({ x, y });
           
           // Set CSS custom properties for liquid morph with proper typing
-          const style = navRef.current.style as React.CSSProperties & Record<string, string>;
+          const style = navRef.current.style as any;
           style['--mouse-x'] = `${x}%`;
           style['--mouse-y'] = `${y}%`;
           style['--scroll-velocity'] = scrollVelocityRef.current.toString();
@@ -400,10 +400,10 @@ const ProfessionalNavigation = () => {
         role="navigation"
         aria-label="Main navigation"
         style={{
-          '--scroll-velocity': scrollVelocity,
+          '--scroll-velocity': scrollVelocity.toString(),
           '--mouse-x': `${mousePosition.x}%`,
           '--mouse-y': `${mousePosition.y}%`,
-        } as React.CSSProperties & Record<string, string>}
+        } as React.CSSProperties}
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between">
@@ -475,7 +475,7 @@ const ProfessionalNavigation = () => {
                 data-testid={`orbital-menu-${link.name.toLowerCase().replace(' ', '-')}`}
                 aria-label={`${link.name} - ${link.tooltip}`}
                 title={link.name}
-                style={{ '--item-index': index } as React.CSSProperties & Record<string, string>}
+                style={{ '--item-index': index.toString() } as React.CSSProperties}
               >
                 <span className="sr-only">{link.name}</span>
                 <span aria-hidden="true">{link.name.charAt(0)}</span>
@@ -490,7 +490,7 @@ const ProfessionalNavigation = () => {
               data-testid="orbital-menu-quote"
               aria-label="Vrijblijvend offerte - Request quote"
               title="Vrijblijvend offerte"
-              style={{ '--item-index': navigationLinks.length } as React.CSSProperties & Record<string, string>}
+              style={{ '--item-index': navigationLinks.length.toString() } as React.CSSProperties}
             >
               <span className="sr-only">Offerte</span>
               <span aria-hidden="true">€</span>
@@ -1733,7 +1733,7 @@ const Home = () => {
                   data-testid="google-reviews-link"
                   aria-label="Bekijk onze Google reviews - opent in nieuw tabblad"
                 >
-                  <span className="mr-2 constellation-star" style={{'--star-index': 0} as React.CSSProperties & Record<string, string>}>⭐</span>
+                  <span className="mr-2 constellation-star" style={{'--star-index': '0'} as React.CSSProperties}>⭐</span>
                   Bekijk onze Google reviews
                 </a>
                 <p className="text-sm text-gray-500 mt-1">
@@ -1774,7 +1774,7 @@ const Home = () => {
                     <span
                       key={i}
                       className="constellation-star"
-                      style={{'--star-index': i} as React.CSSProperties & Record<string, string>}
+                      style={{'--star-index': i.toString()} as React.CSSProperties}
                       aria-hidden="true"
                     >★</span>
                   ))}
@@ -1826,7 +1826,7 @@ const Home = () => {
                     <span
                       key={i}
                       className="constellation-star"
-                      style={{'--star-index': i} as React.CSSProperties & Record<string, string>}
+                      style={{'--star-index': i.toString()} as React.CSSProperties}
                       aria-hidden="true"
                     >★</span>
                   ))}
@@ -1879,7 +1879,7 @@ const Home = () => {
                     <span
                       key={i}
                       className="constellation-star"
-                      style={{'--star-index': i} as React.CSSProperties & Record<string, string>}
+                      style={{'--star-index': i.toString()} as React.CSSProperties}
                       aria-hidden="true"
                     >★</span>
                   ))}

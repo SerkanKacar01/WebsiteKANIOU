@@ -33,31 +33,234 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-// Premium Navigation Component
+// Ultra-Futuristic Floating Navigation Component
 const ProfessionalNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] =
-    React.useState(false);
+  const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] = React.useState(false);
+  const [scrollVelocity, setScrollVelocity] = React.useState(0);
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+  const [activeSection, setActiveSection] = React.useState('');
+  const [isIdle, setIsIdle] = React.useState(false);
+  const [proximityStates, setProximityStates] = React.useState<Record<string, number>>({});
+  const [isMobile, setIsMobile] = React.useState(false);
   const [, setLocation] = useLocation();
+  const navRef = React.useRef<HTMLElement>(null);
+  const lastScrollY = React.useRef(0);
+  const lastScrollTime = React.useRef(Date.now());
+  const idleTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const animationFrameRef = React.useRef<number | null>(null);
+  const scrollVelocityRef = React.useRef(0);
 
+  // Mobile detection with matchMedia
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleMediaChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleMediaChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleMediaChange);
+  }, []);
+  
+  // Advanced scroll velocity detection for predictive animations
   React.useEffect(() => {
     const handleScroll = () => {
+      const now = Date.now();
       const scrollY = window.scrollY;
+      const deltaY = scrollY - lastScrollY.current;
+      const deltaTime = now - lastScrollTime.current;
+      
+      // Calculate scroll velocity (pixels per millisecond)
+      const velocity = deltaTime > 0 ? Math.abs(deltaY / deltaTime) : 0;
+      setScrollVelocity(velocity);
+      scrollVelocityRef.current = velocity;
+      
+      // Enhanced scroll state detection
       setIsScrolled(scrollY > 50);
-
-      // Only check background for mobile menu when it's open
-      if (isMenuOpen && window.innerWidth < 768) {
-        // Simple logic: if scrolled past hero section (assumed to be dark),
-        // we're likely on a light background
+      
+      // Section-aware highlighting - map to actual page sections
+      const sectionMapping = {
+        'hero': 'hero',
+        'products': 'products',
+        'gallery': 'gallery', 
+        'contact': 'contact',
+        'about': 'about'
+      };
+      
+      const sections = Object.keys(sectionMapping);
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+        }
+        return false;
+      });
+      
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
+      
+      // Mobile menu contrast detection
+      if (isMenuOpen && isMobile) {
         const isOnLightBackground = scrollY > window.innerHeight * 0.8;
         setMobileMenuNeedsContrast(isOnLightBackground);
       }
+      
+      lastScrollY.current = scrollY;
+      lastScrollTime.current = now;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMenuOpen, isMobile]);
+  
+  // Consolidated mouse position tracking and proximity detection with requestAnimationFrame throttling
+  React.useEffect(() => {
+    let navItemCenters: Array<{ name: string; x: number; y: number }> = [];
+    
+    const precomputeItemCenters = () => {
+      const items = document.querySelectorAll('.magnetic-nav-items');
+      navItemCenters = Array.from(items).map((item) => {
+        const rect = item.getBoundingClientRect();
+        const name = item.getAttribute('data-testid')?.replace('nav-link-', '') || '';
+        return {
+          name,
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        };
+      });
+    };
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      
+      animationFrameRef.current = requestAnimationFrame(() => {
+        if (navRef.current) {
+          const rect = navRef.current.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          setMousePosition({ x, y });
+          
+          // Set CSS custom properties for liquid morph with proper typing
+          const style = navRef.current.style as React.CSSProperties & Record<string, string>;
+          style['--mouse-x'] = `${x}%`;
+          style['--mouse-y'] = `${y}%`;
+          style['--scroll-velocity'] = scrollVelocityRef.current.toString();
+          
+          // Update proximity states for all nav items in one pass
+          const newProximityStates: Record<string, number> = {};
+          navItemCenters.forEach(({ name, x: centerX, y: centerY }) => {
+            const distance = Math.sqrt(
+              Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
+            );
+            newProximityStates[name] = distance;
+          });
+          setProximityStates(newProximityStates);
+        }
+      });
+    };
+    
+    // Precompute item centers on mount and window resize
+    precomputeItemCenters();
+    const handleResize = () => precomputeItemCenters();
+    
+    if (navRef.current) {
+      navRef.current.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('resize', handleResize);
+      
+      return () => {
+        if (navRef.current) {
+          navRef.current.removeEventListener('mousemove', handleMouseMove);
+        }
+        window.removeEventListener('resize', handleResize);
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+      };
+    }
+  }, []);
+  
+  // Idle state detection for breathing navigation with proper cleanup
+  React.useEffect(() => {
+    const resetIdleTimer = () => {
+      setIsIdle(false);
+      if (idleTimer.current) {
+        clearTimeout(idleTimer.current);
+      }
+      idleTimer.current = setTimeout(() => setIsIdle(true), 3000);
+    };
+
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'] as const;
+    events.forEach(event => {
+      document.addEventListener(event, resetIdleTimer, true);
+    });
+
+    resetIdleTimer();
+
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, resetIdleTimer, true);
+      });
+      if (idleTimer.current) {
+        clearTimeout(idleTimer.current);
+      }
+    };
+  }, []);
+  
+  // Keyboard support and accessibility
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen]);
+  
+  // Focus trap for mobile menu
+  React.useEffect(() => {
+    if (isMenuOpen && isMobile) {
+      const focusableElements = document.querySelectorAll(
+        'button[data-testid^="orbital-menu-"], button[data-testid^="mobile-menu-"]'
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+      
+      const handleTabKey = (e: KeyboardEvent) => {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement?.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement?.focus();
+            }
+          }
+        }
+      };
+      
+      document.addEventListener('keydown', handleTabKey);
+      firstElement?.focus();
+      
+      return () => {
+        document.removeEventListener('keydown', handleTabKey);
+      };
+    }
+  }, [isMenuOpen, isMobile]);
+
+  // Proximity detection for magnetic navigation items (now handled in consolidated mouse handler)
+  const handleNavItemProximity = React.useCallback((itemName: string, distance: number) => {
+    setProximityStates(prev => ({ ...prev, [itemName]: distance }));
+  }, []);
 
   // Reset contrast when menu closes
   React.useEffect(() => {
@@ -67,110 +270,282 @@ const ProfessionalNavigation = () => {
   }, [isMenuOpen]);
 
   const navigationLinks = [
-    { name: "Gallerij", path: "/gallerij" },
-    { name: "Over ons", path: "/over-ons" },
-    { name: "Contact", path: "/contact" },
+    { 
+      name: "Gallerij", 
+      path: "/gallerij",
+      tooltip: "Bekijk onze prachtige realisaties",
+      important: true
+    },
+    { 
+      name: "Over ons", 
+      path: "/over-ons",
+      tooltip: "Ontdek ons verhaal en expertise",
+      important: false
+    },
+    { 
+      name: "Contact", 
+      path: "/contact",
+      tooltip: "Neem contact op voor advies",
+      important: true
+    },
   ];
 
+  // Optimized Magnetic proximity detection for navigation items
+  const MagneticNavItem = ({ link, index }: { link: any, index: number }) => {
+    const itemRef = React.useRef<HTMLButtonElement>(null);
+    const [proximity, setProximity] = React.useState('far');
+    
+    // Use the global proximity state instead of individual listeners
+    React.useEffect(() => {
+      const linkName = link.name.toLowerCase().replace(' ', '-');
+      const distance = proximityStates[linkName] || Infinity;
+      
+      if (distance < 50) {
+        setProximity('close');
+      } else if (distance < 100) {
+        setProximity('near');
+      } else {
+        setProximity('far');
+      }
+    }, [proximityStates, link.name]);
+
+    const getClassNames = () => {
+      let classes = 'magnetic-nav-items proximity-detection-system contextual-tooltips predictive-hover-zones';
+      
+      if (proximity !== 'far') {
+        classes += ` proximity-${proximity}`;
+      }
+      
+      if (link.important) {
+        classes += ' adaptive-sizing important';
+      }
+      
+      if (proximity === 'close') {
+        classes += ' adaptive-sizing proximity-active';
+      }
+      
+      // Map navigation paths to section IDs for highlighting
+      const pathToSection: Record<string, string> = {
+        '/gallerij': 'gallery',
+        '/over-ons': 'about',
+        '/contact': 'contact'
+      };
+      
+      if (activeSection === pathToSection[link.path]) {
+        classes += ' contextual-glow-system active';
+      }
+      
+      if (scrollVelocity > 2) {
+        classes += ' anticipating';
+      }
+      
+      return classes;
+    };
+
+    return (
+      <button
+        ref={itemRef}
+        key={link.name}
+        onClick={() => {
+          // Intelligent preloading hint
+          if (link.path !== window.location.pathname) {
+            const link_element = document.createElement('link');
+            link_element.rel = 'prefetch';
+            link_element.href = link.path;
+            document.head.appendChild(link_element);
+          }
+          setLocation(link.path);
+        }}
+        className={getClassNames()}
+        data-tooltip={link.tooltip}
+        data-testid={`nav-link-${link.name.toLowerCase().replace(' ', '-')}`}
+        aria-label={`Navigate to ${link.name}: ${link.tooltip}`}
+      >
+        {link.name}
+      </button>
+    );
+  };
+
+  // Get navigation container classes
+  const getNavContainerClasses = () => {
+    let classes = 'floating-navigation-system context-aware-positioning morphing-nav-container liquid-background-morph';
+    
+    if (isScrolled) {
+      classes += ' floating-nav-morphed intelligent-transparency';
+    }
+    
+    if (activeSection) {
+      classes += ' contextual-glow-system active';
+    }
+    
+    if (isIdle) {
+      classes += ' breathing-navigation';
+    }
+    
+    if (isMobile) {
+      classes += ' adaptive-mobile-positioning';
+    }
+    
+    return classes;
+  };
+
   return (
-    <nav className={`nav-professional ${isScrolled ? "scrolled" : ""}`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between">
-          {/* Premium Logo */}
-          <div className="nav-logo">
-            <button onClick={() => setLocation("/")} className="hover-elegant">
-              <img
-                src={kaniouLogo}
-                alt="KANIOU - Professional Window Treatments"
-                className="h-12 w-auto transition-professional hover:scale-105"
-              />
-            </button>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigationLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => setLocation(link.path)}
-                className="nav-link"
+    <>
+      {/* Desktop Ultra-Futuristic Floating Navigation */}
+      <nav
+        ref={navRef}
+        className={getNavContainerClasses()}
+        role="navigation"
+        aria-label="Main navigation"
+        style={{
+          '--scroll-velocity': scrollVelocity,
+          '--mouse-x': `${mousePosition.x}%`,
+          '--mouse-y': `${mousePosition.y}%`,
+        } as React.CSSProperties & Record<string, string>}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between">
+            {/* Holographic Logo */}
+            <div className="holographic-logo">
+              <button 
+                onClick={() => setLocation("/")} 
+                className="hover-elegant"
+                data-testid="nav-logo"
+                aria-label="Go to homepage"
               >
-                {link.name}
+                <img
+                  src={kaniouLogo}
+                  alt="KANIOU - Professional Window Treatments"
+                  className="h-12 w-auto transition-professional hover:scale-105"
+                />
               </button>
-            ))}
-          </div>
+            </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={() => setLocation("/quote")}
-              className="btn-luxury"
-            >
-              VRIJBLIJVEND OFFERTE
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className={`md:hidden p-2 transition-all duration-300 rounded-lg ${
-              mobileMenuNeedsContrast
-                ? "bg-black/80 text-white hover:bg-black/90 backdrop-blur-sm shadow-lg"
-                : "text-white hover:text-white"
-            }`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <span className="text-2xl">×</span>
-            ) : (
-              <span className="text-2xl">☰</span>
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div
-            className={`md:hidden mt-4 pb-4 animate-fade-in-up transition-all duration-300 rounded-lg ${
-              mobileMenuNeedsContrast
-                ? "bg-black/90 backdrop-blur-sm mx-2 px-4 py-3 shadow-xl"
-                : ""
-            }`}
-          >
-            <div className="flex flex-col space-y-4">
-              {navigationLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => {
-                    setLocation(link.path);
-                    setIsMenuOpen(false);
-                  }}
-                  className={`transition-all duration-300 text-left font-medium py-3 px-4 rounded-lg border border-gold-300/30 ${
-                    mobileMenuNeedsContrast
-                      ? "text-white hover:bg-white/10 hover:border-gold-400/50"
-                      : "nav-link"
-                  }`}
-                >
-                  {link.name}
-                </button>
+            {/* Desktop Magnetic Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              {navigationLinks.map((link, index) => (
+                <MagneticNavItem key={link.name} link={link} index={index} />
               ))}
+            </div>
+
+            {/* Magnetic CTA Button */}
+            <div className="hidden md:flex items-center space-x-4">
               <button
-                onClick={() => {
-                  setLocation("/quote");
-                  setIsMenuOpen(false);
-                }}
-                className={`mt-4 transition-all duration-300 ${
-                  mobileMenuNeedsContrast
-                    ? "bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                    : "btn-luxury"
-                }`}
+                onClick={() => setLocation("/quote")}
+                className="magnetic-cta-button"
+                data-testid="nav-cta-button"
+                aria-label="Request free quote"
               >
                 VRIJBLIJVEND OFFERTE
               </button>
             </div>
+
+            {/* Desktop Mobile Menu Button (hidden on mobile) */}
+            <button
+              className="md:hidden floating-action-button"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              data-testid="mobile-menu-toggle"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? (
+                <span className="text-2xl">×</span>
+              ) : (
+                <span className="text-2xl">☰</span>
+              )}
+            </button>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      </nav>
+
+      {/* Mobile Orbital Menu System with improved accessibility */}
+      {isMobile && (
+        <div className={`orbital-menu-system ${isMenuOpen ? 'active' : ''}`}>
+          <div className="orbital-menu-items">
+            {navigationLinks.map((link, index) => (
+              <button
+                key={link.name}
+                className="orbital-menu-item"
+                onClick={() => {
+                  setLocation(link.path);
+                  setIsMenuOpen(false);
+                }}
+                data-testid={`orbital-menu-${link.name.toLowerCase().replace(' ', '-')}`}
+                aria-label={`${link.name} - ${link.tooltip}`}
+                title={link.name}
+                style={{ '--item-index': index } as React.CSSProperties & Record<string, string>}
+              >
+                <span className="sr-only">{link.name}</span>
+                <span aria-hidden="true">{link.name.charAt(0)}</span>
+              </button>
+            ))}
+            <button
+              className="orbital-menu-item"
+              onClick={() => {
+                setLocation("/quote");
+                setIsMenuOpen(false);
+              }}
+              data-testid="orbital-menu-quote"
+              aria-label="Vrijblijvend offerte - Request quote"
+              title="Vrijblijvend offerte"
+              style={{ '--item-index': navigationLinks.length } as React.CSSProperties & Record<string, string>}
+            >
+              <span className="sr-only">Offerte</span>
+              <span aria-hidden="true">€</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Fallback Mobile Menu for non-touch devices */}
+      {!isMobile && isMenuOpen && (
+        <div
+          className={`liquid-menu-animations opening md:hidden mt-4 pb-4 transition-all duration-300 rounded-lg ${
+            mobileMenuNeedsContrast
+              ? "bg-black/90 backdrop-blur-sm mx-2 px-4 py-3 shadow-xl"
+              : ""
+          }`}
+          role="menu"
+          aria-label="Mobile navigation menu"
+        >
+          <div className="flex flex-col space-y-4 gesture-responsive-nav">
+            {navigationLinks.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => {
+                  setLocation(link.path);
+                  setIsMenuOpen(false);
+                }}
+                className={`transition-all duration-300 text-left font-medium py-3 px-4 rounded-lg border border-gold-300/30 ${
+                  mobileMenuNeedsContrast
+                    ? "text-white hover:bg-white/10 hover:border-gold-400/50"
+                    : "nav-link"
+                }`}
+                data-testid={`mobile-menu-${link.name.toLowerCase().replace(' ', '-')}`}
+                role="menuitem"
+              >
+                {link.name}
+              </button>
+            ))}
+            <button
+              onClick={() => {
+                setLocation("/quote");
+                setIsMenuOpen(false);
+              }}
+              className={`mt-4 transition-all duration-300 ${
+                mobileMenuNeedsContrast
+                  ? "bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                  : "btn-luxury"
+              }`}
+              data-testid="mobile-menu-cta"
+              role="menuitem"
+            >
+              VRIJBLIJVEND OFFERTE
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -213,7 +588,7 @@ const Home = () => {
 
       <div className="content-offset">
         {/* Hero Section - Ultra Luxury Enhanced */}
-        <div className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive perspective-container cinematic-entrance-sequence">
+        <div id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive perspective-container cinematic-entrance-sequence">
           {/* Cinematic Particle Galaxy System */}
           <div className="cinematic-particle-galaxy magnetic-hover">
             <div className="absolute inset-0 opacity-70">
@@ -328,7 +703,7 @@ const Home = () => {
         </div>
 
         {/* Product Categories Section - Revolutionary Ultra Luxury Design */}
-        <section className="section-spacing-luxury relative overflow-hidden ultra-premium-interactive">
+        <section id="products" className="section-spacing-luxury relative overflow-hidden ultra-premium-interactive">
           {/* Ultra-Advanced Particle System */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3] ultra-premium-glass">
             <div className="ultra-particle-system">
@@ -882,7 +1257,7 @@ const Home = () => {
         <div className="section-divider-luxury"></div>
 
         {/* Why Choose KANIOU - Revolutionary Ultra-Luxury USP Section */}
-        <section className="ultra-luxury-features-section ultra-premium-interactive">
+        <section id="about" className="ultra-luxury-features-section ultra-premium-interactive">
           <div className="absolute inset-0 luxury-gradient-bg ultra-premium-glass"></div>
           <div className="absolute inset-0 luxury-texture-overlay"></div>
           <div className="ultra-particle-system"></div>
@@ -1017,7 +1392,7 @@ const Home = () => {
         <div className="section-divider-luxury"></div>
 
         {/* Client Testimonials - Ultra-Luxury Social Proof */}
-        <section className="section-spacing-luxury gradient-luxury-subtle">
+        <section id="contact" className="section-spacing-luxury gradient-luxury-subtle">
           <div className="container-golden">
             {/* Luxury Section Header */}
             <div className="text-center mb-24">

@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
@@ -551,6 +553,316 @@ const ProfessionalNavigation = () => {
 
 const Home = () => {
   const [, setLocation] = useLocation();
+  
+  // Ultra-Futuristic Testimonials State Management
+  const [testimonialProximity, setTestimonialProximity] = React.useState<Record<string, string>>({});
+  const [scrollProgress, setScrollProgress] = React.useState(0);
+  const [activeTestimonial, setActiveTestimonial] = React.useState(0);
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = React.useState(false);
+  const testimonialsRef = React.useRef<HTMLElement>(null);
+  const cardRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  const animationFrameRef = React.useRef<number | null>(null);
+  
+  // Mobile detection with enhanced touch support
+  React.useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth <= 768 || 'ontouchstart' in window;
+      setIsMobile(isMobileDevice);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  // IMPROVED: IntersectionObserver-based testimonials reveal for performance
+  React.useEffect(() => {
+    if (!testimonialsRef.current) return;
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -20% 0px',
+      threshold: 0.1
+    };
+    
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('testimonial-revealed');
+          // Start animations only when visible
+          cardRefs.current.forEach((card, index) => {
+            if (card) {
+              setTimeout(() => {
+                card.classList.add('testimonial-animate-in');
+              }, index * 200); // Staggered animation
+            }
+          });
+        }
+      });
+    };
+    
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+    
+    if (testimonialsRef.current) {
+      observer.observe(testimonialsRef.current);
+    }
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  
+  // FIXED: Advanced Proximity Detection System - SCOPED TO TESTIMONIALS CONTAINER ONLY
+  React.useEffect(() => {
+    if (isMobile || !testimonialsRef.current) return; // Skip proximity detection on mobile for performance
+    
+    const testimonialsContainer = testimonialsRef.current;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      
+      animationFrameRef.current = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+        
+        const newProximity: Record<string, string> = {};
+        
+        cardRefs.current.forEach((card, index) => {
+          if (!card) return;
+          
+          const rect = card.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          const distance = Math.sqrt(
+            Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
+          );
+          
+          const cardName = ['ramadani', 'anedda', 'abrecht'][index];
+          
+          if (distance < 150) {
+            newProximity[cardName] = 'close';
+          } else if (distance < 300) {
+            newProximity[cardName] = 'near';
+          } else {
+            newProximity[cardName] = 'far';
+          }
+          
+          // Update CSS custom properties for magnetic field effects
+          const relativeX = ((e.clientX - rect.left) / rect.width) * 100;
+          const relativeY = ((e.clientY - rect.top) / rect.height) * 100;
+          
+          card.style.setProperty('--mouse-x', `${relativeX}%`);
+          card.style.setProperty('--mouse-y', `${relativeY}%`);
+        });
+        
+        setTestimonialProximity(newProximity);
+      });
+    };
+    
+    // FIXED: Constrain mousemove listener to testimonials container only
+    testimonialsContainer.addEventListener('mousemove', handleMouseMove, { passive: true });
+    
+    return () => {
+      testimonialsContainer.removeEventListener('mousemove', handleMouseMove);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [isMobile]);
+  
+  // Scroll-Triggered Animations for Testimonials
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (!testimonialsRef.current) return;
+      
+      const rect = testimonialsRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementHeight = rect.height;
+      
+      // Calculate scroll progress (0 to 1)
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const elementTop = rect.top + scrollTop;
+      const viewportBottom = scrollTop + windowHeight;
+      
+      let progress = 0;
+      if (viewportBottom > elementTop) {
+        progress = Math.min(
+          1,
+          (viewportBottom - elementTop) / (windowHeight + elementHeight)
+        );
+      }
+      
+      setScrollProgress(progress);
+      
+      // Reveal testimonials based on scroll position
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return;
+        
+        const cardRect = card.getBoundingClientRect();
+        const isVisible = cardRect.top < windowHeight * 0.8;
+        
+        if (isVisible) {
+          card.classList.add('visible');
+        }
+      });
+    };
+    
+    handleScroll(); // Check initial state
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  // Intelligent Testimonial Rotation System
+  React.useEffect(() => {
+    if (isMobile) return; // Skip auto-rotation on mobile
+    
+    const rotationInterval = setInterval(() => {
+      setActiveTestimonial((prev) => {
+        const next = (prev + 1) % 3;
+        
+        // Highlight active rotation indicator
+        const indicators = document.querySelectorAll('.rotation-dot');
+        indicators.forEach((indicator, index) => {
+          if (index === next) {
+            indicator.classList.add('active');
+          } else {
+            indicator.classList.remove('active');
+          }
+        });
+        
+        return next;
+      });
+    }, 8000); // Rotate every 8 seconds
+    
+    return () => clearInterval(rotationInterval);
+  }, [isMobile]);
+  
+  // ENHANCED: Mobile Embla Carousel with proper accessibility
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { 
+      loop: true, 
+      containScroll: 'trimSnaps',
+      skipSnaps: false,
+      duration: 20,
+      startIndex: 0
+    },
+    isMobile ? [Autoplay({ delay: 6000, stopOnInteraction: true })] : []
+  );
+  
+  React.useEffect(() => {
+    if (!emblaApi || !isMobile) return;
+    
+    const handleSelect = () => {
+      const selectedIndex = emblaApi.selectedScrollSnap();
+      setActiveTestimonial(selectedIndex);
+      
+      // Update rotation indicators
+      const indicators = document.querySelectorAll('.rotation-dot');
+      indicators.forEach((indicator, index) => {
+        if (index === selectedIndex) {
+          indicator.classList.add('active');
+          indicator.setAttribute('aria-current', 'true');
+        } else {
+          indicator.classList.remove('active');
+          indicator.setAttribute('aria-current', 'false');
+        }
+      });
+    };
+    
+    emblaApi.on('select', handleSelect);
+    emblaApi.on('reInit', handleSelect);
+    
+    return () => {
+      emblaApi.off('select', handleSelect);
+      emblaApi.off('reInit', handleSelect);
+    };
+  }, [emblaApi, isMobile]);
+  
+  // Keyboard navigation for testimonials carousel
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!testimonialsRef.current?.contains(document.activeElement)) return;
+      
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault();
+          if (isMobile && emblaApi) {
+            emblaApi.scrollPrev();
+          } else {
+            setActiveTestimonial(prev => (prev - 1 + 3) % 3);
+          }
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          if (isMobile && emblaApi) {
+            emblaApi.scrollNext();
+          } else {
+            setActiveTestimonial(prev => (prev + 1) % 3);
+          }
+          break;
+        case 'Home':
+          e.preventDefault();
+          if (isMobile && emblaApi) {
+            emblaApi.scrollTo(0);
+          } else {
+            setActiveTestimonial(0);
+          }
+          break;
+        case 'End':
+          e.preventDefault();
+          if (isMobile && emblaApi) {
+            emblaApi.scrollTo(2);
+          } else {
+            setActiveTestimonial(2);
+          }
+          break;
+        case ' ': // Space bar to pause/resume autoplay
+          e.preventDefault();
+          if (isMobile && emblaApi) {
+            const autoplay = emblaApi.plugins().autoplay;
+            if (autoplay) {
+              if (autoplay.isPlaying()) {
+                autoplay.stop();
+                // Announce to screen readers
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.textContent = 'Testimonial carousel paused';
+                document.body.appendChild(announcement);
+                setTimeout(() => document.body.removeChild(announcement), 1000);
+              } else {
+                autoplay.play();
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.textContent = 'Testimonial carousel resumed';
+                document.body.appendChild(announcement);
+                setTimeout(() => document.body.removeChild(announcement), 1000);
+              }
+            }
+          }
+          break;
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMobile, emblaApi]);
+  
+  // Update proximity states on cards
+  React.useEffect(() => {
+    cardRefs.current.forEach((card, index) => {
+      if (!card) return;
+      
+      const cardName = ['ramadani', 'anedda', 'abrecht'][index];
+      const proximity = testimonialProximity[cardName] || 'far';
+      
+      card.setAttribute('data-proximity', proximity);
+    });
+  }, [testimonialProximity]);
 
 
   const handleExploreProducts = () => {
@@ -1391,11 +1703,16 @@ const Home = () => {
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>
 
-        {/* Client Testimonials - Ultra-Luxury Social Proof */}
-        <section id="contact" className="section-spacing-luxury gradient-luxury-subtle">
+        {/* ULTRA-FUTURISTIC TESTIMONIALS - Stemmen van Klasse */}
+        <section 
+          ref={testimonialsRef}
+          id="contact" 
+          className="section-spacing-luxury gradient-luxury-subtle intelligent-testimonial-rotation"
+          data-testid="testimonials-section"
+        >
           <div className="container-golden">
-            {/* Luxury Section Header */}
-            <div className="text-center mb-24">
+            {/* Futuristic Section Header */}
+            <div className="text-center mb-24 testimonial-scroll-reveal">
               <div className="divider-luxury w-44 mx-auto mb-12"></div>
               <h2 className="font-display text-headline gradient-text-subtle mb-8">
                 Stemmen van Klasse
@@ -1406,15 +1723,17 @@ const Home = () => {
                 heeft verheven tot ware oases van verfijnde schoonheid.
               </p>
 
-              {/* Google Reviews Link */}
+              {/* Enhanced Google Reviews Link */}
               <div className="text-center mt-6">
                 <a
                   href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-body font-semibold text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
+                  className="inline-flex items-center text-body font-semibold text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline auroral-hover-effects"
+                  data-testid="google-reviews-link"
+                  aria-label="Bekijk onze Google reviews - opent in nieuw tabblad"
                 >
-                  <span className="mr-2">⭐</span>
+                  <span className="mr-2 constellation-star" style={{'--star-index': 0} as React.CSSProperties & Record<string, string>}>⭐</span>
                   Bekijk onze Google reviews
                 </a>
                 <p className="text-sm text-gray-500 mt-1">
@@ -1423,100 +1742,241 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Ultra-Luxury Testimonials Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
-              {/* Testimonial 1 - Ultra Luxury */}
-              <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
-                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
+            {/* ENHANCED: ULTRA-FUTURISTIC TESTIMONIALS GRID WITH EMBLA SUPPORT */}
+            <div 
+              className={`${isMobile ? 'embla' : 'intelligent-testimonial-grid breathing-testimonial-layout'} orbital-testimonial-carousel`}
+              ref={isMobile ? emblaRef : undefined}
+              role="region"
+              aria-label="Customer testimonials"
+              tabIndex={0}
+            >
+              <div className={isMobile ? 'embla__container' : 'intelligent-testimonial-grid-inner'}>
+                {/* Testimonial 1 - Ultra-Futuristic Morphing Card */}
+                <div 
+                  ref={(el) => (cardRefs.current[0] = el)}
+                  className={`testimonial-morphing-card testimonial-magnetic-field proximity-responsive-cards contextual-card-elevation auroral-hover-effects testimonial-scroll-reveal gesture-responsive-cards adaptive-mobile-morphing testimonial-microinteractions ${isMobile ? 'embla__slide' : ''}`}
+                  data-testid="testimonial-card-ramadani"
+                  data-proximity="far"
+                  role="article"
+                  aria-label="Testimonial van Ramadani uit België"
+                  tabIndex={0}
+              >
+                {/* Holographic Effects */}
+                <div className="holographic-card-surface"></div>
+                <div className="liquid-border-morph"></div>
+                
+                {/* 3D Floating Quote Marks */}
+                <span className="dimensional-quote-marks" aria-hidden="true">"</span>
 
-                {/* Luxury Star Rating */}
-                <div className="flex mb-6 gap-1">
+                {/* Constellation Rating System */}
+                <div className="constellation-rating-system" role="img" aria-label="5 van 5 sterren beoordeling">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
+                      className="constellation-star"
+                      style={{'--star-index': i} as React.CSSProperties & Record<string, string>}
+                      aria-hidden="true"
                     >★</span>
                   ))}
+                  <span className="sr-only">5 van 5 sterren</span>
                 </div>
 
-                {/* Premium Testimonial Text */}
-                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
-                  "We stellen enorm op prijs dat je tijd hebt genomen om jouw
-                  ervaring te delen. Het doet ons plezier te horen dat je
-                  tevreden bent - jouw vertrouwen en postieve woorden motiveren
-                  ons elke dag opnieuw om de beste mogelijke service te blijven
-                  bieden. Hartelijk dank"
-                </p>
-
-                {/* Distinguished Customer Info */}
-                <div className="pt-4 border-t border-gold-200">
-                  <p className="font-semibold text-gray-900 text-lg">
-                    Ramadani
+                {/* Liquid Typography Quote */}
+                <div className="liquid-content-reveal">
+                  <p className="prismatic-text-highlights liquid-typography AI-quote-highlighting reveal-content">
+                    <span className="prismatic-punctuation">"</span>We stellen enorm op prijs dat je tijd hebt genomen om jouw
+                    ervaring te delen<span className="prismatic-punctuation">.</span> Het doet ons <span className="highlight-word">plezier</span> te horen dat je
+                    tevreden bent - jouw <span className="highlight-word">vertrouwen</span> en postieve woorden motiveren
+                    ons elke dag opnieuw om de beste mogelijke <span className="highlight-word">service</span> te blijven
+                    bieden<span className="prismatic-punctuation">.</span> Hartelijk dank<span className="prismatic-punctuation">"</span>
                   </p>
-                  <p className="text-body text-gray-600 font-light">België</p>
+                </div>
+
+                {/* Holographic Customer Details */}
+                <div className="magnetic-customer-info holographic-customer-details">
+                  <div className="energy-field-interactions">
+                    <div className="energy-pulse" style={{top: '20%', left: '10%', animationDelay: '0s'}}></div>
+                    <div className="energy-pulse" style={{top: '80%', right: '15%', animationDelay: '1s'}}></div>
+                    <p className="customer-name">Ramadani</p>
+                    <p className="customer-location">België</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Testimonial 2 - Ultra Luxury */}
-              <div className="card-ultra-luxury animate-fade-in-up stagger-2 hover-elegant">
-                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
+                {/* Testimonial 2 - Ultra-Futuristic Morphing Card */}
+                <div 
+                  ref={(el) => (cardRefs.current[1] = el)}
+                  className={`testimonial-morphing-card testimonial-magnetic-field proximity-responsive-cards contextual-card-elevation auroral-hover-effects testimonial-scroll-reveal gesture-responsive-cards adaptive-mobile-morphing testimonial-microinteractions ${isMobile ? 'embla__slide' : ''}`}
+                  data-testid="testimonial-card-anedda"
+                  data-proximity="far"
+                  role="article"
+                  aria-label="Testimonial van Anedda uit België"
+                  tabIndex={0}
+              >
+                {/* Holographic Effects */}
+                <div className="holographic-card-surface"></div>
+                <div className="liquid-border-morph"></div>
+                
+                {/* 3D Floating Quote Marks */}
+                <span className="dimensional-quote-marks" aria-hidden="true">"</span>
 
-                {/* Luxury Star Rating */}
-                <div className="flex mb-6 gap-1">
+                {/* Constellation Rating System */}
+                <div className="constellation-rating-system" role="img" aria-label="5 van 5 sterren beoordeling">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
+                      className="constellation-star"
+                      style={{'--star-index': i} as React.CSSProperties & Record<string, string>}
+                      aria-hidden="true"
                     >★</span>
                   ))}
+                  <span className="sr-only">5 van 5 sterren</span>
                 </div>
 
-                {/* Premium Testimonial Text */}
-                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
-                  "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij
-                  het installeren van mijn jaloezieën en het ophangen van mijn
-                  gordijnen. De medewerker was vriendelijk, kwam alle afspraken
-                  keurig na en werkte nauwkeurig. De kwaliteit van de materialen
-                  is uitstekend. Kortom, een absolute aanrader voor iedereen –
-                  deze vijf sterren zijn méér dan verdiend!"
-                </p>
+                {/* Liquid Typography Quote */}
+                <div className="liquid-content-reveal">
+                  <p className="prismatic-text-highlights liquid-typography AI-quote-highlighting reveal-content">
+                    <span className="prismatic-punctuation">"</span>Ik heb zeer <span className="highlight-word">professionele</span> hulp ontvangen van dit bedrijf bij
+                    het installeren van mijn jaloezieën en het ophangen van mijn
+                    gordijnen<span className="prismatic-punctuation">.</span> De medewerker was <span className="highlight-word">vriendelijk</span>, kwam alle afspraken
+                    keurig na en werkte <span className="highlight-word">nauwkeurig</span><span className="prismatic-punctuation">.</span> De <span className="highlight-word">kwaliteit</span> van de materialen
+                    is uitstekend<span className="prismatic-punctuation">.</span> Kortom, een absolute <span className="highlight-word">aanrader</span> voor iedereen –
+                    deze vijf sterren zijn méér dan verdiend<span className="prismatic-punctuation">!</span><span className="prismatic-punctuation">"</span>
+                  </p>
+                </div>
 
-                {/* Distinguished Customer Info */}
-                <div className="pt-4 border-t border-gold-200">
-                  <p className="font-semibold text-gray-900 text-lg">Anedda</p>
-                  <p className="text-body text-gray-600 font-light">België</p>
+                {/* Holographic Customer Details */}
+                <div className="magnetic-customer-info holographic-customer-details">
+                  <div className="energy-field-interactions">
+                    <div className="energy-pulse" style={{top: '30%', left: '20%', animationDelay: '0.5s'}}></div>
+                    <div className="energy-pulse" style={{top: '70%', right: '25%', animationDelay: '1.5s'}}></div>
+                    <p className="customer-name">Anedda</p>
+                    <p className="customer-location">België</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Testimonial 3 - Ultra Luxury */}
-              <div className="card-ultra-luxury animate-fade-in-up stagger-3 hover-elegant">
-                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
+                {/* Testimonial 3 - Ultra-Futuristic Morphing Card */}
+                <div 
+                  ref={(el) => (cardRefs.current[2] = el)}
+                  className={`testimonial-morphing-card testimonial-magnetic-field proximity-responsive-cards contextual-card-elevation auroral-hover-effects testimonial-scroll-reveal gesture-responsive-cards adaptive-mobile-morphing testimonial-microinteractions ${isMobile ? 'embla__slide' : ''}`}
+                  data-testid="testimonial-card-abrecht"
+                  data-proximity="far"
+                  role="article"
+                  aria-label="Testimonial van Abrecht uit België"
+                  tabIndex={0}
+              >
+                {/* Holographic Effects */}
+                <div className="holographic-card-surface"></div>
+                <div className="liquid-border-morph"></div>
+                
+                {/* 3D Floating Quote Marks */}
+                <span className="dimensional-quote-marks" aria-hidden="true">"</span>
 
-                {/* Luxury Star Rating */}
-                <div className="flex mb-6 gap-1">
+                {/* Constellation Rating System */}
+                <div className="constellation-rating-system" role="img" aria-label="5 van 5 sterren beoordeling">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
+                      className="constellation-star"
+                      style={{'--star-index': i} as React.CSSProperties & Record<string, string>}
+                      aria-hidden="true"
                     >★</span>
                   ))}
+                  <span className="sr-only">5 van 5 sterren</span>
                 </div>
 
-                {/* Premium Testimonial Text */}
-                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
-                  "Zeer goed materiaal en diens na verkoop is voor mij
-                  belangrijk en goede levering ik ben heel tevreden van de
-                  jaloeziekes en de rolgordijn wat kaniou geplaatst heeft Zeer
-                  goede kwaliteit en afwerking doe zo voort groetjes guske en
-                  yvonneke"
-                </p>
+                {/* Liquid Typography Quote */}
+                <div className="liquid-content-reveal">
+                  <p className="prismatic-text-highlights liquid-typography AI-quote-highlighting reveal-content">
+                    <span className="prismatic-punctuation">"</span>Zeer goed <span className="highlight-word">materiaal</span> en diens na verkoop is voor mij
+                    belangrijk en goede <span className="highlight-word">levering</span> ik ben heel tevreden van de
+                    jaloeziekes en de rolgordijn wat kaniou geplaatst heeft Zeer
+                    goede <span className="highlight-word">kwaliteit</span> en <span className="highlight-word">afwerking</span> doe zo voort groetjes guske en
+                    yvonneke<span className="prismatic-punctuation">"</span>
+                  </p>
+                </div>
 
-                {/* Distinguished Customer Info */}
-                <div className="pt-4 border-t border-gold-200">
-                  <p className="font-semibold text-gray-900 text-lg">Abrecht</p>
-                  <p className="text-body text-gray-600 font-light">België</p>
+                {/* Holographic Customer Details */}
+                <div className="magnetic-customer-info holographic-customer-details">
+                  <div className="energy-field-interactions">
+                    <div className="energy-pulse" style={{top: '25%', left: '15%', animationDelay: '1s'}}></div>
+                    <div className="energy-pulse" style={{top: '75%', right: '20%', animationDelay: '2s'}}></div>
+                    <p className="customer-name">Abrecht</p>
+                    <p className="customer-location">België</p>
+                  </div>
+                </div>
                 </div>
               </div>
+            </div>
+
+            {/* ENHANCED: Intelligent Testimonial Rotation Indicators with ARIA */}
+            <div 
+              className="rotation-indicator" 
+              role="tablist" 
+              aria-label="Testimonial navigation"
+              data-testid="testimonial-navigation"
+            >
+              <button
+                className="rotation-dot active" 
+                data-testid="rotation-indicator-1"
+                role="tab"
+                aria-selected={activeTestimonial === 0}
+                aria-controls="testimonial-card-ramadani"
+                aria-label="Go to testimonial from Ramadani"
+                tabIndex={activeTestimonial === 0 ? 0 : -1}
+                onClick={() => {
+                  setActiveTestimonial(0);
+                  if (isMobile && emblaApi) emblaApi.scrollTo(0);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveTestimonial(0);
+                    if (isMobile && emblaApi) emblaApi.scrollTo(0);
+                  }
+                }}
+              />
+              <button
+                className="rotation-dot" 
+                data-testid="rotation-indicator-2"
+                role="tab"
+                aria-selected={activeTestimonial === 1}
+                aria-controls="testimonial-card-anedda"
+                aria-label="Go to testimonial from Anedda"
+                tabIndex={activeTestimonial === 1 ? 0 : -1}
+                onClick={() => {
+                  setActiveTestimonial(1);
+                  if (isMobile && emblaApi) emblaApi.scrollTo(1);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveTestimonial(1);
+                    if (isMobile && emblaApi) emblaApi.scrollTo(1);
+                  }
+                }}
+              />
+              <button
+                className="rotation-dot" 
+                data-testid="rotation-indicator-3"
+                role="tab"
+                aria-selected={activeTestimonial === 2}
+                aria-controls="testimonial-card-abrecht"
+                aria-label="Go to testimonial from Abrecht"
+                tabIndex={activeTestimonial === 2 ? 0 : -1}
+                onClick={() => {
+                  setActiveTestimonial(2);
+                  if (isMobile && emblaApi) emblaApi.scrollTo(2);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveTestimonial(2);
+                    if (isMobile && emblaApi) emblaApi.scrollTo(2);
+                  }
+                }}
+              />
             </div>
           </div>
         </section>

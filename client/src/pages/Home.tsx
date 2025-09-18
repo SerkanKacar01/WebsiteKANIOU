@@ -213,36 +213,46 @@ const Home = () => {
 
       <div className="content-offset">
         {/* Hero Section - Ultra Luxury Enhanced */}
-        <div className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive">
-          {/* Ultra Particle System */}
-          <div className="ultra-particle-system">
-            <div className="absolute inset-0 opacity-60">
-              <div className="luxury-particles"></div>
+        <div className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive perspective-container cinematic-entrance-sequence">
+          {/* Cinematic Particle Galaxy System */}
+          <div className="cinematic-particle-galaxy magnetic-hover">
+            <div className="absolute inset-0 opacity-70">
+              <div className="luxury-particles ultra-premium-transitions"></div>
             </div>
           </div>
           
-          {/* Background Image with Ultra Luxury Overlay */}
-          <div className="absolute inset-0">
-            <img
-              src={interiorImage}
-              alt="Modern interior with elegant window treatments"
-              className="w-full h-full object-cover transition-all duration-1000 hover:scale-105"
-            />
-            {/* Ultra-Premium Glassmorphism Overlay */}
-            <div className="absolute inset-0 ultra-premium-glass"></div>
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
-            {/* Advanced Mobile Overlay */}
-            <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
+          {/* Multi-Layer Parallax System */}
+          <div className="parallax-layer-system absolute inset-0">
+            {/* Depth Layer 1 - Background Image */}
+            <div className="depth-layer-1">
+              <img
+                src={interiorImage}
+                alt="Modern interior with elegant window treatments"
+                className="w-full h-full object-cover ultra-premium-transitions magnetic-hover"
+              />
+            </div>
+            
+            {/* Depth Layer 2 - Ultra-Premium Glassmorphism */}
+            <div className="depth-layer-2">
+              <div className="absolute inset-0 ultra-premium-glass ultra-premium-transitions"></div>
+            </div>
+            
+            {/* Depth Layer 3 - Gradient Overlays */}
+            <div className="depth-layer-3">
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 ultra-premium-transitions"></div>
+              {/* Advanced Mobile Overlay */}
+              <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50 ultra-premium-transitions"></div>
+            </div>
           </div>
 
           {/* Content Container */}
-          <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
-            {/* Ultra-Luxury Title with Revolutionary Effects */}
-            <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow">
-              <span className="block text-4xl md:text-hero text-visible-fallback ultra-luxury-text-effect">
+          <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24 cinematic-entrance-sequence delay-1">
+            {/* Cinematic Hero Title with Breathing Effects */}
+            <h1 className="cinematic-hero-title font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow magnetic-hover">
+              <span className="block text-4xl md:text-hero text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
                 Professionele raamdecoratie
               </span>
-              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback ultra-luxury-text-effect animate-pulse">
+              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
                 Expertise
               </span>
             </h1>
@@ -259,16 +269,16 @@ const Home = () => {
               </span>
             </p>
 
-            {/* Ultra-Premium CTA with Micro-interactions */}
-            <div className="flex justify-center mb-12 md:mb-20">
+            {/* Floating CTA Container with Cinematic Effects */}
+            <div className="floating-cta-container flex justify-center mb-12 md:mb-20 cinematic-entrance-sequence delay-2">
               <button
                 onClick={handleRequestQuote}
-                className="professional-cta-button group ultra-micro-interaction ultra-sophisticated-glow"
+                className="professional-cta-button group ultra-micro-interaction ultra-sophisticated-glow magnetic-hover ultra-premium-transitions"
               >
                 <div className="professional-cta-bg"></div>
                 <div className="professional-cta-glow"></div>
                 <div className="professional-cta-content">
-                  <span className="professional-cta-text ultra-luxury-text-effect">
+                  <span className="professional-cta-text ultra-luxury-text-effect breathing-text-glow">
                     VANDAAG NOG OFFERTE
                   </span>
                   <div className="professional-cta-icon transform group-hover:rotate-45 transition-transform duration-500">
@@ -278,38 +288,38 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Ultra-Luxury Trust Indicators with Sophisticated Effects */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-professional-xl max-w-5xl mx-auto">
-              <div className="text-center animate-float-professional stagger-1 ultra-micro-interaction">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
+            {/* Golden Ratio Trust Indicators with Breathing Animations */}
+            <div className="golden-grid-container responsive-golden-layout cinematic-entrance-sequence delay-3">
+              <div className="breathing-stats text-center animate-float-professional stagger-1 ultra-micro-interaction magnetic-hover">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
                   30+
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white ultra-premium-transitions">
                   Jarenlange Vakmanschap
                 </div>
               </div>
-              <div className="text-center animate-float-professional stagger-2 ultra-micro-interaction">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
+              <div className="breathing-stats text-center animate-float-professional stagger-2 ultra-micro-interaction magnetic-hover">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
                   3500+
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white ultra-premium-transitions">
                   Eisvolle Klanten
                 </div>
               </div>
-              <div className="text-center animate-float-professional stagger-3 ultra-micro-interaction">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
+              <div className="breathing-stats text-center animate-float-professional stagger-3 ultra-micro-interaction magnetic-hover">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
                   100%
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white ultra-premium-transitions">
                   Maatwerk tot in Perfectie
                 </div>
               </div>
             </div>
 
-            {/* Sophisticated Scroll Indicator */}
-            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 hidden md:block">
-              <div className="w-px h-20 bg-gradient-to-b from-white/40 to-transparent relative">
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 border border-white/50 rounded-full animate-pulse">
+            {/* Cinematic Scroll Indicator */}
+            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 hidden md:block cinematic-entrance-sequence delay-4">
+              <div className="w-px h-20 bg-gradient-to-b from-white/40 to-transparent relative magnetic-hover ultra-premium-transitions">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 border border-white/50 rounded-full animate-pulse breathing-text-glow">
                   <div className="w-1 h-1 bg-white/60 rounded-full m-0.5 animate-bounce"></div>
                 </div>
               </div>

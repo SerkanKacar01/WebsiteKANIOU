@@ -356,317 +356,400 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Revolutionary Product Showcase Grid with Ultra Luxury Effects */}
-            <div className="luxury-product-grid mb-16">
-              {/* Houten jaloezieën - Ultra Premium Card */}
-              <button
-                className="professional-product-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow"
-                onClick={() => setLocation("/producten/houten-jaloezieen")}
-                data-testid="button-product-houten-jaloezieen"
-                type="button"
-                aria-label="Houten jaloezieën - Natuurlijke elegantie"
-              >
-                <div className="professional-card-background ultra-premium-glass"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow animate-pulse"></div>
-                    <div className="professional-icon group-hover:rotate-12 transition-transform duration-500">
-                      <span className="text-white text-2xl group-hover:scale-110 transition-transform duration-300">☰</span>
+            {/* ULTRA-MAGNETIC Futuristic Product Grid with Advanced Effects */}
+            <div 
+              className="magnetic-product-grid perspective-grid-container depth-perception-system mb-16"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
+                e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
+                
+                // Fix: Set CSS variables for custom cursor positioning (not pseudo-element querying)
+                e.currentTarget.style.setProperty('--cursor-x', `${e.clientX}px`);
+                e.currentTarget.style.setProperty('--cursor-y', `${e.clientY}px`);
+              }}
+              onPointerMove={(e) => {
+                // Touch/pointer support for mobile devices
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
+                e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
+                e.currentTarget.style.setProperty('--cursor-x', `${e.clientX}px`);
+                e.currentTarget.style.setProperty('--cursor-y', `${e.clientY}px`);
+              }}
+              onTouchMove={(e) => {
+                // Touch-specific support with passive event listeners
+                if (e.touches.length > 0) {
+                  const touch = e.touches[0];
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                  const y = ((touch.clientY - rect.top) / rect.height) * 100;
+                  e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
+                  e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
+                }
+              }}
+              style={{ touchAction: 'none' }} // Enable passive touch events
+            >
+              {/* Houten jaloezieën - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/houten-jaloezieen")}
+                  data-testid="button-product-houten-jaloezieen"
+                  type="button"
+                  aria-label="Houten jaloezieën - Natuurlijke elegantie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <span className="text-white text-2xl">☰</span>
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Houten jaloezieën">Houten jaloezieën</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Natuurlijke elegantie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title ultra-luxury-text-effect">Houten jaloezieën</h3>
-                  <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Natuurlijke elegantie</p>
-                  <div className="professional-card-arrow group-hover:translate-x-2 group-hover:scale-125 transition-all duration-300">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Aluminium jaloezieën - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/textiel-lamellen")}
-                data-testid="button-product-textiel-lamellen"
-                type="button"
-                aria-label="Textiel lamellen - Zachte elegantie"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/verticaal-lamellen-icon.png"
-                        alt="Textiel lamellen"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Textiel lamellen - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/textiel-lamellen")}
+                  data-testid="button-product-textiel-lamellen"
+                  type="button"
+                  aria-label="Textiel lamellen - Zachte elegantie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/verticaal-lamellen-icon.png"
+                          alt="Textiel lamellen"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Textiel lamellen">Textiel lamellen</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Zachte elegantie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Textiel lamellen</h3>
-                  <p className="professional-card-subtitle">Zachte elegantie</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Kunststof jaloezieën - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/kunststof-jaloezieen")}
-                data-testid="button-product-kunststof-jaloezieen"
-                type="button"
-                aria-label="Kunststof jaloezieën - Praktische perfectie"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/jaloezieen-icon.png"
-                        alt="Kunststof jaloezieën"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Kunststof jaloezieën - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/kunststof-jaloezieen")}
+                  data-testid="button-product-kunststof-jaloezieen"
+                  type="button"
+                  aria-label="Kunststof jaloezieën - Praktische perfectie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/jaloezieen-icon.png"
+                          alt="Kunststof jaloezieën"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Kunststof jaloezieën">Kunststof jaloezieën</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Praktische perfectie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Kunststof jaloezieën</h3>
-                  <p className="professional-card-subtitle">Praktische perfectie</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Verticaal lamellen - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/kunststof-lamellen")}
-                data-testid="button-product-kunststof-lamellen"
-                type="button"
-                aria-label="Kunststof lamellen - Praktische perfectie"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/verticaal-lamellen-icon.png"
-                        alt="Kunststof lamellen"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Kunststof lamellen - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/kunststof-lamellen")}
+                  data-testid="button-product-kunststof-lamellen"
+                  type="button"
+                  aria-label="Kunststof lamellen - Praktische perfectie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/verticaal-lamellen-icon.png"
+                          alt="Kunststof lamellen"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Kunststof lamellen">Kunststof lamellen</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Praktische perfectie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Kunststof lamellen</h3>
-                  <p className="professional-card-subtitle">Praktische perfectie</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Plissés - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/plisse")}
-                data-testid="button-product-plisse"
-                type="button"
-                aria-label="Plissés - Gevouwen elegantie"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/plisse-icon.png"
-                        alt="Plissés"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Plissés - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/plisse")}
+                  data-testid="button-product-plisse"
+                  type="button"
+                  aria-label="Plissés - Gevouwen elegantie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/plisse-icon.png"
+                          alt="Plissés"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Plissés">Plissés</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Gevouwen elegantie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Plissés</h3>
-                  <p className="professional-card-subtitle">Gevouwen elegantie</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Duo plissés - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/duo-plisse")}
-                data-testid="button-product-duo-plisse"
-                type="button"
-                aria-label="Duo plissés - Dubbele perfectie"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/plisse-icon.png"
-                        alt="Duo plissé"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Duo plissés - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/duo-plisse")}
+                  data-testid="button-product-duo-plisse"
+                  type="button"
+                  aria-label="Duo plissés - Dubbele perfectie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/plisse-icon.png"
+                          alt="Duo plissé"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Duo plissés">Duo plissés</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Dubbele perfectie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Duo plissés</h3>
-                  <p className="professional-card-subtitle">Dubbele perfectie</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Rolgordijnen - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/rolgordijnen")}
-                data-testid="button-product-rolgordijnen"
-                type="button"
-                aria-label="Rolgordijnen - Strakke simpliciteit"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">☰</span>
+              {/* Rolgordijnen - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/rolgordijnen")}
+                  data-testid="button-product-rolgordijnen"
+                  type="button"
+                  aria-label="Rolgordijnen - Strakke simpliciteit"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <span className="text-white text-2xl">☰</span>
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Rolgordijnen">Rolgordijnen</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Strakke simpliciteit</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Rolgordijnen</h3>
-                  <p className="professional-card-subtitle">Strakke simpliciteit</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Duo rolgordijnen - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/duo-rolgordijnen")}
-                data-testid="button-product-duo-rolgordijnen"
-                type="button"
-                aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/duo-rolgordijnen-icon.png"
-                        alt="Duo rolgordijnen"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Duo rolgordijnen - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/duo-rolgordijnen")}
+                  data-testid="button-product-duo-rolgordijnen"
+                  type="button"
+                  aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/duo-rolgordijnen-icon.png"
+                          alt="Duo rolgordijnen"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Duo rolgordijnen">Duo rolgordijnen</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">
+                      Innovatieve functionaliteit
+                    </p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Duo rolgordijnen</h3>
-                  <p className="professional-card-subtitle">
-                    Innovatieve functionaliteit
-                  </p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Gordijnen - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/overgordijnen")}
-                data-testid="button-product-overgordijnen"
-                type="button"
-                aria-label="Overgordijnen - Klassieke grandeur"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">☄</span>
+              {/* Overgordijnen - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/overgordijnen")}
+                  data-testid="button-product-overgordijnen"
+                  type="button"
+                  aria-label="Overgordijnen - Klassieke grandeur"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <span className="text-white text-2xl">☄</span>
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Overgordijnen">Overgordijnen</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Klassieke grandeur</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Overgordijnen</h3>
-                  <p className="professional-card-subtitle">Klassieke grandeur</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Rails & roedes - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/gordijnrails")}
-                data-testid="button-product-gordijnrails"
-                type="button"
-                aria-label="Gordijnrails - Perfecte mechaniek"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">−</span>
+              {/* Gordijnrails - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/gordijnrails")}
+                  data-testid="button-product-gordijnrails"
+                  type="button"
+                  aria-label="Gordijnrails - Perfecte mechaniek"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <span className="text-white text-2xl">−</span>
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Gordijnrails">Gordijnrails</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Perfecte mechaniek</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Gordijnrails</h3>
-                  <p className="professional-card-subtitle">Perfecte mechaniek</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Vouwgordijnen - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/vitrages")}
-                data-testid="button-product-vitrages"
-                type="button"
-                aria-label="Vitrages - Lichte elegantie"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/vouwgordijnen-icon.png"
-                        alt="Vitrages"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Vitrages - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/vitrages")}
+                  data-testid="button-product-vitrages"
+                  type="button"
+                  aria-label="Vitrages - Lichte elegantie"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/vouwgordijnen-icon.png"
+                          alt="Vitrages"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Vitrages">Vitrages</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Lichte elegantie</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Vitrages</h3>
-                  <p className="professional-card-subtitle">Lichte elegantie</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
-              {/* Houten shutters - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/producten/houten-shutters")}
-                data-testid="button-product-houten-shutters"
-                type="button"
-                aria-label="Houten shutters - Tijdloze klasse"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/houten-shutters-icon.png"
-                        alt="Houten shutters"
-                        className="w-8 h-8 object-contain"
-                      />
+              {/* Houten shutters - ULTRA-MAGNETIC Card */}
+              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
+                <div className="magnetic-hover-zone"></div>
+                <button
+                  className="liquid-morphing-card group floating-card-layer"
+                  onClick={() => setLocation("/producten/houten-shutters")}
+                  data-testid="button-product-houten-shutters"
+                  type="button"
+                  aria-label="Houten shutters - Tijdloze klasse"
+                >
+                  <div className="morphing-background dynamic-border-radius"></div>
+                  <div className="liquid-glow-effects"></div>
+                  <div className="adaptive-depth-glow"></div>
+                  <div className="swipe-detection-zone"></div>
+                  <div className="relative z-10">
+                    <div className="professional-icon-container">
+                      <div className="contextual-icon-animations">
+                        <img
+                          src="/images/houten-shutters-icon.png"
+                          alt="Houten shutters"
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
                     </div>
+                    <h3 className="morphing-title adaptive-text-glow" data-text="Houten shutters">Houten shutters</h3>
+                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Tijdloze klasse</p>
+                    <div className="magnetic-arrow">→</div>
                   </div>
-                  <h3 className="professional-card-title">Houten shutters</h3>
-                  <p className="professional-card-subtitle">Tijdloze klasse</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
+                </button>
+              </div>
 
               {/* Vouwgordijnen - Premium Card */}
               <button

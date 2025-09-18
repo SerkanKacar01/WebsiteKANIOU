@@ -6818,5 +6818,436 @@ html.rtl .right-0 {
 }
 
 /* ================================================================== */
+/* ULTRA-MAGNETIC FUTURISTIC GRID SYSTEM */
+/* ================================================================== */
+
+/* ============= MAGNETIC HOVER SYSTEM ============= */
+.magnetic-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  position: relative;
+  cursor: none; /* Hide default cursor for custom magnetic effect */
+  contain: layout style; /* Performance optimization for containment */
+}
+
+.magnetic-product-grid::before {
+  content: '';
+  position: fixed;
+  left: var(--cursor-x, 0px);
+  top: var(--cursor-y, 0px);
+  width: 24px;
+  height: 24px;
+  border: 2px solid #D5B36A;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(213, 179, 106, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease-out;
+  opacity: 0;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 20px rgba(213, 179, 106, 0.4);
+}
+
+.magnetic-product-grid:hover::before {
+  opacity: 1;
+}
+
+.magnetic-card-container {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  contain: paint layout; /* Performance optimization for card containers */
+}
+
+.magnetic-hover-zone {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+  pointer-events: none;
+  border-radius: 24px;
+  background: radial-gradient(
+    ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(213, 179, 106, 0.1) 0%,
+    rgba(213, 179, 106, 0.05) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  z-index: 0;
+}
+
+.magnetic-card-container:hover .magnetic-hover-zone {
+  opacity: 1;
+}
+
+/* ============= LIQUID MORPHING CARDS ============= */
+.liquid-morphing-card {
+  position: relative;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  border: 1px solid rgba(213, 179, 106, 0.2);
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  cursor: pointer;
+  contain: paint layout; /* Performance optimization for cards */
+  
+  /* Keyboard focus accessibility */
+  &:focus-visible {
+    outline: 3px solid #D5B36A;
+    outline-offset: 2px;
+    transform: translateY(-4px) scale(1.02);
+  }
+  
+  /* Maintain focus styles for accessibility */
+  &:focus {
+    outline: 3px solid #D5B36A;
+    outline-offset: 2px;
+  }
+  z-index: 1;
+  will-change: transform, border-radius, box-shadow;
+}
+
+.morphing-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(251, 248, 243, 0.98) 25%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(213, 179, 106, 0.05) 75%,
+    rgba(255, 255, 255, 0.98) 100%
+  );
+  background-size: 400% 400%;
+  animation: morphingWave 8s ease-in-out infinite;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+@keyframes morphingWave {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+.liquid-glow-effects {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    rgba(213, 179, 106, 0.3),
+    rgba(230, 195, 140, 0.2),
+    rgba(213, 179, 106, 0.3),
+    rgba(200, 165, 90, 0.25)
+  );
+  background-size: 400% 400%;
+  border-radius: 26px;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  z-index: -1;
+  animation: liquidGlowPulse 6s ease-in-out infinite;
+}
+
+@keyframes liquidGlowPulse {
+  0%, 100% { background-position: 0% 50%; opacity: 0.3; }
+  50% { background-position: 100% 50%; opacity: 0.7; }
+}
+
+.liquid-morphing-card:hover .liquid-glow-effects {
+  opacity: 1;
+}
+
+.dynamic-border-radius {
+  border-radius: 24px;
+  transition: border-radius 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.liquid-morphing-card:hover .dynamic-border-radius {
+  border-radius: 32px 16px 28px 20px;
+}
+
+/* ============= ADVANCED DEPTH PERCEPTION SYSTEM ============= */
+.depth-perception-system {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.perspective-grid-container {
+  perspective: 1500px;
+  transform-style: preserve-3d;
+}
+
+.floating-card-layer {
+  transform: translateZ(0);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.liquid-morphing-card:hover .floating-card-layer {
+  transform: translateZ(40px) translateY(-8px);
+}
+
+.adaptive-depth-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(213, 179, 106, 0.15) 0%,
+    rgba(213, 179, 106, 0.08) 40%,
+    transparent 70%
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: all 0.6s ease-out;
+  z-index: -1;
+  transform: translateZ(-10px) scale(1.1);
+}
+
+.liquid-morphing-card:hover .adaptive-depth-glow {
+  opacity: 1;
+  transform: translateZ(-20px) scale(1.3);
+  filter: blur(8px);
+}
+
+/* ============= GESTURE-BASED ANIMATIONS ============= */
+.touch-responsive-animations {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.swipe-detection-zone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  touch-action: pan-x pan-y;
+}
+
+.universal-interaction-states {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.universal-interaction-states:hover,
+.universal-interaction-states:focus,
+.universal-interaction-states.touch-active {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.momentum-based-animations {
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ============= ENHANCED MICRO-INTERACTIONS ============= */
+.magnetic-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D5B36A 0%, #C4A55A 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  transform: rotate(0deg);
+}
+
+.magnetic-arrow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: transform 0.6s ease-out;
+  transform: rotate(-45deg) translateX(-100%);
+}
+
+.liquid-morphing-card:hover .magnetic-arrow {
+  transform: translateX(8px) rotate(45deg) scale(1.1);
+  background: linear-gradient(135deg, #E6D494 0%, #D5B36A 100%);
+  box-shadow: 0 8px 24px rgba(213, 179, 106, 0.4);
+}
+
+.liquid-morphing-card:hover .magnetic-arrow::before {
+  transform: rotate(-45deg) translateX(100%);
+}
+
+.contextual-icon-animations {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.liquid-morphing-card:hover .contextual-icon-animations {
+  transform: scale(1.15) rotate(12deg);
+  filter: brightness(1.2) saturate(1.3);
+}
+
+.adaptive-text-glow {
+  transition: all 0.5s ease-out;
+  position: relative;
+}
+
+.adaptive-text-glow::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(213, 179, 106, 0.6);
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  z-index: -1;
+}
+
+.liquid-morphing-card:hover .adaptive-text-glow::before {
+  opacity: 1;
+}
+
+.morphing-title {
+  background: linear-gradient(
+    135deg,
+    #2A2A2A 0%,
+    #4A4A4A 25%,
+    #D5B36A 50%,
+    #4A4A4A 75%,
+    #2A2A2A 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.8s ease-out;
+  animation: morphingTitleWave 4s ease-in-out infinite;
+}
+
+@keyframes morphingTitleWave {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.liquid-morphing-card:hover .morphing-title {
+  animation-duration: 2s;
+  filter: brightness(1.2);
+  text-shadow: 0 0 20px rgba(213, 179, 106, 0.3);
+}
+
+/* ============= ACCESSIBILITY & PERFORMANCE OPTIMIZATIONS ============= */
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-card-container,
+  .liquid-morphing-card,
+  .morphing-background,
+  .liquid-glow-effects,
+  .floating-card-layer,
+  .adaptive-depth-glow,
+  .magnetic-arrow,
+  .contextual-icon-animations,
+  .morphing-title {
+    animation: none !important;
+    transition-duration: 0.1s !important;
+  }
+  
+  .magnetic-product-grid::before,
+  .magnetic-hover-zone {
+    display: none !important;
+  }
+  
+  .liquid-morphing-card:hover {
+    transform: none !important;
+  }
+}
+
+/* Performance optimizations for 60fps */
+.magnetic-card-container {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.liquid-morphing-card {
+  contain: layout style paint;
+  transform: translate3d(0, 0, 0);
+}
+
+.morphing-background,
+.liquid-glow-effects {
+  will-change: background-position, opacity;
+  contain: paint;
+}
+
+/* Mobile-specific optimizations and accessibility fallbacks */
+@media (max-width: 768px) {
+  .magnetic-product-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    cursor: auto; /* Restore normal cursor on mobile for accessibility */
+  }
+  
+  .magnetic-product-grid::before {
+    display: none; /* Hide custom cursor on mobile */
+  }
+  
+  .magnetic-hover-zone {
+    top: -25px;
+    left: -25px;
+    right: -25px;
+    bottom: -25px;
+  }
+  
+  /* Ensure touch targets are large enough for accessibility */
+  .liquid-morphing-card {
+    min-height: 120px;
+    touch-action: manipulation;
+  }
+}
+
+/* Fallback for browsers that don't support CSS variables */
+@supports not (--css: variables) {
+  .magnetic-product-grid {
+    cursor: pointer; /* Fallback cursor for accessibility */
+  }
+  
+  .magnetic-product-grid::before {
+    display: none; /* Hide if no variable support */
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .liquid-morphing-card {
+    border: 2px solid #D5B36A;
+  }
+  
+  .magnetic-arrow {
+    background: #D5B36A;
+    border: 2px solid #2A2A2A;
+  }
+}
+
+/* ================================================================== */
 /* EINDE ULTRA-GEAVANCEERDE FUTURISTISCHE CSS SYSTEMEN */
 /* ================================================================== */

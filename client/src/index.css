@@ -32,25 +32,37 @@ html, body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
+    /* ULTRA HIGH-END FUTURISTIC PALETTE */
+    --background: 0 0% 100%;  /* Pure White */
+    --foreground: 220 13% 18%;  /* Warm Charcoal - Fijn Zwart */
+    --muted: 0 0% 98%;  /* Ultra Subtle Grey */
+    --muted-foreground: 220 9% 46%;  /* Mid Charcoal */
     --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
+    --popover-foreground: 220 13% 18%;
     --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
-    --primary: 43 31% 62%;  /* #D5B36A - Professional Gold */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 45 36% 70%;  /* #E0C188 - Light Gold */
-    --secondary-foreground: 0 0% 13%;
-    --accent: 43 31% 62%;  /* #D5B36A - Professional Gold */
-    --accent-foreground: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+    --border: 220 13% 91%;  /* Hairline Grey */
+    --input: 220 13% 91%;
+    
+    /* REFINED GOLD SYSTEM - Niet te fel, futuristic */
+    --primary: 45 29% 68%;  /* Refined Champagne Gold */
+    --primary-foreground: 220 13% 18%;
+    --secondary: 48 33% 78%;  /* Subtle Rose Gold */
+    --secondary-foreground: 220 13% 18%;
+    --accent: 45 29% 68%;  /* Refined Champagne Gold */
+    --accent-foreground: 220 13% 18%;
+    
+    /* ULTRA LUXURY CUSTOM VARIABLES */
+    --ultra-white: 0 0% 100%;
+    --ultra-black: 220 13% 18%;
+    --ultra-gold: 45 29% 68%;
+    --ultra-gold-subtle: 48 15% 85%;
+    --ultra-grey-hairline: 220 13% 91%;
+    --ultra-grey-ghost: 220 9% 96%;
+    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
-    --ring: 20 14.3% 4.1%;
+    --ring: 220 13% 18%;
     --radius: 0.5rem;
 
     /* Chart colors */

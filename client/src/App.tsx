@@ -41,6 +41,7 @@ import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
+import PrijzenPage from "@/pages/PrijzenPage";
 import BusinessPage from "@/pages/BusinessPage";
 import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import CleaningProductsPage from "@/pages/CleaningProductsPage";
@@ -89,6 +90,7 @@ function Router() {
     if (location === "/contact") return t("contact.title") + " | " + t("app.title");
     if (location === "/quote") return t("quote.title") + " | " + t("app.title");
     if (location === "/offerte") return "Offerte aanvragen" + " | " + t("app.title");
+    if (location === "/prijzen") return "Prijsoverzicht – Maatwerk Raamdecoratie | " + t("app.title");
     if (location === "/acties") return "Acties & Aanbiedingen" + " | " + t("app.title");
 
     if (location === "/zakelijk" || location === "/business") return "Business Solutions" + " | " + t("app.title");
@@ -175,6 +177,7 @@ function Router() {
         <Route path="/business" component={BusinessPage} />
         <Route path="/quote" component={QuotePage} />
         <Route path="/offerte" component={OffertePage} />
+        <Route path="/prijzen" component={PrijzenPage} />
         <Route path="/afspraak" component={AfspraakPage} />
         <Route path="/acties" component={ActiesPage} />
         <Route path="/smart-quote" component={SmartQuote} />

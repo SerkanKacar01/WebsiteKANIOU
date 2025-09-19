@@ -82,11 +82,11 @@ const ProfessionalNavigation = () => {
         <div className="flex items-center justify-between">
           {/* Premium Logo */}
           <div className="nav-logo">
-            <button onClick={() => setLocation("/")} className="hover-elegant">
+            <button onClick={() => setLocation("/")} className="transition-elegant-fast hover-lift">
               <img
                 src={kaniouLogo}
                 alt="KANIOU - Professional Window Treatments"
-                className="h-12 w-auto transition-professional hover:scale-105"
+                className="h-12 w-auto transition-elegant"
               />
             </button>
           </div>
@@ -108,7 +108,7 @@ const ProfessionalNavigation = () => {
           <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={() => setLocation("/quote")}
-              className="btn-luxury"
+              className="btn-luxury btn-elegant"
             >
               VRIJBLIJVEND OFFERTE
             </button>
@@ -250,7 +250,7 @@ const Home = () => {
             <div className="flex flex-col items-center mb-20">
               <button
                 onClick={handleRequestQuote}
-                className="group px-8 py-3 border border-white/30 hover:border-white/60 text-white hover:bg-white/5 transition-all duration-200 font-light tracking-wide text-sm uppercase"
+                className="group px-8 py-3 border border-white/30 hover:border-white/60 text-white hover:bg-white/5 btn-elegant transition-elegant font-light tracking-wide text-sm uppercase"
               >
                 Vrijblijvend offerte
               </button>

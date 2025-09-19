@@ -32,6 +32,7 @@ const Header = () => {
   const navItems = [
     { label: "Galerij", href: "/gallerij" },
     { label: "Over Ons", href: "/overons" },
+    { label: "Prijzen", href: "/prijzen" },
     { label: "Contact", href: "/contact" },
   ];
 

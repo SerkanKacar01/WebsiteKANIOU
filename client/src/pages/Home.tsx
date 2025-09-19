@@ -69,6 +69,7 @@ const ProfessionalNavigation = () => {
   const navigationLinks = [
     { name: "Gallerij", path: "/gallerij" },
     { name: "Over ons", path: "/over-ons" },
+    { name: "Prijzen", path: "/prijzen" },
     { name: "Contact", path: "/contact" },
   ];
 

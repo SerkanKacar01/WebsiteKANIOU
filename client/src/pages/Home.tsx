@@ -2,8 +2,6 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 // Product and gallery images
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
@@ -35,234 +33,31 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-// Ultra-Futuristic Floating Navigation Component
+// Premium Navigation Component
 const ProfessionalNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] = React.useState(false);
-  const [scrollVelocity, setScrollVelocity] = React.useState(0);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-  const [activeSection, setActiveSection] = React.useState('');
-  const [isIdle, setIsIdle] = React.useState(false);
-  const [proximityStates, setProximityStates] = React.useState<Record<string, number>>({});
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [mobileMenuNeedsContrast, setMobileMenuNeedsContrast] =
+    React.useState(false);
   const [, setLocation] = useLocation();
-  const navRef = React.useRef<HTMLElement>(null);
-  const lastScrollY = React.useRef(0);
-  const lastScrollTime = React.useRef(Date.now());
-  const idleTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const animationFrameRef = React.useRef<number | null>(null);
-  const scrollVelocityRef = React.useRef(0);
 
-  // Mobile detection with matchMedia
-  React.useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 767px)');
-    const handleMediaChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    
-    setIsMobile(mediaQuery.matches);
-    mediaQuery.addEventListener('change', handleMediaChange);
-    
-    return () => mediaQuery.removeEventListener('change', handleMediaChange);
-  }, []);
-  
-  // Advanced scroll velocity detection for predictive animations
   React.useEffect(() => {
     const handleScroll = () => {
-      const now = Date.now();
       const scrollY = window.scrollY;
-      const deltaY = scrollY - lastScrollY.current;
-      const deltaTime = now - lastScrollTime.current;
-      
-      // Calculate scroll velocity (pixels per millisecond)
-      const velocity = deltaTime > 0 ? Math.abs(deltaY / deltaTime) : 0;
-      setScrollVelocity(velocity);
-      scrollVelocityRef.current = velocity;
-      
-      // Enhanced scroll state detection
       setIsScrolled(scrollY > 50);
-      
-      // Section-aware highlighting - map to actual page sections
-      const sectionMapping = {
-        'hero': 'hero',
-        'products': 'products',
-        'gallery': 'gallery', 
-        'contact': 'contact',
-        'about': 'about'
-      };
-      
-      const sections = Object.keys(sectionMapping);
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
-        }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
-      
-      // Mobile menu contrast detection
-      if (isMenuOpen && isMobile) {
+
+      // Only check background for mobile menu when it's open
+      if (isMenuOpen && window.innerWidth < 768) {
+        // Simple logic: if scrolled past hero section (assumed to be dark),
+        // we're likely on a light background
         const isOnLightBackground = scrollY > window.innerHeight * 0.8;
         setMobileMenuNeedsContrast(isOnLightBackground);
       }
-      
-      lastScrollY.current = scrollY;
-      lastScrollTime.current = now;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isMenuOpen, isMobile]);
-  
-  // Consolidated mouse position tracking and proximity detection with requestAnimationFrame throttling
-  React.useEffect(() => {
-    let navItemCenters: Array<{ name: string; x: number; y: number }> = [];
-    
-    const precomputeItemCenters = () => {
-      const items = document.querySelectorAll('.magnetic-nav-items');
-      navItemCenters = Array.from(items).map((item) => {
-        const rect = item.getBoundingClientRect();
-        const name = item.getAttribute('data-testid')?.replace('nav-link-', '') || '';
-        return {
-          name,
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
-        };
-      });
-    };
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      
-      animationFrameRef.current = requestAnimationFrame(() => {
-        if (navRef.current) {
-          const rect = navRef.current.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width) * 100;
-          const y = ((e.clientY - rect.top) / rect.height) * 100;
-          setMousePosition({ x, y });
-          
-          // Set CSS custom properties for liquid morph with proper typing
-          const style = navRef.current.style as any;
-          style['--mouse-x'] = `${x}%`;
-          style['--mouse-y'] = `${y}%`;
-          style['--scroll-velocity'] = scrollVelocityRef.current.toString();
-          
-          // Update proximity states for all nav items in one pass
-          const newProximityStates: Record<string, number> = {};
-          navItemCenters.forEach(({ name, x: centerX, y: centerY }) => {
-            const distance = Math.sqrt(
-              Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
-            );
-            newProximityStates[name] = distance;
-          });
-          setProximityStates(newProximityStates);
-        }
-      });
-    };
-    
-    // Precompute item centers on mount and window resize
-    precomputeItemCenters();
-    const handleResize = () => precomputeItemCenters();
-    
-    if (navRef.current) {
-      navRef.current.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('resize', handleResize);
-      
-      return () => {
-        if (navRef.current) {
-          navRef.current.removeEventListener('mousemove', handleMouseMove);
-        }
-        window.removeEventListener('resize', handleResize);
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
-        }
-      };
-    }
-  }, []);
-  
-  // Idle state detection for breathing navigation with proper cleanup
-  React.useEffect(() => {
-    const resetIdleTimer = () => {
-      setIsIdle(false);
-      if (idleTimer.current) {
-        clearTimeout(idleTimer.current);
-      }
-      idleTimer.current = setTimeout(() => setIsIdle(true), 3000);
-    };
-
-    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'] as const;
-    events.forEach(event => {
-      document.addEventListener(event, resetIdleTimer, true);
-    });
-
-    resetIdleTimer();
-
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, resetIdleTimer, true);
-      });
-      if (idleTimer.current) {
-        clearTimeout(idleTimer.current);
-      }
-    };
-  }, []);
-  
-  // Keyboard support and accessibility
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false);
-      }
-    };
-    
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
-  
-  // Focus trap for mobile menu
-  React.useEffect(() => {
-    if (isMenuOpen && isMobile) {
-      const focusableElements = document.querySelectorAll(
-        'button[data-testid^="orbital-menu-"], button[data-testid^="mobile-menu-"]'
-      );
-      const firstElement = focusableElements[0] as HTMLElement;
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-      
-      const handleTabKey = (e: KeyboardEvent) => {
-        if (e.key === 'Tab') {
-          if (e.shiftKey) {
-            if (document.activeElement === firstElement) {
-              e.preventDefault();
-              lastElement?.focus();
-            }
-          } else {
-            if (document.activeElement === lastElement) {
-              e.preventDefault();
-              firstElement?.focus();
-            }
-          }
-        }
-      };
-      
-      document.addEventListener('keydown', handleTabKey);
-      firstElement?.focus();
-      
-      return () => {
-        document.removeEventListener('keydown', handleTabKey);
-      };
-    }
-  }, [isMenuOpen, isMobile]);
-
-  // Proximity detection for magnetic navigation items (now handled in consolidated mouse handler)
-  const handleNavItemProximity = React.useCallback((itemName: string, distance: number) => {
-    setProximityStates(prev => ({ ...prev, [itemName]: distance }));
-  }, []);
 
   // Reset contrast when menu closes
   React.useEffect(() => {
@@ -272,597 +67,115 @@ const ProfessionalNavigation = () => {
   }, [isMenuOpen]);
 
   const navigationLinks = [
-    { 
-      name: "Gallerij", 
-      path: "/gallerij",
-      tooltip: "Bekijk onze prachtige realisaties",
-      important: true
-    },
-    { 
-      name: "Over ons", 
-      path: "/over-ons",
-      tooltip: "Ontdek ons verhaal en expertise",
-      important: false
-    },
-    { 
-      name: "Contact", 
-      path: "/contact",
-      tooltip: "Neem contact op voor advies",
-      important: true
-    },
+    { name: "Gallerij", path: "/gallerij" },
+    { name: "Over ons", path: "/over-ons" },
+    { name: "Contact", path: "/contact" },
   ];
 
-  // Optimized Magnetic proximity detection for navigation items
-  const MagneticNavItem = ({ link, index }: { link: any, index: number }) => {
-    const itemRef = React.useRef<HTMLButtonElement>(null);
-    const [proximity, setProximity] = React.useState('far');
-    
-    // Use the global proximity state instead of individual listeners
-    React.useEffect(() => {
-      const linkName = link.name.toLowerCase().replace(' ', '-');
-      const distance = proximityStates[linkName] || Infinity;
-      
-      if (distance < 50) {
-        setProximity('close');
-      } else if (distance < 100) {
-        setProximity('near');
-      } else {
-        setProximity('far');
-      }
-    }, [proximityStates, link.name]);
-
-    const getClassNames = () => {
-      let classes = 'magnetic-nav-items proximity-detection-system contextual-tooltips predictive-hover-zones';
-      
-      if (proximity !== 'far') {
-        classes += ` proximity-${proximity}`;
-      }
-      
-      if (link.important) {
-        classes += ' adaptive-sizing important';
-      }
-      
-      if (proximity === 'close') {
-        classes += ' adaptive-sizing proximity-active';
-      }
-      
-      // Map navigation paths to section IDs for highlighting
-      const pathToSection: Record<string, string> = {
-        '/gallerij': 'gallery',
-        '/over-ons': 'about',
-        '/contact': 'contact'
-      };
-      
-      if (activeSection === pathToSection[link.path]) {
-        classes += ' contextual-glow-system active';
-      }
-      
-      if (scrollVelocity > 2) {
-        classes += ' anticipating';
-      }
-      
-      return classes;
-    };
-
-    return (
-      <button
-        ref={itemRef}
-        key={link.name}
-        onClick={() => {
-          // Intelligent preloading hint
-          if (link.path !== window.location.pathname) {
-            const link_element = document.createElement('link');
-            link_element.rel = 'prefetch';
-            link_element.href = link.path;
-            document.head.appendChild(link_element);
-          }
-          setLocation(link.path);
-        }}
-        className={getClassNames()}
-        data-tooltip={link.tooltip}
-        data-testid={`nav-link-${link.name.toLowerCase().replace(' ', '-')}`}
-        aria-label={`Navigate to ${link.name}: ${link.tooltip}`}
-      >
-        {link.name}
-      </button>
-    );
-  };
-
-  // Get navigation container classes
-  const getNavContainerClasses = () => {
-    let classes = 'floating-navigation-system context-aware-positioning morphing-nav-container liquid-background-morph';
-    
-    if (isScrolled) {
-      classes += ' floating-nav-morphed intelligent-transparency';
-    }
-    
-    if (activeSection) {
-      classes += ' contextual-glow-system active';
-    }
-    
-    if (isIdle) {
-      classes += ' breathing-navigation';
-    }
-    
-    if (isMobile) {
-      classes += ' adaptive-mobile-positioning';
-    }
-    
-    return classes;
-  };
-
   return (
-    <>
-      {/* Desktop Ultra-Futuristic Floating Navigation */}
-      <nav
-        ref={navRef}
-        className={getNavContainerClasses()}
-        role="navigation"
-        aria-label="Main navigation"
-        style={{
-          '--scroll-velocity': scrollVelocity.toString(),
-          '--mouse-x': `${mousePosition.x}%`,
-          '--mouse-y': `${mousePosition.y}%`,
-        } as React.CSSProperties}
-      >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between">
-            {/* Holographic Logo */}
-            <div className="holographic-logo">
-              <button 
-                onClick={() => setLocation("/")} 
-                className="hover-elegant"
-                data-testid="nav-logo"
-                aria-label="Go to homepage"
-              >
-                <img
-                  src={kaniouLogo}
-                  alt="KANIOU - Professional Window Treatments"
-                  className="h-12 w-auto transition-professional hover:scale-105"
-                />
-              </button>
-            </div>
-
-            {/* Desktop Magnetic Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {navigationLinks.map((link, index) => (
-                <MagneticNavItem key={link.name} link={link} index={index} />
-              ))}
-            </div>
-
-            {/* Magnetic CTA Button */}
-            <div className="hidden md:flex items-center space-x-4">
-              <button
-                onClick={() => setLocation("/quote")}
-                className="magnetic-cta-button"
-                data-testid="nav-cta-button"
-                aria-label="Request free quote"
-              >
-                VRIJBLIJVEND OFFERTE
-              </button>
-            </div>
-
-            {/* Desktop Mobile Menu Button (hidden on mobile) */}
-            <button
-              className="md:hidden floating-action-button"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              data-testid="mobile-menu-toggle"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? (
-                <span className="text-2xl">×</span>
-              ) : (
-                <span className="text-2xl">☰</span>
-              )}
+    <nav className={`nav-professional ${isScrolled ? "scrolled" : ""}`}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between">
+          {/* Premium Logo */}
+          <div className="nav-logo">
+            <button onClick={() => setLocation("/")} className="hover-elegant">
+              <img
+                src={kaniouLogo}
+                alt="KANIOU - Professional Window Treatments"
+                className="h-12 w-auto transition-professional hover:scale-105"
+              />
             </button>
           </div>
-        </div>
-      </nav>
 
-      {/* Mobile Orbital Menu System with improved accessibility */}
-      {isMobile && (
-        <div className={`orbital-menu-system ${isMenuOpen ? 'active' : ''}`}>
-          <div className="orbital-menu-items">
-            {navigationLinks.map((link, index) => (
-              <button
-                key={link.name}
-                className="orbital-menu-item"
-                onClick={() => {
-                  setLocation(link.path);
-                  setIsMenuOpen(false);
-                }}
-                data-testid={`orbital-menu-${link.name.toLowerCase().replace(' ', '-')}`}
-                aria-label={`${link.name} - ${link.tooltip}`}
-                title={link.name}
-                style={{ '--item-index': index.toString() } as React.CSSProperties}
-              >
-                <span className="sr-only">{link.name}</span>
-                <span aria-hidden="true">{link.name.charAt(0)}</span>
-              </button>
-            ))}
-            <button
-              className="orbital-menu-item"
-              onClick={() => {
-                setLocation("/quote");
-                setIsMenuOpen(false);
-              }}
-              data-testid="orbital-menu-quote"
-              aria-label="Vrijblijvend offerte - Request quote"
-              title="Vrijblijvend offerte"
-              style={{ '--item-index': navigationLinks.length.toString() } as React.CSSProperties}
-            >
-              <span className="sr-only">Offerte</span>
-              <span aria-hidden="true">€</span>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Fallback Mobile Menu for non-touch devices */}
-      {!isMobile && isMenuOpen && (
-        <div
-          className={`liquid-menu-animations opening md:hidden mt-4 pb-4 transition-all duration-300 rounded-lg ${
-            mobileMenuNeedsContrast
-              ? "bg-black/90 backdrop-blur-sm mx-2 px-4 py-3 shadow-xl"
-              : ""
-          }`}
-          role="menu"
-          aria-label="Mobile navigation menu"
-        >
-          <div className="flex flex-col space-y-4 gesture-responsive-nav">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
             {navigationLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => {
-                  setLocation(link.path);
-                  setIsMenuOpen(false);
-                }}
-                className={`transition-all duration-300 text-left font-medium py-3 px-4 rounded-lg border border-gold-300/30 ${
-                  mobileMenuNeedsContrast
-                    ? "text-white hover:bg-white/10 hover:border-gold-400/50"
-                    : "nav-link"
-                }`}
-                data-testid={`mobile-menu-${link.name.toLowerCase().replace(' ', '-')}`}
-                role="menuitem"
+                onClick={() => setLocation(link.path)}
+                className="nav-link"
               >
                 {link.name}
               </button>
             ))}
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
             <button
-              onClick={() => {
-                setLocation("/quote");
-                setIsMenuOpen(false);
-              }}
-              className={`mt-4 transition-all duration-300 ${
-                mobileMenuNeedsContrast
-                  ? "bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                  : "btn-luxury"
-              }`}
-              data-testid="mobile-menu-cta"
-              role="menuitem"
+              onClick={() => setLocation("/quote")}
+              className="btn-luxury"
             >
               VRIJBLIJVEND OFFERTE
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className={`md:hidden p-2 transition-all duration-300 rounded-lg ${
+              mobileMenuNeedsContrast
+                ? "bg-black/80 text-white hover:bg-black/90 backdrop-blur-sm shadow-lg"
+                : "text-white hover:text-white"
+            }`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <span className="text-2xl">×</span>
+            ) : (
+              <span className="text-2xl">☰</span>
+            )}
+          </button>
         </div>
-      )}
-    </>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div
+            className={`md:hidden mt-4 pb-4 animate-fade-in-up transition-all duration-300 rounded-lg ${
+              mobileMenuNeedsContrast
+                ? "bg-black/90 backdrop-blur-sm mx-2 px-4 py-3 shadow-xl"
+                : ""
+            }`}
+          >
+            <div className="flex flex-col space-y-4">
+              {navigationLinks.map((link) => (
+                <button
+                  key={link.name}
+                  onClick={() => {
+                    setLocation(link.path);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`transition-all duration-300 text-left font-medium py-3 px-4 rounded-lg border border-gold-300/30 ${
+                    mobileMenuNeedsContrast
+                      ? "text-white hover:bg-white/10 hover:border-gold-400/50"
+                      : "nav-link"
+                  }`}
+                >
+                  {link.name}
+                </button>
+              ))}
+              <button
+                onClick={() => {
+                  setLocation("/quote");
+                  setIsMenuOpen(false);
+                }}
+                className={`mt-4 transition-all duration-300 ${
+                  mobileMenuNeedsContrast
+                    ? "bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    : "btn-luxury"
+                }`}
+              >
+                VRIJBLIJVEND OFFERTE
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 };
 
 const Home = () => {
   const [, setLocation] = useLocation();
-  
-  // Ultra-Futuristic Testimonials State Management
-  const [testimonialProximity, setTestimonialProximity] = React.useState<Record<string, string>>({});
-  const [scrollProgress, setScrollProgress] = React.useState(0);
-  const [activeTestimonial, setActiveTestimonial] = React.useState(0);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = React.useState(false);
-  const testimonialsRef = React.useRef<HTMLElement>(null);
-  const cardRefs = React.useRef<(HTMLDivElement | null)[]>([]);
-  const animationFrameRef = React.useRef<number | null>(null);
-  
-  // Mobile detection with enhanced touch support
-  React.useEffect(() => {
-    const checkMobile = () => {
-      const isMobileDevice = window.innerWidth <= 768 || 'ontouchstart' in window;
-      setIsMobile(isMobileDevice);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-  
-  // IMPROVED: IntersectionObserver-based testimonials reveal for performance
-  React.useEffect(() => {
-    if (!testimonialsRef.current) return;
-    
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px 0px -20% 0px',
-      threshold: 0.1
-    };
-    
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('testimonial-revealed');
-          // Start animations only when visible
-          cardRefs.current.forEach((card, index) => {
-            if (card) {
-              setTimeout(() => {
-                card.classList.add('testimonial-animate-in');
-              }, index * 200); // Staggered animation
-            }
-          });
-        }
-      });
-    };
-    
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-    
-    if (testimonialsRef.current) {
-      observer.observe(testimonialsRef.current);
-    }
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-  
-  // FIXED: Advanced Proximity Detection System - SCOPED TO TESTIMONIALS CONTAINER ONLY
-  React.useEffect(() => {
-    if (isMobile || !testimonialsRef.current) return; // Skip proximity detection on mobile for performance
-    
-    const testimonialsContainer = testimonialsRef.current;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      
-      animationFrameRef.current = requestAnimationFrame(() => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-        
-        const newProximity: Record<string, string> = {};
-        
-        cardRefs.current.forEach((card, index) => {
-          if (!card) return;
-          
-          const rect = card.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          
-          const distance = Math.sqrt(
-            Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
-          );
-          
-          const cardName = ['ramadani', 'anedda', 'abrecht'][index];
-          
-          if (distance < 150) {
-            newProximity[cardName] = 'close';
-          } else if (distance < 300) {
-            newProximity[cardName] = 'near';
-          } else {
-            newProximity[cardName] = 'far';
-          }
-          
-          // Update CSS custom properties for magnetic field effects
-          const relativeX = ((e.clientX - rect.left) / rect.width) * 100;
-          const relativeY = ((e.clientY - rect.top) / rect.height) * 100;
-          
-          card.style.setProperty('--mouse-x', `${relativeX}%`);
-          card.style.setProperty('--mouse-y', `${relativeY}%`);
-        });
-        
-        setTestimonialProximity(newProximity);
-      });
-    };
-    
-    // FIXED: Constrain mousemove listener to testimonials container only
-    testimonialsContainer.addEventListener('mousemove', handleMouseMove, { passive: true });
-    
-    return () => {
-      testimonialsContainer.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [isMobile]);
-  
-  // Scroll-Triggered Animations for Testimonials
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (!testimonialsRef.current) return;
-      
-      const rect = testimonialsRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const elementHeight = rect.height;
-      
-      // Calculate scroll progress (0 to 1)
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const elementTop = rect.top + scrollTop;
-      const viewportBottom = scrollTop + windowHeight;
-      
-      let progress = 0;
-      if (viewportBottom > elementTop) {
-        progress = Math.min(
-          1,
-          (viewportBottom - elementTop) / (windowHeight + elementHeight)
-        );
-      }
-      
-      setScrollProgress(progress);
-      
-      // Reveal testimonials based on scroll position
-      cardRefs.current.forEach((card, index) => {
-        if (!card) return;
-        
-        const cardRect = card.getBoundingClientRect();
-        const isVisible = cardRect.top < windowHeight * 0.8;
-        
-        if (isVisible) {
-          card.classList.add('visible');
-        }
-      });
-    };
-    
-    handleScroll(); // Check initial state
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  
-  // Intelligent Testimonial Rotation System
-  React.useEffect(() => {
-    if (isMobile) return; // Skip auto-rotation on mobile
-    
-    const rotationInterval = setInterval(() => {
-      setActiveTestimonial((prev) => {
-        const next = (prev + 1) % 3;
-        
-        // Highlight active rotation indicator
-        const indicators = document.querySelectorAll('.rotation-dot');
-        indicators.forEach((indicator, index) => {
-          if (index === next) {
-            indicator.classList.add('active');
-          } else {
-            indicator.classList.remove('active');
-          }
-        });
-        
-        return next;
-      });
-    }, 8000); // Rotate every 8 seconds
-    
-    return () => clearInterval(rotationInterval);
-  }, [isMobile]);
-  
-  // ENHANCED: Mobile Embla Carousel with proper accessibility
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { 
-      loop: true, 
-      containScroll: 'trimSnaps',
-      skipSnaps: false,
-      duration: 20,
-      startIndex: 0
-    },
-    isMobile ? [Autoplay({ delay: 6000, stopOnInteraction: true })] : []
-  );
-  
-  React.useEffect(() => {
-    if (!emblaApi || !isMobile) return;
-    
-    const handleSelect = () => {
-      const selectedIndex = emblaApi.selectedScrollSnap();
-      setActiveTestimonial(selectedIndex);
-      
-      // Update rotation indicators
-      const indicators = document.querySelectorAll('.rotation-dot');
-      indicators.forEach((indicator, index) => {
-        if (index === selectedIndex) {
-          indicator.classList.add('active');
-          indicator.setAttribute('aria-current', 'true');
-        } else {
-          indicator.classList.remove('active');
-          indicator.setAttribute('aria-current', 'false');
-        }
-      });
-    };
-    
-    emblaApi.on('select', handleSelect);
-    emblaApi.on('reInit', handleSelect);
-    
-    return () => {
-      emblaApi.off('select', handleSelect);
-      emblaApi.off('reInit', handleSelect);
-    };
-  }, [emblaApi, isMobile]);
-  
-  // Keyboard navigation for testimonials carousel
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!testimonialsRef.current?.contains(document.activeElement)) return;
-      
-      switch (e.key) {
-        case 'ArrowLeft':
-          e.preventDefault();
-          if (isMobile && emblaApi) {
-            emblaApi.scrollPrev();
-          } else {
-            setActiveTestimonial(prev => (prev - 1 + 3) % 3);
-          }
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          if (isMobile && emblaApi) {
-            emblaApi.scrollNext();
-          } else {
-            setActiveTestimonial(prev => (prev + 1) % 3);
-          }
-          break;
-        case 'Home':
-          e.preventDefault();
-          if (isMobile && emblaApi) {
-            emblaApi.scrollTo(0);
-          } else {
-            setActiveTestimonial(0);
-          }
-          break;
-        case 'End':
-          e.preventDefault();
-          if (isMobile && emblaApi) {
-            emblaApi.scrollTo(2);
-          } else {
-            setActiveTestimonial(2);
-          }
-          break;
-        case ' ': // Space bar to pause/resume autoplay
-          e.preventDefault();
-          if (isMobile && emblaApi) {
-            const autoplay = emblaApi.plugins().autoplay;
-            if (autoplay) {
-              if (autoplay.isPlaying()) {
-                autoplay.stop();
-                // Announce to screen readers
-                const announcement = document.createElement('div');
-                announcement.setAttribute('aria-live', 'polite');
-                announcement.textContent = 'Testimonial carousel paused';
-                document.body.appendChild(announcement);
-                setTimeout(() => document.body.removeChild(announcement), 1000);
-              } else {
-                autoplay.play();
-                const announcement = document.createElement('div');
-                announcement.setAttribute('aria-live', 'polite');
-                announcement.textContent = 'Testimonial carousel resumed';
-                document.body.appendChild(announcement);
-                setTimeout(() => document.body.removeChild(announcement), 1000);
-              }
-            }
-          }
-          break;
-      }
-    };
-    
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isMobile, emblaApi]);
-  
-  // Update proximity states on cards
-  React.useEffect(() => {
-    cardRefs.current.forEach((card, index) => {
-      if (!card) return;
-      
-      const cardName = ['ramadani', 'anedda', 'abrecht'][index];
-      const proximity = testimonialProximity[cardName] || 'far';
-      
-      card.setAttribute('data-proximity', proximity);
-    });
-  }, [testimonialProximity]);
 
 
   const handleExploreProducts = () => {
@@ -898,75 +211,38 @@ const Home = () => {
       {/* Professional Navigation */}
       <ProfessionalNavigation />
 
-      <div 
-        className="content-offset"
-        style={{
-          background: 'linear-gradient(135deg, #000428 0%, #004e92 100%)',
-          minHeight: '100vh',
-          color: '#ffffff'
-        }}
-      >
+      <div className="content-offset">
         {/* Hero Section - Ultra Luxury Enhanced */}
-        <div 
-          id="hero" 
-          className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive perspective-container cinematic-entrance-sequence"
-          style={{
-            background: 'linear-gradient(135deg, #1a0033 0%, #330066 50%, #0066cc 100%)',
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-        >
-          {/* Cinematic Particle Galaxy System */}
-          <div className="cinematic-particle-galaxy magnetic-hover">
-            <div className="absolute inset-0 opacity-70">
-              <div className="luxury-particles ultra-premium-transitions"></div>
+        <div className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive">
+          {/* Ultra Particle System */}
+          <div className="ultra-particle-system">
+            <div className="absolute inset-0 opacity-60">
+              <div className="luxury-particles"></div>
             </div>
           </div>
           
-          {/* Multi-Layer Parallax System */}
-          <div className="parallax-layer-system absolute inset-0">
-            {/* Depth Layer 1 - Background Image */}
-            <div className="depth-layer-1">
-              <img
-                src={interiorImage}
-                alt="Modern interior with elegant window treatments"
-                className="w-full h-full object-cover ultra-premium-transitions magnetic-hover"
-              />
-            </div>
-            
-            {/* Depth Layer 2 - Ultra-Premium Glassmorphism */}
-            <div className="depth-layer-2">
-              <div className="absolute inset-0 ultra-premium-glass ultra-premium-transitions"></div>
-            </div>
-            
-            {/* Depth Layer 3 - Gradient Overlays */}
-            <div className="depth-layer-3">
-              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 ultra-premium-transitions"></div>
-              {/* Advanced Mobile Overlay */}
-              <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50 ultra-premium-transitions"></div>
-            </div>
+          {/* Background Image with Ultra Luxury Overlay */}
+          <div className="absolute inset-0">
+            <img
+              src={interiorImage}
+              alt="Modern interior with elegant window treatments"
+              className="w-full h-full object-cover transition-all duration-1000 hover:scale-105"
+            />
+            {/* Ultra-Premium Glassmorphism Overlay */}
+            <div className="absolute inset-0 ultra-premium-glass"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+            {/* Advanced Mobile Overlay */}
+            <div className="absolute inset-0 md:hidden bg-gradient-to-b from-black/40 via-black/20 to-black/50"></div>
           </div>
 
           {/* Content Container */}
-          <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24 cinematic-entrance-sequence delay-1">
-            {/* Cinematic Hero Title with Breathing Effects */}
-            <h1 
-              className="cinematic-hero-title font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow magnetic-hover"
-              style={{
-                background: 'linear-gradient(45deg, #ff00ff, #00ffff, #ffff00)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontSize: '4rem',
-                fontWeight: '900',
-                textShadow: '0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(0,255,255,0.3)',
-                animation: 'rainbow-pulse 2s infinite'
-              }}
-            >
-              <span className="block text-4xl md:text-hero text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
+          <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
+            {/* Ultra-Luxury Title with Revolutionary Effects */}
+            <h1 className="font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow">
+              <span className="block text-4xl md:text-hero text-visible-fallback ultra-luxury-text-effect">
                 Professionele raamdecoratie
               </span>
-              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
+              <span className="block gradient-text-professional mt-2 md:mt-4 text-glow text-3xl md:text-hero text-visible-fallback ultra-luxury-text-effect animate-pulse">
                 Expertise
               </span>
             </h1>
@@ -983,16 +259,16 @@ const Home = () => {
               </span>
             </p>
 
-            {/* Floating CTA Container with Cinematic Effects */}
-            <div className="floating-cta-container flex justify-center mb-12 md:mb-20 cinematic-entrance-sequence delay-2">
+            {/* Ultra-Premium CTA with Micro-interactions */}
+            <div className="flex justify-center mb-12 md:mb-20">
               <button
                 onClick={handleRequestQuote}
-                className="professional-cta-button group ultra-micro-interaction ultra-sophisticated-glow magnetic-hover ultra-premium-transitions"
+                className="professional-cta-button group ultra-micro-interaction ultra-sophisticated-glow"
               >
                 <div className="professional-cta-bg"></div>
                 <div className="professional-cta-glow"></div>
                 <div className="professional-cta-content">
-                  <span className="professional-cta-text ultra-luxury-text-effect breathing-text-glow">
+                  <span className="professional-cta-text ultra-luxury-text-effect">
                     VANDAAG NOG OFFERTE
                   </span>
                   <div className="professional-cta-icon transform group-hover:rotate-45 transition-transform duration-500">
@@ -1002,38 +278,38 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Golden Ratio Trust Indicators with Breathing Animations */}
-            <div className="golden-grid-container responsive-golden-layout cinematic-entrance-sequence delay-3">
-              <div className="breathing-stats text-center animate-float-professional stagger-1 ultra-micro-interaction magnetic-hover">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
+            {/* Ultra-Luxury Trust Indicators with Sophisticated Effects */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-professional-xl max-w-5xl mx-auto">
+              <div className="text-center animate-float-professional stagger-1 ultra-micro-interaction">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
                   30+
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white ultra-premium-transitions">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
                   Jarenlange Vakmanschap
                 </div>
               </div>
-              <div className="breathing-stats text-center animate-float-professional stagger-2 ultra-micro-interaction magnetic-hover">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
+              <div className="text-center animate-float-professional stagger-2 ultra-micro-interaction">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
                   3500+
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white ultra-premium-transitions">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
                   Eisvolle Klanten
                 </div>
               </div>
-              <div className="breathing-stats text-center animate-float-professional stagger-3 ultra-micro-interaction magnetic-hover">
-                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
+              <div className="text-center animate-float-professional stagger-3 ultra-micro-interaction">
+                <div className="text-5xl md:text-6xl font-professional-display gradient-text-professional mb-4 text-visible-fallback ultra-luxury-text-effect">
                   100%
                 </div>
-                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white ultra-premium-transitions">
+                <div className="text-white/70 text-body font-light tracking-wider uppercase hover:text-white transition-colors duration-500">
                   Maatwerk tot in Perfectie
                 </div>
               </div>
             </div>
 
-            {/* Cinematic Scroll Indicator */}
-            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 hidden md:block cinematic-entrance-sequence delay-4">
-              <div className="w-px h-20 bg-gradient-to-b from-white/40 to-transparent relative magnetic-hover ultra-premium-transitions">
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 border border-white/50 rounded-full animate-pulse breathing-text-glow">
+            {/* Sophisticated Scroll Indicator */}
+            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 hidden md:block">
+              <div className="w-px h-20 bg-gradient-to-b from-white/40 to-transparent relative">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 border border-white/50 rounded-full animate-pulse">
                   <div className="w-1 h-1 bg-white/60 rounded-full m-0.5 animate-bounce"></div>
                 </div>
               </div>
@@ -1042,7 +318,7 @@ const Home = () => {
         </div>
 
         {/* Product Categories Section - Revolutionary Ultra Luxury Design */}
-        <section id="products" className="section-spacing-luxury relative overflow-hidden ultra-premium-interactive">
+        <section className="section-spacing-luxury relative overflow-hidden ultra-premium-interactive">
           {/* Ultra-Advanced Particle System */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3] ultra-premium-glass">
             <div className="ultra-particle-system">
@@ -1070,400 +346,317 @@ const Home = () => {
               </p>
             </div>
 
-            {/* ULTRA-MAGNETIC Futuristic Product Grid with Advanced Effects */}
-            <div 
-              className="magnetic-product-grid perspective-grid-container depth-perception-system mb-16"
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
-                e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
-                
-                // Fix: Set CSS variables for custom cursor positioning (not pseudo-element querying)
-                e.currentTarget.style.setProperty('--cursor-x', `${e.clientX}px`);
-                e.currentTarget.style.setProperty('--cursor-y', `${e.clientY}px`);
-              }}
-              onPointerMove={(e) => {
-                // Touch/pointer support for mobile devices
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
-                e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
-                e.currentTarget.style.setProperty('--cursor-x', `${e.clientX}px`);
-                e.currentTarget.style.setProperty('--cursor-y', `${e.clientY}px`);
-              }}
-              onTouchMove={(e) => {
-                // Touch-specific support with passive event listeners
-                if (e.touches.length > 0) {
-                  const touch = e.touches[0];
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const x = ((touch.clientX - rect.left) / rect.width) * 100;
-                  const y = ((touch.clientY - rect.top) / rect.height) * 100;
-                  e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
-                  e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
-                }
-              }}
-              style={{ touchAction: 'none' }} // Enable passive touch events
-            >
-              {/* Houten jaloezieën - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/houten-jaloezieen")}
-                  data-testid="button-product-houten-jaloezieen"
-                  type="button"
-                  aria-label="Houten jaloezieën - Natuurlijke elegantie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <span className="text-white text-2xl">☰</span>
-                      </div>
+            {/* Revolutionary Product Showcase Grid with Ultra Luxury Effects */}
+            <div className="luxury-product-grid mb-16">
+              {/* Houten jaloezieën - Ultra Premium Card */}
+              <button
+                className="professional-product-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow"
+                onClick={() => setLocation("/producten/houten-jaloezieen")}
+                data-testid="button-product-houten-jaloezieen"
+                type="button"
+                aria-label="Houten jaloezieën - Natuurlijke elegantie"
+              >
+                <div className="professional-card-background ultra-premium-glass"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow animate-pulse"></div>
+                    <div className="professional-icon group-hover:rotate-12 transition-transform duration-500">
+                      <span className="text-white text-2xl group-hover:scale-110 transition-transform duration-300">☰</span>
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Houten jaloezieën">Houten jaloezieën</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Natuurlijke elegantie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title ultra-luxury-text-effect">Houten jaloezieën</h3>
+                  <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Natuurlijke elegantie</p>
+                  <div className="professional-card-arrow group-hover:translate-x-2 group-hover:scale-125 transition-all duration-300">→</div>
+                </div>
+              </button>
 
-              {/* Textiel lamellen - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/textiel-lamellen")}
-                  data-testid="button-product-textiel-lamellen"
-                  type="button"
-                  aria-label="Textiel lamellen - Zachte elegantie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/verticaal-lamellen-icon.png"
-                          alt="Textiel lamellen"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Aluminium jaloezieën - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/textiel-lamellen")}
+                data-testid="button-product-textiel-lamellen"
+                type="button"
+                aria-label="Textiel lamellen - Zachte elegantie"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/verticaal-lamellen-icon.png"
+                        alt="Textiel lamellen"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Textiel lamellen">Textiel lamellen</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Zachte elegantie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Textiel lamellen</h3>
+                  <p className="professional-card-subtitle">Zachte elegantie</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Kunststof jaloezieën - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/kunststof-jaloezieen")}
-                  data-testid="button-product-kunststof-jaloezieen"
-                  type="button"
-                  aria-label="Kunststof jaloezieën - Praktische perfectie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/jaloezieen-icon.png"
-                          alt="Kunststof jaloezieën"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Kunststof jaloezieën - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/kunststof-jaloezieen")}
+                data-testid="button-product-kunststof-jaloezieen"
+                type="button"
+                aria-label="Kunststof jaloezieën - Praktische perfectie"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/jaloezieen-icon.png"
+                        alt="Kunststof jaloezieën"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Kunststof jaloezieën">Kunststof jaloezieën</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Praktische perfectie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Kunststof jaloezieën</h3>
+                  <p className="professional-card-subtitle">Praktische perfectie</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Kunststof lamellen - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/kunststof-lamellen")}
-                  data-testid="button-product-kunststof-lamellen"
-                  type="button"
-                  aria-label="Kunststof lamellen - Praktische perfectie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/verticaal-lamellen-icon.png"
-                          alt="Kunststof lamellen"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Verticaal lamellen - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/kunststof-lamellen")}
+                data-testid="button-product-kunststof-lamellen"
+                type="button"
+                aria-label="Kunststof lamellen - Praktische perfectie"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/verticaal-lamellen-icon.png"
+                        alt="Kunststof lamellen"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Kunststof lamellen">Kunststof lamellen</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Praktische perfectie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Kunststof lamellen</h3>
+                  <p className="professional-card-subtitle">Praktische perfectie</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Plissés - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/plisse")}
-                  data-testid="button-product-plisse"
-                  type="button"
-                  aria-label="Plissés - Gevouwen elegantie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/plisse-icon.png"
-                          alt="Plissés"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Plissés - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/plisse")}
+                data-testid="button-product-plisse"
+                type="button"
+                aria-label="Plissés - Gevouwen elegantie"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/plisse-icon.png"
+                        alt="Plissés"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Plissés">Plissés</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Gevouwen elegantie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Plissés</h3>
+                  <p className="professional-card-subtitle">Gevouwen elegantie</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Duo plissés - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/duo-plisse")}
-                  data-testid="button-product-duo-plisse"
-                  type="button"
-                  aria-label="Duo plissés - Dubbele perfectie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/plisse-icon.png"
-                          alt="Duo plissé"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Duo plissés - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/duo-plisse")}
+                data-testid="button-product-duo-plisse"
+                type="button"
+                aria-label="Duo plissés - Dubbele perfectie"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/plisse-icon.png"
+                        alt="Duo plissé"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Duo plissés">Duo plissés</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Dubbele perfectie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Duo plissés</h3>
+                  <p className="professional-card-subtitle">Dubbele perfectie</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Rolgordijnen - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/rolgordijnen")}
-                  data-testid="button-product-rolgordijnen"
-                  type="button"
-                  aria-label="Rolgordijnen - Strakke simpliciteit"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <span className="text-white text-2xl">☰</span>
-                      </div>
+              {/* Rolgordijnen - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/rolgordijnen")}
+                data-testid="button-product-rolgordijnen"
+                type="button"
+                aria-label="Rolgordijnen - Strakke simpliciteit"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <span className="text-white text-2xl">☰</span>
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Rolgordijnen">Rolgordijnen</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Strakke simpliciteit</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Rolgordijnen</h3>
+                  <p className="professional-card-subtitle">Strakke simpliciteit</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Duo rolgordijnen - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/duo-rolgordijnen")}
-                  data-testid="button-product-duo-rolgordijnen"
-                  type="button"
-                  aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/duo-rolgordijnen-icon.png"
-                          alt="Duo rolgordijnen"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Duo rolgordijnen - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/duo-rolgordijnen")}
+                data-testid="button-product-duo-rolgordijnen"
+                type="button"
+                aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/duo-rolgordijnen-icon.png"
+                        alt="Duo rolgordijnen"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Duo rolgordijnen">Duo rolgordijnen</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">
-                      Innovatieve functionaliteit
-                    </p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Duo rolgordijnen</h3>
+                  <p className="professional-card-subtitle">
+                    Innovatieve functionaliteit
+                  </p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Overgordijnen - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/overgordijnen")}
-                  data-testid="button-product-overgordijnen"
-                  type="button"
-                  aria-label="Overgordijnen - Klassieke grandeur"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <span className="text-white text-2xl">☄</span>
-                      </div>
+              {/* Gordijnen - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/overgordijnen")}
+                data-testid="button-product-overgordijnen"
+                type="button"
+                aria-label="Overgordijnen - Klassieke grandeur"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <span className="text-white text-2xl">☄</span>
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Overgordijnen">Overgordijnen</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Klassieke grandeur</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Overgordijnen</h3>
+                  <p className="professional-card-subtitle">Klassieke grandeur</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Gordijnrails - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/gordijnrails")}
-                  data-testid="button-product-gordijnrails"
-                  type="button"
-                  aria-label="Gordijnrails - Perfecte mechaniek"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <span className="text-white text-2xl">−</span>
-                      </div>
+              {/* Rails & roedes - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/gordijnrails")}
+                data-testid="button-product-gordijnrails"
+                type="button"
+                aria-label="Gordijnrails - Perfecte mechaniek"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <span className="text-white text-2xl">−</span>
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Gordijnrails">Gordijnrails</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Perfecte mechaniek</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Gordijnrails</h3>
+                  <p className="professional-card-subtitle">Perfecte mechaniek</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Vitrages - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/vitrages")}
-                  data-testid="button-product-vitrages"
-                  type="button"
-                  aria-label="Vitrages - Lichte elegantie"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/vouwgordijnen-icon.png"
-                          alt="Vitrages"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Vouwgordijnen - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/vitrages")}
+                data-testid="button-product-vitrages"
+                type="button"
+                aria-label="Vitrages - Lichte elegantie"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/vouwgordijnen-icon.png"
+                        alt="Vitrages"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Vitrages">Vitrages</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Lichte elegantie</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Vitrages</h3>
+                  <p className="professional-card-subtitle">Lichte elegantie</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
-              {/* Houten shutters - ULTRA-MAGNETIC Card */}
-              <div className="magnetic-card-container touch-responsive-animations universal-interaction-states momentum-based-animations">
-                <div className="magnetic-hover-zone"></div>
-                <button
-                  className="liquid-morphing-card group floating-card-layer"
-                  onClick={() => setLocation("/producten/houten-shutters")}
-                  data-testid="button-product-houten-shutters"
-                  type="button"
-                  aria-label="Houten shutters - Tijdloze klasse"
-                >
-                  <div className="morphing-background dynamic-border-radius"></div>
-                  <div className="liquid-glow-effects"></div>
-                  <div className="adaptive-depth-glow"></div>
-                  <div className="swipe-detection-zone"></div>
-                  <div className="relative z-10">
-                    <div className="professional-icon-container">
-                      <div className="contextual-icon-animations">
-                        <img
-                          src="/images/houten-shutters-icon.png"
-                          alt="Houten shutters"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+              {/* Houten shutters - Premium Card */}
+              <button
+                className="professional-product-card group"
+                onClick={() => setLocation("/producten/houten-shutters")}
+                data-testid="button-product-houten-shutters"
+                type="button"
+                aria-label="Houten shutters - Tijdloze klasse"
+              >
+                <div className="professional-card-background"></div>
+                <div className="professional-card-glow"></div>
+                <div className="professional-card-content">
+                  <div className="professional-icon-container">
+                    <div className="professional-icon-glow"></div>
+                    <div className="professional-icon">
+                      <img
+                        src="/images/houten-shutters-icon.png"
+                        alt="Houten shutters"
+                        className="w-8 h-8 object-contain"
+                      />
                     </div>
-                    <h3 className="morphing-title adaptive-text-glow" data-text="Houten shutters">Houten shutters</h3>
-                    <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Tijdloze klasse</p>
-                    <div className="magnetic-arrow">→</div>
                   </div>
-                </button>
-              </div>
+                  <h3 className="professional-card-title">Houten shutters</h3>
+                  <p className="professional-card-subtitle">Tijdloze klasse</p>
+                  <div className="professional-card-arrow">→</div>
+                </div>
+              </button>
 
               {/* Vouwgordijnen - Premium Card */}
               <button
@@ -1596,7 +789,7 @@ const Home = () => {
         <div className="section-divider-luxury"></div>
 
         {/* Why Choose KANIOU - Revolutionary Ultra-Luxury USP Section */}
-        <section id="about" className="ultra-luxury-features-section ultra-premium-interactive">
+        <section className="ultra-luxury-features-section ultra-premium-interactive">
           <div className="absolute inset-0 luxury-gradient-bg ultra-premium-glass"></div>
           <div className="absolute inset-0 luxury-texture-overlay"></div>
           <div className="ultra-particle-system"></div>
@@ -1730,16 +923,11 @@ const Home = () => {
         {/* Animated Section Divider */}
         <div className="section-divider-luxury"></div>
 
-        {/* ULTRA-FUTURISTIC TESTIMONIALS - Stemmen van Klasse */}
-        <section 
-          ref={testimonialsRef}
-          id="contact" 
-          className="section-spacing-luxury gradient-luxury-subtle intelligent-testimonial-rotation"
-          data-testid="testimonials-section"
-        >
+        {/* Client Testimonials - Ultra-Luxury Social Proof */}
+        <section className="section-spacing-luxury gradient-luxury-subtle">
           <div className="container-golden">
-            {/* Futuristic Section Header */}
-            <div className="text-center mb-24 testimonial-scroll-reveal">
+            {/* Luxury Section Header */}
+            <div className="text-center mb-24">
               <div className="divider-luxury w-44 mx-auto mb-12"></div>
               <h2 className="font-display text-headline gradient-text-subtle mb-8">
                 Stemmen van Klasse
@@ -1750,17 +938,15 @@ const Home = () => {
                 heeft verheven tot ware oases van verfijnde schoonheid.
               </p>
 
-              {/* Enhanced Google Reviews Link */}
+              {/* Google Reviews Link */}
               <div className="text-center mt-6">
                 <a
                   href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-body font-semibold text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline auroral-hover-effects"
-                  data-testid="google-reviews-link"
-                  aria-label="Bekijk onze Google reviews - opent in nieuw tabblad"
+                  className="inline-flex items-center text-body font-semibold text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
                 >
-                  <span className="mr-2 constellation-star" style={{'--star-index': '0'} as React.CSSProperties}>⭐</span>
+                  <span className="mr-2">⭐</span>
                   Bekijk onze Google reviews
                 </a>
                 <p className="text-sm text-gray-500 mt-1">
@@ -1769,241 +955,100 @@ const Home = () => {
               </div>
             </div>
 
-            {/* ENHANCED: ULTRA-FUTURISTIC TESTIMONIALS GRID WITH EMBLA SUPPORT */}
-            <div 
-              className={`${isMobile ? 'embla' : 'intelligent-testimonial-grid breathing-testimonial-layout'} orbital-testimonial-carousel`}
-              ref={isMobile ? emblaRef : undefined}
-              role="region"
-              aria-label="Customer testimonials"
-              tabIndex={0}
-            >
-              <div className={isMobile ? 'embla__container' : 'intelligent-testimonial-grid-inner'}>
-                {/* Testimonial 1 - Ultra-Futuristic Morphing Card */}
-                <div 
-                  ref={(el) => (cardRefs.current[0] = el)}
-                  className={`testimonial-morphing-card testimonial-magnetic-field proximity-responsive-cards contextual-card-elevation auroral-hover-effects testimonial-scroll-reveal gesture-responsive-cards adaptive-mobile-morphing testimonial-microinteractions ${isMobile ? 'embla__slide' : ''}`}
-                  data-testid="testimonial-card-ramadani"
-                  data-proximity="far"
-                  role="article"
-                  aria-label="Testimonial van Ramadani uit België"
-                  tabIndex={0}
-              >
-                {/* Holographic Effects */}
-                <div className="holographic-card-surface"></div>
-                <div className="liquid-border-morph"></div>
-                
-                {/* 3D Floating Quote Marks */}
-                <span className="dimensional-quote-marks" aria-hidden="true">"</span>
+            {/* Ultra-Luxury Testimonials Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-luxury-xl">
+              {/* Testimonial 1 - Ultra Luxury */}
+              <div className="card-ultra-luxury animate-fade-in-up stagger-1 hover-elegant">
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
-                {/* Constellation Rating System */}
-                <div className="constellation-rating-system" role="img" aria-label="5 van 5 sterren beoordeling">
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="constellation-star"
-                      style={{'--star-index': i.toString()} as React.CSSProperties}
-                      aria-hidden="true"
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
                     >★</span>
                   ))}
-                  <span className="sr-only">5 van 5 sterren</span>
                 </div>
 
-                {/* Liquid Typography Quote */}
-                <div className="liquid-content-reveal">
-                  <p className="prismatic-text-highlights liquid-typography AI-quote-highlighting reveal-content">
-                    <span className="prismatic-punctuation">"</span>We stellen enorm op prijs dat je tijd hebt genomen om jouw
-                    ervaring te delen<span className="prismatic-punctuation">.</span> Het doet ons <span className="highlight-word">plezier</span> te horen dat je
-                    tevreden bent - jouw <span className="highlight-word">vertrouwen</span> en postieve woorden motiveren
-                    ons elke dag opnieuw om de beste mogelijke <span className="highlight-word">service</span> te blijven
-                    bieden<span className="prismatic-punctuation">.</span> Hartelijk dank<span className="prismatic-punctuation">"</span>
+                {/* Premium Testimonial Text */}
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
+                  "We stellen enorm op prijs dat je tijd hebt genomen om jouw
+                  ervaring te delen. Het doet ons plezier te horen dat je
+                  tevreden bent - jouw vertrouwen en postieve woorden motiveren
+                  ons elke dag opnieuw om de beste mogelijke service te blijven
+                  bieden. Hartelijk dank"
+                </p>
+
+                {/* Distinguished Customer Info */}
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">
+                    Ramadani
                   </p>
-                </div>
-
-                {/* Holographic Customer Details */}
-                <div className="magnetic-customer-info holographic-customer-details">
-                  <div className="energy-field-interactions">
-                    <div className="energy-pulse" style={{top: '20%', left: '10%', animationDelay: '0s'}}></div>
-                    <div className="energy-pulse" style={{top: '80%', right: '15%', animationDelay: '1s'}}></div>
-                    <p className="customer-name">Ramadani</p>
-                    <p className="customer-location">België</p>
-                  </div>
+                  <p className="text-body text-gray-600 font-light">België</p>
                 </div>
               </div>
 
-                {/* Testimonial 2 - Ultra-Futuristic Morphing Card */}
-                <div 
-                  ref={(el) => (cardRefs.current[1] = el)}
-                  className={`testimonial-morphing-card testimonial-magnetic-field proximity-responsive-cards contextual-card-elevation auroral-hover-effects testimonial-scroll-reveal gesture-responsive-cards adaptive-mobile-morphing testimonial-microinteractions ${isMobile ? 'embla__slide' : ''}`}
-                  data-testid="testimonial-card-anedda"
-                  data-proximity="far"
-                  role="article"
-                  aria-label="Testimonial van Anedda uit België"
-                  tabIndex={0}
-              >
-                {/* Holographic Effects */}
-                <div className="holographic-card-surface"></div>
-                <div className="liquid-border-morph"></div>
-                
-                {/* 3D Floating Quote Marks */}
-                <span className="dimensional-quote-marks" aria-hidden="true">"</span>
+              {/* Testimonial 2 - Ultra Luxury */}
+              <div className="card-ultra-luxury animate-fade-in-up stagger-2 hover-elegant">
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
-                {/* Constellation Rating System */}
-                <div className="constellation-rating-system" role="img" aria-label="5 van 5 sterren beoordeling">
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="constellation-star"
-                      style={{'--star-index': i.toString()} as React.CSSProperties}
-                      aria-hidden="true"
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
                     >★</span>
                   ))}
-                  <span className="sr-only">5 van 5 sterren</span>
                 </div>
 
-                {/* Liquid Typography Quote */}
-                <div className="liquid-content-reveal">
-                  <p className="prismatic-text-highlights liquid-typography AI-quote-highlighting reveal-content">
-                    <span className="prismatic-punctuation">"</span>Ik heb zeer <span className="highlight-word">professionele</span> hulp ontvangen van dit bedrijf bij
-                    het installeren van mijn jaloezieën en het ophangen van mijn
-                    gordijnen<span className="prismatic-punctuation">.</span> De medewerker was <span className="highlight-word">vriendelijk</span>, kwam alle afspraken
-                    keurig na en werkte <span className="highlight-word">nauwkeurig</span><span className="prismatic-punctuation">.</span> De <span className="highlight-word">kwaliteit</span> van de materialen
-                    is uitstekend<span className="prismatic-punctuation">.</span> Kortom, een absolute <span className="highlight-word">aanrader</span> voor iedereen –
-                    deze vijf sterren zijn méér dan verdiend<span className="prismatic-punctuation">!</span><span className="prismatic-punctuation">"</span>
-                  </p>
-                </div>
+                {/* Premium Testimonial Text */}
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
+                  "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij
+                  het installeren van mijn jaloezieën en het ophangen van mijn
+                  gordijnen. De medewerker was vriendelijk, kwam alle afspraken
+                  keurig na en werkte nauwkeurig. De kwaliteit van de materialen
+                  is uitstekend. Kortom, een absolute aanrader voor iedereen –
+                  deze vijf sterren zijn méér dan verdiend!"
+                </p>
 
-                {/* Holographic Customer Details */}
-                <div className="magnetic-customer-info holographic-customer-details">
-                  <div className="energy-field-interactions">
-                    <div className="energy-pulse" style={{top: '30%', left: '20%', animationDelay: '0.5s'}}></div>
-                    <div className="energy-pulse" style={{top: '70%', right: '25%', animationDelay: '1.5s'}}></div>
-                    <p className="customer-name">Anedda</p>
-                    <p className="customer-location">België</p>
-                  </div>
+                {/* Distinguished Customer Info */}
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">Anedda</p>
+                  <p className="text-body text-gray-600 font-light">België</p>
                 </div>
               </div>
 
-                {/* Testimonial 3 - Ultra-Futuristic Morphing Card */}
-                <div 
-                  ref={(el) => (cardRefs.current[2] = el)}
-                  className={`testimonial-morphing-card testimonial-magnetic-field proximity-responsive-cards contextual-card-elevation auroral-hover-effects testimonial-scroll-reveal gesture-responsive-cards adaptive-mobile-morphing testimonial-microinteractions ${isMobile ? 'embla__slide' : ''}`}
-                  data-testid="testimonial-card-abrecht"
-                  data-proximity="far"
-                  role="article"
-                  aria-label="Testimonial van Abrecht uit België"
-                  tabIndex={0}
-              >
-                {/* Holographic Effects */}
-                <div className="holographic-card-surface"></div>
-                <div className="liquid-border-morph"></div>
-                
-                {/* 3D Floating Quote Marks */}
-                <span className="dimensional-quote-marks" aria-hidden="true">"</span>
+              {/* Testimonial 3 - Ultra Luxury */}
+              <div className="card-ultra-luxury animate-fade-in-up stagger-3 hover-elegant">
+                <span className="absolute top-8 right-8 w-10 h-10 text-gold-300 opacity-40 text-2xl flex items-center justify-center">"</span>
 
-                {/* Constellation Rating System */}
-                <div className="constellation-rating-system" role="img" aria-label="5 van 5 sterren beoordeling">
+                {/* Luxury Star Rating */}
+                <div className="flex mb-6 gap-1">
                   {[...Array(5)].map((_, i) => (
                     <span
                       key={i}
-                      className="constellation-star"
-                      style={{'--star-index': i.toString()} as React.CSSProperties}
-                      aria-hidden="true"
+                      className="w-6 h-6 text-gold-500 text-lg flex items-center justify-center"
                     >★</span>
                   ))}
-                  <span className="sr-only">5 van 5 sterren</span>
                 </div>
 
-                {/* Liquid Typography Quote */}
-                <div className="liquid-content-reveal">
-                  <p className="prismatic-text-highlights liquid-typography AI-quote-highlighting reveal-content">
-                    <span className="prismatic-punctuation">"</span>Zeer goed <span className="highlight-word">materiaal</span> en diens na verkoop is voor mij
-                    belangrijk en goede <span className="highlight-word">levering</span> ik ben heel tevreden van de
-                    jaloeziekes en de rolgordijn wat kaniou geplaatst heeft Zeer
-                    goede <span className="highlight-word">kwaliteit</span> en <span className="highlight-word">afwerking</span> doe zo voort groetjes guske en
-                    yvonneke<span className="prismatic-punctuation">"</span>
-                  </p>
-                </div>
+                {/* Premium Testimonial Text */}
+                <p className="text-gray-700 mb-8 leading-relaxed font-light text-body italic">
+                  "Zeer goed materiaal en diens na verkoop is voor mij
+                  belangrijk en goede levering ik ben heel tevreden van de
+                  jaloeziekes en de rolgordijn wat kaniou geplaatst heeft Zeer
+                  goede kwaliteit en afwerking doe zo voort groetjes guske en
+                  yvonneke"
+                </p>
 
-                {/* Holographic Customer Details */}
-                <div className="magnetic-customer-info holographic-customer-details">
-                  <div className="energy-field-interactions">
-                    <div className="energy-pulse" style={{top: '25%', left: '15%', animationDelay: '1s'}}></div>
-                    <div className="energy-pulse" style={{top: '75%', right: '20%', animationDelay: '2s'}}></div>
-                    <p className="customer-name">Abrecht</p>
-                    <p className="customer-location">België</p>
-                  </div>
-                </div>
+                {/* Distinguished Customer Info */}
+                <div className="pt-4 border-t border-gold-200">
+                  <p className="font-semibold text-gray-900 text-lg">Abrecht</p>
+                  <p className="text-body text-gray-600 font-light">België</p>
                 </div>
               </div>
-            </div>
-
-            {/* ENHANCED: Intelligent Testimonial Rotation Indicators with ARIA */}
-            <div 
-              className="rotation-indicator" 
-              role="tablist" 
-              aria-label="Testimonial navigation"
-              data-testid="testimonial-navigation"
-            >
-              <button
-                className="rotation-dot active" 
-                data-testid="rotation-indicator-1"
-                role="tab"
-                aria-selected={activeTestimonial === 0}
-                aria-controls="testimonial-card-ramadani"
-                aria-label="Go to testimonial from Ramadani"
-                tabIndex={activeTestimonial === 0 ? 0 : -1}
-                onClick={() => {
-                  setActiveTestimonial(0);
-                  if (isMobile && emblaApi) emblaApi.scrollTo(0);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setActiveTestimonial(0);
-                    if (isMobile && emblaApi) emblaApi.scrollTo(0);
-                  }
-                }}
-              />
-              <button
-                className="rotation-dot" 
-                data-testid="rotation-indicator-2"
-                role="tab"
-                aria-selected={activeTestimonial === 1}
-                aria-controls="testimonial-card-anedda"
-                aria-label="Go to testimonial from Anedda"
-                tabIndex={activeTestimonial === 1 ? 0 : -1}
-                onClick={() => {
-                  setActiveTestimonial(1);
-                  if (isMobile && emblaApi) emblaApi.scrollTo(1);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setActiveTestimonial(1);
-                    if (isMobile && emblaApi) emblaApi.scrollTo(1);
-                  }
-                }}
-              />
-              <button
-                className="rotation-dot" 
-                data-testid="rotation-indicator-3"
-                role="tab"
-                aria-selected={activeTestimonial === 2}
-                aria-controls="testimonial-card-abrecht"
-                aria-label="Go to testimonial from Abrecht"
-                tabIndex={activeTestimonial === 2 ? 0 : -1}
-                onClick={() => {
-                  setActiveTestimonial(2);
-                  if (isMobile && emblaApi) emblaApi.scrollTo(2);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setActiveTestimonial(2);
-                    if (isMobile && emblaApi) emblaApi.scrollTo(2);
-                  }
-                }}
-              />
             </div>
           </div>
         </section>

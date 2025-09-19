@@ -294,318 +294,207 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Product Categories Section - Revolutionary Ultra Luxury Design */}
-        <section className="section-spacing-luxury relative overflow-hidden ultra-premium-interactive">
-          {/* Ultra-Advanced Particle System */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-[#FBF8F3] ultra-premium-glass">
-            <div className="ultra-particle-system">
-              <div className="absolute inset-0 opacity-60">
-                <div className="luxury-particles"></div>
-              </div>
-            </div>
-          </div>
-
-          <div className="container-golden relative z-10">
-            {/* Ultra-Premium Section Header with Revolutionary Effects */}
-            <div className="text-center mb-20">
-              <div className="luxury-section-badge ultra-sophisticated-glow ultra-micro-interaction">
-                <div className="luxury-badge-glow"></div>
-                <span className="luxury-badge-text ultra-luxury-text-effect">PREMIUM COLLECTIE</span>
-              </div>
-              <h2 className="luxury-mega-title mb-8 ultra-sophisticated-glow">
-                <span className="luxury-title-line ultra-luxury-text-effect">Ontdek onze</span>
-                <span className="luxury-title-emphasis ultra-luxury-text-effect animate-pulse">collectie</span>
+        {/* Product Collection Section - Ultra High-End Minimalistic */}
+        <section className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            {/* Ultra High-End Section Header */}
+            <div className="text-center mb-16">
+              <h2 className="font-serif text-4xl md:text-5xl font-light text-gray-900 mb-6">
+                Onze collectie
               </h2>
-              <p className="luxury-subtitle max-w-4xl mx-auto hover:scale-105 transition-transform duration-700">
-                Verken onze exclusieve collectie van artisanaal vervaardigde
-                raamdecoratie. Elk meesterwerk wordt met uitzonderlijke precisie
-                en devotie gecreëerd voor uw verfijnde interieur.
+              <p className="text-lg font-light text-gray-600 max-w-2xl mx-auto">
+                Professionele raamdecoratie op maat, 
+                gemaakt met precisie en vakmanschap.
               </p>
             </div>
 
-            {/* Revolutionary Product Showcase Grid with Ultra Luxury Effects */}
-            <div className="luxury-product-grid mb-16">
-              {/* Houten jaloezieën - Ultra Premium Card */}
+            {/* Ultra High-End Product Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+              {/* Houten jaloezieën - Ultra High-End Card */}
               <button
-                className="professional-product-card group ultra-premium-interactive ultra-micro-interaction ultra-sophisticated-glow"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/houten-jaloezieen")}
                 data-testid="button-product-houten-jaloezieen"
                 type="button"
                 aria-label="Houten jaloezieën - Natuurlijke elegantie"
               >
-                <div className="professional-card-background ultra-premium-glass"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow animate-pulse"></div>
-                    <div className="professional-icon group-hover:rotate-12 transition-transform duration-500">
-                      <span className="text-white text-2xl group-hover:scale-110 transition-transform duration-300">☰</span>
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">☰</span>
                   </div>
-                  <h3 className="professional-card-title ultra-luxury-text-effect">Houten jaloezieën</h3>
-                  <p className="professional-card-subtitle group-hover:text-gold-600 transition-colors duration-300">Natuurlijke elegantie</p>
-                  <div className="professional-card-arrow group-hover:translate-x-2 group-hover:scale-125 transition-all duration-300">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Houten jaloezieën</h3>
+                <p className="text-sm font-light text-gray-600">Natuurlijke elegantie</p>
               </button>
 
-              {/* Aluminium jaloezieën - Premium Card */}
+              {/* Textiel lamellen - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/textiel-lamellen")}
                 data-testid="button-product-textiel-lamellen"
                 type="button"
                 aria-label="Textiel lamellen - Zachte elegantie"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/verticaal-lamellen-icon.png"
-                        alt="Textiel lamellen"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">|</span>
                   </div>
-                  <h3 className="professional-card-title">Textiel lamellen</h3>
-                  <p className="professional-card-subtitle">Zachte elegantie</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Textiel lamellen</h3>
+                <p className="text-sm font-light text-gray-600">Zachte elegantie</p>
               </button>
 
-              {/* Kunststof jaloezieën - Premium Card */}
+              {/* Kunststof jaloezieën - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/kunststof-jaloezieen")}
                 data-testid="button-product-kunststof-jaloezieen"
                 type="button"
                 aria-label="Kunststof jaloezieën - Praktische perfectie"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/jaloezieen-icon.png"
-                        alt="Kunststof jaloezieën"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">≡</span>
                   </div>
-                  <h3 className="professional-card-title">Kunststof jaloezieën</h3>
-                  <p className="professional-card-subtitle">Praktische perfectie</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Kunststof jaloezieën</h3>
+                <p className="text-sm font-light text-gray-600">Praktische perfectie</p>
               </button>
 
-              {/* Verticaal lamellen - Premium Card */}
+              {/* Kunststof lamellen - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/kunststof-lamellen")}
                 data-testid="button-product-kunststof-lamellen"
                 type="button"
                 aria-label="Kunststof lamellen - Praktische perfectie"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/verticaal-lamellen-icon.png"
-                        alt="Kunststof lamellen"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">||</span>
                   </div>
-                  <h3 className="professional-card-title">Kunststof lamellen</h3>
-                  <p className="professional-card-subtitle">Praktische perfectie</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Kunststof lamellen</h3>
+                <p className="text-sm font-light text-gray-600">Praktische perfectie</p>
               </button>
 
-              {/* Plissés - Premium Card */}
+              {/* Plissés - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/plisse")}
                 data-testid="button-product-plisse"
                 type="button"
                 aria-label="Plissés - Gevouwen elegantie"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/plisse-icon.png"
-                        alt="Plissés"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">△</span>
                   </div>
-                  <h3 className="professional-card-title">Plissés</h3>
-                  <p className="professional-card-subtitle">Gevouwen elegantie</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Plissés</h3>
+                <p className="text-sm font-light text-gray-600">Gevouwen elegantie</p>
               </button>
 
-              {/* Duo plissés - Premium Card */}
+              {/* Duo plissés - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/duo-plisse")}
                 data-testid="button-product-duo-plisse"
                 type="button"
                 aria-label="Duo plissés - Dubbele perfectie"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/plisse-icon.png"
-                        alt="Duo plissé"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">◇</span>
                   </div>
-                  <h3 className="professional-card-title">Duo plissés</h3>
-                  <p className="professional-card-subtitle">Dubbele perfectie</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Duo plissés</h3>
+                <p className="text-sm font-light text-gray-600">Dubbele perfectie</p>
               </button>
 
-              {/* Rolgordijnen - Premium Card */}
+              {/* Rolgordijnen - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/rolgordijnen")}
                 data-testid="button-product-rolgordijnen"
                 type="button"
                 aria-label="Rolgordijnen - Strakke simpliciteit"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">☰</span>
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">○</span>
                   </div>
-                  <h3 className="professional-card-title">Rolgordijnen</h3>
-                  <p className="professional-card-subtitle">Strakke simpliciteit</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Rolgordijnen</h3>
+                <p className="text-sm font-light text-gray-600">Strakke simpliciteit</p>
               </button>
 
-              {/* Duo rolgordijnen - Premium Card */}
+              {/* Duo rolgordijnen - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/duo-rolgordijnen")}
                 data-testid="button-product-duo-rolgordijnen"
                 type="button"
                 aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/duo-rolgordijnen-icon.png"
-                        alt="Duo rolgordijnen"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">◎</span>
                   </div>
-                  <h3 className="professional-card-title">Duo rolgordijnen</h3>
-                  <p className="professional-card-subtitle">
-                    Innovatieve functionaliteit
-                  </p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Duo rolgordijnen</h3>
+                <p className="text-sm font-light text-gray-600">Innovatieve functionaliteit</p>
               </button>
 
-              {/* Gordijnen - Premium Card */}
+              {/* Overgordijnen - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/overgordijnen")}
                 data-testid="button-product-overgordijnen"
                 type="button"
                 aria-label="Overgordijnen - Klassieke grandeur"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">☄</span>
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">〜</span>
                   </div>
-                  <h3 className="professional-card-title">Overgordijnen</h3>
-                  <p className="professional-card-subtitle">Klassieke grandeur</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Overgordijnen</h3>
+                <p className="text-sm font-light text-gray-600">Klassieke grandeur</p>
               </button>
 
-              {/* Rails & roedes - Premium Card */}
+              {/* Gordijnrails - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/gordijnrails")}
                 data-testid="button-product-gordijnrails"
                 type="button"
                 aria-label="Gordijnrails - Perfecte mechaniek"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">−</span>
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">─</span>
                   </div>
-                  <h3 className="professional-card-title">Gordijnrails</h3>
-                  <p className="professional-card-subtitle">Perfecte mechaniek</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Gordijnrails</h3>
+                <p className="text-sm font-light text-gray-600">Perfecte mechaniek</p>
               </button>
 
-              {/* Vouwgordijnen - Premium Card */}
+              {/* Vitrages - Ultra High-End Card */}
               <button
-                className="professional-product-card group"
+                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setLocation("/producten/vitrages")}
                 data-testid="button-product-vitrages"
                 type="button"
                 aria-label="Vitrages - Lichte elegantie"
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/vouwgordijnen-icon.png"
-                        alt="Vitrages"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-4">
+                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-lg">◦</span>
                   </div>
-                  <h3 className="professional-card-title">Vitrages</h3>
-                  <p className="professional-card-subtitle">Lichte elegantie</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Vitrages</h3>
+                <p className="text-sm font-light text-gray-600">Lichte elegantie</p>
               </button>
 
               {/* Houten shutters - Premium Card */}

@@ -73,6 +73,9 @@ const ProfessionalNavigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
+  // Debug: Log navigation links to console
+  console.log("🔍 NAVIGATION DEBUG: Rendering", navigationLinks.length, "navigation items:", navigationLinks.map(l => l.name).join(", "));
+
   return (
     <nav className={`nav-professional ${isScrolled ? "scrolled" : ""}`}>
       <div className="max-w-7xl mx-auto px-6">

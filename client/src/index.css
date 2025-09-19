@@ -212,33 +212,54 @@ html, body {
     background: #FFFFFF;
     color: #1A1A1A;
     font-weight: 400;
-    line-height: 1.7;
-    letter-spacing: -0.005em;
-    font-feature-settings: "liga", "kern";
+    line-height: 1.65;
+    letter-spacing: -0.008em;
+    font-feature-settings: "liga", "kern", "calt", "ss01";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-variation-settings: 'wght' 400;
   }
 
+  /* ULTRA HIGH-END TYPOGRAPHY HIERARCHY */
   h1 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
+    font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-feature-settings: "liga", "kern", "swsh";
   }
 
-  h2, h3 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 600;
+  h2 {
+    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-feature-settings: "liga", "kern";
+  }
+
+  h3 {
+    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+    font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.02em;
+    font-feature-settings: "liga", "kern";
   }
 
-  h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
+  h4 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
     line-height: 1.3;
+    letter-spacing: -0.015em;
+    font-feature-settings: "liga", "kern", "tnum";
+  }
+
+  h5, h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    line-height: 1.4;
     letter-spacing: -0.01em;
+    font-feature-settings: "liga", "kern", "tnum";
   }
 }
 
@@ -328,6 +349,70 @@ html, body {
 .fade-in-elegant.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ULTRA HIGH-END TYPOGRAPHY UTILITIES */
+.font-display-ultra {
+  font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-feature-settings: "liga", "kern", "swsh", "hist";
+}
+
+.font-display-elegant {
+  font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-feature-settings: "liga", "kern", "oldstyle-nums";
+}
+
+.font-body-refined {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.008em;
+  font-feature-settings: "liga", "kern", "calt";
+}
+
+.font-body-light {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+  font-feature-settings: "liga", "kern", "calt";
+}
+
+.font-caption-elegant {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-feature-settings: "liga", "kern", "tnum", "lnum";
+}
+
+/* ELEGANT TEXT COLORS */
+.text-elegant-primary {
+  color: var(--gray-900);
+}
+
+.text-elegant-secondary {
+  color: var(--gray-600);
+}
+
+.text-elegant-muted {
+  color: var(--gray-500);
+}
+
+.text-elegant-gold {
+  color: var(--gold-600);
+}
+
+.text-elegant-gold-light {
+  color: var(--gold-400);
 }
 
 .font-professional-display {

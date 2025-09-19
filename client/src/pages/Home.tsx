@@ -898,9 +898,24 @@ const Home = () => {
       {/* Professional Navigation */}
       <ProfessionalNavigation />
 
-      <div className="content-offset">
+      <div 
+        className="content-offset"
+        style={{
+          background: 'linear-gradient(135deg, #000428 0%, #004e92 100%)',
+          minHeight: '100vh',
+          color: '#ffffff'
+        }}
+      >
         {/* Hero Section - Ultra Luxury Enhanced */}
-        <div id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive perspective-container cinematic-entrance-sequence">
+        <div 
+          id="hero" 
+          className="relative min-h-screen flex items-center justify-center overflow-hidden ultra-premium-interactive perspective-container cinematic-entrance-sequence"
+          style={{
+            background: 'linear-gradient(135deg, #1a0033 0%, #330066 50%, #0066cc 100%)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        >
           {/* Cinematic Particle Galaxy System */}
           <div className="cinematic-particle-galaxy magnetic-hover">
             <div className="absolute inset-0 opacity-70">
@@ -935,7 +950,19 @@ const Home = () => {
           {/* Content Container */}
           <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24 cinematic-entrance-sequence delay-1">
             {/* Cinematic Hero Title with Breathing Effects */}
-            <h1 className="cinematic-hero-title font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow magnetic-hover">
+            <h1 
+              className="cinematic-hero-title font-professional-display text-hero text-white mb-8 leading-[0.9] tracking-tight text-shadow-professional drop-shadow-2xl ultra-sophisticated-glow magnetic-hover"
+              style={{
+                background: 'linear-gradient(45deg, #ff00ff, #00ffff, #ffff00)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontSize: '4rem',
+                fontWeight: '900',
+                textShadow: '0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(0,255,255,0.3)',
+                animation: 'rainbow-pulse 2s infinite'
+              }}
+            >
               <span className="block text-4xl md:text-hero text-visible-fallback ultra-luxury-text-effect breathing-text-glow">
                 Professionele raamdecoratie
               </span>

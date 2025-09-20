@@ -478,6 +478,157 @@ html, body {
     0 0 30px rgba(237, 214, 147, 0.2);
 }
 
+/* 2040 QUANTUM GRID LAYOUT SYSTEM - Golden Ratio Based */
+.quantum-container {
+  max-width: 1618px; /* Golden ratio * 1000 */
+  margin: 0 auto;
+  padding: 0 1.618rem;
+}
+
+.quantum-grid {
+  display: grid;
+  gap: 1.618rem; /* Golden ratio spacing */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.quantum-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1.618fr; /* Golden ratio proportions */
+  gap: 1.618rem;
+}
+
+.quantum-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1.618fr 1fr; /* Golden ratio center emphasis */
+  gap: 1.618rem;
+}
+
+.quantum-grid-golden {
+  display: grid;
+  grid-template-columns: 0.618fr 1fr; /* Pure golden ratio */
+  gap: 1.618rem;
+}
+
+/* 2040 FLUID RESPONSIVE BEHAVIOR */
+.liquid-responsive {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .quantum-container {
+    padding: 0 1rem;
+  }
+  
+  .quantum-grid-2,
+  .quantum-grid-3,
+  .quantum-grid-golden {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .quantum-grid {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .quantum-container {
+    padding: 0 1.382rem; /* Fibonacci */
+  }
+}
+
+@media (min-width: 1025px) {
+  .quantum-container {
+    padding: 0 2.618rem; /* Golden ratio expansion */
+  }
+}
+
+/* 2040 CRYSTALLINE LAYOUT COMPONENTS */
+.crystalline-card {
+  background: var(--crystalline-gradient);
+  border: 1px solid rgba(237, 214, 147, 0.1);
+  border-radius: 8px;
+  padding: 1.618rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.crystalline-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(237, 214, 147, 0.1), 
+    transparent, 
+    rgba(237, 214, 147, 0.1), 
+    transparent);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.crystalline-card:hover::before {
+  opacity: 1;
+  animation: crystalline-shimmer 2s ease-in-out infinite;
+}
+
+.crystalline-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 0 20px rgba(237, 214, 147, 0.1);
+}
+
+.liquid-section {
+  padding: 4.236rem 0; /* Fibonacci spacing */
+  position: relative;
+}
+
+.liquid-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--quantum-overlay);
+  z-index: -1;
+}
+
+.prisma-divider {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--liquid-gold-300), 
+    var(--liquid-gold-500), 
+    var(--liquid-gold-300), 
+    transparent);
+  margin: 2.618rem 0;
+  position: relative;
+}
+
+.prisma-divider::after {
+  content: '◆';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--crystal-white-50);
+  color: var(--liquid-gold-500);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
 .font-professional-display {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 600;

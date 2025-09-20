@@ -321,360 +321,306 @@ const Home = () => {
           <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
         </div>
 
-        {/* Product Collection Section - Ultra High-End Minimalistic */}
-        <section className="py-20 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            {/* Ultra High-End Section Header */}
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-4xl md:text-5xl font-light text-gray-900 mb-6">
-                Onze collectie
+        {/* 2040 MORPHING PRODUCT COLLECTION - Liquid Precision */}
+        <section className="liquid-section">
+          <div className="quantum-container">
+            {/* 2040 Crystalline Section Header */}
+            <div className="text-center spacing-quantum-2xl">
+              <h2 className="font-liquid-display text-5xl md:text-7xl font-light text-black mb-8 text-liquid-morph">
+                <span style={{
+                  background: 'linear-gradient(135deg, #2c3e50 0%, #edd693 50%, #2c3e50 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  animation: 'liquid-flow 6s ease-in-out infinite'
+                }}>
+                  Onze collectie
+                </span>
               </h2>
-              <p className="text-lg font-light text-gray-600 max-w-2xl mx-auto">
-                Professionele raamdecoratie op maat, 
-                gemaakt met precisie en vakmanschap.
+              <div className="prisma-divider"></div>
+              <p className="text-xl font-crystalline-header text-gray-700 max-w-3xl mx-auto spacing-quantum-lg">
+                Precisie-engineered raamdecoratie waar elke millimeter telt in 2040 perfection.
               </p>
             </div>
 
-            {/* Ultra High-End Product Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
-              {/* Houten jaloezieën - Ultra High-End Card */}
+            {/* 2040 MORPHING LIQUID PRODUCT GRID - Geometric Precision */}
+            <div className="quantum-grid spacing-quantum-2xl">
+              {/* Houten jaloezieën - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/houten-jaloezieen")}
                 data-testid="button-product-houten-jaloezieen"
                 type="button"
                 aria-label="Houten jaloezieën - Natuurlijke elegantie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 3s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">☰</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">☰</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Houten jaloezieën</h3>
-                <p className="text-sm font-light text-gray-600">Natuurlijke elegantie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Houten jaloezieën</h3>
+                <p className="text-base text-gray-600 font-light">Natuurlijke elegantie</p>
               </button>
 
-              {/* Textiel lamellen - Ultra High-End Card */}
+              {/* Textiel lamellen - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/textiel-lamellen")}
                 data-testid="button-product-textiel-lamellen"
                 type="button"
                 aria-label="Textiel lamellen - Zachte elegantie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 3.2s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">|</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">|</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Textiel lamellen</h3>
-                <p className="text-sm font-light text-gray-600">Zachte elegantie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Textiel lamellen</h3>
+                <p className="text-base text-gray-600 font-light">Zachte elegantie</p>
               </button>
 
-              {/* Kunststof jaloezieën - Ultra High-End Card */}
+              {/* Kunststof jaloezieën - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/kunststof-jaloezieen")}
                 data-testid="button-product-kunststof-jaloezieen"
                 type="button"
                 aria-label="Kunststof jaloezieën - Praktische perfectie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 3.4s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">≡</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">≡</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Kunststof jaloezieën</h3>
-                <p className="text-sm font-light text-gray-600">Praktische perfectie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Kunststof jaloezieën</h3>
+                <p className="text-base text-gray-600 font-light">Praktische perfectie</p>
               </button>
 
-              {/* Kunststof lamellen - Ultra High-End Card */}
+              {/* Kunststof lamellen - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/kunststof-lamellen")}
                 data-testid="button-product-kunststof-lamellen"
                 type="button"
                 aria-label="Kunststof lamellen - Praktische perfectie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 3.6s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">||</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">||</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Kunststof lamellen</h3>
-                <p className="text-sm font-light text-gray-600">Praktische perfectie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Kunststof lamellen</h3>
+                <p className="text-base text-gray-600 font-light">Praktische perfectie</p>
               </button>
 
-              {/* Plissés - Ultra High-End Card */}
+              {/* Plissés - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/plisse")}
                 data-testid="button-product-plisse"
                 type="button"
                 aria-label="Plissés - Gevouwen elegantie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 3.8s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">△</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">△</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Plissés</h3>
-                <p className="text-sm font-light text-gray-600">Gevouwen elegantie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Plissés</h3>
+                <p className="text-base text-gray-600 font-light">Gevouwen elegantie</p>
               </button>
 
-              {/* Duo plissés - Ultra High-End Card */}
+              {/* Duo plissés - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/duo-plisse")}
                 data-testid="button-product-duo-plisse"
                 type="button"
                 aria-label="Duo plissés - Dubbele perfectie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 4s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">◇</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">◇</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Duo plissés</h3>
-                <p className="text-sm font-light text-gray-600">Dubbele perfectie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Duo plissés</h3>
+                <p className="text-base text-gray-600 font-light">Dubbele perfectie</p>
               </button>
 
-              {/* Rolgordijnen - Ultra High-End Card */}
+              {/* Rolgordijnen - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/rolgordijnen")}
                 data-testid="button-product-rolgordijnen"
                 type="button"
                 aria-label="Rolgordijnen - Strakke simpliciteit"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 4.2s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">○</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">○</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Rolgordijnen</h3>
-                <p className="text-sm font-light text-gray-600">Strakke simpliciteit</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Rolgordijnen</h3>
+                <p className="text-base text-gray-600 font-light">Strakke simpliciteit</p>
               </button>
 
-              {/* Duo rolgordijnen - Ultra High-End Card */}
+              {/* Duo rolgordijnen - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/duo-rolgordijnen")}
                 data-testid="button-product-duo-rolgordijnen"
                 type="button"
                 aria-label="Duo rolgordijnen - Innovatieve functionaliteit"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 4.4s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">◎</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">◎</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Duo rolgordijnen</h3>
-                <p className="text-sm font-light text-gray-600">Innovatieve functionaliteit</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Duo rolgordijnen</h3>
+                <p className="text-base text-gray-600 font-light">Innovatieve functionaliteit</p>
               </button>
 
-              {/* Overgordijnen - Ultra High-End Card */}
+              {/* Overgordijnen - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/overgordijnen")}
                 data-testid="button-product-overgordijnen"
                 type="button"
                 aria-label="Overgordijnen - Klassieke grandeur"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 4.6s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">〜</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">〜</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Overgordijnen</h3>
-                <p className="text-sm font-light text-gray-600">Klassieke grandeur</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Overgordijnen</h3>
+                <p className="text-base text-gray-600 font-light">Klassieke grandeur</p>
               </button>
 
-              {/* Gordijnrails - Ultra High-End Card */}
+              {/* Gordijnrails - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/gordijnrails")}
                 data-testid="button-product-gordijnrails"
                 type="button"
                 aria-label="Gordijnrails - Perfecte mechaniek"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 4.8s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">─</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">─</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Gordijnrails</h3>
-                <p className="text-sm font-light text-gray-600">Perfecte mechaniek</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Gordijnrails</h3>
+                <p className="text-base text-gray-600 font-light">Perfecte mechaniek</p>
               </button>
 
-              {/* Vitrages - Ultra High-End Card */}
+              {/* Vitrages - 2040 Liquid Card */}
               <button
-                className="group bg-white border border-gray-100 rounded-lg p-6 text-left hover:shadow-sm transition-all duration-200 hover:-translate-y-1"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/vitrages")}
                 data-testid="button-product-vitrages"
                 type="button"
                 aria-label="Vitrages - Lichte elegantie"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 5s ease-in-out infinite'
+                }}
               >
-                <div className="mb-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 text-lg">◦</span>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">◦</span>
                   </div>
                 </div>
-                <h3 className="font-serif text-lg font-normal text-gray-900 mb-2">Vitrages</h3>
-                <p className="text-sm font-light text-gray-600">Lichte elegantie</p>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Vitrages</h3>
+                <p className="text-base text-gray-600 font-light">Lichte elegantie</p>
               </button>
 
-              {/* Houten shutters - Premium Card */}
+              {/* Houten shutters - 2040 Liquid Card */}
               <button
-                className="professional-product-card group"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/producten/houten-shutters")}
                 data-testid="button-product-houten-shutters"
                 type="button"
                 aria-label="Houten shutters - Tijdloze klasse"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 5.2s ease-in-out infinite'
+                }}
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/houten-shutters-icon.png"
-                        alt="Houten shutters"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">▓</span>
                   </div>
-                  <h3 className="professional-card-title">Houten shutters</h3>
-                  <p className="professional-card-subtitle">Tijdloze klasse</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Houten shutters</h3>
+                <p className="text-base text-gray-600 font-light">Tijdloze klasse</p>
               </button>
 
-              {/* Vouwgordijnen - Premium Card */}
+              {/* Vouwgordijnen - 2040 Liquid Card */}
               <button
-                className="professional-product-card group"
+                className="crystalline-card group text-left liquid-responsive spacing-quantum-lg"
                 onClick={() => setLocation("/vouwgordijnen")}
                 data-testid="button-product-vouwgordijnen"
                 type="button"
                 aria-label="Vouwgordijnen - Zachte plooien, strakke lijnen"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.9) 100%)',
+                  animation: 'quantum-pulse 5.4s ease-in-out infinite'
+                }}
               >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <img
-                        src="/images/vouwgordijnen-icon.png"
-                        alt="Vouwgordijnen"
-                        className="w-8 h-8 object-contain"
-                      />
-                    </div>
+                <div className="mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-lg flex items-center justify-center border border-gray-100 group-hover:border-yellow-200 transition-all duration-500">
+                    <span className="text-gray-700 text-2xl group-hover:scale-110 transition-transform duration-500">▭</span>
                   </div>
-                  <h3 className="professional-card-title">Vouwgordijnen</h3>
-                  <p className="professional-card-subtitle">Zachte plooien, strakke lijnen</p>
-                  <div className="professional-card-arrow">→</div>
                 </div>
-              </button>
-
-              {/* Gordijnroedes - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/gordijnroedes")}
-                data-testid="button-product-gordijnroedes"
-                type="button"
-                aria-label="Gordijnroedes - Sterke ondersteuning"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">−</span>
-                    </div>
-                  </div>
-                  <h3 className="professional-card-title">Gordijnroedes</h3>
-                  <p className="professional-card-subtitle">Sterke ondersteuning</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
-
-              {/* Squid - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/squid")}
-                data-testid="button-product-squid"
-                type="button"
-                aria-label="Squid - Moderne privacy"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">×</span>
-                    </div>
-                  </div>
-                  <h3 className="professional-card-title">Squid</h3>
-                  <p className="professional-card-subtitle">Moderne privacy</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
-
-              {/* Horren - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/horren")}
-                data-testid="button-product-horren"
-                type="button"
-                aria-label="Horren - Insectvrij comfort"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <span className="text-white text-2xl">🛏️</span>
-                    </div>
-                  </div>
-                  <h3 className="professional-card-title">Horren</h3>
-                  <p className="professional-card-subtitle">Insectvrij comfort</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
-              </button>
-
-              {/* Screen - Buiten Zonwering - Premium Card */}
-              <button
-                className="professional-product-card group"
-                onClick={() => setLocation("/screen")}
-                data-testid="button-product-screen"
-                type="button"
-                aria-label="Screen - Buiten zonwering"
-              >
-                <div className="professional-card-background"></div>
-                <div className="professional-card-glow"></div>
-                <div className="professional-card-content">
-                  <div className="professional-icon-container">
-                    <div className="professional-icon-glow"></div>
-                    <div className="professional-icon">
-                      <div className="relative">
-                        <span className="text-white text-2xl">⛄</span>
-                        <div className="absolute -top-2 -right-2 bg-[#E67E22] text-white text-xs px-2 py-1 rounded-full font-bold">
-                          BUITEN ZONWERING
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="professional-card-title">Screen</h3>
-                  <p className="professional-card-subtitle">Buiten zonwering</p>
-                  <div className="professional-card-arrow">→</div>
-                </div>
+                <h3 className="font-crystalline-header text-xl text-gray-900 mb-3 text-liquid-morph">Vouwgordijnen</h3>
+                <p className="text-base text-gray-600 font-light">Zachte plooien, strakke lijnen</p>
               </button>
             </div>
+
+            {/* 2040 PRISMATIC DIVIDER - End of Grid */}
+            <div className="prisma-divider"></div>
           </div>
         </section>
 

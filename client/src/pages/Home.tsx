@@ -216,82 +216,109 @@ const Home = () => {
       <ProfessionalNavigation />
 
       <div className="content-offset">
-        {/* Hero Section - Ultra High-End Minimalistic */}
+        {/* 2040 CRYSTALLINE HERO SECTION - Faceted Luxury Design */}
         <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          {/* Clean Background Image */}
+          {/* Liquid Crystal Background Matrix */}
           <div className="absolute inset-0">
             <img
               src={interiorImage}
               alt="Premium raamdecoratie vakmanschap door KANIOU"
               className="w-full h-full object-cover"
             />
-            {/* Minimal Elegant Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30"></div>
+            {/* 2040 Prismatic Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/60"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+            
+            {/* Crystalline Refractive Layer */}
+            <div className="absolute inset-0 opacity-20" style={{
+              background: `
+                radial-gradient(circle at 20% 20%, rgba(237, 214, 147, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 30%, rgba(237, 214, 147, 0.1) 50%, transparent 70%)
+              `
+            }}></div>
           </div>
 
-          {/* Content Container */}
-          <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
-            {/* Ultra High-End Minimalistic Title */}
-            <h1 className="font-serif text-5xl md:text-7xl text-white mb-6 leading-[0.9] tracking-tight">
-              <span className="block font-light">
+          {/* Liquid Precision Content Container */}
+          <div className="relative z-10 text-center max-w-5xl mx-auto px-4 md:px-6 py-16 md:pt-16 pt-24">
+            {/* 2040 Morphing Liquid Display Title */}
+            <h1 className="font-liquid-display text-6xl md:text-8xl text-white mb-8 text-liquid-morph text-crystalline-glow">
+              <span className="block">
                 Professionele
               </span>
-              <span className="block font-normal mt-2">
+              <span className="block mt-4" style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #edd693 50%, #ffffff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                animation: 'liquid-flow 4s ease-in-out infinite'
+              }}>
                 raamdecoratie
               </span>
             </h1>
 
-            {/* Refined Subtitle */}
-            <p className="text-lg md:text-xl text-white/85 mb-16 max-w-2xl mx-auto leading-relaxed font-light">
-              Waar kwaliteit en vakmanschap samenkomen.
+            {/* Quantum Precision Subtitle */}
+            <p className="text-xl md:text-2xl text-white/90 mb-20 max-w-3xl mx-auto font-crystalline-header spacing-quantum-md">
+              Waar precisie en vakmanschap een nieuwe dimensie ontmoeten.
             </p>
 
-            {/* Ultra High-End Minimalistic CTA */}
-            <div className="flex flex-col items-center mb-20">
+            {/* 2040 Crystalline CTA Matrix */}
+            <div className="flex flex-col items-center mb-24 spacing-quantum-xl">
               <button
                 onClick={handleRequestQuote}
-                className="group px-8 py-3 border border-white/30 hover:border-white/60 text-white hover:bg-white/5 btn-elegant transition-elegant font-light tracking-wide text-sm uppercase"
+                className="crystalline-card group px-12 py-4 border-2 border-white/20 hover:border-white/60 text-white hover:bg-white/10 font-crystalline-header text-lg tracking-wider uppercase transition-all duration-700 hover:shadow-2xl hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.1) 100%)',
+                  backdropFilter: 'blur(10px)'
+                }}
+                data-testid="button-request-quote"
               >
-                Vrijblijvend offerte
+                <span className="relative z-10">Vrijblijvend offerte</span>
               </button>
-              <p className="mt-4 text-white/60 text-sm font-light">
-                30+ jaren ervaring • 3500+ tevreden klanten
+              <p className="mt-6 text-white/70 text-base font-crystalline-header">
+                30+ jaren expertise • 3500+ succesvolle projecten
               </p>
             </div>
 
-            {/* Ultra High-End Trust Indicators */}
-            <div className="hidden md:grid grid-cols-3 gap-16 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="text-4xl font-serif font-light text-white mb-2">
+            {/* 2040 Quantum Trust Matrix */}
+            <div className="hidden md:grid quantum-grid-3 max-w-5xl mx-auto">
+              <div className="crystalline-card text-center spacing-quantum-lg">
+                <div className="text-5xl font-liquid-display text-white mb-3 text-crystalline-glow">
                   30+
                 </div>
-                <div className="text-white/60 text-sm font-light tracking-wide">
-                  Jaren ervaring
+                <div className="text-white/70 text-sm font-crystalline-header tracking-widest uppercase">
+                  Jaren expertise
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-serif font-light text-white mb-2">
+              <div className="crystalline-card text-center spacing-quantum-lg">
+                <div className="text-5xl font-liquid-display text-white mb-3 text-crystalline-glow">
                   3500+
                 </div>
-                <div className="text-white/60 text-sm font-light tracking-wide">
+                <div className="text-white/70 text-sm font-crystalline-header tracking-widest uppercase">
                   Tevreden klanten
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-serif font-light text-white mb-2">
+              <div className="crystalline-card text-center spacing-quantum-lg">
+                <div className="text-5xl font-liquid-display text-white mb-3 text-crystalline-glow">
                   100%
                 </div>
-                <div className="text-white/60 text-sm font-light tracking-wide">
+                <div className="text-white/70 text-sm font-crystalline-header tracking-widest uppercase">
                   Maatwerk
                 </div>
               </div>
             </div>
 
-            {/* Minimal Scroll Indicator */}
-            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block">
-              <div className="w-px h-8 bg-white/30"></div>
+            {/* 2040 Prismatic Scroll Indicator */}
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center">
+              <div className="w-0.5 h-12 bg-gradient-to-b from-transparent via-white/40 to-transparent mb-2"></div>
+              <div className="w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
             </div>
           </div>
+
+          {/* 2040 Floating Geometric Elements */}
+          <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-white/10 rotate-45 animate-pulse"></div>
+          <div className="absolute top-1/3 right-1/4 w-6 h-6 border border-white/20 rotate-12" style={{animation: 'prisma-rotation 15s linear infinite'}}></div>
+          <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
         </div>
 
         {/* Product Collection Section - Ultra High-End Minimalistic */}

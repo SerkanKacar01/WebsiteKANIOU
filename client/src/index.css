@@ -221,29 +221,35 @@ html, body {
     font-variation-settings: 'wght' 400;
   }
 
-  /* ULTRA HIGH-END TYPOGRAPHY HIERARCHY */
+  /* 2040 LIQUID PRECISION TYPOGRAPHY HIERARCHY */
   h1 {
     font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
     font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    font-feature-settings: "liga", "kern", "swsh";
+    line-height: 0.85; /* Golden ratio precision */
+    letter-spacing: -0.06em; /* Ultra-tight for luxury */
+    font-feature-settings: "liga", "kern", "swsh", "ss01";
+    font-variation-settings: 'wght' 300, 'slnt' 0;
+    text-rendering: optimizeLegibility;
   }
 
   h2 {
     font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
     font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.025em;
-    font-feature-settings: "liga", "kern";
+    line-height: 1.0; /* Mathematical precision */
+    letter-spacing: -0.04em; /* Crystalline spacing */
+    font-feature-settings: "liga", "kern", "oldstyle-nums";
+    font-variation-settings: 'wght' 400;
+    text-rendering: optimizeLegibility;
   }
 
   h3 {
     font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
     font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    font-feature-settings: "liga", "kern";
+    line-height: 1.15; /* Fibonacci ratio */
+    letter-spacing: -0.03em; /* Quantum spacing */
+    font-feature-settings: "liga", "kern", "oldstyle-nums";
+    font-variation-settings: 'wght' 500;
+    text-rendering: optimizeLegibility;
   }
 
   h4 {
@@ -351,21 +357,27 @@ html, body {
   transform: translateY(0);
 }
 
-/* ULTRA HIGH-END TYPOGRAPHY UTILITIES */
-.font-display-ultra {
+/* 2040 LIQUID MORPHING TYPOGRAPHY UTILITIES */
+.font-liquid-display {
   font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
   font-weight: 300;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-  font-feature-settings: "liga", "kern", "swsh", "hist";
+  line-height: 0.8; /* Ultra-tight for 2040 luxury */
+  letter-spacing: -0.08em; /* Extreme crystalline precision */
+  font-feature-settings: "liga", "kern", "swsh", "ss01", "hist";
+  font-variation-settings: 'wght' 300;
+  text-rendering: optimizeLegibility;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.font-display-elegant {
+.font-crystalline-header {
   font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  font-feature-settings: "liga", "kern", "oldstyle-nums";
+  line-height: 0.95; /* Golden ratio mathematical precision */
+  letter-spacing: -0.05em; /* Prismatic spacing */
+  font-feature-settings: "liga", "kern", "oldstyle-nums", "ss02";
+  font-variation-settings: 'wght' 400;
+  text-rendering: optimizeLegibility;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .font-body-refined {
@@ -413,6 +425,57 @@ html, body {
 
 .text-elegant-gold-light {
   color: var(--gold-400);
+}
+
+/* 2040 QUANTUM SPACING SYSTEM - Mathematical Precision */
+.spacing-quantum-xs {
+  padding: 0.236rem; /* Fibonacci sequence */
+}
+
+.spacing-quantum-sm {
+  padding: 0.382rem; /* Golden ratio derivative */
+}
+
+.spacing-quantum-md {
+  padding: 0.618rem; /* Golden ratio */
+}
+
+.spacing-quantum-lg {
+  padding: 1rem; /* Base unit */
+}
+
+.spacing-quantum-xl {
+  padding: 1.618rem; /* Golden ratio expansion */
+}
+
+.spacing-quantum-2xl {
+  padding: 2.618rem; /* Golden ratio squared */
+}
+
+/* 2040 LIQUID TEXT EFFECTS */
+.text-liquid-morph {
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.text-liquid-morph:hover {
+  transform: scale(1.05) translateY(-2px);
+  letter-spacing: 0.02em;
+  font-variation-settings: 'wght' 500;
+}
+
+.text-crystalline-glow {
+  text-shadow: 
+    0 0 5px rgba(237, 214, 147, 0.3),
+    0 0 10px rgba(237, 214, 147, 0.2),
+    0 0 15px rgba(237, 214, 147, 0.1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.text-crystalline-glow:hover {
+  text-shadow: 
+    0 0 10px rgba(237, 214, 147, 0.6),
+    0 0 20px rgba(237, 214, 147, 0.4),
+    0 0 30px rgba(237, 214, 147, 0.2);
 }
 
 .font-professional-display {

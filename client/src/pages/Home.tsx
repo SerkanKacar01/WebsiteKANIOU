@@ -77,99 +77,139 @@ const ProfessionalNavigation = () => {
   console.log("🔍 NAVIGATION DEBUG: Rendering", navigationLinks.length, "navigation items:", navigationLinks.map(l => l.name).join(", "));
 
   return (
-    <nav className={`nav-professional ${isScrolled ? "scrolled" : ""}`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between">
-          {/* Premium Logo */}
-          <div className="nav-logo">
-            <button onClick={() => setLocation("/")} className="transition-elegant-fast hover-lift">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+      isScrolled 
+        ? "bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-lg" 
+        : "bg-transparent"
+    }`} style={{
+      background: isScrolled 
+        ? 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(237,214,147,0.05) 50%, rgba(255,255,255,0.95) 100%)'
+        : 'transparent'
+    }}>
+      <div className="quantum-container">
+        <div className="flex items-center justify-between py-4">
+          {/* 2040 Crystalline Logo */}
+          <div className="relative">
+            <button 
+              onClick={() => setLocation("/")} 
+              className="crystalline-card spacing-quantum-sm transition-all duration-700 hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.1) 100%)',
+                backdropFilter: 'blur(10px)',
+                animation: 'quantum-pulse 4s ease-in-out infinite'
+              }}
+            >
               <img
                 src={kaniouLogo}
                 alt="KANIOU - Professional Window Treatments"
-                className="h-12 w-auto transition-elegant"
+                className="h-12 w-auto transition-all duration-700 group-hover:brightness-110"
               />
             </button>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigationLinks.map((link) => (
+          {/* 2040 Prismatic Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-2">
+            {navigationLinks.map((link, index) => (
               <button
                 key={link.name}
                 onClick={() => setLocation(link.path)}
-                className="nav-link"
+                className="crystalline-card group px-6 py-3 text-sm font-crystalline-header text-gray-700 hover:text-gray-900 tracking-wide uppercase transition-all duration-700 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.1) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  animation: `quantum-pulse ${3.5 + index * 0.2}s ease-in-out infinite`
+                }}
+                data-testid={`nav-link-${link.name.toLowerCase()}`}
               >
-                {link.name}
+                <span className="relative z-10 text-liquid-morph">{link.name}</span>
               </button>
             ))}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* 2040 Quantum CTA Button */}
+          <div className="hidden md:flex items-center">
             <button
               onClick={() => setLocation("/quote")}
-              className="btn-luxury btn-elegant"
+              className="crystalline-card group px-8 py-3 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-crystalline-header text-sm tracking-wider uppercase transition-all duration-700 hover:scale-105 hover:shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #2c3e50 0%, #edd693 50%, #2c3e50 100%)',
+                backdropFilter: 'blur(10px)',
+                animation: 'quantum-pulse 3s ease-in-out infinite'
+              }}
+              data-testid="nav-cta-quote"
             >
-              VRIJBLIJVEND OFFERTE
+              <span className="relative z-10">Vrijblijvend offerte</span>
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* 2040 Mobile Prismatic Menu Button */}
           <button
-            className={`md:hidden p-2 transition-all duration-300 rounded-lg ${
+            className={`md:hidden crystalline-card p-3 transition-all duration-700 hover:scale-105 ${
               mobileMenuNeedsContrast
-                ? "bg-black/80 text-white hover:bg-black/90 backdrop-blur-sm shadow-lg"
-                : "text-white hover:text-white"
+                ? "bg-black/90 text-white"
+                : "text-gray-700"
             }`}
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.1) 100%)',
+              backdropFilter: 'blur(10px)'
+            }}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            data-testid="mobile-menu-toggle"
           >
             {isMenuOpen ? (
-              <span className="text-2xl">×</span>
+              <span className="text-2xl transition-transform duration-300 rotate-180">×</span>
             ) : (
               <span className="text-2xl">☰</span>
             )}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* 2040 Liquid Mobile Menu */}
         {isMenuOpen && (
-          <div
-            className={`md:hidden mt-4 pb-4 animate-fade-in-up transition-all duration-300 rounded-lg ${
-              mobileMenuNeedsContrast
-                ? "bg-black/90 backdrop-blur-sm mx-2 px-4 py-3 shadow-xl"
-                : ""
-            }`}
-          >
-            <div className="flex flex-col space-y-4">
-              {navigationLinks.map((link) => (
+          <div className="md:hidden mt-6 pb-6 animate-fade-in-up transition-all duration-700">
+            <div className="crystalline-card mx-4 spacing-quantum-lg" style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.95) 100%)',
+              backdropFilter: 'blur(20px)',
+              animation: 'quantum-pulse 4s ease-in-out infinite'
+            }}>
+              <div className="flex flex-col space-y-4">
+                {navigationLinks.map((link, index) => (
+                  <button
+                    key={link.name}
+                    onClick={() => {
+                      setLocation(link.path);
+                      setIsMenuOpen(false);
+                    }}
+                    className="crystalline-card text-left font-crystalline-header py-4 px-6 text-gray-700 hover:text-gray-900 tracking-wide uppercase transition-all duration-700 hover:scale-105"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(237,214,147,0.1) 50%, rgba(255,255,255,0.1) 100%)',
+                      backdropFilter: 'blur(10px)',
+                      animation: `quantum-pulse ${4 + index * 0.3}s ease-in-out infinite`
+                    }}
+                    data-testid={`mobile-nav-${link.name.toLowerCase()}`}
+                  >
+                    <span className="text-liquid-morph">{link.name}</span>
+                  </button>
+                ))}
+                
+                <div className="prisma-divider my-4"></div>
+                
                 <button
-                  key={link.name}
                   onClick={() => {
-                    setLocation(link.path);
+                    setLocation("/quote");
                     setIsMenuOpen(false);
                   }}
-                  className={`transition-all duration-300 text-left font-medium py-3 px-4 rounded-lg border border-gold-300/30 ${
-                    mobileMenuNeedsContrast
-                      ? "text-white hover:bg-white/10 hover:border-gold-400/50"
-                      : "nav-link"
-                  }`}
+                  className="crystalline-card text-center font-crystalline-header py-4 px-6 text-white tracking-wider uppercase transition-all duration-700 hover:scale-105 hover:shadow-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #2c3e50 0%, #edd693 50%, #2c3e50 100%)',
+                    backdropFilter: 'blur(10px)',
+                    animation: 'quantum-pulse 3s ease-in-out infinite'
+                  }}
+                  data-testid="mobile-cta-quote"
                 >
-                  {link.name}
+                  <span className="relative z-10">Vrijblijvend offerte</span>
                 </button>
-              ))}
-              <button
-                onClick={() => {
-                  setLocation("/quote");
-                  setIsMenuOpen(false);
-                }}
-                className={`mt-4 transition-all duration-300 ${
-                  mobileMenuNeedsContrast
-                    ? "bg-gradient-to-r from-gold-500 to-gold-400 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                    : "btn-luxury"
-                }`}
-              >
-                VRIJBLIJVEND OFFERTE
-              </button>
+              </div>
             </div>
           </div>
         )}

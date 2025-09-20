@@ -434,61 +434,77 @@ html, body {
   transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* PROFESSIONAL COLOR PALETTE */
+/* 2040 LIQUID PRECISION CRYSTALLINE COLOR SYSTEM */
 :root {
-  /* Primary Professional Gold */
-  --gold-50: #FEFDF8;
-  --gold-100: #FDF9E8;
-  --gold-200: #F8F0D1;
-  --gold-300: #F0E4B3;
-  --gold-400: #E6D494;
-  --gold-500: #D5B36A; /* Main brand color */
-  --gold-600: #C4A55A;
-  --gold-700: #A68947;
-  --gold-800: #8B6D37;
-  --gold-900: #6F5529;
+  /* Ultra-Refined 2040 Gold Spectrum */
+  --liquid-gold-50: #FFFEF9;
+  --liquid-gold-100: #FEFBF0;
+  --liquid-gold-200: #FCF4E0;
+  --liquid-gold-300: #F8EBCB;
+  --liquid-gold-400: #F3E0B1;
+  --liquid-gold-500: #EDD693; /* Core 2040 Gold */
+  --liquid-gold-600: #E1C876;
+  --liquid-gold-700: #D4B959;
+  --liquid-gold-800: #C7AA3C;
+  --liquid-gold-900: #B29B1F;
   
-  /* Neutral Professional Grays */
-  --gray-50: #FAFAFA;
-  --gray-100: #F5F5F5;
-  --gray-200: #E8E8E8;
-  --gray-300: #D1D1D1;
-  --gray-400: #B4B4B4;
-  --gray-500: #9A9A9A;
-  --gray-600: #6B6B6B;
-  --gray-700: #4A4A4A;
-  --gray-800: #2A2A2A;
-  --gray-900: #1A1A1A;
+  /* Crystalline Pure Whites */
+  --crystal-white-50: #FFFFFF;
+  --crystal-white-100: #FEFEFE;
+  --crystal-white-200: #FCFCFC;
+  --crystal-white-300: #F9F9F9;
+  --crystal-white-400: #F6F6F6;
   
-  /* Professional Accent Colors */
-  --cream: #FBF8F3;
-  --ivory: #FFFFF0;
-  --champagne: #F7E7CE;
-  --pearl: #F8F6F0;
+  /* Quantum Precision Blacks */
+  --quantum-black-50: #F8F8F8;
+  --quantum-black-100: #E8E8E8;
+  --quantum-black-200: #D8D8D8;
+  --quantum-black-300: #C8C8C8;
+  --quantum-black-400: #B8B8B8;
+  --quantum-black-500: #A8A8A8;
+  --quantum-black-600: #888888;
+  --quantum-black-700: #606060;
+  --quantum-black-800: #383838;
+  --quantum-black-900: #101010;
+  
+  /* 2040 Luxury Accents */
+  --crystalline-accent: #F4F1EC;
+  --liquid-pearl: #FFFEF8;
+  --prisma-silver: #E8E6E3;
+  --quantum-platinum: #F2F0ED;
 }
 
-/* PROFESSIONAL GRADIENTS */
-.gradient-professional-gold {
-  background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-600) 50%, var(--gold-500) 100%);
+/* 2040 LIQUID PRECISION CRYSTALLINE GRADIENTS */
+.liquid-gold-gradient {
+  background: linear-gradient(135deg, var(--liquid-gold-400) 0%, var(--liquid-gold-600) 50%, var(--liquid-gold-500) 100%);
 }
 
-.gradient-professional-subtle {
-  background: linear-gradient(135deg, #FFFFFF 0%, var(--cream) 30%, #FFFFFF 100%);
+.crystalline-gradient {
+  background: linear-gradient(135deg, var(--crystal-white-50) 0%, var(--crystalline-accent) 30%, var(--crystal-white-50) 100%);
 }
 
-.gradient-professional-overlay {
-  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(213,179,106,0.05) 50%, rgba(255,255,255,0.98) 100%);
+.quantum-overlay {
+  background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(237,214,147,0.03) 50%, rgba(255,255,255,0.99) 100%);
 }
 
-.gradient-text-professional {
-  background: linear-gradient(135deg, #F4E4A6 0%, #E6C988 25%, #D5B36A 50%, #C4A55A 75%, #B8995C 100%);
+.prisma-reflection {
+  background: linear-gradient(45deg, 
+    var(--crystal-white-50) 0%, 
+    var(--liquid-pearl) 25%, 
+    var(--prisma-silver) 50%, 
+    var(--liquid-pearl) 75%, 
+    var(--crystal-white-50) 100%);
+}
+
+.liquid-text-2040 {
+  background: linear-gradient(135deg, var(--liquid-gold-300) 0%, var(--liquid-gold-500) 25%, var(--liquid-gold-700) 50%, var(--liquid-gold-600) 75%, var(--liquid-gold-400) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-size: 200% 100%;
-  animation: shimmer-text 3s ease-in-out infinite;
+  background-size: 300% 100%;
+  animation: liquid-flow 4s ease-in-out infinite;
   /* Fallback for browsers that don't support background-clip: text */
-  color: #D5B36A;
+  color: var(--liquid-gold-500);
 }
 
 /* Ensure fallback colors work */
@@ -510,13 +526,59 @@ html, body {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
 }
 
-/* Shimmer animation for gradient text */
-@keyframes shimmer-text {
+/* 2040 LIQUID PRECISION CRYSTALLINE ANIMATIONS */
+@keyframes liquid-flow {
   0% {
-    background-position: -200% 0;
+    background-position: -300% 0;
+  }
+  50% {
+    background-position: 0% 0;
   }
   100% {
-    background-position: 200% 0;
+    background-position: 300% 0;
+  }
+}
+
+@keyframes crystalline-shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+@keyframes quantum-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(237, 214, 147, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 8px rgba(237, 214, 147, 0);
+  }
+}
+
+@keyframes prisma-rotation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(90deg) scale(1.05);
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+  }
+  75% {
+    transform: rotate(270deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
   }
 }
 

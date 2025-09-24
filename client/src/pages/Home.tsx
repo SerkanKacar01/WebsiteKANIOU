@@ -126,8 +126,20 @@ const ProfessionalNavigation = () => {
             ))}
           </div>
 
-          {/* 2040 Quantum CTA Button */}
-          <div className="hidden md:flex items-center">
+          {/* 2040 Quantum CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-3">
+            <button
+              onClick={() => setLocation("/prijzen")}
+              className="crystalline-card group px-8 py-3 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-crystalline-header text-sm tracking-wider uppercase transition-all duration-700 hover:scale-105 hover:shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #2c3e50 0%, #edd693 50%, #2c3e50 100%)',
+                backdropFilter: 'blur(10px)',
+                animation: 'quantum-pulse 3.2s ease-in-out infinite'
+              }}
+              data-testid="nav-cta-prijzen"
+            >
+              <span className="relative z-10">Prijzen</span>
+            </button>
             <button
               onClick={() => setLocation("/quote")}
               className="crystalline-card group px-8 py-3 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-crystalline-header text-sm tracking-wider uppercase transition-all duration-700 hover:scale-105 hover:shadow-2xl"
@@ -194,6 +206,22 @@ const ProfessionalNavigation = () => {
                 
                 <div className="prisma-divider my-4"></div>
                 
+                <button
+                  onClick={() => {
+                    setLocation("/prijzen");
+                    setIsMenuOpen(false);
+                  }}
+                  className="crystalline-card text-center font-crystalline-header py-4 px-6 text-white tracking-wider uppercase transition-all duration-700 hover:scale-105 hover:shadow-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #2c3e50 0%, #edd693 50%, #2c3e50 100%)',
+                    backdropFilter: 'blur(10px)',
+                    animation: 'quantum-pulse 3.2s ease-in-out infinite'
+                  }}
+                  data-testid="mobile-cta-prijzen"
+                >
+                  <span className="relative z-10">Prijzen</span>
+                </button>
+
                 <button
                   onClick={() => {
                     setLocation("/quote");

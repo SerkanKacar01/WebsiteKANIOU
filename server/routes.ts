@@ -35,6 +35,10 @@ export async function registerRoutes(app: Express): Promise<void> {
   // Session and cookie middleware
   app.use(cookieParser());
 
+  // GDPR-compliant session configuration with enhanced security
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
+  const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
+
   // Enhanced security middleware - Add security headers including CSP
   app.use((req, res, next) => {
     // Security headers voor maximale bescherming
@@ -42,6 +46,18 @@ export async function registerRoutes(app: Express): Promise<void> {
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // HSTS - Force HTTPS for 1 year (only in production)
+    if (isProduction) {
+      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+    }
+    
+    // Additional security headers
+    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
     
     // Content Security Policy voor extra browser beveiliging - relaxed for development
     const csp = [
@@ -59,10 +75,6 @@ export async function registerRoutes(app: Express): Promise<void> {
     res.setHeader('Content-Security-Policy', csp);
     next();
   });
-
-  // GDPR-compliant session configuration with enhanced security
-  const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
-  const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
   
   // Modern session configuration for Express 5.x
   app.use(

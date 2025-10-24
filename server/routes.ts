@@ -59,6 +59,21 @@ export async function registerRoutes(app: Express): Promise<void> {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
     
+    // CORS policy - only allow same origin
+    const origin = req.headers.origin;
+    const allowedOrigins = [
+      'https://kaniou.be',
+      'https://www.kaniou.be',
+      process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null
+    ].filter(Boolean);
+    
+    if (origin && allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
+    }
+    
     // Content Security Policy voor extra browser beveiliging - relaxed for development
     const csp = [
       "default-src 'self'",

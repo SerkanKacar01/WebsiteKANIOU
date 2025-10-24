@@ -100,6 +100,16 @@ export async function isValidCredentials(email: string, password: string): Promi
     return false;
   }
   
+  // SECURITY: Validate that ADMIN_PASSWORD is a bcrypt hash, not plaintext
+  // Bcrypt hashes always start with $2a$, $2b$, or $2y$ and are 60 characters
+  const bcryptHashRegex = /^\$2[aby]\$\d{2}\$.{53}$/;
+  if (!bcryptHashRegex.test(adminPasswordHash)) {
+    console.error('🚨 CRITICAL SECURITY ERROR: ADMIN_PASSWORD is not a valid bcrypt hash!');
+    console.error('   It appears to be plaintext. Use server/hashPassword.ts to generate a proper hash.');
+    console.error('   Authentication is DISABLED until a valid bcrypt hash is provided.');
+    return false;
+  }
+  
   // Verify password using bcrypt (secure constant-time comparison)
   let isPasswordValid = false;
   try {

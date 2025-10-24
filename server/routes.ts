@@ -37,7 +37,17 @@ export async function registerRoutes(app: Express): Promise<void> {
 
   // GDPR-compliant session configuration with enhanced security
   const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
-  const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
+  
+  // SECURITY: Enforce SESSION_SECRET in production
+  const sessionSecret = process.env.SESSION_SECRET;
+  if (isProduction && !sessionSecret) {
+    console.error('🚨 CRITICAL SECURITY ERROR: SESSION_SECRET not set in production!');
+    console.error('   Set SESSION_SECRET environment variable before deploying.');
+    throw new Error('SESSION_SECRET required in production');
+  }
+  
+  // Use generated secret only in development
+  const finalSessionSecret = sessionSecret || generateSecureSessionSecret();
 
   // Enhanced security middleware - Add security headers including CSP
   app.use((req, res, next) => {
@@ -82,7 +92,8 @@ export async function registerRoutes(app: Express): Promise<void> {
       "style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: https:",
-      "connect-src 'self'",
+      // Allow third-party connections for Mailgun, SendGrid, payment processing
+      "connect-src 'self' https://api.mailgun.net https://api.sendgrid.com https://api.mollie.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -107,7 +118,7 @@ export async function registerRoutes(app: Express): Promise<void> {
   // Modern session configuration for Express 5.x
   app.use(
     session({
-      secret: sessionSecret,
+      secret: finalSessionSecret,
       resave: false,
       saveUninitialized: false,
       cookie: {

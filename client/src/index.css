@@ -1,5 +1,5 @@
-/* PROFESSIONAL TYPOGRAPHY SYSTEM */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&display=swap');
+/* LUXURY TYPOGRAPHY SYSTEM - High-End Minimal */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&display=swap');
 
 /* Professional text utilities */
 .text-shadow-professional {
@@ -210,45 +210,41 @@ html, body {
     @apply text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: #FFFFFF;
-    color: #1A1A1A;
-    font-weight: 400;
-    line-height: 1.65;
-    letter-spacing: -0.008em;
-    font-feature-settings: "liga", "kern", "calt", "ss01";
+    color: #000000;
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    font-feature-settings: "liga", "kern", "calt";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-variation-settings: 'wght' 400;
   }
 
-  /* 2040 LIQUID PRECISION TYPOGRAPHY HIERARCHY */
+  /* LUXURY SERIF TYPOGRAPHY - Minimal & Elegant */
   h1 {
     font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
     font-weight: 300;
-    line-height: 0.85; /* Golden ratio precision */
-    letter-spacing: -0.06em; /* Ultra-tight for luxury */
-    font-feature-settings: "liga", "kern", "swsh", "ss01";
-    font-variation-settings: 'wght' 300, 'slnt' 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-feature-settings: "liga", "kern";
     text-rendering: optimizeLegibility;
   }
 
   h2 {
-    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
-    font-weight: 400;
-    line-height: 1.0; /* Mathematical precision */
-    letter-spacing: -0.04em; /* Crystalline spacing */
-    font-feature-settings: "liga", "kern", "oldstyle-nums";
-    font-variation-settings: 'wght' 400;
+    font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-feature-settings: "liga", "kern";
     text-rendering: optimizeLegibility;
   }
 
   h3 {
-    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
-    font-weight: 500;
-    line-height: 1.15; /* Fibonacci ratio */
-    letter-spacing: -0.03em; /* Quantum spacing */
-    font-feature-settings: "liga", "kern", "oldstyle-nums";
-    font-variation-settings: 'wght' 500;
+    font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    font-feature-settings: "liga", "kern";
     text-rendering: optimizeLegibility;
   }
 

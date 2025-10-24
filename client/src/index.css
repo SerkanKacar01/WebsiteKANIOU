@@ -434,35 +434,32 @@ html, body {
     font-variation-settings: 'wght' 400;
   }
 
-  /* 2040 LIQUID PRECISION TYPOGRAPHY HIERARCHY */
+  /* HYPERLOOP TYPOGRAPHY HIERARCHY - Monument Grotesk Inspired */
   h1 {
-    font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
-    font-weight: 300;
-    line-height: 0.85; /* Golden ratio precision */
-    letter-spacing: -0.06em; /* Ultra-tight for luxury */
-    font-feature-settings: "liga", "kern", "swsh", "ss01";
-    font-variation-settings: 'wght' 300, 'slnt' 0;
-    text-rendering: optimizeLegibility;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-weight: 200;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    font-feature-settings: "ss01", "ss02", "cv01";
+    text-rendering: geometricPrecision;
   }
 
   h2 {
-    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
-    font-weight: 400;
-    line-height: 1.0; /* Mathematical precision */
-    letter-spacing: -0.04em; /* Crystalline spacing */
-    font-feature-settings: "liga", "kern", "oldstyle-nums";
-    font-variation-settings: 'wght' 400;
-    text-rendering: optimizeLegibility;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.06em;
+    font-feature-settings: "ss01", "ss02";
+    text-rendering: geometricPrecision;
   }
 
   h3 {
-    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
-    font-weight: 500;
-    line-height: 1.15; /* Fibonacci ratio */
-    letter-spacing: -0.03em; /* Quantum spacing */
-    font-feature-settings: "liga", "kern", "oldstyle-nums";
-    font-variation-settings: 'wght' 500;
-    text-rendering: optimizeLegibility;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-feature-settings: "ss01", "liga";
+    text-rendering: geometricPrecision;
   }
 
   h4 {

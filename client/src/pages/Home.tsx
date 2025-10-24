@@ -45,19 +45,28 @@ const HyperloopNavigation = () => {
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => setLocation("/gallerij")}
-              className="font-hyperloop text-sm uppercase tracking-wider text-gray-900 hover:text-[#C5A565] transition-all duration-300"
+              className={`font-hyperloop text-sm uppercase tracking-wider transition-all duration-300 ${
+                isScrolled ? 'text-gray-900 hover:text-[#C5A565]' : 'text-white hover:text-[#C5A565]'
+              }`}
+              data-testid="nav-link-gallerij"
             >
               Gallerij
             </button>
             <button
               onClick={() => setLocation("/over-ons")}
-              className="font-hyperloop text-sm uppercase tracking-wider text-gray-900 hover:text-[#C5A565] transition-all duration-300"
+              className={`font-hyperloop text-sm uppercase tracking-wider transition-all duration-300 ${
+                isScrolled ? 'text-gray-900 hover:text-[#C5A565]' : 'text-white hover:text-[#C5A565]'
+              }`}
+              data-testid="nav-link-over-ons"
             >
               Over ons
             </button>
             <button
               onClick={() => setLocation("/contact")}
-              className="font-hyperloop text-sm uppercase tracking-wider text-gray-900 hover:text-[#C5A565] transition-all duration-300"
+              className={`font-hyperloop text-sm uppercase tracking-wider transition-all duration-300 ${
+                isScrolled ? 'text-gray-900 hover:text-[#C5A565]' : 'text-white hover:text-[#C5A565]'
+              }`}
+              data-testid="nav-link-contact"
             >
               Contact
             </button>
@@ -68,13 +77,17 @@ const HyperloopNavigation = () => {
             <button
               onClick={() => setLocation("/quote")}
               className="relative group px-8 py-3 bg-black text-white font-hyperloop text-sm uppercase tracking-wider overflow-hidden light-ray-effect magnetic-hover"
+              data-testid="nav-cta-quote"
             >
               <span className="relative z-10">Vrijblijvend Offerte</span>
             </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-gray-900">
+          <button 
+            className={`md:hidden ${isScrolled ? 'text-gray-900' : 'text-white'}`}
+            data-testid="mobile-menu-toggle"
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -158,6 +171,7 @@ const Home = () => {
             <button
               onClick={() => setLocation("/gallerij")}
               className="group px-10 py-5 glass-morphism-dark text-white font-hyperloop text-sm uppercase tracking-wider magnetic-hover"
+              data-testid="button-view-gallery"
             >
               <span className="flex items-center gap-3">
                 Bekijk Gallerij
@@ -167,16 +181,16 @@ const Home = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="glass-morphism-dark p-6 rounded-lg cursor-glow">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+            <div className="glass-morphism-dark p-6 rounded-lg cursor-glow" data-testid="stat-experience">
               <div className="font-hyperloop-bold text-4xl md:text-5xl text-white mb-2">30+</div>
               <div className="font-spatial text-sm text-white/70 uppercase tracking-wider">Jaar Expertise</div>
             </div>
-            <div className="glass-morphism-dark p-6 rounded-lg cursor-glow">
+            <div className="glass-morphism-dark p-6 rounded-lg cursor-glow" data-testid="stat-projects">
               <div className="font-hyperloop-bold text-4xl md:text-5xl text-white mb-2">3500+</div>
               <div className="font-spatial text-sm text-white/70 uppercase tracking-wider">Projecten</div>
             </div>
-            <div className="glass-morphism-dark p-6 rounded-lg cursor-glow">
+            <div className="glass-morphism-dark p-6 rounded-lg cursor-glow" data-testid="stat-custom">
               <div className="font-hyperloop-bold text-4xl md:text-5xl text-white mb-2">100%</div>
               <div className="font-spatial text-sm text-white/70 uppercase tracking-wider">Maatwerk</div>
             </div>
@@ -328,6 +342,7 @@ const Home = () => {
               <div
                 key={testimonial.name}
                 className="p-8 border border-black/5 hover:border-[#C5A565]/30 transition-all duration-500 cursor-glow"
+                data-testid={`testimonial-${testimonial.name.toLowerCase()}`}
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -362,6 +377,7 @@ const Home = () => {
           <button
             onClick={() => setLocation("/quote")}
             className="px-12 py-6 bg-white text-black font-hyperloop text-sm uppercase tracking-wider magnetic-hover light-ray-effect"
+            data-testid="button-final-cta"
           >
             Vraag Nu Offerte Aan
           </button>

@@ -21,7 +21,7 @@ import {
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
 import { randomBytes } from "crypto";
-import { adminLoginRateLimiter, formRateLimiter, trackingRateLimiter } from "./middleware/rateLimiter";
+import { adminLoginRateLimiter } from "./middleware/rateLimiter";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
 
 // Generate a secure session secret as fallback
@@ -35,20 +35,6 @@ export async function registerRoutes(app: Express): Promise<void> {
   // Session and cookie middleware
   app.use(cookieParser());
 
-  // GDPR-compliant session configuration with enhanced security
-  const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
-  
-  // SECURITY: Enforce SESSION_SECRET in production
-  const sessionSecret = process.env.SESSION_SECRET;
-  if (isProduction && !sessionSecret) {
-    console.error('🚨 CRITICAL SECURITY ERROR: SESSION_SECRET not set in production!');
-    console.error('   Set SESSION_SECRET environment variable before deploying.');
-    throw new Error('SESSION_SECRET required in production');
-  }
-  
-  // Use generated secret only in development
-  const finalSessionSecret = sessionSecret || generateSecureSessionSecret();
-
   // Enhanced security middleware - Add security headers including CSP
   app.use((req, res, next) => {
     // Security headers voor maximale bescherming
@@ -57,51 +43,10 @@ export async function registerRoutes(app: Express): Promise<void> {
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     
-    // HSTS - Force HTTPS for 1 year (only in production)
-    if (isProduction) {
-      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-    }
-    
-    // Additional security headers
-    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
-    
-    // CORS policy - only allow same origin
-    const origin = req.headers.origin;
-    const allowedOrigins = [
-      'https://kaniou.be',
-      'https://www.kaniou.be',
-      process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null
-    ].filter(Boolean);
-    
-    if (origin && allowedOrigins.includes(origin)) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
-    }
-    
-    // Content Security Policy - Strict for production security (OWASP 2025 compliant)
-    // Note: In development, Vite requires 'unsafe-inline' for HMR. For production builds, this is removed.
-    const csp = isProduction ? [
+    // Content Security Policy voor extra browser beveiliging - relaxed for development
+    const csp = [
       "default-src 'self'",
-      "script-src 'self' https://consent.cookiebot.com",
-      "style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
-      "font-src 'self' https://fonts.gstatic.com data:",
-      "img-src 'self' data: https:",
-      // Allow third-party connections for Mailgun, SendGrid, payment processing
-      "connect-src 'self' https://api.mailgun.net https://api.sendgrid.com https://api.mollie.com",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "upgrade-insecure-requests"
-    ].join('; ') : [
-      // Development CSP - allows Vite HMR to function
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com https://fonts.googleapis.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: https:",
@@ -114,11 +59,15 @@ export async function registerRoutes(app: Express): Promise<void> {
     res.setHeader('Content-Security-Policy', csp);
     next();
   });
+
+  // GDPR-compliant session configuration with enhanced security
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
+  const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
   
   // Modern session configuration for Express 5.x
   app.use(
     session({
-      secret: finalSessionSecret,
+      secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -158,10 +107,7 @@ export async function registerRoutes(app: Express): Promise<void> {
           .json({ error: "Email en wachtwoord zijn vereist" });
       }
 
-      // Use await since isValidCredentials is now async (bcrypt.compare)
-      const credentialsValid = await isValidCredentials(email, password);
-      
-      if (credentialsValid) {
+      if (isValidCredentials(email, password)) {
         const { sessionId, expiresAt } = createSession(email);
 
         // Enhanced security logging
@@ -261,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<void> {
   });
 
   // Contact form submission endpoint
-  app.post("/api/contact", formRateLimiter, async (req, res) => {
+  app.post("/api/contact", async (req, res) => {
     try {
       // Validate request body
       const validation = insertContactSubmissionSchema.safeParse(req.body);
@@ -437,7 +383,7 @@ Verzoek ID: ${sampleRequest.id}
   });
 
   // Quote request submission endpoint
-  app.post("/api/quote-requests", formRateLimiter, async (req, res) => {
+  app.post("/api/quote-requests", async (req, res) => {
     try {
       // Validate request body
       const validation = insertQuoteRequestSchema.safeParse(req.body);
@@ -1413,7 +1359,7 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
 
   // 🔐 ULTRA-SECURE ORDER TRACKING ENDPOINT 🔐
   // This endpoint implements ALL security best practices against hackers
-  app.get("/api/orders/track/:bonnummer", trackingRateLimiter, async (req, res) => {
+  app.get("/api/orders/track/:bonnummer", async (req, res) => {
     const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
     const { bonnummer } = req.params;
     const { email } = req.query;

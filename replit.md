@@ -19,55 +19,13 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js
 - **Language**: TypeScript (ESM modules)
-- **API Design**: RESTful endpoints with Zod validation
-- **Session Management**: Cryptographically secure session tokens (256-bit) with regeneration support
-- **File Uploads**: Planned implementation with MIME type validation and size limits
-- **Rate Limiting**: Multi-layer rate limiting:
-  - Admin login: 3 attempts per 15 minutes with 30-minute account lockout after 5 failures
-  - Form submissions: 5 per hour with suspicious IP tracking
-  - Order tracking: 10 requests per 15 minutes
-- **Security Headers**: Complete HTTP security header suite:
-  - HSTS (Strict-Transport-Security) with 1-year max-age and preload
-  - X-Content-Type-Options: nosniff
-  - X-Frame-Options: DENY
-  - X-XSS-Protection: 1; mode=block
-  - Referrer-Policy: strict-origin-when-cross-origin
-  - Permissions-Policy: restrictive geolocation/microphone/camera
-  - Cross-Origin policies (COEP, COOP, CORP)
-  - Strict Content Security Policy (CSP) with whitelisted origins
-- **CORS Policy**: Explicit origin whitelist (kaniou.be, www.kaniou.be, Replit dev domain)
-- **Session Security**: 
-  - Production-aware secure cookie configuration
-  - HttpOnly, Secure, and SameSite=Lax flags
-  - Session fixation prevention via ID regeneration
-  - Cryptographically strong session secrets (SESSION_SECRET)
-- **Brute Force Protection**:
-  - Account lockout after 5 failed login attempts (30-minute duration)
-  - IP-based rate limiting with suspicious behavior tracking
-  - Progressive delays for repeated failed attempts
-- **Input Validation & Sanitization**:
-  - Comprehensive Zod schemas for all form inputs
-  - Honeypot fields for spam bot detection
-  - Regex-based format validation (email, phone, names)
-  - Length constraints and character whitelisting
-- **SQL Injection Prevention**: Drizzle ORM with parameterized queries (no raw SQL)
-- **XSS Protection**: 
-  - React JSX automatic HTML escaping
-  - Content Security Policy enforcement
-  - Input sanitization via Zod schemas
-- **CSRF Protection**: Token-based CSRF protection for state-changing requests
-- **Cryptographic Security**:
-  - Bcrypt password hashing (12 rounds) for admin accounts
-    - ADMIN_PASSWORD must be stored as bcrypt hash in Replit Secrets
-    - Use `server/hashPassword.ts` utility to generate hash
-    - Passwords verified with constant-time bcrypt.compare()
-  - BONNUMMER_SECRET for bonnummer checksum validation
-  - Cryptographically secure random token generation (256-bit session IDs)
-- **Security Monitoring**: 
-  - Comprehensive event logging for admin activities
-  - Failed login attempt tracking with IP logging
-  - Suspicious activity detection and automated blocking
-  - Security event timestamps and user agent tracking
+- **API Design**: RESTful endpoints with validation
+- **Session Management**: Session-based user tracking
+- **File Uploads**: Multer for image processing
+- **Rate Limiting**: Enhanced multi-layer rate limiting with specialized admin login protection (max 3 attempts per 15 min)
+- **Security Headers**: Advanced security headers (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy)
+- **Session Security**: Production-aware secure cookie configuration with strong session secret generation
+- **Security Monitoring**: Comprehensive security event logging for admin activities and suspicious behavior detection
 - **Technical Implementations**: Secure admin authentication with bcryptjs, memory-based fallbacks for database operations during downtime, smart notification system for order updates, comprehensive document management, enhanced IP blocking for suspicious activities.
 
 ### Feature Specifications
@@ -82,15 +40,7 @@ Preferred communication style: Simple, everyday language.
 ### System Design Choices
 - **AI Integration**: AI chatbot components have been removed; traditional contact forms and quote systems are maintained.
 - **GDPR Compliance**: Cookiebot integration for GDPR-compliant cookie consent management. Session-based functionality with production-aware secure cookie settings to ensure privacy compliance.
-- **Security Posture**: Enterprise-grade multi-layered security architecture (Score: 9.5/10):
-  - **Network Layer**: CORS whitelisting, rate limiting, IP-based blocking
-  - **Transport Layer**: HSTS enforcement, secure cookie transmission
-  - **Application Layer**: Input validation, output encoding, CSRF protection
-  - **Data Layer**: SQL injection prevention via ORM, bcrypt password hashing
-  - **Session Layer**: Secure token generation, session fixation prevention
-  - **Monitoring Layer**: Security event logging, failed attempt tracking
-  - **Production Readiness**: SESSION_SECRET enforcement, ADMIN_PASSWORD bcrypt validation, strict CSP
-  - **Compliance**: OWASP Top 10 2025 compliant, GDPR compliant via Cookiebot
+- **Security Posture**: Multi-layered security architecture with rate limiting, IP blocking, security headers, secure session management, and comprehensive audit logging.
 - **Data Flow**: Defined flows for customer journey, inquiries, quote processing, and order processing, emphasizing human follow-up for complex interactions.
 
 ## External Dependencies

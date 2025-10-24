@@ -1,218 +1,5 @@
-/* ========================================
-   HYPERLOOP × SPATIAL DESIGN SYSTEM
-   Ultra-Futuristic Typography & Utilities
-   Apple × Porsche × Louis Vuitton Quality
-   ======================================== */
-
-/* Monument Grotesk-style System Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-/* Futuristic Font Stack */
-.font-hyperloop {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-  font-weight: 200;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
-  text-rendering: geometricPrecision;
-}
-
-.font-hyperloop-bold {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-  font-weight: 700;
-  line-height: 1.0;
-  letter-spacing: -0.06em;
-  font-feature-settings: "ss01", "ss02";
-  text-rendering: geometricPrecision;
-}
-
-.font-spatial {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 300;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  font-feature-settings: "liga", "calt";
-}
-
-/* GLASSMORPHISM UTILITIES */
-.glass-morphism {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-morphism-dark {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-morphism-light {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px) saturate(200%);
-  -webkit-backdrop-filter: blur(16px) saturate(200%);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-/* MAGNETIC HOVER EFFECT */
-.magnetic-hover {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.magnetic-hover:hover {
-  transform: scale(1.05) translateY(-2px);
-}
-
-/* CURSOR GLOW EFFECT */
-.cursor-glow {
-  position: relative;
-  cursor: pointer;
-}
-
-.cursor-glow::after {
-  content: '';
-  position: absolute;
-  inset: -20px;
-  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(197, 165, 101, 0.15) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.cursor-glow:hover::after {
-  opacity: 1;
-}
-
-/* KINETIC SCROLL ANIMATION */
-@keyframes kinetic-slide {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.kinetic-reveal {
-  animation: kinetic-slide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* LIGHT RAY EFFECT */
-@keyframes light-ray {
-  0% {
-    transform: translateX(-100%) rotate(45deg);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(200%) rotate(45deg);
-    opacity: 0;
-  }
-}
-
-.light-ray-effect {
-  position: relative;
-  overflow: hidden;
-}
-
-.light-ray-effect::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: light-ray 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* PREMIUM GLOW EFFECTS */
-@keyframes premium-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(197, 165, 101, 0.1), 0 0 40px rgba(197, 165, 101, 0.05);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(197, 165, 101, 0.2), 0 0 60px rgba(197, 165, 101, 0.1);
-  }
-}
-
-.premium-glow {
-  animation: premium-glow 3s ease-in-out infinite;
-}
-
-/* DEPTH LAYERING */
-.depth-layer-1 {
-  transform: translateZ(10px);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.depth-layer-2 {
-  transform: translateZ(20px);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.depth-layer-3 {
-  transform: translateZ(30px);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* SMOOTH SCROLL */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* FLOATING ANIMATION */
-@keyframes floating {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.floating-animation {
-  animation: floating 3s ease-in-out infinite;
-}
-
-/* GRADIENT TEXT */
-.gradient-text-gold {
-  background: linear-gradient(135deg, #C5A565 0%, #E8D7A8 50%, #C5A565 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* SCALE ON HOVER */
-.scale-hover {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.scale-hover:hover {
-  transform: scale(1.02);
-}
+/* PROFESSIONAL TYPOGRAPHY SYSTEM */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&display=swap');
 
 /* Professional text utilities */
 .text-shadow-professional {
@@ -434,32 +221,35 @@ html, body {
     font-variation-settings: 'wght' 400;
   }
 
-  /* HYPERLOOP TYPOGRAPHY HIERARCHY - Monument Grotesk Inspired */
+  /* 2040 LIQUID PRECISION TYPOGRAPHY HIERARCHY */
   h1 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    font-weight: 200;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-    font-feature-settings: "ss01", "ss02", "cv01";
-    text-rendering: geometricPrecision;
+    font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+    font-weight: 300;
+    line-height: 0.85; /* Golden ratio precision */
+    letter-spacing: -0.06em; /* Ultra-tight for luxury */
+    font-feature-settings: "liga", "kern", "swsh", "ss01";
+    font-variation-settings: 'wght' 300, 'slnt' 0;
+    text-rendering: optimizeLegibility;
   }
 
   h2 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    font-weight: 700;
-    line-height: 1.0;
-    letter-spacing: -0.06em;
-    font-feature-settings: "ss01", "ss02";
-    text-rendering: geometricPrecision;
+    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.0; /* Mathematical precision */
+    letter-spacing: -0.04em; /* Crystalline spacing */
+    font-feature-settings: "liga", "kern", "oldstyle-nums";
+    font-variation-settings: 'wght' 400;
+    text-rendering: optimizeLegibility;
   }
 
   h3 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
-    font-feature-settings: "ss01", "liga";
-    text-rendering: geometricPrecision;
+    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+    font-weight: 500;
+    line-height: 1.15; /* Fibonacci ratio */
+    letter-spacing: -0.03em; /* Quantum spacing */
+    font-feature-settings: "liga", "kern", "oldstyle-nums";
+    font-variation-settings: 'wght' 500;
+    text-rendering: optimizeLegibility;
   }
 
   h4 {

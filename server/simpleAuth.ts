@@ -1,5 +1,6 @@
 // Simple authentication bypass for immediate dashboard access
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 
 const sessionStore = new Map<string, { email: string; expiresAt: Date }>();
 
@@ -77,7 +78,7 @@ export function deleteSession(sessionId: string): void {
   }
 }
 
-export function isValidCredentials(email: string, password: string): boolean {
+export async function isValidCredentials(email: string, password: string): Promise<boolean> {
   // Check if account is locked
   const attempts = loginAttempts.get(email);
   if (attempts?.lockUntil && attempts.lockUntil > new Date()) {
@@ -86,8 +87,27 @@ export function isValidCredentials(email: string, password: string): boolean {
     return false;
   }
   
-  // Validate password complexity (minimum 12 characters, mix of types)
-  const isPasswordValid = email === 'admin@kaniou.be' && password === process.env.ADMIN_PASSWORD;
+  // Verify email is admin account
+  if (email !== 'admin@kaniou.be') {
+    console.warn(`⚠️  Invalid login attempt for unknown email: ${email}`);
+    return false;
+  }
+  
+  // Get bcrypt-hashed password from environment
+  const adminPasswordHash = process.env.ADMIN_PASSWORD;
+  if (!adminPasswordHash) {
+    console.error('🚨 SECURITY: ADMIN_PASSWORD not configured in environment');
+    return false;
+  }
+  
+  // Verify password using bcrypt (secure constant-time comparison)
+  let isPasswordValid = false;
+  try {
+    isPasswordValid = await bcrypt.compare(password, adminPasswordHash);
+  } catch (error) {
+    console.error('🚨 SECURITY: Error during password verification:', error);
+    return false;
+  }
   
   if (!isPasswordValid) {
     // Track failed attempt
@@ -104,6 +124,15 @@ export function isValidCredentials(email: string, password: string): boolean {
   }
   
   return isPasswordValid;
+}
+
+/**
+ * Hash a password using bcrypt (for setting up ADMIN_PASSWORD)
+ * Use this function to generate the bcrypt hash for ADMIN_PASSWORD environment variable
+ */
+export async function hashPassword(plainPassword: string): Promise<string> {
+  const saltRounds = 12; // OWASP recommended minimum for 2025
+  return await bcrypt.hash(plainPassword, saltRounds);
 }
 
 export function validatePasswordComplexity(password: string): { valid: boolean; errors: string[] } {

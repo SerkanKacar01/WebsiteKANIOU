@@ -74,10 +74,23 @@ export async function registerRoutes(app: Express): Promise<void> {
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
     }
     
-    // Content Security Policy voor extra browser beveiliging - relaxed for development
-    const csp = [
+    // Content Security Policy - Strict for production security (OWASP 2025 compliant)
+    // Note: In development, Vite requires 'unsafe-inline' for HMR. For production builds, this is removed.
+    const csp = isProduction ? [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com https://fonts.googleapis.com",
+      "script-src 'self' https://consent.cookiebot.com",
+      "style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: https:",
+      "connect-src 'self'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "upgrade-insecure-requests"
+    ].join('; ') : [
+      // Development CSP - allows Vite HMR to function
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: https:",
@@ -134,7 +147,10 @@ export async function registerRoutes(app: Express): Promise<void> {
           .json({ error: "Email en wachtwoord zijn vereist" });
       }
 
-      if (isValidCredentials(email, password)) {
+      // Use await since isValidCredentials is now async (bcrypt.compare)
+      const credentialsValid = await isValidCredentials(email, password);
+      
+      if (credentialsValid) {
         const { sessionId, expiresAt } = createSession(email);
 
         // Enhanced security logging

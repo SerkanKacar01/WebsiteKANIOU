@@ -58,8 +58,11 @@ Preferred communication style: Simple, everyday language.
 - **CSRF Protection**: Token-based CSRF protection for state-changing requests
 - **Cryptographic Security**:
   - Bcrypt password hashing (12 rounds) for admin accounts
+    - ADMIN_PASSWORD must be stored as bcrypt hash in Replit Secrets
+    - Use `server/hashPassword.ts` utility to generate hash
+    - Passwords verified with constant-time bcrypt.compare()
   - BONNUMMER_SECRET for bonnummer checksum validation
-  - Cryptographically secure random token generation
+  - Cryptographically secure random token generation (256-bit session IDs)
 - **Security Monitoring**: 
   - Comprehensive event logging for admin activities
   - Failed login attempt tracking with IP logging

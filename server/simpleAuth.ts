@@ -8,7 +8,8 @@ const loginAttempts = new Map<string, { count: number; lockUntil: Date | null }>
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 30 * 60 * 1000; // 30 minutes
 
-export function createSession(email: string): { sessionId: string; expiresAt: Date } {
+export function createSession(email: string, regenerate: boolean = false): { sessionId: string; expiresAt: Date } {
+  // Generate cryptographically secure session ID (256 bits)
   const sessionId = crypto.randomBytes(32).toString('hex');
   const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
   
@@ -17,12 +18,29 @@ export function createSession(email: string): { sessionId: string; expiresAt: Da
   // Reset login attempts on successful login
   loginAttempts.delete(email);
   
+  if (regenerate) {
+    console.log('🔄 Session ID regenerated for security (session fixation prevention)');
+  }
+  
   console.log('💾 Session stored in memory:', {
     sessionId: sessionId.substring(0, 8) + '...',
     email,
     storeSize: sessionStore.size
   });
   return { sessionId, expiresAt };
+}
+
+export function regenerateSessionId(oldSessionId: string): { sessionId: string; expiresAt: Date } | null {
+  const oldSession = sessionStore.get(oldSessionId);
+  if (!oldSession) {
+    return null;
+  }
+  
+  // Delete old session
+  sessionStore.delete(oldSessionId);
+  
+  // Create new session with same email but new ID (session fixation prevention)
+  return createSession(oldSession.email, true);
 }
 
 export function validateSession(sessionId: string): { email: string } | null {

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
@@ -20,7 +20,7 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-// Luxury Navigation Component - Minimal & Elegant
+// Luxury Navigation Component - Minimal & Elegant with Enhanced Hover
 const LuxuryNavigation = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -52,7 +52,7 @@ const LuxuryNavigation = () => {
           {/* Logo */}
           <button 
             onClick={() => setLocation("/")}
-            className="transition-all duration-500 hover:opacity-70"
+            className="transition-all duration-500 hover:opacity-70 hover:scale-105"
             data-testid="nav-logo"
           >
             <img
@@ -77,14 +77,15 @@ const LuxuryNavigation = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button - Enhanced Hover */}
           <div className="hidden lg:block">
             <button
               onClick={() => setLocation("/quote")}
-              className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900"
+              className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group"
               data-testid="nav-cta-quote"
             >
-              Offerte aanvragen
+              <span className="relative z-10">Offerte aanvragen</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             </button>
           </div>
 
@@ -133,8 +134,51 @@ const LuxuryNavigation = () => {
   );
 };
 
+// Custom hook for scroll-triggered animations
+const useScrollReveal = (threshold = 0.1) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [threshold]);
+
+  return [ref, isVisible] as const;
+};
+
 const Home = () => {
   const [, setLocation] = useLocation();
+  const [scrollY, setScrollY] = useState(0);
+  
+  // Parallax effect
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll reveal hooks for different sections
+  const [brandRef, brandVisible] = useScrollReveal(0.2);
+  const [productsRef, productsVisible] = useScrollReveal(0.1);
+  const [craftsmanshipRef, craftsmanshipVisible] = useScrollReveal(0.2);
+  const [galleryRef, galleryVisible] = useScrollReveal(0.1);
 
   return (
     <>
@@ -152,58 +196,79 @@ const Home = () => {
       <LuxuryNavigation />
 
       <div className="bg-white">
-        {/* HERO SECTION - Full Screen Minimal */}
+        {/* HERO SECTION - Full Screen Minimal with Parallax */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
+          {/* Background Image with Parallax */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              transform: `translateY(${scrollY * 0.5}px)`,
+              transition: 'transform 0.1s ease-out'
+            }}
+          >
             <img
               src={interiorImage}
               alt="Premium raamdecoratie"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
           </div>
 
-          {/* Hero Content */}
-          <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-light text-white mb-8 tracking-tighter leading-[0.85]" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              letterSpacing: '-0.04em'
-            }}>
+          {/* Hero Content with Fade-in Animation */}
+          <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-[fadeInUp_1.2s_ease-out]">
+            <h1 
+              className="text-6xl md:text-8xl lg:text-9xl font-light text-white mb-8 tracking-tighter leading-[0.85] transition-all duration-700 hover:scale-105" 
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                letterSpacing: '-0.04em',
+                textShadow: '0 4px 20px rgba(0,0,0,0.4)'
+              }}
+            >
               Vakmanschap<br/>
-              <span className="italic">in elke plooi</span>
+              <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">in elke plooi</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-white/90 mb-16 font-light tracking-wide max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 mb-16 font-light tracking-wide max-w-xl mx-auto animate-[fadeInUp_1.4s_ease-out]">
               Premium raamdecoratie op maat sinds meer dan 30 jaar
             </p>
 
             <button
               onClick={() => setLocation("/quote")}
-              className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700"
+              className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden"
               data-testid="button-request-quote"
             >
-              <span className="text-xs tracking-widest uppercase mr-3">Ontdek de collectie</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+              <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Ontdek de collectie</span>
+              <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             </button>
           </div>
 
-          {/* Scroll Indicator */}
+          {/* Scroll Indicator with Glow */}
           <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block">
-            <ChevronDown className="w-6 h-6 text-white/60 animate-bounce" />
+            <ChevronDown className="w-6 h-6 text-white/60 animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
           </div>
         </section>
 
-        {/* BRAND STATEMENT - Extreme Whitespace */}
-        <section className="py-32 md:py-48 bg-white">
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-black mb-8 tracking-tight leading-tight" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              letterSpacing: '-0.02em'
-            }}>
+        {/* BRAND STATEMENT - Extreme Whitespace with Scroll Animation */}
+        <section 
+          ref={brandRef}
+          className="py-32 md:py-48 bg-white overflow-hidden"
+        >
+          <div 
+            className={`max-w-5xl mx-auto px-6 text-center transition-all duration-1200 ${
+              brandVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}
+          >
+            <h2 
+              className="text-4xl md:text-6xl lg:text-7xl font-light text-black mb-8 tracking-tight leading-tight hover:scale-105 transition-transform duration-700" 
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                letterSpacing: '-0.02em'
+              }}
+            >
               Waar precisie en<br/>schoonheid samenkomen
             </h2>
-            <div className="w-16 h-px bg-black/20 mx-auto my-12"></div>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto my-12"></div>
             <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-2xl mx-auto">
               Elk project is uniek. Elke millimeter telt. Met meer dan drie decennia ervaring 
               creëren wij raamdecoratie die uw ruimte transformeert.
@@ -211,21 +276,31 @@ const Home = () => {
           </div>
         </section>
 
-        {/* PRODUCT GRID - Editorial Style */}
-        <section className="py-32 bg-gray-50">
+        {/* PRODUCT GRID - Editorial Style with Stagger Animation */}
+        <section 
+          ref={productsRef}
+          className="py-32 bg-gray-50"
+        >
           <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
             {/* Section Header */}
-            <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-light text-black mb-6" style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                letterSpacing: '-0.02em'
-              }}>
+            <div 
+              className={`text-center mb-20 transition-all duration-1000 ${
+                productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <h2 
+                className="text-5xl md:text-6xl font-light text-black mb-6" 
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  letterSpacing: '-0.02em'
+                }}
+              >
                 Onze collectie
               </h2>
-              <div className="w-16 h-px bg-black/20 mx-auto"></div>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto"></div>
             </div>
 
-            {/* 2-Column Grid */}
+            {/* 2-Column Grid with Stagger */}
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
               {[
                 { name: "Houten jaloezieën", desc: "Natuurlijke warmte", path: "/producten/houten-jaloezieen" },
@@ -236,60 +311,89 @@ const Home = () => {
                 <button
                   key={product.name}
                   onClick={() => setLocation(product.path)}
-                  className="group relative overflow-hidden bg-white p-12 lg:p-16 text-left transition-all duration-700 hover:shadow-2xl"
+                  className={`group relative overflow-hidden bg-white p-12 lg:p-16 text-left transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 ${
+                    productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                  }`}
+                  style={{
+                    transitionDelay: productsVisible ? `${index * 150}ms` : '0ms'
+                  }}
                   data-testid={`button-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
                 >
                   <div className="relative z-10">
-                    <div className="text-6xl md:text-7xl font-light mb-6 text-gray-200 group-hover:text-gray-300 transition-colors duration-700" style={{
-                      fontFamily: "'Cormorant Garamond', serif"
-                    }}>
+                    <div 
+                      className="text-6xl md:text-7xl font-light mb-6 text-gray-200 group-hover:text-gray-300 transition-all duration-700 group-hover:scale-110" 
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif"
+                      }}
+                    >
                       {String(index + 1).padStart(2, '0')}
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-light text-black mb-3" style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      letterSpacing: '-0.01em'
-                    }}>
+                    <h3 
+                      className="text-3xl md:text-4xl font-light text-black mb-3 group-hover:text-gray-900 transition-colors duration-500" 
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        letterSpacing: '-0.01em'
+                      }}
+                    >
                       {product.name}
                     </h3>
                     <p className="text-gray-600 text-sm tracking-wide uppercase mb-8">{product.desc}</p>
                     <div className="inline-flex items-center text-black text-xs tracking-widest uppercase group-hover:translate-x-2 transition-transform duration-500">
                       Ontdekken
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{
+                    boxShadow: 'inset 0 0 30px rgba(0,0,0,0.02)'
+                  }}></div>
                 </button>
               ))}
             </div>
 
             {/* All Products Link */}
-            <div className="text-center mt-20">
+            <div 
+              className={`text-center mt-20 transition-all duration-1000 delay-600 ${
+                productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
               <button
                 onClick={() => setLocation("/producten/overgordijnen")}
-                className="inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500"
+                className="group inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
                 data-testid="button-view-all"
               >
-                <span className="text-xs tracking-widest uppercase mr-3">Volledige collectie</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Volledige collectie</span>
+                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               </button>
             </div>
           </div>
         </section>
 
-        {/* CRAFTSMANSHIP SECTION - 2 Column Editorial */}
-        <section className="py-32 bg-white">
+        {/* CRAFTSMANSHIP SECTION - 2 Column Editorial with Reveal */}
+        <section 
+          ref={craftsmanshipRef}
+          className="py-32 bg-white"
+        >
           <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
               {/* Left: Text */}
-              <div>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-black mb-12 leading-tight" style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: '-0.02em'
-                }}>
+              <div 
+                className={`transition-all duration-1200 ${
+                  craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+                }`}
+              >
+                <h2 
+                  className="text-5xl md:text-6xl lg:text-7xl font-light text-black mb-12 leading-tight hover:scale-105 transition-transform duration-700" 
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    letterSpacing: '-0.02em'
+                  }}
+                >
                   30+ jaar<br/>
-                  <span className="italic">expertise</span>
+                  <span className="italic bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">expertise</span>
                 </h2>
-                <div className="w-16 h-px bg-black/20 mb-12"></div>
+                <div className="w-16 h-px bg-gradient-to-r from-black/20 to-transparent mb-12"></div>
                 <p className="text-lg md:text-xl text-gray-700 font-light leading-relaxed mb-8">
                   Sinds onze oprichting hebben we meer dan 3500 projecten gerealiseerd, 
                   elk met dezelfde toewijding aan kwaliteit en vakmanschap.
@@ -300,26 +404,39 @@ const Home = () => {
                 </p>
                 <button
                   onClick={() => setLocation("/over-ons")}
-                  className="inline-flex items-center text-black text-xs tracking-widest uppercase hover:translate-x-2 transition-transform duration-500"
+                  className="group inline-flex items-center text-black text-xs tracking-widest uppercase hover:translate-x-2 transition-all duration-500 hover:text-gray-700"
                   data-testid="button-about"
                 >
                   Ons verhaal
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
               </div>
 
-              {/* Right: Stats */}
-              <div className="grid grid-cols-2 gap-8">
+              {/* Right: Stats with Stagger */}
+              <div 
+                className={`grid grid-cols-2 gap-8 transition-all duration-1200 delay-300 ${
+                  craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+                }`}
+              >
                 {[
                   { number: "30+", label: "Jaren ervaring" },
                   { number: "3500+", label: "Projecten" },
                   { number: "100%", label: "Maatwerk" },
                   { number: "5★", label: "Klantbeoordeling" },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center p-8 bg-gray-50">
-                    <div className="text-5xl md:text-6xl font-light text-black mb-4" style={{
-                      fontFamily: "'Cormorant Garamond', serif"
-                    }}>
+                ].map((stat, index) => (
+                  <div 
+                    key={stat.label} 
+                    className="group text-center p-8 bg-gray-50 hover:bg-white transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
+                    style={{
+                      transitionDelay: craftsmanshipVisible ? `${index * 100}ms` : '0ms'
+                    }}
+                  >
+                    <div 
+                      className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500" 
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif"
+                      }}
+                    >
                       {stat.number}
                     </div>
                     <div className="text-xs tracking-widest uppercase text-gray-600">
@@ -332,61 +449,91 @@ const Home = () => {
           </div>
         </section>
 
-        {/* GALLERY PREVIEW - Masonry Style */}
-        <section className="py-32 bg-gray-50">
+        {/* GALLERY PREVIEW - Masonry Style with Hover Glow */}
+        <section 
+          ref={galleryRef}
+          className="py-32 bg-gray-50"
+        >
           <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
             {/* Section Header */}
-            <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-light text-black mb-6" style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                letterSpacing: '-0.02em'
-              }}>
+            <div 
+              className={`text-center mb-20 transition-all duration-1000 ${
+                galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <h2 
+                className="text-5xl md:text-6xl font-light text-black mb-6" 
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  letterSpacing: '-0.02em'
+                }}
+              >
                 Realisaties
               </h2>
-              <div className="w-16 h-px bg-black/20 mx-auto mb-6"></div>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-6"></div>
               <p className="text-gray-600 tracking-wide">Een selectie uit ons portfolio</p>
             </div>
 
-            {/* 3-Column Gallery Grid */}
+            {/* 3-Column Gallery Grid with Stagger */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
               {[gallery1, gallery2, gallery3, gallery4, gallery5, gallery6].map((img, i) => (
                 <div 
                   key={i} 
-                  className="relative overflow-hidden group cursor-pointer aspect-[4/5]"
+                  className={`relative overflow-hidden group cursor-pointer aspect-[4/5] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 ${
+                    galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                  }`}
+                  style={{
+                    transitionDelay: galleryVisible ? `${i * 100}ms` : '0ms'
+                  }}
                   onClick={() => setLocation("/gallerij")}
                   data-testid={`gallery-item-${i + 1}`}
                 >
                   <img
                     src={img}
                     alt={`Project ${i + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
+                    boxShadow: 'inset 0 0 40px rgba(0,0,0,0.3)'
+                  }}></div>
                 </div>
               ))}
             </div>
 
             {/* Gallery Link */}
-            <div className="text-center mt-20">
+            <div 
+              className={`text-center mt-20 transition-all duration-1000 delay-600 ${
+                galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
               <button
                 onClick={() => setLocation("/gallerij")}
-                className="inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500"
+                className="group inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
                 data-testid="button-view-gallery"
               >
-                <span className="text-xs tracking-widest uppercase mr-3">Bekijk alle projecten</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Bekijk alle projecten</span>
+                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               </button>
             </div>
           </div>
         </section>
 
-        {/* CTA SECTION - Minimal */}
-        <section className="py-32 md:py-48 bg-black text-white">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-5xl md:text-7xl font-light mb-12 leading-tight" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              letterSpacing: '-0.02em'
-            }}>
+        {/* CTA SECTION - Minimal with Glow */}
+        <section className="py-32 md:py-48 bg-black text-white relative overflow-hidden">
+          {/* Subtle Background Glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 opacity-50"></div>
+          
+          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <h2 
+              className="text-5xl md:text-7xl font-light mb-12 leading-tight hover:scale-105 transition-transform duration-700" 
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                letterSpacing: '-0.02em',
+                textShadow: '0 0 40px rgba(255,255,255,0.1)'
+              }}
+            >
               Klaar om te beginnen?
             </h2>
             <p className="text-lg md:text-xl text-white/70 font-light mb-16 max-w-2xl mx-auto">
@@ -394,11 +541,12 @@ const Home = () => {
             </p>
             <button
               onClick={() => setLocation("/quote")}
-              className="inline-flex items-center px-12 py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500"
+              className="group inline-flex items-center px-12 py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:-translate-y-1 relative overflow-hidden"
               data-testid="button-cta-quote"
             >
-              <span className="text-xs tracking-widest uppercase mr-3">Offerte aanvragen</span>
-              <ArrowRight className="w-4 h-4" />
+              <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Offerte aanvragen</span>
+              <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             </button>
           </div>
         </section>
@@ -406,5 +554,26 @@ const Home = () => {
     </>
   );
 };
+
+// Custom keyframe animations for luxury effects
+const styles = `
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+}
 
 export default Home;

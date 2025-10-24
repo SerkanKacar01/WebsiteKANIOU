@@ -61,7 +61,7 @@
     "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",
     "date-fns": "^3.6.0",
-    "drizzle-kit": "^0.31.4",
+    "drizzle-kit": "^0.18.1",
     "drizzle-orm": "^0.39.1",
     "drizzle-zod": "^0.7.0",
     "embla-carousel-autoplay": "^8.6.0",

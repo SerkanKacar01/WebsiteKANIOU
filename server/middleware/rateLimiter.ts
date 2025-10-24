@@ -18,6 +18,55 @@ const RAPID_REQUEST_THRESHOLD = 10 * 1000; // 10 seconds between requests
 const MAX_SUSPICIOUS_ATTEMPTS = 3; // Number of rapid attempts before marking as suspicious
 
 /**
+ * Stricter rate limiting for tracking endpoint to prevent brute force attacks
+ */
+export function trackingRateLimiter(req: Request, res: Response, next: NextFunction) {
+  const ip = req.ip || 'unknown';
+  const now = Date.now();
+  
+  const TRACKING_MAX_REQUESTS = 10; // Maximum tracking requests per window
+  const TRACKING_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+  
+  if (suspiciousIPs.has(ip)) {
+    return res.status(429).json({
+      message: "Toegang tijdelijk beperkt. Probeer later opnieuw.",
+      retryAfter: 60
+    });
+  }
+  
+  let record = rateLimitStore.get(ip);
+  if (!record) {
+    record = { 
+      count: 0, 
+      resetTime: now + TRACKING_WINDOW_MS,
+      suspiciousAttempts: 0,
+      lastAttempt: now
+    };
+  }
+  
+  if (now > record.resetTime) {
+    record.count = 1;
+    record.resetTime = now + TRACKING_WINDOW_MS;
+    record.suspiciousAttempts = 0;
+    record.lastAttempt = now;
+  } else {
+    record.count += 1;
+    record.lastAttempt = now;
+  }
+  
+  rateLimitStore.set(ip, record);
+  
+  if (record.count > TRACKING_MAX_REQUESTS) {
+    return res.status(429).json({
+      message: 'Te veel tracking verzoeken. Probeer later opnieuw.',
+      retryAfter: Math.ceil((record.resetTime - now) / 1000)
+    });
+  }
+  
+  next();
+}
+
+/**
  * Enhanced rate limiting middleware for form submissions
  * Provides multiple layers of protection against spam and abuse
  */

@@ -21,7 +21,7 @@ import {
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
 import { randomBytes } from "crypto";
-import { adminLoginRateLimiter } from "./middleware/rateLimiter";
+import { adminLoginRateLimiter, formRateLimiter, trackingRateLimiter } from "./middleware/rateLimiter";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
 
 // Generate a secure session secret as fallback
@@ -234,7 +234,7 @@ export async function registerRoutes(app: Express): Promise<void> {
   });
 
   // Contact form submission endpoint
-  app.post("/api/contact", async (req, res) => {
+  app.post("/api/contact", formRateLimiter, async (req, res) => {
     try {
       // Validate request body
       const validation = insertContactSubmissionSchema.safeParse(req.body);
@@ -410,7 +410,7 @@ Verzoek ID: ${sampleRequest.id}
   });
 
   // Quote request submission endpoint
-  app.post("/api/quote-requests", async (req, res) => {
+  app.post("/api/quote-requests", formRateLimiter, async (req, res) => {
     try {
       // Validate request body
       const validation = insertQuoteRequestSchema.safeParse(req.body);
@@ -1386,7 +1386,7 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
 
   // 🔐 ULTRA-SECURE ORDER TRACKING ENDPOINT 🔐
   // This endpoint implements ALL security best practices against hackers
-  app.get("/api/orders/track/:bonnummer", async (req, res) => {
+  app.get("/api/orders/track/:bonnummer", trackingRateLimiter, async (req, res) => {
     const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
     const { bonnummer } = req.params;
     const { email } = req.query;

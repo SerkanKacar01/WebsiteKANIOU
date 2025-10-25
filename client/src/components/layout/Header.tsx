@@ -98,10 +98,8 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 md:py-1.5 py-1 ${
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-md shadow-lg" 
-          : "bg-gradient-to-b from-black/50 via-black/30 to-transparent backdrop-blur-sm"
+      className={`sticky top-0 z-50 w-full transition-all duration-300 md:py-1.5 py-1 bg-white ${
+        isScrolled ? "shadow-lg" : "shadow-md"
       }`}
     >
       <Container>
@@ -128,9 +126,7 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className={`p-2 min-h-[44px] min-w-[44px] transition-colors ${
-                      isScrolled ? "text-gray-700" : "text-white drop-shadow-lg"
-                    }`}
+                    className="p-2 min-h-[44px] min-w-[44px] text-gray-700 hover:text-[#D5B992]"
                   >
                     <Menu className="h-6 w-6" />
                   </Button>
@@ -227,12 +223,8 @@ const Header = () => {
                     <NavigationMenuTrigger 
                       className={`font-body text-sm transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent ${
                         isCollectieActive()
-                          ? isScrolled 
-                            ? "text-[#D5B992] font-semibold" 
-                            : "text-[#E6C988] font-semibold drop-shadow-lg"
-                          : isScrolled
-                            ? "text-gray-700 hover:text-[#D5B992]"
-                            : "text-white hover:text-[#E6C988] drop-shadow-md"
+                          ? "text-[#D5B992] font-semibold" 
+                          : "text-gray-700 hover:text-[#D5B992]"
                       }`}
                     >
                       Collectie
@@ -266,12 +258,8 @@ const Header = () => {
                   <div
                     className={`font-body text-sm transition-colors cursor-pointer ${
                       isActive(item.href)
-                        ? isScrolled 
-                          ? "text-[#D5B992] font-semibold" 
-                          : "text-[#E6C988] font-semibold drop-shadow-lg"
-                        : isScrolled
-                          ? "text-gray-700 hover:text-[#D5B992]"
-                          : "text-white hover:text-[#E6C988] drop-shadow-md"
+                        ? "text-[#D5B992] font-semibold" 
+                        : "text-gray-700 hover:text-[#D5B992]"
                     }`}
                     onClick={handleNavClick}
                   >
@@ -282,11 +270,7 @@ const Header = () => {
               <div className="flex items-center gap-3">
                 <Link href="/offerte">
                   <Button 
-                    className={`text-sm font-medium px-4 py-2 h-10 transition-all duration-300 rounded-md ${
-                      isScrolled
-                        ? "bg-[#D5B992] hover:bg-[#C5A565] text-white shadow-md"
-                        : "bg-white/90 hover:bg-white text-[#2C3E50] shadow-xl backdrop-blur-sm"
-                    }`}
+                    className="bg-[#D5B992] hover:bg-[#C5A565] text-white text-sm font-medium px-4 py-2 h-10 transition-all duration-300 rounded-md shadow-md hover:shadow-lg"
                     onClick={handleNavClick}
                   >
                     VRIJBLIJVEND OFFERTE

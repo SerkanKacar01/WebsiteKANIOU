@@ -224,32 +224,44 @@ const Header = () => {
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger 
-                      className={`font-body text-sm transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent ${
+                      className={`font-body text-sm transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#D5B992] ${
                         isCollectieActive()
                           ? "text-[#D5B992] font-semibold" 
                           : "text-gray-700 hover:text-[#D5B992]"
                       }`}
+                      data-testid="nav-collectie-dropdown"
                     >
                       Collectie
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent>
+                    <NavigationMenuContent className="z-50">
                       <div className="grid grid-cols-2 gap-1 p-4 w-[500px] bg-white shadow-xl rounded-lg">
-                        {productCategories.map((product) => (
-                          <Link key={product.href} href={product.href}>
-                            <NavigationMenuLink
-                              className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent focus:bg-accent/10 focus:text-accent ${
-                                isActive(product.href)
-                                  ? "bg-accent/5 text-accent font-medium"
-                                  : "text-text-dark"
-                              }`}
-                              onClick={handleNavClick}
-                            >
-                              <div className="text-sm font-medium leading-none">
-                                {product.label}
-                              </div>
-                            </NavigationMenuLink>
-                          </Link>
-                        ))}
+                        {productsLoading ? (
+                          <div className="col-span-2 p-4 text-center text-gray-500">
+                            Producten laden...
+                          </div>
+                        ) : productCategories.length === 0 ? (
+                          <div className="col-span-2 p-4 text-center text-gray-500">
+                            Geen producten beschikbaar
+                          </div>
+                        ) : (
+                          productCategories.map((product) => (
+                            <Link key={product.href} href={product.href}>
+                              <NavigationMenuLink
+                                className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent focus:bg-accent/10 focus:text-accent ${
+                                  isActive(product.href)
+                                    ? "bg-accent/5 text-accent font-medium"
+                                    : "text-text-dark"
+                                }`}
+                                onClick={handleNavClick}
+                                data-testid={`nav-product-${product.id}`}
+                              >
+                                <div className="text-sm font-medium leading-none">
+                                  {product.label}
+                                </div>
+                              </NavigationMenuLink>
+                            </Link>
+                          ))
+                        )}
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>

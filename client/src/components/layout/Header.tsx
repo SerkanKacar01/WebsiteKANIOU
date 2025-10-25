@@ -17,33 +17,36 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useQuery } from "@tanstack/react-query";
+import type { Product } from "@shared/schema";
 
 import { kaniouLogo } from "@/assets";
-
-// Alle producten voor de COLLECTIE dropdown
-const productCategories = [
-  { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
-  { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
-  { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
-  { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
-  { label: "Plissés", href: "/producten/plisse" },
-  { label: "Duo plissés", href: "/producten/duo-plisse" },
-  { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
-  { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
-  { label: "Overgordijnen", href: "/producten/overgordijnen" },
-  { label: "Gordijnrails", href: "/producten/gordijnrails" },
-  { label: "Vitrages", href: "/producten/vitrages" },
-  { label: "Houten shutters", href: "/producten/houten-shutters" },
-  { label: "Vonwgordijnen", href: "/producten/vonwgordijnen" },
-  { label: "Gordijnroedes", href: "/gordijnroedes" },
-  { label: "Squid", href: "/squid" },
-  { label: "Horren", href: "/horren" },
-];
 
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
+
+  // Fetch products dynamically from the database
+  const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
+    queryKey: ["/api/products"],
+  });
+
+  // Convert product names to URL-friendly slugs and create dropdown items
+  const productCategories = products.map(product => {
+    const slug = product.name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+    
+    return {
+      label: product.name,
+      href: `/producten/${slug}`,
+      id: product.id
+    };
+  });
 
   // Define navigation items (without Collectie - that's now a dropdown)
   const navItems = [

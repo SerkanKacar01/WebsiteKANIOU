@@ -558,28 +558,28 @@ const Home = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
-                  name: "Jan De Vries",
+                  name: "Cardeynaels",
                   rating: 5,
-                  text: "Uitstekende service en prachtige gordijnen! Het team heeft ons perfect geholpen met het maken van de juiste keuze. Zeer tevreden met het eindresultaat.",
-                  date: "3 weken geleden"
+                  text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde. De communicatie verloopt vlot en correct. Ook op de plaatsing is niets aan te merken. Zeer prettige samenwerking en zeker een aanrader.",
+                  date: "5 maanden geleden"
                 },
                 {
-                  name: "Marie Peeters",
+                  name: "Buelles",
                   rating: 5,
-                  text: "Professioneel maatwerk van A tot Z. De montage was netjes en snel uitgevoerd. Onze woonkamer ziet er nu fantastisch uit met de nieuwe rolgordijnen!",
-                  date: "1 maand geleden"
+                  text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Thuisbezoek  gehad voor opnemen maten en om te zien of stoffen ook daadwerkelijk passen bij de ruimtes. Steeds netjes contact geweest ; offerte snel gemaakt , afspraken worden nagekomen . Vandaag de gordijnen in onze woonkamer mogen ontvangen en we zijn zo content ! Heel snel en vakkundig werk geleverd . We laten het hele huis doen , bovenverdieping volgende maand . We kijken er naar uit ! Voornaam: Kwaliteit en service voor een eerlijke prijs !",
+                  date: "1 jaar geleden"
                 },
                 {
-                  name: "Peter Van Damme",
+                  name: "Anedda",
                   rating: 5,
-                  text: "Top kwaliteit en uitstekend advies. De prijzen zijn eerlijk en het personeel is zeer vriendelijk. Absolute aanrader voor iedereen die op zoek is naar raamdecoratie!",
-                  date: "2 maanden geleden"
+                  text: "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na en werkte nauwkeurig. De kwaliteit van de materialen is uitstekend. Kortom, een absolute aanrader voor iedereen – deze vijf sterren zijn méér dan verdiend!"
+                  date: "3 maanden geleden"
                 },
                 {
                   name: "Sophie Vermeulen",
                   rating: 5,
                   text: "Meer dan 30 jaar ervaring is duidelijk merkbaar. Heel blij met onze nieuwe houten jaloezieën. Perfect vakmanschap en persoonlijke service. Bedankt!",
-                  date: "2 maanden geleden"
+                  date: "3 maanden geleden"
                 }
               ].map((review, index) => (
                 <div 

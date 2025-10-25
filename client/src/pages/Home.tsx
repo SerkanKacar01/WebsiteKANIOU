@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Star, ExternalLink } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
 import gallery1Src from "@assets/IMG_9192.jpeg";
@@ -516,6 +516,123 @@ const Home = () => {
                 <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               </button>
+            </div>
+          </div>
+        </section>
+
+        {/* GOOGLE REVIEWS SECTION */}
+        <section className="py-32 bg-white">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+            {/* Section Header with Google Link */}
+            <div className="text-center mb-16">
+              <h2 
+                className="text-5xl md:text-6xl font-light text-black mb-8" 
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                Wat onze klanten zeggen
+              </h2>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-8"></div>
+              
+              {/* Google Profile Link */}
+              <a
+                href="https://g.page/r/YOUR_GOOGLE_BUSINESS_ID/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 text-sm group"
+                data-testid="link-google-reviews"
+              >
+                <img 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%234285F4' d='M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z'/%3E%3Cpath fill='%2334A853' d='M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z'/%3E%3Cpath fill='%23FBBC05' d='M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z'/%3E%3Cpath fill='%23EA4335' d='M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z'/%3E%3C/svg%3E"
+                  alt="Google"
+                  className="w-5 h-5"
+                />
+                <span className="font-medium">Bekijk alle reviews op Google</span>
+                <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+              </a>
+            </div>
+
+            {/* Google Reviews Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  name: "Jan De Vries",
+                  rating: 5,
+                  text: "Uitstekende service en prachtige gordijnen! Het team heeft ons perfect geholpen met het maken van de juiste keuze. Zeer tevreden met het eindresultaat.",
+                  date: "3 weken geleden"
+                },
+                {
+                  name: "Marie Peeters",
+                  rating: 5,
+                  text: "Professioneel maatwerk van A tot Z. De montage was netjes en snel uitgevoerd. Onze woonkamer ziet er nu fantastisch uit met de nieuwe rolgordijnen!",
+                  date: "1 maand geleden"
+                },
+                {
+                  name: "Peter Van Damme",
+                  rating: 5,
+                  text: "Top kwaliteit en uitstekend advies. De prijzen zijn eerlijk en het personeel is zeer vriendelijk. Absolute aanrader voor iedereen die op zoek is naar raamdecoratie!",
+                  date: "2 maanden geleden"
+                },
+                {
+                  name: "Sophie Vermeulen",
+                  rating: 5,
+                  text: "Meer dan 30 jaar ervaring is duidelijk merkbaar. Heel blij met onze nieuwe houten jaloezieën. Perfect vakmanschap en persoonlijke service. Bedankt!",
+                  date: "2 maanden geleden"
+                }
+              ].map((review, index) => (
+                <div 
+                  key={index}
+                  className="bg-gray-50 p-8 hover:bg-white hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group"
+                  data-testid={`google-review-${index + 1}`}
+                >
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-5 h-5 ${
+                          i < review.rating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "fill-gray-200 text-gray-200"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-gray-700 text-sm leading-relaxed mb-6 min-h-[120px]">
+                    "{review.text}"
+                  </p>
+
+                  {/* Author Info */}
+                  <div className="border-t border-gray-200 pt-4">
+                    <p className="font-medium text-gray-900 text-sm mb-1">{review.name}</p>
+                    <p className="text-xs text-gray-500">{review.date}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Google Rating Summary */}
+            <div className="mt-16 text-center">
+              <div className="inline-flex items-center gap-3 bg-gray-50 px-8 py-4 rounded-full">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-6 h-6 fill-yellow-400 text-yellow-400"
+                    />
+                  ))}
+                </div>
+                <div className="text-left">
+                  <p className="text-2xl font-light text-black" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    5.0
+                  </p>
+                  <p className="text-xs text-gray-600">Gemiddelde beoordeling</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

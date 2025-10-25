@@ -76,8 +76,10 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-white md:py-1.5 py-1 ${
-        isScrolled ? "shadow-md" : ""
+      className={`sticky top-0 z-50 w-full transition-all duration-300 md:py-1.5 py-1 ${
+        isScrolled 
+          ? "bg-white/95 backdrop-blur-md shadow-lg" 
+          : "bg-gradient-to-b from-black/50 via-black/30 to-transparent backdrop-blur-sm"
       }`}
     >
       <Container>
@@ -104,7 +106,9 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-primary p-2 min-h-[44px] min-w-[44px]"
+                    className={`p-2 min-h-[44px] min-w-[44px] transition-colors ${
+                      isScrolled ? "text-gray-700" : "text-white drop-shadow-lg"
+                    }`}
                   >
                     <Menu className="h-6 w-6" />
                   </Button>
@@ -164,11 +168,15 @@ const Header = () => {
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className={`font-body text-sm ${
+                    className={`font-body text-sm transition-colors cursor-pointer ${
                       isActive(item.href)
-                        ? "text-accent font-medium"
-                        : "text-text-dark hover:text-accent"
-                    } transition-colors cursor-pointer`}
+                        ? isScrolled 
+                          ? "text-[#D5B992] font-semibold" 
+                          : "text-[#E6C988] font-semibold drop-shadow-lg"
+                        : isScrolled
+                          ? "text-gray-700 hover:text-[#D5B992]"
+                          : "text-white hover:text-[#E6C988] drop-shadow-md"
+                    }`}
                     onClick={handleNavClick}
                   >
                     {item.label}
@@ -178,7 +186,11 @@ const Header = () => {
               <div className="flex items-center gap-3">
                 <Link href="/offerte">
                   <Button 
-                    className="bg-[#D5B992] hover:bg-[#C5A565] text-white text-sm font-medium px-4 py-2 h-10 transition-colors rounded-md"
+                    className={`text-sm font-medium px-4 py-2 h-10 transition-all duration-300 rounded-md ${
+                      isScrolled
+                        ? "bg-[#D5B992] hover:bg-[#C5A565] text-white shadow-md"
+                        : "bg-white/90 hover:bg-white text-[#2C3E50] shadow-xl backdrop-blur-sm"
+                    }`}
                     onClick={handleNavClick}
                   >
                     VRIJBLIJVEND OFFERTE

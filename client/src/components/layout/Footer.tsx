@@ -894,6 +894,18 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li>
+                  <button
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && typeof (window as any).showCookieSettings === 'function') {
+                        (window as any).showCookieSettings();
+                      }
+                    }}
+                    className="footer-legal-link hover:text-gold-600 transition-colors duration-300 cursor-pointer font-bold text-left w-full"
+                  >
+                    🍪 Cookie Instellingen
+                  </button>
+                </li>
+                <li>
                   <a href="/disclaimer" className="footer-legal-link">
                     Disclaimer
                   </a>
@@ -944,6 +956,17 @@ const Footer: React.FC = () => {
               <a href="/cookiebeleid" className="footer-legal-link">
                 Cookiebeleid
               </a>
+              <span className="text-gray-400">|</span>
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined' && typeof (window as any).showCookieSettings === 'function') {
+                    (window as any).showCookieSettings();
+                  }
+                }}
+                className="footer-legal-link hover:text-gold-600 transition-colors duration-300 cursor-pointer font-semibold"
+              >
+                🍪 Cookie Instellingen
+              </button>
               <span className="text-gray-400">|</span>
               <a href="/disclaimer" className="footer-legal-link">
                 Disclaimer

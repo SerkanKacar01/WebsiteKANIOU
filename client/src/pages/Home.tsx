@@ -561,7 +561,7 @@ const Home = () => {
                   name: "Cardeynaels",
                   rating: 5,
                   text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde. De communicatie verloopt vlot en correct. Ook op de plaatsing is niets aan te merken. Zeer prettige samenwerking en zeker een aanrader.",
-                  date: "5 maanden geleden"
+                  date: ""
                 },
                 {
                   name: "Buelles",
@@ -573,13 +573,11 @@ const Home = () => {
                   name: "Anedda",
                   rating: 5,
                   text: "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na en werkte nauwkeurig. De kwaliteit van de materialen is uitstekend. Kortom, een absolute aanrader voor iedereen – deze vijf sterren zijn méér dan verdiend!"
-                  date: "3 maanden geleden"
                 },
                 {
-                  name: "Sophie Vermeulen",
+                  name: "Patrick",
                   rating: 5,
-                  text: "Meer dan 30 jaar ervaring is duidelijk merkbaar. Heel blij met onze nieuwe houten jaloezieën. Perfect vakmanschap en persoonlijke service. Bedankt!",
-                  date: "3 maanden geleden"
+                  text: "Ik ben ontzettend tevreden met mijn houten jaloezieën van KANIOU! Vanaf het eerst contact tot aan de levering was alles helder, de levering op tijd en de installatie werd professioneel uitgevoerd. De kwaliteit van de jaloezieën is top - precies zoals ik had verwacht, misschien zelfs beter! Ze geven mijn interieur meteen een warme luxe uitstraling. KANIOU heeft mijn verwachtingen overtroffen, zowel qua product als service. Zeker een aanrader!"
                 }
               ].map((review, index) => (
                 <div 

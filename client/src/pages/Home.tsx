@@ -538,7 +538,7 @@ const Home = () => {
               
               {/* Google Profile Link */}
               <a
-                href="https://g.page/r/YOUR_GOOGLE_BUSINESS_ID/review"
+                href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,16z/data=!4m8!3m7!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn?authuser=3&entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 text-sm group"
@@ -567,7 +567,7 @@ const Home = () => {
                   name: "Buelles",
                   rating: 5,
                   text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Thuisbezoek  gehad voor opnemen maten en om te zien of stoffen ook daadwerkelijk passen bij de ruimtes. Steeds netjes contact geweest ; offerte snel gemaakt , afspraken worden nagekomen . Vandaag de gordijnen in onze woonkamer mogen ontvangen en we zijn zo content ! Heel snel en vakkundig werk geleverd . We laten het hele huis doen , bovenverdieping volgende maand . We kijken er naar uit ! Voornaam: Kwaliteit en service voor een eerlijke prijs !",
-                  date: "1 jaar geleden"
+                  date: ""
                 },
                 {
                   name: "Anedda",

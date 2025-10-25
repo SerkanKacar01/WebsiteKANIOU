@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
@@ -20,15 +20,32 @@ import {
 
 import { kaniouLogo } from "@/assets";
 
-
+// Alle producten voor de COLLECTIE dropdown
+const productCategories = [
+  { label: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
+  { label: "Textiel lamellen", href: "/producten/textiel-lamellen" },
+  { label: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
+  { label: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
+  { label: "Plissés", href: "/producten/plisse" },
+  { label: "Duo plissés", href: "/producten/duo-plisse" },
+  { label: "Rolgordijnen", href: "/producten/rolgordijnen" },
+  { label: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
+  { label: "Overgordijnen", href: "/producten/overgordijnen" },
+  { label: "Gordijnrails", href: "/producten/gordijnrails" },
+  { label: "Vitrages", href: "/producten/vitrages" },
+  { label: "Houten shutters", href: "/producten/houten-shutters" },
+  { label: "Vonwgordijnen", href: "/producten/vonwgordijnen" },
+  { label: "Gordijnroedes", href: "/gordijnroedes" },
+  { label: "Squid", href: "/squid" },
+  { label: "Horren", href: "/horren" },
+];
 
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
   const { t } = useLanguage();
 
-
-  // Define navigation items
+  // Define navigation items (without Collectie - that's now a dropdown)
   const navItems = [
     { label: "Galerij", href: "/gallerij" },
     { label: "Over Ons", href: "/overons" },
@@ -37,6 +54,7 @@ const Header = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [mobileCollectieOpen, setMobileCollectieOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,6 +74,7 @@ const Header = () => {
 
   const handleCloseSheet = () => {
     setSheetOpen(false);
+    setMobileCollectieOpen(false);
   };
 
   const handleNavClick = () => {
@@ -73,6 +92,9 @@ const Header = () => {
     return false;
   };
 
+  const isCollectieActive = () => {
+    return productCategories.some(product => location.startsWith(product.href));
+  };
 
   return (
     <header
@@ -132,6 +154,40 @@ const Header = () => {
                     </Button>
                   </div>
 
+                  {/* Mobile Collectie Dropdown */}
+                  <div className="border-b border-neutral-200">
+                    <button
+                      onClick={() => setMobileCollectieOpen(!mobileCollectieOpen)}
+                      className={`w-full flex items-center justify-between py-3 text-base font-body ${
+                        isCollectieActive() ? "text-accent font-medium" : "text-text-dark"
+                      }`}
+                    >
+                      <span>Collectie</span>
+                      <ChevronDown 
+                        className={`w-5 h-5 transition-transform duration-200 ${
+                          mobileCollectieOpen ? "rotate-180" : ""
+                        }`} 
+                      />
+                    </button>
+                    {mobileCollectieOpen && (
+                      <div className="pl-4 pb-3 space-y-2">
+                        {productCategories.map((product) => (
+                          <Link key={product.href} href={product.href}>
+                            <a
+                              className={`block py-2 text-sm ${
+                                isActive(product.href)
+                                  ? "text-accent font-medium"
+                                  : "text-text-dark/80 hover:text-accent"
+                              }`}
+                              onClick={handleMobileNavClick}
+                            >
+                              {product.label}
+                            </a>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
 
                   {navItems.map((item) => (
                     <Link key={item.href} href={item.href}>
@@ -164,6 +220,46 @@ const Header = () => {
             </div>
           ) : (
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
+              {/* Desktop COLLECTIE Dropdown */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className={`font-body text-sm transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent ${
+                        isCollectieActive()
+                          ? isScrolled 
+                            ? "text-[#D5B992] font-semibold" 
+                            : "text-[#E6C988] font-semibold drop-shadow-lg"
+                          : isScrolled
+                            ? "text-gray-700 hover:text-[#D5B992]"
+                            : "text-white hover:text-[#E6C988] drop-shadow-md"
+                      }`}
+                    >
+                      Collectie
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid grid-cols-2 gap-1 p-4 w-[500px] bg-white shadow-xl rounded-lg">
+                        {productCategories.map((product) => (
+                          <Link key={product.href} href={product.href}>
+                            <NavigationMenuLink
+                              className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent focus:bg-accent/10 focus:text-accent ${
+                                isActive(product.href)
+                                  ? "bg-accent/5 text-accent font-medium"
+                                  : "text-text-dark"
+                              }`}
+                              onClick={handleNavClick}
+                            >
+                              <div className="text-sm font-medium leading-none">
+                                {product.label}
+                              </div>
+                            </NavigationMenuLink>
+                          </Link>
+                        ))}
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
 
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>

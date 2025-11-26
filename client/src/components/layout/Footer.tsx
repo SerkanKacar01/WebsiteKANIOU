@@ -432,7 +432,7 @@ const Footer: React.FC = () => {
                   <div 
                     onMouseEnter={() => setIsContactDropdownOpen(true)}
                     onMouseLeave={() => setIsContactDropdownOpen(false)}
-                    className="absolute top-full left-0 mt-2 w-full bg-white/98 backdrop-blur-xl shadow-lg border border-orange-200 rounded-sm py-2 z-50"
+                    className="absolute top-full left-0 mt-2 w-full bg-white shadow-xl border border-orange-300 rounded-sm py-2 z-50"
                   >
                     <a
                       href="/contact"

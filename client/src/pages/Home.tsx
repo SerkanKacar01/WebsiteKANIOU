@@ -114,7 +114,7 @@ const LuxuryNavigation = () => {
                 <div 
                   onMouseEnter={() => setIsCollectieDropdownOpen(true)}
                   onMouseLeave={() => setIsCollectieDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
                 >
                   {productLinks.map((product) => (
                     <button
@@ -151,7 +151,7 @@ const LuxuryNavigation = () => {
                 <div 
                   onMouseEnter={() => setIsHorrenDropdownOpen(true)}
                   onMouseLeave={() => setIsHorrenDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
                 >
                   {horrenLinks.map((product) => (
                     <button
@@ -188,7 +188,7 @@ const LuxuryNavigation = () => {
                 <div 
                   onMouseEnter={() => setIsGordijnenDropdownOpen(true)}
                   onMouseLeave={() => setIsGordijnenDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
                 >
                   {gordijnenLinks.map((product) => (
                     <button
@@ -225,7 +225,7 @@ const LuxuryNavigation = () => {
                 <div 
                   onMouseEnter={() => setIsOphangsystemenDropdownOpen(true)}
                   onMouseLeave={() => setIsOphangsystemenDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
                 >
                   {ophangsystemenLinks.map((product) => (
                     <button

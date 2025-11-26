@@ -26,6 +26,7 @@ const LuxuryNavigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isCollectieDropdownOpen, setIsCollectieDropdownOpen] = React.useState(false);
   const [isHorrenDropdownOpen, setIsHorrenDropdownOpen] = React.useState(false);
+  const [isGordijnenDropdownOpen, setIsGordijnenDropdownOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -60,6 +61,12 @@ const LuxuryNavigation = () => {
     { name: "Opzet horren", path: "/producten/opzethorren" },
     { name: "Inzet horren", path: "/producten/inzethorren" },
     { name: "Plisse hordeuren", path: "/producten/plisse-hordeuren" },
+  ];
+
+  const gordijnenLinks = [
+    { name: "Inbetweens", path: "/producten/vitrages" },
+    { name: "Overgordijnen", path: "/producten/overgordijnen" },
+    { name: "Vitrages", path: "/producten/vitrages" },
   ];
 
   return (
@@ -159,6 +166,43 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
+            {/* Gordijnen Dropdown */}
+            <div className="relative group">
+              <button
+                onMouseEnter={() => setIsGordijnenDropdownOpen(true)}
+                onMouseLeave={() => setIsGordijnenDropdownOpen(false)}
+                className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative flex items-center gap-2"
+                data-testid="nav-link-gordijnen"
+              >
+                Gordijnen
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isGordijnenDropdownOpen && (
+                <div 
+                  onMouseEnter={() => setIsGordijnenDropdownOpen(true)}
+                  onMouseLeave={() => setIsGordijnenDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                >
+                  {gordijnenLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsGordijnenDropdownOpen(false);
+                      }}
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
+                      data-testid={`nav-gordijnen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {navLinks.map((link) => (
               <button
                 key={link.name}
@@ -231,6 +275,26 @@ const LuxuryNavigation = () => {
                       }}
                       className="text-left text-sm text-gray-600 hover:text-black transition-colors"
                       data-testid={`mobile-horren-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile Gordijnen Menu */}
+              <div className="px-4">
+                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Gordijnen</div>
+                <div className="flex flex-col space-y-2 pl-4">
+                  {gordijnenLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
+                      data-testid={`mobile-gordijnen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {product.name}
                     </button>

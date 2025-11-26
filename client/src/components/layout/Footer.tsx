@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, ChevronDown } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const [expandedSections, setExpandedSections] = React.useState({
@@ -9,6 +9,7 @@ const Footer: React.FC = () => {
     nieuwsbrief: true,
     legal: false,
   });
+  const [isContactDropdownOpen, setIsContactDropdownOpen] = React.useState(false);
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections((prev) => ({
@@ -414,6 +415,49 @@ const Footer: React.FC = () => {
                   </button>
                 </div>
               </form>
+
+              {/* Contact Dropdown - Orange */}
+              <div className="relative mt-8">
+                <button
+                  onMouseEnter={() => setIsContactDropdownOpen(true)}
+                  onMouseLeave={() => setIsContactDropdownOpen(false)}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs tracking-widest uppercase rounded-sm transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/40 hover:scale-105 flex items-center justify-center gap-2"
+                >
+                  Contact
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-500 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Contact Dropdown Menu */}
+                {isContactDropdownOpen && (
+                  <div 
+                    onMouseEnter={() => setIsContactDropdownOpen(true)}
+                    onMouseLeave={() => setIsContactDropdownOpen(false)}
+                    className="absolute top-full left-0 mt-2 w-full bg-white/98 backdrop-blur-xl shadow-lg border border-orange-200 rounded-sm py-2 z-50"
+                  >
+                    <a
+                      href="/contact"
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500 block"
+                      onClick={() => setIsContactDropdownOpen(false)}
+                    >
+                      Plan een afspraak
+                    </a>
+                    <a
+                      href="/quote"
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500 block"
+                      onClick={() => setIsContactDropdownOpen(false)}
+                    >
+                      Vrijblijvende offerte
+                    </a>
+                    <a
+                      href="/bestelling-volgen"
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500 block"
+                      onClick={() => setIsContactDropdownOpen(false)}
+                    >
+                      Bestelling volgen
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

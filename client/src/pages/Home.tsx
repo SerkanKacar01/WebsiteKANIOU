@@ -286,45 +286,16 @@ const LuxuryNavigation = () => {
             ))}
           </div>
 
-          {/* Right Section - Offerte and Contact Menu */}
+          {/* Right Section - Offerte Button */}
           <div className="hidden lg:flex items-center">
-            <div className="relative group">
-              {/* Offerte aanvragen Button with Dropdown */}
-              <button
-                onMouseEnter={() => setIsContactDropdownOpen(true)}
-                onMouseLeave={() => setIsContactDropdownOpen(false)}
-                onClick={() => setLocation("/quote")}
-                className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group flex items-center gap-2"
-                data-testid="nav-cta-quote"
-              >
-                <span className="relative z-10">Offerte aanvragen</span>
-                <ChevronDown className={`relative z-10 w-4 h-4 transition-transform duration-500 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-              </button>
-
-              {/* Contact Dropdown Menu */}
-              {isContactDropdownOpen && (
-                <div 
-                  onMouseEnter={() => setIsContactDropdownOpen(true)}
-                  onMouseLeave={() => setIsContactDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg border border-gray-200 rounded-sm py-2 z-50"
-                >
-                  {contactLinks.map((link) => (
-                    <button
-                      key={link.name}
-                      onClick={() => {
-                        setLocation(link.path);
-                        setIsContactDropdownOpen(false);
-                      }}
-                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300 border-l-4 border-transparent hover:border-black"
-                      data-testid={`nav-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
-                    >
-                      {link.name}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <button
+              onClick={() => setLocation("/quote")}
+              className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group"
+              data-testid="nav-cta-quote"
+            >
+              <span className="relative z-10">Offerte aanvragen</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -493,28 +464,28 @@ const LuxuryNavigation = () => {
         )}
       </div>
 
-      {/* Right Side Contact Sidebar - Desktop & Mobile */}
+      {/* Right Side Contact Sidebar - Fixed */}
       <div 
-        className={`fixed right-0 top-0 h-full w-80 bg-gradient-to-b from-orange-400 to-orange-300 shadow-2xl transition-transform duration-500 ease-out z-40 ${
-          isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed right-8 top-1/2 -translate-y-1/2 w-72 bg-gradient-to-b from-orange-400 to-orange-300 shadow-2xl transition-all duration-500 ease-out z-40 rounded-xl overflow-hidden ${
+          isRightSidebarOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
         }`}
       >
         {/* Close Button */}
         <button
           onClick={() => setIsRightSidebarOpen(false)}
-          className="absolute top-4 right-4 text-white hover:opacity-80"
+          className="absolute top-3 right-3 text-white hover:opacity-80 z-50"
           data-testid="sidebar-close"
         >
           <span className="text-2xl">×</span>
         </button>
 
         {/* Sidebar Content */}
-        <div className="pt-16 px-6 flex flex-col h-full">
-          <h2 className="text-xl tracking-widest uppercase text-white font-light mb-8">
+        <div className="pt-12 px-6 pb-6 flex flex-col">
+          <h2 className="text-lg tracking-widest uppercase text-white font-light mb-6">
             Contact
           </h2>
           
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-3">
             {contactLinks.map((link) => (
               <button
                 key={link.name}
@@ -522,11 +493,10 @@ const LuxuryNavigation = () => {
                   setLocation(link.path);
                   setIsRightSidebarOpen(false);
                 }}
-                className="px-4 py-3 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm tracking-wide uppercase hover:bg-white/30 transition-all duration-300 flex items-center gap-3"
+                className="px-4 py-3 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm tracking-wide uppercase hover:bg-white/30 transition-all duration-300"
                 data-testid={`sidebar-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
               >
-                <span className="text-lg">📅</span>
-                <span>{link.name}</span>
+                {link.name}
               </button>
             ))}
           </div>
@@ -536,7 +506,7 @@ const LuxuryNavigation = () => {
       {/* Sidebar Toggle Button - Fixed on Right */}
       <button
         onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-gradient-to-r from-orange-400 to-orange-500 text-white px-3 py-8 rounded-l-lg hover:shadow-lg transition-all duration-300 group"
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-gradient-to-r from-orange-400 to-orange-500 text-white px-3 py-8 rounded-l-lg hover:shadow-lg transition-all duration-300 hover:from-orange-500 hover:to-orange-600"
         data-testid="sidebar-toggle"
       >
         <span className="vertical-text text-xs tracking-widest uppercase font-light whitespace-nowrap transform -rotate-90 inline-block">

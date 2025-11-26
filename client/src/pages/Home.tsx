@@ -24,7 +24,8 @@ const gallery6 = gallery6Src;
 const LuxuryNavigation = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+  const [isCollectieDropdownOpen, setIsCollectieDropdownOpen] = React.useState(false);
+  const [isHorrenDropdownOpen, setIsHorrenDropdownOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -53,6 +54,14 @@ const LuxuryNavigation = () => {
     { name: "Dakraam Zonweringen", path: "/producten/dakraam-zonweringen" },
   ];
 
+  const horrenLinks = [
+    { name: "Schuif deur horren", path: "/producten/horren" },
+    { name: "Draai hordeuren", path: "/producten/horren" },
+    { name: "Opzet horren", path: "/producten/opzethorren" },
+    { name: "Inzet horren", path: "/producten/inzethorren" },
+    { name: "Plisse hordeuren", path: "/producten/plisse-hordeuren" },
+  ];
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
@@ -79,8 +88,8 @@ const LuxuryNavigation = () => {
             {/* Collectie Dropdown */}
             <div className="relative group">
               <button
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
+                onMouseEnter={() => setIsCollectieDropdownOpen(true)}
+                onMouseLeave={() => setIsCollectieDropdownOpen(false)}
                 className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative flex items-center gap-2"
                 data-testid="nav-link-collectie"
               >
@@ -90,10 +99,10 @@ const LuxuryNavigation = () => {
               </button>
 
               {/* Dropdown Menu */}
-              {isDropdownOpen && (
+              {isCollectieDropdownOpen && (
                 <div 
-                  onMouseEnter={() => setIsDropdownOpen(true)}
-                  onMouseLeave={() => setIsDropdownOpen(false)}
+                  onMouseEnter={() => setIsCollectieDropdownOpen(true)}
+                  onMouseLeave={() => setIsCollectieDropdownOpen(false)}
                   className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
                 >
                   {productLinks.map((product) => (
@@ -101,10 +110,47 @@ const LuxuryNavigation = () => {
                       key={product.name}
                       onClick={() => {
                         setLocation(product.path);
-                        setIsDropdownOpen(false);
+                        setIsCollectieDropdownOpen(false);
                       }}
                       className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
                       data-testid={`nav-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Horren Dropdown */}
+            <div className="relative group">
+              <button
+                onMouseEnter={() => setIsHorrenDropdownOpen(true)}
+                onMouseLeave={() => setIsHorrenDropdownOpen(false)}
+                className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative flex items-center gap-2"
+                data-testid="nav-link-horren"
+              >
+                Horren
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isHorrenDropdownOpen && (
+                <div 
+                  onMouseEnter={() => setIsHorrenDropdownOpen(true)}
+                  onMouseLeave={() => setIsHorrenDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                >
+                  {horrenLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsHorrenDropdownOpen(false);
+                      }}
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
+                      data-testid={`nav-horren-${product.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {product.name}
                     </button>
@@ -165,6 +211,26 @@ const LuxuryNavigation = () => {
                       }}
                       className="text-left text-sm text-gray-600 hover:text-black transition-colors"
                       data-testid={`mobile-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile Horren Menu */}
+              <div className="px-4">
+                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Horren</div>
+                <div className="flex flex-col space-y-2 pl-4">
+                  {horrenLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
+                      data-testid={`mobile-horren-${product.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {product.name}
                     </button>

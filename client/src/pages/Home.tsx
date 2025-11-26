@@ -32,7 +32,6 @@ const LuxuryNavigation = () => {
   const [isGordijnenDropdownOpen, setIsGordijnenDropdownOpen] = React.useState(false);
   const [isOphangsystemenDropdownOpen, setIsOphangsystemenDropdownOpen] = React.useState(false);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = React.useState(false);
-  const [isRightSidebarOpen, setIsRightSidebarOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -88,7 +87,7 @@ const LuxuryNavigation = () => {
         isScrolled ? "bg-white/98 backdrop-blur-xl shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
+      <div className="max-w-[1800px] mx-auto px-8 lg:px-16">
         <div className="flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
           <button 
@@ -104,7 +103,7 @@ const LuxuryNavigation = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-12">
             {/* Collectie Dropdown */}
             <div className="relative group">
               <button
@@ -286,8 +285,45 @@ const LuxuryNavigation = () => {
             ))}
           </div>
 
-          {/* Right Section - Offerte Button */}
-          <div className="hidden lg:flex items-center">
+          {/* Right Section - CTA and Contact Menu */}
+          <div className="hidden lg:flex items-center gap-6">
+            {/* Contact Dropdown - Orange */}
+            <div className="relative group">
+              <button
+                onMouseEnter={() => setIsContactDropdownOpen(true)}
+                onMouseLeave={() => setIsContactDropdownOpen(false)}
+                className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs tracking-widest uppercase rounded-sm transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/40 hover:scale-105 flex items-center gap-2"
+                data-testid="nav-contact-menu"
+              >
+                Contact
+                <ChevronDown className={`w-4 h-4 transition-transform duration-500 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Contact Dropdown Menu */}
+              {isContactDropdownOpen && (
+                <div 
+                  onMouseEnter={() => setIsContactDropdownOpen(true)}
+                  onMouseLeave={() => setIsContactDropdownOpen(false)}
+                  className="absolute top-full right-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg border border-orange-200 rounded-sm py-2 z-50"
+                >
+                  {contactLinks.map((link) => (
+                    <button
+                      key={link.name}
+                      onClick={() => {
+                        setLocation(link.path);
+                        setIsContactDropdownOpen(false);
+                      }}
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500"
+                      data-testid={`nav-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {link.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Offerte aanvragen Button */}
             <button
               onClick={() => setLocation("/quote")}
               className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group"
@@ -416,18 +452,8 @@ const LuxuryNavigation = () => {
                 Houten Shutters
               </button>
 
-              {/* Mobile Contact and Offerte */}
-              <div className="px-4 pt-4 border-t">
-                <button
-                  onClick={() => {
-                    setLocation("/quote");
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mb-4"
-                  data-testid="mobile-cta-quote"
-                >
-                  Offerte aanvragen
-                </button>
+              {/* Mobile Contact Menu */}
+              <div className="px-4">
                 <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Contact</div>
                 <div className="flex flex-col space-y-2 pl-4">
                   {contactLinks.map((link) => (
@@ -437,7 +463,7 @@ const LuxuryNavigation = () => {
                         setLocation(link.path);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
+                      className="text-left text-sm text-gray-600 hover:text-orange-600 transition-colors"
                       data-testid={`mobile-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {link.name}
@@ -459,60 +485,20 @@ const LuxuryNavigation = () => {
                   {link.name}
                 </button>
               ))}
+              <button
+                onClick={() => {
+                  setLocation("/quote");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mx-4"
+                data-testid="mobile-cta-quote"
+              >
+                Offerte aanvragen
+              </button>
             </div>
           </div>
         )}
       </div>
-
-      {/* Right Side Contact Sidebar - Fixed */}
-      <div 
-        className={`fixed right-8 top-1/2 -translate-y-1/2 w-72 bg-gradient-to-b from-orange-400 to-orange-300 shadow-2xl transition-all duration-500 ease-out z-40 rounded-xl overflow-hidden ${
-          isRightSidebarOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
-        }`}
-      >
-        {/* Close Button */}
-        <button
-          onClick={() => setIsRightSidebarOpen(false)}
-          className="absolute top-3 right-3 text-white hover:opacity-80 z-50"
-          data-testid="sidebar-close"
-        >
-          <span className="text-2xl">×</span>
-        </button>
-
-        {/* Sidebar Content */}
-        <div className="pt-12 px-6 pb-6 flex flex-col">
-          <h2 className="text-lg tracking-widest uppercase text-white font-light mb-6">
-            Contact
-          </h2>
-          
-          <div className="flex flex-col space-y-3">
-            {contactLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => {
-                  setLocation(link.path);
-                  setIsRightSidebarOpen(false);
-                }}
-                className="px-4 py-3 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm tracking-wide uppercase hover:bg-white/30 transition-all duration-300"
-                data-testid={`sidebar-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
-              >
-                {link.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Sidebar Toggle Button - Fixed on Right */}
-      <button
-        onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-gradient-to-r from-orange-400 to-orange-500 text-white px-3 py-8 rounded-l-lg hover:shadow-lg transition-all duration-300 hover:from-orange-500 hover:to-orange-600"
-        data-testid="sidebar-toggle"
-      >
-        <span className="vertical-text text-xs tracking-widest uppercase font-light whitespace-nowrap transform -rotate-90 inline-block">
-          Contact
-        </span>
-      </button>
     </nav>
   );
 };

@@ -203,6 +203,16 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
+            {/* Vouwgordijnen Link */}
+            <button
+              onClick={() => setLocation("/producten/vouwgordijnen")}
+              className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative group"
+              data-testid="nav-link-vouwgordijnen"
+            >
+              Vouwgordijnen
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
+            </button>
+
             {navLinks.map((link) => (
               <button
                 key={link.name}
@@ -301,6 +311,18 @@ const LuxuryNavigation = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Mobile Vouwgordijnen Link */}
+              <button
+                onClick={() => {
+                  setLocation("/producten/vouwgordijnen");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-left text-sm tracking-widest uppercase text-gray-700 px-4"
+                data-testid="mobile-nav-vouwgordijnen"
+              >
+                Vouwgordijnen
+              </button>
 
               {navLinks.map((link) => (
                 <button

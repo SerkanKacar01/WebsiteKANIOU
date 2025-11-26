@@ -24,6 +24,7 @@ const gallery6 = gallery6Src;
 const LuxuryNavigation = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -35,10 +36,21 @@ const LuxuryNavigation = () => {
   }, []);
 
   const navLinks = [
-    { name: "Collectie", path: "/producten/overgordijnen" },
     { name: "Gallerij", path: "/gallerij" },
     { name: "Over ons", path: "/over-ons" },
     { name: "Contact", path: "/contact" },
+  ];
+
+  const productLinks = [
+    { name: "Kunststof lamellen", path: "/producten/kunststof-lamellen" },
+    { name: "Textiel lamellen", path: "/producten/textiel-lamellen" },
+    { name: "Rolgordijnen", path: "/producten/rolgordijnen" },
+    { name: "Duo Rolgordijnen", path: "/producten/duo-rolgordijnen" },
+    { name: "Plissés", path: "/producten/plisse" },
+    { name: "Duo Plissés", path: "/producten/duo-plisses" },
+    { name: "Houten Jaloezieën", path: "/producten/houten-jaloezieen" },
+    { name: "Aluminium Jaloezieën", path: "/producten/kunststof-jaloezieen" },
+    { name: "Dakraam Zonweringen", path: "/producten/dakraam-zonweringen" },
   ];
 
   return (
@@ -64,6 +76,43 @@ const LuxuryNavigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-12">
+            {/* Collectie Dropdown */}
+            <div className="relative group">
+              <button
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+                className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative flex items-center gap-2"
+                data-testid="nav-link-collectie"
+              >
+                Collectie
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <div 
+                  onMouseEnter={() => setIsDropdownOpen(true)}
+                  onMouseLeave={() => setIsDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg rounded-sm border border-gray-200 py-4"
+                >
+                  {productLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsDropdownOpen(false);
+                      }}
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
+                      data-testid={`nav-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {navLinks.map((link) => (
               <button
                 key={link.name}
@@ -103,6 +152,26 @@ const LuxuryNavigation = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden bg-white border-t py-8">
             <div className="flex flex-col space-y-6">
+              {/* Mobile Collectie Menu */}
+              <div className="px-4">
+                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Collectie</div>
+                <div className="flex flex-col space-y-2 pl-4">
+                  {productLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
+                      data-testid={`mobile-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {navLinks.map((link) => (
                 <button
                   key={link.name}
@@ -110,7 +179,7 @@ const LuxuryNavigation = () => {
                     setLocation(link.path);
                     setIsMobileMenuOpen(false);
                   }}
-                  className="text-left text-sm tracking-widest uppercase text-gray-700"
+                  className="text-left text-sm tracking-widest uppercase text-gray-700 px-4"
                   data-testid={`mobile-nav-${link.name.toLowerCase()}`}
                 >
                   {link.name}
@@ -121,7 +190,7 @@ const LuxuryNavigation = () => {
                   setLocation("/quote");
                   setIsMobileMenuOpen(false);
                 }}
-                className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center"
+                className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mx-4"
                 data-testid="mobile-cta-quote"
               >
                 Offerte aanvragen

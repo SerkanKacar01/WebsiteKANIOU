@@ -32,6 +32,7 @@ const LuxuryNavigation = () => {
   const [isGordijnenDropdownOpen, setIsGordijnenDropdownOpen] = React.useState(false);
   const [isOphangsystemenDropdownOpen, setIsOphangsystemenDropdownOpen] = React.useState(false);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = React.useState(false);
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -491,6 +492,57 @@ const LuxuryNavigation = () => {
           </div>
         )}
       </div>
+
+      {/* Right Side Contact Sidebar - Desktop & Mobile */}
+      <div 
+        className={`fixed right-0 top-0 h-full w-80 bg-gradient-to-b from-orange-400 to-orange-300 shadow-2xl transition-transform duration-500 ease-out z-40 ${
+          isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => setIsRightSidebarOpen(false)}
+          className="absolute top-4 right-4 text-white hover:opacity-80"
+          data-testid="sidebar-close"
+        >
+          <span className="text-2xl">×</span>
+        </button>
+
+        {/* Sidebar Content */}
+        <div className="pt-16 px-6 flex flex-col h-full">
+          <h2 className="text-xl tracking-widest uppercase text-white font-light mb-8">
+            Contact
+          </h2>
+          
+          <div className="flex flex-col space-y-4">
+            {contactLinks.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => {
+                  setLocation(link.path);
+                  setIsRightSidebarOpen(false);
+                }}
+                className="px-4 py-3 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm tracking-wide uppercase hover:bg-white/30 transition-all duration-300 flex items-center gap-3"
+                data-testid={`sidebar-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
+              >
+                <span className="text-lg">📅</span>
+                <span>{link.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Sidebar Toggle Button - Fixed on Right */}
+      <button
+        onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-gradient-to-r from-orange-400 to-orange-500 text-white px-3 py-8 rounded-l-lg hover:shadow-lg transition-all duration-300 group"
+        data-testid="sidebar-toggle"
+      >
+        <span className="vertical-text text-xs tracking-widest uppercase font-light whitespace-nowrap transform -rotate-90 inline-block">
+          Contact
+        </span>
+      </button>
     </nav>
   );
 };

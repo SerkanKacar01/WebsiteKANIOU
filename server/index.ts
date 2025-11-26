@@ -270,5 +270,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
   // Setup Vite after all other routes to prevent catch-all interference
   // Serve built files in all environments
+// Serve built files in all environments
+if (app.get("env") === "development") {
+  await setupVite(app, server);
+} else {
   serveStatic(app);
+}
 })();

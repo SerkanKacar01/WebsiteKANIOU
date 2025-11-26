@@ -11,6 +11,15 @@ import gallery3Src from "@assets/IMG_9217.jpeg";
 import gallery4Src from "@assets/IMG_9219.jpeg";
 import gallery5Src from "@assets/IMG_9220.jpeg";
 import gallery6Src from "@assets/IMG_9221.jpeg";
+import heroImg1 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.24_1764194640013.png";
+import heroImg2 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.30_1764194640013.png";
+import heroImg3 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.49_1764194640014.png";
+import heroImg4 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.54_1764194640014.png";
+import heroImg5 from "@assets/Scherm­afbeelding 2025-11-26 om 23.01.06_1764194640014.png";
+import heroImg6 from "@assets/Scherm­afbeelding 2025-11-26 om 23.01.28_1764194640014.png";
+import heroImg7 from "@assets/Scherm­afbeelding 2025-11-26 om 23.01.51_1764194640014.png";
+import heroImg8 from "@assets/Scherm­afbeelding 2025-11-26 om 23.02.12_1764194640014.png";
+import heroImg9 from "@assets/Scherm­afbeelding 2025-11-26 om 23.02.23_1764194640015.png";
 
 const interiorImage = interiorImageSrc;
 const gallery1 = gallery1Src;
@@ -19,6 +28,9 @@ const gallery3 = gallery3Src;
 const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
+
+// Collage images array
+const collageImages = [heroImg1, heroImg2, heroImg3, heroImg4, heroImg5, heroImg6, heroImg7, heroImg8, heroImg9];
 
 // Luxury Navigation Component - Minimal & Elegant with Enhanced Hover
 const LuxuryNavigation = () => {

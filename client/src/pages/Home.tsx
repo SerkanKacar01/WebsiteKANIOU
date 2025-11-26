@@ -285,18 +285,20 @@ const LuxuryNavigation = () => {
             ))}
           </div>
 
-          {/* Right Section - CTA and Contact Menu */}
-          <div className="hidden lg:flex items-center gap-6">
-            {/* Contact Dropdown - Orange */}
+          {/* Right Section - Offerte and Contact Menu */}
+          <div className="hidden lg:flex items-center">
             <div className="relative group">
+              {/* Offerte aanvragen Button with Dropdown */}
               <button
                 onMouseEnter={() => setIsContactDropdownOpen(true)}
                 onMouseLeave={() => setIsContactDropdownOpen(false)}
-                className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs tracking-widest uppercase rounded-sm transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/40 hover:scale-105 flex items-center gap-2"
-                data-testid="nav-contact-menu"
+                onClick={() => setLocation("/quote")}
+                className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group flex items-center gap-2"
+                data-testid="nav-cta-quote"
               >
-                Contact
-                <ChevronDown className={`w-4 h-4 transition-transform duration-500 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+                <span className="relative z-10">Offerte aanvragen</span>
+                <ChevronDown className={`relative z-10 w-4 h-4 transition-transform duration-500 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               </button>
 
               {/* Contact Dropdown Menu */}
@@ -304,7 +306,7 @@ const LuxuryNavigation = () => {
                 <div 
                   onMouseEnter={() => setIsContactDropdownOpen(true)}
                   onMouseLeave={() => setIsContactDropdownOpen(false)}
-                  className="absolute top-full right-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg border border-orange-200 rounded-sm py-2 z-50"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-xl shadow-lg border border-gray-200 rounded-sm py-2 z-50"
                 >
                   {contactLinks.map((link) => (
                     <button
@@ -313,7 +315,7 @@ const LuxuryNavigation = () => {
                         setLocation(link.path);
                         setIsContactDropdownOpen(false);
                       }}
-                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500"
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300 border-l-4 border-transparent hover:border-black"
                       data-testid={`nav-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {link.name}
@@ -322,16 +324,6 @@ const LuxuryNavigation = () => {
                 </div>
               )}
             </div>
-
-            {/* Offerte aanvragen Button */}
-            <button
-              onClick={() => setLocation("/quote")}
-              className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group"
-              data-testid="nav-cta-quote"
-            >
-              <span className="relative z-10">Offerte aanvragen</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -452,8 +444,18 @@ const LuxuryNavigation = () => {
                 Houten Shutters
               </button>
 
-              {/* Mobile Contact Menu */}
-              <div className="px-4">
+              {/* Mobile Contact and Offerte */}
+              <div className="px-4 pt-4 border-t">
+                <button
+                  onClick={() => {
+                    setLocation("/quote");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mb-4"
+                  data-testid="mobile-cta-quote"
+                >
+                  Offerte aanvragen
+                </button>
                 <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Contact</div>
                 <div className="flex flex-col space-y-2 pl-4">
                   {contactLinks.map((link) => (
@@ -463,7 +465,7 @@ const LuxuryNavigation = () => {
                         setLocation(link.path);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="text-left text-sm text-gray-600 hover:text-orange-600 transition-colors"
+                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
                       data-testid={`mobile-contact-${link.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {link.name}
@@ -485,16 +487,6 @@ const LuxuryNavigation = () => {
                   {link.name}
                 </button>
               ))}
-              <button
-                onClick={() => {
-                  setLocation("/quote");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mx-4"
-                data-testid="mobile-cta-quote"
-              >
-                Offerte aanvragen
-              </button>
             </div>
           </div>
         )}

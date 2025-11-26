@@ -11,15 +11,6 @@ import gallery3Src from "@assets/IMG_9217.jpeg";
 import gallery4Src from "@assets/IMG_9219.jpeg";
 import gallery5Src from "@assets/IMG_9220.jpeg";
 import gallery6Src from "@assets/IMG_9221.jpeg";
-import heroImg1 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.24_1764194640013.png";
-import heroImg2 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.30_1764194640013.png";
-import heroImg3 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.49_1764194640014.png";
-import heroImg4 from "@assets/Scherm­afbeelding 2025-11-26 om 23.00.54_1764194640014.png";
-import heroImg5 from "@assets/Scherm­afbeelding 2025-11-26 om 23.01.06_1764194640014.png";
-import heroImg6 from "@assets/Scherm­afbeelding 2025-11-26 om 23.01.28_1764194640014.png";
-import heroImg7 from "@assets/Scherm­afbeelding 2025-11-26 om 23.01.51_1764194640014.png";
-import heroImg8 from "@assets/Scherm­afbeelding 2025-11-26 om 23.02.12_1764194640014.png";
-import heroImg9 from "@assets/Scherm­afbeelding 2025-11-26 om 23.02.23_1764194640015.png";
 
 const interiorImage = interiorImageSrc;
 const gallery1 = gallery1Src;
@@ -29,8 +20,8 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-// Collage images array
-const collageImages = [heroImg1, heroImg2, heroImg3, heroImg4, heroImg5, heroImg6, heroImg7, heroImg8, heroImg9];
+// Collage images array - using existing gallery images
+const collageImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery1, gallery2, gallery3];
 
 // Luxury Navigation Component - Minimal & Elegant with Enhanced Hover
 const LuxuryNavigation = () => {
@@ -450,6 +441,86 @@ const LuxuryNavigation = () => {
   );
 };
 
+// Luxury Collage Hero Component - 9 Photo Interactive Hover Grid
+const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (path: string) => void }) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  return (
+    <div className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* 3x3 Collage Grid Background */}
+      <div className="absolute inset-0">
+        <div className="grid grid-cols-3 grid-rows-3 w-full h-full gap-1">
+          {images.map((img, idx) => (
+            <div
+              key={idx}
+              className="relative overflow-hidden cursor-pointer group"
+              onMouseEnter={() => setHoveredIndex(idx)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <img
+                src={img}
+                alt={`Interior showcase ${idx + 1}`}
+                className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+                  hoveredIndex === idx ? 'scale-110' : 'scale-100'
+                }`}
+                style={{
+                  filter: hoveredIndex !== null && hoveredIndex !== idx ? 'brightness(0.6)' : 'brightness(1)',
+                  transition: 'all 700ms cubic-bezier(0.34, 1.56, 0.64, 1)'
+                }}
+              />
+              {/* Shine effect on hover */}
+              <div
+                className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                style={{
+                  transform: hoveredIndex === idx ? 'translate(0, 0)' : 'translate(-100%, -100%)',
+                  transition: 'transform 700ms ease-out, opacity 700ms ease-out'
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/40"></div>
+
+      {/* Hero Content - Centered Text */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-[fadeInUp_1.2s_ease-out]">
+        <h1
+          className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-6 tracking-tighter leading-[0.9] transition-all duration-700 hover:scale-105"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            letterSpacing: '-0.04em',
+            textShadow: '0 8px 32px rgba(0,0,0,0.5)'
+          }}
+        >
+          Vakmanschap<br/>
+          <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">in elke plooi</span>
+        </h1>
+
+        <p className="text-lg md:text-xl text-white/90 mb-12 font-light tracking-wide max-w-xl mx-auto animate-[fadeInUp_1.4s_ease-out]">
+          Premium raamdecoratie op maat sinds meer dan 30 jaar
+        </p>
+
+        <button
+          onClick={() => setLocation("/quote")}
+          className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden"
+          data-testid="button-request-quote"
+        >
+          <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Ontdek de collectie</span>
+          <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+        </button>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block">
+        <ChevronDown className="w-6 h-6 text-white/60 animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+      </div>
+    </div>
+  );
+};
+
 // Custom hook for scroll-triggered animations
 const useScrollReveal = (threshold = 0.1) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -512,58 +583,11 @@ const Home = () => {
       <LuxuryNavigation />
 
       <div className="bg-white">
-        {/* HERO SECTION - Full Screen Minimal with Parallax */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
-          {/* Background Image with Parallax */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              transform: `translateY(${scrollY * 0.5}px)`,
-              transition: 'transform 0.1s ease-out'
-            }}
-          >
-            <img
-              src={interiorImage}
-              alt="Premium raamdecoratie"
-              className="w-full h-full object-cover scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
-          </div>
-
-          {/* Hero Content with Fade-in Animation */}
-          <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-[fadeInUp_1.2s_ease-out]">
-            <h1 
-              className="text-6xl md:text-8xl lg:text-9xl font-light text-white mb-8 tracking-tighter leading-[0.85] transition-all duration-700 hover:scale-105" 
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                letterSpacing: '-0.04em',
-                textShadow: '0 4px 20px rgba(0,0,0,0.4)'
-              }}
-            >
-              Vakmanschap<br/>
-              <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">in elke plooi</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-white/90 mb-16 font-light tracking-wide max-w-xl mx-auto animate-[fadeInUp_1.4s_ease-out]">
-              Premium raamdecoratie op maat sinds meer dan 30 jaar
-            </p>
-
-            <button
-              onClick={() => setLocation("/quote")}
-              className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden"
-              data-testid="button-request-quote"
-            >
-              <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Ontdek de collectie</span>
-              <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-            </button>
-          </div>
-
-          {/* Scroll Indicator with Glow */}
-          <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block">
-            <ChevronDown className="w-6 h-6 text-white/60 animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
-          </div>
-        </section>
+        {/* HERO SECTION - Interactive 9-Photo Collage */}
+        <CollageHero images={collageImages} setLocation={setLocation} />
+        
+        {/* Add spacing */}
+        <div className="h-4"></div>
 
         {/* BRAND STATEMENT - Extreme Whitespace with Scroll Animation */}
         <section 

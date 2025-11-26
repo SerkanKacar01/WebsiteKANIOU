@@ -39,8 +39,6 @@ const LuxuryNavigation = () => {
   }, []);
 
   const navLinks = [
-    { name: "Gallerij", path: "/gallerij" },
-    { name: "Over ons", path: "/over-ons" },
     { name: "Contact", path: "/contact" },
   ];
 

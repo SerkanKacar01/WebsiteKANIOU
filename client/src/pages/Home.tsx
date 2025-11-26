@@ -87,7 +87,7 @@ const LuxuryNavigation = () => {
         isScrolled ? "bg-white/98 backdrop-blur-xl shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1800px] mx-auto px-8 lg:px-16">
+      <div className="max-w-[1800px] mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
           <button 
@@ -103,7 +103,7 @@ const LuxuryNavigation = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-12">
+          <div className="hidden lg:flex items-center space-x-4">
             {/* Collectie Dropdown */}
             <div className="relative group">
               <button

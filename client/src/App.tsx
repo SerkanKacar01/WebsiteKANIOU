@@ -70,6 +70,7 @@ import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import GordijnroedesPage from "@/pages/products/gordijnroedes";
 import HorrenPage from "@/pages/products/horren";
 import ScreenPage from "@/pages/products/screen";
+import ScreensInsidePage from "@/pages/products/screens-inside";
 
 
 
@@ -153,6 +154,8 @@ function Router() {
         <Route path="/horren" component={HorrenPage} />
         <Route path="/producten/screen" component={ScreenPage} />
         <Route path="/screen" component={ScreenPage} />
+        <Route path="/producten/screens-inside" component={ScreensInsidePage} />
+        <Route path="/screens-inside" component={ScreensInsidePage} />
         <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
         <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
 

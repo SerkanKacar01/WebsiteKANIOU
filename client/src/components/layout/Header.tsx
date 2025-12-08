@@ -268,13 +268,23 @@ const Header = () => {
                       SCREENS
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="z-50">
-                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100">
+                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100 space-y-1">
                         <Link href="/producten/screens-inside">
                           <NavigationMenuLink
                             className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
                             onClick={handleNavClick}
                           >
                             <div className="text-sm font-medium">Screens Inside</div>
+                            <p className="text-xs text-gray-500 mt-1">Binnenscreens voor lichtfiltering</p>
+                          </NavigationMenuLink>
+                        </Link>
+                        <Link href="/producten/screens-outside">
+                          <NavigationMenuLink
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
+                            onClick={handleNavClick}
+                          >
+                            <div className="text-sm font-medium">Screens Outside</div>
+                            <p className="text-xs text-gray-500 mt-1">Buitenscreens voor warmtewering</p>
                           </NavigationMenuLink>
                         </Link>
                       </div>
@@ -465,7 +475,7 @@ const Header = () => {
                           <ChevronDown className={`w-4 h-4 transition-transform ${mobileMenuOpen === 'screens' ? "rotate-180" : ""}`} />
                         </button>
                         {mobileMenuOpen === 'screens' && (
-                          <div className="pl-4 pb-3">
+                          <div className="pl-4 pb-3 space-y-1">
                             <Link href="/producten/screens-inside">
                               <a
                                 className={`block py-2 text-sm ${
@@ -474,6 +484,16 @@ const Header = () => {
                                 onClick={handleMobileNavClick}
                               >
                                 Screens Inside
+                              </a>
+                            </Link>
+                            <Link href="/producten/screens-outside">
+                              <a
+                                className={`block py-2 text-sm ${
+                                  isActive("/producten/screens-outside") ? "text-[#C4A35A] font-medium" : "text-gray-600"
+                                }`}
+                                onClick={handleMobileNavClick}
+                              >
+                                Screens Outside
                               </a>
                             </Link>
                           </div>

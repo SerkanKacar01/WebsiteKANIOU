@@ -25,7 +25,6 @@ try {
 async function testMailgun() {
   try {
     console.log('Testing Mailgun email integration...');
-    console.log('API Key:', process.env.API_KEY ? 'Found' : 'Missing');
     
     const result = await sendMailgunEmail(
       'info@kaniou.be',

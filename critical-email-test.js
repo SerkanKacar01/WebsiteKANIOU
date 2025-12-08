@@ -11,7 +11,6 @@ async function criticalEmailTest() {
 
   // Test 1: Environment Variables
   console.log('\n1️⃣ ENVIRONMENT VARIABLES CHECK');
-  console.log('MAILGUN_API_KEY:', process.env.MAILGUN_API_KEY ? `SET (${process.env.MAILGUN_API_KEY.substring(0, 8)}...)` : '❌ NOT SET');
   console.log('MAILGUN_DOMAIN:', process.env.MAILGUN_DOMAIN || '❌ NOT SET');
   
   // Test 2: Direct Mailgun API Test

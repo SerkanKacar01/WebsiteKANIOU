@@ -5,10 +5,7 @@ import Container from "@/components/ui/container";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronDown } from "lucide-react";
 import useMobile from "@/hooks/use-mobile";
-import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTop } from "@/hooks/use-scroll-to-top";
-import LanguageSelector from "./LanguageSelector";
-import NewsletterSignup from "./NewsletterSignup";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,19 +17,14 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import type { Product } from "@shared/schema";
 
-import { kaniouLogo } from "@/assets";
-
 const Header = () => {
   const [location] = useLocation();
   const isMobile = useMobile();
-  const { t } = useLanguage();
 
-  // Fetch products dynamically from the database
   const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
 
-  // Convert product names to URL-friendly slugs and create dropdown items
   const productCategories = products.map(product => {
     const slug = product.name
       .toLowerCase()
@@ -48,36 +40,36 @@ const Header = () => {
     };
   });
 
-  // Define navigation items (without Collectie - that's now a dropdown)
-  const navItems = [
-    { label: "Galerij", href: "/gallerij" },
-    { label: "Over Ons", href: "/overons" },
-    { label: "Contact", href: "/contact" },
+  const mainNavItems = [
+    { 
+      label: "COLLECTIE", 
+      href: "/collectie",
+      hasDropdown: true,
+      dropdownItems: productCategories
+    },
+    { label: "HORREN", href: "/producten/horren", hasDropdown: true },
+    { label: "GORDIJNEN", href: "/producten/gordijnen", hasDropdown: true },
+    { label: "OPHANGSYSTEMEN", href: "/producten/ophangsystemen", hasDropdown: true },
+    { label: "SCREENS", href: "/producten/screens", hasDropdown: true },
+    { label: "VOUWGORDIJNEN", href: "/producten/vouwgordijnen", hasDropdown: true },
+    { label: "HOUTEN SHUTTERS", href: "/producten/houten-shutters", hasDropdown: false },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [mobileCollectieOpen, setMobileCollectieOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleCloseSheet = () => {
     setSheetOpen(false);
-    setMobileCollectieOpen(false);
+    setMobileMenuOpen(null);
   };
 
   const handleNavClick = () => {
@@ -101,161 +93,80 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 md:py-1.5 py-1 bg-white ${
-        isScrolled ? "shadow-lg" : "shadow-md"
+      className={`sticky top-0 z-50 w-full transition-all duration-300 bg-white border-b border-gray-200 ${
+        isScrolled ? "shadow-md" : ""
       }`}
     >
       <Container>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo Section */}
+          <div className="flex items-center flex-shrink-0">
             <Link href="/">
               <div 
-                className="flex items-center cursor-pointer"
+                className="flex items-center cursor-pointer gap-3"
                 onClick={() => scrollToTop('instant')}
               >
-                <img
-                  src={kaniouLogo}
-                  alt="KANIOU zilvernaald"
-                  className="h-10 sm:h-12 md:h-14 w-auto"
-                />
+                <div className="flex flex-col">
+                  <span className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight leading-none">
+                    KANIOU
+                  </span>
+                  <span className="text-[10px] md:text-xs text-[#C4A35A] font-medium tracking-wider leading-tight">
+                    zilvernaald
+                  </span>
+                </div>
+                <div className="hidden sm:block h-8 w-px bg-gray-300 mx-2"></div>
+                <div className="hidden sm:flex flex-col">
+                  <span className="text-xs md:text-sm text-gray-700 font-medium leading-tight">
+                    Gordijnen &
+                  </span>
+                  <span className="text-xs md:text-sm text-gray-700 font-medium leading-tight">
+                    Zonweringen
+                  </span>
+                </div>
               </div>
             </Link>
           </div>
 
-          {isMobile ? (
-            <div className="flex items-center gap-2">
-              <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="p-2 min-h-[44px] min-w-[44px] text-gray-700 hover:text-[#D5B992]"
-                  >
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-              <SheetContent side="right" className="p-0">
-                <div className="flex flex-col space-y-3 p-6">
-                  <div className="flex justify-between items-center mb-6">
-                    <div>
-                      <img
-                        src={kaniouLogo}
-                        alt="KANIOU zilvernaald"
-                        className="h-10"
-                      />
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleCloseSheet}
-                    >
-                      <X className="h-5 w-5" />
-                    </Button>
-                  </div>
-
-                  {/* Mobile Collectie Dropdown */}
-                  <div className="border-b border-neutral-200">
-                    <button
-                      onClick={() => setMobileCollectieOpen(!mobileCollectieOpen)}
-                      className={`w-full flex items-center justify-between py-3 text-base font-body ${
-                        isCollectieActive() ? "text-accent font-medium" : "text-text-dark"
-                      }`}
-                    >
-                      <span>Collectie</span>
-                      <ChevronDown 
-                        className={`w-5 h-5 transition-transform duration-200 ${
-                          mobileCollectieOpen ? "rotate-180" : ""
-                        }`} 
-                      />
-                    </button>
-                    {mobileCollectieOpen && (
-                      <div className="pl-4 pb-3 space-y-2">
-                        {productCategories.map((product) => (
-                          <Link key={product.href} href={product.href}>
-                            <a
-                              className={`block py-2 text-sm ${
-                                isActive(product.href)
-                                  ? "text-accent font-medium"
-                                  : "text-text-dark/80 hover:text-accent"
-                              }`}
-                              onClick={handleMobileNavClick}
-                            >
-                              {product.label}
-                            </a>
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {navItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <a
-                        className={`font-body py-3 border-b border-neutral-200 block text-base ${
-                          isActive(item.href)
-                            ? "text-accent font-medium"
-                            : "text-text-dark"
-                        }`}
-                        onClick={handleMobileNavClick}
-                      >
-                        {item.label}
-                      </a>
-                    </Link>
-                  ))}
-
-                  <div className="mt-4 space-y-3">
-                    <Link href="/offerte">
-                      <Button
-                        className="w-full bg-[#D0B378] hover:bg-[#C5A565] text-white transition-colors min-h-[44px] text-base"
-                        onClick={handleMobileNavClick}
-                      >
-                        VRIJBLIJVEND OFFERTE
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-            </div>
-          ) : (
-            <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {/* Desktop COLLECTIE Dropdown */}
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
               <NavigationMenu>
-                <NavigationMenuList>
+                <NavigationMenuList className="gap-0">
+                  {/* COLLECTIE with Dropdown */}
                   <NavigationMenuItem>
                     <NavigationMenuTrigger 
-                      className={`font-body text-sm transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#D5B992] ${
+                      className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#C4A35A] ${
                         isCollectieActive()
-                          ? "text-[#D5B992] font-semibold" 
-                          : "text-gray-700 hover:text-[#D5B992]"
+                          ? "text-[#C4A35A]" 
+                          : "text-gray-700 hover:text-[#C4A35A]"
                       }`}
                       data-testid="nav-collectie-dropdown"
                     >
-                      Collectie
+                      COLLECTIE
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="z-50">
-                      <div className="grid grid-cols-2 gap-1 p-4 w-[500px] bg-white shadow-xl rounded-lg">
+                      <div className="grid grid-cols-2 gap-1 p-4 w-[450px] bg-white shadow-xl rounded-lg border border-gray-100">
                         {productsLoading ? (
                           <div className="col-span-2 p-4 text-center text-gray-500">
-                            Producten laden...
+                            Laden...
                           </div>
                         ) : productCategories.length === 0 ? (
                           <div className="col-span-2 p-4 text-center text-gray-500">
-                            Geen producten beschikbaar
+                            Geen producten
                           </div>
                         ) : (
                           productCategories.map((product) => (
                             <Link key={product.href} href={product.href}>
                               <NavigationMenuLink
-                                className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent focus:bg-accent/10 focus:text-accent ${
+                                className={`block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] ${
                                   isActive(product.href)
-                                    ? "bg-accent/5 text-accent font-medium"
-                                    : "text-text-dark"
+                                    ? "bg-[#C4A35A]/5 text-[#C4A35A] font-medium"
+                                    : "text-gray-700"
                                 }`}
                                 onClick={handleNavClick}
                                 data-testid={`nav-product-${product.id}`}
                               >
-                                <div className="text-sm font-medium leading-none">
+                                <div className="text-sm font-medium">
                                   {product.label}
                                 </div>
                               </NavigationMenuLink>
@@ -265,34 +176,355 @@ const Header = () => {
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
+
+                  {/* HORREN with Dropdown indicator */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#C4A35A] ${
+                        isActive("/producten/horren")
+                          ? "text-[#C4A35A]" 
+                          : "text-gray-700 hover:text-[#C4A35A]"
+                      }`}
+                      data-testid="nav-horren-dropdown"
+                    >
+                      HORREN
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="z-50">
+                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100">
+                        <Link href="/producten/horren">
+                          <NavigationMenuLink
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
+                            onClick={handleNavClick}
+                          >
+                            <div className="text-sm font-medium">Bekijk Horren</div>
+                          </NavigationMenuLink>
+                        </Link>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* GORDIJNEN with Dropdown indicator */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#C4A35A] ${
+                        isActive("/producten/gordijnen")
+                          ? "text-[#C4A35A]" 
+                          : "text-gray-700 hover:text-[#C4A35A]"
+                      }`}
+                      data-testid="nav-gordijnen-dropdown"
+                    >
+                      GORDIJNEN
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="z-50">
+                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100">
+                        <Link href="/producten/gordijnen">
+                          <NavigationMenuLink
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
+                            onClick={handleNavClick}
+                          >
+                            <div className="text-sm font-medium">Bekijk Gordijnen</div>
+                          </NavigationMenuLink>
+                        </Link>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* OPHANGSYSTEMEN with Dropdown indicator */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#C4A35A] ${
+                        isActive("/producten/ophangsystemen")
+                          ? "text-[#C4A35A]" 
+                          : "text-gray-700 hover:text-[#C4A35A]"
+                      }`}
+                      data-testid="nav-ophangsystemen-dropdown"
+                    >
+                      OPHANGSYSTEMEN
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="z-50">
+                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100">
+                        <Link href="/producten/ophangsystemen">
+                          <NavigationMenuLink
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
+                            onClick={handleNavClick}
+                          >
+                            <div className="text-sm font-medium">Bekijk Ophangsystemen</div>
+                          </NavigationMenuLink>
+                        </Link>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* SCREENS with Dropdown indicator */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#C4A35A] ${
+                        isActive("/producten/screens") || isActive("/screens")
+                          ? "text-[#C4A35A]" 
+                          : "text-gray-700 hover:text-[#C4A35A]"
+                      }`}
+                      data-testid="nav-screens-dropdown"
+                    >
+                      SCREENS
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="z-50">
+                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100">
+                        <Link href="/producten/screens-inside">
+                          <NavigationMenuLink
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
+                            onClick={handleNavClick}
+                          >
+                            <div className="text-sm font-medium">Screens Inside</div>
+                          </NavigationMenuLink>
+                        </Link>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* VOUWGORDIJNEN with Dropdown indicator */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger 
+                      className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-[#C4A35A] ${
+                        isActive("/producten/vouwgordijnen")
+                          ? "text-[#C4A35A]" 
+                          : "text-gray-700 hover:text-[#C4A35A]"
+                      }`}
+                      data-testid="nav-vouwgordijnen-dropdown"
+                    >
+                      VOUWGORDIJNEN
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="z-50">
+                      <div className="p-4 w-[300px] bg-white shadow-xl rounded-lg border border-gray-100">
+                        <Link href="/producten/vouwgordijnen">
+                          <NavigationMenuLink
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#C4A35A]/10 hover:text-[#C4A35A] text-gray-700"
+                            onClick={handleNavClick}
+                          >
+                            <div className="text-sm font-medium">Bekijk Vouwgordijnen</div>
+                          </NavigationMenuLink>
+                        </Link>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* HOUTEN SHUTTERS - no dropdown */}
+                  <NavigationMenuItem>
+                    <Link href="/producten/houten-shutters">
+                      <div
+                        className={`font-medium text-xs xl:text-sm px-2 xl:px-3 py-2 transition-colors cursor-pointer ${
+                          isActive("/producten/houten-shutters")
+                            ? "text-[#C4A35A]" 
+                            : "text-gray-700 hover:text-[#C4A35A]"
+                        }`}
+                        onClick={handleNavClick}
+                        data-testid="nav-houten-shutters"
+                      >
+                        HOUTEN SHUTTERS
+                      </div>
+                    </Link>
+                  </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
 
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <div
-                    className={`font-body text-sm transition-colors cursor-pointer ${
-                      isActive(item.href)
-                        ? "text-[#D5B992] font-semibold" 
-                        : "text-gray-700 hover:text-[#D5B992]"
-                    }`}
-                    onClick={handleNavClick}
-                  >
-                    {item.label}
-                  </div>
-                </Link>
-              ))}
-              <div className="flex items-center gap-3">
-                <Link href="/offerte">
-                  <Button 
-                    className="bg-[#D5B992] hover:bg-[#C5A565] text-white text-sm font-medium px-4 py-2 h-10 transition-all duration-300 rounded-md shadow-md hover:shadow-lg"
-                    onClick={handleNavClick}
-                  >
-                    VRIJBLIJVEND OFFERTE
-                  </Button>
-                </Link>
-              </div>
+              {/* CTA Button */}
+              <Link href="/offerte">
+                <Button 
+                  className="bg-[#C4A35A] hover:bg-[#B39245] text-white text-xs xl:text-sm font-semibold px-4 xl:px-6 py-2.5 h-10 transition-all duration-300 rounded-md ml-2"
+                  onClick={handleNavClick}
+                  data-testid="nav-offerte-button"
+                >
+                  OFFERTE AANVRAGEN
+                </Button>
+              </Link>
             </nav>
+          )}
+
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <div className="flex items-center gap-2">
+              <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="p-2 min-h-[44px] min-w-[44px] text-gray-700 hover:text-[#C4A35A]"
+                    data-testid="mobile-menu-button"
+                  >
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="p-0 w-[300px]">
+                  <div className="flex flex-col h-full">
+                    {/* Mobile Menu Header */}
+                    <div className="flex justify-between items-center p-4 border-b border-gray-100">
+                      <div className="flex items-center gap-2">
+                        <div className="flex flex-col">
+                          <span className="text-lg font-bold text-gray-900 leading-none">KANIOU</span>
+                          <span className="text-[9px] text-[#C4A35A] font-medium tracking-wider">zilvernaald</span>
+                        </div>
+                        <div className="h-6 w-px bg-gray-200 mx-1"></div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] text-gray-600 leading-tight">Gordijnen &</span>
+                          <span className="text-[10px] text-gray-600 leading-tight">Zonweringen</span>
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleCloseSheet}
+                        className="h-8 w-8"
+                        data-testid="mobile-menu-close"
+                      >
+                        <X className="h-5 w-5" />
+                      </Button>
+                    </div>
+
+                    {/* Mobile Navigation Items */}
+                    <div className="flex-1 overflow-y-auto p-4">
+                      {/* COLLECTIE */}
+                      <div className="border-b border-gray-100">
+                        <button
+                          onClick={() => setMobileMenuOpen(mobileMenuOpen === 'collectie' ? null : 'collectie')}
+                          className={`w-full flex items-center justify-between py-3 text-sm font-medium ${
+                            isCollectieActive() ? "text-[#C4A35A]" : "text-gray-700"
+                          }`}
+                          data-testid="mobile-nav-collectie"
+                        >
+                          <span>COLLECTIE</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileMenuOpen === 'collectie' ? "rotate-180" : ""}`} />
+                        </button>
+                        {mobileMenuOpen === 'collectie' && (
+                          <div className="pl-4 pb-3 space-y-1">
+                            {productCategories.map((product) => (
+                              <Link key={product.href} href={product.href}>
+                                <a
+                                  className={`block py-2 text-sm ${
+                                    isActive(product.href) ? "text-[#C4A35A] font-medium" : "text-gray-600"
+                                  }`}
+                                  onClick={handleMobileNavClick}
+                                >
+                                  {product.label}
+                                </a>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* HORREN */}
+                      <div className="border-b border-gray-100">
+                        <Link href="/producten/horren">
+                          <a
+                            className={`block py-3 text-sm font-medium ${
+                              isActive("/producten/horren") ? "text-[#C4A35A]" : "text-gray-700"
+                            }`}
+                            onClick={handleMobileNavClick}
+                          >
+                            HORREN
+                          </a>
+                        </Link>
+                      </div>
+
+                      {/* GORDIJNEN */}
+                      <div className="border-b border-gray-100">
+                        <Link href="/producten/gordijnen">
+                          <a
+                            className={`block py-3 text-sm font-medium ${
+                              isActive("/producten/gordijnen") ? "text-[#C4A35A]" : "text-gray-700"
+                            }`}
+                            onClick={handleMobileNavClick}
+                          >
+                            GORDIJNEN
+                          </a>
+                        </Link>
+                      </div>
+
+                      {/* OPHANGSYSTEMEN */}
+                      <div className="border-b border-gray-100">
+                        <Link href="/producten/ophangsystemen">
+                          <a
+                            className={`block py-3 text-sm font-medium ${
+                              isActive("/producten/ophangsystemen") ? "text-[#C4A35A]" : "text-gray-700"
+                            }`}
+                            onClick={handleMobileNavClick}
+                          >
+                            OPHANGSYSTEMEN
+                          </a>
+                        </Link>
+                      </div>
+
+                      {/* SCREENS */}
+                      <div className="border-b border-gray-100">
+                        <button
+                          onClick={() => setMobileMenuOpen(mobileMenuOpen === 'screens' ? null : 'screens')}
+                          className={`w-full flex items-center justify-between py-3 text-sm font-medium ${
+                            isActive("/producten/screens") ? "text-[#C4A35A]" : "text-gray-700"
+                          }`}
+                        >
+                          <span>SCREENS</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileMenuOpen === 'screens' ? "rotate-180" : ""}`} />
+                        </button>
+                        {mobileMenuOpen === 'screens' && (
+                          <div className="pl-4 pb-3">
+                            <Link href="/producten/screens-inside">
+                              <a
+                                className={`block py-2 text-sm ${
+                                  isActive("/producten/screens-inside") ? "text-[#C4A35A] font-medium" : "text-gray-600"
+                                }`}
+                                onClick={handleMobileNavClick}
+                              >
+                                Screens Inside
+                              </a>
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* VOUWGORDIJNEN */}
+                      <div className="border-b border-gray-100">
+                        <Link href="/producten/vouwgordijnen">
+                          <a
+                            className={`block py-3 text-sm font-medium ${
+                              isActive("/producten/vouwgordijnen") ? "text-[#C4A35A]" : "text-gray-700"
+                            }`}
+                            onClick={handleMobileNavClick}
+                          >
+                            VOUWGORDIJNEN
+                          </a>
+                        </Link>
+                      </div>
+
+                      {/* HOUTEN SHUTTERS */}
+                      <div className="border-b border-gray-100">
+                        <Link href="/producten/houten-shutters">
+                          <a
+                            className={`block py-3 text-sm font-medium ${
+                              isActive("/producten/houten-shutters") ? "text-[#C4A35A]" : "text-gray-700"
+                            }`}
+                            onClick={handleMobileNavClick}
+                          >
+                            HOUTEN SHUTTERS
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Mobile CTA */}
+                    <div className="p-4 border-t border-gray-100">
+                      <Link href="/offerte">
+                        <Button
+                          className="w-full bg-[#C4A35A] hover:bg-[#B39245] text-white font-semibold py-3 h-12"
+                          onClick={handleMobileNavClick}
+                          data-testid="mobile-nav-offerte"
+                        >
+                          OFFERTE AANVRAGEN
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           )}
         </div>
       </Container>

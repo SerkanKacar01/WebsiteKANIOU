@@ -10,7 +10,7 @@
     "noEmit": true,
     "module": "ESNext",
     "strict": false,
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": ["es2015", "dom", "dom.iterable"],
     "jsx": "preserve",
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,

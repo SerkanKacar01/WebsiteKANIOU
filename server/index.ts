@@ -5,6 +5,30 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
 
+// Validate environment variables before starting
+function validateEnvironment() {
+  const requiredEnvVars = ['DATABASE_URL'];
+  const missingVars = requiredEnvVars.filter(v => !process.env[v]);
+  
+  if (missingVars.length > 0) {
+    console.error(`❌ FATAL: Missing required environment variables: ${missingVars.join(', ')}`);
+    console.error('Deployment cannot proceed without these variables configured in your Deployments settings.');
+    process.exit(1);
+  }
+  
+  // Verify database credentials if available
+  const dbCredentials = ['PGHOST', 'PGDATABASE', 'PGUSER', 'PGPASSWORD'];
+  const missingDbCreds = dbCredentials.filter(v => !process.env[v]);
+  if (missingDbCreds.length > 0) {
+    console.warn(`⚠️  WARNING: Missing PostgreSQL credentials: ${missingDbCreds.join(', ')}`);
+    console.warn('Using DATABASE_URL connection string instead.');
+  }
+  
+  console.log('✅ Environment validation passed');
+}
+
+validateEnvironment();
+
 const app = express();
 
 // Built-in body parsing middleware for Express 4.16+ and 5.x
@@ -261,19 +285,42 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
+  // For autoscale/Cloud Run deployments, this MUST be 0.0.0.0:5000
   const port = 5000;
+  const host = "0.0.0.0";
   
   // Express 5.x - use app.listen() with proper callback
-  const server = app.listen(port, "0.0.0.0", () => {
-    log(`serving on port ${port}`);
-  });
+  try {
+    const server = app.listen(port, host, () => {
+      log(`✅ Server successfully listening on ${host}:${port}`);
+      log(`🚀 Application ready to handle requests`);
+      console.log(`📋 Server details: NODE_ENV=${process.env.NODE_ENV}, PORT=${port}, HOST=${host}`);
+    });
 
-  // Setup Vite after all other routes to prevent catch-all interference
-  // Serve built files in all environments
-// Serve built files in all environments
-if (app.get("env") === "development") {
-  await setupVite(app, server);
-} else {
-  serveStatic(app);
-}
-})();
+    // Handle server errors
+    server.on('error', (error: any) => {
+      if (error.code === 'EADDRINUSE') {
+        console.error(`❌ FATAL: Port ${port} is already in use`);
+      } else if (error.code === 'EACCES') {
+        console.error(`❌ FATAL: Permission denied listening on port ${port}. Consider using a port >= 1024`);
+      } else {
+        console.error(`❌ FATAL: Server error:`, error);
+      }
+      process.exit(1);
+    });
+
+    // Setup Vite after all other routes to prevent catch-all interference
+    // Serve built files in all environments
+    if (app.get("env") === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+  } catch (error) {
+    console.error('❌ FATAL: Failed to start server:', error);
+    process.exit(1);
+  }
+})().catch(error => {
+  console.error('❌ FATAL: Application initialization failed:', error);
+  process.exit(1);
+});

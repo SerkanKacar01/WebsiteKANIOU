@@ -85,7 +85,7 @@ const LuxuryNavigation = () => {
     <nav 
       className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100/50 shadow-sm"
     >
-      <div className="max-w-[1800px] mx-auto px-8 lg:px-16">
+      <div className="max-w-full mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
           <button 
@@ -101,7 +101,7 @@ const LuxuryNavigation = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-12">
+          <div className="hidden lg:flex items-center space-x-8">
             {/* Collectie Dropdown */}
             <div className="relative group">
               <button

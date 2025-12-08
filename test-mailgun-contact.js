@@ -15,7 +15,6 @@ async function testMailgunDirect() {
 
   console.log(`🔧 Testing Mailgun Direct Integration...`);
   console.log(`📧 Domain: ${DOMAIN}`);
-  console.log(`🔑 API Key: ${API_KEY ? 'Present' : 'Missing'}`);
 
   try {
     const emailData = {

@@ -344,7 +344,7 @@ const LuxuryNavigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t py-8">
+          <div className="lg:hidden bg-white border-t py-8 overflow-y-auto max-h-[calc(100vh-100px)]">
             <div className="flex flex-col space-y-6">
               {/* Mobile Collectie Menu */}
               <div className="px-4">

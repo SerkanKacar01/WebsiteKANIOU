@@ -1,9 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import session from "express-session";
+import ConnectPgSimple from "connect-pg-simple";
 import cookieParser from "cookie-parser";
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
+import { pool } from "./db";
 // Import security classes for ultra-secure tracking
 import { SecureBonnummerGenerator, TrackingSecurityMonitor } from "./storage";
 import {
@@ -64,9 +66,26 @@ export async function registerRoutes(app: Express): Promise<void> {
   const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
   const sessionSecret = process.env.SESSION_SECRET || generateSecureSessionSecret();
   
-  // Modern session configuration for Express 5.x
+  // Get database connection for session storage
+  let sessionStore;
+  try {
+    const PgSession = ConnectPgSimple(session);
+    sessionStore = new PgSession({
+      pool,
+      tableName: 'session',
+      createTableIfMissing: true,
+    });
+    console.log('✅ Using PostgreSQL session store for multi-instance deployment');
+  } catch (error) {
+    console.warn('⚠️  PostgreSQL session store unavailable, falling back to memory store:', error);
+    // Fall back to memory store if database is unavailable
+    sessionStore = new session.MemoryStore();
+  }
+  
+  // Modern session configuration for Express 5.x with database-backed storage
   app.use(
     session({
+      store: sessionStore,
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,

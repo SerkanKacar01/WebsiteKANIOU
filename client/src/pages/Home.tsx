@@ -31,6 +31,7 @@ const LuxuryNavigation = () => {
   const [isHorrenDropdownOpen, setIsHorrenDropdownOpen] = React.useState(false);
   const [isGordijnenDropdownOpen, setIsGordijnenDropdownOpen] = React.useState(false);
   const [isOphangsystemenDropdownOpen, setIsOphangsystemenDropdownOpen] = React.useState(false);
+  const [isScreensDropdownOpen, setIsScreensDropdownOpen] = React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -73,6 +74,11 @@ const LuxuryNavigation = () => {
   const ophangsystemenLinks = [
     { name: "Gordijn rails", path: "/producten/gordijnrails" },
     { name: "Gordijn roedes", path: "/producten/gordijnroedes" },
+  ];
+
+  const screensLinks = [
+    { name: "Inside", path: "/producten/screens-inside" },
+    { name: "Outside", path: "/producten/screens-outside" },
   ];
 
   return (
@@ -244,6 +250,43 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
+            {/* Screens Dropdown */}
+            <div className="relative group">
+              <button
+                onMouseEnter={() => setIsScreensDropdownOpen(true)}
+                onMouseLeave={() => setIsScreensDropdownOpen(false)}
+                className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative flex items-center gap-2"
+                data-testid="nav-link-screens"
+              >
+                Screens
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isScreensDropdownOpen && (
+                <div 
+                  onMouseEnter={() => setIsScreensDropdownOpen(true)}
+                  onMouseLeave={() => setIsScreensDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-0 pt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
+                >
+                  {screensLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsScreensDropdownOpen(false);
+                      }}
+                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
+                      data-testid={`nav-screens-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Vouwgordijnen Link */}
             <button
               onClick={() => setLocation("/producten/vouwgordijnen")}
@@ -376,6 +419,26 @@ const LuxuryNavigation = () => {
                       }}
                       className="text-left text-sm text-gray-600 hover:text-black transition-colors"
                       data-testid={`mobile-ophangsystemen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                    >
+                      {product.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile Screens Menu */}
+              <div className="px-4">
+                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Screens</div>
+                <div className="flex flex-col space-y-2 pl-4">
+                  {screensLinks.map((product) => (
+                    <button
+                      key={product.name}
+                      onClick={() => {
+                        setLocation(product.path);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
+                      data-testid={`mobile-screens-${product.name.toLowerCase().replace(/\s/g, '-')}`}
                     >
                       {product.name}
                     </button>

@@ -12,7 +12,6 @@ async function emailDiagnostic() {
   // 1. Check environment variables
   console.log('\n📋 Step 1: Environment Variables Check');
   console.log('MAILGUN_DOMAIN:', process.env.MAILGUN_DOMAIN || 'kaniou.be (default)');
-  console.log('MAILGUN_API_KEY:', process.env.MAILGUN_API_KEY ? 'SET ✅' : 'NOT SET ❌');
   
   // 2. Test quote form submission with enhanced logging
   console.log('\n📤 Step 2: Quote Form Submission Test');

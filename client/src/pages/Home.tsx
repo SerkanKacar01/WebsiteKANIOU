@@ -188,6 +188,49 @@ const TextReveal = ({ children, className = "", delay = 0 }: { children: React.R
   );
 };
 
+// Animated Stat Card with Counter
+const AnimatedStatCard = ({ value, suffix = "", label, delay = 0 }: { value: number; suffix?: string; label: string; delay?: number }) => {
+  const { count, ref } = useCountUp(value, 2000);
+  
+  return (
+    <div 
+      ref={ref}
+      className="group text-center p-8 bg-gray-50 hover:bg-white transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <div 
+        className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500" 
+        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+      >
+        {count}{suffix}
+      </div>
+      <div className="text-xs tracking-widest uppercase text-gray-600">
+        {label}
+      </div>
+    </div>
+  );
+};
+
+// Static Stat Card (for non-numeric values like stars)
+const StaticStatCard = ({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) => {
+  return (
+    <div 
+      className="group text-center p-8 bg-gray-50 hover:bg-white transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <div 
+        className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500" 
+        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+      >
+        {value}
+      </div>
+      <div className="text-xs tracking-widest uppercase text-gray-600">
+        {label}
+      </div>
+    </div>
+  );
+};
+
 // Luxury Navigation Component - Minimal & Elegant with Enhanced Hover
 const LuxuryNavigation = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -817,8 +860,9 @@ const Home = () => {
         {/* BRAND STATEMENT - Extreme Whitespace with Scroll Animation */}
         <section 
           ref={brandRef}
-          className="py-32 md:py-48 bg-white overflow-hidden"
+          className="py-32 md:py-48 bg-white overflow-hidden relative"
         >
+          <FloatingElements />
           <div 
             className={`max-w-5xl mx-auto px-6 text-center transition-all duration-1200 ${
               brandVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -865,7 +909,7 @@ const Home = () => {
               <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto"></div>
             </div>
 
-            {/* 2-Column Grid with Stagger */}
+            {/* 2-Column Grid with Stagger & 3D Tilt Effect */}
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
               {[
                 { name: "Houten jaloezieën", desc: "Natuurlijke warmte", path: "/producten/houten-jaloezieen" },
@@ -873,46 +917,50 @@ const Home = () => {
                 { name: "Plissé gordijnen", desc: "Veelzijdige perfectie", path: "/producten/plisse" },
                 { name: "Overgordijnen", desc: "Tijdloze luxe", path: "/producten/overgordijnen" },
               ].map((product, index) => (
-                <button
+                <TiltCard 
                   key={product.name}
-                  onClick={() => setLocation(product.path)}
-                  className={`group relative overflow-hidden bg-white p-12 lg:p-16 text-left transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 ${
+                  className={`cursor-pointer ${
                     productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                   }`}
-                  style={{
-                    transitionDelay: productsVisible ? `${index * 150}ms` : '0ms'
-                  }}
-                  data-testid={`button-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                  onClick={() => setLocation(product.path)}
                 >
-                  <div className="relative z-10">
-                    <div 
-                      className="text-6xl md:text-7xl font-light mb-6 text-gray-200 group-hover:text-gray-300 transition-all duration-700 group-hover:scale-110" 
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif"
-                      }}
-                    >
-                      {String(index + 1).padStart(2, '0')}
+                  <div
+                    className="group relative overflow-hidden bg-white p-12 lg:p-16 text-left transition-all duration-700 hover:shadow-2xl rounded-sm"
+                    style={{
+                      transitionDelay: productsVisible ? `${index * 150}ms` : '0ms'
+                    }}
+                    data-testid={`button-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                  >
+                    <div className="relative z-10">
+                      <div 
+                        className="text-6xl md:text-7xl font-light mb-6 text-gray-200 group-hover:text-gray-300 transition-all duration-700 group-hover:scale-110" 
+                        style={{
+                          fontFamily: "'Cormorant Garamond', serif"
+                        }}
+                      >
+                        {String(index + 1).padStart(2, '0')}
+                      </div>
+                      <h3 
+                        className="text-3xl md:text-4xl font-light text-black mb-3 group-hover:text-gray-900 transition-colors duration-500" 
+                        style={{
+                          fontFamily: "'Cormorant Garamond', serif",
+                          letterSpacing: '-0.01em'
+                        }}
+                      >
+                        {product.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm tracking-wide uppercase mb-8">{product.desc}</p>
+                      <div className="inline-flex items-center text-black text-xs tracking-widest uppercase group-hover:translate-x-2 transition-transform duration-500">
+                        Ontdekken
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
                     </div>
-                    <h3 
-                      className="text-3xl md:text-4xl font-light text-black mb-3 group-hover:text-gray-900 transition-colors duration-500" 
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        letterSpacing: '-0.01em'
-                      }}
-                    >
-                      {product.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm tracking-wide uppercase mb-8">{product.desc}</p>
-                    <div className="inline-flex items-center text-black text-xs tracking-widest uppercase group-hover:translate-x-2 transition-transform duration-500">
-                      Ontdekken
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{
+                      boxShadow: 'inset 0 0 30px rgba(0,0,0,0.02)'
+                    }}></div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{
-                    boxShadow: 'inset 0 0 30px rgba(0,0,0,0.02)'
-                  }}></div>
-                </button>
+                </TiltCard>
               ))}
             </div>
 
@@ -977,38 +1025,16 @@ const Home = () => {
                 </button>
               </div>
 
-              {/* Right: Stats with Stagger */}
+              {/* Right: Stats with Stagger & Counter Animation */}
               <div 
                 className={`grid grid-cols-2 gap-8 transition-all duration-1200 delay-300 ${
                   craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
                 }`}
               >
-                {[
-                  { number: "30+", label: "Jaren ervaring" },
-                  { number: "3500+", label: "Projecten" },
-                  { number: "100%", label: "Maatwerk" },
-                  { number: "5★", label: "Klantbeoordeling" },
-                ].map((stat, index) => (
-                  <div 
-                    key={stat.label} 
-                    className="group text-center p-8 bg-gray-50 hover:bg-white transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
-                    style={{
-                      transitionDelay: craftsmanshipVisible ? `${index * 100}ms` : '0ms'
-                    }}
-                  >
-                    <div 
-                      className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500" 
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif"
-                      }}
-                    >
-                      {stat.number}
-                    </div>
-                    <div className="text-xs tracking-widest uppercase text-gray-600">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
+                <AnimatedStatCard value={30} suffix="+" label="Jaren ervaring" delay={0} />
+                <AnimatedStatCard value={3500} suffix="+" label="Projecten" delay={100} />
+                <AnimatedStatCard value={100} suffix="%" label="Maatwerk" delay={200} />
+                <StaticStatCard value="5★" label="Klantbeoordeling" delay={300} />
               </div>
             </div>
           </div>
@@ -1205,29 +1231,38 @@ const Home = () => {
           {/* Subtle Background Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 opacity-50"></div>
           
+          {/* Animated floating orbs */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl animate-float-slow" />
+            <div className="absolute bottom-20 right-20 w-48 h-48 bg-gradient-to-br from-white/3 to-transparent rounded-full blur-2xl animate-float-medium" />
+          </div>
+          
           <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <h2 
-              className="text-5xl md:text-7xl font-light mb-12 leading-tight hover:scale-105 transition-transform duration-700" 
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                letterSpacing: '-0.02em',
-                textShadow: '0 0 40px rgba(255,255,255,0.1)'
-              }}
-            >
-              Klaar om te beginnen?
-            </h2>
-            <p className="text-lg md:text-xl text-white/70 font-light mb-16 max-w-2xl mx-auto">
-              Vraag een vrijblijvende offerte aan en ontdek wat wij voor u kunnen betekenen.
-            </p>
-            <button
+            <TextReveal>
+              <h2 
+                className="text-5xl md:text-7xl font-light mb-12 leading-tight hover:scale-105 transition-transform duration-700" 
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  letterSpacing: '-0.02em',
+                  textShadow: '0 0 40px rgba(255,255,255,0.1)'
+                }}
+              >
+                Klaar om te beginnen?
+              </h2>
+            </TextReveal>
+            <TextReveal delay={200}>
+              <p className="text-lg md:text-xl text-white/70 font-light mb-16 max-w-2xl mx-auto">
+                Vraag een vrijblijvende offerte aan en ontdek wat wij voor u kunnen betekenen.
+              </p>
+            </TextReveal>
+            <MagneticButton
               onClick={() => setLocation("/quote")}
-              className="group inline-flex items-center px-12 py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:-translate-y-1 relative overflow-hidden"
-              data-testid="button-cta-quote"
+              className="group inline-flex items-center px-12 py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:-translate-y-1 relative overflow-hidden animate-glow-pulse"
             >
               <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Offerte aanvragen</span>
               <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-            </button>
+            </MagneticButton>
           </div>
         </section>
       </div>

@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { ArrowRight, ChevronDown, Star, ExternalLink } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronDown, ChevronLeft, ChevronRight, Star, ExternalLink, MapPin, Phone, Mail, Clock, Home as HomeIcon, Ruler, Wrench, Search } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
 import gallery1Src from "@assets/IMG_9192.jpeg";
@@ -20,12 +21,10 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-// Collage images array - using existing gallery images
 const collageImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery1, gallery2, gallery3];
 
 // ========== ANIMATION HOOKS & COMPONENTS ==========
 
-// Counter Animation Hook - Animates numbers from 0 to target
 const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolean = true) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -70,7 +69,6 @@ const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolea
   return { count, ref };
 };
 
-// 3D Tilt Card Component
 const TiltCard = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg)');
@@ -115,7 +113,6 @@ const TiltCard = ({ children, className = "", onClick }: { children: React.React
   );
 };
 
-// Magnetic Button Component
 const MagneticButton = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -146,7 +143,6 @@ const MagneticButton = ({ children, className = "", onClick }: { children: React
   );
 };
 
-// Floating Decorative Elements Component
 const FloatingElements = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -158,7 +154,6 @@ const FloatingElements = () => {
   );
 };
 
-// Text Reveal Component
 const TextReveal = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -188,7 +183,6 @@ const TextReveal = ({ children, className = "", delay = 0 }: { children: React.R
   );
 };
 
-// Animated Stat Card with Counter
 const AnimatedStatCard = ({ value, suffix = "", label, delay = 0 }: { value: number; suffix?: string; label: string; delay?: number }) => {
   const { count, ref } = useCountUp(value, 2000);
   
@@ -211,7 +205,6 @@ const AnimatedStatCard = ({ value, suffix = "", label, delay = 0 }: { value: num
   );
 };
 
-// Static Stat Card (for non-numeric values like stars)
 const StaticStatCard = ({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) => {
   return (
     <div 
@@ -231,7 +224,562 @@ const StaticStatCard = ({ value, label, delay = 0 }: { value: string; label: str
   );
 };
 
-// Luxury Navigation Component - Minimal & Elegant with Enhanced Hover
+// ========== HORIZONTAL PRODUCT CAROUSEL ==========
+const ProductCarousel = ({ setLocation }: { setLocation: (path: string) => void }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const products = [
+    { name: "Kunststof Lamellen", image: gallery1, path: "/producten/kunststof-lamellen" },
+    { name: "Textiel Lamellen", image: gallery2, path: "/producten/textiel-lamellen" },
+    { name: "Rolgordijnen", image: gallery3, path: "/producten/rolgordijnen" },
+    { name: "Duo Rolgordijnen", image: gallery4, path: "/producten/duo-rolgordijnen" },
+    { name: "Plissés", image: gallery5, path: "/producten/plisse" },
+    { name: "Houten Jaloezieën", image: gallery6, path: "/producten/houten-jaloezieen" },
+    { name: "Aluminium Jaloezieën", image: gallery1, path: "/producten/kunststof-jaloezieen" },
+    { name: "Overgordijnen", image: interiorImage, path: "/producten/overgordijnen" },
+    { name: "Vouwgordijnen", image: gallery2, path: "/producten/vouwgordijnen" },
+    { name: "Houten Shutters", image: gallery3, path: "/producten/houten-shutters" },
+  ];
+
+  const checkScroll = useCallback(() => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', checkScroll);
+      return () => scrollElement.removeEventListener('scroll', checkScroll);
+    }
+  }, [checkScroll]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 360;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  return (
+    <div className="relative">
+      {canScrollLeft && (
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-110"
+          data-testid="carousel-left"
+        >
+          <ChevronLeft className="w-6 h-6 text-gray-800" />
+        </button>
+      )}
+      
+      {canScrollRight && (
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-110"
+          data-testid="carousel-right"
+        >
+          <ChevronRight className="w-6 h-6 text-gray-800" />
+        </button>
+      )}
+
+      <div 
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-8"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {products.map((product, index) => (
+          <TiltCard
+            key={product.name}
+            className="flex-shrink-0 w-[320px] cursor-pointer"
+            onClick={() => setLocation(product.path)}
+          >
+            <div className="group relative overflow-hidden rounded-lg bg-white shadow-md hover:shadow-2xl transition-all duration-500">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="p-6 bg-white">
+                <h3 
+                  className="text-lg font-medium text-gray-900 group-hover:text-black transition-colors"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {product.name}
+                </h3>
+              </div>
+            </div>
+          </TiltCard>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ========== 3-STEP SERVICE SECTION ==========
+const ServiceSteps = () => {
+  const steps = [
+    {
+      number: "1",
+      icon: HomeIcon,
+      title: "Bezoek onze showroom",
+      description: "Kom langs voor gratis persoonlijk advies en bekijk onze uitgebreide collectie"
+    },
+    {
+      number: "2",
+      icon: Ruler,
+      title: "Kies uw perfecte stijl",
+      description: "Selecteer het product, de kleur en bediening die uw interieur compleet maken"
+    },
+    {
+      number: "3",
+      icon: Wrench,
+      title: "Wij doen de rest",
+      description: "Onze specialisten komen opmeten en installeren uw raamdecoratie vakkundig"
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 
+            className="text-4xl md:text-5xl font-light text-black mb-4"
+            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+          >
+            Hoe onze service werkt
+          </h2>
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto" />
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          {steps.map((step, index) => (
+            <div 
+              key={index}
+              className="text-center group"
+            >
+              <div className="relative mb-8">
+                <div className="w-20 h-20 mx-auto bg-black text-white rounded-full flex items-center justify-center text-3xl font-light group-hover:scale-110 transition-transform duration-500" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  {step.number}
+                </div>
+                {index < steps.length - 1 && (
+                  <div className="hidden md:block absolute top-10 left-[60%] w-full h-px bg-gradient-to-r from-gray-300 to-transparent" />
+                )}
+              </div>
+              <step.icon className="w-8 h-8 mx-auto mb-4 text-gray-600" />
+              <h3 
+                className="text-xl font-medium text-black mb-3"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                {step.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ========== INSPIRATION GALLERY (LARGE IMAGES) ==========
+const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => void }) => {
+  const inspirations = [
+    { image: gallery1, title: "Houten Jaloezieën", subtitle: "Natuurlijke warmte in elk interieur", path: "/producten/houten-jaloezieen" },
+    { image: gallery2, title: "Plissé Gordijnen", subtitle: "Veelzijdig en stijlvol", path: "/producten/plisse" },
+    { image: gallery3, title: "Rolgordijnen", subtitle: "Modern en functioneel", path: "/producten/rolgordijnen" },
+    { image: interiorImage, title: "Overgordijnen", subtitle: "Tijdloze elegantie", path: "/producten/overgordijnen" },
+    { image: gallery4, title: "Duo Rolgordijnen", subtitle: "Het beste van twee werelden", path: "/producten/duo-rolgordijnen" },
+    { image: gallery5, title: "Textiel Lamellen", subtitle: "Zachte lichtfiltering", path: "/producten/textiel-lamellen" },
+  ];
+
+  return (
+    <section className="py-24 bg-white">
+      <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
+        <div className="text-center mb-16">
+          <h2 
+            className="text-4xl md:text-5xl font-light text-black mb-4"
+            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+          >
+            Laat je inspireren
+          </h2>
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4" />
+          <p className="text-gray-600">Ontdek de mogelijkheden voor uw interieur</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {inspirations.map((item, index) => (
+            <div 
+              key={index}
+              className="group relative overflow-hidden cursor-pointer aspect-[16/10] rounded-lg"
+              onClick={() => setLocation(item.path)}
+              data-testid={`inspiration-${index + 1}`}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <h3 
+                  className="text-2xl font-light mb-1 group-hover:translate-x-2 transition-transform duration-500"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {item.title}
+                </h3>
+                <p className="text-white/80 text-sm">{item.subtitle}</p>
+              </div>
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <ArrowRight className="w-6 h-6 text-white" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ========== SPLIT LAYOUT SECTION ==========
+const SplitSection = ({ 
+  image, 
+  title, 
+  subtitle, 
+  description, 
+  buttonText, 
+  buttonPath, 
+  imageLeft = true,
+  setLocation 
+}: { 
+  image: string; 
+  title: string; 
+  subtitle?: string; 
+  description: string; 
+  buttonText: string; 
+  buttonPath: string; 
+  imageLeft?: boolean;
+  setLocation: (path: string) => void;
+}) => {
+  return (
+    <section className="py-24 bg-white">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+        <div className={`grid lg:grid-cols-2 gap-16 lg:gap-24 items-center ${!imageLeft ? 'lg:grid-flow-col-dense' : ''}`}>
+          <div className={`relative overflow-hidden rounded-lg aspect-square ${!imageLeft ? 'lg:col-start-2' : ''}`}>
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          
+          <div className={!imageLeft ? 'lg:col-start-1' : ''}>
+            {subtitle && (
+              <span className="text-xs tracking-widest uppercase text-gray-500 mb-4 block">{subtitle}</span>
+            )}
+            <h2 
+              className="text-4xl md:text-5xl lg:text-6xl font-light text-black mb-8 leading-tight"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              {title}
+            </h2>
+            <div className="w-16 h-px bg-gradient-to-r from-black/20 to-transparent mb-8" />
+            <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
+              {description}
+            </p>
+            <button
+              onClick={() => setLocation(buttonPath)}
+              className="group inline-flex items-center px-8 py-4 bg-black text-white hover:bg-gray-900 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
+              data-testid={`button-${buttonPath.replace(/\//g, '-')}`}
+            >
+              <span className="text-xs tracking-widest uppercase mr-3">{buttonText}</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ========== IN DE KIJKER / SPOTLIGHT SECTION ==========
+const SpotlightSection = ({ setLocation }: { setLocation: (path: string) => void }) => {
+  const spotlights = [
+    {
+      label: "Nieuw",
+      title: "Duo Rolgordijnen",
+      description: "Combineer privacy met lichtinval - de perfecte balans voor elk moment van de dag",
+      image: gallery4,
+      path: "/producten/duo-rolgordijnen"
+    },
+    {
+      label: "Populair",
+      title: "Houten Shutters",
+      description: "Tijdloze elegantie met perfecte lichtcontrole en isolatie",
+      image: gallery5,
+      path: "/producten/houten-shutters"
+    },
+    {
+      label: "Duurzaam",
+      title: "Textiel Lamellen",
+      description: "Zachte materialen voor een warme uitstraling en optimale lichtfiltering",
+      image: gallery6,
+      path: "/producten/textiel-lamellen"
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-gray-50">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+        <div className="text-center mb-16">
+          <h2 
+            className="text-4xl md:text-5xl font-light text-black mb-4"
+            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+          >
+            In de kijker
+          </h2>
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto" />
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {spotlights.map((item, index) => (
+            <TiltCard
+              key={index}
+              className="cursor-pointer"
+              onClick={() => setLocation(item.path)}
+            >
+              <div className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-black text-white text-xs tracking-widest uppercase">
+                    {item.label}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <h3 
+                    className="text-2xl font-light text-black mb-3 group-hover:text-gray-700 transition-colors"
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    {item.description}
+                  </p>
+                  <div className="inline-flex items-center text-black text-xs tracking-widest uppercase group-hover:translate-x-2 transition-transform duration-500">
+                    Ontdekken
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </div>
+                </div>
+              </div>
+            </TiltCard>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ========== SHOWROOM FINDER SECTION ==========
+const ShowroomSection = () => {
+  return (
+    <section className="py-24 bg-white">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 
+              className="text-4xl md:text-5xl font-light text-black mb-8"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Bezoek onze showroom voor advies op maat
+            </h2>
+            <div className="w-16 h-px bg-gradient-to-r from-black/20 to-transparent mb-8" />
+            <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
+              Onze experts helpen je graag bij het vinden van de perfecte raamdecoratie voor jouw woning. 
+              Kom langs in onze showroom voor persoonlijk advies en bekijk onze uitgebreide collectie.
+            </p>
+            
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start gap-4">
+                <MapPin className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-900">KANIOU Zilvernaald</p>
+                  <p className="text-gray-600">Genkersteenweg 508, 3500 Hasselt</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <Phone className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                <a href="tel:+32470592914" className="text-gray-600 hover:text-black transition-colors">
+                  +32 470 59 29 14
+                </a>
+              </div>
+              <div className="flex items-center gap-4">
+                <Mail className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                <a href="mailto:info@kaniou.be" className="text-gray-600 hover:text-black transition-colors">
+                  info@kaniou.be
+                </a>
+              </div>
+              <div className="flex items-start gap-4">
+                <Clock className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
+                <div className="text-gray-600">
+                  <p>Ma-Vr: 09:00 - 18:00</p>
+                  <p>Za: 10:00 - 17:00</p>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-4 bg-black text-white hover:bg-gray-900 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
+              data-testid="button-showroom-map"
+            >
+              <span className="text-xs tracking-widest uppercase mr-3">Bekijk op kaart</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
+          <div className="relative rounded-lg overflow-hidden aspect-square bg-gray-100">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.6!2d5.6939832!3d50.9886857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c0c5d2ad242f0f%3A0x1d9efc14cec41751!2sKANIOU%20bvba%20ZILVERNAALD!5e0!3m2!1snl!2sbe!4v1699000000000!5m2!1snl!2sbe"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="KANIOU Showroom Location"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ========== BROCHURE REQUEST FORM ==========
+const BrochureForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    newsletter: false
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  return (
+    <section className="py-24 bg-gray-900 text-white">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
+            <img
+              src={gallery6}
+              alt="KANIOU Brochure"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          </div>
+
+          <div>
+            <h2 
+              className="text-4xl md:text-5xl font-light mb-6"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Vraag onze brochure aan en laat je inspireren!
+            </h2>
+            <div className="w-16 h-px bg-gradient-to-r from-white/30 to-transparent mb-8" />
+            
+            {submitted ? (
+              <div className="bg-white/10 rounded-lg p-8 text-center">
+                <div className="text-2xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Bedankt!
+                </div>
+                <p className="text-white/80">
+                  Je ontvangt de brochure zo snel mogelijk in je mailbox.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm tracking-widest uppercase mb-2 text-white/80">
+                    Naam
+                  </label>
+                  <Input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
+                    placeholder="Uw naam"
+                    required
+                    data-testid="input-brochure-name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm tracking-widest uppercase mb-2 text-white/80">
+                    E-mailadres
+                  </label>
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
+                    placeholder="uw@email.com"
+                    required
+                    data-testid="input-brochure-email"
+                  />
+                </div>
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="newsletter"
+                    checked={formData.newsletter}
+                    onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+                    className="mt-1"
+                    data-testid="checkbox-brochure-newsletter"
+                  />
+                  <label htmlFor="newsletter" className="text-sm text-white/70 leading-relaxed">
+                    Ja, ik wil de nieuwsbrief ontvangen met informatie over promoties, trends en nieuwe collecties.
+                  </label>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500 text-xs tracking-widest uppercase font-medium"
+                  data-testid="button-brochure-submit"
+                >
+                  Verstuur
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ========== LUXURY NAVIGATION ==========
 const LuxuryNavigation = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -249,9 +797,6 @@ const LuxuryNavigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const navLinks = [];
-
 
   const productLinks = [
     { name: "Kunststof lamellen", path: "/producten/kunststof-lamellen" },
@@ -290,27 +835,18 @@ const LuxuryNavigation = () => {
   ];
 
   return (
-    <nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100/50 shadow-sm"
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100/50 shadow-sm">
       <div className="max-w-full mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20 lg:h-24">
-          {/* Logo */}
           <button 
             onClick={() => setLocation("/")}
             className="transition-all duration-500 hover:opacity-70 hover:scale-105"
             data-testid="nav-logo"
           >
-            <img
-              src={kaniouLogo}
-              alt="KANIOU"
-              className="h-10 lg:h-12 w-auto"
-            />
+            <img src={kaniouLogo} alt="KANIOU" className="h-10 lg:h-12 w-auto" />
           </button>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            {/* Collectie Dropdown */}
             <div className="relative group">
               <button
                 onMouseEnter={() => setIsCollectieDropdownOpen(true)}
@@ -322,8 +858,6 @@ const LuxuryNavigation = () => {
                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
-
-              {/* Dropdown Menu */}
               {isCollectieDropdownOpen && (
                 <div 
                   onMouseEnter={() => setIsCollectieDropdownOpen(true)}
@@ -347,7 +881,6 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
-            {/* Horren Dropdown */}
             <div className="relative group">
               <button
                 onMouseEnter={() => setIsHorrenDropdownOpen(true)}
@@ -359,8 +892,6 @@ const LuxuryNavigation = () => {
                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
-
-              {/* Dropdown Menu */}
               {isHorrenDropdownOpen && (
                 <div 
                   onMouseEnter={() => setIsHorrenDropdownOpen(true)}
@@ -384,7 +915,6 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
-            {/* Gordijnen Dropdown */}
             <div className="relative group">
               <button
                 onMouseEnter={() => setIsGordijnenDropdownOpen(true)}
@@ -396,8 +926,6 @@ const LuxuryNavigation = () => {
                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
-
-              {/* Dropdown Menu */}
               {isGordijnenDropdownOpen && (
                 <div 
                   onMouseEnter={() => setIsGordijnenDropdownOpen(true)}
@@ -421,7 +949,6 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
-            {/* Ophangsystemen Dropdown */}
             <div className="relative group">
               <button
                 onMouseEnter={() => setIsOphangsystemenDropdownOpen(true)}
@@ -433,8 +960,6 @@ const LuxuryNavigation = () => {
                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
-
-              {/* Dropdown Menu */}
               {isOphangsystemenDropdownOpen && (
                 <div 
                   onMouseEnter={() => setIsOphangsystemenDropdownOpen(true)}
@@ -458,7 +983,6 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
-            {/* Screens Dropdown */}
             <div className="relative group">
               <button
                 onMouseEnter={() => setIsScreensDropdownOpen(true)}
@@ -470,8 +994,6 @@ const LuxuryNavigation = () => {
                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
-
-              {/* Dropdown Menu */}
               {isScreensDropdownOpen && (
                 <div 
                   onMouseEnter={() => setIsScreensDropdownOpen(true)}
@@ -495,7 +1017,6 @@ const LuxuryNavigation = () => {
               )}
             </div>
 
-            {/* Vouwgordijnen Link */}
             <button
               onClick={() => setLocation("/producten/vouwgordijnen")}
               className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative group"
@@ -505,7 +1026,6 @@ const LuxuryNavigation = () => {
               <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
             </button>
 
-            {/* Houten Shutters Link */}
             <button
               onClick={() => setLocation("/producten/houten-shutters")}
               className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative group"
@@ -514,21 +1034,8 @@ const LuxuryNavigation = () => {
               Houten Shutters
               <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
             </button>
-
-            {navLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => setLocation(link.path)}
-                className="text-sm tracking-widest uppercase text-gray-700 hover:text-black transition-all duration-500 relative group"
-                data-testid={`nav-link-${link.name.toLowerCase()}`}
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
-              </button>
-            ))}
           </div>
 
-          {/* CTA Button - Enhanced Hover */}
           <div className="hidden lg:block">
             <button
               onClick={() => setLocation("/quote")}
@@ -540,162 +1047,42 @@ const LuxuryNavigation = () => {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
-            className="lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden w-10 h-10 flex items-center justify-center"
             data-testid="mobile-menu-toggle"
           >
-            <span className="text-2xl">{isMobileMenuOpen ? "×" : "☰"}</span>
+            <div className="w-6 flex flex-col gap-1.5">
+              <span className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </div>
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t py-8 overflow-y-auto max-h-[calc(100vh-100px)]">
-            <div className="flex flex-col space-y-6">
-              {/* Mobile Collectie Menu */}
-              <div className="px-4">
-                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Collectie</div>
-                <div className="flex flex-col space-y-2 pl-4">
-                  {productLinks.map((product) => (
-                    <button
-                      key={product.name}
-                      onClick={() => {
-                        setLocation(product.path);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
-                      data-testid={`mobile-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
-                    >
-                      {product.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile Horren Menu */}
-              <div className="px-4">
-                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Horren</div>
-                <div className="flex flex-col space-y-2 pl-4">
-                  {horrenLinks.map((product) => (
-                    <button
-                      key={product.name}
-                      onClick={() => {
-                        setLocation(product.path);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
-                      data-testid={`mobile-horren-${product.name.toLowerCase().replace(/\s/g, '-')}`}
-                    >
-                      {product.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile Gordijnen Menu */}
-              <div className="px-4">
-                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Gordijnen</div>
-                <div className="flex flex-col space-y-2 pl-4">
-                  {gordijnenLinks.map((product) => (
-                    <button
-                      key={product.name}
-                      onClick={() => {
-                        setLocation(product.path);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
-                      data-testid={`mobile-gordijnen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
-                    >
-                      {product.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile Ophangsystemen Menu */}
-              <div className="px-4">
-                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Ophangsystemen</div>
-                <div className="flex flex-col space-y-2 pl-4">
-                  {ophangsystemenLinks.map((product) => (
-                    <button
-                      key={product.name}
-                      onClick={() => {
-                        setLocation(product.path);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
-                      data-testid={`mobile-ophangsystemen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
-                    >
-                      {product.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile Screens Menu */}
-              <div className="px-4">
-                <div className="text-sm tracking-widest uppercase text-gray-700 font-semibold mb-3">Screens</div>
-                <div className="flex flex-col space-y-2 pl-4">
-                  {screensLinks.map((product) => (
-                    <button
-                      key={product.name}
-                      onClick={() => {
-                        setLocation(product.path);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-left text-sm text-gray-600 hover:text-black transition-colors"
-                      data-testid={`mobile-screens-${product.name.toLowerCase().replace(/\s/g, '-')}`}
-                    >
-                      {product.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile Vouwgordijnen Link */}
+          <div className="lg:hidden bg-white border-t border-gray-100 py-6 animate-[fadeInUp_0.3s_ease-out]">
+            <div className="space-y-4">
               <button
-                onClick={() => {
-                  setLocation("/producten/vouwgordijnen");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="text-left text-sm tracking-widest uppercase text-gray-700 px-4"
-                data-testid="mobile-nav-vouwgordijnen"
+                onClick={() => { setLocation("/producten/overgordijnen"); setIsMobileMenuOpen(false); }}
+                className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
               >
-                Vouwgordijnen
+                Collectie
               </button>
-
-              {/* Mobile Houten Shutters Link */}
               <button
-                onClick={() => {
-                  setLocation("/producten/houten-shutters");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="text-left text-sm tracking-widest uppercase text-gray-700 px-4"
-                data-testid="mobile-nav-houten-shutters"
+                onClick={() => { setLocation("/producten/horren"); setIsMobileMenuOpen(false); }}
+                className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
               >
-                Houten Shutters
+                Horren
               </button>
-
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => {
-                    setLocation(link.path);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="text-left text-sm tracking-widest uppercase text-gray-700 px-4"
-                  data-testid={`mobile-nav-${link.name.toLowerCase()}`}
-                >
-                  {link.name}
-                </button>
-              ))}
               <button
-                onClick={() => {
-                  setLocation("/quote");
-                  setIsMobileMenuOpen(false);
-                }}
+                onClick={() => { setLocation("/producten/overgordijnen"); setIsMobileMenuOpen(false); }}
+                className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
+              >
+                Gordijnen
+              </button>
+              <button
+                onClick={() => { setLocation("/quote"); setIsMobileMenuOpen(false); }}
                 className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mx-4"
                 data-testid="mobile-cta-quote"
               >
@@ -709,13 +1096,12 @@ const LuxuryNavigation = () => {
   );
 };
 
-// Luxury Collage Hero Component - 9 Photo Interactive Hover Grid
+// ========== COLLAGE HERO ==========
 const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (path: string) => void }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* 3x3 Collage Grid Background */}
       <div className="absolute inset-0">
         <div className="grid grid-cols-3 grid-rows-3 w-full h-full gap-1">
           {images.map((img, idx) => (
@@ -736,7 +1122,6 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
                   transition: 'all 700ms cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
               />
-              {/* Shine effect on hover */}
               <div
                 className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                 style={{
@@ -749,10 +1134,8 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
         </div>
       </div>
 
-      {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* Hero Content - Centered Text */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-[fadeInUp_1.2s_ease-out]">
         <h1
           className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-6 tracking-tighter leading-[0.9] transition-all duration-700 hover:scale-105"
@@ -762,8 +1145,8 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
             textShadow: '0 8px 32px rgba(0,0,0,0.5)'
           }}
         >
-          Vakmanschap<br/>
-          <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">in elke plooi</span>
+          KANIOU raamdecoratie<br/>
+          <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">op maat, voor elke stijl</span>
         </h1>
 
         <p className="text-lg md:text-xl text-white/90 mb-12 font-light tracking-wide max-w-xl mx-auto animate-[fadeInUp_1.4s_ease-out]">
@@ -771,17 +1154,16 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
         </p>
 
         <MagneticButton
-          onClick={() => setLocation("/quote")}
+          onClick={() => setLocation("/producten/overgordijnen")}
           className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden animate-glow-pulse"
           data-testid="button-request-quote"
         >
-          <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Ontdek de collectie</span>
+          <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Bekijk onze producten</span>
           <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
         </MagneticButton>
       </div>
 
-      {/* Scroll Indicator */}
       <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block">
         <ChevronDown className="w-6 h-6 text-white/60 animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
       </div>
@@ -789,7 +1171,7 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
   );
 };
 
-// Custom hook for scroll-triggered animations
+// ========== SCROLL REVEAL HOOK ==========
 const useScrollReveal = (threshold = 0.1) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -818,20 +1200,18 @@ const useScrollReveal = (threshold = 0.1) => {
   return [ref, isVisible] as const;
 };
 
+// ========== MAIN HOME COMPONENT ==========
 const Home = () => {
   const [, setLocation] = useLocation();
   const [scrollY, setScrollY] = useState(0);
   
-  // Parallax effect
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll reveal hooks for different sections
   const [brandRef, brandVisible] = useScrollReveal(0.2);
-  const [productsRef, productsVisible] = useScrollReveal(0.1);
   const [craftsmanshipRef, craftsmanshipVisible] = useScrollReveal(0.2);
   const [galleryRef, galleryVisible] = useScrollReveal(0.1);
 
@@ -851,146 +1231,54 @@ const Home = () => {
       <LuxuryNavigation />
 
       <div className="bg-white">
-        {/* HERO SECTION - Interactive 9-Photo Collage */}
+        {/* HERO SECTION */}
         <CollageHero images={collageImages} setLocation={setLocation} />
-        
-        {/* Add spacing */}
-        <div className="h-4"></div>
 
-        {/* BRAND STATEMENT - Extreme Whitespace with Scroll Animation */}
-        <section 
-          ref={brandRef}
-          className="py-32 md:py-48 bg-white overflow-hidden relative"
-        >
-          <FloatingElements />
-          <div 
-            className={`max-w-5xl mx-auto px-6 text-center transition-all duration-1200 ${
-              brandVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}
-          >
-            <h2 
-              className="text-4xl md:text-6xl lg:text-7xl font-light text-black mb-8 tracking-tight leading-tight hover:scale-105 transition-transform duration-700" 
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                letterSpacing: '-0.02em'
-              }}
-            >
-              Waar precisie en<br/>schoonheid samenkomen
-            </h2>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto my-12"></div>
-            <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-2xl mx-auto">
-              Elk project is uniek. Elke millimeter telt. Met meer dan drie decennia ervaring 
-              creëren wij raamdecoratie die uw ruimte transformeert.
-            </p>
-          </div>
-        </section>
-
-        {/* PRODUCT GRID - Editorial Style with Stagger Animation */}
-        <section 
-          ref={productsRef}
-          className="py-32 bg-gray-50"
-        >
+        {/* PRODUCT CAROUSEL SECTION */}
+        <section className="py-24 bg-white">
           <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
-            {/* Section Header */}
-            <div 
-              className={`text-center mb-20 transition-all duration-1000 ${
-                productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
+            <div className="text-center mb-16">
               <h2 
-                className="text-5xl md:text-6xl font-light text-black mb-6" 
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: '-0.02em'
-                }}
+                className="text-4xl md:text-5xl font-light text-black mb-4"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Onze collectie
+                Onze collectie raamdecoratie
               </h2>
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto"></div>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4" />
+              <p className="text-gray-600">Premium producten voor elk raam en elke stijl</p>
             </div>
-
-            {/* 2-Column Grid with Stagger & 3D Tilt Effect */}
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-              {[
-                { name: "Houten jaloezieën", desc: "Natuurlijke warmte", path: "/producten/houten-jaloezieen" },
-                { name: "Textiel lamellen", desc: "Zachte elegantie", path: "/producten/textiel-lamellen" },
-                { name: "Plissé gordijnen", desc: "Veelzijdige perfectie", path: "/producten/plisse" },
-                { name: "Overgordijnen", desc: "Tijdloze luxe", path: "/producten/overgordijnen" },
-              ].map((product, index) => (
-                <TiltCard 
-                  key={product.name}
-                  className={`cursor-pointer ${
-                    productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                  }`}
-                  onClick={() => setLocation(product.path)}
-                >
-                  <div
-                    className="group relative overflow-hidden bg-white p-12 lg:p-16 text-left transition-all duration-700 hover:shadow-2xl rounded-sm"
-                    style={{
-                      transitionDelay: productsVisible ? `${index * 150}ms` : '0ms'
-                    }}
-                    data-testid={`button-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
-                  >
-                    <div className="relative z-10">
-                      <div 
-                        className="text-6xl md:text-7xl font-light mb-6 text-gray-200 group-hover:text-gray-300 transition-all duration-700 group-hover:scale-110" 
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif"
-                        }}
-                      >
-                        {String(index + 1).padStart(2, '0')}
-                      </div>
-                      <h3 
-                        className="text-3xl md:text-4xl font-light text-black mb-3 group-hover:text-gray-900 transition-colors duration-500" 
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          letterSpacing: '-0.01em'
-                        }}
-                      >
-                        {product.name}
-                      </h3>
-                      <p className="text-gray-600 text-sm tracking-wide uppercase mb-8">{product.desc}</p>
-                      <div className="inline-flex items-center text-black text-xs tracking-widest uppercase group-hover:translate-x-2 transition-transform duration-500">
-                        Ontdekken
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{
-                      boxShadow: 'inset 0 0 30px rgba(0,0,0,0.02)'
-                    }}></div>
-                  </div>
-                </TiltCard>
-              ))}
-            </div>
-
-            {/* All Products Link */}
-            <div 
-              className={`text-center mt-20 transition-all duration-1000 delay-600 ${
-                productsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              <button
-                onClick={() => setLocation("/producten/overgordijnen")}
-                className="group inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
-                data-testid="button-view-all"
-              >
-                <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Volledige collectie</span>
-                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-              </button>
-            </div>
+            <ProductCarousel setLocation={setLocation} />
           </div>
         </section>
 
-        {/* CRAFTSMANSHIP SECTION - 2 Column Editorial with Reveal */}
+        {/* 3-STEP SERVICE SECTION */}
+        <ServiceSteps />
+
+        {/* INSPIRATION GALLERY */}
+        <InspirationGallery setLocation={setLocation} />
+
+        {/* SPLIT SECTION - ABOUT */}
+        <SplitSection
+          image={interiorImage}
+          subtitle="Productoverzicht"
+          title="Welke raamdecoratie bieden wij aan?"
+          description="KANIOU is er trots op alle wensen voor raamdecoratie te kunnen realiseren voor elke kamer en stijl. Onze producten zijn van hoge kwaliteit en helemaal afgestemd op jouw ramen en praktische behoeften. Ook op stijl hoef je niet in te boeten, want onze collectie raambekleding biedt tal van mogelijkheden in design, kleuren en stoffen."
+          buttonText="Bekijk al onze producten"
+          buttonPath="/producten/overgordijnen"
+          imageLeft={true}
+          setLocation={setLocation}
+        />
+
+        {/* SPOTLIGHT SECTION */}
+        <SpotlightSection setLocation={setLocation} />
+
+        {/* CRAFTSMANSHIP / STATS SECTION */}
         <section 
           ref={craftsmanshipRef}
           className="py-32 bg-white"
         >
           <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-              {/* Left: Text */}
               <div 
                 className={`transition-all duration-1200 ${
                   craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
@@ -1025,7 +1313,6 @@ const Home = () => {
                 </button>
               </div>
 
-              {/* Right: Stats with Stagger & Counter Animation */}
               <div 
                 className={`grid grid-cols-2 gap-8 transition-all duration-1200 delay-300 ${
                   craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
@@ -1040,13 +1327,15 @@ const Home = () => {
           </div>
         </section>
 
-        {/* GALLERY PREVIEW - Masonry Style with Hover Glow */}
+        {/* SHOWROOM SECTION */}
+        <ShowroomSection />
+
+        {/* GALLERY PREVIEW */}
         <section 
           ref={galleryRef}
           className="py-32 bg-gray-50"
         >
           <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
-            {/* Section Header */}
             <div 
               className={`text-center mb-20 transition-all duration-1000 ${
                 galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -1065,7 +1354,6 @@ const Home = () => {
               <p className="text-gray-600 tracking-wide">Een selectie uit ons portfolio</p>
             </div>
 
-            {/* 3-Column Gallery Grid with Stagger */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
               {[gallery1, gallery2, gallery3, gallery4, gallery5, gallery6].map((img, i) => (
                 <div 
@@ -1085,14 +1373,10 @@ const Home = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
-                    boxShadow: 'inset 0 0 40px rgba(0,0,0,0.3)'
-                  }}></div>
                 </div>
               ))}
             </div>
 
-            {/* Gallery Link */}
             <div 
               className={`text-center mt-20 transition-all duration-1000 delay-600 ${
                 galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -1105,7 +1389,6 @@ const Home = () => {
               >
                 <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Bekijk alle projecten</span>
                 <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               </button>
             </div>
           </div>
@@ -1114,7 +1397,6 @@ const Home = () => {
         {/* GOOGLE REVIEWS SECTION */}
         <section className="py-32 bg-white">
           <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-            {/* Section Header with Google Link */}
             <div className="text-center mb-16">
               <h2 
                 className="text-5xl md:text-6xl font-light text-black mb-8" 
@@ -1127,9 +1409,8 @@ const Home = () => {
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-8"></div>
               
-              {/* Google Profile Link */}
               <a
-                href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,16z/data=!4m8!3m7!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn?authuser=3&entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
+                href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 text-sm group"
@@ -1145,30 +1426,27 @@ const Home = () => {
               </a>
             </div>
 
-            {/* Google Reviews Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
                   name: "Cardeynaels",
                   rating: 5,
-                  text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde. De communicatie verloopt vlot en correct. Ook op de plaatsing is niets aan te merken. Zeer prettige samenwerking en zeker een aanrader.",
-                  date: ""
+                  text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde. De communicatie verloopt vlot en correct. Ook op de plaatsing is niets aan te merken. Zeer prettige samenwerking en zeker een aanrader."
                 },
                 {
                   name: "Buelles",
                   rating: 5,
-                  text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Thuisbezoek  gehad voor opnemen maten en om te zien of stoffen ook daadwerkelijk passen bij de ruimtes. Steeds netjes contact geweest ; offerte snel gemaakt , afspraken worden nagekomen . Vandaag de gordijnen in onze woonkamer mogen ontvangen en we zijn zo content ! Heel snel en vakkundig werk geleverd . We laten het hele huis doen , bovenverdieping volgende maand . We kijken er naar uit ! Voornaam: Kwaliteit en service voor een eerlijke prijs !",
-                  date: ""
+                  text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Thuisbezoek gehad voor opnemen maten en om te zien of stoffen ook daadwerkelijk passen bij de ruimtes. Steeds netjes contact geweest."
                 },
                 {
                   name: "Anedda",
                   rating: 5,
-                  text: "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na en werkte nauwkeurig. De kwaliteit van de materialen is uitstekend. Kortom, een absolute aanrader voor iedereen – deze vijf sterren zijn méér dan verdiend!"
+                  text: "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na."
                 },
                 {
                   name: "Patrick",
                   rating: 5,
-                  text: "Ik ben ontzettend tevreden met mijn houten jaloezieën van KANIOU! Vanaf het eerst contact tot aan de levering was alles helder, de levering op tijd en de installatie werd professioneel uitgevoerd. De kwaliteit van de jaloezieën is top - precies zoals ik had verwacht, misschien zelfs beter! Ze geven mijn interieur meteen een warme luxe uitstraling. KANIOU heeft mijn verwachtingen overtroffen, zowel qua product als service. Zeker een aanrader!"
+                  text: "Ik ben ontzettend tevreden met mijn houten jaloezieën van KANIOU! Vanaf het eerst contact tot aan de levering was alles helder, de levering op tijd en de installatie werd professioneel uitgevoerd."
                 }
               ].map((review, index) => (
                 <div 
@@ -1176,7 +1454,6 @@ const Home = () => {
                   className="bg-gray-50 p-8 hover:bg-white hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group"
                   data-testid={`google-review-${index + 1}`}
                 >
-                  {/* Rating Stars */}
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -1189,30 +1466,21 @@ const Home = () => {
                       />
                     ))}
                   </div>
-
-                  {/* Review Text */}
                   <p className="text-gray-700 text-sm leading-relaxed mb-6 min-h-[120px]">
                     "{review.text}"
                   </p>
-
-                  {/* Author Info */}
                   <div className="border-t border-gray-200 pt-4">
-                    <p className="font-medium text-gray-900 text-sm mb-1">{review.name}</p>
-                    <p className="text-xs text-gray-500">{review.date}</p>
+                    <p className="font-medium text-gray-900 text-sm">{review.name}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Google Rating Summary */}
             <div className="mt-16 text-center">
               <div className="inline-flex items-center gap-3 bg-gray-50 px-8 py-4 rounded-full">
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-6 h-6 fill-yellow-400 text-yellow-400"
-                    />
+                    <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
                 <div className="text-left">
@@ -1226,12 +1494,13 @@ const Home = () => {
           </div>
         </section>
 
-        {/* CTA SECTION - Minimal with Glow */}
+        {/* BROCHURE FORM */}
+        <BrochureForm />
+
+        {/* CTA SECTION */}
         <section className="py-32 md:py-48 bg-black text-white relative overflow-hidden">
-          {/* Subtle Background Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 opacity-50"></div>
           
-          {/* Animated floating orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl animate-float-slow" />
             <div className="absolute bottom-20 right-20 w-48 h-48 bg-gradient-to-br from-white/3 to-transparent rounded-full blur-2xl animate-float-medium" />
@@ -1270,7 +1539,6 @@ const Home = () => {
   );
 };
 
-// Custom keyframe animations for luxury effects
 const styles = `
   @keyframes fadeInUp {
     from {
@@ -1337,15 +1605,6 @@ const styles = `
     }
   }
   
-  @keyframes text-reveal {
-    from {
-      clip-path: inset(0 100% 0 0);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-  
   .animate-float-slow {
     animation: float-slow 8s ease-in-out infinite;
   }
@@ -1368,16 +1627,11 @@ const styles = `
     animation: shimmer 2s infinite;
   }
   
-  .text-gradient-animate {
-    background: linear-gradient(90deg, #1a1a1a, #4a4a4a, #1a1a1a);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 3s linear infinite;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 `;
 
-// Inject styles
 if (typeof document !== 'undefined') {
   const existingStyle = document.getElementById('luxury-animations');
   if (!existingStyle) {

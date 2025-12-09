@@ -12,6 +12,14 @@ import gallery3Src from "@assets/IMG_9217.jpeg";
 import gallery4Src from "@assets/IMG_9219.jpeg";
 import gallery5Src from "@assets/IMG_9220.jpeg";
 import gallery6Src from "@assets/IMG_9221.jpeg";
+import {
+  galleryImage1,
+  galleryImage2,
+  galleryImage3,
+  galleryImage4,
+  galleryImage5,
+  galleryImage6,
+} from "@/assets/fallback";
 
 const interiorImage = interiorImageSrc;
 const gallery1 = gallery1Src;
@@ -396,15 +404,15 @@ const ServiceSteps = () => {
   );
 };
 
-// ========== INSPIRATION GALLERY (LARGE IMAGES) ==========
+// ========== REALISATIES GALLERY (NO TITLES) ==========
 const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => void }) => {
-  const inspirations = [
-    { image: gallery1, title: "Houten Jaloezieën", subtitle: "Natuurlijke warmte in elk interieur", path: "/producten/houten-jaloezieen" },
-    { image: gallery2, title: "Plissé Gordijnen", subtitle: "Veelzijdig en stijlvol", path: "/producten/plisse" },
-    { image: gallery3, title: "Rolgordijnen", subtitle: "Modern en functioneel", path: "/producten/rolgordijnen" },
-    { image: interiorImage, title: "Overgordijnen", subtitle: "Tijdloze elegantie", path: "/producten/overgordijnen" },
-    { image: gallery4, title: "Duo Rolgordijnen", subtitle: "Het beste van twee werelden", path: "/producten/duo-rolgordijnen" },
-    { image: gallery5, title: "Textiel Lamellen", subtitle: "Zachte lichtfiltering", path: "/producten/textiel-lamellen" },
+  const realisatieImages = [
+    galleryImage1,
+    galleryImage2,
+    galleryImage3,
+    galleryImage4,
+    galleryImage5,
+    galleryImage6,
   ];
 
   return (
@@ -415,38 +423,26 @@ const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => vo
             className="text-4xl md:text-5xl font-light text-black mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            Laat je inspireren
+            Realisaties
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4" />
-          <p className="text-gray-600">Ontdek de mogelijkheden voor uw interieur</p>
+          <p className="text-gray-600">Ontdek onze afgewerkte projecten</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {inspirations.map((item, index) => (
+          {realisatieImages.map((image, index) => (
             <div 
               key={index}
               className="group relative overflow-hidden cursor-pointer aspect-[16/10] rounded-lg"
-              onClick={() => setLocation(item.path)}
-              data-testid={`inspiration-${index + 1}`}
+              onClick={() => setLocation("/gallerij")}
+              data-testid={`realisatie-${index + 1}`}
             >
               <img
-                src={item.image}
-                alt={item.title}
+                src={image}
+                alt={`Realisatie ${index + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 
-                  className="text-2xl font-light mb-1 group-hover:translate-x-2 transition-transform duration-500"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  {item.title}
-                </h3>
-                <p className="text-white/80 text-sm">{item.subtitle}</p>
-              </div>
-              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <ArrowRight className="w-6 h-6 text-white" />
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           ))}
         </div>

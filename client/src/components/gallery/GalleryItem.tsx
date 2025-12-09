@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 type GalleryItemType = {
   id: number;
@@ -27,44 +27,12 @@ import {
   galleryImage17,
   galleryImage18,
   galleryImage19,
-  galleryImage20,
-  galleryImage21,
-  galleryImage22,
-  galleryImage23,
-  galleryImage24,
-  galleryImage25,
-  galleryImage26,
-  galleryImage27,
-  galleryImage28,
-  galleryImage29,
-  galleryImage30,
-  galleryImage31,
-  galleryImage32,
-  galleryImage33,
-  galleryImage34,
-  galleryImage35,
-  galleryImage36,
-  galleryImage37,
-  galleryImage38,
-  galleryImage39,
-  galleryImage40,
-  galleryImage41,
-  galleryImage42,
-  galleryImage43,
-  galleryImage44,
-  galleryImage45,
-  galleryImage46,
-  galleryImage47,
-  galleryImage48,
-  galleryImage49,
-  galleryImage50,
 } from "@/assets/fallback";
 
 interface GalleryItemProps {
   item: GalleryItemType;
 }
 
-// Image mapping for premium gallery collection
 const imageMap: Record<string, string> = {
   '/gallery/premium-1': galleryImage1,
   '/gallery/premium-2': galleryImage2,
@@ -85,43 +53,11 @@ const imageMap: Record<string, string> = {
   '/gallery/premium-17': galleryImage17,
   '/gallery/premium-18': galleryImage18,
   '/gallery/premium-19': galleryImage19,
-  '/gallery/premium-20': galleryImage20,
-  '/gallery/premium-21': galleryImage21,
-  '/gallery/premium-22': galleryImage22,
-  '/gallery/premium-23': galleryImage23,
-  '/gallery/premium-24': galleryImage24,
-  '/gallery/premium-25': galleryImage25,
-  '/gallery/premium-26': galleryImage26,
-  '/gallery/premium-27': galleryImage27,
-  '/gallery/premium-28': galleryImage28,
-  '/gallery/premium-29': galleryImage29,
-  '/gallery/premium-30': galleryImage30,
-  '/gallery/premium-31': galleryImage31,
-  '/gallery/premium-32': galleryImage32,
-  '/gallery/premium-33': galleryImage33,
-  '/gallery/premium-34': galleryImage34,
-  '/gallery/premium-35': galleryImage35,
-  '/gallery/premium-36': galleryImage36,
-  '/gallery/premium-37': galleryImage37,
-  '/gallery/premium-38': galleryImage38,
-  '/gallery/premium-39': galleryImage39,
-  '/gallery/premium-40': galleryImage40,
-  '/gallery/premium-41': galleryImage41,
-  '/gallery/premium-42': galleryImage42,
-  '/gallery/premium-43': galleryImage43,
-  '/gallery/premium-44': galleryImage44,
-  '/gallery/premium-45': galleryImage45,
-  '/gallery/premium-46': galleryImage46,
-  '/gallery/premium-47': galleryImage47,
-  '/gallery/premium-48': galleryImage48,
-  '/gallery/premium-49': galleryImage49,
-  '/gallery/premium-50': galleryImage50,
 };
 
 const GalleryItem = ({ item }: GalleryItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Get the actual image URL from the mapping, or fallback to the original URL
   const imageUrl = imageMap[item.imageUrl] || item.imageUrl;
 
   return (
@@ -131,13 +67,12 @@ const GalleryItem = ({ item }: GalleryItemProps) => {
           <div className="w-full h-full overflow-hidden">
             <img
               src={imageUrl}
-              alt={item.title}
+              alt="Realisatie"
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
               loading="lazy"
             />
           </div>
           
-          {/* Golden border effect */}
           <div className="absolute inset-0 border border-[#D5B36A]/20 group-hover:border-[#D5B36A]/60 transition-all duration-500 rounded-xl"></div>
         </div>
       </DialogTrigger>
@@ -146,21 +81,9 @@ const GalleryItem = ({ item }: GalleryItemProps) => {
         <div className="relative w-full h-full flex items-center justify-center p-4">
           <img
             src={imageUrl}
-            alt={item.title}
+            alt="Realisatie"
             className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
           />
-          
-          {/* Image info overlay */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
-            <div className="text-white">
-              <h2 className="text-2xl font-bold mb-2 text-[#D5B36A]">
-                {item.title}
-              </h2>
-              <p className="text-gray-200 text-lg">
-                {item.description}
-              </p>
-            </div>
-          </div>
         </div>
       </DialogContent>
     </Dialog>

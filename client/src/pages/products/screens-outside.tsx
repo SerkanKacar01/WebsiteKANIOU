@@ -36,8 +36,21 @@ import {
   Wind,
   Smartphone,
   Settings,
+  Cog,
 } from "lucide-react";
 import { Link } from "wouter";
+
+import heroImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.33.44_1765238134792.png";
+import motorizedImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.33.51_1765238134792.png";
+import skyZipImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.33.59_1765238134791.png";
+import manualImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.07_1765238134792.png";
+import colorImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.13_1765238134792.png";
+import soltis92Image from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.20_1765238134791.png";
+import soltis86Image from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.26_1765238134791.png";
+import serge600Image from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.33_1765238134792.png";
+import petScreenImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.39_1765238134792.png";
+import technicalImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.34.46_1765238134791.png";
+import applicationsImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.35.04_1765238134792.png";
 
 const ScreensOutsidePage = () => {
   const benefits = [
@@ -101,29 +114,6 @@ const ScreensOutsidePage = () => {
     {
       icon: <Home className="h-6 w-6 text-[#C4A35A]" />,
       title: "Tuinkamers, veranda's en serres",
-    },
-  ];
-
-  const controlOptions = [
-    {
-      icon: <Settings className="h-6 w-6" />,
-      title: "Handmatige bediening",
-      description: "Eenvoudige en betrouwbare handmatige bediening",
-    },
-    {
-      icon: <Zap className="h-6 w-6" />,
-      title: "Somfy motor",
-      description: "Premium gemotoriseerde bediening",
-    },
-    {
-      icon: <Phone className="h-6 w-6" />,
-      title: "Afstandsbediening",
-      description: "Bedien uw screens op afstand",
-    },
-    {
-      icon: <Smartphone className="h-6 w-6" />,
-      title: "Smart home app-bediening",
-      description: "Integratie met uw smart home systeem",
     },
   ];
 
@@ -195,39 +185,43 @@ const ScreensOutsidePage = () => {
       </div>
 
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white w-full">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#2C3E50] to-[#1a252f] py-20 lg:py-28">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAzMHYySDI0di0yaDEyek0zNiAyNnYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50"></div>
-          <Container>
-            <div className="relative z-10 max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-2 rounded-full mb-6">
-                <Thermometer className="h-5 w-5 text-[#C4A35A]" />
-                <span className="text-white/90 text-sm font-medium tracking-wide">Premium Buitenzonwering</span>
-              </div>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-6 leading-tight">
-                Screens voor Buiten
-              </h1>
-              <p className="font-body text-xl md:text-2xl text-white/90 leading-relaxed mb-4">
-                De Beste Warmte-werende Zonwering voor uw Woning
-              </p>
-              <p className="text-white/70 text-lg max-w-3xl mx-auto mb-8">
-                Onze screens voor buiten zijn de meest effectieve oplossing tegen oververhitting en fel zonlicht. 
-                Doordat ze aan de buitenzijde van het raam worden geplaatst, blokkeren buitenscreens de warmte nog 
-                vóór deze het glas bereikt.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/offerte">
-                  <Button
-                    size="lg"
-                    className="bg-[#C4A35A] hover:bg-[#B39245] text-white px-8 py-4 text-lg font-medium rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-                  >
-                    <Mail className="mr-2 h-5 w-5" />
-                    Gratis Offerte Aanvragen
-                  </Button>
-                </Link>
-              </div>
+        {/* Hero Section with Image */}
+        <section className="relative overflow-hidden">
+          <div className="relative w-full">
+            <img 
+              src={heroImage} 
+              alt="Built to shade. Engineered to lead." 
+              className="w-full h-[60vh] md:h-[70vh] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
+              <Container>
+                <div className="max-w-3xl">
+                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-2 rounded-full mb-6">
+                    <Thermometer className="h-5 w-5 text-[#C4A35A]" />
+                    <span className="text-white/90 text-sm font-medium tracking-wide">Premium Buitenzonwering</span>
+                  </div>
+                  <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4 leading-tight">
+                    Screens voor Buiten
+                  </h1>
+                  <p className="font-body text-xl md:text-2xl text-white/90 leading-relaxed mb-6">
+                    De Beste Warmte-werende Zonwering voor uw Woning
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link href="/offerte">
+                      <Button
+                        size="lg"
+                        className="bg-[#C4A35A] hover:bg-[#B39245] text-white px-8 py-4 text-lg font-medium rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                      >
+                        <Mail className="mr-2 h-5 w-5" />
+                        Gratis Offerte Aanvragen
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </Container>
             </div>
-          </Container>
+          </div>
         </section>
 
         {/* Introduction */}
@@ -235,9 +229,10 @@ const ScreensOutsidePage = () => {
           <Container>
             <div className="max-w-4xl mx-auto text-center">
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                Buitenscreens combineren moderne architecturale uitstraling met hoogwaardige functionaliteit, 
-                waardoor ze ideaal zijn voor nieuwbouwwoningen, appartementen, veranda's en grote glaspartijen. 
-                Dit zorgt voor merkbaar koelere ruimtes in de zomer en voorkomt verkleuring van meubels en vloeren.
+                Onze screens voor buiten zijn de meest effectieve oplossing tegen oververhitting en fel zonlicht. 
+                Doordat ze aan de buitenzijde van het raam worden geplaatst, blokkeren buitenscreens de warmte nog 
+                vóór deze het glas bereikt. Dit zorgt voor merkbaar koelere ruimtes in de zomer en voorkomt 
+                verkleuring van meubels en vloeren.
               </p>
             </div>
           </Container>
@@ -277,8 +272,89 @@ const ScreensOutsidePage = () => {
           </Container>
         </section>
 
-        {/* ZIP-Screens Section */}
+        {/* Operating Systems Section */}
         <section className="py-20 bg-white">
+          <Container>
+            <div className="text-center mb-16">
+              <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Bedieningssystemen</span>
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Kies uw bedieningsoptie
+              </h2>
+              <div className="w-16 h-1 bg-[#C4A35A] mx-auto rounded-full"></div>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Motorized */}
+              <Card className="overflow-hidden border-none shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <div className="relative overflow-hidden bg-gray-100">
+                  <img 
+                    src={motorizedImage} 
+                    alt="Motorized ZIP Screen Systems" 
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-[#C4A35A]/10 rounded-lg flex items-center justify-center">
+                      <Zap className="h-5 w-5 text-[#C4A35A]" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#2C3E50]">Gemotoriseerd</h3>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Gemotoriseerde ZIP screen systemen bieden een moderne zonweringsoplossing die zowel comfort als stijl verbetert. Compatibel met Google Home, Amazon Alexa en Tuya Smart.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* SkyZip */}
+              <Card className="overflow-hidden border-none shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <div className="relative overflow-hidden bg-gray-100">
+                  <img 
+                    src={skyZipImage} 
+                    alt="SkyZIP Horizontal Shading System" 
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Settings className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#2C3E50]">SkyZip</h3>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    SkyZip is een gemotoriseerd ZIP screen systeem ontworpen voor horizontale zonweringstoepassingen. Ideaal voor serres, pergola's, dakramen en terras daken.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Manual */}
+              <Card className="overflow-hidden border-none shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <div className="relative overflow-hidden bg-gray-100">
+                  <img 
+                    src={manualImage} 
+                    alt="Manual ZIP Screen Systems" 
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Cog className="h-5 w-5 text-green-600" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#2C3E50]">Manueel</h3>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Manuele ZIP systemen bieden een kosteneffectieve oplossing met behoud van de kernvoordelen van ZIP technologie — hoge windweerstand en doekspanning.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </Container>
+        </section>
+
+        {/* ZIP-Screens Premium Section */}
+        <section className="py-20 bg-[#f9f7f3]">
           <Container>
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -295,7 +371,7 @@ const ScreensOutsidePage = () => {
                   {zipBenefits.map((benefit, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-4 p-4 bg-gradient-to-r from-green-50 to-transparent rounded-xl"
+                      className="flex items-center gap-4 p-4 bg-white shadow-sm rounded-xl"
                     >
                       <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <CheckCircle className="h-5 w-5 text-green-600" />
@@ -330,13 +406,148 @@ const ScreensOutsidePage = () => {
           </Container>
         </section>
 
-        {/* Suitable Spaces */}
+        {/* Fabric Types Section */}
+        <section className="py-20 bg-white">
+          <Container>
+            <div className="text-center mb-16">
+              <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Stoffencollectie</span>
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Premium Fabric Types
+              </h2>
+              <div className="w-16 h-1 bg-[#C4A35A] mx-auto rounded-full"></div>
+              <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
+                Onze screens zijn verkrijgbaar in verschillende hoogwaardige doektypes, elk met unieke eigenschappen voor optimale zonwering en duurzaamheid.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Soltis 92 */}
+              <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <img 
+                  src={soltis92Image} 
+                  alt="Soltis 92 - Serge Ferrari" 
+                  className="w-full h-auto"
+                />
+              </div>
+
+              {/* Soltis 86 */}
+              <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <img 
+                  src={soltis86Image} 
+                  alt="Soltis 86 - Serge Ferrari" 
+                  className="w-full h-auto"
+                />
+              </div>
+
+              {/* Serge 600 */}
+              <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <img 
+                  src={serge600Image} 
+                  alt="Serge 600 - Copaco Screenweavers" 
+                  className="w-full h-auto"
+                />
+              </div>
+
+              {/* PET Screen */}
+              <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                <img 
+                  src={petScreenImage} 
+                  alt="PET Screen" 
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* RAL Colors Section */}
         <section className="py-20 bg-[#f9f7f3]">
           <Container>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Kleuren</span>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                  Volledige RAL Kleurencollectie
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                  Alle ZIP systemen zijn verkrijgbaar in het volledige assortiment van RAL Classic kleuren. Standaard architecturale tinten zoals RAL 7016, RAL 9005 en RAL 9016 worden veel gebruikt in moderne geveltoepassingen.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  Aangepaste kleuropties zorgen voor naadloze integratie met elk exterieur design of materiaal palet.
+                </p>
+              </div>
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+                <img 
+                  src={colorImage} 
+                  alt="RAL Color Options" 
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Technical Details */}
+        <section className="py-20 bg-white">
+          <Container>
+            <div className="text-center mb-12">
+              <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Technische Details</span>
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                Professionele Afwerking
+              </h2>
+              <div className="w-16 h-1 bg-[#C4A35A] mx-auto rounded-full"></div>
+            </div>
+            <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src={technicalImage} 
+                alt="Technical Details" 
+                className="w-full h-auto"
+              />
+            </div>
+          </Container>
+        </section>
+
+        {/* Applications Section */}
+        <section className="relative overflow-hidden">
+          <img 
+            src={applicationsImage} 
+            alt="Screen Applications" 
+            className="w-full h-auto"
+          />
+        </section>
+
+        {/* Suitable Spaces */}
+        <section className="py-20 bg-white">
+          <Container>
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="order-2 lg:order-1">
+              <div>
+                <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Toepassingen</span>
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
+                  Waar worden buitenscreens meestal geplaatst?
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                  Buitenscreens zijn ideaal voor woningen met veel glasoppervlak of gevels die op het zuiden of westen gericht zijn.
+                </p>
+                
+                <div className="space-y-4">
+                  {suitableSpaces.map((space, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-transparent rounded-xl hover:from-[#f9f7f3] transition-colors duration-300"
+                    >
+                      <div className="w-12 h-12 bg-white shadow-md rounded-xl flex items-center justify-center flex-shrink-0">
+                        {space.icon}
+                      </div>
+                      <span className="text-[#2C3E50] font-medium text-lg">{space.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="relative">
                 <div className="bg-gradient-to-br from-[#2C3E50] to-[#34495e] rounded-3xl p-8 text-white">
                   <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#C4A35A] rounded-full opacity-20 blur-2xl"></div>
+                  <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#C4A35A] rounded-full opacity-20 blur-2xl"></div>
                   
                   <div className="relative z-10">
                     <Sun className="h-12 w-12 text-[#C4A35A] mb-6" />
@@ -353,64 +564,6 @@ const ScreensOutsidePage = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="order-1 lg:order-2">
-                <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Toepassingen</span>
-                <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
-                  Waar worden buitenscreens meestal geplaatst?
-                </h2>
-                <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Buitenscreens zijn ideaal voor woningen met veel glasoppervlak of gevels die op het zuiden of westen gericht zijn.
-                </p>
-                
-                <div className="space-y-4">
-                  {suitableSpaces.map((space, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-4 p-4 bg-white shadow-md rounded-xl hover:shadow-lg transition-shadow duration-300"
-                    >
-                      <div className="w-12 h-12 bg-[#C4A35A]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        {space.icon}
-                      </div>
-                      <span className="text-[#2C3E50] font-medium text-lg">{space.title}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-
-        {/* Control Options */}
-        <section className="py-20 bg-white">
-          <Container>
-            <div className="text-center mb-16">
-              <span className="inline-block text-[#C4A35A] text-sm font-semibold tracking-wider uppercase mb-4">Bediening</span>
-              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-6">
-                Bedieningsopties
-              </h2>
-              <div className="w-16 h-1 bg-[#C4A35A] mx-auto rounded-full"></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {controlOptions.map((option, index) => (
-                <Card
-                  key={index}
-                  className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white text-center"
-                >
-                  <CardContent className="p-6">
-                    <div className="w-14 h-14 bg-[#C4A35A]/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#C4A35A]">
-                      {option.icon}
-                    </div>
-                    <h3 className="font-bold text-[#2C3E50] text-lg mb-2">
-                      {option.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      {option.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
             </div>
           </Container>
         </section>

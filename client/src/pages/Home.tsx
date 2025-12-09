@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { ArrowRight, ChevronDown, Star, ExternalLink } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
@@ -22,6 +22,171 @@ const gallery6 = gallery6Src;
 
 // Collage images array - using existing gallery images
 const collageImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery1, gallery2, gallery3];
+
+// ========== ANIMATION HOOKS & COMPONENTS ==========
+
+// Counter Animation Hook - Animates numbers from 0 to target
+const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolean = true) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          setIsVisible(true);
+          hasAnimated.current = true;
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible && startOnVisible) return;
+    
+    let startTime: number;
+    let animationFrame: number;
+    
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isVisible, end, duration, startOnVisible]);
+
+  return { count, ref };
+};
+
+// 3D Tilt Card Component
+const TiltCard = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg)');
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / 15;
+    const rotateY = (centerX - x) / 15;
+    
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+    setGlare({ x: (x / rect.width) * 100, y: (y / rect.height) * 100, opacity: 0.15 });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    setGlare({ x: 50, y: 50, opacity: 0 });
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative transition-all duration-300 ease-out ${className}`}
+      style={{ transform, transformStyle: 'preserve-3d' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+    >
+      {children}
+      <div 
+        className="absolute inset-0 pointer-events-none rounded-inherit transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,${glare.opacity}), transparent 60%)`,
+        }}
+      />
+    </div>
+  );
+};
+
+// Magnetic Button Component
+const MagneticButton = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    setPosition({ x: x * 0.3, y: y * 0.3 });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setPosition({ x: 0, y: 0 });
+  }, []);
+
+  return (
+    <button
+      ref={buttonRef}
+      className={className}
+      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+};
+
+// Floating Decorative Elements Component
+const FloatingElements = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-100/20 to-transparent rounded-full blur-3xl animate-float-slow" />
+      <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-gray-200/30 to-transparent rounded-full blur-2xl animate-float-medium" />
+      <div className="absolute bottom-32 left-1/4 w-32 h-32 bg-gradient-to-br from-amber-50/40 to-transparent rounded-full blur-xl animate-float-fast" />
+      <div className="absolute bottom-20 right-1/3 w-56 h-56 bg-gradient-to-br from-gray-100/20 to-transparent rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '-3s' }} />
+    </div>
+  );
+};
+
+// Text Reveal Component
+const TextReveal = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="overflow-hidden">
+      <div 
+        className={`transition-all duration-1000 ease-out ${className} ${
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+        }`}
+        style={{ transitionDelay: `${delay}ms` }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
 
 // Luxury Navigation Component - Minimal & Elegant with Enhanced Hover
 const LuxuryNavigation = () => {
@@ -1082,13 +1247,110 @@ const styles = `
       transform: translateY(0);
     }
   }
+  
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-20px) translateX(10px) rotate(2deg);
+    }
+    50% {
+      transform: translateY(-10px) translateX(-5px) rotate(-1deg);
+    }
+    75% {
+      transform: translateY(-25px) translateX(5px) rotate(1deg);
+    }
+  }
+  
+  @keyframes float-medium {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    33% {
+      transform: translateY(-15px) translateX(-10px);
+    }
+    66% {
+      transform: translateY(-8px) translateX(8px);
+    }
+  }
+  
+  @keyframes float-fast {
+    0%, 100% {
+      transform: translateY(0px) scale(1);
+    }
+    50% {
+      transform: translateY(-12px) scale(1.05);
+    }
+  }
+  
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(196, 163, 108, 0.3), 0 0 40px rgba(196, 163, 108, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(196, 163, 108, 0.5), 0 0 60px rgba(196, 163, 108, 0.2);
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  @keyframes text-reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+  
+  .animate-float-medium {
+    animation: float-medium 6s ease-in-out infinite;
+  }
+  
+  .animate-float-fast {
+    animation: float-fast 4s ease-in-out infinite;
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+  
+  .text-gradient-animate {
+    background: linear-gradient(90deg, #1a1a1a, #4a4a4a, #1a1a1a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
 `;
 
 // Inject styles
 if (typeof document !== 'undefined') {
-  const styleSheet = document.createElement("style");
-  styleSheet.textContent = styles;
-  document.head.appendChild(styleSheet);
+  const existingStyle = document.getElementById('luxury-animations');
+  if (!existingStyle) {
+    const styleSheet = document.createElement("style");
+    styleSheet.id = 'luxury-animations';
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
+  }
 }
 
 export default Home;

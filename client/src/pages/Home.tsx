@@ -770,15 +770,15 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
           Premium raamdecoratie op maat sinds meer dan 30 jaar
         </p>
 
-        <button
+        <MagneticButton
           onClick={() => setLocation("/quote")}
-          className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden"
+          className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden animate-glow-pulse"
           data-testid="button-request-quote"
         >
           <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Ontdek de collectie</span>
           <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-        </button>
+        </MagneticButton>
       </div>
 
       {/* Scroll Indicator */}

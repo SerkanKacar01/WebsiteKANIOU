@@ -490,17 +490,15 @@ Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")}
         // Continue anyway - email is the primary goal
       }
 
-      // Return success if email was sent (primary goal achieved)
-      if (emailSent) {
-        res.json({
-          success: true,
-          message: "Quote request submitted successfully",
-        });
-      } else {
-        res.status(500).json({
-          error: "Failed to send quote request email",
-        });
-      }
+      // Return success - quote is saved to database even if email fails
+      // User can check admin dashboard for all quote requests
+      res.json({
+        success: true,
+        message: emailSent 
+          ? "Quote request submitted successfully" 
+          : "Quote request saved - our team will contact you soon",
+        emailSent: emailSent
+      });
     } catch (error: any) {
       console.error("Quote request submission error:", error);
       res.status(500).json({ error: "Failed to submit quote request" });

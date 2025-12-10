@@ -2,1048 +2,418 @@ import React from 'react';
 import { Plus, Minus, ChevronDown } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const [expandedSections, setExpandedSections] = React.useState({
-    bedrijf: false,
-    producten: false,
-    klantenservice: false,
-    nieuwsbrief: true,
-    legal: false,
-  });
+  const [isProductenExpanded, setIsProductenExpanded] = React.useState(false);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = React.useState(false);
 
-  const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section as keyof typeof prev],
-    }));
-  };
-
   return (
-    <footer className="ultra-luxury-footer">
-      <div className="ultra-luxury-footer-bg"></div>
-      <div className="ultra-luxury-footer-texture"></div>
-      <div className="ultra-luxury-footer-container">
-
-        {/* Main Footer Content */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+    <footer className="relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] via-[#222222] to-[#1a1a1a]">
+      {/* Subtle texture overlay */}
+      <div className="absolute inset-0 opacity-30" style={{
+        backgroundImage: `radial-gradient(circle at 20% 30%, rgba(200, 168, 91, 0.08) 0%, transparent 50%),
+                          radial-gradient(circle at 80% 70%, rgba(200, 168, 91, 0.05) 0%, transparent 50%)`
+      }}></div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
+        
+        {/* Main Footer Grid - Desktop */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-16">
+          
           {/* Column 1: Bedrijf */}
-          <div className="ultra-luxury-footer-column">
-            <h3 className="ultra-luxury-footer-heading">Bedrijf</h3>
-            <div className="ultra-luxury-footer-content">
-              <div className="ultra-luxury-brand-container">
-                <p className="ultra-luxury-brand-name">
-                  KANIOU zilvernaald
+          <div>
+            <h3 className="text-xl font-semibold text-[#F5F5F5] mb-6 tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Bedrijf
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#C8A85B] to-[#E6C988]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  KANIOU
                 </p>
-                <p className="ultra-luxury-brand-tagline">
-                  Premium Gordijnen & Zonweringen
+                <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#C8A85B] to-[#E6C988]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  zilvernaald
                 </p>
               </div>
+              <p className="text-sm text-gray-400 italic">
+                Premium Gordijnen & Zonweringen
+              </p>
 
-              {/* Ultra-Luxury Social Media */}
-              <div className="ultra-luxury-social-container">
-                <a href="#" className="ultra-luxury-social-icon">
-                  <div className="ultra-luxury-social-bg"></div>
-                  <svg
-                    className="ultra-luxury-social-svg"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.40z" />
+              {/* Instagram Icon */}
+              <div className="pt-4">
+                <a 
+                  href="https://www.instagram.com/kaniou_zilvernaald/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#C8A85B]/20 to-[#C8A85B]/10 border border-[#C8A85B]/30 hover:border-[#C8A85B]/60 hover:bg-[#C8A85B]/20 transition-all duration-300 group"
+                  aria-label="Volg ons op Instagram"
+                >
+                  <svg className="w-5 h-5 text-[#C8A85B] group-hover:text-[#E6C988] transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                 </a>
               </div>
 
-              {/* Ultra-Luxury Order Tracking Button */}
-              <div className="mt-8">
+              {/* Order Tracking Button */}
+              <div className="pt-4">
                 <a 
                   href="/bestelling-volgen" 
-                  className="ultra-luxury-tracking-button group"
+                  className="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-[#C8A85B]/40 hover:border-[#C8A85B] bg-gradient-to-r from-[#C8A85B]/10 to-transparent hover:from-[#C8A85B]/20 transition-all duration-300 group"
                 >
-                  <div className="ultra-luxury-tracking-bg"></div>
-                  <div className="ultra-luxury-tracking-border"></div>
-                  <div className="ultra-luxury-tracking-content">
-                    <div className="ultra-luxury-tracking-icon">
-                      <svg 
-                        className="w-5 h-5" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" 
-                        />
-                      </svg>
-                    </div>
-                    <span className="ultra-luxury-tracking-text">
-                      VOLG UW BESTELLING
-                    </span>
-                    <div className="ultra-luxury-tracking-arrow">
-                      <svg 
-                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M9 5l7 7-7 7" 
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                  <svg className="w-5 h-5 text-[#C8A85B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-xs font-semibold tracking-widest text-[#F5F5F5] uppercase">
+                    Volg uw bestelling
+                  </span>
+                  <svg className="w-4 h-4 text-[#C8A85B] group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Column 2: Producten */}
-          <div className="ultra-luxury-footer-column">
+          {/* Column 2: Producten - Expandable */}
+          <div>
             <button
-              onClick={() => toggleSection("producten")}
-              className="w-full flex justify-between items-center text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded mb-4"
+              onClick={() => setIsProductenExpanded(!isProductenExpanded)}
+              className="w-full flex items-center justify-between text-left focus:outline-none group"
             >
-              <h3 className="ultra-luxury-footer-heading">Producten</h3>
-              <div className="ml-2 transition-transform duration-300">
-                {expandedSections.producten ? (
-                  <Minus className="w-5 h-5 text-[#C8A85B]" />
+              <h3 className="text-xl font-semibold text-[#F5F5F5] tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                Producten
+              </h3>
+              <div className="ml-3 text-[#C8A85B] group-hover:text-[#E6C988] transition-colors">
+                {isProductenExpanded ? (
+                  <Minus className="w-5 h-5" />
                 ) : (
-                  <Plus className="w-5 h-5 text-[#C8A85B]" />
+                  <Plus className="w-5 h-5" />
                 )}
               </div>
             </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                expandedSections.producten
-                  ? "max-h-[800px] opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="ultra-luxury-footer-content">
-              <ul className="ultra-luxury-footer-links">
-                <li>
-                  <a
-                    href="/producten/houten-jaloezieen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Houten jaloezieën"
-                  >
-
-                    Houten jaloezieën
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/textiel-lamellen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Textiel lamellen"
-                  >
-
-                    Textiel lamellen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/kunststof-jaloezieen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Kunststof jaloezieën"
-                  >
-
-                    Kunststof jaloezieën
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/kunststof-lamellen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Kunststof lamellen"
-                  >
-
-                    Kunststof lamellen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/plisse"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Plissés"
-                  >
-
-                    Plissés
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/duo-plisse"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Duo plissés"
-                  >
-
-                    Duo plissés
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/rolgordijnen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Rolgordijnen"
-                  >
-
-                    Rolgordijnen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/duo-rolgordijnen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Duo rolgordijnen"
-                  >
-
-                    Duo rolgordijnen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/overgordijnen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Overgordijnen"
-                  >
-
-                    Overgordijnen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/gordijnrails"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Gordijnrails"
-                  >
-
-                    Gordijnrails
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/vitrages"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Vitrages"
-                  >
-
-                    Vitrages
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/houten-shutters"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Houten shutters"
-                  >
-
-                    Houten shutters
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/producten/vonwgordijnen"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Vonwgordijnen"
-                  >
-
-                    Vonwgordijnen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/gordijnroedes"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Gordijnroedes"
-                  >
-
-                    Gordijnroedes
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/squid"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Squid"
-                  >
-
-                    Squid
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/horren"
-                    className="ultra-luxury-footer-link ultra-luxury-footer-link-available"
-                    aria-label="Go to product page for Horren"
-                  >
-
-                    Horren
-                  </a>
-                </li>
+            
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+              isProductenExpanded ? "max-h-[600px] opacity-100 mt-6" : "max-h-0 opacity-0"
+            }`}>
+              <ul className="space-y-3">
+                {[
+                  { name: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
+                  { name: "Textiel lamellen", href: "/producten/textiel-lamellen" },
+                  { name: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
+                  { name: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
+                  { name: "Plissés", href: "/producten/plisse" },
+                  { name: "Duo plissés", href: "/producten/duo-plisse" },
+                  { name: "Rolgordijnen", href: "/producten/rolgordijnen" },
+                  { name: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
+                  { name: "Overgordijnen", href: "/producten/overgordijnen" },
+                  { name: "Gordijnrails", href: "/producten/gordijnrails" },
+                  { name: "Vitrages", href: "/producten/vitrages" },
+                  { name: "Houten shutters", href: "/producten/houten-shutters" },
+                  { name: "Vouwgordijnen", href: "/producten/vouwgordijnen" },
+                  { name: "Gordijnroedes", href: "/gordijnroedes" },
+                  { name: "Squid", href: "/squid" },
+                  { name: "Horren", href: "/horren" },
+                ].map((product) => (
+                  <li key={product.name}>
+                    <a 
+                      href={product.href}
+                      className="text-[#C8A85B] hover:text-[#E6C988] font-medium text-sm transition-colors hover:underline underline-offset-4"
+                    >
+                      {product.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
-              </div>
             </div>
           </div>
 
-          {/* Column 3: Klantenservice */}
-          <div className="ultra-luxury-footer-column">
-            <h3 className="ultra-luxury-footer-heading">Klantenservice</h3>
-            <div className="ultra-luxury-footer-content">
-              <ul className="ultra-luxury-footer-links">
-                <li>
-                  <a
-                    href="/meet-instructies"
-                    className="ultra-luxury-footer-link"
+          {/* Column 3: Klantenservice - Always Visible */}
+          <div>
+            <h3 className="text-xl font-semibold text-[#F5F5F5] mb-6 tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Klantenservice
+            </h3>
+            <ul className="space-y-3">
+              {[
+                { name: "Meet instructies", href: "/meet-instructies" },
+                { name: "Installatie instructies", href: "/installatie-instructies" },
+                { name: "Onderhouds instructies", href: "/onderhouds-instructies" },
+                { name: "Retour beleid", href: "/retour-beleid" },
+                { name: "Garantie voorwaarden", href: "/garantie-voorwaarden" },
+                { name: "Veelgestelde vragen", href: "/veelgestelde-vragen" },
+                { name: "Bestelstatus volgen", href: "/bestelling-volgen" },
+                { name: "Contact opnemen", href: "/contact" },
+                { name: "Service & Herstellingen", href: "/service-en-herstellingen" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <a 
+                    href={link.href}
+                    className="text-gray-400 hover:text-[#F5F5F5] text-sm transition-colors flex items-center gap-2 group"
                   >
-                    Meet instructies
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C8A85B]/60 group-hover:bg-[#C8A85B] transition-colors"></span>
+                    {link.name}
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="/installatie-instructies"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Installatie instructies
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/onderhouds-instructies"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Onderhouds instructies
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/retour-beleid"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Retour beleid
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/garantie-voorwaarden"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Garantie voorwaarden
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/veelgestelde-vragen"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Veelgestelde vragen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/bestelling-volgen"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Bestelstatus volgen
-                  </a>
-                </li>
-                <li>
-                  <a href="/contact" className="ultra-luxury-footer-link">
-                    Contact opnemen
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/service-en-herstellingen"
-                    className="ultra-luxury-footer-link"
-                  >
-                    Service & Herstellingen
-                  </a>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
 
           {/* Column 4: Nieuwsbrief */}
-          <div className="ultra-luxury-footer-column">
-            <h3 className="ultra-luxury-footer-heading">Nieuwsbrief</h3>
-            <div className="ultra-luxury-footer-content">
-              <p className="ultra-luxury-newsletter-description">
-                Blijf op de hoogte van nieuwe collecties, aanbiedingen en
-                inspiratie voor uw interieur.
-              </p>
+          <div>
+            <h3 className="text-xl font-semibold text-[#F5F5F5] mb-6 tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Nieuwsbrief
+            </h3>
+            <p className="text-sm text-gray-400 leading-relaxed mb-6">
+              Blijf op de hoogte van nieuwe collecties, aanbiedingen en inspiratie voor uw interieur.
+            </p>
 
-              {/* Ultra-Luxury Newsletter Signup */}
-              <form className="ultra-luxury-newsletter-form">
-                <div className="ultra-luxury-newsletter-container">
-                  <div className="ultra-luxury-input-wrapper">
-                    <input
-                      type="email"
-                      placeholder="E-mail"
-                      className="ultra-luxury-newsletter-input"
-                      required
-                    />
-                    <div className="ultra-luxury-input-glow"></div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="ultra-luxury-newsletter-button"
-                  >
-                    <div className="ultra-luxury-button-bg"></div>
-                    <div className="ultra-luxury-button-content">
-                      <svg
-                        className="ultra-luxury-button-icon"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span className="ultra-luxury-button-text">
-                        Aanmelden
-                      </span>
-                    </div>
-                  </button>
-                </div>
-              </form>
-
-              {/* Contact Dropdown - Orange */}
-              <div className="relative mt-8">
+            {/* Newsletter Form */}
+            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="E-mail"
+                  className="flex-1 px-4 py-3 bg-white/5 border border-[#C8A85B]/30 rounded-sm text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#C8A85B] transition-colors"
+                  required
+                />
                 <button
+                  type="submit"
+                  className="px-5 py-3 bg-gradient-to-r from-[#C8A85B] to-[#B8941F] text-black font-semibold text-xs tracking-wider uppercase rounded-sm hover:from-[#D4AF37] hover:to-[#C8A85B] transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#C8A85B]/20"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Aanmelden
+                </button>
+              </div>
+            </form>
+
+            {/* Contact Dropdown */}
+            <div className="relative mt-6">
+              <button
+                onMouseEnter={() => setIsContactDropdownOpen(true)}
+                onMouseLeave={() => setIsContactDropdownOpen(false)}
+                className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-semibold tracking-widest uppercase rounded-sm transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-[1.02] flex items-center justify-center gap-2"
+              >
+                Contact
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isContactDropdownOpen && (
+                <div 
                   onMouseEnter={() => setIsContactDropdownOpen(true)}
                   onMouseLeave={() => setIsContactDropdownOpen(false)}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs tracking-widest uppercase rounded-sm transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/40 hover:scale-105 flex items-center justify-center gap-2"
+                  className="absolute top-full left-0 mt-2 w-full bg-white shadow-xl rounded-sm overflow-hidden z-50"
                 >
-                  Contact
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-500 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {/* Contact Dropdown Menu */}
-                {isContactDropdownOpen && (
-                  <div 
-                    onMouseEnter={() => setIsContactDropdownOpen(true)}
-                    onMouseLeave={() => setIsContactDropdownOpen(false)}
-                    className="absolute top-full left-0 mt-2 w-full bg-white shadow-xl border border-orange-300 rounded-sm py-2 z-50"
-                  >
+                  {[
+                    { name: "Plan een afspraak", href: "/contact" },
+                    { name: "Vrijblijvende offerte", href: "/quote" },
+                    { name: "Bestelling volgen", href: "/bestelling-volgen" },
+                  ].map((item) => (
                     <a
-                      href="/contact"
-                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500 block"
-                      onClick={() => setIsContactDropdownOpen(false)}
+                      key={item.name}
+                      href={item.href}
+                      className="block px-5 py-3 text-sm text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-colors border-l-4 border-transparent hover:border-orange-500"
                     >
-                      Plan een afspraak
+                      {item.name}
                     </a>
-                    <a
-                      href="/quote"
-                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500 block"
-                      onClick={() => setIsContactDropdownOpen(false)}
-                    >
-                      Vrijblijvende offerte
-                    </a>
-                    <a
-                      href="/bestelling-volgen"
-                      className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-300 border-l-4 border-transparent hover:border-orange-500 block"
-                      onClick={() => setIsContactDropdownOpen(false)}
-                    >
-                      Bestelling volgen
-                    </a>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Accordion Footer */}
-        <div className="md:hidden space-y-1 mb-12">
-          {/* Bedrijf Section */}
-          <div className="border-b border-gold-200/30">
-            <button
-              onClick={() => toggleSection("bedrijf")}
-              className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
-            >
-              <h3 className="footer-heading text-lg font-bold text-white">
-                Bedrijf
-              </h3>
-              <div className="ml-2 transition-transform duration-300">
-                {expandedSections.bedrijf ? (
-                  <Minus className="w-5 h-5 text-gold-600" />
-                ) : (
-                  <Plus className="w-5 h-5 text-gold-600" />
-                )}
-              </div>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                expandedSections.bedrijf
-                  ? "max-h-96 opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="px-2 pb-4">
-                <p className="text-lg font-bold text-white mb-2">
-                  KANIOU zilvernaald
-                </p>
-                <p className="text-white font-medium mb-4">
-                  Premium Gordijnen & Zonweringen
-                </p>
-
-                {/* Social Media Icons */}
-                <div className="flex space-x-4">
-                  <a href="#" className="footer-social-icon">
-                    <svg
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.40s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                  </a>
+                  ))}
                 </div>
-
-                {/* Mobile Order Tracking Button */}
-                <a 
-                  href="/bestelling-volgen" 
-                  className="mobile-luxury-tracking-button group block mt-4"
-                >
-                  <div className="mobile-tracking-bg"></div>
-                  <div className="mobile-tracking-content">
-                    <div className="mobile-tracking-icon">
-                      <svg 
-                        className="w-5 h-5" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" 
-                        />
-                      </svg>
-                    </div>
-                    <span className="mobile-tracking-text">
-                      VOLG UW BESTELLING
-                    </span>
-                    <div className="mobile-tracking-arrow">
-                      <svg 
-                        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M9 5l7 7-7 7" 
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Producten Section */}
-          <div className="border-b border-gold-200/30">
-            <button
-              onClick={() => toggleSection("producten")}
-              className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
-            >
-              <h3 className="footer-heading text-lg font-bold text-white">
-                Producten
-              </h3>
-              <div className="ml-2 transition-transform duration-300">
-                {expandedSections.producten ? (
-                  <Minus className="w-5 h-5 text-gold-600" />
-                ) : (
-                  <Plus className="w-5 h-5 text-gold-600" />
-                )}
-              </div>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                expandedSections.producten
-                  ? "max-h-96 opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="px-2 pb-4">
-                <ul className="space-y-3">
-                  <li>
-                    <a
-                      href="/producten/houten-jaloezieen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Houten jaloezieën"
-                    >
-
-                      Houten jaloezieën
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/textiel-lamellen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Textiel lamellen"
-                    >
-
-                      Textiel lamellen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/kunststof-jaloezieen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Kunststof jaloezieën"
-                    >
-
-                      Kunststof jaloezieën
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/kunststof-lamellen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Kunststof lamellen"
-                    >
-
-                      Kunststof lamellen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/plisse"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Plissés"
-                    >
-
-                      Plissés
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/duo-plisse"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Duo plissés"
-                    >
-
-                      Duo plissés
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/rolgordijnen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Rolgordijnen"
-                    >
-
-                      Rolgordijnen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/duo-rolgordijnen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Duo rolgordijnen"
-                    >
-
-                      Duo rolgordijnen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/overgordijnen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Overgordijnen"
-                    >
-
-                      Overgordijnen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/gordijnrails"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Gordijnrails"
-                    >
-
-                      Gordijnrails
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/vitrages"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Vitrages"
-                    >
-
-                      Vitrages
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/houten-shutters"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Houten shutters"
-                    >
-
-                      Houten shutters
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/producten/vonwgordijnen"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Vonwgordijnen"
-                    >
-
-                      Vonwgordijnen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/gordijnroedes"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Gordijnroedes"
-                    >
-
-                      Gordijnroedes
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/squid"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Squid"
-                    >
-
-                      Squid
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/horren"
-                      className="footer-link footer-link-available"
-                      aria-label="Go to product page for Horren"
-                    >
-
-                      Horren
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Klantenservice Section */}
-          <div className="border-b border-gold-200/30">
-            <button
-              onClick={() => toggleSection("klantenservice")}
-              className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
-            >
-              <h3 className="footer-heading text-lg font-bold text-white">
-                Klantenservice
-              </h3>
-              <div className="ml-2 transition-transform duration-300">
-                {expandedSections.klantenservice ? (
-                  <Minus className="w-5 h-5 text-gold-600" />
-                ) : (
-                  <Plus className="w-5 h-5 text-gold-600" />
-                )}
-              </div>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                expandedSections.klantenservice
-                  ? "max-h-[600px] opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="px-2 pb-4">
-                <ul className="space-y-3">
-                  <li>
-                    <a href="/meet-instructies" className="footer-link">
-                      Meet instructies
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/installatie-instructies"
-                      className="footer-link"
-                    >
-                      Installatie instructies
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/onderhouds-instructies"
-                      className="footer-link"
-                    >
-                      Onderhouds instructies
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/retour-beleid" className="footer-link">
-                      Retour beleid
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/garantie-voorwaarden" className="footer-link">
-                      Garantie voorwaarden
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/veelgestelde-vragen" className="footer-link">
-                      Veelgestelde vragen
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/bestelling-volgen" className="footer-link">
-                      Bestelstatus volgen
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/contact" className="footer-link">
-                      Contact opnemen
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/service-en-herstellingen"
-                      className="footer-link"
-                    >
-                      Service & Herstellingen
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Nieuwsbrief Section */}
-          <div className="border-b border-gold-200/30">
-            <button
-              onClick={() => toggleSection("nieuwsbrief")}
-              className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
-            >
-              <h3 className="footer-heading text-lg font-bold text-white">
-                Nieuwsbrief
-              </h3>
-              <div className="ml-2 transition-transform duration-300">
-                {expandedSections.nieuwsbrief ? (
-                  <Minus className="w-5 h-5 text-gold-600" />
-                ) : (
-                  <Plus className="w-5 h-5 text-gold-600" />
-                )}
-              </div>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                expandedSections.nieuwsbrief
-                  ? "max-h-96 opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="px-2 pb-4">
-                <p className="text-white font-medium mb-4 leading-relaxed">
-                  Blijf op de hoogte van nieuwe collecties, aanbiedingen en
-                  inspiratie voor uw interieur.
-                </p>
-
-                {/* Newsletter Signup */}
-                <form className="newsletter-form">
-                  <div className="newsletter-input-group">
-                    <input
-                      type="email"
-                      placeholder="E-mail"
-                      className="newsletter-input"
-                      required
-                    />
-                    <button type="submit" className="newsletter-button">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"
-                        />
-                      </svg>
-                      Aanmelden
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Legal Section - Collapsible */}
-        <div className="md:hidden border-b border-gold-200/30">
-          <button
-            onClick={() => toggleSection("legal")}
-            className="w-full flex justify-between items-center py-4 px-2 text-left focus:outline-none focus:ring-2 focus:ring-gold-500/20 rounded"
-          >
-            <h3 className="footer-heading text-lg font-bold text-white">
-              Wettelijke documenten
-            </h3>
-            <div className="ml-2 transition-transform duration-300">
-              {expandedSections.legal ? (
-                <Minus className="w-5 h-5 text-gold-600" />
-              ) : (
-                <Plus className="w-5 h-5 text-gold-600" />
               )}
             </div>
-          </button>
-          <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out ${
-              expandedSections.legal
-                ? "max-h-96 opacity-100"
-                : "max-h-0 opacity-0"
-            }`}
-          >
-            <div className="px-2 pb-4">
-              <ul className="space-y-3 mb-4">
-                <li>
-                  <a href="/privacybeleid" className="footer-legal-link">
-                    Privacybeleid
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/algemene-voorwaarden"
-                    className="footer-legal-link"
-                  >
-                    Algemene voorwaarden
-                  </a>
-                </li>
-                <li>
-                  <a href="/cookiebeleid" className="footer-legal-link">
-                    Cookiebeleid
-                  </a>
-                </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      if (typeof window !== 'undefined' && typeof (window as any).showCookieSettings === 'function') {
-                        (window as any).showCookieSettings();
-                      }
-                    }}
-                    className="footer-legal-link hover:text-gold-600 transition-colors duration-300 cursor-pointer font-bold text-left w-full"
-                  >
-                    🍪 Cookie Instellingen
-                  </button>
-                </li>
-                <li>
-                  <a href="/disclaimer" className="footer-legal-link">
-                    Disclaimer
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/gebruiksvoorwaarden"
-                    className="footer-legal-link"
-                  >
-                    Gebruiksvoorwaarden
-                  </a>
-                </li>
-              </ul>
-
-              {/* Google Reviews Link */}
-              <div className="text-center">
-                <a
-                  href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-sm font-medium text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
-                >
-                  <span className="mr-1">⭐</span>
-                  Bekijk onze Google Reviews
-                </a>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Desktop Legal Section - Always visible */}
-        <div className="hidden md:block footer-legal">
-          <div className="text-center">
-            <p className="text-gray-600 text-sm mb-4">
+        {/* Mobile Footer - Accordion Style */}
+        <div className="md:hidden space-y-1 mb-12">
+          {/* Mobile Bedrijf */}
+          <MobileSection title="Bedrijf" defaultOpen>
+            <div className="space-y-3">
+              <p className="text-lg font-bold text-[#C8A85B]">KANIOU zilvernaald</p>
+              <p className="text-sm text-gray-400 italic">Premium Gordijnen & Zonweringen</p>
+              <a 
+                href="https://www.instagram.com/kaniou_zilvernaald/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[#C8A85B]/20 border border-[#C8A85B]/30"
+              >
+                <svg className="w-5 h-5 text-[#C8A85B]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <a 
+                href="/bestelling-volgen" 
+                className="flex items-center gap-2 px-4 py-2 mt-2 rounded-full border border-[#C8A85B]/40 text-[#F5F5F5] text-xs font-semibold tracking-wider uppercase"
+              >
+                <svg className="w-4 h-4 text-[#C8A85B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Volg uw bestelling
+              </a>
+            </div>
+          </MobileSection>
+
+          {/* Mobile Producten */}
+          <MobileSection title="Producten">
+            <ul className="space-y-2">
+              {[
+                "Houten jaloezieën", "Textiel lamellen", "Kunststof jaloezieën", "Kunststof lamellen",
+                "Plissés", "Duo plissés", "Rolgordijnen", "Duo rolgordijnen", "Overgordijnen",
+                "Gordijnrails", "Vitrages", "Houten shutters", "Vouwgordijnen"
+              ].map((product) => (
+                <li key={product}>
+                  <a href={`/producten/${product.toLowerCase().replace(/\s+/g, '-').replace(/ë/g, 'e')}`} className="text-[#C8A85B] text-sm font-medium">
+                    {product}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </MobileSection>
+
+          {/* Mobile Klantenservice */}
+          <MobileSection title="Klantenservice">
+            <ul className="space-y-2">
+              {[
+                "Meet instructies", "Installatie instructies", "Onderhouds instructies",
+                "Retour beleid", "Garantie voorwaarden", "Veelgestelde vragen",
+                "Bestelstatus volgen", "Contact opnemen", "Service & Herstellingen"
+              ].map((item) => (
+                <li key={item}>
+                  <a href={`/${item.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'en')}`} className="text-gray-400 text-sm flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-[#C8A85B]/60"></span>
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </MobileSection>
+
+          {/* Mobile Nieuwsbrief */}
+          <MobileSection title="Nieuwsbrief" defaultOpen>
+            <div className="space-y-4">
+              <p className="text-sm text-gray-400">Blijf op de hoogte van nieuwe collecties en aanbiedingen.</p>
+              <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+                <input
+                  type="email"
+                  placeholder="E-mail"
+                  className="flex-1 px-3 py-2 bg-white/5 border border-[#C8A85B]/30 rounded-sm text-white placeholder-gray-500 text-sm"
+                />
+                <button type="submit" className="px-4 py-2 bg-gradient-to-r from-[#C8A85B] to-[#B8941F] text-black font-semibold text-xs rounded-sm">
+                  Aanmelden
+                </button>
+              </form>
+            </div>
+          </MobileSection>
+
+          {/* Mobile Legal */}
+          <MobileSection title="Wettelijke documenten">
+            <ul className="space-y-2">
+              {[
+                { name: "Privacybeleid", href: "/privacybeleid" },
+                { name: "Algemene voorwaarden", href: "/algemene-voorwaarden" },
+                { name: "Cookiebeleid", href: "/cookiebeleid" },
+                { name: "Disclaimer", href: "/disclaimer" },
+                { name: "Gebruiksvoorwaarden", href: "/gebruiksvoorwaarden" },
+              ].map((item) => (
+                <li key={item.name}>
+                  <a href={item.href} className="text-gray-400 text-sm">{item.name}</a>
+                </li>
+              ))}
+            </ul>
+          </MobileSection>
+        </div>
+
+        {/* Bottom Section - Desktop */}
+        <div className="hidden md:block border-t border-white/10 pt-8">
+          <div className="text-center space-y-4">
+            <p className="text-gray-500 text-sm">
               © 2025 KANIOU Zilvernaald – Alle rechten voorbehouden
             </p>
 
-            {/* Enhanced Legal Links */}
-            <div className="flex flex-wrap justify-center lg:justify-between items-center gap-x-4 gap-y-2 text-sm mb-4 lg:max-w-none lg:w-full">
-              <a href="/privacybeleid" className="footer-legal-link">
-                Privacybeleid
-              </a>
-              <span className="text-gray-400">|</span>
-              <a href="/algemene-voorwaarden" className="footer-legal-link">
-                Algemene voorwaarden
-              </a>
-              <span className="text-gray-400">|</span>
-              <a href="/cookiebeleid" className="footer-legal-link">
-                Cookiebeleid
-              </a>
-              <span className="text-gray-400">|</span>
+            <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-sm">
+              <a href="/privacybeleid" className="text-gray-400 hover:text-[#C8A85B] transition-colors">Privacybeleid</a>
+              <span className="text-gray-600">|</span>
+              <a href="/algemene-voorwaarden" className="text-gray-400 hover:text-[#C8A85B] transition-colors">Algemene voorwaarden</a>
+              <span className="text-gray-600">|</span>
+              <a href="/cookiebeleid" className="text-gray-400 hover:text-[#C8A85B] transition-colors">Cookiebeleid</a>
+              <span className="text-gray-600">|</span>
               <button
                 onClick={() => {
                   if (typeof window !== 'undefined' && typeof (window as any).showCookieSettings === 'function') {
                     (window as any).showCookieSettings();
                   }
                 }}
-                className="footer-legal-link hover:text-gold-600 transition-colors duration-300 cursor-pointer font-semibold"
+                className="text-gray-400 hover:text-[#C8A85B] transition-colors cursor-pointer"
               >
                 🍪 Cookie Instellingen
               </button>
-              <span className="text-gray-400">|</span>
-              <a href="/disclaimer" className="footer-legal-link">
-                Disclaimer
-              </a>
-              <span className="text-gray-400">|</span>
-              <a href="/gebruiksvoorwaarden" className="footer-legal-link">
-                Gebruiksvoorwaarden
-              </a>
+              <span className="text-gray-600">|</span>
+              <a href="/disclaimer" className="text-gray-400 hover:text-[#C8A85B] transition-colors">Disclaimer</a>
+              <span className="text-gray-600">|</span>
+              <a href="/gebruiksvoorwaarden" className="text-gray-400 hover:text-[#C8A85B] transition-colors">Gebruiksvoorwaarden</a>
             </div>
 
-            {/* Google Reviews Link */}
-            <div className="text-center">
-              <a
-                href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD/@50.9886857,5.6914029,17z/data=!4m16!1m9!3m8!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!2sKANIOU+bvba+ZILVERNAALD!8m2!3d50.9886857!4d5.6939832!9m1!1b1!16s%2Fg%2F11snz4psjn!3m5!1s0x47c0c5d2ad242f0f:0x1d9efc14cec41751!8m2!3d50.9886857!4d5.6939832!16s%2Fg%2F11snz4psjn?authuser=4&entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm font-medium text-gold-500 hover:text-gold-600 transition-colors duration-300 hover:underline"
-              >
-                <span className="mr-1">⭐</span>
-                Bekijk onze Google Reviews
-              </a>
-            </div>
+            <a
+              href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm font-medium text-[#C8A85B] hover:text-[#E6C988] transition-colors"
+            >
+              <span>⭐</span>
+              Bekijk onze Google Reviews
+            </a>
           </div>
         </div>
 
-        {/* Mobile Copyright - Always visible */}
-        <div className="md:hidden text-center mt-6">
-          <p className="text-white font-medium text-sm">
+        {/* Bottom Section - Mobile */}
+        <div className="md:hidden text-center pt-6 border-t border-white/10">
+          <p className="text-gray-500 text-xs mb-4">
             © 2025 KANIOU Zilvernaald – Alle rechten voorbehouden
           </p>
+          <a
+            href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-medium text-[#C8A85B]"
+          >
+            <span>⭐</span>
+            Bekijk onze Google Reviews
+          </a>
         </div>
       </div>
     </footer>
+  );
+};
+
+// Mobile Section Component
+const MobileSection = ({ 
+  title, 
+  children, 
+  defaultOpen = false 
+}: { 
+  title: string; 
+  children: React.ReactNode; 
+  defaultOpen?: boolean;
+}) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  
+  return (
+    <div className="border-b border-white/10">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between py-4 px-2 focus:outline-none"
+      >
+        <h3 className="text-lg font-semibold text-[#F5F5F5]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+          {title}
+        </h3>
+        {isOpen ? (
+          <Minus className="w-5 h-5 text-[#C8A85B]" />
+        ) : (
+          <Plus className="w-5 h-5 text-[#C8A85B]" />
+        )}
+      </button>
+      <div className={`overflow-hidden transition-all duration-300 ${
+        isOpen ? "max-h-[500px] opacity-100 pb-4 px-2" : "max-h-0 opacity-0"
+      }`}>
+        {children}
+      </div>
+    </div>
   );
 };
 

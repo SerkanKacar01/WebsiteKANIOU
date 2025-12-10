@@ -3,7 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { ArrowRight, ArrowLeft, ChevronDown, ChevronLeft, ChevronRight, Star, ExternalLink, MapPin, Phone, Mail, Clock, Home as HomeIcon, Ruler, Wrench, Search } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  ExternalLink,
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Home as HomeIcon,
+  Ruler,
+  Wrench,
+  Search,
+} from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 import interiorImageSrc from "@assets/Overgordijnen.jpeg";
 import gallery1Src from "@assets/IMG_9192.jpeg";
@@ -33,11 +49,25 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-const collageImages = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery1, gallery2, gallery3];
+const collageImages = [
+  gallery1,
+  gallery2,
+  gallery3,
+  gallery4,
+  gallery5,
+  gallery6,
+  gallery1,
+  gallery2,
+  gallery3,
+];
 
 // ========== ANIMATION HOOKS & COMPONENTS ==========
 
-const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolean = true) => {
+const useCountUp = (
+  end: number,
+  duration: number = 2000,
+  startOnVisible: boolean = true,
+) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -51,7 +81,7 @@ const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolea
           hasAnimated.current = true;
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -59,21 +89,21 @@ const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolea
 
   useEffect(() => {
     if (!isVisible && startOnVisible) return;
-    
+
     let startTime: number;
     let animationFrame: number;
-    
+
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       setCount(Math.floor(easeOutQuart * end));
-      
+
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate);
       }
     };
-    
+
     animationFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrame);
   }, [isVisible, end, duration, startOnVisible]);
@@ -81,9 +111,19 @@ const useCountUp = (end: number, duration: number = 2000, startOnVisible: boolea
   return { count, ref };
 };
 
-const TiltCard = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
+const TiltCard = ({
+  children,
+  className = "",
+  onClick,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg)');
+  const [transform, setTransform] = useState(
+    "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+  );
   const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -95,13 +135,21 @@ const TiltCard = ({ children, className = "", onClick }: { children: React.React
     const centerY = rect.height / 2;
     const rotateX = (y - centerY) / 15;
     const rotateY = (centerX - x) / 15;
-    
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
-    setGlare({ x: (x / rect.width) * 100, y: (y / rect.height) * 100, opacity: 0.15 });
+
+    setTransform(
+      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+    );
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.15,
+    });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    setTransform(
+      "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
+    );
     setGlare({ x: 50, y: 50, opacity: 0 });
   }, []);
 
@@ -109,13 +157,13 @@ const TiltCard = ({ children, className = "", onClick }: { children: React.React
     <div
       ref={cardRef}
       className={`relative transition-all duration-300 ease-out ${className}`}
-      style={{ transform, transformStyle: 'preserve-3d' }}
+      style={{ transform, transformStyle: "preserve-3d" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
       {children}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none rounded-inherit transition-opacity duration-300"
         style={{
           background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,${glare.opacity}), transparent 60%)`,
@@ -125,17 +173,28 @@ const TiltCard = ({ children, className = "", onClick }: { children: React.React
   );
 };
 
-const MagneticButton = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
+const MagneticButton = ({
+  children,
+  className = "",
+  onClick,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
-    const rect = buttonRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    setPosition({ x: x * 0.3, y: y * 0.3 });
-  }, []);
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!buttonRef.current) return;
+      const rect = buttonRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      setPosition({ x: x * 0.3, y: y * 0.3 });
+    },
+    [],
+  );
 
   const handleMouseLeave = useCallback(() => {
     setPosition({ x: 0, y: 0 });
@@ -161,12 +220,23 @@ const FloatingElements = () => {
       <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-100/20 to-transparent rounded-full blur-3xl animate-float-slow" />
       <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-gray-200/30 to-transparent rounded-full blur-2xl animate-float-medium" />
       <div className="absolute bottom-32 left-1/4 w-32 h-32 bg-gradient-to-br from-amber-50/40 to-transparent rounded-full blur-xl animate-float-fast" />
-      <div className="absolute bottom-20 right-1/3 w-56 h-56 bg-gradient-to-br from-gray-100/20 to-transparent rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '-3s' }} />
+      <div
+        className="absolute bottom-20 right-1/3 w-56 h-56 bg-gradient-to-br from-gray-100/20 to-transparent rounded-full blur-3xl animate-float-slow"
+        style={{ animationDelay: "-3s" }}
+      />
     </div>
   );
 };
 
-const TextReveal = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+const TextReveal = ({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -175,7 +245,7 @@ const TextReveal = ({ children, className = "", delay = 0 }: { children: React.R
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -183,9 +253,9 @@ const TextReveal = ({ children, className = "", delay = 0 }: { children: React.R
 
   return (
     <div ref={ref} className="overflow-hidden">
-      <div 
+      <div
         className={`transition-all duration-1000 ease-out ${className} ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
         style={{ transitionDelay: `${delay}ms` }}
       >
@@ -195,20 +265,31 @@ const TextReveal = ({ children, className = "", delay = 0 }: { children: React.R
   );
 };
 
-const AnimatedStatCard = ({ value, suffix = "", label, delay = 0 }: { value: number; suffix?: string; label: string; delay?: number }) => {
+const AnimatedStatCard = ({
+  value,
+  suffix = "",
+  label,
+  delay = 0,
+}: {
+  value: number;
+  suffix?: string;
+  label: string;
+  delay?: number;
+}) => {
   const { count, ref } = useCountUp(value, 2000);
-  
+
   return (
-    <div 
+    <div
       ref={ref}
       className="group text-center p-8 bg-gray-50 hover:bg-white transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div 
-        className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500" 
+      <div
+        className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500"
         style={{ fontFamily: "'Cormorant Garamond', serif" }}
       >
-        {count}{suffix}
+        {count}
+        {suffix}
       </div>
       <div className="text-xs tracking-widest uppercase text-gray-600">
         {label}
@@ -217,14 +298,22 @@ const AnimatedStatCard = ({ value, suffix = "", label, delay = 0 }: { value: num
   );
 };
 
-const StaticStatCard = ({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) => {
+const StaticStatCard = ({
+  value,
+  label,
+  delay = 0,
+}: {
+  value: string;
+  label: string;
+  delay?: number;
+}) => {
   return (
-    <div 
+    <div
       className="group text-center p-8 bg-gray-50 hover:bg-white transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div 
-        className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500" 
+      <div
+        className="text-5xl md:text-6xl font-light text-black mb-4 group-hover:scale-110 transition-transform duration-500"
         style={{ fontFamily: "'Cormorant Garamond', serif" }}
       >
         {value}
@@ -237,22 +326,58 @@ const StaticStatCard = ({ value, label, delay = 0 }: { value: string; label: str
 };
 
 // ========== HORIZONTAL PRODUCT CAROUSEL ==========
-const ProductCarousel = ({ setLocation }: { setLocation: (path: string) => void }) => {
+const ProductCarousel = ({
+  setLocation,
+}: {
+  setLocation: (path: string) => void;
+}) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
   const products = [
-    { name: "Kunststof Lamellen", image: gallery1, path: "/producten/kunststof-lamellen" },
-    { name: "Textiel Lamellen", image: gallery2, path: "/producten/textiel-lamellen" },
+    {
+      name: "Kunststof Lamellen",
+      image: gallery1,
+      path: "/producten/kunststof-lamellen",
+    },
+    {
+      name: "Textiel Lamellen",
+      image: gallery2,
+      path: "/producten/textiel-lamellen",
+    },
     { name: "Rolgordijnen", image: gallery3, path: "/producten/rolgordijnen" },
-    { name: "Duo Rolgordijnen", image: gallery4, path: "/producten/duo-rolgordijnen" },
+    {
+      name: "Duo Rolgordijnen",
+      image: gallery4,
+      path: "/producten/duo-rolgordijnen",
+    },
     { name: "Plissés", image: gallery5, path: "/producten/plisse" },
-    { name: "Houten Jaloezieën", image: gallery6, path: "/producten/houten-jaloezieen" },
-    { name: "Aluminium Jaloezieën", image: gallery1, path: "/producten/kunststof-jaloezieen" },
-    { name: "Overgordijnen", image: interiorImage, path: "/producten/overgordijnen" },
-    { name: "Vouwgordijnen", image: gallery2, path: "/producten/vouwgordijnen" },
-    { name: "Houten Shutters", image: gallery3, path: "/producten/houten-shutters" },
+    {
+      name: "Houten Jaloezieën",
+      image: gallery6,
+      path: "/producten/houten-jaloezieen",
+    },
+    {
+      name: "Aluminium Jaloezieën",
+      image: gallery1,
+      path: "/producten/kunststof-jaloezieen",
+    },
+    {
+      name: "Overgordijnen",
+      image: interiorImage,
+      path: "/producten/overgordijnen",
+    },
+    {
+      name: "Vouwgordijnen",
+      image: gallery2,
+      path: "/producten/vouwgordijnen",
+    },
+    {
+      name: "Houten Shutters",
+      image: gallery3,
+      path: "/producten/houten-shutters",
+    },
   ];
 
   const checkScroll = useCallback(() => {
@@ -267,17 +392,17 @@ const ProductCarousel = ({ setLocation }: { setLocation: (path: string) => void 
     checkScroll();
     const scrollElement = scrollRef.current;
     if (scrollElement) {
-      scrollElement.addEventListener('scroll', checkScroll);
-      return () => scrollElement.removeEventListener('scroll', checkScroll);
+      scrollElement.addEventListener("scroll", checkScroll);
+      return () => scrollElement.removeEventListener("scroll", checkScroll);
     }
   }, [checkScroll]);
 
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 360;
       scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
       });
     }
   };
@@ -286,17 +411,17 @@ const ProductCarousel = ({ setLocation }: { setLocation: (path: string) => void 
     <div className="relative">
       {canScrollLeft && (
         <button
-          onClick={() => scroll('left')}
+          onClick={() => scroll("left")}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-110"
           data-testid="carousel-left"
         >
           <ChevronLeft className="w-6 h-6 text-gray-800" />
         </button>
       )}
-      
+
       {canScrollRight && (
         <button
-          onClick={() => scroll('right')}
+          onClick={() => scroll("right")}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-110"
           data-testid="carousel-right"
         >
@@ -304,10 +429,10 @@ const ProductCarousel = ({ setLocation }: { setLocation: (path: string) => void 
         </button>
       )}
 
-      <div 
+      <div
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-8"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {products.map((product, index) => (
           <TiltCard
@@ -325,7 +450,7 @@ const ProductCarousel = ({ setLocation }: { setLocation: (path: string) => void 
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="p-6 bg-white">
-                <h3 
+                <h3
                   className="text-lg font-medium text-gray-900 group-hover:text-black transition-colors"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 >
@@ -347,27 +472,30 @@ const ServiceSteps = () => {
       number: "1",
       icon: HomeIcon,
       title: "Bezoek onze showroom",
-      description: "Kom langs voor gratis persoonlijk advies en bekijk onze uitgebreide collectie"
+      description:
+        "Kom langs voor gratis persoonlijk advies en bekijk onze uitgebreide collectie",
     },
     {
       number: "2",
       icon: Ruler,
       title: "Kies uw perfecte stijl",
-      description: "Selecteer het product, de kleur en bediening die uw interieur compleet maken"
+      description:
+        "Selecteer het product, de kleur en bediening die uw interieur compleet maken",
     },
     {
       number: "3",
       icon: Wrench,
       title: "Wij doen de rest",
-      description: "Onze specialisten komen opmeten en installeren uw raamdecoratie vakkundig"
-    }
+      description:
+        "Onze specialisten komen opmeten en installeren uw raamdecoratie vakkundig",
+    },
   ];
 
   return (
     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 
+          <h2
             className="text-4xl md:text-5xl font-light text-black mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
@@ -378,12 +506,12 @@ const ServiceSteps = () => {
 
         <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
           {steps.map((step, index) => (
-            <div 
-              key={index}
-              className="text-center group"
-            >
+            <div key={index} className="text-center group">
               <div className="relative mb-8">
-                <div className="w-20 h-20 mx-auto bg-black text-white rounded-full flex items-center justify-center text-3xl font-light group-hover:scale-110 transition-transform duration-500" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <div
+                  className="w-20 h-20 mx-auto bg-black text-white rounded-full flex items-center justify-center text-3xl font-light group-hover:scale-110 transition-transform duration-500"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
                   {step.number}
                 </div>
                 {index < steps.length - 1 && (
@@ -391,7 +519,7 @@ const ServiceSteps = () => {
                 )}
               </div>
               <step.icon className="w-8 h-8 mx-auto mb-4 text-gray-600" />
-              <h3 
+              <h3
                 className="text-xl font-medium text-black mb-3"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
@@ -409,7 +537,11 @@ const ServiceSteps = () => {
 };
 
 // ========== REALISATIES GALLERY (NO TITLES) ==========
-const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => void }) => {
+const InspirationGallery = ({
+  setLocation,
+}: {
+  setLocation: (path: string) => void;
+}) => {
   const realisatieImages = [
     galleryImage1,
     galleryImage2,
@@ -423,20 +555,22 @@ const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => vo
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-[1800px] mx-auto px-4 md:px-6 lg:px-16">
         <div className="text-center mb-10 md:mb-16">
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-light text-black mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             Realisaties
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4" />
-          <p className="text-gray-600 text-sm md:text-base">Een selectie uit ons portfolio</p>
+          <p className="text-gray-600 text-sm md:text-base">
+            Een selectie uit ons portfolio
+          </p>
         </div>
 
         {/* Mobile: 2 columns with square images */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
           {realisatieImages.map((image, index) => (
-            <div 
+            <div
               key={index}
               className="group relative overflow-hidden cursor-pointer aspect-square rounded-2xl shadow-md"
               onClick={() => setLocation("/gallerij")}
@@ -457,7 +591,9 @@ const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => vo
             className="inline-flex items-center px-8 py-4 bg-[#1a1a2e] text-white hover:bg-[#16162a] transition-all duration-300"
             data-testid="button-bekijk-gallerij"
           >
-            <span className="tracking-widest uppercase text-sm mr-3">Bekijk alle realisaties</span>
+            <span className="tracking-widest uppercase text-sm mr-3">
+              Bekijk alle realisaties
+            </span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -467,42 +603,48 @@ const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => vo
 };
 
 // ========== SPLIT LAYOUT SECTION ==========
-const SplitSection = ({ 
-  image, 
-  title, 
-  subtitle, 
-  description, 
-  buttonText, 
-  buttonPath, 
+const SplitSection = ({
+  image,
+  title,
+  subtitle,
+  description,
+  buttonText,
+  buttonPath,
   imageLeft = true,
-  setLocation 
-}: { 
-  image: string; 
-  title: string; 
-  subtitle?: string; 
-  description: string; 
-  buttonText: string; 
-  buttonPath: string; 
+  setLocation,
+}: {
+  image: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  buttonText: string;
+  buttonPath: string;
   imageLeft?: boolean;
   setLocation: (path: string) => void;
 }) => {
   return (
     <section className="py-24 bg-white">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-        <div className={`grid lg:grid-cols-2 gap-16 lg:gap-24 items-center ${!imageLeft ? 'lg:grid-flow-col-dense' : ''}`}>
-          <div className={`relative overflow-hidden rounded-lg aspect-square ${!imageLeft ? 'lg:col-start-2' : ''}`}>
+        <div
+          className={`grid lg:grid-cols-2 gap-16 lg:gap-24 items-center ${!imageLeft ? "lg:grid-flow-col-dense" : ""}`}
+        >
+          <div
+            className={`relative overflow-hidden rounded-lg aspect-square ${!imageLeft ? "lg:col-start-2" : ""}`}
+          >
             <img
               src={image}
               alt={title}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
           </div>
-          
-          <div className={!imageLeft ? 'lg:col-start-1' : ''}>
+
+          <div className={!imageLeft ? "lg:col-start-1" : ""}>
             {subtitle && (
-              <span className="text-xs tracking-widest uppercase text-gray-500 mb-4 block">{subtitle}</span>
+              <span className="text-xs tracking-widest uppercase text-gray-500 mb-4 block">
+                {subtitle}
+              </span>
             )}
-            <h2 
+            <h2
               className="text-4xl md:text-5xl lg:text-6xl font-light text-black mb-8 leading-tight"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
@@ -515,9 +657,11 @@ const SplitSection = ({
             <button
               onClick={() => setLocation(buttonPath)}
               className="group inline-flex items-center px-8 py-4 bg-black text-white hover:bg-gray-900 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
-              data-testid={`button-${buttonPath.replace(/\//g, '-')}`}
+              data-testid={`button-${buttonPath.replace(/\//g, "-")}`}
             >
-              <span className="text-xs tracking-widest uppercase mr-3">{buttonText}</span>
+              <span className="text-xs tracking-widest uppercase mr-3">
+                {buttonText}
+              </span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
           </div>
@@ -528,36 +672,42 @@ const SplitSection = ({
 };
 
 // ========== IN DE KIJKER / SPOTLIGHT SECTION ==========
-const SpotlightSection = ({ setLocation }: { setLocation: (path: string) => void }) => {
+const SpotlightSection = ({
+  setLocation,
+}: {
+  setLocation: (path: string) => void;
+}) => {
   const spotlights = [
     {
       label: "Nieuw",
       title: "Duo Rolgordijnen",
-      description: "Combineer privacy met lichtinval - de perfecte balans voor elk moment van de dag",
+      description:
+        "Combineer privacy met lichtinval - de perfecte balans voor elk moment van de dag",
       image: duoRolgordijnenSrc,
-      path: "/producten/duo-rolgordijnen"
+      path: "/producten/duo-rolgordijnen",
     },
     {
       label: "Populair",
       title: "Houten Shutters",
       description: "Tijdloze elegantie met perfecte lichtcontrole en isolatie",
       image: houtenShuttersSrc,
-      path: "/producten/houten-shutters"
+      path: "/producten/houten-shutters",
     },
     {
       label: "Duurzaam",
       title: "Textiel Lamellen",
-      description: "Zachte materialen voor een warme uitstraling en optimale lichtfiltering",
+      description:
+        "Zachte materialen voor een warme uitstraling en optimale lichtfiltering",
       image: textielLamellenSrc,
-      path: "/producten/textiel-lamellen"
-    }
+      path: "/producten/textiel-lamellen",
+    },
   ];
 
   return (
     <section className="py-24 bg-gray-50">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         <div className="text-center mb-16">
-          <h2 
+          <h2
             className="text-4xl md:text-5xl font-light text-black mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
@@ -585,7 +735,7 @@ const SpotlightSection = ({ setLocation }: { setLocation: (path: string) => void
                   </span>
                 </div>
                 <div className="p-6">
-                  <h3 
+                  <h3
                     className="text-2xl font-light text-black mb-3 group-hover:text-gray-700 transition-colors"
                     style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   >
@@ -615,7 +765,7 @@ const ShowroomSection = () => {
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 
+            <h2
               className="text-4xl md:text-5xl font-light text-black mb-8"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
@@ -623,35 +773,47 @@ const ShowroomSection = () => {
             </h2>
             <div className="w-16 h-px bg-gradient-to-r from-black/20 to-transparent mb-8" />
             <p className="text-lg text-gray-700 font-light leading-relaxed mb-8">
-              Onze experts helpen je graag bij het vinden van de perfecte raamdecoratie voor jouw woning. 
-              Kom langs in onze showroom voor persoonlijk advies en bekijk onze uitgebreide collectie.
+              Onze experts helpen je graag bij het vinden van de perfecte
+              raamdecoratie voor jouw woning. Kom langs in onze showroom voor
+              persoonlijk advies en bekijk onze uitgebreide collectie.
             </p>
-            
+
             <div className="space-y-4 mb-8">
               <div className="flex items-start gap-4">
                 <MapPin className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="font-medium text-gray-900">KANIOU Zilvernaald</p>
-                  <p className="text-gray-600">Genkersteenweg 508, 3500 Hasselt</p>
+                  <p className="font-medium text-gray-900">
+                    KANIOU Zilvernaald || Gordijnen & Zonweringen
+                  </p>
+                  <p className="text-gray-600">
+                    Pauwengraaf 66 - 3630 Maasmechelen te België
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <Phone className="w-5 h-5 text-gray-600 flex-shrink-0" />
-                <a href="tel:+32470592914" className="text-gray-600 hover:text-black transition-colors">
-                  +32 470 59 29 14
+                <a
+                  href="tel:+32470592914"
+                  className="text-gray-600 hover:text-black transition-colors"
+                >
+                  +32 467 85 64 05
                 </a>
               </div>
               <div className="flex items-center gap-4">
                 <Mail className="w-5 h-5 text-gray-600 flex-shrink-0" />
-                <a href="mailto:info@kaniou.be" className="text-gray-600 hover:text-black transition-colors">
+                <a
+                  href="mailto:info@kaniou.be"
+                  className="text-gray-600 hover:text-black transition-colors"
+                >
                   info@kaniou.be
                 </a>
               </div>
               <div className="flex items-start gap-4">
                 <Clock className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
                 <div className="text-gray-600">
-                  <p>Ma-Vr: 09:00 - 18:00</p>
-                  <p>Za: 10:00 - 17:00</p>
+                  <p>Ma-Vr: 10:00 - 18:00</p>
+                  <p>Za: 10:00 - 18:00</p>
+                  <p>Zo: Gesloten</p>
                 </div>
               </div>
             </div>
@@ -663,7 +825,9 @@ const ShowroomSection = () => {
               className="inline-flex items-center px-8 py-4 bg-black text-white hover:bg-gray-900 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
               data-testid="button-showroom-map"
             >
-              <span className="text-xs tracking-widest uppercase mr-3">Bekijk op kaart</span>
+              <span className="text-xs tracking-widest uppercase mr-3">
+                Bekijk op kaart
+              </span>
               <ExternalLink className="w-4 h-4" />
             </a>
           </div>
@@ -684,9 +848,9 @@ const ShowroomSection = () => {
 // ========== BROCHURE REQUEST FORM ==========
 const BrochureForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    newsletter: false
+    name: "",
+    email: "",
+    newsletter: false,
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -709,17 +873,20 @@ const BrochureForm = () => {
           </div>
 
           <div>
-            <h2 
+            <h2
               className="text-4xl md:text-5xl font-light mb-6"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               Vraag onze brochure aan en laat je inspireren!
             </h2>
             <div className="w-16 h-px bg-gradient-to-r from-white/30 to-transparent mb-8" />
-            
+
             {submitted ? (
               <div className="bg-white/10 rounded-lg p-8 text-center">
-                <div className="text-2xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <div
+                  className="text-2xl mb-4"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
                   Bedankt!
                 </div>
                 <p className="text-white/80">
@@ -735,7 +902,9 @@ const BrochureForm = () => {
                   <Input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
                     placeholder="Uw naam"
                     required
@@ -749,7 +918,9 @@ const BrochureForm = () => {
                   <Input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
                     placeholder="uw@email.com"
                     required
@@ -761,12 +932,18 @@ const BrochureForm = () => {
                     type="checkbox"
                     id="newsletter"
                     checked={formData.newsletter}
-                    onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, newsletter: e.target.checked })
+                    }
                     className="mt-1"
                     data-testid="checkbox-brochure-newsletter"
                   />
-                  <label htmlFor="newsletter" className="text-sm text-white/70 leading-relaxed">
-                    Ja, ik wil de nieuwsbrief ontvangen met informatie over promoties, trends en nieuwe collecties.
+                  <label
+                    htmlFor="newsletter"
+                    className="text-sm text-white/70 leading-relaxed"
+                  >
+                    Ja, ik wil de nieuwsbrief ontvangen met informatie over
+                    promoties, trends en nieuwe collecties.
                   </label>
                 </div>
                 <button
@@ -789,11 +966,15 @@ const BrochureForm = () => {
 const LuxuryNavigation = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isCollectieDropdownOpen, setIsCollectieDropdownOpen] = React.useState(false);
+  const [isCollectieDropdownOpen, setIsCollectieDropdownOpen] =
+    React.useState(false);
   const [isHorrenDropdownOpen, setIsHorrenDropdownOpen] = React.useState(false);
-  const [isGordijnenDropdownOpen, setIsGordijnenDropdownOpen] = React.useState(false);
-  const [isOphangsystemenDropdownOpen, setIsOphangsystemenDropdownOpen] = React.useState(false);
-  const [isScreensDropdownOpen, setIsScreensDropdownOpen] = React.useState(false);
+  const [isGordijnenDropdownOpen, setIsGordijnenDropdownOpen] =
+    React.useState(false);
+  const [isOphangsystemenDropdownOpen, setIsOphangsystemenDropdownOpen] =
+    React.useState(false);
+  const [isScreensDropdownOpen, setIsScreensDropdownOpen] =
+    React.useState(false);
   const [, setLocation] = useLocation();
 
   React.useEffect(() => {
@@ -844,12 +1025,16 @@ const LuxuryNavigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100/50 shadow-sm">
       <div className="max-w-full mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20 lg:h-24">
-          <button 
+          <button
             onClick={() => setLocation("/")}
             className="transition-all duration-500 hover:opacity-70 hover:scale-105"
             data-testid="nav-logo"
           >
-            <img src={kaniouLogo} alt="KANIOU" className="h-10 lg:h-12 w-auto" />
+            <img
+              src={kaniouLogo}
+              alt="KANIOU"
+              className="h-10 lg:h-12 w-auto"
+            />
           </button>
 
           <div className="hidden lg:flex items-center space-x-8">
@@ -865,7 +1050,7 @@ const LuxuryNavigation = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
               {isCollectieDropdownOpen && (
-                <div 
+                <div
                   onMouseEnter={() => setIsCollectieDropdownOpen(true)}
                   onMouseLeave={() => setIsCollectieDropdownOpen(false)}
                   className="absolute top-full left-0 mt-0 pt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
@@ -878,7 +1063,7 @@ const LuxuryNavigation = () => {
                         setIsCollectieDropdownOpen(false);
                       }}
                       className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
-                      data-testid={`nav-product-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                      data-testid={`nav-product-${product.name.toLowerCase().replace(/\s/g, "-")}`}
                     >
                       {product.name}
                     </button>
@@ -899,7 +1084,7 @@ const LuxuryNavigation = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
               {isHorrenDropdownOpen && (
-                <div 
+                <div
                   onMouseEnter={() => setIsHorrenDropdownOpen(true)}
                   onMouseLeave={() => setIsHorrenDropdownOpen(false)}
                   className="absolute top-full left-0 mt-0 pt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
@@ -912,7 +1097,7 @@ const LuxuryNavigation = () => {
                         setIsHorrenDropdownOpen(false);
                       }}
                       className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
-                      data-testid={`nav-horren-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                      data-testid={`nav-horren-${product.name.toLowerCase().replace(/\s/g, "-")}`}
                     >
                       {product.name}
                     </button>
@@ -933,7 +1118,7 @@ const LuxuryNavigation = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
               {isGordijnenDropdownOpen && (
-                <div 
+                <div
                   onMouseEnter={() => setIsGordijnenDropdownOpen(true)}
                   onMouseLeave={() => setIsGordijnenDropdownOpen(false)}
                   className="absolute top-full left-0 mt-0 pt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
@@ -946,7 +1131,7 @@ const LuxuryNavigation = () => {
                         setIsGordijnenDropdownOpen(false);
                       }}
                       className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
-                      data-testid={`nav-gordijnen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                      data-testid={`nav-gordijnen-${product.name.toLowerCase().replace(/\s/g, "-")}`}
                     >
                       {product.name}
                     </button>
@@ -967,7 +1152,7 @@ const LuxuryNavigation = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
               {isOphangsystemenDropdownOpen && (
-                <div 
+                <div
                   onMouseEnter={() => setIsOphangsystemenDropdownOpen(true)}
                   onMouseLeave={() => setIsOphangsystemenDropdownOpen(false)}
                   className="absolute top-full left-0 mt-0 pt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
@@ -980,7 +1165,7 @@ const LuxuryNavigation = () => {
                         setIsOphangsystemenDropdownOpen(false);
                       }}
                       className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
-                      data-testid={`nav-ophangsystemen-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                      data-testid={`nav-ophangsystemen-${product.name.toLowerCase().replace(/\s/g, "-")}`}
                     >
                       {product.name}
                     </button>
@@ -1001,7 +1186,7 @@ const LuxuryNavigation = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-black group-hover:w-full transition-all duration-500"></span>
               </button>
               {isScreensDropdownOpen && (
-                <div 
+                <div
                   onMouseEnter={() => setIsScreensDropdownOpen(true)}
                   onMouseLeave={() => setIsScreensDropdownOpen(false)}
                   className="absolute top-full left-0 mt-0 pt-2 w-64 bg-white shadow-xl rounded-sm border border-gray-300 py-4 z-50"
@@ -1014,7 +1199,7 @@ const LuxuryNavigation = () => {
                         setIsScreensDropdownOpen(false);
                       }}
                       className="w-full px-6 py-3 text-left text-sm tracking-wide text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
-                      data-testid={`nav-screens-${product.name.toLowerCase().replace(/\s/g, '-')}`}
+                      data-testid={`nav-screens-${product.name.toLowerCase().replace(/\s/g, "-")}`}
                     >
                       {product.name}
                     </button>
@@ -1059,9 +1244,15 @@ const LuxuryNavigation = () => {
             data-testid="mobile-menu-toggle"
           >
             <div className="w-6 flex flex-col gap-1.5">
-              <span className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-              <span className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+              <span
+                className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+              ></span>
+              <span
+                className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : ""}`}
+              ></span>
+              <span
+                className={`block h-0.5 bg-gray-900 transition-all duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              ></span>
             </div>
           </button>
         </div>
@@ -1070,25 +1261,37 @@ const LuxuryNavigation = () => {
           <div className="lg:hidden bg-white border-t border-gray-100 py-6 animate-[fadeInUp_0.3s_ease-out]">
             <div className="space-y-4">
               <button
-                onClick={() => { setLocation("/producten/overgordijnen"); setIsMobileMenuOpen(false); }}
+                onClick={() => {
+                  setLocation("/producten/overgordijnen");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
               >
                 Collectie
               </button>
               <button
-                onClick={() => { setLocation("/producten/horren"); setIsMobileMenuOpen(false); }}
+                onClick={() => {
+                  setLocation("/producten/horren");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
               >
                 Horren
               </button>
               <button
-                onClick={() => { setLocation("/producten/overgordijnen"); setIsMobileMenuOpen(false); }}
+                onClick={() => {
+                  setLocation("/producten/overgordijnen");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
               >
                 Gordijnen
               </button>
               <button
-                onClick={() => { setLocation("/quote"); setIsMobileMenuOpen(false); }}
+                onClick={() => {
+                  setLocation("/quote");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase text-center mx-4"
                 data-testid="mobile-cta-quote"
               >
@@ -1103,7 +1306,13 @@ const LuxuryNavigation = () => {
 };
 
 // ========== COLLAGE HERO ==========
-const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (path: string) => void }) => {
+const CollageHero = ({
+  images,
+  setLocation,
+}: {
+  images: string[];
+  setLocation: (path: string) => void;
+}) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -1121,18 +1330,25 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
                 src={img}
                 alt={`Interior showcase ${idx + 1}`}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${
-                  hoveredIndex === idx ? 'scale-110' : 'scale-100'
+                  hoveredIndex === idx ? "scale-110" : "scale-100"
                 }`}
                 style={{
-                  filter: hoveredIndex !== null && hoveredIndex !== idx ? 'brightness(0.6)' : 'brightness(1)',
-                  transition: 'all 700ms cubic-bezier(0.34, 1.56, 0.64, 1)'
+                  filter:
+                    hoveredIndex !== null && hoveredIndex !== idx
+                      ? "brightness(0.6)"
+                      : "brightness(1)",
+                  transition: "all 700ms cubic-bezier(0.34, 1.56, 0.64, 1)",
                 }}
               />
               <div
                 className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                 style={{
-                  transform: hoveredIndex === idx ? 'translate(0, 0)' : 'translate(-100%, -100%)',
-                  transition: 'transform 700ms ease-out, opacity 700ms ease-out'
+                  transform:
+                    hoveredIndex === idx
+                      ? "translate(0, 0)"
+                      : "translate(-100%, -100%)",
+                  transition:
+                    "transform 700ms ease-out, opacity 700ms ease-out",
                 }}
               />
             </div>
@@ -1147,12 +1363,15 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
           className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-6 tracking-tighter leading-[0.9] transition-all duration-700 hover:scale-105"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            letterSpacing: '-0.04em',
-            textShadow: '0 8px 32px rgba(0,0,0,0.5)'
+            letterSpacing: "-0.04em",
+            textShadow: "0 8px 32px rgba(0,0,0,0.5)",
           }}
         >
-          KANIOU raamdecoratie<br/>
-          <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">op maat, voor elke stijl</span>
+          KANIOU raamdecoratie
+          <br />
+          <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">
+            op maat, voor elke stijl
+          </span>
         </h1>
 
         <p className="text-lg md:text-xl text-white/90 mb-12 font-light tracking-wide max-w-xl mx-auto animate-[fadeInUp_1.4s_ease-out]">
@@ -1164,7 +1383,9 @@ const CollageHero = ({ images, setLocation }: { images: string[]; setLocation: (
           className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden animate-glow-pulse"
           data-testid="button-request-quote"
         >
-          <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Vrijblijvend offerte aanvragen</span>
+          <span className="relative z-10 text-xs tracking-widest uppercase mr-3">
+            Vrijblijvend offerte aanvragen
+          </span>
           <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
         </MagneticButton>
@@ -1189,7 +1410,7 @@ const useScrollReveal = (threshold = 0.1) => {
           setIsVisible(true);
         }
       },
-      { threshold }
+      { threshold },
     );
 
     if (ref.current) {
@@ -1210,7 +1431,7 @@ const useScrollReveal = (threshold = 0.1) => {
 const Home = () => {
   const [, setLocation] = useLocation();
   const [scrollY, setScrollY] = useState(0);
-  
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -1224,13 +1445,18 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>KANIOU – Premium Raamdecoratie & Maatwerk | 30+ jaar expertise</title>
+        <title>
+          KANIOU – Premium Raamdecoratie & Maatwerk | 30+ jaar expertise
+        </title>
         <meta
           name="description"
           content="Ontdek de ultieme luxe in raamdecoratie. KANIOU biedt op maat gemaakte gordijnen, jaloezieën en zonwering met meer dan 30 jaar vakmanschap in België."
         />
         <meta property="og:title" content="KANIOU – Premium Raamdecoratie" />
-        <meta property="og:description" content="Luxe raamdecoratie op maat | 30+ jaar expertise" />
+        <meta
+          property="og:description"
+          content="Luxe raamdecoratie op maat | 30+ jaar expertise"
+        />
         <meta property="og:type" content="website" />
       </Helmet>
 
@@ -1244,14 +1470,16 @@ const Home = () => {
         <section className="py-24 bg-white">
           <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
             <div className="text-center mb-16">
-              <h2 
+              <h2
                 className="text-4xl md:text-5xl font-light text-black mb-4"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
                 Onze collectie raamdecoratie
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4" />
-              <p className="text-gray-600">Premium producten voor elk raam en elke stijl</p>
+              <p className="text-gray-600">
+                Premium producten voor elk raam en elke stijl
+              </p>
             </div>
             <ProductCarousel setLocation={setLocation} />
           </div>
@@ -1279,35 +1507,38 @@ const Home = () => {
         <SpotlightSection setLocation={setLocation} />
 
         {/* CRAFTSMANSHIP / STATS SECTION */}
-        <section 
-          ref={craftsmanshipRef}
-          className="py-32 bg-white"
-        >
+        <section ref={craftsmanshipRef} className="py-32 bg-white">
           <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-              <div 
+              <div
                 className={`transition-all duration-1200 ${
-                  craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+                  craftsmanshipVisible
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-12"
                 }`}
               >
-                <h2 
-                  className="text-5xl md:text-6xl lg:text-7xl font-light text-black mb-12 leading-tight hover:scale-105 transition-transform duration-700" 
+                <h2
+                  className="text-5xl md:text-6xl lg:text-7xl font-light text-black mb-12 leading-tight hover:scale-105 transition-transform duration-700"
                   style={{
                     fontFamily: "'Cormorant Garamond', serif",
-                    letterSpacing: '-0.02em'
+                    letterSpacing: "-0.02em",
                   }}
                 >
-                  30+ jaar<br/>
-                  <span className="italic bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">expertise</span>
+                  30+ jaar
+                  <br />
+                  <span className="italic bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                    expertise
+                  </span>
                 </h2>
                 <div className="w-16 h-px bg-gradient-to-r from-black/20 to-transparent mb-12"></div>
                 <p className="text-lg md:text-xl text-gray-700 font-light leading-relaxed mb-8">
-                  Sinds onze oprichting hebben we meer dan 3500 projecten gerealiseerd, 
-                  elk met dezelfde toewijding aan kwaliteit en vakmanschap.
+                  Sinds onze oprichting hebben we meer dan 3500 projecten
+                  gerealiseerd, elk met dezelfde toewijding aan kwaliteit en
+                  vakmanschap.
                 </p>
                 <p className="text-lg md:text-xl text-gray-700 font-light leading-relaxed mb-12">
-                  Van klassieke elegantie tot modern minimalisme – 
-                  wij brengen uw visie tot leven met precisie en zorg.
+                  Van klassieke elegantie tot modern minimalisme – wij brengen
+                  uw visie tot leven met precisie en zorg.
                 </p>
                 <button
                   onClick={() => setLocation("/over-ons")}
@@ -1319,15 +1550,36 @@ const Home = () => {
                 </button>
               </div>
 
-              <div 
+              <div
                 className={`grid grid-cols-2 gap-8 transition-all duration-1200 delay-300 ${
-                  craftsmanshipVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+                  craftsmanshipVisible
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 translate-x-12"
                 }`}
               >
-                <AnimatedStatCard value={30} suffix="+" label="Jaren ervaring" delay={0} />
-                <AnimatedStatCard value={3500} suffix="+" label="Projecten" delay={100} />
-                <AnimatedStatCard value={100} suffix="%" label="Maatwerk" delay={200} />
-                <StaticStatCard value="5★" label="Klantbeoordeling" delay={300} />
+                <AnimatedStatCard
+                  value={30}
+                  suffix="+"
+                  label="Jaren ervaring"
+                  delay={0}
+                />
+                <AnimatedStatCard
+                  value={3500}
+                  suffix="+"
+                  label="Projecten"
+                  delay={100}
+                />
+                <AnimatedStatCard
+                  value={100}
+                  suffix="%"
+                  label="Maatwerk"
+                  delay={200}
+                />
+                <StaticStatCard
+                  value="5★"
+                  label="Klantbeoordeling"
+                  delay={300}
+                />
               </div>
             </div>
           </div>
@@ -1337,55 +1589,62 @@ const Home = () => {
         <ShowroomSection />
 
         {/* GALLERY PREVIEW */}
-        <section 
-          ref={galleryRef}
-          className="py-32 bg-gray-50"
-        >
+        <section ref={galleryRef} className="py-32 bg-gray-50">
           <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
-            <div 
+            <div
               className={`text-center mb-20 transition-all duration-1000 ${
-                galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                galleryVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
               }`}
             >
-              <h2 
-                className="text-5xl md:text-6xl font-light text-black mb-6" 
+              <h2
+                className="text-5xl md:text-6xl font-light text-black mb-6"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: '-0.02em'
+                  letterSpacing: "-0.02em",
                 }}
               >
                 Realisaties
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-6"></div>
-              <p className="text-gray-600 tracking-wide">Een selectie uit ons portfolio</p>
+              <p className="text-gray-600 tracking-wide">
+                Een selectie uit ons portfolio
+              </p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
-              {[gallery1, gallery2, gallery3, gallery4, gallery5, gallery6].map((img, i) => (
-                <div 
-                  key={i} 
-                  className={`relative overflow-hidden group cursor-pointer aspect-[4/5] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 ${
-                    galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                  }`}
-                  style={{
-                    transitionDelay: galleryVisible ? `${i * 100}ms` : '0ms'
-                  }}
-                  onClick={() => setLocation("/gallerij")}
-                  data-testid={`gallery-item-${i + 1}`}
-                >
-                  <img
-                    src={img}
-                    alt={`Project ${i + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
-                </div>
-              ))}
+              {[gallery1, gallery2, gallery3, gallery4, gallery5, gallery6].map(
+                (img, i) => (
+                  <div
+                    key={i}
+                    className={`relative overflow-hidden group cursor-pointer aspect-[4/5] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 ${
+                      galleryVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-12"
+                    }`}
+                    style={{
+                      transitionDelay: galleryVisible ? `${i * 100}ms` : "0ms",
+                    }}
+                    onClick={() => setLocation("/gallerij")}
+                    data-testid={`gallery-item-${i + 1}`}
+                  >
+                    <img
+                      src={img}
+                      alt={`Project ${i + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+                  </div>
+                ),
+              )}
             </div>
 
-            <div 
+            <div
               className={`text-center mt-20 transition-all duration-1000 delay-600 ${
-                galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                galleryVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
               }`}
             >
               <button
@@ -1393,7 +1652,9 @@ const Home = () => {
                 className="group inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
                 data-testid="button-view-gallery"
               >
-                <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Bekijk alle projecten</span>
+                <span className="relative z-10 text-xs tracking-widest uppercase mr-3">
+                  Bekijk alle projecten
+                </span>
                 <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
@@ -1404,17 +1665,17 @@ const Home = () => {
         <section className="py-32 bg-white">
           <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
             <div className="text-center mb-16">
-              <h2 
-                className="text-5xl md:text-6xl font-light text-black mb-8" 
+              <h2
+                className="text-5xl md:text-6xl font-light text-black mb-8"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: '-0.02em'
+                  letterSpacing: "-0.02em",
                 }}
               >
                 Wat onze klanten zeggen
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-8"></div>
-              
+
               <a
                 href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD"
                 target="_blank"
@@ -1422,12 +1683,14 @@ const Home = () => {
                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 text-sm group"
                 data-testid="link-google-reviews"
               >
-                <img 
+                <img
                   src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%234285F4' d='M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z'/%3E%3Cpath fill='%2334A853' d='M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z'/%3E%3Cpath fill='%23FBBC05' d='M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z'/%3E%3Cpath fill='%23EA4335' d='M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z'/%3E%3C/svg%3E"
                   alt="Google"
                   className="w-5 h-5"
                 />
-                <span className="font-medium">Bekijk alle reviews op Google</span>
+                <span className="font-medium">
+                  Bekijk alle reviews op Google
+                </span>
                 <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
               </a>
             </div>
@@ -1437,25 +1700,25 @@ const Home = () => {
                 {
                   name: "Cardeynaels",
                   rating: 5,
-                  text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde. De communicatie verloopt vlot en correct. Ook op de plaatsing is niets aan te merken. Zeer prettige samenwerking en zeker een aanrader."
+                  text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde. De communicatie verloopt vlot en correct. Ook op de plaatsing is niets aan te merken. Zeer prettige samenwerking en zeker een aanrader.",
                 },
                 {
                   name: "Buelles",
                   rating: 5,
-                  text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Thuisbezoek gehad voor opnemen maten en om te zien of stoffen ook daadwerkelijk passen bij de ruimtes. Steeds netjes contact geweest."
+                  text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Thuisbezoek gehad voor opnemen maten en om te zien of stoffen ook daadwerkelijk passen bij de ruimtes. Steeds netjes contact geweest.",
                 },
                 {
                   name: "Anedda",
                   rating: 5,
-                  text: "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na."
+                  text: "Ik heb zeer professionele hulp ontvangen van dit bedrijf bij het installeren van mijn jaloezieën en het ophangen van mijn gordijnen. De medewerker was vriendelijk, kwam alle afspraken keurig na.",
                 },
                 {
                   name: "Patrick",
                   rating: 5,
-                  text: "Ik ben ontzettend tevreden met mijn houten jaloezieën van KANIOU! Vanaf het eerst contact tot aan de levering was alles helder, de levering op tijd en de installatie werd professioneel uitgevoerd."
-                }
+                  text: "Ik ben ontzettend tevreden met mijn houten jaloezieën van KANIOU! Vanaf het eerst contact tot aan de levering was alles helder, de levering op tijd en de installatie werd professioneel uitgevoerd.",
+                },
               ].map((review, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-gray-50 p-8 hover:bg-white hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group"
                   data-testid={`google-review-${index + 1}`}
@@ -1476,7 +1739,9 @@ const Home = () => {
                     "{review.text}"
                   </p>
                   <div className="border-t border-gray-200 pt-4">
-                    <p className="font-medium text-gray-900 text-sm">{review.name}</p>
+                    <p className="font-medium text-gray-900 text-sm">
+                      {review.name}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -1486,14 +1751,22 @@ const Home = () => {
               <div className="inline-flex items-center gap-3 bg-gray-50 px-8 py-4 rounded-full">
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+                    <Star
+                      key={i}
+                      className="w-6 h-6 fill-yellow-400 text-yellow-400"
+                    />
                   ))}
                 </div>
                 <div className="text-left">
-                  <p className="text-2xl font-light text-black" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <p
+                    className="text-2xl font-light text-black"
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  >
                     5.0
                   </p>
-                  <p className="text-xs text-gray-600">Gemiddelde beoordeling</p>
+                  <p className="text-xs text-gray-600">
+                    Gemiddelde beoordeling
+                  </p>
                 </div>
               </div>
             </div>
@@ -1506,20 +1779,20 @@ const Home = () => {
         {/* CTA SECTION */}
         <section className="py-32 md:py-48 bg-black text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 opacity-50"></div>
-          
+
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl animate-float-slow" />
             <div className="absolute bottom-20 right-20 w-48 h-48 bg-gradient-to-br from-white/3 to-transparent rounded-full blur-2xl animate-float-medium" />
           </div>
-          
+
           <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
             <TextReveal>
-              <h2 
-                className="text-5xl md:text-7xl font-light mb-12 leading-tight hover:scale-105 transition-transform duration-700" 
+              <h2
+                className="text-5xl md:text-7xl font-light mb-12 leading-tight hover:scale-105 transition-transform duration-700"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: '-0.02em',
-                  textShadow: '0 0 40px rgba(255,255,255,0.1)'
+                  letterSpacing: "-0.02em",
+                  textShadow: "0 0 40px rgba(255,255,255,0.1)",
                 }}
               >
                 Klaar om te beginnen?
@@ -1527,14 +1800,17 @@ const Home = () => {
             </TextReveal>
             <TextReveal delay={200}>
               <p className="text-lg md:text-xl text-white/70 font-light mb-16 max-w-2xl mx-auto">
-                Vraag een vrijblijvende offerte aan en ontdek wat wij voor u kunnen betekenen.
+                Vraag een vrijblijvende offerte aan en ontdek wat wij voor u
+                kunnen betekenen.
               </p>
             </TextReveal>
             <MagneticButton
               onClick={() => setLocation("/quote")}
               className="group inline-flex items-center px-12 py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:-translate-y-1 relative overflow-hidden animate-glow-pulse"
             >
-              <span className="relative z-10 text-xs tracking-widest uppercase mr-3">Offerte aanvragen</span>
+              <span className="relative z-10 text-xs tracking-widest uppercase mr-3">
+                Offerte aanvragen
+              </span>
               <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             </MagneticButton>
@@ -1638,11 +1914,11 @@ const styles = `
   }
 `;
 
-if (typeof document !== 'undefined') {
-  const existingStyle = document.getElementById('luxury-animations');
+if (typeof document !== "undefined") {
+  const existingStyle = document.getElementById("luxury-animations");
   if (!existingStyle) {
     const styleSheet = document.createElement("style");
-    styleSheet.id = 'luxury-animations';
+    styleSheet.id = "luxury-animations";
     styleSheet.textContent = styles;
     document.head.appendChild(styleSheet);
   }

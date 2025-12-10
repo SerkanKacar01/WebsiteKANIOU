@@ -46,6 +46,8 @@ import {
   galleryImage36,
   galleryImage37,
   galleryImage38,
+  galleryImage39,
+  galleryImage40,
 } from "@/assets/fallback";
 
 interface GalleryItemProps {
@@ -91,6 +93,8 @@ const imageMap: Record<string, string> = {
   '/gallery/premium-36': galleryImage36,
   '/gallery/premium-37': galleryImage37,
   '/gallery/premium-38': galleryImage38,
+  '/gallery/premium-39': galleryImage39,
+  '/gallery/premium-40': galleryImage40,
 };
 
 const GalleryItem = ({ item }: GalleryItemProps) => {

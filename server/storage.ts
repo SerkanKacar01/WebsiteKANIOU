@@ -473,6 +473,8 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
           { id: 36, title: "", description: "", imageUrl: "/gallery/premium-36", categoryId: 1 },
           { id: 37, title: "", description: "", imageUrl: "/gallery/premium-37", categoryId: 1 },
           { id: 38, title: "", description: "", imageUrl: "/gallery/premium-38", categoryId: 1 },
+          { id: 39, title: "", description: "", imageUrl: "/gallery/premium-39", categoryId: 1 },
+          { id: 40, title: "", description: "", imageUrl: "/gallery/premium-40", categoryId: 1 },
         ];
       }
       return global.memoryGalleryItems;

@@ -37,3 +37,5 @@ export const galleryImage35 = "/attached_assets/Scherm­afbeelding_2025-12-10_om
 export const galleryImage36 = "/attached_assets/Scherm­afbeelding_2025-12-10_om_00.43.51_1765325711072.png";
 export const galleryImage37 = "/attached_assets/Scherm­afbeelding_2025-12-10_om_00.44.16_1765325711072.png";
 export const galleryImage38 = "/attached_assets/Scherm­afbeelding_2025-12-10_om_00.44.21_1765325711072.png";
+export const galleryImage39 = "/attached_assets/Scherm­afbeelding_2025-12-10_om_00.46.11_1765325914515.png";
+export const galleryImage40 = "/attached_assets/Scherm­afbeelding_2025-12-10_om_00.47.30_1765325914515.png";

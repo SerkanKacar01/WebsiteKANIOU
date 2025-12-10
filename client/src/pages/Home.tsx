@@ -12,14 +12,6 @@ import gallery3Src from "@assets/IMG_9217.jpeg";
 import gallery4Src from "@assets/IMG_9219.jpeg";
 import gallery5Src from "@assets/IMG_9220.jpeg";
 import gallery6Src from "@assets/IMG_9221.jpeg";
-import {
-  galleryImage1,
-  galleryImage2,
-  galleryImage3,
-  galleryImage4,
-  galleryImage5,
-  galleryImage6,
-} from "@/assets/fallback";
 
 const interiorImage = interiorImageSrc;
 const gallery1 = gallery1Src;

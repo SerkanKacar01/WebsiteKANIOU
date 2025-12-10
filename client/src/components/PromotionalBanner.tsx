@@ -113,13 +113,26 @@ const PromotionalBanner = () => {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                 <button
                   onClick={handleCTA}
                   className="group inline-flex items-center justify-center gap-2 bg-[#C4A36C] hover:bg-[#B39356] text-white px-6 md:px-8 py-3 md:py-4 text-xs md:text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-2xl hover:scale-105"
                   data-testid="banner-cta-offerte"
                 >
                   <span>Vraag offerte aan</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
+                
+                <button
+                  onClick={() => {
+                    localStorage.setItem(BANNER_STORAGE_KEY, "true");
+                    setIsVisible(false);
+                    setLocation("/producten/screens-outside");
+                  }}
+                  className="group inline-flex items-center justify-center gap-2 border border-white/50 hover:border-white hover:bg-white/10 text-white px-6 md:px-8 py-3 md:py-4 text-xs md:text-sm tracking-widest uppercase transition-all duration-500"
+                  data-testid="banner-cta-meer-info"
+                >
+                  <span>Meer info</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
                 

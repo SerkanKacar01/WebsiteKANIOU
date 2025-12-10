@@ -1710,11 +1710,11 @@ const Home = () => {
         </section>
 
         {/* GOOGLE REVIEWS SECTION */}
-        <section className="py-32 bg-white">
-          <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-            <div className="text-center mb-16">
+        <section className="py-16 md:py-32 bg-white">
+          <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2
-                className="text-5xl md:text-6xl font-light text-black mb-8"
+                className="text-3xl md:text-6xl font-light text-black mb-4 md:mb-8"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   letterSpacing: "-0.02em",
@@ -1722,28 +1722,86 @@ const Home = () => {
               >
                 Wat onze klanten zeggen
               </h2>
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-8"></div>
+              <div className="w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4 md:mb-8"></div>
 
               <a
                 href="https://www.google.com/maps/place/KANIOU+bvba+ZILVERNAALD"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 text-sm group"
+                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-300 text-xs md:text-sm group"
                 data-testid="link-google-reviews"
               >
                 <img
                   src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%234285F4' d='M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z'/%3E%3Cpath fill='%2334A853' d='M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z'/%3E%3Cpath fill='%23FBBC05' d='M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z'/%3E%3Cpath fill='%23EA4335' d='M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z'/%3E%3C/svg%3E"
                   alt="Google"
-                  className="w-5 h-5"
+                  className="w-4 h-4 md:w-5 md:h-5"
                 />
                 <span className="font-medium">
                   Bekijk alle reviews op Google
                 </span>
-                <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                <ExternalLink className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
               </a>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Mobile: Horizontal scroll carousel */}
+            <div className="md:hidden">
+              <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {[
+                  {
+                    name: "Cardeynaels",
+                    rating: 5,
+                    text: "Zeer tevreden van de service van Kaniou! Komen de afspraken na, producten zijn dik in orde.",
+                  },
+                  {
+                    name: "Buelles",
+                    rating: 5,
+                    text: "Zonder afspraak binnen gewandeld en toen direct netjes geholpen. Steeds netjes contact geweest.",
+                  },
+                  {
+                    name: "Anedda",
+                    rating: 5,
+                    text: "Zeer professionele hulp ontvangen bij het installeren van mijn jaloezieën. Medewerker was vriendelijk.",
+                  },
+                  {
+                    name: "Patrick",
+                    rating: 5,
+                    text: "Ontzettend tevreden met mijn houten jaloezieën! Levering op tijd en installatie professioneel.",
+                  },
+                ].map((review, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-[260px] snap-center bg-gray-50 p-5 rounded-lg"
+                    data-testid={`google-review-mobile-${index + 1}`}
+                  >
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
+                    </div>
+                    <p className="text-gray-700 text-xs leading-relaxed mb-4">
+                      "{review.text}"
+                    </p>
+                    <div className="border-t border-gray-200 pt-3">
+                      <p className="font-medium text-gray-900 text-xs">
+                        {review.name}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Scroll indicator */}
+              <div className="flex justify-center gap-2 mt-4">
+                {[...Array(4)].map((_, index) => (
+                  <div key={index} className="w-2 h-2 rounded-full bg-gray-300" />
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop: Grid layout */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
                   name: "Cardeynaels",
@@ -1795,24 +1853,24 @@ const Home = () => {
               ))}
             </div>
 
-            <div className="mt-16 text-center">
-              <div className="inline-flex items-center gap-3 bg-gray-50 px-8 py-4 rounded-full">
-                <div className="flex gap-1">
+            <div className="mt-8 md:mt-16 text-center">
+              <div className="inline-flex items-center gap-2 md:gap-3 bg-gray-50 px-5 md:px-8 py-3 md:py-4 rounded-full">
+                <div className="flex gap-0.5 md:gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-6 h-6 fill-yellow-400 text-yellow-400"
+                      className="w-4 h-4 md:w-6 md:h-6 fill-yellow-400 text-yellow-400"
                     />
                   ))}
                 </div>
                 <div className="text-left">
                   <p
-                    className="text-2xl font-light text-black"
+                    className="text-xl md:text-2xl font-light text-black"
                     style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   >
                     5.0
                   </p>
-                  <p className="text-xs text-gray-600">
+                  <p className="text-[10px] md:text-xs text-gray-600">
                     Gemiddelde beoordeling
                   </p>
                 </div>

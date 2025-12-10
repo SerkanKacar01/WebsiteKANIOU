@@ -430,36 +430,18 @@ const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => vo
         </div>
 
         {/* Mobile: 2 columns with square images */}
-        <div className="grid grid-cols-2 gap-3 md:hidden">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
           {realisatieImages.map((image, index) => (
             <div 
               key={index}
               className="group relative overflow-hidden cursor-pointer aspect-square rounded-2xl shadow-md"
               onClick={() => setLocation("/gallerij")}
-              data-testid={`realisatie-mobile-${index + 1}`}
+              data-testid={`realisatie-${index + 1}`}
             >
               <img
                 src={image}
                 alt={`Realisatie ${index + 1}`}
                 className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* Desktop: 3 columns with landscape images */}
-        <div className="hidden md:grid md:grid-cols-3 gap-6">
-          {realisatieImages.map((image, index) => (
-            <div 
-              key={index}
-              className="group relative overflow-hidden cursor-pointer aspect-[4/3] rounded-lg"
-              onClick={() => setLocation("/gallerij")}
-              data-testid={`realisatie-desktop-${index + 1}`}
-            >
-              <img
-                src={image}
-                alt={`Realisatie ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
           ))}

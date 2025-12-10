@@ -434,48 +434,7 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
     } catch (error) {
       console.warn('Database connection issue for gallery');
       if (!global.memoryGalleryItems) {
-        global.memoryGalleryItems = [
-          { id: 1, title: "", description: "", imageUrl: "/gallery/premium-1", categoryId: 1 },
-          { id: 2, title: "", description: "", imageUrl: "/gallery/premium-2", categoryId: 1 },
-          { id: 3, title: "", description: "", imageUrl: "/gallery/premium-3", categoryId: 1 },
-          { id: 4, title: "", description: "", imageUrl: "/gallery/premium-4", categoryId: 1 },
-          { id: 5, title: "", description: "", imageUrl: "/gallery/premium-5", categoryId: 1 },
-          { id: 6, title: "", description: "", imageUrl: "/gallery/premium-6", categoryId: 1 },
-          { id: 7, title: "", description: "", imageUrl: "/gallery/premium-7", categoryId: 1 },
-          { id: 8, title: "", description: "", imageUrl: "/gallery/premium-8", categoryId: 1 },
-          { id: 9, title: "", description: "", imageUrl: "/gallery/premium-9", categoryId: 1 },
-          { id: 10, title: "", description: "", imageUrl: "/gallery/premium-10", categoryId: 1 },
-          { id: 11, title: "", description: "", imageUrl: "/gallery/premium-11", categoryId: 1 },
-          { id: 12, title: "", description: "", imageUrl: "/gallery/premium-12", categoryId: 1 },
-          { id: 13, title: "", description: "", imageUrl: "/gallery/premium-13", categoryId: 1 },
-          { id: 14, title: "", description: "", imageUrl: "/gallery/premium-14", categoryId: 1 },
-          { id: 15, title: "", description: "", imageUrl: "/gallery/premium-15", categoryId: 1 },
-          { id: 16, title: "", description: "", imageUrl: "/gallery/premium-16", categoryId: 1 },
-          { id: 17, title: "", description: "", imageUrl: "/gallery/premium-17", categoryId: 1 },
-          { id: 18, title: "", description: "", imageUrl: "/gallery/premium-18", categoryId: 1 },
-          { id: 19, title: "", description: "", imageUrl: "/gallery/premium-19", categoryId: 1 },
-          { id: 20, title: "", description: "", imageUrl: "/gallery/premium-20", categoryId: 1 },
-          { id: 21, title: "", description: "", imageUrl: "/gallery/premium-21", categoryId: 1 },
-          { id: 22, title: "", description: "", imageUrl: "/gallery/premium-22", categoryId: 1 },
-          { id: 23, title: "", description: "", imageUrl: "/gallery/premium-23", categoryId: 1 },
-          { id: 24, title: "", description: "", imageUrl: "/gallery/premium-24", categoryId: 1 },
-          { id: 25, title: "", description: "", imageUrl: "/gallery/premium-25", categoryId: 1 },
-          { id: 26, title: "", description: "", imageUrl: "/gallery/premium-26", categoryId: 1 },
-          { id: 27, title: "", description: "", imageUrl: "/gallery/premium-27", categoryId: 1 },
-          { id: 28, title: "", description: "", imageUrl: "/gallery/premium-28", categoryId: 1 },
-          { id: 29, title: "", description: "", imageUrl: "/gallery/premium-29", categoryId: 1 },
-          { id: 30, title: "", description: "", imageUrl: "/gallery/premium-30", categoryId: 1 },
-          { id: 31, title: "", description: "", imageUrl: "/gallery/premium-31", categoryId: 1 },
-          { id: 32, title: "", description: "", imageUrl: "/gallery/premium-32", categoryId: 1 },
-          { id: 33, title: "", description: "", imageUrl: "/gallery/premium-33", categoryId: 1 },
-          { id: 34, title: "", description: "", imageUrl: "/gallery/premium-34", categoryId: 1 },
-          { id: 35, title: "", description: "", imageUrl: "/gallery/premium-35", categoryId: 1 },
-          { id: 36, title: "", description: "", imageUrl: "/gallery/premium-36", categoryId: 1 },
-          { id: 37, title: "", description: "", imageUrl: "/gallery/premium-37", categoryId: 1 },
-          { id: 38, title: "", description: "", imageUrl: "/gallery/premium-38", categoryId: 1 },
-          { id: 39, title: "", description: "", imageUrl: "/gallery/premium-39", categoryId: 1 },
-          { id: 40, title: "", description: "", imageUrl: "/gallery/premium-40", categoryId: 1 },
-        ];
+        global.memoryGalleryItems = [];
       }
       return global.memoryGalleryItems;
     }

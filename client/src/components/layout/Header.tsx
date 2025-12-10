@@ -293,8 +293,15 @@ const Header = () => {
             </button>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={() => setLocation("/contact")}
+              className="border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-lg"
+              data-testid="nav-cta-contact"
+            >
+              Contact
+            </button>
             <button
               onClick={() => setLocation("/offerte")}
               className="bg-[#C4A36C] hover:bg-[#B39356] text-white px-8 py-3 text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-lg hover:scale-105"
@@ -482,10 +489,18 @@ const Header = () => {
                     </div>
 
                     {/* Mobile CTA */}
-                    <div className="pt-4">
+                    <div className="pt-4 space-y-3">
+                      <button
+                        onClick={() => handleMobileNavClick("/contact")}
+                        className="w-full border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300"
+                        data-testid="mobile-cta-contact"
+                      >
+                        Contact
+                      </button>
                       <button
                         onClick={() => handleMobileNavClick("/offerte")}
                         className="w-full bg-[#C4A36C] hover:bg-[#B39356] text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300"
+                        data-testid="mobile-cta-offerte"
                       >
                         Offerte Aanvragen
                       </button>

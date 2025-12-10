@@ -12,6 +12,9 @@ import gallery3Src from "@assets/IMG_9217.jpeg";
 import gallery4Src from "@assets/IMG_9219.jpeg";
 import gallery5Src from "@assets/IMG_9220.jpeg";
 import gallery6Src from "@assets/IMG_9221.jpeg";
+import duoRolgordijnenSrc from "@assets/DUOROLGORDIJNEN_1765327273263.png";
+import houtenShuttersSrc from "@assets/HOUTEN_SHUTTERS_1765327379155.png";
+import textielLamellenSrc from "@assets/TEXTIEL_LAMELLEN_1765327446795.png";
 import {
   galleryImage1,
   galleryImage2,
@@ -530,21 +533,21 @@ const SpotlightSection = ({ setLocation }: { setLocation: (path: string) => void
       label: "Nieuw",
       title: "Duo Rolgordijnen",
       description: "Combineer privacy met lichtinval - de perfecte balans voor elk moment van de dag",
-      image: gallery4,
+      image: duoRolgordijnenSrc,
       path: "/producten/duo-rolgordijnen"
     },
     {
       label: "Populair",
       title: "Houten Shutters",
       description: "Tijdloze elegantie met perfecte lichtcontrole en isolatie",
-      image: gallery5,
+      image: houtenShuttersSrc,
       path: "/producten/houten-shutters"
     },
     {
       label: "Duurzaam",
       title: "Textiel Lamellen",
       description: "Zachte materialen voor een warme uitstraling en optimale lichtfiltering",
-      image: gallery6,
+      image: textielLamellenSrc,
       path: "/producten/textiel-lamellen"
     }
   ];

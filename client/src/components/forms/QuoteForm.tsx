@@ -40,16 +40,20 @@ const quoteFormSchema = z.object({
   email: z.string().email("Gelieve een geldig e-mailadres in te voeren"),
   phone: z.string().min(10, "Telefoonnummer moet minstens 10 cijfers bevatten"),
   products: z.array(productSchema).min(1, "Selecteer minstens 1 product"),
-  requirements: z.string()
+  requirements: z
+    .string()
     .optional()
-    .refine((val) => {
-      // If field is empty or undefined, it's valid (optional)
-      if (!val || val.trim() === "") return true;
-      // If field has content, it must be at least 10 characters
-      return val.trim().length >= 10;
-    }, {
-      message: "Gelieve minstens 10 tekens in te vullen bij uw aanvraag",
-    }),
+    .refine(
+      (val) => {
+        // If field is empty or undefined, it's valid (optional)
+        if (!val || val.trim() === "") return true;
+        // If field has content, it must be at least 10 characters
+        return val.trim().length >= 10;
+      },
+      {
+        message: "Gelieve minstens 10 tekens in te vullen bij uw aanvraag",
+      },
+    ),
   website: z.string().max(0, "Invalid submission").optional(),
 });
 
@@ -76,6 +80,7 @@ const PRODUCT_OPTIONS = [
   { value: "plisse_hordeuren", label: "Plissé hordeuren" },
   { value: "dakraam_velux_fakro", label: "Dakraam Velux/Fakro" },
   { value: "screens_outside", label: "Buitenscreens" },
+  { value: "screens_inside", label: "Binnenscreens" },
 ];
 
 const QuoteForm = () => {
@@ -106,7 +111,8 @@ const QuoteForm = () => {
       // Transform the data to match the backend schema
       const productList = data.products
         .map((p) => {
-          const dimensions = p.width && p.height ? `${p.width} x ${p.height} cm` : "";
+          const dimensions =
+            p.width && p.height ? `${p.width} x ${p.height} cm` : "";
           return `${p.type}${dimensions ? ` (${dimensions})` : ""}`;
         })
         .join(", ");
@@ -118,8 +124,8 @@ const QuoteForm = () => {
         productType: productList,
         dimensions: "",
         // Only send requirements if it has valid content (10+ chars), otherwise omit it
-        ...(data.requirements && data.requirements.trim().length >= 10 
-          ? { requirements: data.requirements.trim() } 
+        ...(data.requirements && data.requirements.trim().length >= 10
+          ? { requirements: data.requirements.trim() }
           : {}),
         website: data.website || "",
       };
@@ -237,7 +243,9 @@ const QuoteForm = () => {
               className="mb-6 p-4 bg-gradient-to-br from-white to-[#F9F7F3] rounded-xl border border-[#D5B36A]/20"
             >
               <div className="flex items-center justify-between mb-4">
-                <h4 className="font-medium text-primary">Product {index + 1}</h4>
+                <h4 className="font-medium text-primary">
+                  Product {index + 1}
+                </h4>
                 {fields.length > 1 && (
                   <button
                     type="button"
@@ -317,9 +325,7 @@ const QuoteForm = () => {
 
           <Button
             type="button"
-            onClick={() =>
-              append({ type: "", width: "", height: "" })
-            }
+            onClick={() => append({ type: "", width: "", height: "" })}
             variant="outline"
             className="w-full border-[#D5B36A]/50 hover:border-[#D5B36A] hover:bg-[#D5B36A]/5 transition-all duration-300 group"
             data-testid="add-product-button"
@@ -336,7 +342,7 @@ const QuoteForm = () => {
             render={({ field }) => {
               const charCount = field.value?.length || 0;
               const hasError = form.formState.errors.requirements;
-              
+
               return (
                 <FormItem>
                   <FormLabel>Optioneel voor evt. opmerkingen</FormLabel>
@@ -357,9 +363,7 @@ const QuoteForm = () => {
                       </span>
                     )}
                     {charCount >= 10 && (
-                      <span className="text-green-600">
-                        ✓ Voldoende tekens
-                      </span>
+                      <span className="text-green-600">✓ Voldoende tekens</span>
                     )}
                   </div>
                 </FormItem>

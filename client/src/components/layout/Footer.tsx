@@ -2,7 +2,7 @@ import React from 'react';
 import { Plus, Minus, ChevronDown } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const [isProductenExpanded, setIsProductenExpanded] = React.useState(false);
+  const [isProductenExpanded, setIsProductenExpanded] = React.useState(true);
   const [isContactDropdownOpen, setIsContactDropdownOpen] = React.useState(false);
 
   return (
@@ -13,10 +13,10 @@ const Footer: React.FC = () => {
                           radial-gradient(circle at 80% 70%, rgba(200, 168, 91, 0.05) 0%, transparent 50%)`
       }}></div>
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
+      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-8 lg:px-20 xl:px-32 py-16 lg:py-20">
         
         {/* Main Footer Grid - Desktop */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-16">
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-20 xl:gap-24 mb-16">
           
           {/* Column 1: Bedrijf */}
           <div>
@@ -71,56 +71,42 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Producten - Expandable */}
+          {/* Column 2: Producten - Always Visible */}
           <div>
-            <button
-              onClick={() => setIsProductenExpanded(!isProductenExpanded)}
-              className="w-full flex items-center justify-between text-left focus:outline-none group"
-            >
+            <div className="flex items-center gap-2 mb-6">
               <h3 className="text-xl font-semibold text-[#F5F5F5] tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Producten
               </h3>
-              <div className="ml-3 text-[#C8A85B] group-hover:text-[#E6C988] transition-colors">
-                {isProductenExpanded ? (
-                  <Minus className="w-5 h-5" />
-                ) : (
-                  <Plus className="w-5 h-5" />
-                )}
-              </div>
-            </button>
+              <Plus className="w-4 h-4 text-[#C8A85B]" />
+            </div>
             
-            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-              isProductenExpanded ? "max-h-[600px] opacity-100 mt-6" : "max-h-0 opacity-0"
-            }`}>
-              <ul className="space-y-3">
-                {[
-                  { name: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
-                  { name: "Textiel lamellen", href: "/producten/textiel-lamellen" },
-                  { name: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
-                  { name: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
-                  { name: "Plissés", href: "/producten/plisse" },
-                  { name: "Duo plissés", href: "/producten/duo-plisse" },
-                  { name: "Rolgordijnen", href: "/producten/rolgordijnen" },
-                  { name: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
-                  { name: "Overgordijnen", href: "/producten/overgordijnen" },
-                  { name: "Gordijnrails", href: "/producten/gordijnrails" },
-                  { name: "Vitrages", href: "/producten/vitrages" },
-                  { name: "Houten shutters", href: "/producten/houten-shutters" },
-                  { name: "Vouwgordijnen", href: "/producten/vouwgordijnen" },
-                  { name: "Gordijnroedes", href: "/gordijnroedes" },
-                  { name: "Squid", href: "/squid" },
-                  { name: "Horren", href: "/horren" },
-                ].map((product) => (
-                  <li key={product.name}>
-                    <a 
-                      href={product.href}
-                      className="text-[#C8A85B] hover:text-[#E6C988] font-medium text-sm transition-colors hover:underline underline-offset-4"
-                    >
-                      {product.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+              {[
+                { name: "Houten jaloezieën", href: "/producten/houten-jaloezieen" },
+                { name: "Textiel lamellen", href: "/producten/textiel-lamellen" },
+                { name: "Kunststof jaloezieën", href: "/producten/kunststof-jaloezieen" },
+                { name: "Kunststof lamellen", href: "/producten/kunststof-lamellen" },
+                { name: "Plissés", href: "/producten/plisse" },
+                { name: "Duo plissés", href: "/producten/duo-plisse" },
+                { name: "Rolgordijnen", href: "/producten/rolgordijnen" },
+                { name: "Duo rolgordijnen", href: "/producten/duo-rolgordijnen" },
+                { name: "Overgordijnen", href: "/producten/overgordijnen" },
+                { name: "Gordijnrails", href: "/producten/gordijnrails" },
+                { name: "Vitrages", href: "/producten/vitrages" },
+                { name: "Houten shutters", href: "/producten/houten-shutters" },
+                { name: "Vouwgordijnen", href: "/producten/vouwgordijnen" },
+                { name: "Gordijnroedes", href: "/gordijnroedes" },
+                { name: "Squid", href: "/squid" },
+                { name: "Horren", href: "/horren" },
+              ].map((product) => (
+                <a 
+                  key={product.name}
+                  href={product.href}
+                  className="text-[#C8A85B] hover:text-[#E6C988] font-medium text-sm transition-colors hover:underline underline-offset-4 py-1"
+                >
+                  {product.name}
+                </a>
+              ))}
             </div>
           </div>
 

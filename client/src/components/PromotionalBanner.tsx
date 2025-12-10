@@ -11,9 +11,13 @@ const PromotionalBanner = () => {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
+    // Check for debug mode via URL parameter
+    const params = new URLSearchParams(window.location.search);
+    const forceShow = params.get("showBanner") === "true";
+    
     const hasSeenBanner = localStorage.getItem(BANNER_STORAGE_KEY);
     
-    if (!hasSeenBanner) {
+    if (!hasSeenBanner || forceShow) {
       const timer = setTimeout(() => {
         setIsVisible(true);
       }, 1500);

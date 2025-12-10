@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { inbetweenImage } from "@/assets/fallback";
 
 const AboutCompany = () => {
   const { t } = useLanguage();
@@ -96,11 +95,9 @@ const AboutCompany = () => {
           </div>
 
           <div className="relative">
-            <img
-              src={inbetweenImage}
-              alt={t('about.showroomImage')}
-              className="w-full h-auto rounded-lg shadow-lg"
-            />
+            <div className="w-full h-96 bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-lg shadow-lg flex items-center justify-center">
+              <p className="text-text-medium text-lg font-medium">Image Placeholder</p>
+            </div>
             <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
               <p className="font-display text-lg text-primary font-medium">20+</p>
               <p className="font-body text-text-medium text-sm">

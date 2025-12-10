@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { useLanguage } from "@/context/LanguageContext";
 import {
@@ -25,6 +25,13 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { insertQuoteRequestSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import { X, Plus } from "lucide-react";
+
+const productSchema = z.object({
+  type: z.string().min(1, "Producttype is verplicht"),
+  width: z.string().optional(),
+  height: z.string().optional(),
+});
 
 // Create extended schema for the new form structure
 const quoteFormSchema = z.object({
@@ -32,9 +39,7 @@ const quoteFormSchema = z.object({
   lastName: z.string().min(2, "Achternaam moet minstens 2 tekens bevatten"),
   email: z.string().email("Gelieve een geldig e-mailadres in te voeren"),
   phone: z.string().min(10, "Telefoonnummer moet minstens 10 cijfers bevatten"),
-  productType: z.string().min(1, "Producttype is verplicht"),
-  width: z.string().optional(),
-  height: z.string().optional(),
+  products: z.array(productSchema).min(1, "Selecteer minstens 1 product"),
   requirements: z.string()
     .optional()
     .refine((val) => {
@@ -50,6 +55,29 @@ const quoteFormSchema = z.object({
 
 type QuoteFormValues = z.infer<typeof quoteFormSchema>;
 
+const PRODUCT_OPTIONS = [
+  { value: "curtains", label: "Gordijnen" },
+  { value: "blinds", label: "Inbetweens" },
+  { value: "shades", label: "Vouwgordijnen" },
+  { value: "drapes", label: "Textiel Lamellen" },
+  { value: "kunststof_lamellen", label: "Kunststof lamellen" },
+  { value: "kunststof_jaloezieen", label: "Kunststof jaloezieën" },
+  { value: "houten_jaloezieen", label: "Houten jaloezieën" },
+  { value: "houten_shutters", label: "Houten shutters" },
+  { value: "plisse", label: "Plissé" },
+  { value: "duo_plisse", label: "Duo-Plissé" },
+  { value: "rolgordijnen", label: "Rolgordijnen" },
+  { value: "duo_rolgordijnen", label: "Duo-rolgordijnen" },
+  { value: "gordijnrails", label: "Gordijnrails" },
+  { value: "gordijnroedes", label: "Gordijnroedes" },
+  { value: "squid", label: "SQUID" },
+  { value: "inzethorren", label: "Inzethorren" },
+  { value: "opzethorren", label: "Opzethorren" },
+  { value: "plisse_hordeuren", label: "Plissé hordeuren" },
+  { value: "dakraam_velux_fakro", label: "Dakraam Velux/Fakro" },
+  { value: "screens_outside", label: "Buitenscreens" },
+];
+
 const QuoteForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -62,24 +90,33 @@ const QuoteForm = () => {
       lastName: "",
       email: "",
       phone: "",
-      productType: "",
-      width: "",
-      height: "",
+      products: [{ type: "", width: "", height: "" }],
       requirements: "",
       website: "", // Honeypot field
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "products",
+  });
+
   const mutation = useMutation({
     mutationFn: (data: QuoteFormValues) => {
       // Transform the data to match the backend schema
+      const productList = data.products
+        .map((p) => {
+          const dimensions = p.width && p.height ? `${p.width} x ${p.height} cm` : "";
+          return `${p.type}${dimensions ? ` (${dimensions})` : ""}`;
+        })
+        .join(", ");
+
       const transformedData = {
         name: `${data.firstName} ${data.lastName}`,
         email: data.email,
         phone: data.phone,
-        productType: data.productType,
-        dimensions:
-          data.width && data.height ? `${data.width} x ${data.height} cm` : "",
+        productType: productList,
+        dimensions: "",
         // Only send requirements if it has valid content (10+ chars), otherwise omit it
         ...(data.requirements && data.requirements.trim().length >= 10 
           ? { requirements: data.requirements.trim() } 
@@ -95,7 +132,15 @@ const QuoteForm = () => {
           "Thank you, your quote request has been sent successfully.",
         variant: "default",
       });
-      form.reset();
+      form.reset({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        products: [{ type: "", width: "", height: "" }],
+        requirements: "",
+        website: "",
+      });
       setIsSubmitting(false);
     },
     onError: (error) => {
@@ -176,124 +221,152 @@ const QuoteForm = () => {
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="productType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Produkt type (dropdown menu)</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecteer" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="curtains">Gordijnen</SelectItem>
-                  <SelectItem value="blinds">Inbetweens</SelectItem>
-                  <SelectItem value="shades">Vouwgordijnen</SelectItem>
-                  <SelectItem value="drapes">Textiel Lamellen</SelectItem>
-                  <SelectItem value="kunststof_lamellen">
-                    Kunststof lamellen
-                  </SelectItem>
-                  <SelectItem value="kunststof_jaloezieen">
-                    Kunststof jaloezieën
-                  </SelectItem>
-                  <SelectItem value="houten_jaloezieen">
-                    Houten jaloezieën
-                  </SelectItem>
-                  <SelectItem value="houten_shutters">
-                    Houten shutters
-                  </SelectItem>
-                  <SelectItem value="plisse">Plissé</SelectItem>
-                  <SelectItem value="duo_plisse">Duo-Plissé</SelectItem>
-                  <SelectItem value="rolgordijnen">Rolgordijnen</SelectItem>
-                  <SelectItem value="duo_rolgordijnen">
-                    Duo-rolgordijnen
-                  </SelectItem>
-                  <SelectItem value="gordijnrails">Gordijnrails</SelectItem>
-                  <SelectItem value="gordijnroedes">Gordijnroedes</SelectItem>
-                  <SelectItem value="squid">SQUID</SelectItem>
-                  <SelectItem value="inzethorren">Inzethorren</SelectItem>
-                  <SelectItem value="opzethorren">Opzethorren</SelectItem>
-                  <SelectItem value="plisse_hordeuren">
-                    Plissé hordeuren
-                  </SelectItem>
-                  <SelectItem value="dakraam_velux_fakro">
-                    Dakraam Velux/Fakro
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="border-t pt-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-primary">
+              Selecteer producten
+            </h3>
+            <span className="text-sm text-text-light">
+              {fields.length} product{fields.length !== 1 ? "en" : ""}
+            </span>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="width"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Breedte</FormLabel>
-                <FormControl>
-                  <Input placeholder="Breedte in cm" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {fields.map((field, index) => (
+            <div
+              key={field.id}
+              className="mb-6 p-4 bg-gradient-to-br from-white to-[#F9F7F3] rounded-xl border border-[#D5B36A]/20"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="font-medium text-primary">Product {index + 1}</h4>
+                {fields.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => remove(index)}
+                    className="text-red-500 hover:text-red-700 transition-colors"
+                    data-testid={`remove-product-${index}`}
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
 
-          <FormField
-            control={form.control}
-            name="height"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Hoogte </FormLabel>
-                <FormControl>
-                  <Input placeholder="Hoogte in cm" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <FormField
+                control={form.control}
+                name={`products.${index}.type`}
+                render={({ field }) => (
+                  <FormItem className="mb-4">
+                    <FormLabel>Producttype</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecteer product" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {PRODUCT_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name={`products.${index}.width`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Breedte (cm)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Breedte in cm"
+                          {...field}
+                          data-testid={`width-product-${index}`}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name={`products.${index}.height`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Hoogte (cm)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Hoogte in cm"
+                          {...field}
+                          data-testid={`height-product-${index}`}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+          ))}
+
+          <Button
+            type="button"
+            onClick={() =>
+              append({ type: "", width: "", height: "" })
+            }
+            variant="outline"
+            className="w-full border-[#D5B36A]/50 hover:border-[#D5B36A] hover:bg-[#D5B36A]/5 transition-all duration-300 group"
+            data-testid="add-product-button"
+          >
+            <Plus className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+            Nog een product toevoegen
+          </Button>
         </div>
 
-        <FormField
-          control={form.control}
-          name="requirements"
-          render={({ field }) => {
-            const charCount = field.value?.length || 0;
-            const hasError = form.formState.errors.requirements;
-            
-            return (
-              <FormItem>
-                <FormLabel>Optioneel voor evt. opmerkingen</FormLabel>
-                <FormControl>
-                  <Textarea
-                    rows={4}
-                    placeholder="Geef aan of u specifieke wensen of vragen heeft..."
-                    className={`${hasError ? "border-red-500 ring-red-500" : ""}`}
-                    {...field}
-                  />
-                </FormControl>
-                <div className="flex justify-between items-center text-sm mt-1">
-                  <FormMessage />
-                  {charCount > 0 && charCount < 10 && (
-                    <span className="text-orange-600">
-                      {10 - charCount} tekens nog nodig
-                    </span>
-                  )}
-                  {charCount >= 10 && (
-                    <span className="text-green-600">
-                      ✓ Voldoende tekens
-                    </span>
-                  )}
-                </div>
-              </FormItem>
-            );
-          }}
-        />
+        <div className="border-t pt-6">
+          <FormField
+            control={form.control}
+            name="requirements"
+            render={({ field }) => {
+              const charCount = field.value?.length || 0;
+              const hasError = form.formState.errors.requirements;
+              
+              return (
+                <FormItem>
+                  <FormLabel>Optioneel voor evt. opmerkingen</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      rows={4}
+                      placeholder="Geef aan of u specifieke wensen of vragen heeft..."
+                      className={`${hasError ? "border-red-500 ring-red-500" : ""}`}
+                      {...field}
+                      data-testid="textarea-requirements"
+                    />
+                  </FormControl>
+                  <div className="flex justify-between items-center text-sm mt-1">
+                    <FormMessage />
+                    {charCount > 0 && charCount < 10 && (
+                      <span className="text-orange-600">
+                        {10 - charCount} tekens nog nodig
+                      </span>
+                    )}
+                    {charCount >= 10 && (
+                      <span className="text-green-600">
+                        ✓ Voldoende tekens
+                      </span>
+                    )}
+                  </div>
+                </FormItem>
+              );
+            }}
+          />
+        </div>
 
         {/* Honeypot field - hidden from users but visible to bots */}
         <FormField

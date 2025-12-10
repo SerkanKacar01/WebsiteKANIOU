@@ -22,6 +22,7 @@ import {
 } from "@shared/schema";
 import { createContactEmailHtml } from "./services/email";
 import { sendMailgunEmail } from "./mailgun/sendMail";
+import { sendQuoteRequestEmail } from "./sendgrid/client";
 import { randomBytes } from "crypto";
 import { adminLoginRateLimiter } from "./middleware/rateLimiter";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
@@ -428,47 +429,31 @@ Verzoek ID: ${sampleRequest.id}
         return res.status(400).json({ error: "Invalid submission" });
       }
 
-      // Send email notification to business first (most important)
+      // Send email notification to business using SendGrid
       let emailSent = false;
       try {
-        console.log(`🔄 QUOTE FORM: Preparing to send email for quote request from ${email}`);
+        console.log(`🔄 QUOTE FORM: Preparing to send email via SendGrid for quote request from ${email}`);
         
-        const emailSubject = `[KANIOU Offerte] ${productType} - ${name}`;
-
-        const emailText = `
-Nieuwe offerteaanvraag van KANIOU website
-
-Klantgegevens:
-- Naam: ${name}
-- E-mail: ${email}
-- Telefoon: ${phone}
-
-Product Details:
-- Type: ${productType}
-- Afmetingen: ${dimensions || "Niet opgegeven"}
-
-Aanvullende wensen:
-${requirements || "Geen aanvullende wensen opgegeven"}
-
----
-Deze offerteaanvraag werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new Date().toLocaleTimeString("nl-NL")}
-        `.trim();
-
-        console.log(`📧 QUOTE FORM: Sending email to info@kaniou.be with subject: ${emailSubject}`);
-        await sendMailgunEmail("info@kaniou.be", emailSubject, emailText);
-        console.log(
-          `✅ Quote request email sent successfully to info@kaniou.be from ${email}`,
-        );
+        // Split name into first and last name
+        const nameParts = name.trim().split(' ');
+        const firstName = nameParts[0] || name;
+        const lastName = nameParts.slice(1).join(' ') || '';
         
-        // BACKUP: Also send to alternative email to ensure delivery
-        console.log(`📧 BACKUP: Sending copy to serkann.k01@gmail.com for guaranteed delivery`);
-        await sendMailgunEmail("serkann.k01@gmail.com", `[BACKUP] ${emailSubject}`, 
-          `BACKUP COPY - Original sent to info@kaniou.be\n\n${emailText}`);
-        console.log(`✅ Backup email sent to serkann.k01@gmail.com`);
+        await sendQuoteRequestEmail({
+          firstName,
+          lastName,
+          email,
+          phone,
+          productType,
+          width: dimensions ? dimensions.split('x')[0]?.trim() : undefined,
+          height: dimensions ? dimensions.split('x')[1]?.trim() : undefined,
+          message: requirements
+        });
         
+        console.log(`✅ Quote request email sent successfully via SendGrid to info@kaniou.be from ${email}`);
         emailSent = true;
       } catch (emailError) {
-        console.error("❌ Failed to send quote request email:", emailError);
+        console.error("❌ Failed to send quote request email via SendGrid:", emailError);
       }
 
       // Try to save to database (secondary priority)

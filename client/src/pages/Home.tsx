@@ -416,35 +416,46 @@ const InspirationGallery = ({ setLocation }: { setLocation: (path: string) => vo
   ];
 
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
-        <div className="text-center mb-16">
+    <section className="py-16 md:py-24 bg-white">
+      <div className="max-w-[1800px] mx-auto px-4 md:px-6 lg:px-16">
+        <div className="text-center mb-10 md:mb-16">
           <h2 
-            className="text-4xl md:text-5xl font-light text-black mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-light text-black mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             Realisaties
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-4" />
-          <p className="text-gray-600">Ontdek onze afgewerkte projecten</p>
+          <p className="text-gray-600 text-sm md:text-base">Ontdek onze afgewerkte projecten</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
           {realisatieImages.map((image, index) => (
             <div 
               key={index}
-              className="group relative overflow-hidden cursor-pointer aspect-[16/10] rounded-lg"
+              className="group relative overflow-hidden cursor-pointer aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
               onClick={() => setLocation("/gallerij")}
               data-testid={`realisatie-${index + 1}`}
             >
               <img
                 src={image}
                 alt={`Realisatie ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-10 md:mt-12">
+          <button
+            onClick={() => setLocation("/gallerij")}
+            className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 bg-black text-white hover:bg-gray-900 transition-all duration-300 text-sm md:text-base"
+            data-testid="button-bekijk-gallerij"
+          >
+            <span className="tracking-widest uppercase mr-2 md:mr-3">Bekijk alle realisaties</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>

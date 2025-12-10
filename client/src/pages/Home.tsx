@@ -15,6 +15,7 @@ import gallery6Src from "@assets/IMG_9221.jpeg";
 import duoRolgordijnenSrc from "@assets/DUOROLGORDIJNEN_1765327273263.png";
 import houtenShuttersSrc from "@assets/HOUTEN_SHUTTERS_1765327379155.png";
 import textielLamellenSrc from "@assets/TEXTIEL_LAMELLEN_1765327446795.png";
+import showroomImageSrc from "@assets/Scherm­afbeelding_2025-12-10_om_02.26.40_1765330020631.png";
 import {
   galleryImage1,
   galleryImage2,
@@ -668,15 +669,10 @@ const ShowroomSection = () => {
           </div>
 
           <div className="relative rounded-lg overflow-hidden aspect-square bg-gray-100">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.6!2d5.6939832!3d50.9886857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c0c5d2ad242f0f%3A0x1d9efc14cec41751!2sKANIOU%20bvba%20ZILVERNAALD!5e0!3m2!1snl!2sbe!4v1699000000000!5m2!1snl!2sbe"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="KANIOU Showroom Location"
+            <img
+              src={showroomImageSrc}
+              alt="KANIOU Showroom"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
           </div>
         </div>

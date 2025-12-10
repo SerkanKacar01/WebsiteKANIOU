@@ -704,19 +704,67 @@ const SpotlightSection = ({
   ];
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-        <div className="text-center mb-16">
+    <section className="py-12 md:py-24 bg-gray-50">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-16">
+        <div className="text-center mb-8 md:mb-16">
           <h2
-            className="text-4xl md:text-5xl font-light text-black mb-4"
+            className="text-3xl md:text-5xl font-light text-black mb-3 md:mb-4"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             In de kijker
           </h2>
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto" />
+          <div className="w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto" />
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Mobile: Horizontal scroll carousel */}
+        <div className="md:hidden">
+          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            {spotlights.map((item, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-[280px] snap-center cursor-pointer"
+                onClick={() => setLocation(item.path)}
+              >
+                <div className="group bg-white rounded-lg overflow-hidden shadow-md">
+                  <div className="relative h-40 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <span className="absolute top-3 left-3 px-2 py-1 bg-black text-white text-[10px] tracking-widest uppercase">
+                      {item.label}
+                    </span>
+                  </div>
+                  <div className="p-4">
+                    <h3
+                      className="text-lg font-light text-black mb-2"
+                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 text-xs leading-relaxed mb-3 line-clamp-2">
+                      {item.description}
+                    </p>
+                    <div className="inline-flex items-center text-black text-[10px] tracking-widest uppercase">
+                      Ontdekken
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Scroll indicator dots */}
+          <div className="flex justify-center gap-2 mt-4">
+            {spotlights.map((_, index) => (
+              <div key={index} className="w-2 h-2 rounded-full bg-gray-300" />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: Grid layout */}
+        <div className="hidden md:grid md:grid-cols-3 gap-8">
           {spotlights.map((item, index) => (
             <TiltCard
               key={index}

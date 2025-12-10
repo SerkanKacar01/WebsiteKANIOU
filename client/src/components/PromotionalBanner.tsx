@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
-import bannerImage from "@assets/Scherm­afbeelding_2025-12-09_om_00.33.44_1765404349756.png";
+import bannerImage from "@assets/buitenscreen-banner.png";
 
 const PromotionalBanner = () => {
   const [, setLocation] = useLocation();

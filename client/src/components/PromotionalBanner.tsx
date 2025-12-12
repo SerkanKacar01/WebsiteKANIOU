@@ -82,31 +82,28 @@ const PromotionalBanner = () => {
             <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 bg-[#C4A36C] text-white px-4 py-2 text-xs md:text-sm tracking-widest uppercase mb-5 animate-pulse">
                 <span className="font-semibold">20% Korting</span>
-                <span className="text-white/80">|</span>
-                <span>Beperkte actie</span>
               </div>
 
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-3 leading-tight"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Buitenscreens op Maat
+                20% Korting op Screens, Gordijnen & Zonweringen
               </h2>
               
               <p className="text-[#C4A36C] text-base md:text-lg font-medium mb-4">
-                Exclusief voor de eerste 10 klanten.
+                Actie geldig t/m 25 december 2025
               </p>
 
               <p className="text-white/90 text-sm md:text-base leading-relaxed mb-6 max-w-lg">
-                Profiteer van maximale warmtewering, strak design en premium kwaliteit.
-                Upgrade uw woning met de beste zonwering van dit moment.
+                Maatwerk, kwaliteit en comfort voor uw woning.
               </p>
 
               <div className="space-y-2 mb-8">
                 {[
-                  "Perfect voor grote ramen",
-                  "Tot 90% warmtewering",
-                  "Luxe ZIP-screens beschikbaar",
+                  "Snelle, professionele afwerking",
+                  "Maatwerk naar uw wensen",
+                  "Kwaliteit die duurzaam is",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-[#C4A36C] flex items-center justify-center flex-shrink-0">

@@ -64,6 +64,28 @@ const MobileHeader = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Reset all submenu states when sheet opens or closes
+  useEffect(() => {
+    if (!sheetOpen) {
+      // Reset all submenus when sheet closes
+      setMobileCollectieOpen(false);
+      setMobileHorrenOpen(false);
+      setMobileGordijnenOpen(false);
+      setMobileOphangsystemenOpen(false);
+      setMobileScreensOpen(false);
+    }
+  }, [sheetOpen]);
+
+  // Reset all submenus when navigating to a new page
+  useEffect(() => {
+    setMobileCollectieOpen(false);
+    setMobileHorrenOpen(false);
+    setMobileGordijnenOpen(false);
+    setMobileOphangsystemenOpen(false);
+    setMobileScreensOpen(false);
+    setSheetOpen(false);
+  }, [location]);
+
   const handleMobileNavClick = (path: string) => {
     scrollToTop('instant');
     setSheetOpen(false);

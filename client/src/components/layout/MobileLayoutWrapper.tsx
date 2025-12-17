@@ -14,10 +14,9 @@ const MobileLayoutWrapper = ({ children }: MobileLayoutWrapperProps) => {
   const isMobile = useMobile();
   const [location] = useLocation();
   
-  // Don't show header on homepage, admin pages, or special routes
-  const isHomePage = location === '/';
+  // Don't show header on admin pages or special routes
   const isAdminPage = location.includes('/admin') || location.includes('/entrepreneur-dashboard') || location.includes('/kaniouzilvernaald-dashboard');
-  const showHeader = !isHomePage && !isAdminPage;
+  const showHeader = !isAdminPage;
 
   return (
     <div className="flex min-h-screen flex-col w-full">

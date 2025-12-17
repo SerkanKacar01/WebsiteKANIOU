@@ -295,13 +295,15 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <button
-              onClick={() => setLocation("/shop")}
-              className="border border-[#C4A36C] text-[#C4A36C] hover:bg-[#C4A36C] hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-lg"
-              data-testid="nav-cta-shop"
-            >
-              Shop
-            </button>
+            {isScrolled === false && (
+              <button
+                onClick={() => setLocation("/shop")}
+                className="border border-[#C4A36C] text-[#C4A36C] hover:bg-[#C4A36C] hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-lg"
+                data-testid="nav-cta-shop"
+              >
+                Shop
+              </button>
+            )}
             <button
               onClick={() => setLocation("/contact")}
               className="border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-lg"

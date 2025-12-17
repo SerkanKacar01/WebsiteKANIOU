@@ -33,6 +33,7 @@ import houtenShuttersSrc from "@assets/HOUTEN_SHUTTERS_1765327379155.png";
 import textielLamellenSrc from "@assets/TEXTIEL_LAMELLEN_1765327446795.png";
 import showroomImageSrc from "@assets/Scherm­afbeelding_2025-12-10_om_02.26.40_1765330020631.png";
 import PromotionalBanner from "@/components/PromotionalBanner";
+import ShopShowcase from "@/components/ShopShowcase";
 import {
   galleryImage1,
   galleryImage2,
@@ -1555,6 +1556,9 @@ const Home = () => {
         {/* SPOTLIGHT SECTION */}
         {/* Promotional Banner */}
         <PromotionalBanner />
+
+        {/* ONLINE SHOP SHOWCASE */}
+        <ShopShowcase setLocation={setLocation} />
 
         <SpotlightSection setLocation={setLocation} />
 

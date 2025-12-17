@@ -543,3 +543,209 @@ export const insertAdminSessionSchema = createInsertSchema(adminSessions).omit({
 
 export type AdminSession = typeof adminSessions.$inferSelect;
 export type InsertAdminSession = z.infer<typeof insertAdminSessionSchema>;
+
+// =====================================================
+// E-COMMERCE: GORDIJNSTOFFEN ONLINE SHOP
+// =====================================================
+
+// Curtain Fabrics - Stoffen met prijs per meter
+export const curtainFabrics = pgTable("curtain_fabrics", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  pricePerMeter: doublePrecision("price_per_meter").notNull(), // Prijs per strekkende meter
+  imageUrl: text("image_url"),
+  category: text("category").notNull(), // 'overgordijn', 'vitrage', 'inbetween', etc.
+  material: text("material"), // 'katoen', 'linnen', 'polyester', etc.
+  color: text("color"),
+  pattern: text("pattern"), // 'uni', 'gestreept', 'bloemen', etc.
+  maxHeight: integer("max_height").notNull(), // Maximum hoogte in cm
+  minWidth: integer("min_width").default(30), // Minimum breedte in cm (default 30)
+  weight: text("weight"), // 'licht', 'medium', 'zwaar'
+  washable: boolean("washable").default(true),
+  stockStatus: text("stock_status").default("in_stock"), // 'in_stock', 'low_stock', 'out_of_stock'
+  isActive: boolean("is_active").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertCurtainFabricSchema = createInsertSchema(curtainFabrics).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type CurtainFabric = typeof curtainFabrics.$inferSelect;
+export type InsertCurtainFabric = z.infer<typeof insertCurtainFabricSchema>;
+
+// Pleat Types - Verschillende plooi stijlen met prijzen
+export const pleatTypes = pgTable("pleat_types", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(), // 'Wave plooi', 'Enkele plooi', 'Dubbele plooi', etc.
+  description: text("description"),
+  pricePerMeter: doublePrecision("price_per_meter").notNull(), // Extra prijs per meter voor deze plooi
+  imageUrl: text("image_url"),
+  fabricMultiplier: doublePrecision("fabric_multiplier").default(1.0), // Hoeveel extra stof nodig (bv. 2.0 = dubbele breedte)
+  isActive: boolean("is_active").default(true),
+  sortOrder: integer("sort_order").default(0),
+});
+
+export const insertPleatTypeSchema = createInsertSchema(pleatTypes).omit({
+  id: true,
+});
+
+export type PleatType = typeof pleatTypes.$inferSelect;
+export type InsertPleatType = z.infer<typeof insertPleatTypeSchema>;
+
+// Shopping Cart Items - Winkelwagen (sessie-gebaseerd)
+export const cartItems = pgTable("cart_items", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(), // Browser sessie ID
+  fabricId: integer("fabric_id").notNull().references(() => curtainFabrics.id, { onDelete: 'cascade' }),
+  pleatId: integer("pleat_id").references(() => pleatTypes.id, { onDelete: 'set null' }),
+  widthCm: integer("width_cm").notNull(), // Breedte in cm
+  heightCm: integer("height_cm").notNull(), // Hoogte in cm
+  quantity: integer("quantity").default(1),
+  isMadeToMeasure: boolean("is_made_to_measure").default(false), // Op maat gemaakt
+  calculatedPrice: doublePrecision("calculated_price").notNull(), // Berekende totaalprijs
+  notes: text("notes"), // Klant notities
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertCartItemSchema = createInsertSchema(cartItems).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type CartItem = typeof cartItems.$inferSelect;
+export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
+
+// Fabric Orders - Bestellingen voor stoffen
+export const fabricOrders = pgTable("fabric_orders", {
+  id: serial("id").primaryKey(),
+  orderNumber: text("order_number").notNull().unique(),
+  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  stripeSessionId: text("stripe_session_id"),
+  
+  // Klantgegevens
+  customerEmail: text("customer_email").notNull(),
+  customerFirstName: text("customer_first_name").notNull(),
+  customerLastName: text("customer_last_name").notNull(),
+  customerPhone: text("customer_phone"),
+  
+  // Verzendadres
+  shippingAddress: text("shipping_address").notNull(),
+  shippingCity: text("shipping_city").notNull(),
+  shippingPostalCode: text("shipping_postal_code").notNull(),
+  shippingCountry: text("shipping_country").default("BE"),
+  
+  // Bestelgegevens
+  subtotal: doublePrecision("subtotal").notNull(),
+  shippingCost: doublePrecision("shipping_cost").default(0),
+  totalAmount: doublePrecision("total_amount").notNull(),
+  currency: text("currency").default("EUR"),
+  
+  // Status
+  paymentStatus: text("payment_status").default("pending"), // 'pending', 'paid', 'failed', 'refunded'
+  orderStatus: text("order_status").default("pending"), // 'pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'
+  
+  // Notities
+  customerNote: text("customer_note"),
+  internalNote: text("internal_note"),
+  
+  // Timestamps
+  paidAt: timestamp("paid_at"),
+  shippedAt: timestamp("shipped_at"),
+  deliveredAt: timestamp("delivered_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertFabricOrderSchema = createInsertSchema(fabricOrders).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  paidAt: true,
+  shippedAt: true,
+  deliveredAt: true,
+});
+
+export type FabricOrder = typeof fabricOrders.$inferSelect;
+export type InsertFabricOrder = z.infer<typeof insertFabricOrderSchema>;
+
+// Fabric Order Items - Bestelregels
+export const fabricOrderItems = pgTable("fabric_order_items", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").notNull().references(() => fabricOrders.id, { onDelete: 'cascade' }),
+  fabricId: integer("fabric_id").notNull().references(() => curtainFabrics.id),
+  pleatId: integer("pleat_id").references(() => pleatTypes.id),
+  
+  // Snapshot van productgegevens (voor als prijs later verandert)
+  fabricName: text("fabric_name").notNull(),
+  fabricPricePerMeter: doublePrecision("fabric_price_per_meter").notNull(),
+  pleatName: text("pleat_name"),
+  pleatPricePerMeter: doublePrecision("pleat_price_per_meter"),
+  
+  // Afmetingen
+  widthCm: integer("width_cm").notNull(),
+  heightCm: integer("height_cm").notNull(),
+  quantity: integer("quantity").default(1),
+  
+  // Opties
+  isMadeToMeasure: boolean("is_made_to_measure").default(false),
+  
+  // Prijs
+  lineTotal: doublePrecision("line_total").notNull(),
+  
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertFabricOrderItemSchema = createInsertSchema(fabricOrderItems).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type FabricOrderItem = typeof fabricOrderItems.$inferSelect;
+export type InsertFabricOrderItem = z.infer<typeof insertFabricOrderItemSchema>;
+
+// Relations for E-commerce tables
+export const curtainFabricsRelations = relations(curtainFabrics, ({ many }) => ({
+  cartItems: many(cartItems),
+  orderItems: many(fabricOrderItems),
+}));
+
+export const pleatTypesRelations = relations(pleatTypes, ({ many }) => ({
+  cartItems: many(cartItems),
+  orderItems: many(fabricOrderItems),
+}));
+
+export const cartItemsRelations = relations(cartItems, ({ one }) => ({
+  fabric: one(curtainFabrics, {
+    fields: [cartItems.fabricId],
+    references: [curtainFabrics.id],
+  }),
+  pleat: one(pleatTypes, {
+    fields: [cartItems.pleatId],
+    references: [pleatTypes.id],
+  }),
+}));
+
+export const fabricOrdersRelations = relations(fabricOrders, ({ many }) => ({
+  items: many(fabricOrderItems),
+}));
+
+export const fabricOrderItemsRelations = relations(fabricOrderItems, ({ one }) => ({
+  order: one(fabricOrders, {
+    fields: [fabricOrderItems.orderId],
+    references: [fabricOrders.id],
+  }),
+  fabric: one(curtainFabrics, {
+    fields: [fabricOrderItems.fabricId],
+    references: [curtainFabrics.id],
+  }),
+  pleat: one(pleatTypes, {
+    fields: [fabricOrderItems.pleatId],
+    references: [pleatTypes.id],
+  }),
+}));

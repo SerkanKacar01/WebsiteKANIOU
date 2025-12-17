@@ -50,7 +50,7 @@ export default function FabricConfiguratorPage() {
   
   // Fetch fabric details
   const { data: fabric, isLoading: fabricLoading } = useQuery<CurtainFabric>({
-    queryKey: ["/api/shop/fabrics", fabricId],
+    queryKey: [`/api/shop/fabrics/${fabricId}`],
     enabled: !!fabricId,
   });
   

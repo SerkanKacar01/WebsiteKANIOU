@@ -318,6 +318,15 @@ const MobileHeader = () => {
 
                 {/* Mobile Menu Footer - CTA Buttons */}
                 <div className="border-t border-gray-100 bg-white p-4 space-y-3">
+                  <Link href="/shop">
+                    <button
+                      onClick={() => handleMobileNavClick("/shop")}
+                      className="w-full border border-[#C4A36C] text-[#C4A36C] hover:bg-[#C4A36C] hover:text-white px-6 py-3 text-xs tracking-widest uppercase transition-all duration-500 font-medium"
+                      data-testid="mobile-nav-shop"
+                    >
+                      Shop
+                    </button>
+                  </Link>
                   <Link href="/contact">
                     <button
                       onClick={() => handleMobileNavClick("/contact")}

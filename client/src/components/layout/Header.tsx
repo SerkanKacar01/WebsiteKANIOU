@@ -6,7 +6,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 
 const Header = () => {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCollectieDropdownOpen, setIsCollectieDropdownOpen] = useState(false);
@@ -295,7 +295,7 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            {isScrolled === false && (
+            {location === "/" && (
               <button
                 onClick={() => setLocation("/shop")}
                 className="border border-[#C4A36C] text-[#C4A36C] hover:bg-[#C4A36C] hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-lg"

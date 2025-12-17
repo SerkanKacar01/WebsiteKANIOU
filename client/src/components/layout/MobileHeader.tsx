@@ -318,7 +318,7 @@ const MobileHeader = () => {
 
                 {/* Mobile Menu Footer - CTA Buttons */}
                 <div className="border-t border-gray-100 bg-white p-4 space-y-3">
-                  {isScrolled === false && (
+                  {location === "/" && (
                     <Link href="/shop">
                       <button
                         onClick={() => handleMobileNavClick("/shop")}

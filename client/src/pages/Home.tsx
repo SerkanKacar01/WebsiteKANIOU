@@ -1277,7 +1277,14 @@ const LuxuryNavigation = () => {
             </button>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={() => setLocation("/shop")}
+              className="px-6 py-3 border border-[#C4A36C] text-[#C4A36C] hover:bg-[#C4A36C] hover:text-white text-xs tracking-widest uppercase transition-all duration-500 hover:shadow-lg"
+              data-testid="nav-cta-shop"
+            >
+              Shop
+            </button>
             <button
               onClick={() => setLocation("/quote")}
               className="px-8 py-3 bg-black text-white text-xs tracking-widest uppercase transition-all duration-500 hover:bg-gray-900 hover:shadow-2xl hover:-translate-y-0.5 relative overflow-hidden group"
@@ -1336,6 +1343,16 @@ const LuxuryNavigation = () => {
                 className="block w-full text-left px-4 py-2 text-sm tracking-widest uppercase text-gray-700 hover:text-black hover:bg-gray-50"
               >
                 Gordijnen
+              </button>
+              <button
+                onClick={() => {
+                  setLocation("/shop");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="px-8 py-3 border border-[#C4A36C] text-[#C4A36C] hover:bg-[#C4A36C] hover:text-white text-xs tracking-widest uppercase text-center mx-4"
+                data-testid="mobile-cta-shop"
+              >
+                Shop
               </button>
               <button
                 onClick={() => {

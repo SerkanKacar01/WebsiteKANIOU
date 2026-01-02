@@ -80,60 +80,28 @@ const PromotionalBanner = () => {
 
           <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 py-12">
             <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 bg-[#C4A36C] text-white px-4 py-2 text-xs md:text-sm tracking-widest uppercase mb-5 animate-pulse">
-                <span className="font-semibold">20% Korting</span>
-              </div>
-
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-3 leading-tight"
+                className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-6 leading-tight"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                20% Korting op Screens, Gordijnen & Zonweringen
+                Heeft u vragen of twijfels?
               </h2>
               
-              <p className="text-[#C4A36C] text-base md:text-lg font-medium mb-4">
-                Actie geldig t/m 25 december 2025
+              <p className="text-white/90 text-base md:text-lg leading-relaxed mb-4 max-w-lg">
+                Laat uw e-mail achter en één van onze specialisten neemt contact met u op.
               </p>
 
-              <p className="text-white/90 text-sm md:text-base leading-relaxed mb-6 max-w-lg">
-                Maatwerk, kwaliteit en comfort voor uw woning.
+              <p className="text-[#C4A36C] text-base md:text-lg font-medium mb-8">
+                Geen verplichtingen, enkel eerlijk advies.
               </p>
-
-              <div className="space-y-2 mb-8">
-                {[
-                  "Snelle, professionele afwerking",
-                  "Maatwerk naar uw wensen",
-                  "Kwaliteit die duurzaam is",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#C4A36C] flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                    <span className="text-white text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
 
               <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                 <button
                   onClick={handleCTA}
                   className="group inline-flex items-center justify-center gap-2 bg-[#C4A36C] hover:bg-[#B39356] text-white px-6 md:px-8 py-3 md:py-4 text-xs md:text-sm tracking-widest uppercase transition-all duration-500 hover:shadow-2xl hover:scale-105"
-                  data-testid="banner-cta-offerte"
+                  data-testid="banner-cta-contact"
                 >
-                  <span>Vraag offerte aan</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
-                
-                <button
-                  onClick={() => {
-                    localStorage.setItem(BANNER_STORAGE_KEY, "true");
-                    setIsVisible(false);
-                    setLocation("/producten/screens-outside");
-                  }}
-                  className="group inline-flex items-center justify-center gap-2 border border-white/50 hover:border-white hover:bg-white/10 text-white px-6 md:px-8 py-3 md:py-4 text-xs md:text-sm tracking-widest uppercase transition-all duration-500"
-                  data-testid="banner-cta-meer-info"
-                >
-                  <span>Meer info</span>
+                  <span>Neem contact op</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
                 

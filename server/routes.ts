@@ -470,6 +470,20 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
+  app.delete("/api/admin/enterprise-quotes/:id", requireAuth, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid quote ID" });
+      }
+      await storage.deleteEnterpriseQuote(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting enterprise quote:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
   app.get("/api/admin/contact-submissions", requireAuth, async (req: any, res) => {
     try {
       const submissions = await storage.getContactSubmissions();

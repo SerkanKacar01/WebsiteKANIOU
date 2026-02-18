@@ -275,11 +275,16 @@ export default function EntrepreneurDashboardPage() {
     if (!dateStr) return "Onbekend";
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString("nl-NL", {
+      const day = date.toLocaleDateString("nl-NL", {
         day: "2-digit",
         month: "2-digit", 
         year: "numeric"
       });
+      const time = date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+      return `${day} om ${time}`;
     } catch {
       return "Onbekend";
     }
@@ -385,6 +390,26 @@ export default function EntrepreneurDashboardPage() {
     setIsLoggingOut(true);
     logoutMutation.mutate();
   };
+
+  const deleteQuoteMutation = useMutation({
+    mutationFn: async (quoteId: number) => {
+      await apiRequest("DELETE", `/api/admin/enterprise-quotes/${quoteId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/enterprise-quotes"] });
+      toast({
+        title: "✅ Offerte Verwijderd",
+        description: "De offerteaanvraag is succesvol verwijderd.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "❌ Verwijder Fout",
+        description: "Er is een probleem opgetreden bij het verwijderen van de offerte.",
+        variant: "destructive",
+      });
+    },
+  });
 
   // Create order mutation
   const createOrderMutation = useMutation({
@@ -1165,8 +1190,23 @@ export default function EntrepreneurDashboardPage() {
                                     </div>
                                     <div className="flex items-center gap-4">
                                       <span className="text-sm text-slate-400">
-                                        {formatDate(quote.createdAt)}
+                                        Ontvangen: {formatDate(quote.createdAt)}
                                       </span>
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          if (window.confirm('Weet u zeker dat u deze offerteaanvraag wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
+                                            deleteQuoteMutation.mutate(quote.id);
+                                          }
+                                        }}
+                                        disabled={deleteQuoteMutation.isPending}
+                                      >
+                                        <Trash2 className="w-4 h-4 mr-1" />
+                                        Verwijder
+                                      </Button>
                                       {expandedQuoteId === quote.id ? (
                                         <ChevronUp className="w-5 h-5 text-slate-400" />
                                       ) : (
@@ -1188,8 +1228,13 @@ export default function EntrepreneurDashboardPage() {
                                           <p className="text-white"><span className="text-slate-400">Naam:</span> {quote.contact?.firstName} {quote.contact?.lastName}</p>
                                           <p className="text-white"><span className="text-slate-400">Email:</span> {quote.contact?.email}</p>
                                           <p className="text-white"><span className="text-slate-400">Telefoon:</span> {quote.contact?.phone}</p>
+                                          {quote.contact?.street && <p className="text-white"><span className="text-slate-400">Straat:</span> {quote.contact?.street}</p>}
                                           {quote.contact?.address && <p className="text-white"><span className="text-slate-400">Adres:</span> {quote.contact?.address}</p>}
+                                          {quote.contact?.postalCode && <p className="text-white"><span className="text-slate-400">Postcode:</span> {quote.contact?.postalCode}</p>}
                                           {quote.contact?.city && <p className="text-white"><span className="text-slate-400">Stad:</span> {quote.contact?.city}</p>}
+                                          {quote.contact?.country && <p className="text-white"><span className="text-slate-400">Land:</span> {quote.contact?.country}</p>}
+                                          {quote.contact?.companyName && <p className="text-white"><span className="text-slate-400">Bedrijfsnaam:</span> {quote.contact?.companyName}</p>}
+                                          {quote.contact?.vatNumber && <p className="text-white"><span className="text-slate-400">BTW-nummer:</span> {quote.contact?.vatNumber}</p>}
                                         </div>
                                       </div>
 
@@ -1202,7 +1247,11 @@ export default function EntrepreneurDashboardPage() {
                                           <p className="text-white"><span className="text-slate-400">Producttypes:</span> {quote.preferences?.productTypes?.join(', ') || 'Niet opgegeven'}</p>
                                           {quote.preferences?.colors && <p className="text-white"><span className="text-slate-400">Kleuren:</span> {quote.preferences.colors.join(', ')}</p>}
                                           {quote.preferences?.budget && <p className="text-white"><span className="text-slate-400">Budget:</span> {quote.preferences.budget}</p>}
+                                          {quote.preferences?.lightControl && <p className="text-white"><span className="text-slate-400">Lichtinval:</span> {quote.preferences.lightControl}</p>}
+                                          {quote.preferences?.style && <p className="text-white"><span className="text-slate-400">Stijl:</span> {quote.preferences.style}</p>}
+                                          {quote.preferences?.colorPref && <p className="text-white"><span className="text-slate-400">Kleurvoorkeur:</span> {quote.preferences.colorPref}</p>}
                                           <p className="text-white"><span className="text-slate-400">Metingen beschikbaar:</span> {quote.hasMeasurements ? 'Ja' : 'Nee'}</p>
+                                          {quote.preferences?.extraNotes && <p className="text-white"><span className="text-slate-400">Extra wensen/opmerkingen:</span> {quote.preferences.extraNotes}</p>}
                                         </div>
                                       </div>
                                     </div>
@@ -1217,12 +1266,15 @@ export default function EntrepreneurDashboardPage() {
                                           {quote.rooms.map((room: any, roomIdx: number) => (
                                             <div key={roomIdx} className="bg-white/5 rounded-lg p-4">
                                               <p className="text-white font-semibold mb-2">{room.name}</p>
+                                              {room.notes && <p className="text-slate-300 text-sm mb-2"><span className="text-slate-400">Notities:</span> {room.notes}</p>}
                                               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                                                 {room.windows?.map((win: any, winIdx: number) => (
                                                   <div key={winIdx} className="bg-white/5 rounded p-2 text-sm">
-                                                    <p className="text-slate-300">Raam {winIdx + 1}</p>
+                                                    <p className="text-slate-300">{win.label || `Raam ${winIdx + 1}`}</p>
                                                     <p className="text-white">{win.widthCm} × {win.heightCm} cm</p>
                                                     {win.productType && <p className="text-amber-300 text-xs">{win.productType}</p>}
+                                                    {win.mountType && <p className="text-white text-xs"><span className="text-slate-400">Montagetype:</span> {win.mountType}</p>}
+                                                    {win.quantity && <p className="text-white text-xs"><span className="text-slate-400">Aantal:</span> {win.quantity}</p>}
                                                   </div>
                                                 ))}
                                               </div>
@@ -1238,13 +1290,21 @@ export default function EntrepreneurDashboardPage() {
                                           <CheckCircle className="w-4 h-4" />
                                           Diensten
                                         </h4>
-                                        <div className="bg-white/5 rounded-lg p-4 text-sm">
-                                          <div className="flex flex-wrap gap-2">
-                                            {quote.services.measurement && <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">Inmeten</Badge>}
-                                            {quote.services.installation && <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30">Installatie</Badge>}
-                                            {quote.services.removal && <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">Demontage</Badge>}
-                                            {quote.services.advice && <Badge className="bg-amber-500/20 text-amber-300 border-amber-400/30">Advies</Badge>}
-                                          </div>
+                                        <div className="bg-white/5 rounded-lg p-4 text-sm space-y-2">
+                                          {quote.services.selected && quote.services.selected.length > 0 && (
+                                            <div className="flex flex-wrap gap-2">
+                                              {quote.services.selected.map((service: string, idx: number) => (
+                                                <Badge key={idx} className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">{service}</Badge>
+                                              ))}
+                                            </div>
+                                          )}
+                                          {quote.services.measurement && <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">Inmeten</Badge>}
+                                          {quote.services.installation && <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30">Installatie</Badge>}
+                                          {quote.services.removal && <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">Demontage</Badge>}
+                                          {quote.services.advice && <Badge className="bg-amber-500/20 text-amber-300 border-amber-400/30">Advies</Badge>}
+                                          {quote.services.contactPref && <p className="text-white"><span className="text-slate-400">Contact voorkeur:</span> {quote.services.contactPref}</p>}
+                                          {quote.services.preferredTime && <p className="text-white"><span className="text-slate-400">Voorkeur tijdstip:</span> {quote.services.preferredTime}</p>}
+                                          {quote.services.region && <p className="text-white"><span className="text-slate-400">Regio:</span> {quote.services.region}</p>}
                                           {quote.services.notes && <p className="text-slate-300 mt-2">{quote.services.notes}</p>}
                                         </div>
                                       </div>

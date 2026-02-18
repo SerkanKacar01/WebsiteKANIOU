@@ -231,6 +231,7 @@ export interface IStorage {
   createEnterpriseQuote(request: InsertEnterpriseQuoteRequest): Promise<EnterpriseQuoteRequest>;
   getEnterpriseQuotes(): Promise<EnterpriseQuoteRequest[]>;
   getEnterpriseQuoteById(id: number): Promise<EnterpriseQuoteRequest | undefined>;
+  deleteEnterpriseQuote(id: number): Promise<void>;
   
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
@@ -547,6 +548,10 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
   async getEnterpriseQuoteById(id: number): Promise<EnterpriseQuoteRequest | undefined> {
     const result = await db.select().from(enterpriseQuoteRequests).where(eq(enterpriseQuoteRequests.id, id));
     return result[0];
+  }
+
+  async deleteEnterpriseQuote(id: number): Promise<void> {
+    await db.delete(enterpriseQuoteRequests).where(eq(enterpriseQuoteRequests.id, id));
   }
   
   // Contact Submissions

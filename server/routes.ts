@@ -14,15 +14,11 @@ import {
   isValidCredentials,
   isValidCredentialsAsync,
 } from "./simpleAuth";
-import { sendEmail } from "./services/sendgrid";
 import {
   insertContactSubmissionSchema,
   insertQuoteRequestSchema,
   insertColorSampleRequestSchema,
 } from "@shared/schema";
-import { createContactEmailHtml } from "./services/email";
-import { sendMailgunEmail } from "./mailgun/sendMail";
-import { sendQuoteRequestEmail } from "./sendgrid/client";
 import { randomBytes } from "crypto";
 import { adminLoginRateLimiter } from "./middleware/rateLimiter";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
@@ -274,69 +270,19 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(400).json({ error: "Invalid submission" });
       }
 
-      // Send email notification to business first (most important)
-      let emailSent = false;
-      try {
-        const emailSubject = `[KANIOU Contact] ${subject}`;
-        const emailHtml = createContactEmailHtml({
-          name,
-          email,
-          subject,
-          message,
-        });
+      await storage.createContactSubmission({
+        name,
+        email,
+        subject,
+        message,
+        type: "contact",
+      });
+      console.log(`📝 Contact form submission saved to database`);
 
-        // Send plain text email for better deliverability
-        const emailText = `
-Nieuw contactformulier bericht van KANIOU website
-
-Van: ${name}
-E-mail: ${email}
-Onderwerp: ${subject}
-
-Bericht:
-${message}
-
----
-Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new Date().toLocaleTimeString("nl-NL")}
-        `.trim();
-
-        await sendMailgunEmail("info@kaniou.be", emailSubject, emailText);
-        console.log(
-          `✅ Contact form email sent successfully to info@kaniou.be from ${email}`,
-        );
-        emailSent = true;
-      } catch (emailError) {
-        console.error("❌ Failed to send contact form email:", emailError);
-      }
-
-      // Try to save to database (secondary priority)
-      try {
-        await storage.createContactSubmission({
-          name,
-          email,
-          subject,
-          message,
-        });
-        console.log(`📝 Contact form submission saved to database`);
-      } catch (dbError) {
-        console.warn(
-          `⚠️ Database unavailable for contact form storage:`,
-          (dbError as Error).message,
-        );
-        // Continue anyway - email is the primary goal
-      }
-
-      // Return success if email was sent (primary goal achieved)
-      if (emailSent) {
-        res.json({
-          success: true,
-          message: "Contact form submitted successfully",
-        });
-      } else {
-        res.status(500).json({
-          error: "Failed to send contact form email",
-        });
-      }
+      res.json({
+        success: true,
+        message: "Contact form submitted successfully",
+      });
     } catch (error: any) {
       console.error("Contact form submission error:", error);
       res.status(500).json({ error: "Failed to submit contact form" });
@@ -369,55 +315,7 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new
         colorName,
       });
 
-      // Send confirmation email to customer
-      const customerSubject = "KANIOU - Bevestiging staalverzoek ontvangen";
-      const customerEmailText = `
-Beste klant,
-
-Bedankt voor uw interesse in KANIOU raamdecoratie!
-
-We hebben uw verzoek ontvangen voor stalen in de kleur: ${colorName}
-
-Binnen 2-3 werkdagen ontvangt u per post enkele gratis stofstalen zodat u thuis de perfecte keuze kunt maken.
-
-Met vriendelijke groet,
-Het KANIOU team
-
----
-KANIOU Zilvernaald
-Kwaliteit en stijl voor elk raam
-      `.trim();
-
-      // Send admin notification email
-      const adminSubject = `[KANIOU] Nieuw staalverzoek - ${colorName}`;
-      const adminEmailText = `
-Nieuw staalverzoek ontvangen via KANIOU website:
-
-E-mailadres: ${email}
-Gekozen kleur: ${colorName} (${selectedColor})
-Datum: ${new Date().toLocaleString("nl-BE")}
-
-Actie vereist: Staal verzenden naar klant.
-
-Verzoek ID: ${sampleRequest.id}
-      `.trim();
-
-      // Send emails
-      let emailsSent = 0;
-      
-      try {
-        await sendMailgunEmail(email, customerSubject, customerEmailText);
-        emailsSent++;
-      } catch (error) {
-        console.error("Failed to send customer confirmation email:", error);
-      }
-
-      try {
-        await sendMailgunEmail("info@kaniou.be", adminSubject, adminEmailText);
-        emailsSent++;
-      } catch (error) {
-        console.error("Failed to send admin notification email:", error);
-      }
+      console.log(`📝 Color sample request saved to database: ${colorName} (${selectedColor})`);
 
       res.json({
         success: true,
@@ -458,60 +356,19 @@ Verzoek ID: ${sampleRequest.id}
         return res.status(400).json({ error: "Invalid submission" });
       }
 
-      // Send email notification to business using SendGrid
-      let emailSent = false;
-      try {
-        console.log(`🔄 QUOTE FORM: Preparing to send email via SendGrid for quote request from ${email}`);
-        
-        // Split name into first and last name
-        const nameParts = name.trim().split(' ');
-        const firstName = nameParts[0] || name;
-        const lastName = nameParts.slice(1).join(' ') || '';
-        
-        await sendQuoteRequestEmail({
-          firstName,
-          lastName,
-          email,
-          phone,
-          productType,
-          width: dimensions ? dimensions.split('x')[0]?.trim() : undefined,
-          height: dimensions ? dimensions.split('x')[1]?.trim() : undefined,
-          message: requirements
-        });
-        
-        console.log(`✅ Quote request email sent successfully via SendGrid to info@kaniou.be from ${email}`);
-        emailSent = true;
-      } catch (emailError) {
-        console.error("❌ Failed to send quote request email via SendGrid:", emailError);
-      }
+      await storage.createQuoteRequest({
+        name,
+        email,
+        phone,
+        productType,
+        dimensions: dimensions || "",
+        requirements: requirements || "",
+      });
+      console.log(`📝 Quote request submission saved to database`);
 
-      // Try to save to database (secondary priority)
-      try {
-        await storage.createQuoteRequest({
-          name,
-          email,
-          phone,
-          productType,
-          dimensions: dimensions || "",
-          requirements: requirements || "",
-        });
-        console.log(`📝 Quote request submission saved to database`);
-      } catch (dbError) {
-        console.warn(
-          `⚠️ Database unavailable for quote request storage:`,
-          (dbError as Error).message,
-        );
-        // Continue anyway - email is the primary goal
-      }
-
-      // Return success - quote is saved to database even if email fails
-      // User can check admin dashboard for all quote requests
       res.json({
         success: true,
-        message: emailSent 
-          ? "Quote request submitted successfully" 
-          : "Quote request saved - our team will contact you soon",
-        emailSent: emailSent
+        message: "Quote request submitted successfully",
       });
     } catch (error: any) {
       console.error("Quote request submission error:", error);
@@ -593,22 +450,7 @@ Verzoek ID: ${sampleRequest.id}
         status: "nieuw",
       });
 
-      try {
-        const { sendEnterpriseQuoteEmail } = await import("./sendgrid/client");
-        await sendEnterpriseQuoteEmail({
-          submissionId,
-          customerType,
-          projectType,
-          planning,
-          hasMeasurements: hasMeasurements || false,
-          rooms,
-          preferences,
-          services: services || {},
-          contact,
-        });
-      } catch (emailError) {
-        console.error("Email notification failed:", emailError);
-      }
+      console.log(`📝 Enterprise quote request saved to database: ${submissionId}`);
 
       res.json({ success: true, submissionId, message: "Offerteaanvraag succesvol ontvangen" });
     } catch (error: any) {
@@ -895,14 +737,7 @@ Accountmanager
 Mr. Serkan KACAR
           `.trim();
 
-          await sendMailgunEmail(
-            existingOrder.customerEmail,
-            subject,
-            emailBody,
-          );
-          console.log(
-            `📧 Status update email sent to ${existingOrder.customerEmail} for order ${orderId}`,
-          );
+          console.log("📋 Status update opgeslagen voor order", orderId);
         } catch (emailError) {
           console.error(`Failed to send status update email:`, emailError);
         }
@@ -1065,8 +900,7 @@ Accountmanager
 Mr. Serkan KACAR
           `.trim();
 
-          await sendMailgunEmail(customerEmail, subject, emailBody);
-          console.log(`📧 Order confirmation email sent to ${customerEmail}`);
+          console.log(`📋 Orderbevestiging opgeslagen voor ${customerEmail}`);
         } catch (emailError) {
           console.error(`Failed to send order confirmation email:`, emailError);
         }
@@ -1120,8 +954,7 @@ Dit is een automatische melding van het KANIOU bestellingssysteem.
 Tijd: ${new Date().toLocaleString('nl-BE')}
         `.trim();
 
-        await sendMailgunEmail('info@kaniou.be', adminSubject, adminEmailBody);
-        console.log(`🔔 Admin notification sent for new order ${bonnummer}`);
+        console.log(`📋 Admin notificatie opgeslagen voor nieuwe order ${bonnummer}`);
       } catch (adminEmailError) {
         console.error(`Failed to send admin notification email:`, adminEmailError);
       }
@@ -1321,37 +1154,21 @@ Tijd: ${new Date().toLocaleString('nl-BE')}
   // Contact form endpoints for floating action buttons
   app.post("/api/contact/callback", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
-      const { firstName, lastName, phone, type } = req.body;
+      const { firstName, lastName, phone } = req.body;
 
       if (!firstName || !lastName || !phone) {
         return res.status(400).json({ error: "Alle velden zijn verplicht" });
       }
 
-      // Send email notification using SendGrid
-      const subject = "KANIOU - Nieuw terugbelverzoek";
-      const emailBody = `
-Nieuw terugbelverzoek ontvangen via KANIOU website:
-
-Naam: ${firstName} ${lastName}
-Telefoonnummer: ${phone}
-Type: Terugbelverzoek
-
-Datum: ${new Date().toLocaleString("nl-BE")}
-
-Deze klant vraagt om teruggebeld te worden.
-      `.trim();
-
-      try {
-        await sendEmail({
-          to: "info@kaniou.be",
-          subject: subject,
-          text: emailBody,
-        });
-        console.log("Callback request email sent successfully");
-      } catch (emailError) {
-        console.error("Failed to send callback email:", emailError);
-        // Continue anyway - don't fail the request if email fails
-      }
+      await storage.createContactSubmission({
+        name: firstName + " " + lastName,
+        email: "callback@kaniou.be",
+        subject: "Terugbelverzoek",
+        message: "Telefoonnummer: " + phone,
+        type: "callback",
+        phone,
+      });
+      console.log(`📝 Callback request saved to database`);
 
       res.json({
         success: true,
@@ -1365,39 +1182,20 @@ Deze klant vraagt om teruggebeld te worden.
 
   app.post("/api/contact/question", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
-      const { name, email, message, type } = req.body;
+      const { name, email, message } = req.body;
 
       if (!name || !email || !message) {
         return res.status(400).json({ error: "Alle velden zijn verplicht" });
       }
 
-      // Send email notification using SendGrid
-      const subject = "KANIOU - Nieuwe vraag via website";
-      const emailBody = `
-Nieuwe vraag ontvangen via KANIOU website:
-
-Naam: ${name}
-E-mailadres: ${email}
-Bericht:
-${message}
-
-Type: Vraag via floating button
-Datum: ${new Date().toLocaleString("nl-BE")}
-
-Beantwoord deze vraag zo snel mogelijk via e-mail.
-      `.trim();
-
-      try {
-        await sendEmail({
-          to: "info@kaniou.be",
-          subject: subject,
-          text: emailBody,
-        });
-        console.log("Question email sent successfully");
-      } catch (emailError) {
-        console.error("Failed to send question email:", emailError);
-        // Continue anyway - don't fail the request if email fails
-      }
+      await storage.createContactSubmission({
+        name,
+        email,
+        subject: "Vraag via website",
+        message,
+        type: "question",
+      });
+      console.log(`📝 Question saved to database`);
 
       res.json({
         success: true,

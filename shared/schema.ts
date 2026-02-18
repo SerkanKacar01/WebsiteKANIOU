@@ -177,6 +177,8 @@ export const contactSubmissions = pgTable("contact_submissions", {
   email: text("email").notNull(),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
+  type: text("type").default("contact"),
+  phone: text("phone"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -197,6 +199,8 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   message: z.string()
     .min(10, "Message must be at least 10 characters")
     .max(2000, "Message must be less than 2000 characters"),
+  type: z.string().optional(),
+  phone: z.string().optional(),
   // Honeypot field for spam protection
   website: z.string().max(0, "Invalid submission").optional(),
 });

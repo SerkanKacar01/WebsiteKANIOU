@@ -1,4 +1,3 @@
-import { sendMailgunEmail } from "../mailgun/sendMail.js";
 import { storage } from "../storage.js";
 
 interface OrderNotificationData {
@@ -30,12 +29,10 @@ export class NotificationService {
       statusMessages[data.newStatus as keyof typeof statusMessages] ||
       data.newStatus;
 
-    // Send email notification if enabled
     if (data.notifyByEmail && data.notificationEmail) {
       await this.sendEmailNotification(data, statusMessage);
     }
 
-    // Send WhatsApp notification if enabled (placeholder for Twilio integration)
     if (data.notifyByWhatsapp && data.notificationPhone) {
       await this.sendWhatsAppNotification(data, statusMessage);
     }
@@ -47,54 +44,16 @@ export class NotificationService {
   ): Promise<void> {
     try {
       const subject = `KANIOU - Update bestelling ${data.orderNumber}`;
-      const emailBody = `
-Beste {{customerName}},
 
-We hopen dat alles goed met u gaat.  
-Dit is een automatische update over uw maatwerkbestelling bij **KANIOU Zilvernaald || Gordijnen & Zonweringen**.
+      console.log(`📧 Notificatie zou verzonden worden naar ${data.notificationEmail}: ${subject}`);
 
-🧾 **Bestelgegevens**
-━━━━━━━━━━━━━━━━━━━  
-📦 Bestelnummer: ${data.orderNumber}
-🛍️ Producttype: ${data.productType}
-📋 Huidige status: ${statusMessage}
-
-📦 **Volg uw bestelling**  
-━━━━━━━━━━━━━━━━━━━  
-U kunt de voortgang van uw bestelling op elk moment bekijken via de volgende link: https://kaniou.be/bestelling-status/${data.orderId}
-
-🛠 **Over uw bestelling**  
-━━━━━━━━━━━━━━━━━━━  
-Uw bestelling wordt speciaal voor u op maat gemaakt met oog voor detail en kwaliteit.
-We houden u uiteraard op de hoogte zodra uw bestelling gereed is voor levering of plaatsing.
-
-📩 **Vragen of hulp nodig?**  
-━━━━━━━━━━━━━━━━━━━  
-Heeft u vragen over uw bestelling, levering of iets anders? Neem gerust contact met ons op:  
-📧 E-mail: info@kaniou.be  
-📞 Telefoon: +32 467 85 64 05 
-🌐 Website: www.kaniou.be
-
-🛍 Bedankt voor uw vertrouwen in **KANIOU Zilvernaald || Gordijnen & Zonweringen** –  
-Dé specialist in premium gordijnen en zonwering op maat.
-
-Met vriendelijke groet,  
-**Team KANIOU**  
-
-Accountmanager
-Mr. Serkan KACAR
-      `.trim();
-
-      await sendMailgunEmail(data.notificationEmail!, subject, emailBody);
-
-      // Log the notification
       await this.logNotification(
         data.orderId,
         "email",
         "sent",
         data.notificationEmail,
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("Email notification failed:", error);
       await this.logNotification(
         data.orderId,
@@ -111,8 +70,6 @@ Mr. Serkan KACAR
     statusMessage: string,
   ): Promise<void> {
     try {
-      // Placeholder for Twilio WhatsApp integration
-      // This would be implemented when Twilio credentials are provided
       console.log(
         `WhatsApp notification would be sent to ${data.notificationPhone}:`,
       );
@@ -120,7 +77,6 @@ Mr. Serkan KACAR
         `KANIOU Update: ${statusMessage} voor bestelling ${data.orderNumber}`,
       );
 
-      // For now, log as sent (demo mode)
       await this.logNotification(
         data.orderId,
         "whatsapp",
@@ -129,7 +85,7 @@ Mr. Serkan KACAR
         undefined,
         data.notificationPhone,
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("WhatsApp notification failed:", error);
       await this.logNotification(
         data.orderId,

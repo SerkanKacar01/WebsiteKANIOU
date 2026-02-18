@@ -726,349 +726,375 @@ export default function EntrepreneurDashboardPage() {
                 </div>
               </div>
 
-              {/* Tab Navigation */}
-              <div className="relative z-20">
-                <div className="flex flex-col sm:flex-row gap-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 mb-8 shadow-2xl">
+              {/* Enhanced Tab Navigation */}
+              <div className="mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <button
                     onClick={() => setActiveTab("orders")}
-                    className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${
+                    className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
                       activeTab === "orders"
-                        ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl shadow-amber-500/40 border-amber-400"
-                        : "text-slate-300 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white"
+                        ? "bg-gradient-to-br from-amber-500 to-orange-600 border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.4)] scale-105 z-10"
+                        : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10"
                     }`}
                   >
-                    <Package className="w-6 h-6" />
-                    Bestellingen ({dashboardData?.orders?.length || 0})
+                    <div className={`p-4 rounded-xl mb-3 ${activeTab === 'orders' ? 'bg-white/20' : 'bg-amber-500/10'}`}>
+                      <Package className={`w-8 h-8 ${activeTab === 'orders' ? 'text-white' : 'text-amber-400'}`} />
+                    </div>
+                    <span className={`text-xl font-bold ${activeTab === 'orders' ? 'text-white' : 'text-slate-300'}`}>
+                      Bestellingen
+                    </span>
+                    <span className={`text-sm mt-1 ${activeTab === 'orders' ? 'text-white/80' : 'text-slate-500'}`}>
+                      ({dashboardData?.orders?.length || 0} totaal)
+                    </span>
                   </button>
+
                   <button
                     onClick={() => setActiveTab("quotes")}
-                    className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${
+                    className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
                       activeTab === "quotes"
-                        ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl shadow-amber-500/40 border-amber-400"
-                        : "text-slate-300 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white"
+                        ? "bg-gradient-to-br from-blue-500 to-indigo-600 border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.4)] scale-105 z-10"
+                        : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10"
                     }`}
                   >
-                    <FileText className="w-6 h-6" />
-                    Offerteaanvragen ({enterpriseQuotes?.length || 0})
+                    <div className={`p-4 rounded-xl mb-3 ${activeTab === 'quotes' ? 'bg-white/20' : 'bg-blue-500/10'}`}>
+                      <FileText className={`w-8 h-8 ${activeTab === 'quotes' ? 'text-white' : 'text-blue-400'}`} />
+                    </div>
+                    <span className={`text-xl font-bold ${activeTab === 'quotes' ? 'text-white' : 'text-slate-300'}`}>
+                      Offerteaanvragen
+                    </span>
+                    <span className={`text-sm mt-1 ${activeTab === 'quotes' ? 'text-white/80' : 'text-slate-500'}`}>
+                      ({enterpriseQuotes?.length || 0} nieuw)
+                    </span>
                   </button>
+
                   <button
                     onClick={() => setActiveTab("messages")}
-                    className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${
+                    className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
                       activeTab === "messages"
-                        ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl shadow-amber-500/40 border-amber-400"
-                        : "text-slate-300 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white"
+                        ? "bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.4)] scale-105 z-10"
+                        : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10"
                     }`}
                   >
-                    <MessageSquare className="w-6 h-6" />
-                    Berichten ({contactSubmissions?.length || 0})
+                    <div className={`p-4 rounded-xl mb-3 ${activeTab === 'messages' ? 'bg-white/20' : 'bg-emerald-500/10'}`}>
+                      <MessageSquare className={`w-8 h-8 ${activeTab === 'messages' ? 'text-white' : 'text-emerald-400'}`} />
+                    </div>
+                    <span className={`text-xl font-bold ${activeTab === 'messages' ? 'text-white' : 'text-slate-300'}`}>
+                      Berichten
+                    </span>
+                    <span className={`text-sm mt-1 ${activeTab === 'messages' ? 'text-white/80' : 'text-slate-500'}`}>
+                      ({contactSubmissions?.length || 0} vragen)
+                    </span>
                   </button>
                 </div>
               </div>
 
               {/* Tab Content */}
-              {activeTab === "orders" && (
-              <>
-              {/* Premium Search & Filter Section */}
-              <div className={`transform transition-all duration-1000 delay-500 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400/50 via-purple-500/50 to-pink-500/50 rounded-2xl blur opacity-30"></div>
-                  <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
-                    <CardHeader className="relative pb-4">
-                      <CardTitle className="text-xl font-bold text-white flex items-center gap-3">
-                        <Filter className="w-6 h-6 text-indigo-300" />
-                        Intelligent Search & Filtering
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="relative space-y-6">
-                      {/* Premium Search Bar */}
+              <div className="relative z-10">
+                {activeTab === "orders" && (
+                  <>
+                    {/* Premium Search & Filter Section */}
+                    <div className="transform transition-all duration-500 translate-y-0 opacity-100">
                       <div className="relative group">
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/30 to-orange-500/30 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden">
-                          <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                            <Search className="w-5 h-5 text-slate-300" />
-                          </div>
-                          <input
-                            type="text"
-                            placeholder="Zoek op klantnaam, ordernummer, bonnummer of product..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 bg-transparent text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-300/50 text-lg"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Premium Filter Dropdowns */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* Status Filter */}
-                        <div className="space-y-2">
-                          <Label className="text-white font-semibold flex items-center gap-2">
-                            <Gem className="w-4 h-4 text-emerald-300" />
-                            Premium Status
-                          </Label>
-                          <div className="relative">
-                            <Select value={statusFilter} onValueChange={setStatusFilter}>
-                              <SelectTrigger className="bg-white/10 backdrop-blur-sm border-white/30 text-white focus:bg-white/20 focus:border-amber-300/50">
-                                <SelectValue placeholder="Alle statussen" />
-                              </SelectTrigger>
-                              <SelectContent className="bg-slate-900/95 backdrop-blur-xl border-white/20">
-                                <SelectItem value="all" className="text-white hover:bg-white/10">Alle Statussen</SelectItem>
-                                {ORDER_STATUSES.map((status) => (
-                                  <SelectItem key={status} value={status} className="text-white hover:bg-white/10">
-                                    {status}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-
-                        {/* Product Filter */}
-                        <div className="space-y-2">
-                          <Label className="text-white font-semibold flex items-center gap-2">
-                            <Diamond className="w-4 h-4 text-blue-300" />
-                            Product Categorie
-                          </Label>
-                          <div className="relative">
-                            <Select value={productFilter} onValueChange={setProductFilter}>
-                              <SelectTrigger className="bg-white/10 backdrop-blur-sm border-white/30 text-white focus:bg-white/20 focus:border-blue-300/50">
-                                <SelectValue placeholder="Alle producten" />
-                              </SelectTrigger>
-                              <SelectContent className="bg-slate-900/95 backdrop-blur-xl border-white/20">
-                                <SelectItem value="all" className="text-white hover:bg-white/10">Alle Producten</SelectItem>
-                                {PRODUCT_CATEGORIES.map((product) => (
-                                  <SelectItem key={product} value={product} className="text-white hover:bg-white/10">
-                                    {product}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-
-                        {/* Reset Filters */}
-                        <div className="space-y-2">
-                          <Label className="text-transparent">Reset</Label>
-                          <Button
-                            onClick={() => {
-                              setSearchQuery("");
-                              setStatusFilter("all");
-                              setProductFilter("all");
-                            }}
-                            className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white border-white/20"
-                            variant="outline"
-                          >
-                            <Settings className="w-4 h-4 mr-2" />
-                            Reset Filters
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-
-              {/* Premium Orders Overview */}
-              <div className={`transform transition-all duration-1000 delay-700 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/50 via-cyan-500/50 to-blue-500/50 rounded-2xl blur opacity-30"></div>
-                  <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
-                    <CardHeader className="relative bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-b border-white/10">
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
-                          <Crown className="w-7 h-7 text-amber-300" />
-                          Exclusive Orders Management
-                        </CardTitle>
-                        <div className="flex items-center gap-6">
-                          <div className="text-slate-300 font-semibold">
-                            {filteredOrders.length} van {dashboardData?.orders?.length || 0} premium orders
-                          </div>
-                          <div className="relative">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/50 to-cyan-500/50 rounded-xl blur opacity-50"></div>
-                            <Button
-                              onClick={() => setIsNewOrderModalOpen(true)}
-                              className="relative bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-bold px-6 py-3 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
-                            >
-                              <Plus className="w-5 h-5" />
-                              Nieuwe Premium Order
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="relative p-0">
-                      {filteredOrders.length === 0 ? (
-                        <div className="text-center py-16">
-                          <Package className="w-16 h-16 mx-auto text-slate-400 mb-4" />
-                          <h3 className="text-xl font-semibold text-white mb-2">Geen Orders Gevonden</h3>
-                          <p className="text-slate-300">Pas uw zoekfilters aan of maak een nieuwe premium order aan.</p>
-                        </div>
-                      ) : (
-                        /* Desktop Table View */
-                        <div className="hidden lg:block overflow-x-auto">
-                          <table className="w-full">
-                            <thead className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-b border-white/10">
-                              <tr>
-                                <th className="text-left py-6 px-6 font-bold text-amber-300">Order</th>
-                                <th className="text-left py-6 px-6 font-bold text-emerald-300">VIP Klant</th>
-                                <th className="text-left py-6 px-6 font-bold text-blue-300">Premium Product</th>
-                                <th className="text-left py-6 px-6 font-bold text-purple-300">Status</th>
-                                <th className="text-left py-6 px-6 font-bold text-cyan-300">Documenten</th>
-                                <th className="text-left py-6 px-6 font-bold text-pink-300">Acties</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/10">
-                              {filteredOrders.map((order) => (
-                                <tr
-                                  key={order.id}
-                                  className="hover:bg-white/5 transition-all duration-300 group"
-                                >
-                                  <td className="py-6 px-6">
-                                    <div className="flex flex-col space-y-1">
-                                      <div className="flex items-center gap-3">
-                                        <div className="bg-gradient-to-r from-amber-400/20 to-orange-500/20 p-2 rounded-lg">
-                                          <Diamond className="w-4 h-4 text-amber-300" />
-                                        </div>
-                                        <span className="font-mono text-amber-300 font-bold text-lg">
-                                          #{order.orderNumber}
-                                        </span>
-                                      </div>
-                                      <span className="text-xs text-slate-400 font-mono">
-                                        {order.bonnummer}
-                                      </span>
-                                      <span className="text-xs text-slate-400">
-                                        {formatDate(order.createdAt)}
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td className="py-6 px-6">
-                                    <div className="flex flex-col space-y-1">
-                                      <span className="font-semibold text-white text-lg">
-                                        {order.customerName}
-                                      </span>
-                                      <span className="text-sm text-slate-300">
-                                        {order.customerEmail}
-                                      </span>
-                                      {order.customerPhone && (
-                                        <span className="text-xs text-slate-400 font-mono">
-                                          {order.customerPhone}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </td>
-                                  <td className="py-6 px-6">
-                                    <div className="flex flex-col space-y-1">
-                                      <span className="font-medium text-white">
-                                        {order.productType}
-                                      </span>
-                                      <div className="text-lg font-bold text-emerald-300">
-                                        €{((order.amount || 0) / 100).toFixed(2)}
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td className="py-6 px-6">
-                                    <Badge
-                                      className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-200 border-purple-400/30 font-semibold px-4 py-2"
-                                    >
-                                      {order.status}
-                                    </Badge>
-                                  </td>
-                                  <td className="py-6 px-6">
-                                    <div className="flex items-center gap-2">
-                                      <FileText className="w-4 h-4 text-cyan-300" />
-                                      <span className="text-slate-300">
-                                        {order.documentCount || 0} docs
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td className="py-6 px-6">
-                                    <div className="flex gap-2">
-                                      <Button
-                                        size="sm"
-                                        onClick={() => openEditModal(order)}
-                                        className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white font-medium px-4 py-2 rounded-lg transform hover:scale-105 transition-all duration-300"
-                                      >
-                                        <Edit className="h-3 w-3 mr-1" />
-                                        Bewerk
-                                      </Button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      )}
-
-                      {/* Mobile Card View */}
-                      <div className="lg:hidden p-4 space-y-4">
-                        {filteredOrders.map((order) => (
-                          <div key={order.id} className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/30 to-orange-500/30 rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
-                            <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-xl rounded-xl">
-                              <div className="p-6">
-                                <div className="flex justify-between items-start mb-4">
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-2">
-                                      <Diamond className="w-5 h-5 text-amber-300" />
-                                      <h3 className="text-xl font-bold text-amber-300">
-                                        #{order.orderNumber}
-                                      </h3>
-                                    </div>
-                                    <p className="text-lg font-semibold text-white">
-                                      {order.customerName}
-                                    </p>
-                                    <p className="text-sm text-slate-300">
-                                      {order.customerEmail}
-                                    </p>
-                                  </div>
-                                  <div className="text-right">
-                                    <div className="text-2xl font-bold text-emerald-300 mb-2">
-                                      €{((order.amount || 0) / 100).toFixed(2)}
-                                    </div>
-                                    <Button
-                                      size="sm"
-                                      onClick={() => openEditModal(order)}
-                                      className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white"
-                                    >
-                                      <Edit className="h-3 w-3 mr-1" />
-                                      Bewerk
-                                    </Button>
-                                  </div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400/50 via-purple-500/50 to-pink-500/50 rounded-2xl blur opacity-30"></div>
+                        <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+                          <CardHeader className="relative pb-4">
+                            <CardTitle className="text-xl font-bold text-white flex items-center gap-3">
+                              <Filter className="w-6 h-6 text-indigo-300" />
+                              Intelligent Search & Filtering
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="relative space-y-6">
+                            {/* Premium Search Bar */}
+                            <div className="relative group">
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/30 to-orange-500/30 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="relative bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden">
+                                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                                  <Search className="w-5 h-5 text-slate-300" />
                                 </div>
-                                
-                                <div className="grid grid-cols-2 gap-4 mb-4">
-                                  <div>
-                                    <p className="text-xs text-slate-400">Product</p>
-                                    <p className="text-sm font-medium text-white">{order.productType}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-slate-400">Status</p>
-                                    <Badge className="mt-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-200 border-purple-400/30">
-                                      {order.status}
-                                    </Badge>
-                                  </div>
-                                </div>
-                                
-                                <div className="text-xs text-slate-400">
-                                  <span>Bonnummer: </span>
-                                  <span className="font-mono text-amber-300">{order.bonnummer}</span>
-                                  <span className="mx-2">•</span>
-                                  <span>{formatDate(order.createdAt)}</span>
+                                <input
+                                  type="text"
+                                  placeholder="Zoek op klantnaam, ordernummer, bonnummer of product..."
+                                  value={searchQuery}
+                                  onChange={(e) => setSearchQuery(e.target.value)}
+                                  className="w-full pl-12 pr-4 py-4 bg-transparent text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-300/50 text-lg"
+                                />
+                              </div>
+                            </div>
+
+                            {/* Premium Filter Dropdowns */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                              {/* Status Filter */}
+                              <div className="space-y-2">
+                                <Label className="text-white font-semibold flex items-center gap-2">
+                                  <Gem className="w-4 h-4 text-emerald-300" />
+                                  Premium Status
+                                </Label>
+                                <div className="relative">
+                                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                    <SelectTrigger className="bg-white/10 backdrop-blur-sm border-white/30 text-white focus:bg-white/20 focus:border-amber-300/50">
+                                      <SelectValue placeholder="Alle statussen" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-slate-900/95 backdrop-blur-xl border-white/20">
+                                      <SelectItem value="all" className="text-white hover:bg-white/10">Alle Statussen</SelectItem>
+                                      {ORDER_STATUSES.map((status) => (
+                                        <SelectItem key={status} value={status} className="text-white hover:bg-white/10">
+                                          {status}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
                                 </div>
                               </div>
-                            </Card>
-                          </div>
-                        ))}
+
+                              {/* Product Filter */}
+                              <div className="space-y-2">
+                                <Label className="text-white font-semibold flex items-center gap-2">
+                                  <Diamond className="w-4 h-4 text-blue-300" />
+                                  Product Categorie
+                                </Label>
+                                <div className="relative">
+                                  <Select value={productFilter} onValueChange={setProductFilter}>
+                                    <SelectTrigger className="bg-white/10 backdrop-blur-sm border-white/30 text-white focus:bg-white/20 focus:border-blue-300/50">
+                                      <SelectValue placeholder="Alle producten" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-slate-900/95 backdrop-blur-xl border-white/20">
+                                      <SelectItem value="all" className="text-white hover:bg-white/10">Alle Producten</SelectItem>
+                                      {PRODUCT_CATEGORIES.map((product) => (
+                                        <SelectItem key={product} value={product} className="text-white hover:bg-white/10">
+                                          {product}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+
+                              {/* Reset Filters */}
+                              <div className="space-y-2">
+                                <Label className="text-transparent">Reset</Label>
+                                <Button
+                                  onClick={() => {
+                                    setSearchQuery("");
+                                    setStatusFilter("all");
+                                    setProductFilter("all");
+                                  }}
+                                  className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white border-white/20"
+                                  variant="outline"
+                                >
+                                  <Settings className="w-4 h-4 mr-2" />
+                                  Reset Filters
+                                </Button>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
                       </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                    </div>
+
+                    {/* Premium Orders Overview */}
+                    <div className="transform transition-all duration-500 translate-y-0 opacity-100 mt-8">
+                      <div className="relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/50 via-cyan-500/50 to-blue-500/50 rounded-2xl blur opacity-30"></div>
+                        <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+                          <CardHeader className="relative bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-b border-white/10">
+                            <div className="flex items-center justify-between">
+                              <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                                <Crown className="w-7 h-7 text-amber-300" />
+                                Exclusive Orders Management
+                              </CardTitle>
+                              <div className="flex items-center gap-6">
+                                <div className="text-slate-300 font-semibold">
+                                  {filteredOrders.length} van {dashboardData?.orders?.length || 0} premium orders
+                                </div>
+                                <div className="relative">
+                                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/50 to-cyan-500/50 rounded-xl blur opacity-50"></div>
+                                  <Button
+                                    onClick={() => setIsNewOrderModalOpen(true)}
+                                    className="relative bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-bold px-6 py-3 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                                  >
+                                    <Plus className="w-5 h-5" />
+                                    Nieuwe Premium Order
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </CardHeader>
+
+                          <CardContent className="relative p-0">
+                            {filteredOrders.length === 0 ? (
+                              <div className="text-center py-16">
+                                <Package className="w-16 h-16 mx-auto text-slate-400 mb-4" />
+                                <h3 className="text-xl font-semibold text-white mb-2">Geen Orders Gevonden</h3>
+                                <p className="text-slate-300">Pas uw zoekfilters aan of maak een nieuwe premium order aan.</p>
+                              </div>
+                            ) : (
+                              /* Desktop Table View */
+                              <div className="hidden lg:block overflow-x-auto">
+                                <table className="w-full">
+                                  <thead className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-b border-white/10">
+                                    <tr>
+                                      <th className="text-left py-6 px-6 font-bold text-amber-300">Order</th>
+                                      <th className="text-left py-6 px-6 font-bold text-emerald-300">VIP Klant</th>
+                                      <th className="text-left py-6 px-6 font-bold text-blue-300">Premium Product</th>
+                                      <th className="text-left py-6 px-6 font-bold text-purple-300">Status</th>
+                                      <th className="text-left py-6 px-6 font-bold text-cyan-300">Documenten</th>
+                                      <th className="text-left py-6 px-6 font-bold text-pink-300">Acties</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-white/10">
+                                    {filteredOrders.map((order) => (
+                                      <tr
+                                        key={order.id}
+                                        className="hover:bg-white/5 transition-all duration-300 group"
+                                      >
+                                        <td className="py-6 px-6">
+                                          <div className="flex flex-col space-y-1">
+                                            <div className="flex items-center gap-3">
+                                              <div className="bg-gradient-to-r from-amber-400/20 to-orange-500/20 p-2 rounded-lg">
+                                                <Diamond className="w-4 h-4 text-amber-300" />
+                                              </div>
+                                              <span className="font-mono text-amber-300 font-bold text-lg">
+                                                #{order.orderNumber}
+                                              </span>
+                                            </div>
+                                            <span className="text-xs text-slate-400 font-mono">
+                                              {order.bonnummer}
+                                            </span>
+                                            <span className="text-xs text-slate-400">
+                                              {formatDate(order.createdAt)}
+                                            </span>
+                                          </div>
+                                        </td>
+                                        <td className="py-6 px-6">
+                                          <div className="flex flex-col space-y-1">
+                                            <span className="font-semibold text-white text-lg">
+                                              {order.customerName}
+                                            </span>
+                                            <span className="text-sm text-slate-300">
+                                              {order.customerEmail}
+                                            </span>
+                                            {order.customerPhone && (
+                                              <span className="text-xs text-slate-400 font-mono">
+                                                {order.customerPhone}
+                                              </span>
+                                            )}
+                                          </div>
+                                        </td>
+                                        <td className="py-6 px-6">
+                                          <div className="flex flex-col space-y-1">
+                                            <span className="font-medium text-white">
+                                              {order.productType}
+                                            </span>
+                                            <div className="text-lg font-bold text-emerald-300">
+                                              €{((order.amount || 0) / 100).toFixed(2)}
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td className="py-6 px-6">
+                                          <Badge
+                                            className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-200 border-purple-400/30 font-semibold px-4 py-2"
+                                          >
+                                            {order.status}
+                                          </Badge>
+                                        </td>
+                                        <td className="py-6 px-6">
+                                          <div className="flex items-center gap-2">
+                                            <FileText className="w-4 h-4 text-cyan-300" />
+                                            <span className="text-slate-300">
+                                              {order.documentCount || 0} docs
+                                            </span>
+                                          </div>
+                                        </td>
+                                        <td className="py-6 px-6">
+                                          <div className="flex gap-2">
+                                            <Button
+                                              size="sm"
+                                              onClick={() => openEditModal(order)}
+                                              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white font-medium px-4 py-2 rounded-lg transform hover:scale-105 transition-all duration-300"
+                                            >
+                                              <Edit className="h-3 w-3 mr-1" />
+                                              Bewerk
+                                            </Button>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            )}
+
+                            {/* Mobile Card View */}
+                            <div className="lg:hidden p-4 space-y-4">
+                              {filteredOrders.map((order) => (
+                                <div key={order.id} className="relative group">
+                                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/30 to-orange-500/30 rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
+                                  <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-xl rounded-xl">
+                                    <div className="p-6">
+                                      <div className="flex justify-between items-start mb-4">
+                                        <div className="flex-1">
+                                          <div className="flex items-center gap-3 mb-2">
+                                            <Diamond className="w-5 h-5 text-amber-300" />
+                                            <h3 className="text-xl font-bold text-amber-300">
+                                              #{order.orderNumber}
+                                            </h3>
+                                          </div>
+                                          <p className="text-lg font-semibold text-white">
+                                            {order.customerName}
+                                          </p>
+                                          <p className="text-sm text-slate-300">
+                                            {order.customerEmail}
+                                          </p>
+                                        </div>
+                                        <div className="text-right">
+                                          <div className="text-2xl font-bold text-emerald-300 mb-2">
+                                            €{((order.amount || 0) / 100).toFixed(2)}
+                                          </div>
+                                          <Button
+                                            size="sm"
+                                            onClick={() => openEditModal(order)}
+                                            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white"
+                                          >
+                                            <Edit className="h-3 w-3 mr-1" />
+                                            Bewerk
+                                          </Button>
+                                        </div>
+                                      </div>
+                                      
+                                      <div className="grid grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                          <p className="text-xs text-slate-400">Product</p>
+                                          <p className="text-sm font-medium text-white">{order.productType}</p>
+                                        </div>
+                                        <div>
+                                          <p className="text-xs text-slate-400">Status</p>
+                                          <Badge className="mt-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-200 border-purple-400/30">
+                                            {order.status}
+                                          </Badge>
+                                        </div>
+                                      </div>
+                                      
+                                      <div className="text-xs text-slate-400">
+                                        <span>Bonnummer: </span>
+                                        <span className="font-mono text-amber-300">{order.bonnummer}</span>
+                                        <span className="mx-2">•</span>
+                                        <span>{formatDate(order.createdAt)}</span>
+                                      </div>
+                                    </div>
+                                  </Card>
+                                </div>
+                              ))}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
-              </>
-              )}
+
 
               {/* Offerteaanvragen Tab */}
               {activeTab === "quotes" && (

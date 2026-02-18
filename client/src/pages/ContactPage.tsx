@@ -1,298 +1,781 @@
+import { useState, useEffect } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import Container from "@/components/ui/container";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Crown, 
-  Star, 
-  Award,
-  Shield,
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
   ArrowRight,
   Calendar,
-  MessageCircle
+  Star,
+  Video,
+  Shield,
+  ChevronDown,
+  ChevronUp,
+  Quote,
+  Building2,
+  Send,
+  Users,
+  Ruler,
+  Wrench,
+  Sparkles,
+  MessageSquare,
 } from "lucide-react";
-import ContactForm from "@/components/forms/ContactForm";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import PageLayout from "@/components/layout/PageLayout";
+import { Testimonial } from "@shared/schema";
+
+const contactFormSchema = z.object({
+  firstName: z.string().min(2, "Voornaam is verplicht"),
+  lastName: z.string().min(2, "Achternaam is verplicht"),
+  email: z.string().email("Ongeldig e-mailadres"),
+  phone: z.string().optional(),
+  subject: z.string().min(1, "Selecteer een onderwerp"),
+  message: z.string().min(10, "Bericht moet minstens 10 tekens bevatten").max(2000),
+  privacy: z.boolean().refine((val) => val === true, "U moet akkoord gaan met het privacybeleid"),
+  website: z.string().max(0, "Invalid").optional(),
+});
+
+type ContactFormValues = z.infer<typeof contactFormSchema>;
+
+const fallbackTestimonials = [
+  {
+    id: 1,
+    name: "Jan de Vries",
+    content: "We hebben Zilvernaald ingeschakeld voor nieuwe gordijnen in onze woonkamer. Het resultaat is prachtig! Perfecte pasvorm en de stof is van uitstekende kwaliteit.",
+    rating: 5,
+    location: "Maasmechelen",
+  },
+  {
+    id: 2,
+    name: "Marieke Jansen",
+    content: "Onze nieuwe rolgordijnen zijn perfect geïnstalleerd door het team van KANIOU. Ze gaven uitstekend advies over welke stoffen het beste zouden werken.",
+    rating: 5,
+    location: "Hasselt",
+  },
+  {
+    id: 3,
+    name: "Peter Bakker",
+    content: "Na lang zoeken eindelijk de perfecte oplossing gevonden bij KANIOU voor onze lastige dakramen. De plissé zonwering werkt perfect.",
+    rating: 5,
+    location: "Genk",
+  },
+];
+
+const faqItems = [
+  {
+    question: "Hoe snel ontvangt u een offerte?",
+    answer: "Na een adviesgesprek of opmeting ontvangt u binnen 2 werkdagen een gedetailleerde offerte op maat. Bij dringende projecten proberen we dit sneller te verzorgen.",
+  },
+  {
+    question: "Bieden jullie gratis opmeting aan?",
+    answer: "Ja, wij bieden een gratis en vrijblijvende opmeting aan huis aan. Onze specialist komt bij u langs om alles nauwkeurig op te meten en advies te geven.",
+  },
+  {
+    question: "Werken jullie ook voor zakelijke projecten?",
+    answer: "Absoluut. Wij werken samen met architecten, projectontwikkelaars en interieurontwerpers voor zowel residentiële als commerciële projecten.",
+  },
+  {
+    question: "Wat is de gemiddelde levertermijn?",
+    answer: "De gemiddelde levertermijn bedraagt 2 tot 4 weken, afhankelijk van het gekozen product en de complexiteit van het project. Bij speciale bestellingen kan dit langer duren.",
+  },
+];
 
 const ContactPage = () => {
+  const { toast } = useToast();
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const { data: testimonials } = useQuery<Testimonial[]>({
+    queryKey: ["/api/testimonials"],
+  });
+
+  const displayTestimonials = testimonials && testimonials.length > 0
+    ? testimonials
+    : fallbackTestimonials;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % displayTestimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [displayTestimonials.length]);
+
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+      privacy: false,
+      website: "",
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: (data: ContactFormValues) => {
+      const payload = {
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        phone: data.phone || "",
+        subject: data.subject,
+        message: data.message,
+        type: "contact",
+        website: data.website || "",
+      };
+      return apiRequest("POST", "/api/contact", payload);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Bericht verzonden",
+        description: "Bedankt! Onze specialisten nemen binnen 24 uur contact met u op.",
+      });
+      form.reset();
+    },
+    onError: (error) => {
+      toast({
+        title: "Verzending mislukt",
+        description: error.message || "Probeer het later opnieuw.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onSubmit = (data: ContactFormValues) => {
+    mutation.mutate(data);
+  };
+
   return (
     <PageLayout
-      title="Neem Contact Op"
-      subtitle="Persoonlijke Service"
-      description="Ervaar persoonlijke service op het hoogste niveau. Ons team van interieurspecialisten staat voor u klaar."
-      metaDescription="Neem contact op met KANIOU Zilvernaald voor premium maatwerk raamdecoratie. Professioneel advies, luxe showroom, en persoonlijke service voor uw interieur."
+      title="Persoonlijke begeleiding op het hoogste niveau"
+      subtitle="Contact"
+      description="Of u nu advies wenst voor één ruimte of een volledig project, ons team van interieurspecialisten staat klaar om u professioneel te begeleiden."
+      metaDescription="Neem contact op met KANIOU Zilvernaald voor premium maatwerk raamdecoratie. Professioneel advies, gratis opmeting en persoonlijke service."
       breadcrumbs={[{ label: "Contact" }]}
       showCTA={false}
     >
+      {/* Hero CTA Buttons */}
+      <section className="bg-[#2C3E50] -mt-8 pb-12">
+        <Container>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/quote"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"
+            >
+              <Calendar className="w-5 h-5" />
+              Gratis adviesgesprek plannen
+            </a>
+            <a
+              href="tel:+32467856405"
+              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/20 hover:scale-105"
+            >
+              <Phone className="w-5 h-5" />
+              Direct bellen
+            </a>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 2: Direct Contact Blocks */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-[#f8f6f1] to-white">
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Showroom */}
+            <div className="group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 text-center h-full flex flex-col">
+                <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] p-4 rounded-xl inline-flex mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <MapPin className="text-white w-7 h-7" />
+                </div>
+                <h3 className="font-display text-xl text-[#2C3E50] font-bold mb-4">
+                  Bezoek onze showroom
+                </h3>
+                <div className="space-y-1 mb-4 text-[#2C3E50]/80">
+                  <p>Pauwengraaf 66</p>
+                  <p>3630 Maasmechelen, België</p>
+                </div>
+                <div className="border-t border-[#C8A85B]/15 pt-4 mb-6">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Clock className="text-[#C8A85B] h-4 w-4" />
+                    <span className="font-semibold text-[#2C3E50] text-sm">Openingstijden</span>
+                  </div>
+                  <p className="text-[#2C3E50]/70 text-sm">Ma – Za: 10:00 – 18:00</p>
+                  <p className="text-[#2C3E50]/70 text-sm">Zondag: Gesloten</p>
+                </div>
+                <div className="mt-auto">
+                  <a
+                    href="https://www.google.com/maps/dir//KANIOU+bvba+ZILVERNAALD,+Pauwengraaf+66,+3630+Maasmechelen"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-[#C8A85B] font-semibold hover:text-[#D4AF37] transition-colors"
+                  >
+                    Route plannen
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 text-center h-full flex flex-col">
+                <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] p-4 rounded-xl inline-flex mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Phone className="text-white w-7 h-7" />
+                </div>
+                <h3 className="font-display text-xl text-[#2C3E50] font-bold mb-4">
+                  Bel ons direct
+                </h3>
+                <a
+                  href="tel:+32467856405"
+                  className="text-2xl font-bold text-[#C8A85B] hover:text-[#D4AF37] transition-colors mb-4"
+                >
+                  +32 467 85 64 05
+                </a>
+                <div className="border-t border-[#C8A85B]/15 pt-4 mb-6">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Clock className="text-[#C8A85B] h-4 w-4" />
+                    <span className="font-semibold text-[#2C3E50] text-sm">Bereikbaar</span>
+                  </div>
+                  <p className="text-[#2C3E50]/70 text-sm">Ma – Za: 10:00 – 18:00</p>
+                </div>
+                <div className="mt-auto">
+                  <a
+                    href="tel:+32467856405"
+                    className="inline-flex items-center gap-2 text-[#C8A85B] font-semibold hover:text-[#D4AF37] transition-colors"
+                  >
+                    Nu bellen
+                    <Phone className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div className="group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 text-center h-full flex flex-col">
+                <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] p-4 rounded-xl inline-flex mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Mail className="text-white w-7 h-7" />
+                </div>
+                <h3 className="font-display text-xl text-[#2C3E50] font-bold mb-4">
+                  Stuur ons een e-mail
+                </h3>
+                <a
+                  href="mailto:info@kaniou.be"
+                  className="text-xl font-bold text-[#C8A85B] hover:text-[#D4AF37] transition-colors mb-4"
+                >
+                  info@kaniou.be
+                </a>
+                <div className="border-t border-[#C8A85B]/15 pt-4 mb-6">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Shield className="text-[#C8A85B] h-4 w-4" />
+                    <span className="font-semibold text-[#2C3E50] text-sm">Responsietijd</span>
+                  </div>
+                  <p className="text-[#2C3E50]/70 text-sm">Binnen 24 uur op werkdagen</p>
+                </div>
+                <div className="mt-auto">
+                  <a
+                    href="mailto:info@kaniou.be"
+                    className="inline-flex items-center gap-2 text-[#C8A85B] font-semibold hover:text-[#D4AF37] transition-colors"
+                  >
+                    E-mail sturen
+                    <Mail className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 3: Premium Advies Module */}
       <section className="py-16 lg:py-20 bg-white">
         <Container>
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 mb-8">
-              <MessageCircle className="w-6 h-6 text-[#C8A85B]" />
-            </div>
-            
-            <h2 className="font-display text-3xl md:text-5xl text-[#2C3E50] font-black mb-6 tracking-tight leading-tight">
-              Neem <span className="bg-gradient-to-r from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] bg-clip-text text-transparent">contact</span> op
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl text-[#2C3E50] font-bold mb-4">
+              Kies uw type advies
             </h2>
-            
-            <p className="text-xl text-[#2C3E50]/70 font-light leading-relaxed max-w-3xl mx-auto">
-              Ons deskundige team staat klaar om u te voorzien van het beste advies voor uw raamdecoratie
+            <p className="text-lg text-[#2C3E50]/70 max-w-2xl mx-auto">
+              Wij bieden begeleiding afgestemd op uw project en wensen.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-            <div className="group relative">
-              <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:-translate-y-2 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                <div className="relative z-10 text-center">
-                  <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-                    <MapPin className="text-white w-8 h-8" />
-                  </div>
-                  
-                  <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors">
-                    Bezoek onze luxe showroom
-                  </h3>
-                  
-                  <div className="w-16 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-6 group-hover:w-20 transition-all duration-500"></div>
-                  
-                  <div className="space-y-2 mb-6">
-                    <p className="font-body text-lg text-[#2C3E50] font-medium">Pauwengraaf 66</p>
-                    <p className="font-body text-lg text-[#2C3E50] font-medium">3630 Maasmechelen, België</p>
-                  </div>
-                  
-                  <div className="border-t border-[#C8A85B]/20 pt-6">
-                    <div className="flex items-center justify-center mb-3">
-                      <Clock className="text-[#C8A85B] h-5 w-5 mr-2" />
-                      <span className="font-display font-semibold text-[#2C3E50]">Openingstijden</span>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="font-body text-[#2C3E50]/80">Ma - Za: 10:00 - 18:00</p>
-                      <p className="font-body text-[#2C3E50]/80">Zondag: Gesloten</p>
-                    </div>
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="group bg-gradient-to-br from-[#f8f6f1] to-white rounded-2xl p-8 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 hover:shadow-xl transition-all duration-500 text-center">
+              <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                <Calendar className="w-8 h-8 text-white" />
               </div>
+              <h3 className="font-display text-xl text-[#2C3E50] font-bold mb-3">
+                Advies aan huis
+              </h3>
+              <p className="text-[#2C3E50]/70 mb-6 leading-relaxed">
+                Persoonlijk bezoek voor opmeting en interieuradvies op maat.
+              </p>
+              <a
+                href="/quote"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
+              >
+                Afspraak plannen
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </div>
 
-            <div className="group relative">
-              <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:-translate-y-2 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                <div className="relative z-10 text-center">
-                  <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-                    <Phone className="text-white w-8 h-8" />
-                  </div>
-                  
-                  <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors">
-                    Bel ons direct
-                  </h3>
-                  
-                  <div className="w-16 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-6 group-hover:w-20 transition-all duration-500"></div>
-                  
-                  <div className="mb-6">
-                    <a
-                      href="tel:+32467856405"
-                      className="font-display text-2xl text-[#C8A85B] font-bold hover:text-[#D4AF37] transition-colors group-hover:scale-110 inline-block transform transition-transform"
-                    >
-                      +32 467 85 64 05
-                    </a>
-                  </div>
-                  
-                  <div className="border-t border-[#C8A85B]/20 pt-6">
-                    <div className="flex items-center justify-center mb-3">
-                      <Clock className="text-[#C8A85B] h-5 w-5 mr-2" />
-                      <span className="font-display font-semibold text-[#2C3E50]">Bereikbaarheid</span>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="font-body text-[#2C3E50]/80">Ma - Za: 10:00 - 18:00</p>
-                      <p className="font-body text-[#2C3E50]/80">Zondag: Gesloten</p>
-                    </div>
-                  </div>
-                </div>
+            <div className="group bg-gradient-to-br from-[#f8f6f1] to-white rounded-2xl p-8 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 hover:shadow-xl transition-all duration-500 text-center">
+              <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                <Star className="w-8 h-8 text-white" />
               </div>
+              <h3 className="font-display text-xl text-[#2C3E50] font-bold mb-3">
+                Showroom afspraak
+              </h3>
+              <p className="text-[#2C3E50]/70 mb-6 leading-relaxed">
+                Ontdek ons volledige assortiment in een inspirerende omgeving.
+              </p>
+              <a
+                href="tel:+32467856405"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
+              >
+                Showroom reserveren
+                <Phone className="w-4 h-4" />
+              </a>
             </div>
 
-            <div className="group relative">
-              <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:-translate-y-2 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                <div className="relative z-10 text-center">
-                  <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-                    <Mail className="text-white w-8 h-8" />
+            <div className="group bg-gradient-to-br from-[#f8f6f1] to-white rounded-2xl p-8 border border-[#C8A85B]/10 hover:border-[#C8A85B]/30 hover:shadow-xl transition-all duration-500 text-center">
+              <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                <Video className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="font-display text-xl text-[#2C3E50] font-bold mb-3">
+                Virtueel advies
+              </h3>
+              <p className="text-[#2C3E50]/70 mb-6 leading-relaxed">
+                Online consultatie via videogesprek.
+              </p>
+              <a
+                href="mailto:info@kaniou.be?subject=Online%20afspraak%20aanvragen"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
+              >
+                Online afspraak aanvragen
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 4: Waarom Contact Opnemen */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-[#f8f6f1] to-white">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl md:text-4xl text-[#2C3E50] font-bold mb-4">
+                Waarom kiezen voor persoonlijk advies?
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+              {[
+                { icon: Users, text: "Meer dan 30 jaar expertise" },
+                { icon: Sparkles, text: "Maatwerkoplossingen" },
+                { icon: Ruler, text: "Professionele opmeting" },
+                { icon: Wrench, text: "Installatie door ervaren vakmensen" },
+                { icon: Shield, text: "Hoogwaardige stoffen & systemen" },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-4 bg-white rounded-xl p-5 shadow-sm border border-[#C8A85B]/10"
+                >
+                  <div className="bg-gradient-to-br from-[#C8A85B]/10 to-[#D4AF37]/10 p-3 rounded-lg shrink-0">
+                    <item.icon className="w-6 h-6 text-[#C8A85B]" />
                   </div>
-                  
-                  <h3 className="font-display text-2xl text-[#2C3E50] font-black mb-4 tracking-tight group-hover:text-[#C8A85B] transition-colors">
-                    Stuur ons een e-mail
-                  </h3>
-                  
-                  <div className="w-16 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-6 group-hover:w-20 transition-all duration-500"></div>
-                  
-                  <div className="mb-6">
-                    <a
-                      href="mailto:info@kaniou.be"
-                      className="font-display text-xl text-[#C8A85B] font-bold hover:text-[#D4AF37] transition-colors group-hover:scale-110 inline-block transform transition-transform"
-                    >
-                      info@kaniou.be
-                    </a>
+                  <span className="text-[#2C3E50] font-medium">{item.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-lg text-[#2C3E50]/70 italic">
+              Wij begeleiden u van eerste advies tot perfecte afwerking.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 5: Enterprise Contact Form */}
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+              <div className="lg:col-span-3">
+                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-xl border border-[#C8A85B]/10">
+                  <div className="mb-8">
+                    <h2 className="font-display text-2xl md:text-3xl text-[#2C3E50] font-bold mb-3">
+                      Stel uw vraag of plan een afspraak
+                    </h2>
+                    <p className="text-[#2C3E50]/70">
+                      Onze specialisten nemen binnen 24 uur contact met u op.
+                    </p>
                   </div>
-                  
-                  <div className="border-t border-[#C8A85B]/20 pt-6">
-                    <div className="flex items-center justify-center mb-3">
-                      <Shield className="text-[#C8A85B] h-5 w-5 mr-2" />
-                      <span className="font-display font-semibold text-[#2C3E50]">Responstijd</span>
+
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <FormField
+                          control={form.control}
+                          name="firstName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[#2C3E50] font-medium">Voornaam</FormLabel>
+                              <FormControl>
+                                <Input className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="lastName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[#2C3E50] font-medium">Achternaam</FormLabel>
+                              <FormControl>
+                                <Input className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[#2C3E50] font-medium">E-mail</FormLabel>
+                              <FormControl>
+                                <Input type="email" className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-[#2C3E50] font-medium">Telefoonnummer</FormLabel>
+                              <FormControl>
+                                <Input type="tel" className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="subject"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[#2C3E50] font-medium">Onderwerp</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20">
+                                  <SelectValue placeholder="Selecteer een onderwerp" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Algemene vraag">Algemene vraag</SelectItem>
+                                <SelectItem value="Adviesgesprek">Adviesgesprek</SelectItem>
+                                <SelectItem value="Offerte aanvraag">Offerte aanvraag</SelectItem>
+                                <SelectItem value="Opmeting plannen">Opmeting plannen</SelectItem>
+                                <SelectItem value="Zakelijk project">Zakelijk project</SelectItem>
+                                <SelectItem value="Service / nazorg">Service / nazorg</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[#2C3E50] font-medium">Bericht</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                rows={5}
+                                placeholder="Beschrijf uw vraag zo duidelijk mogelijk. Indien mogelijk vermeld ruimte, type raamdecoratie en gewenste planning."
+                                className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 resize-none"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="privacy"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-start gap-3">
+                              <FormControl>
+                                <input
+                                  type="checkbox"
+                                  checked={field.value}
+                                  onChange={field.onChange}
+                                  className="mt-1 w-4 h-4 rounded border-[#C8A85B]/30 text-[#C8A85B] focus:ring-[#C8A85B]"
+                                />
+                              </FormControl>
+                              <span className="text-sm text-[#2C3E50]/70">
+                                Ik ga akkoord met het{" "}
+                                <a href="/privacy" className="text-[#C8A85B] underline hover:text-[#D4AF37]">
+                                  privacybeleid
+                                </a>
+                                .
+                              </span>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/* Honeypot */}
+                      <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}>
+                        <FormField
+                          control={form.control}
+                          name="website"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input tabIndex={-1} autoComplete="off" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <Button
+                        type="submit"
+                        disabled={mutation.isPending}
+                        className="w-full bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] hover:from-[#b8983b] hover:to-[#c49f27] text-white py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                      >
+                        {mutation.isPending ? (
+                          "Verzenden..."
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <Send className="w-5 h-5" />
+                            Bericht verzenden
+                          </span>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </div>
+              </div>
+
+              {/* Map */}
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-2xl shadow-xl border border-[#C8A85B]/10 overflow-hidden h-full min-h-[500px] relative">
+                  <div className="absolute top-3 left-3 z-10">
+                    <div className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-3 py-1.5 rounded-full shadow-md">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span className="font-semibold text-xs">KANIOU Showroom</span>
+                      </div>
                     </div>
-                    <p className="font-body text-[#2C3E50]/80">Binnen 24 uur op werkdagen</p>
                   </div>
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2515.5554716862737!2d5.691408300000001!3d50.9886857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c0c5d2ad242f0f%3A0x1d9efc14cec41751!2sKANIOU%20bvba%20ZILVERNAALD!5e0!3m2!1sen!2sbe!4v1683924568227!5m2!1sen!2sbe"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={false}
+                    loading="lazy"
+                    title="KANIOU zilvernaald showroom locatie"
+                    className="absolute inset-0 w-full h-full"
+                  />
                 </div>
               </div>
             </div>
           </div>
+        </Container>
+      </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-            <div className="bg-white rounded-3xl p-10 shadow-2xl border-2 border-[#C8A85B]/10 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/3 via-transparent to-[#D4AF37]/3"></div>
-              
-              <div className="relative z-10">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-2 mb-4">
-                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent to-[#C8A85B]"></div>
-                    <MessageCircle className="w-5 h-5 text-[#C8A85B]" />
-                    <div className="w-8 h-0.5 bg-gradient-to-r from-[#C8A85B] to-transparent"></div>
-                  </div>
-                  <h2 className="font-display text-3xl text-[#2C3E50] font-black mb-4 tracking-tight">
-                    Stuur ons een <span className="text-[#C8A85B]">bericht</span>
-                  </h2>
-                  <p className="text-[#2C3E50]/70 font-light">Onze experts nemen binnen 24 uur contact met u op</p>
-                </div>
-                <ContactForm />
-              </div>
+      {/* Section 6: Zakelijke Projecten */}
+      <section className="py-16 lg:py-20 bg-gradient-to-br from-[#2C3E50] via-[#1a2a3a] to-[#2C3E50] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5" />
+        <Container>
+          <div className="relative z-10 max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 mb-6">
+              <Building2 className="w-6 h-6 text-[#C8A85B]" />
             </div>
+            <h2 className="font-display text-3xl md:text-4xl text-white font-bold mb-4">
+              Zakelijke projecten of samenwerkingen
+            </h2>
+            <p className="text-white/70 text-lg mb-8 leading-relaxed">
+              Bent u architect, projectontwikkelaar of interieurontwerper?
+              Ons team ondersteunt u bij residentiële en commerciële projecten.
+            </p>
+            <a
+              href="mailto:info@kaniou.be?subject=Zakelijk%20project"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"
+            >
+              Neem contact op voor zakelijke projecten
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </div>
+        </Container>
+      </section>
 
-            <div className="bg-white rounded-3xl shadow-2xl border-2 border-[#C8A85B]/10 overflow-hidden relative">
-              <div className="absolute top-4 left-4 z-20">
-                <div className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-4 py-2 rounded-full shadow-lg">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    <span className="font-semibold text-sm">KANIOU Showroom</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="h-full w-full min-h-[500px]">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2515.5554716862737!2d5.691408300000001!3d50.9886857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c0c5d2ad242f0f%3A0x1d9efc14cec41751!2sKANIOU%20bvba%20ZILVERNAALD!5e0!3m2!1sen!2sbe!4v1683924568227!5m2!1sen!2sbe"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen={false}
-                  loading="lazy"
-                  title="KANIOU zilvernaald premium showroom locatie"
-                ></iframe>
-              </div>
-            </div>
+      {/* Section 7: Social Proof / Testimonials */}
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl text-[#2C3E50] font-bold mb-4">
+              Wat klanten zeggen
+            </h2>
           </div>
 
-          <div className="bg-gradient-to-br from-[#2C3E50] via-[#1a2332] to-[#2C3E50] rounded-3xl p-12 relative overflow-hidden">
-            <div className="absolute inset-0">
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C8A85B]/10 via-transparent to-[#D4AF37]/10"></div>
-            </div>
-            
-            <div className="relative z-10">
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-3 mb-8">
-                  <Crown className="w-6 h-6 text-[#C8A85B]" />
+          <div className="max-w-3xl mx-auto">
+            <div className="relative bg-gradient-to-br from-[#f8f6f1] to-white rounded-2xl p-8 md:p-10 shadow-lg border border-[#C8A85B]/10">
+              <Quote className="absolute top-6 left-6 w-10 h-10 text-[#C8A85B]/20" />
+              <div className="relative z-10 text-center">
+                <div className="flex items-center justify-center gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${
+                        i < ((displayTestimonials[currentTestimonial] as any)?.rating || 5)
+                          ? "text-[#C8A85B] fill-[#C8A85B]"
+                          : "text-gray-300"
+                      }`}
+                    />
+                  ))}
                 </div>
-                
-                <h2 className="font-display text-3xl md:text-5xl text-white font-black mb-6 tracking-tight">
-                  Premium adviesgesprek
-                </h2>
-                
-                <p className="text-white/70 text-xl font-light max-w-3xl mx-auto leading-relaxed">
-                  Ontvang deskundig advies van onze interieurspecialisten en transformeer uw woning met onze premium raamdecoratie
+                <p className="text-lg text-[#2C3E50]/80 leading-relaxed mb-6 italic min-h-[80px]">
+                  "{displayTestimonials[currentTestimonial]?.content}"
                 </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#C8A85B]/30 transition-all duration-500 group hover:-translate-y-2">
-                  <div className="text-center">
-                    <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110">
-                      <Calendar className="w-8 h-8 text-white" />
-                    </div>
-                    
-                    <h3 className="font-display text-xl text-white font-bold mb-4 tracking-tight">
-                      Advies aan huis
-                    </h3>
-                    
-                    <div className="w-12 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-4"></div>
-                    
-                    <p className="font-body text-white/80 leading-relaxed mb-8">
-                      Persoonlijk bezoek voor nauwkeurige opmetingen en advies op maat van uw interieur
-                    </p>
-                    
-                    <a
-                      href="/quote"
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-6 py-3 rounded-full font-bold transition-all duration-500 hover:shadow-2xl hover:scale-105"
-                    >
-                      Afspraak maken
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#C8A85B]/30 transition-all duration-500 group hover:-translate-y-2">
-                  <div className="text-center">
-                    <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110">
-                      <Star className="w-8 h-8 text-white" />
-                    </div>
-                    
-                    <h3 className="font-display text-xl text-white font-bold mb-4 tracking-tight">
-                      Showroom afspraak
-                    </h3>
-                    
-                    <div className="w-12 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-4"></div>
-                    
-                    <p className="font-body text-white/80 leading-relaxed mb-8">
-                      Ontdek ons volledige premium assortiment en ontvang professioneel advies in onze luxe showroom
-                    </p>
-                    
-                    <a
-                      href="tel:+32467856405"
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-6 py-3 rounded-full font-bold transition-all duration-500 hover:shadow-2xl hover:scale-105"
-                    >
-                      Nu bellen
-                      <Phone className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#C8A85B]/30 transition-all duration-500 group hover:-translate-y-2">
-                  <div className="text-center">
-                    <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110">
-                      <Award className="w-8 h-8 text-white" />
-                    </div>
-                    
-                    <h3 className="font-display text-xl text-white font-bold mb-4 tracking-tight">
-                      Virtueel advies
-                    </h3>
-                    
-                    <div className="w-12 h-0.5 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] mx-auto mb-4"></div>
-                    
-                    <p className="font-body text-white/80 leading-relaxed mb-8">
-                      Online videogesprek vanuit het comfort van uw eigen woning met onze interieurdesigners
-                    </p>
-                    
-                    <a
-                      href="mailto:info@kaniou.be"
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-6 py-3 rounded-full font-bold transition-all duration-500 hover:shadow-2xl hover:scale-105"
-                    >
-                      Online aanvragen
-                      <MessageCircle className="w-4 h-4" />
-                    </a>
-                  </div>
+                <div>
+                  <p className="font-bold text-[#2C3E50]">
+                    {displayTestimonials[currentTestimonial]?.name}
+                  </p>
+                  <p className="text-[#2C3E50]/60 text-sm">
+                    {(displayTestimonials[currentTestimonial] as any)?.location || ""}
+                  </p>
                 </div>
               </div>
+
+              <div className="flex items-center justify-center gap-2 mt-8">
+                {displayTestimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentTestimonial(idx)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      idx === currentTestimonial
+                        ? "bg-[#C8A85B] w-6"
+                        : "bg-[#C8A85B]/30 hover:bg-[#C8A85B]/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 8: FAQ */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-[#f8f6f1] to-white">
+        <Container>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl md:text-4xl text-[#2C3E50] font-bold mb-4">
+                Veelgestelde vragen
+              </h2>
+            </div>
+
+            <div className="space-y-4">
+              {faqItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white rounded-xl border border-[#C8A85B]/10 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                    className="w-full flex items-center justify-between p-5 text-left"
+                  >
+                    <span className="font-semibold text-[#2C3E50] pr-4">{item.question}</span>
+                    {openFaq === idx ? (
+                      <ChevronUp className="w-5 h-5 text-[#C8A85B] shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-[#C8A85B] shrink-0" />
+                    )}
+                  </button>
+                  {openFaq === idx && (
+                    <div className="px-5 pb-5">
+                      <p className="text-[#2C3E50]/70 leading-relaxed">{item.answer}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 9: Footer CTA */}
+      <section className="py-16 lg:py-20 bg-gradient-to-br from-[#2C3E50] via-[#1a2a3a] to-[#2C3E50] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5" />
+        <Container>
+          <div className="relative z-10 text-center">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white font-bold mb-6">
+              Klaar om uw interieur te transformeren?
+            </h2>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+              <a
+                href="/quote"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"
+              >
+                <Calendar className="w-5 h-5" />
+                Gratis adviesgesprek
+              </a>
+              <a
+                href="/quote"
+                className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/20 hover:scale-105"
+              >
+                <MessageSquare className="w-5 h-5" />
+                Offerte aanvragen
+              </a>
             </div>
           </div>
         </Container>

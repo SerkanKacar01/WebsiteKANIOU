@@ -65,9 +65,7 @@ export default function AdminLoginPage() {
 
       console.log("Login successful, redirecting to dashboard...");
       
-      await queryClient.invalidateQueries({ queryKey: ["/api/admin/auth-status"] });
-      
-      setLocation("/entrepreneur-dashboard");
+      window.location.href = "/entrepreneur-dashboard";
 
     } catch (error) {
       console.error("Login error:", error);

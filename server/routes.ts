@@ -26,7 +26,6 @@ import { sendQuoteRequestEmail } from "./sendgrid/client";
 import { randomBytes } from "crypto";
 import { adminLoginRateLimiter } from "./middleware/rateLimiter";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
-import { registerShopRoutes } from "./shop-routes";
 import {
   createHelmetMiddleware,
   createSecurityHeaders,
@@ -1475,8 +1474,6 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email) && email.length <= 254; // RFC 5321 limit
   }
-
-  registerShopRoutes(app);
 
   app.use(secureErrorHandler);
 }

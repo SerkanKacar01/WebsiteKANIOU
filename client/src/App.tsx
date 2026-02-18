@@ -43,7 +43,6 @@ import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import PrijzenPage from "@/pages/PrijzenPage";
 import BusinessPage from "@/pages/BusinessPage";
-import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import CleaningProductsPage from "@/pages/CleaningProductsPage";
 import BedanktPage from "@/pages/BedanktPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
@@ -52,11 +51,6 @@ import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import SecureOrderTrackingPage from "@/pages/SecureOrderTrackingPage";
 import AfspraakPage from "@/pages/AfspraakPage";
 
-// Shop Pages
-import ShopPage from "@/pages/ShopPage";
-import FabricConfiguratorPage from "@/pages/FabricConfiguratorPage";
-import CartPage from "@/pages/CartPage";
-import CheckoutPage from "@/pages/CheckoutPage";
 
 // Simple Product Pages
 import PlissesPage from "@/pages/products/plisses";
@@ -119,12 +113,6 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        {/* Product categories - Disabled */}
-        {/* E-commerce Shop Routes */}
-        <Route path="/shop" component={ShopPage} />
-        <Route path="/shop/stof/:id" component={FabricConfiguratorPage} />
-        <Route path="/shop/winkelwagen" component={CartPage} />
-        <Route path="/shop/checkout" component={CheckoutPage} />
         
         {/* All product category routes for both /products/ and /producten/ paths */}
         <Route path="/products/fly-screens" component={ProductCategoryPage} />
@@ -214,7 +202,6 @@ function Router() {
         <Route path="/gebruiksvoorwaarden" component={TermsOfServicePage} />
         <Route path="/algemene-voorwaarden" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
-        <Route path="/payment/success" component={PaymentSuccessPage} />
         <Route path="/bedankt" component={BedanktPage} />
         
         

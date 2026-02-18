@@ -47,7 +47,7 @@ Preferred communication style: Simple, everyday language.
 - **Technical Implementations**: Memory-based fallbacks for database operations during downtime, smart notification system for order updates, comprehensive document management.
 
 ### Feature Specifications
-- **E-commerce System (Informational)**: Product catalog (curtains, blinds, shutters), smart quote system, image gallery, customer testimonials. All e-commerce purchasing capabilities (cart, checkout, payment integration) have been removed, transforming product pages into informational displays.
+- **Product Catalog (Informational)**: Product catalog (curtains, blinds, shutters), smart quote system, image gallery, customer testimonials. All e-commerce/shop functionality (cart, checkout, payment, shop pages) has been completely removed. Product pages serve as informational displays only.
 - **Customer Communication**: Multi-step quote requests, general inquiries, automated email notifications via SendGrid, multilingual content (Dutch, French, English, Turkish). Floating action buttons provide quick access to contact forms, callback requests, measuring instructions, and quote requests.
 - **Payment Integration**: Mollie for European payments (credit cards, SEPA, iDEAL, Bancontact). This functionality is integrated for order management but not directly accessible for customer e-commerce purchases due to the removal of the shopping cart.
 - **Content Management**: Full CRUD for products/categories, gallery management, simplified admin dashboard for content and customer management, testimonial system.

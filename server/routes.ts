@@ -594,14 +594,17 @@ Verzoek ID: ${sampleRequest.id}
       });
 
       try {
-        const { sendQuoteRequestEmail } = await import("./sendgrid/client");
-        await sendQuoteRequestEmail({
-          firstName: contact.firstName,
-          lastName: contact.lastName,
-          email: contact.email,
-          phone: contact.phone,
-          productType: preferences?.productTypes?.join(", ") || "Diverse",
-          message: `Enterprise offerte: ${(rooms as any[])?.length || 0} ruimte(s), type: ${customerType}, project: ${projectType}`,
+        const { sendEnterpriseQuoteEmail } = await import("./sendgrid/client");
+        await sendEnterpriseQuoteEmail({
+          submissionId,
+          customerType,
+          projectType,
+          planning,
+          hasMeasurements: hasMeasurements || false,
+          rooms,
+          preferences,
+          services: services || {},
+          contact,
         });
       } catch (emailError) {
         console.error("Email notification failed:", emailError);

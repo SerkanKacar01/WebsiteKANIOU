@@ -383,48 +383,146 @@ const QuoteWizard = () => {
     );
   }
 
+  const planningLabels: Record<string, string> = {
+    asap: "Zo snel mogelijk",
+    "2-4w": "Binnen 2–4 weken",
+    "1-2m": "Binnen 1–2 maanden",
+    later: "Geen haast",
+  };
+
+  const lightLabels: Record<string, string> = {
+    transparant: "Transparant",
+    lichtdoorlatend: "Lichtdoorlatend",
+    verduisterend: "Verduisterend",
+    "weet-niet": "Weet ik niet",
+  };
+
+  const colorLabels: Record<string, string> = {
+    neutraal: "Neutraal (wit/beige/grijs)",
+    warm: "Warme tinten",
+    donker: "Donkere tinten",
+    aardetinten: "Aardetinten",
+    geen: "Geen voorkeur",
+  };
+
+  const contactPrefLabels: Record<string, string> = {
+    telefoon: "Telefoon",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+  };
+
+  const timeLabels: Record<string, string> = {
+    ochtend: "Weekdag ochtend",
+    namiddag: "Weekdag namiddag",
+    avond: "Weekdag avond",
+    zaterdag: "Zaterdag",
+  };
+
+  const OverviewRow = ({ label, value }: { label: string; value: string }) => (
+    <div className="flex justify-between text-sm gap-2">
+      <span className="text-gray-500 flex-shrink-0">{label}</span>
+      <span className="font-medium text-[#2C3E50] text-right">{value}</span>
+    </div>
+  );
+
   const OverviewPanel = () => (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <h3 className="text-sm font-semibold text-[#2C3E50] uppercase tracking-wider">Offerteoverzicht</h3>
-      <div className="flex justify-between text-sm">
-        <span className="text-gray-500">Ruimtes</span>
-        <span className="font-semibold text-[#2C3E50]">{form.rooms.length}</span>
-      </div>
-      <div className="flex justify-between text-sm">
-        <span className="text-gray-500">Totaal ramen</span>
-        <span className="font-semibold text-[#2C3E50]">{totalWindows}</span>
-      </div>
-      {form.customerType && (
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Type</span>
-          <span className="font-medium text-[#2C3E50]">{form.customerType}</span>
+
+      {(form.customerType || form.projectType || form.planning || form.hasMeasurements) && (
+        <div className="space-y-1.5 pb-3 border-b border-gray-100">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Project</p>
+          {form.customerType && <OverviewRow label="Klant" value={form.customerType} />}
+          {form.projectType && <OverviewRow label="Project" value={form.projectType} />}
+          {form.planning && <OverviewRow label="Planning" value={planningLabels[form.planning] || form.planning} />}
+          {form.hasMeasurements && <OverviewRow label="Maten" value={form.hasMeasurements === "ja" ? "Ja, beschikbaar" : "Nee, opmeting gewenst"} />}
         </div>
       )}
-      {form.productTypes.length > 0 && (
-        <div className="text-sm">
-          <span className="text-gray-500">Producten</span>
-          <div className="flex flex-wrap gap-1 mt-1">
-            {form.productTypes.map((p) => (
-              <span key={p} className="px-2 py-0.5 bg-[#2C3E50]/5 text-[#2C3E50] rounded text-xs">{p}</span>
-            ))}
-          </div>
-        </div>
-      )}
-      <div className="border-t border-gray-100 pt-3 space-y-3">
+
+      <div className="space-y-1.5 pb-3 border-b border-gray-100">
+        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Ruimtes & Ramen</p>
+        <OverviewRow label="Ruimtes" value={String(form.rooms.length)} />
+        <OverviewRow label="Totaal ramen" value={String(totalWindows)} />
         {form.rooms.map((room, ri) => (
-          <div key={room.id} className="text-sm">
-            <p className="font-medium text-[#2C3E50]">{room.name === "Andere" ? room.customName || "Ruimte" : room.name || `Ruimte ${ri + 1}`}</p>
+          <div key={room.id} className="text-sm mt-1">
+            <p className="font-medium text-[#2C3E50] text-xs">{room.name === "Andere" ? room.customName || "Ruimte" : room.name || `Ruimte ${ri + 1}`}</p>
+            {room.notes && <p className="text-[11px] text-gray-400 ml-3 italic">{room.notes}</p>}
             {room.windows.map((w, wi) => (
-              <div key={w.id} className="ml-3 text-gray-500 text-xs flex items-center gap-2 py-0.5">
+              <div key={w.id} className="ml-3 text-gray-500 text-xs flex items-center gap-1.5 py-0.5">
                 <span className="w-1.5 h-1.5 bg-[#C4A36C] rounded-full flex-shrink-0"></span>
                 <span>{w.label || `Raam ${wi + 1}`}</span>
                 {w.width && w.height && <span className="text-gray-400">— {w.width}×{w.height} cm</span>}
                 {w.mountType && <span className="text-gray-400">({w.mountType})</span>}
+                {Number(w.quantity) > 1 && <span className="text-gray-400">×{w.quantity}</span>}
               </div>
             ))}
           </div>
         ))}
       </div>
+
+      {(form.productTypes.length > 0 || form.lightControl || form.style || form.colorPref) && (
+        <div className="space-y-1.5 pb-3 border-b border-gray-100">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Voorkeuren</p>
+          {form.productTypes.length > 0 && (
+            <div className="text-sm">
+              <span className="text-gray-500 text-xs">Producten</span>
+              <div className="flex flex-wrap gap-1 mt-1">
+                {form.productTypes.map((p) => (
+                  <span key={p} className="px-2 py-0.5 bg-[#2C3E50]/5 text-[#2C3E50] rounded text-xs">{p}</span>
+                ))}
+              </div>
+            </div>
+          )}
+          {form.lightControl && <OverviewRow label="Lichtinval" value={lightLabels[form.lightControl] || form.lightControl} />}
+          {form.style && <OverviewRow label="Stijl" value={form.style} />}
+          {form.colorPref && <OverviewRow label="Kleur" value={colorLabels[form.colorPref] || form.colorPref} />}
+          {form.extraNotes && (
+            <div className="text-sm">
+              <span className="text-gray-500 text-xs">Extra wensen</span>
+              <p className="text-xs text-[#2C3E50] mt-0.5 italic leading-relaxed">{form.extraNotes}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {(form.services.length > 0 || form.contactPref || form.preferredTime || form.region) && (
+        <div className="space-y-1.5 pb-3 border-b border-gray-100">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Diensten & Planning</p>
+          {form.services.length > 0 && (
+            <div className="text-sm">
+              <span className="text-gray-500 text-xs">Diensten</span>
+              <div className="flex flex-wrap gap-1 mt-1">
+                {form.services.map((s) => (
+                  <span key={s} className="px-2 py-0.5 bg-[#C4A36C]/10 text-[#2C3E50] rounded text-xs">{s}</span>
+                ))}
+              </div>
+            </div>
+          )}
+          {form.contactPref && <OverviewRow label="Contact via" value={contactPrefLabels[form.contactPref] || form.contactPref} />}
+          {form.preferredTime && <OverviewRow label="Voorkeur" value={timeLabels[form.preferredTime] || form.preferredTime} />}
+          {form.region && <OverviewRow label="Regio" value={form.region} />}
+        </div>
+      )}
+
+      {(form.firstName || form.lastName || form.email || form.phone) && (
+        <div className="space-y-1.5">
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Contact</p>
+          {(form.firstName || form.lastName) && <OverviewRow label="Naam" value={`${form.firstName} ${form.lastName}`.trim()} />}
+          {form.email && <OverviewRow label="E-mail" value={form.email} />}
+          {form.phone && <OverviewRow label="Telefoon" value={form.phone} />}
+          {(form.street || form.city) && (
+            <div className="text-sm">
+              <span className="text-gray-500 text-xs">Adres</span>
+              <p className="text-xs text-[#2C3E50] mt-0.5">
+                {form.street && <>{form.street}<br /></>}
+                {form.postalCode} {form.city}{form.country && form.country !== "België" ? `, ${form.country}` : ""}
+              </p>
+            </div>
+          )}
+          {form.companyName && <OverviewRow label="Bedrijf" value={form.companyName} />}
+          {form.vatNumber && <OverviewRow label="BTW" value={form.vatNumber} />}
+        </div>
+      )}
     </div>
   );
 

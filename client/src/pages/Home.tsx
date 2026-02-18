@@ -1508,8 +1508,6 @@ const Home = () => {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <LuxuryNavigation />
-
       <div className="bg-white">
         {/* HERO SECTION */}
         <CollageHero images={collageImages} setLocation={setLocation} />

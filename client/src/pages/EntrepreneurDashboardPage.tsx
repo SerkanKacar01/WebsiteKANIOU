@@ -728,38 +728,38 @@ export default function EntrepreneurDashboardPage() {
 
               {/* Tab Navigation */}
               <div className={`transform transition-all duration-1000 delay-400 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
-                <div className="flex gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-2">
+                <div className="flex flex-col sm:flex-row gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 mb-8">
                   <button
                     onClick={() => setActiveTab("orders")}
-                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${
                       activeTab === "orders"
-                        ? "bg-gradient-to-r from-amber-500/80 to-orange-500/80 text-white shadow-lg shadow-amber-500/25"
-                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                        ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl shadow-amber-500/40 border-amber-400"
+                        : "text-slate-300 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white"
                     }`}
                   >
-                    <Package className="w-5 h-5" />
+                    <Package className="w-6 h-6" />
                     Bestellingen ({dashboardData?.orders?.length || 0})
                   </button>
                   <button
                     onClick={() => setActiveTab("quotes")}
-                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${
                       activeTab === "quotes"
-                        ? "bg-gradient-to-r from-amber-500/80 to-orange-500/80 text-white shadow-lg shadow-amber-500/25"
-                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                        ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl shadow-amber-500/40 border-amber-400"
+                        : "text-slate-300 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white"
                     }`}
                   >
-                    <FileText className="w-5 h-5" />
+                    <FileText className="w-6 h-6" />
                     Offerteaanvragen ({enterpriseQuotes?.length || 0})
                   </button>
                   <button
                     onClick={() => setActiveTab("messages")}
-                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${
                       activeTab === "messages"
-                        ? "bg-gradient-to-r from-amber-500/80 to-orange-500/80 text-white shadow-lg shadow-amber-500/25"
-                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                        ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-xl shadow-amber-500/40 border-amber-400"
+                        : "text-slate-300 bg-white/5 border-white/10 hover:bg-white/10 hover:text-white"
                     }`}
                   >
-                    <MessageSquare className="w-5 h-5" />
+                    <MessageSquare className="w-6 h-6" />
                     Berichten ({contactSubmissions?.length || 0})
                   </button>
                 </div>

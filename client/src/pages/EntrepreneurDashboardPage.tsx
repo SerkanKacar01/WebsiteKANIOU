@@ -499,6 +499,12 @@ export default function EntrepreneurDashboardPage() {
     return filtered;
   }, [dashboardData?.orders, searchQuery, statusFilter, productFilter]);
 
+  useEffect(() => {
+    if (!isLoadingAuth && authStatus && !authStatus.authenticated) {
+      setLocation("/kaniouzilvernaald-dashboard");
+    }
+  }, [authStatus, isLoadingAuth, setLocation]);
+
   if (isLoadingAuth) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900">
@@ -511,7 +517,6 @@ export default function EntrepreneurDashboardPage() {
   }
 
   if (!authStatus?.authenticated) {
-    setLocation("/kaniouzilvernaald-dashboard");
     return null;
   }
 

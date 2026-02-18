@@ -115,14 +115,14 @@ export async function registerRoutes(app: Express): Promise<void> {
   );
 
   // Admin authentication middleware for protected routes
-  const requireAuth = (req: any, res: any, next: any) => {
+  const requireAuth = async (req: any, res: any, next: any) => {
     const sessionId = req.session?.sessionId || req.cookies?.sessionId;
 
     if (!sessionId) {
       return res.status(401).json({ error: "Authentication required" });
     }
 
-    const session = validateSession(sessionId);
+    const session = await validateSession(sessionId);
     if (!session) {
       return res.status(401).json({ error: "Invalid or expired session" });
     }
@@ -159,7 +159,7 @@ export async function registerRoutes(app: Express): Promise<void> {
       if (await isValidCredentialsAsync(email, password)) {
         if ((req as any).recordBruteForce) (req as any).recordBruteForce(true);
 
-        const { sessionId, expiresAt } = createSession(email);
+        const { sessionId, expiresAt } = await createSession(email);
 
         console.log('🔑 SECURITY: Successful admin login:', {
           sessionId: sessionId.substring(0, 8) + '...',
@@ -172,7 +172,7 @@ export async function registerRoutes(app: Express): Promise<void> {
           httpOnly: true,
           secure: isProduction,
           maxAge: 2 * 60 * 60 * 1000,
-          sameSite: 'strict',
+          sameSite: 'lax',
           path: '/',
         });
 
@@ -197,11 +197,11 @@ export async function registerRoutes(app: Express): Promise<void> {
   });
 
   // Admin logout route
-  app.post("/api/admin/logout", (req: any, res) => {
+  app.post("/api/admin/logout", async (req: any, res) => {
     const sessionId = req.session?.sessionId || req.cookies?.sessionId;
 
     if (sessionId) {
-      deleteSession(sessionId);
+      await deleteSession(sessionId);
       
       // Enhanced security logging for logout
       console.log('🔓 SECURITY: Admin logout:', {
@@ -498,7 +498,7 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.json({ authenticated: false });
       }
 
-      const session = validateSession(sessionId);
+      const session = await validateSession(sessionId);
       if (!session) {
         console.log('❌ Session validation failed - clearing cookies');
         // Clear invalid session cookie

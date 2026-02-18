@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import { storage } from './storage';
+import { pool } from './db';
 
 interface SessionData {
   email: string;
@@ -9,8 +10,8 @@ interface SessionData {
   ip?: string;
 }
 
-const sessionStore = new Map<string, SessionData>();
-const MAX_SESSIONS = 10;
+const memoryCache = new Map<string, SessionData>();
+const MAX_CACHE_SIZE = 20;
 const SESSION_DURATION = 2 * 60 * 60 * 1000;
 
 let cachedPasswordHash: string | null = null;
@@ -25,44 +26,70 @@ async function ensurePasswordHash(): Promise<string | null> {
 
 ensurePasswordHash();
 
-function cleanExpiredSessions(): void {
+function cleanMemoryCache(): void {
   const now = new Date();
-  sessionStore.forEach((session, id) => {
+  memoryCache.forEach((session, id) => {
     if (session.expiresAt < now) {
-      sessionStore.delete(id);
+      memoryCache.delete(id);
     }
   });
-}
-
-export function createSession(email: string, ip?: string): { sessionId: string; expiresAt: Date } {
-  cleanExpiredSessions();
-
-  if (sessionStore.size >= MAX_SESSIONS) {
+  if (memoryCache.size > MAX_CACHE_SIZE) {
     let oldestId = '';
     let oldestTime = new Date();
-    sessionStore.forEach((session, id) => {
+    memoryCache.forEach((session, id) => {
       if (session.createdAt < oldestTime) {
         oldestTime = session.createdAt;
         oldestId = id;
       }
     });
-    if (oldestId) sessionStore.delete(oldestId);
+    if (oldestId) memoryCache.delete(oldestId);
   }
+}
+
+async function cleanExpiredDbSessions(): Promise<void> {
+  try {
+    await pool.query('DELETE FROM admin_sessions WHERE expires_at < NOW()');
+  } catch {}
+}
+
+export async function createSession(email: string, ip?: string): Promise<{ sessionId: string; expiresAt: Date }> {
+  cleanMemoryCache();
+  await cleanExpiredDbSessions();
 
   const sessionId = crypto.randomBytes(48).toString('hex');
   const expiresAt = new Date(Date.now() + SESSION_DURATION);
 
-  sessionStore.set(sessionId, {
-    email,
-    expiresAt,
-    createdAt: new Date(),
-    ip,
-  });
+  let dbSuccess = false;
+  try {
+    let adminUserId = 1;
+    try {
+      const adminUser = await storage.getAdminUserByEmail(email);
+      if (adminUser) adminUserId = adminUser.id;
+    } catch {}
+
+    await pool.query(
+      'INSERT INTO admin_sessions (session_id, admin_user_id, expires_at, created_at) VALUES ($1, $2, $3, NOW())',
+      [sessionId, adminUserId, expiresAt]
+    );
+    dbSuccess = true;
+    console.log('✅ Session stored in database');
+  } catch (dbError) {
+    console.warn('Database session storage failed, using memory fallback');
+  }
+
+  if (!dbSuccess) {
+    memoryCache.set(sessionId, {
+      email,
+      expiresAt,
+      createdAt: new Date(),
+      ip,
+    });
+  }
 
   return { sessionId, expiresAt };
 }
 
-export function validateSession(sessionId: string): { email: string } | null {
+export async function validateSession(sessionId: string): Promise<{ email: string } | null> {
   if (!sessionId || typeof sessionId !== 'string') {
     return null;
   }
@@ -71,22 +98,39 @@ export function validateSession(sessionId: string): { email: string } | null {
     return null;
   }
 
-  const session = sessionStore.get(sessionId);
-  if (!session) {
-    return null;
+  cleanMemoryCache();
+
+  const memSession = memoryCache.get(sessionId);
+  if (memSession && memSession.expiresAt > new Date()) {
+    return { email: memSession.email };
   }
 
-  if (session.expiresAt < new Date()) {
-    sessionStore.delete(sessionId);
-    return null;
+  try {
+    const result = await pool.query(
+      `SELECT s.session_id, s.expires_at, u.email 
+       FROM admin_sessions s 
+       JOIN admin_users u ON s.admin_user_id = u.id 
+       WHERE s.session_id = $1 AND s.expires_at > NOW()`,
+      [sessionId]
+    );
+
+    if (result.rows.length > 0) {
+      const row = result.rows[0];
+      return { email: row.email };
+    }
+  } catch (dbError) {
+    console.warn('Database session validation failed:', dbError);
   }
 
-  return { email: session.email };
+  return null;
 }
 
-export function deleteSession(sessionId: string): void {
+export async function deleteSession(sessionId: string): Promise<void> {
   if (sessionId) {
-    sessionStore.delete(sessionId);
+    memoryCache.delete(sessionId);
+    try {
+      await pool.query('DELETE FROM admin_sessions WHERE session_id = $1', [sessionId]);
+    } catch {}
   }
 }
 
@@ -124,6 +168,5 @@ export function isValidCredentials(email: string, password: string): boolean {
 }
 
 export function getActiveSessionCount(): number {
-  cleanExpiredSessions();
-  return sessionStore.size;
+  return memoryCache.size;
 }

@@ -188,21 +188,19 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
 }).extend({
   name: z.string()
     .min(2, "Name must be at least 2 characters")
-    .max(100, "Name must be less than 100 characters")
-    .regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+    .max(100, "Name must be less than 100 characters"),
   email: z.string()
     .email("Please enter a valid email address")
     .max(254, "Email must be less than 254 characters"),
   subject: z.string()
-    .min(3, "Subject must be at least 3 characters")
+    .min(1, "Subject is required")
     .max(200, "Subject must be less than 200 characters"),
   message: z.string()
-    .min(10, "Message must be at least 10 characters")
+    .min(1, "Message is required")
     .max(2000, "Message must be less than 2000 characters"),
   type: z.string().optional(),
   phone: z.string().optional(),
-  // Honeypot field for spam protection
-  website: z.string().max(0, "Invalid submission").optional(),
+  website: z.string().optional(),
 });
 
 // Dealer Contact Submissions

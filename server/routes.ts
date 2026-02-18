@@ -263,7 +263,7 @@ export async function registerRoutes(app: Express): Promise<void> {
         });
       }
 
-      const { name, email, subject, message, website } = validation.data;
+      const { name, email, subject, message, website, phone } = validation.data;
 
       // Check honeypot field for spam protection
       if (website && website.length > 0) {
@@ -275,6 +275,7 @@ export async function registerRoutes(app: Express): Promise<void> {
         email,
         subject,
         message,
+        phone: phone || "",
         type: "contact",
       });
       console.log(`📝 Contact form submission saved to database`);

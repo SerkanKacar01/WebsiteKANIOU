@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { queryClient } from "@/lib/queryClient";
 
 const loginSchema = z.object({
   email: z.string().email("Voer een geldig e-mailadres in"),
@@ -62,10 +63,10 @@ export default function AdminLoginPage() {
         description: "U wordt doorgestuurd naar het dashboard...",
       });
 
-      // Immediate redirect after successful login - the session is already set
       console.log("Login successful, redirecting to dashboard...");
       
-      // Direct redirect without delay to prevent race conditions
+      await queryClient.invalidateQueries({ queryKey: ["/api/admin/auth-status"] });
+      
       setLocation("/entrepreneur-dashboard");
 
     } catch (error) {

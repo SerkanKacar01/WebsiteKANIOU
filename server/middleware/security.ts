@@ -97,9 +97,10 @@ export function createSecurityHeaders() {
 }
 
 export function createGlobalRateLimiter() {
+  const isDev = process.env.NODE_ENV !== 'production';
   return rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 300,
+    max: isDev ? 5000 : 300,
     standardHeaders: true,
     legacyHeaders: false,
     message: {
@@ -107,22 +108,32 @@ export function createGlobalRateLimiter() {
       retryAfter: 900,
     },
     skip: (req) => {
-      return req.path.startsWith('/assets/') ||
-             req.path.startsWith('/images/') ||
-             req.path.endsWith('.js') ||
-             req.path.endsWith('.css') ||
-             req.path.endsWith('.png') ||
-             req.path.endsWith('.jpg') ||
-             req.path.endsWith('.ico');
+      const p = req.path;
+      return p.startsWith('/assets/') ||
+             p.startsWith('/images/') ||
+             p.startsWith('/@') ||
+             p.startsWith('/node_modules/') ||
+             p.startsWith('/src/') ||
+             p.endsWith('.js') ||
+             p.endsWith('.ts') ||
+             p.endsWith('.tsx') ||
+             p.endsWith('.css') ||
+             p.endsWith('.png') ||
+             p.endsWith('.jpg') ||
+             p.endsWith('.svg') ||
+             p.endsWith('.ico') ||
+             p.endsWith('.woff') ||
+             p.endsWith('.woff2');
     },
     validate: { trustProxy: false, xForwardedForHeader: false },
   });
 }
 
 export function createApiRateLimiter() {
+  const isDev = process.env.NODE_ENV !== 'production';
   return rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    max: isDev ? 2000 : 100,
     standardHeaders: true,
     legacyHeaders: false,
     message: {

@@ -27,13 +27,13 @@ async function getCredentials() {
   if (!connectionSettings || (!connectionSettings.settings.api_key || !connectionSettings.settings.from_email)) {
     throw new Error('SendGrid not connected');
   }
-  return { apiKey: connectionSettings.settings.api_key, email: connectionSettings.settings.from_email };
+  return { apiKey: connectionSettings.settings.api_key.trim(), email: connectionSettings.settings.from_email.trim() };
 }
 
 // WARNING: Never cache this client.
 export async function getUncachableSendGridClient() {
   const { apiKey, email } = await getCredentials();
-  sgMail.setApiKey(apiKey);
+  sgMail.setApiKey(apiKey.trim());
   return {
     client: sgMail,
     fromEmail: email

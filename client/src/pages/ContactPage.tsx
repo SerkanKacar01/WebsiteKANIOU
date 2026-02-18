@@ -426,8 +426,8 @@ const ContactPage = () => {
       <section className="py-16 lg:py-20 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-              <div className="lg:col-span-3">
+            <div>
+              <div>
                 <div className="bg-white rounded-2xl p-8 md:p-10 shadow-xl border border-[#C8A85B]/10">
                   <div className="mb-8">
                     <h2 className="font-display text-2xl md:text-3xl text-[#2C3E50] font-bold mb-3">
@@ -601,30 +601,6 @@ const ContactPage = () => {
                       </Button>
                     </form>
                   </Form>
-                </div>
-              </div>
-
-              {/* Map */}
-              <div className="lg:col-span-2">
-                <div className="bg-white rounded-2xl shadow-xl border border-[#C8A85B]/10 overflow-hidden h-full min-h-[500px] relative">
-                  <div className="absolute top-3 left-3 z-10">
-                    <div className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-3 py-1.5 rounded-full shadow-md">
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5" />
-                        <span className="font-semibold text-xs">KANIOU Showroom</span>
-                      </div>
-                    </div>
-                  </div>
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2515.5554716862737!2d5.691408300000001!3d50.9886857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c0c5d2ad242f0f%3A0x1d9efc14cec41751!2sKANIOU%20bvba%20ZILVERNAALD!5e0!3m2!1sen!2sbe!4v1683924568227!5m2!1sen!2sbe"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen={false}
-                    loading="lazy"
-                    title="KANIOU zilvernaald showroom locatie"
-                    className="absolute inset-0 w-full h-full"
-                  />
                 </div>
               </div>
             </div>

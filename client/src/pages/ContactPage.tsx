@@ -24,6 +24,11 @@ import {
   Wrench,
   Sparkles,
   MessageSquare,
+  MessageCircle,
+  FileText,
+  PhoneCall,
+  HelpCircle,
+  Paperclip,
 } from "lucide-react";
 import {
   Form,
@@ -36,25 +41,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import PageLayout from "@/components/layout/PageLayout";
 import { Testimonial } from "@shared/schema";
 
+const requestTypes = [
+  { id: "Adviesgesprek", label: "Adviesgesprek", icon: MessageCircle },
+  { id: "Offerte aanvraag", label: "Offerte aanvraag", icon: FileText },
+  { id: "Terugbelverzoek", label: "Terugbelverzoek", icon: PhoneCall },
+  { id: "Algemene vraag", label: "Algemene vraag", icon: HelpCircle },
+] as const;
+
 const contactFormSchema = z.object({
+  requestType: z.string().min(1, "Selecteer een type aanvraag"),
   firstName: z.string().min(2, "Voornaam is verplicht"),
   lastName: z.string().min(2, "Achternaam is verplicht"),
   email: z.string().email("Ongeldig e-mailadres"),
   phone: z.string().optional(),
-  subject: z.string().min(1, "Selecteer een onderwerp"),
-  message: z.string().min(10, "Bericht moet minstens 10 tekens bevatten").max(2000),
+  message: z.string().min(5, "Toelichting is verplicht").max(2000),
+  callbackTime: z.string().optional(),
   privacy: z.boolean().refine((val) => val === true, "U moet akkoord gaan met het privacybeleid"),
   website: z.string().max(0, "Invalid").optional(),
 });
@@ -127,25 +133,32 @@ const ContactPage = () => {
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
+      requestType: "",
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
-      subject: "",
       message: "",
+      callbackTime: "",
       privacy: false,
       website: "",
     },
   });
 
+  const selectedType = form.watch("requestType");
+
   const mutation = useMutation({
     mutationFn: (data: ContactFormValues) => {
+      let messageBody = data.message;
+      if (data.callbackTime) {
+        messageBody += `\n\nBeste moment om te bellen: ${data.callbackTime}`;
+      }
       const payload = {
         name: `${data.firstName} ${data.lastName}`,
         email: data.email,
         phone: data.phone || "",
-        subject: data.subject,
-        message: data.message,
+        subject: data.requestType,
+        message: messageBody,
         type: "contact",
         website: data.website || "",
       };
@@ -425,184 +438,230 @@ const ContactPage = () => {
       {/* Section 5: Enterprise Contact Form */}
       <section className="py-16 lg:py-20 bg-white">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <div>
-              <div>
-                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-xl border border-[#C8A85B]/10">
-                  <div className="mb-8">
-                    <h2 className="font-display text-2xl md:text-3xl text-[#2C3E50] font-bold mb-3">
-                      Stel uw vraag of plan een afspraak
-                    </h2>
-                    <p className="text-[#2C3E50]/70">
-                      Onze specialisten nemen binnen 24 uur contact met u op.
-                    </p>
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl border border-[#C8A85B]/10">
+              <div className="text-center mb-10">
+                <h2 className="font-display text-2xl md:text-3xl text-[#2C3E50] font-bold mb-3">
+                  Persoonlijk advies of terugbelverzoek
+                </h2>
+                <p className="text-[#2C3E50]/60">
+                  Onze specialisten nemen binnen 24 uur persoonlijk contact met u op.
+                </p>
+              </div>
+
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                  {/* Type aanvraag cards */}
+                  <FormField
+                    control={form.control}
+                    name="requestType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                          {requestTypes.map((type) => {
+                            const Icon = type.icon;
+                            const isSelected = field.value === type.id;
+                            return (
+                              <button
+                                key={type.id}
+                                type="button"
+                                onClick={() => field.onChange(type.id)}
+                                className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-300 ${
+                                  isSelected
+                                    ? "border-[#C8A85B] bg-[#C8A85B]/5 shadow-md"
+                                    : "border-gray-200 hover:border-[#C8A85B]/40 hover:bg-gray-50"
+                                }`}
+                              >
+                                <Icon className={`w-5 h-5 ${isSelected ? "text-[#C8A85B]" : "text-[#2C3E50]/50"}`} />
+                                <span className={`text-xs font-medium text-center leading-tight ${isSelected ? "text-[#C8A85B]" : "text-[#2C3E50]/70"}`}>
+                                  {type.label}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Contact fields */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <FormField
+                      control={form.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#2C3E50] font-medium text-sm">Voornaam</FormLabel>
+                          <FormControl>
+                            <Input className="border-gray-200 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 h-11" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#2C3E50] font-medium text-sm">Achternaam</FormLabel>
+                          <FormControl>
+                            <Input className="border-gray-200 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 h-11" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
 
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <FormField
-                          control={form.control}
-                          name="firstName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[#2C3E50] font-medium">Voornaam</FormLabel>
-                              <FormControl>
-                                <Input className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="lastName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[#2C3E50] font-medium">Achternaam</FormLabel>
-                              <FormControl>
-                                <Input className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#2C3E50] font-medium text-sm">E-mail</FormLabel>
+                          <FormControl>
+                            <Input type="email" className="border-gray-200 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 h-11" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#2C3E50] font-medium text-sm">Telefoonnummer</FormLabel>
+                          <FormControl>
+                            <Input type="tel" className="border-gray-200 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 h-11" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[#2C3E50] font-medium">E-mail</FormLabel>
-                              <FormControl>
-                                <Input type="email" className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="phone"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[#2C3E50] font-medium">Telefoonnummer</FormLabel>
-                              <FormControl>
-                                <Input type="tel" className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+                  {/* Message */}
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#2C3E50] font-medium text-sm">Korte toelichting</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            rows={4}
+                            placeholder="Beschrijf kort uw vraag of project (ruimte, type raamdecoratie of gewenste planning)."
+                            className="border-gray-200 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                      <FormField
-                        control={form.control}
-                        name="subject"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-[#2C3E50] font-medium">Onderwerp</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20">
-                                  <SelectValue placeholder="Selecteer een onderwerp" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Algemene vraag">Algemene vraag</SelectItem>
-                                <SelectItem value="Adviesgesprek">Adviesgesprek</SelectItem>
-                                <SelectItem value="Offerte aanvraag">Offerte aanvraag</SelectItem>
-                                <SelectItem value="Opmeting plannen">Opmeting plannen</SelectItem>
-                                <SelectItem value="Zakelijk project">Zakelijk project</SelectItem>
-                                <SelectItem value="Service / nazorg">Service / nazorg</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                  {/* Conditional: Callback time */}
+                  {selectedType === "Terugbelverzoek" && (
+                    <FormField
+                      control={form.control}
+                      name="callbackTime"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#2C3E50] font-medium text-sm">Beste moment om te bellen</FormLabel>
+                          <div className="flex gap-3">
+                            {["Ochtend", "Namiddag", "Avond"].map((time) => (
+                              <button
+                                key={time}
+                                type="button"
+                                onClick={() => field.onChange(time)}
+                                className={`flex-1 py-2.5 px-4 rounded-lg border-2 text-sm font-medium transition-all duration-200 ${
+                                  field.value === time
+                                    ? "border-[#C8A85B] bg-[#C8A85B]/5 text-[#C8A85B]"
+                                    : "border-gray-200 text-[#2C3E50]/60 hover:border-[#C8A85B]/40"
+                                }`}
+                              >
+                                {time}
+                              </button>
+                            ))}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
 
-                      <FormField
-                        control={form.control}
-                        name="message"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-[#2C3E50] font-medium">Bericht</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                rows={5}
-                                placeholder="Beschrijf uw vraag zo duidelijk mogelijk. Indien mogelijk vermeld ruimte, type raamdecoratie en gewenste planning."
-                                className="border-[#C8A85B]/20 focus:border-[#C8A85B] focus:ring-[#C8A85B]/20 resize-none"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                  {/* Photo upload link */}
+                  <div>
+                    <label className="inline-flex items-center gap-2 text-sm text-[#2C3E50]/50 hover:text-[#C8A85B] cursor-pointer transition-colors">
+                      <Paperclip className="w-4 h-4" />
+                      <span>Foto toevoegen (optioneel)</span>
+                      <input type="file" accept="image/*" className="hidden" />
+                    </label>
+                  </div>
 
-                      <FormField
-                        control={form.control}
-                        name="privacy"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="flex items-start gap-3">
-                              <FormControl>
-                                <input
-                                  type="checkbox"
-                                  checked={field.value}
-                                  onChange={field.onChange}
-                                  className="mt-1 w-4 h-4 rounded border-[#C8A85B]/30 text-[#C8A85B] focus:ring-[#C8A85B]"
-                                />
-                              </FormControl>
-                              <span className="text-sm text-[#2C3E50]/70">
-                                Ik ga akkoord met het{" "}
-                                <a href="/privacy" className="text-[#C8A85B] underline hover:text-[#D4AF37]">
-                                  privacybeleid
-                                </a>
-                                .
-                              </span>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Honeypot */}
-                      <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}>
-                        <FormField
-                          control={form.control}
-                          name="website"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input tabIndex={-1} autoComplete="off" {...field} />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
-                      <Button
-                        type="submit"
-                        disabled={mutation.isPending}
-                        className="w-full bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] hover:from-[#b8983b] hover:to-[#c49f27] text-white py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                      >
-                        {mutation.isPending ? (
-                          "Verzenden..."
-                        ) : (
-                          <span className="flex items-center gap-2">
-                            <Send className="w-5 h-5" />
-                            Bericht verzenden
+                  {/* Privacy */}
+                  <FormField
+                    control={form.control}
+                    name="privacy"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-start gap-3">
+                          <FormControl>
+                            <input
+                              type="checkbox"
+                              checked={field.value}
+                              onChange={field.onChange}
+                              className="mt-0.5 w-4 h-4 rounded border-gray-300 text-[#C8A85B] focus:ring-[#C8A85B]"
+                            />
+                          </FormControl>
+                          <span className="text-sm text-[#2C3E50]/60">
+                            Ik ga akkoord met het{" "}
+                            <a href="/privacy" className="text-[#C8A85B] underline hover:text-[#D4AF37]">
+                              privacybeleid
+                            </a>
+                            .
                           </span>
-                        )}
-                      </Button>
-                    </form>
-                  </Form>
-                </div>
-              </div>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Honeypot */}
+                  <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}>
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input tabIndex={-1} autoComplete="off" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={mutation.isPending}
+                    className="w-full bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] hover:from-[#b8983b] hover:to-[#c49f27] text-white py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    {mutation.isPending ? (
+                      "Verzenden..."
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <Send className="w-5 h-5" />
+                        Persoonlijk contact aanvragen
+                      </span>
+                    )}
+                  </Button>
+                </form>
+              </Form>
             </div>
           </div>
         </Container>

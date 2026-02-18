@@ -1,35 +1,25 @@
-import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocation } from "wouter";
+import PageLayout from "@/components/layout/PageLayout";
 
 const AfspraakPage = () => {
   const [, setLocation] = useLocation();
 
   return (
-    <>
-      <Helmet>
-        <title>Plan een Afspraak | KANIOU Zilvernaald</title>
-        <meta name="description" content="Plan eenvoudig een persoonlijke afspraak met onze experts voor een vrijblijvend advies over uw raamdecoratie." />
-      </Helmet>
-
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white pt-24">
+    <PageLayout
+      title="Afspraak Maken"
+      subtitle="Persoonlijk Advies"
+      description="Plan eenvoudig een persoonlijke afspraak met onze experts voor een vrijblijvend advies over uw raamdecoratie."
+      metaDescription="Plan eenvoudig een persoonlijke afspraak met onze experts voor een vrijblijvend advies over uw raamdecoratie."
+      breadcrumbs={[{ label: "Afspraak" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                📅 Plan een Afspraak
-              </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Plan eenvoudig een persoonlijke afspraak met onze experts voor een vrijblijvend advies over uw raamdecoratie.
-              </p>
-            </div>
-
-            {/* Main Content */}
             <div className="grid lg:grid-cols-2 gap-8">
-              {/* Contact Information */}
               <Card className="h-fit">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -64,7 +54,6 @@ const AfspraakPage = () => {
                 </CardContent>
               </Card>
 
-              {/* Appointment Options */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -99,7 +88,6 @@ const AfspraakPage = () => {
               </Card>
             </div>
 
-            {/* Call to Action */}
             <div className="text-center mt-12">
               <div className="space-y-4">
                 <Button
@@ -122,8 +110,8 @@ const AfspraakPage = () => {
             </div>
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

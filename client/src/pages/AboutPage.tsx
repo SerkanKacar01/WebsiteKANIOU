@@ -1,38 +1,19 @@
-import { Helmet } from "react-helmet-async";
-import Container from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
 import { Search, Palette, Wrench, CheckCircle } from "lucide-react";
 import { overgordijnenImage } from "@/assets";
+import Container from "@/components/ui/container";
+import PageLayout from "@/components/layout/PageLayout";
 
 const AboutPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>Over ons | Kaniou Zilvernaald</title>
-        <meta
-          name="description"
-          content="Ontdek het verhaal achter Kaniou Zilvernaald – specialist in gordijnen, zonweringen en maatwerkoplossingen met meer dan 30 jaar ervaring."
-        />
-      </Helmet>
-
-      {/* Hero Section */}
-      <div className="bg-[#f9f7f3] py-20">
-        <Container>
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-semibold mb-6">
-              Wie wij zijn
-            </h1>
-            <div className="w-24 h-0.5 bg-[#D5B992] mx-auto mb-8"></div>
-            <p className="font-body text-xl text-[#2C3E50] leading-relaxed">
-              Bij Kaniou Zilvernaald draait alles om perfectie in maatwerk raamdecoratie.
-            </p>
-          </div>
-        </Container>
-      </div>
-
-      {/* Our Story Section */}
-      <div className="py-20 bg-white">
+    <PageLayout
+      title="Over Ons"
+      subtitle="Ons Verhaal"
+      description="Meer dan 30 jaar ervaring in elegantie en vakmanschap voor verfijnde raamdecoratie."
+      metaDescription="Ontdek het verhaal achter Kaniou Zilvernaald – specialist in gordijnen, zonweringen en maatwerkoplossingen met meer dan 30 jaar ervaring."
+      breadcrumbs={[{ label: "Over Ons" }]}
+      showCTA={true}
+    >
+      <section className="py-16 lg:py-20 bg-white">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
@@ -60,10 +41,9 @@ const AboutPage = () => {
             </div>
           </div>
         </Container>
-      </div>
+      </section>
 
-      {/* Mission & Vision Section */}
-      <div className="py-20 bg-[#f9f7f3]">
+      <section className="py-16 lg:py-20 bg-[#FAFAF8]">
         <Container>
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl text-[#2C3E50] font-semibold mb-6">
@@ -120,10 +100,9 @@ const AboutPage = () => {
             </p>
           </div>
         </Container>
-      </div>
+      </section>
 
-      {/* Why Choose Kaniou Section */}
-      <div className="py-20 bg-[#f5f5f5]">
+      <section className="py-16 lg:py-20 bg-white">
         <Container>
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl text-[#2C3E50] font-semibold mb-6">
@@ -164,30 +143,8 @@ const AboutPage = () => {
             </div>
           </div>
         </Container>
-      </div>
-
-      {/* Call to Action Section */}
-      <div className="py-20 bg-white">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="font-display text-3xl text-[#2C3E50] font-semibold mb-6">
-              Maak kennis met Kaniou Zilvernaald.
-            </h2>
-            <p className="font-body text-lg text-[#2C3E50] leading-relaxed mb-10">
-              Wij staan klaar om uw visie tot leven te brengen. Vraag vandaag nog vrijblijvend advies aan.
-            </p>
-            <Link href="/quote">
-              <Button
-                size="lg"
-                className="bg-[#D5B992] hover:bg-[#C4A882] text-white px-8 py-4 text-lg font-medium rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
-              >
-                Vrijblijvend Offerte aanvragen
-              </Button>
-            </Link>
-          </div>
-        </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

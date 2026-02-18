@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { 
   MapPin, 
@@ -6,7 +5,6 @@ import {
   Mail, 
   Clock, 
   Crown, 
-  Sparkles, 
   Star, 
   Award,
   Shield,
@@ -15,75 +13,20 @@ import {
   MessageCircle
 } from "lucide-react";
 import ContactForm from "@/components/forms/ContactForm";
+import PageLayout from "@/components/layout/PageLayout";
 
 const ContactPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>Contact - Premium Raamdecoratie Advies | KANIOU Zilvernaald</title>
-        <meta
-          name="description"
-          content="Neem contact op met KANIOU Zilvernaald voor premium maatwerk raamdecoratie. Professioneel advies, luxe showroom, en persoonlijke service voor uw interieur."
-        />
-        <meta property="og:title" content="Contact - Premium Raamdecoratie Advies | KANIOU Zilvernaald" />
-        <meta property="og:description" content="Neem contact op met KANIOU Zilvernaald voor premium maatwerk raamdecoratie. Professioneel advies, luxe showroom, en persoonlijke service voor uw interieur." />
-      </Helmet>
-
-      {/* Luxury Hero Section */}
-      <div className="relative bg-gradient-to-br from-[#1a1a1a] via-[#2C3E50] to-[#1a1a1a] overflow-hidden">
-        {/* Premium background decorative elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#C8A85B]/5 via-transparent to-[#C8A85B]/5"></div>
-          <div className="absolute top-20 left-20 w-96 h-96 bg-[#C8A85B]/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-[#D4AF37]/8 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#C8A85B]/5 to-transparent rounded-full"></div>
-          
-          {/* Floating particles */}
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#C8A85B] rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-[#D4AF37] rounded-full animate-bounce" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-[#C8A85B] rounded-full animate-bounce" style={{animationDelay: '2s'}}></div>
-        </div>
-        
-        <Container className="py-20 md:py-24 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="animate-fade-in-up">
-              {/* Premium badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C8A85B]/20 to-[#D4AF37]/20 backdrop-blur-sm border border-[#C8A85B]/30 rounded-full px-6 py-2 mb-8">
-                <Crown className="w-4 h-4 text-[#C8A85B]" />
-                <span className="text-[#C8A85B] text-sm font-semibold tracking-wide uppercase">Premium Service</span>
-                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-              </div>
-              
-              <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-white font-black mb-6 leading-none tracking-tight">
-                <span className="bg-gradient-to-r from-white via-[#C8A85B] to-white bg-clip-text text-transparent animate-shimmer">
-                  Contact met ons luxe team
-                </span>
-              </h1>
-              
-              
-              <p className="font-body text-xl md:text-2xl text-white/80 leading-relaxed font-light tracking-wide max-w-3xl mx-auto">
-                Ervaar <span className="text-[#C8A85B] font-medium">persoonlijke service</span> op het hoogste niveau. 
-                <br className="hidden md:block" />
-                Ons team van <span className="text-[#D4AF37] font-medium">interieurspecialisten</span> staat voor u klaar.
-              </p>
-            </div>
-          </div>
-        </Container>
-        
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
-      </div>
-
-      {/* Luxury Contact Cards Section */}
-      <div className="py-20 bg-gradient-to-b from-white via-[#fafafa] to-white relative overflow-hidden">
-        {/* Elegant background pattern */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#C8A85B]/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#D4AF37]/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        </div>
-
-        <Container className="relative z-10">
-          {/* Premium section header */}
+    <PageLayout
+      title="Neem Contact Op"
+      subtitle="Persoonlijke Service"
+      description="Ervaar persoonlijke service op het hoogste niveau. Ons team van interieurspecialisten staat voor u klaar."
+      metaDescription="Neem contact op met KANIOU Zilvernaald voor premium maatwerk raamdecoratie. Professioneel advies, luxe showroom, en persoonlijke service voor uw interieur."
+      breadcrumbs={[{ label: "Contact" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-8">
               <MessageCircle className="w-6 h-6 text-[#C8A85B]" />
@@ -99,14 +42,11 @@ const ContactPage = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-            {/* Showroom Card */}
             <div className="group relative">
               <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:-translate-y-2 relative overflow-hidden">
-                {/* Luxury background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="relative z-10 text-center">
-                  {/* Premium icon container */}
                   <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
                     <MapPin className="text-white w-8 h-8" />
                   </div>
@@ -133,20 +73,14 @@ const ContactPage = () => {
                     </div>
                   </div>
                 </div>
-                
-                {/* Luxury card shadow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/10 to-[#D4AF37]/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 scale-110"></div>
               </div>
             </div>
 
-            {/* Phone Card */}
             <div className="group relative">
               <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:-translate-y-2 relative overflow-hidden">
-                {/* Luxury background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="relative z-10 text-center">
-                  {/* Premium icon container */}
                   <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
                     <Phone className="text-white w-8 h-8" />
                   </div>
@@ -177,20 +111,14 @@ const ContactPage = () => {
                     </div>
                   </div>
                 </div>
-                
-                {/* Luxury card shadow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/10 to-[#D4AF37]/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 scale-110"></div>
               </div>
             </div>
 
-            {/* Email Card */}
             <div className="group relative">
               <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-[#C8A85B]/10 hover:border-[#C8A85B]/30 group-hover:-translate-y-2 relative overflow-hidden">
-                {/* Luxury background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/5 via-transparent to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="relative z-10 text-center">
-                  {/* Premium icon container */}
                   <div className="bg-gradient-to-br from-[#C8A85B] via-[#D4AF37] to-[#C8A85B] p-6 rounded-2xl inline-flex mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
                     <Mail className="text-white w-8 h-8" />
                   </div>
@@ -218,18 +146,12 @@ const ContactPage = () => {
                     <p className="font-body text-[#2C3E50]/80">Binnen 24 uur op werkdagen</p>
                   </div>
                 </div>
-                
-                {/* Luxury card shadow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/10 to-[#D4AF37]/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 scale-110"></div>
               </div>
             </div>
           </div>
 
-          {/* Contact Form & Map Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-            {/* Luxury Contact Form */}
             <div className="bg-white rounded-3xl p-10 shadow-2xl border-2 border-[#C8A85B]/10 relative overflow-hidden">
-              {/* Luxury background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#C8A85B]/3 via-transparent to-[#D4AF37]/3"></div>
               
               <div className="relative z-10">
@@ -248,9 +170,7 @@ const ContactPage = () => {
               </div>
             </div>
 
-            {/* Luxury Map Container */}
             <div className="bg-white rounded-3xl shadow-2xl border-2 border-[#C8A85B]/10 overflow-hidden relative">
-              {/* Map overlay with luxury styling */}
               <div className="absolute top-4 left-4 z-20">
                 <div className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-4 py-2 rounded-full shadow-lg">
                   <div className="flex items-center gap-2">
@@ -274,12 +194,9 @@ const ContactPage = () => {
             </div>
           </div>
 
-          {/* Premium Consultation Services */}
           <div className="bg-gradient-to-br from-[#2C3E50] via-[#1a2332] to-[#2C3E50] rounded-3xl p-12 relative overflow-hidden">
-            {/* Luxury background elements */}
             <div className="absolute inset-0">
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C8A85B]/10 via-transparent to-[#D4AF37]/10"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-[#C8A85B]/5 to-transparent"></div>
             </div>
             
             <div className="relative z-10">
@@ -298,7 +215,6 @@ const ContactPage = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Home Consultation */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#C8A85B]/30 transition-all duration-500 group hover:-translate-y-2">
                   <div className="text-center">
                     <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110">
@@ -325,7 +241,6 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                {/* Showroom Appointment */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#C8A85B]/30 transition-all duration-500 group hover:-translate-y-2">
                   <div className="text-center">
                     <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110">
@@ -352,7 +267,6 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                {/* Virtual Consultation */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#C8A85B]/30 transition-all duration-500 group hover:-translate-y-2">
                   <div className="text-center">
                     <div className="bg-gradient-to-br from-[#C8A85B] to-[#D4AF37] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:shadow-3xl transition-all duration-500 group-hover:scale-110">
@@ -382,8 +296,8 @@ const ContactPage = () => {
             </div>
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

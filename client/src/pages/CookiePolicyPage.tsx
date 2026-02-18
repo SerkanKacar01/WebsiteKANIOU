@@ -1,61 +1,15 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import Container from '@/components/ui/container';
-import { useLanguage } from '@/context/LanguageContext';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { HomeIcon, ChevronRight } from "lucide-react";
+import PageLayout from "@/components/layout/PageLayout";
+import Container from "@/components/ui/container";
 
 const CookiePolicyPage = () => {
-  const { t } = useLanguage();
-
   return (
-    <>
-      <Helmet>
-        <title>Cookiebeleid | {t('app.title')}</title>
-        <meta
-          name="description"
-          content="Cookiebeleid van Kaniou Zilvernaald. Lees hoe wij cookies gebruiken en hoe u uw cookievoorkeuren kunt beheren."
-        />
-      </Helmet>
-      
-      {/* Breadcrumb */}
-      <div className="bg-neutral-100 py-4">
+    <PageLayout
+      title="Cookiebeleid"
+      breadcrumbs={[{ label: "Cookiebeleid" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20">
         <Container>
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">
-                  <HomeIcon className="h-4 w-4" />
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>
-                <ChevronRight className="h-4 w-4" />
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <BreadcrumbLink>Cookiebeleid</BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </Container>
-      </div>
-      
-      <div className="bg-neutral-100 py-16">
-        <Container>
-          <div className="text-center mb-12">
-            <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              🍪 Cookiebeleid
-            </h1>
-            <p className="text-text-medium">
-              Laatst bijgewerkt op: 7 september 2025
-            </p>
-          </div>
-          
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 lg:p-10">
             <div className="prose prose-lg max-w-none">
               <p className="font-body text-text-medium mb-6">
@@ -132,7 +86,6 @@ const CookiePolicyPage = () => {
                 Voor meer informatie over gebruikte cookies verwijzen wij naar onze Cookieverklaring hieronder:
               </p>
               
-              {/* Cookiebot Cookie Declaration Script */}
               <div className="my-6 p-4 bg-gray-50 border border-gray-200 rounded-lg" dangerouslySetInnerHTML={{
                 __html: '<script id="CookieDeclaration" src="https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/cd.js" type="text/javascript" async></script>'
               }} />
@@ -271,8 +224,8 @@ const CookiePolicyPage = () => {
             </div>
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

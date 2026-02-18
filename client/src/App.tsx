@@ -6,65 +6,48 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import Footer from "@/components/layout/Footer";
 import FloatingActionButtons from "@/components/FloatingActionButtons";
 
-
 import Home from "@/pages/Home";
-import ProductDetail from "@/pages/ProductDetail";
-
-import ProductCategoryPage from "@/pages/ProductCategoryPage";
-import PriceCalculatorPage from "@/pages/PriceCalculatorPage";
-
 import GalleryPage from "@/pages/GalleryPage";
-import AdminGallery from "@/pages/AdminGallery";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import QuotePage from "@/pages/QuotePage";
 import OffertePage from "@/pages/OffertePage";
 import ActiesPage from "@/pages/ActiesPage";
-import SmartQuote from "@/pages/SmartQuote";
-import ColorMatcherPage from "@/pages/ColorMatcherPage";
-import CustomizationWizardPage from "@/pages/CustomizationWizardPage";
-import VirtualRoomPreview from "@/pages/VirtualRoomPreview";
-import InventoryAlerts from "@/pages/InventoryAlerts";
-import Admin from "@/pages/Admin";
-import { Product360Demo } from "@/components/Product360Demo";
-import { RewardsSystem } from "@/components/RewardsSystem";
-import { SmartRecommendationEngine } from "@/components/SmartRecommendationEngine";
+import PrijzenPage from "@/pages/PrijzenPage";
+import BusinessPage from "@/pages/BusinessPage";
+import CleaningProductsPage from "@/pages/CleaningProductsPage";
+import AfspraakPage from "@/pages/AfspraakPage";
+import BedanktPage from "@/pages/BedanktPage";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import CookiePolicyPage from "@/pages/CookiePolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
-import PrijzenPage from "@/pages/PrijzenPage";
-import BusinessPage from "@/pages/BusinessPage";
-import CleaningProductsPage from "@/pages/CleaningProductsPage";
-import BedanktPage from "@/pages/BedanktPage";
+
 import AdminLoginPage from "@/pages/AdminLoginPage";
-import AdminLoginTest from "@/pages/AdminLoginTest";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
+import AdminGallery from "@/pages/AdminGallery";
 import SecureOrderTrackingPage from "@/pages/SecureOrderTrackingPage";
-import AfspraakPage from "@/pages/AfspraakPage";
 
-
-// Simple Product Pages
 import PlissesPage from "@/pages/products/plisses";
 import DuoPlissesPage from "@/pages/products/duo-plisses";
-import RolgordijnenSimplePage from "@/pages/products/rolgordijnen-simple";
+import RolgordijnenPage from "@/pages/products/rolgordijnen-simple";
 import DuoRolgordijnenPage from "@/pages/products/duo-rolgordijnen-simple";
-import OvergordijnenSimplePage from "@/pages/products/overgordijnen-simple";
-import GordijnrailsSimplePage from "@/pages/products/gordijnrails-simple";
-import VitragesSimplePage from "@/pages/products/vitrages-simple";
-import HoutenShuttersSimplePage from "@/pages/products/houten-shutters-simple";
-import HoutenJaloezieeenSimplePage from "@/pages/products/houten-jaloezieen-simple";
-import TextielLamellenSimplePage from "@/pages/products/textiel-lamellen-simple";
-import KunststofJaloezieeenSimplePage from "@/pages/products/kunststof-jaloezieen-simple";
-import KunststofLamellenSimplePage from "@/pages/products/kunststof-lamellen-simple";
+import OvergordijnenPage from "@/pages/products/overgordijnen-simple";
+import GordijnrailsPage from "@/pages/products/gordijnrails-simple";
+import VitragesPage from "@/pages/products/vitrages-simple";
+import HoutenShuttersPage from "@/pages/products/houten-shutters-simple";
+import HoutenJaloezieeenPage from "@/pages/products/houten-jaloezieen-simple";
+import TextielLamellenPage from "@/pages/products/textiel-lamellen-simple";
+import KunststofJaloezieeenPage from "@/pages/products/kunststof-jaloezieen-simple";
+import KunststofLamellenPage from "@/pages/products/kunststof-lamellen-simple";
 import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import GordijnroedesPage from "@/pages/products/gordijnroedes";
@@ -73,35 +56,21 @@ import ScreenPage from "@/pages/products/screen";
 import ScreensInsidePage from "@/pages/products/screens-inside";
 import ScreensOutsidePage from "@/pages/products/screens-outside";
 
-
-
-
 function Router() {
   const { t } = useLanguage();
   const [location] = useLocation();
-  
-  // Enable scroll to top on route change
+
   useScrollToTop();
 
-  // Get page title based on current route
   const getPageTitle = () => {
     if (location === "/") return t("app.title") + " | " + t("app.subtitle");
-
-    if (location === "/gallery" || location === "/gallerij") return t("gallery.title") + " | " + t("app.title");
-    if (location === "/about" || location === "/overons" || location === "/over-ons") return "Over ons | Kaniou Zilvernaald";
-    if (location === "/contact") return t("contact.title") + " | " + t("app.title");
-    if (location === "/quote") return t("quote.title") + " | " + t("app.title");
-    if (location === "/offerte") return "Offerte aanvragen" + " | " + t("app.title");
-    if (location === "/prijzen") return "Prijsoverzicht – Maatwerk Raamdecoratie | " + t("app.title");
-    if (location === "/acties") return "Acties & Aanbiedingen" + " | " + t("app.title");
-
-    if (location === "/zakelijk" || location === "/business") return "Business Solutions" + " | " + t("app.title");
-    if (location === "/privacy-policy") return "Privacy Policy" + " | " + t("app.title");
-    if (location === "/privacybeleid") return "📄 Privacybeleid" + " | " + t("app.title");
-    if (location === "/terms-of-service") return "Terms of Service" + " | " + t("app.title");
-    if (location === "/gebruiksvoorwaarden") return "📄 Gebruiksvoorwaarden" + " | " + t("app.title");
-    if (location === "/algemene-voorwaarden") return "📄 Algemene Voorwaarden" + " | " + t("app.title");
-    if (location === "/disclaimer") return "Legal Disclaimer" + " | " + t("app.title");
+    if (location === "/gallery" || location === "/gallerij") return "Galerij | KANIOU Zilvernaald";
+    if (location === "/about" || location === "/over-ons") return "Over Ons | KANIOU Zilvernaald";
+    if (location === "/contact") return "Contact | KANIOU Zilvernaald";
+    if (location === "/offerte") return "Offerte Aanvragen | KANIOU Zilvernaald";
+    if (location === "/prijzen") return "Prijsoverzicht | KANIOU Zilvernaald";
+    if (location === "/acties") return "Acties & Aanbiedingen | KANIOU Zilvernaald";
+    if (location === "/zakelijk") return "Zakelijk | KANIOU Zilvernaald";
     return t("app.title") + " | " + t("app.subtitle");
   };
 
@@ -113,88 +82,44 @@ function Router() {
       </Helmet>
       <Switch>
         <Route path="/" component={Home} />
-        
-        {/* All product category routes for both /products/ and /producten/ paths */}
-        <Route path="/products/fly-screens" component={ProductCategoryPage} />
 
-        <Route path="/products/overgordijnen" component={ProductCategoryPage} />
-        <Route path="/products/squid-textiel-folie" component={SquidTextielFoliePage} />
-        <Route path="/products/squid-textile-foil" component={SquidTextielFoliePage} />
-        <Route path="/products/squid" component={SquidTextielFoliePage} />
-        <Route path="/products/plisse" component={ProductCategoryPage} />
-        <Route path="/products/jaloezieen" component={ProductCategoryPage} />
-        
-        {/* New /producten/ routes for all categories */}
-        <Route path="/producten/overgordijnen" component={OvergordijnenSimplePage} />
-        <Route path="/producten/vitrages" component={VitragesSimplePage} />
-        <Route path="/producten/rolgordijnen" component={RolgordijnenSimplePage} />
+        {/* Product Pages */}
+        <Route path="/producten/overgordijnen" component={OvergordijnenPage} />
+        <Route path="/producten/vitrages" component={VitragesPage} />
+        <Route path="/producten/rolgordijnen" component={RolgordijnenPage} />
         <Route path="/producten/duo-rolgordijnen" component={DuoRolgordijnenPage} />
-        <Route path="/producten/textiel-lamellen" component={TextielLamellenSimplePage} />
-        <Route path="/producten/kunststof-lamellen" component={KunststofLamellenSimplePage} />
-        <Route path="/producten/jaloezieen" component={ProductCategoryPage} />
-        <Route path="/producten/houten-jaloezieen" component={HoutenJaloezieeenSimplePage} />
-        <Route path="/producten/kunststof-jaloezieen" component={KunststofJaloezieeenSimplePage} />
-        <Route path="/producten/textiel-raamfolie" component={ProductCategoryPage} />
-        <Route path="/producten/houten-shutters" component={HoutenShuttersSimplePage} />
-        <Route path="/producten/inzethorren" component={ProductCategoryPage} />
-        <Route path="/producten/opzethorren" component={ProductCategoryPage} />
-        <Route path="/producten/plisse-hordeuren" component={ProductCategoryPage} />
         <Route path="/producten/plisse" component={PlissesPage} />
-        <Route path="/producten/duo-plisse" component={DuoPlissesPage} />
+        <Route path="/producten/duo-plisses" component={DuoPlissesPage} />
+        <Route path="/producten/textiel-lamellen" component={TextielLamellenPage} />
+        <Route path="/producten/kunststof-lamellen" component={KunststofLamellenPage} />
+        <Route path="/producten/houten-jaloezieen" component={HoutenJaloezieeenPage} />
+        <Route path="/producten/kunststof-jaloezieen" component={KunststofJaloezieeenPage} />
+        <Route path="/producten/houten-shutters" component={HoutenShuttersPage} />
         <Route path="/producten/vouwgordijnen" component={VouwgordijnenPage} />
-        <Route path="/vouwgordijnen" component={VouwgordijnenPage} />
+        <Route path="/producten/gordijnrails" component={GordijnrailsPage} />
         <Route path="/producten/gordijnroedes" component={GordijnroedesPage} />
-        <Route path="/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/producten/horren" component={HorrenPage} />
-        <Route path="/horren" component={HorrenPage} />
         <Route path="/producten/screen" component={ScreenPage} />
-        <Route path="/screen" component={ScreenPage} />
         <Route path="/producten/screens-inside" component={ScreensInsidePage} />
-        <Route path="/screens-inside" component={ScreensInsidePage} />
         <Route path="/producten/screens-outside" component={ScreensOutsidePage} />
-        <Route path="/screens-outside" component={ScreensOutsidePage} />
-        <Route path="/producten/dakraam-zonweringen" component={ProductCategoryPage} />
-        <Route path="/producten/gordijnrails" component={GordijnrailsSimplePage} />
-
         <Route path="/producten/squid-textiel-folie" component={SquidTextielFoliePage} />
-        <Route path="/producten/squid-textile-foil" component={SquidTextielFoliePage} />
-        <Route path="/producten/squid" component={SquidTextielFoliePage} />
-        <Route path="/squid" component={SquidTextielFoliePage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
-        <Route path="/reiniging" component={CleaningProductsPage} />
 
-        
-        {/* Handle all other product category routes */}
-        <Route path="/products/:category" component={ProductCategoryPage} />
-        <Route path="/producten/:category" component={ProductCategoryPage} />
+        {/* Main Pages */}
         <Route path="/gallery" component={GalleryPage} />
         <Route path="/gallerij" component={GalleryPage} />
         <Route path="/about" component={AboutPage} />
-        <Route path="/overons" component={AboutPage} />
         <Route path="/over-ons" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/zakelijk" component={BusinessPage} />
-        <Route path="/business" component={BusinessPage} />
         <Route path="/quote" component={QuotePage} />
         <Route path="/offerte" component={OffertePage} />
         <Route path="/prijzen" component={PrijzenPage} />
         <Route path="/afspraak" component={AfspraakPage} />
         <Route path="/acties" component={ActiesPage} />
-        <Route path="/smart-quote" component={SmartQuote} />
-        <Route path="/slimme-offerte" component={SmartQuote} />
-        <Route path="/kleur-matcher" component={ColorMatcherPage} />
-        <Route path="/color-matcher" component={ColorMatcherPage} />
-        <Route path="/maatwerk-wizard" component={CustomizationWizardPage} />
-        <Route path="/customization-wizard" component={CustomizationWizardPage} />
-        <Route path="/virtual-room-preview" component={VirtualRoomPreview} />
-        <Route path="/kamer-preview" component={VirtualRoomPreview} />
-        <Route path="/inventory-alerts" component={InventoryAlerts} />
-        <Route path="/voorraad-alerts" component={InventoryAlerts} />
+        <Route path="/bedankt" component={BedanktPage} />
 
-        <Route path="/product-360-demo" component={Product360Demo} />
-        <Route path="/rewards" component={RewardsSystem} />
-        <Route path="/recommendations" component={SmartRecommendationEngine} />
-
+        {/* Legal Pages */}
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/privacybeleid" component={PrivacyPolicyPage} />
         <Route path="/cookiebeleid" component={CookiePolicyPage} />
@@ -202,22 +127,16 @@ function Router() {
         <Route path="/gebruiksvoorwaarden" component={TermsOfServicePage} />
         <Route path="/algemene-voorwaarden" component={TermsOfServicePage} />
         <Route path="/disclaimer" component={DisclaimerPage} />
-        <Route path="/bedankt" component={BedanktPage} />
-        
-        
-        {/* Hidden Admin Routes */}
+
+        {/* Admin Routes */}
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
         <Route path="/admin-login" component={AdminLoginPage} />
-        <Route path="/test-login" component={AdminLoginTest} />
         <Route path="/entrepreneur-dashboard" component={EntrepreneurDashboardPage} />
-        
-        {/* Secure Order Tracking for Customers */}
+        <Route path="/admin/gallery" component={AdminGallery} />
+
+        {/* Order Tracking */}
         <Route path="/bestelling-volgen" component={SecureOrderTrackingPage} />
         <Route path="/order-tracking" component={SecureOrderTrackingPage} />
-        <Route path="/track-order" component={SecureOrderTrackingPage} />
-        
-        <Route path="/admin/gallery" component={AdminGallery} />
-        <Route path="/admin" component={Admin} />
 
         <Route component={NotFound} />
       </Switch>
@@ -230,22 +149,20 @@ function Router() {
 function App() {
   const { language } = useLanguage();
 
-  // Update language-specific metadata
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   }, [language]);
 
-
   return (
     <div className="min-h-screen bg-white">
       <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <MobileLayoutWrapper>
-              <Router />
-            </MobileLayoutWrapper>
-          </TooltipProvider>
+        <TooltipProvider>
+          <Toaster />
+          <MobileLayoutWrapper>
+            <Router />
+          </MobileLayoutWrapper>
+        </TooltipProvider>
       </QueryClientProvider>
     </div>
   );

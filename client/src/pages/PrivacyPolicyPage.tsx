@@ -1,37 +1,18 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import Container from '@/components/ui/container';
+import PageLayout from "@/components/layout/PageLayout";
+import Container from "@/components/ui/container";
 import { useLanguage } from '@/context/LanguageContext';
-import LanguageSelector from '@/components/layout/LanguageSelector';
 
 const PrivacyPolicyPage = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
 
   return (
-    <>
-      <Helmet>
-        <title>📄 Privacybeleid | {t('app.title')}</title>
-        <meta
-          name="description"
-          content="Privacybeleid van KANIOU Zilvernaald. Lees hoe wij uw persoonsgegevens beschermen volgens de AVG/GDPR."
-        />
-      </Helmet>
-      
-      <div className="bg-neutral-100 py-16">
+    <PageLayout
+      title="Privacybeleid"
+      breadcrumbs={[{ label: "Privacybeleid" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20">
         <Container>
-          <div className="flex justify-end mb-6">
-            <LanguageSelector />
-          </div>
-          
-          <div className="text-center mb-12">
-            <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              📄 Privacybeleid – KANIOU Zilvernaald
-            </h1>
-            <p className="text-text-medium">
-              Bij KANIOU Zilvernaald hechten wij veel waarde aan de bescherming van uw persoonsgegevens
-            </p>
-          </div>
-          
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 lg:p-10">
             {language === 'nl' ? (
               <>
@@ -304,7 +285,6 @@ const PrivacyPolicyPage = () => {
                 </div>
               </>
             ) : (
-              // English version by default (placeholder - to be replaced with actual English content)
               <>
                 <h2 className="font-display text-xl text-primary font-semibold mb-4">
                   Privacy Policy – Kaniou.be
@@ -429,7 +409,6 @@ const PrivacyPolicyPage = () => {
                   Below you will find a complete overview of all cookies used on our website:
                 </p>
                 
-                {/* Cookiebot Cookie Declaration Script */}
                 <div className="my-6" dangerouslySetInnerHTML={{
                   __html: '<script id="CookieDeclaration" src="https://consent.cookiebot.com/277bd293-9336-4f15-ba87-4c760a56129b/cd.js" type="text/javascript" async></script>'
                 }} />
@@ -455,8 +434,8 @@ const PrivacyPolicyPage = () => {
             )}
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

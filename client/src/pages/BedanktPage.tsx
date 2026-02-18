@@ -1,26 +1,18 @@
-import React, { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Link, useLocation } from "wouter";
+import PageLayout from "@/components/layout/PageLayout";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Package, Home, Mail } from "lucide-react";
+import { Link } from "wouter";
 
 export default function BedanktPage() {
-  const [location] = useLocation();
-
-
   return (
-    <>
-      <Helmet>
-        <title>Bedankt voor uw bestelling - KANIOU</title>
-        <meta
-          name="description"
-          content="Bedankt voor uw bestelling bij KANIOU. Uw betaling is succesvol verwerkt en u ontvangt binnenkort een bevestiging per e-mail."
-        />
-      </Helmet>
-
-      <div className="min-h-screen bg-gray-50 py-12">
+    <PageLayout
+      title="Bedankt"
+      breadcrumbs={[{ label: "Bedankt" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20">
         <Container>
           <div className="max-w-2xl mx-auto">
             <Card className="text-center">
@@ -92,7 +84,7 @@ export default function BedanktPage() {
             </Card>
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 }

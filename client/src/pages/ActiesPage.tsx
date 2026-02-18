@@ -1,10 +1,10 @@
-import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Tag, CheckCircle, Shield } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { Tag, CheckCircle, Shield } from "lucide-react";
+import { useLocation } from "wouter";
+import PageLayout from "@/components/layout/PageLayout";
 
 const ActiesPage = () => {
   const [, setLocation] = useLocation();
@@ -22,60 +22,24 @@ const ActiesPage = () => {
     ctaLink: "/contact",
   };
 
-  const scrollToPromotion = () => {
-    document.getElementById("promotion-section")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   const handleContactRedirect = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setLocation("/contact");
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Acties & Aanbiedingen | KANIOU zilvernaald</title>
-        <meta
-          name="description"
-          content="Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op = Op. Bekijk onze huidige acties en aanbiedingen."
-        />
-      </Helmet>
-
-      {/* Full-width Hero Banner */}
-      <div className="relative min-h-[70vh] bg-gradient-to-br from-neutral-800 via-neutral-700 to-neutral-600 flex items-center overflow-hidden">
-        {/* Elegant background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-secondary/20"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1)_0%,transparent_50%)]"></div>
-
-        <Container className="relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="font-display text-5xl md:text-6xl text-white font-bold mb-6 leading-tight">
-              Acties & Aanbiedingen
-            </h1>
-            <p className="font-body text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-              Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op
-              = Op.
-            </p>
-            <Button
-              size="lg"
-              className="bg-secondary hover:bg-secondary/90 text-white font-medium px-8 py-4 text-lg"
-              onClick={scrollToPromotion}
-            >
-              Bekijk onze actie
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
-          </div>
-        </Container>
-      </div>
-
-      {/* Single Promotion Section */}
-      <section id="promotion-section" className="py-20 bg-white">
+    <PageLayout
+      title="Acties & Aanbiedingen"
+      subtitle="Speciale Acties"
+      description="Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op = Op."
+      metaDescription="Profiteer nu van exclusieve kortingen op premium raamdecoratie. Op = Op. Bekijk onze huidige acties en aanbiedingen."
+      breadcrumbs={[{ label: "Acties" }]}
+      showCTA={true}
+    >
+      <section className="py-16 lg:py-20 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto">
             <Card className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border-0">
-              {/* Badge */}
               <div className="absolute top-6 left-6 z-10">
                 <Badge className="bg-secondary text-white font-medium px-3 py-1">
                   <Tag className="h-3 w-3 mr-1" />
@@ -83,7 +47,6 @@ const ActiesPage = () => {
                 </Badge>
               </div>
 
-              {/* Discount Badge */}
               <div className="absolute top-6 right-6 z-10">
                 <Badge className="bg-red-500 text-white font-bold px-3 py-1">
                   {promotion.discount}
@@ -121,8 +84,7 @@ const ActiesPage = () => {
         </Container>
       </section>
 
-      {/* Information Section */}
-      <section className="py-20 bg-gradient-to-br from-neutral-50 to-neutral-100">
+      <section className="py-16 lg:py-20 bg-[#FAFAF8]">
         <Container>
           <div className="max-w-4xl mx-auto">
             <Card className="border-0 shadow-xl bg-white rounded-2xl overflow-hidden">
@@ -167,7 +129,7 @@ const ActiesPage = () => {
           </div>
         </Container>
       </section>
-    </>
+    </PageLayout>
   );
 };
 

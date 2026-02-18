@@ -1,19 +1,18 @@
 import { useLanguage } from "@/context/LanguageContext";
-import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   Building2,
-  Users,
   Mail,
   Phone,
   MapPin,
   ArrowRight,
-  MessageSquare,
 } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "wouter";
+import Container from "@/components/ui/container";
+import PageLayout from "@/components/layout/PageLayout";
 
 const BusinessPage = () => {
   const { language, t } = useLanguage();
@@ -30,139 +29,105 @@ const BusinessPage = () => {
     }, 100);
   };
 
-  const redirectToContact = () => {
-    setLocation('/contact');
-  };
-
   return (
-    <>
-      <Helmet>
-        <title>Zakelijke Oplossingen - Business Solutions | KANIOU</title>
-        <meta
-          name="description"
-          content="Professionele raambekleding voor bedrijven, projecten en dealers. KANIOU biedt zakelijke oplossingen met professionele voorwaarden."
-        />
-        <meta
-          property="og:title"
-          content="Zakelijke Oplossingen - Business Solutions"
-        />
-        <meta
-          property="og:description"
-          content="Professionele raambekleding voor bedrijven, projecten en dealers"
-        />
-      </Helmet>
-
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-secondary/30">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white py-20 px-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Business Solutions for Professionals
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Bent u aannemer, architect, interieurdesigner, winkel of
-              projectstudio op zoek naar hoogwaardige raambekleding op maat voor
-              uw klanten?
-            </p>
-            <p className="text-lg mb-10 max-w-3xl mx-auto text-white/80">
-              KANIOU is uw betrouwbare partner voor stijlvolle en functionele
-              oplossingen met professionele voorwaarden.
-            </p>
-          </div>
-        </section>
-
-        {/* Why Choose KANIOU Business Section */}
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-              🎯 Waarom kiezen voor KANIOU Business?
-            </h2>
-            <div className="bg-white rounded-xl p-8 shadow-lg max-w-4xl mx-auto">
-              <div className="space-y-6">
-                <div className="flex items-start gap-3">
-                  <div className="text-green-600 font-bold text-xl mt-1">✓</div>
-                  <p className="text-lg text-gray-700">
-                    Raambekleding op maat voor alle projecttypes
-                  </p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-green-600 font-bold text-xl mt-1">✓</div>
-                  <p className="text-lg text-gray-700">
-                    Snelle afhandeling en levering, ook bij grote volumes
-                  </p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-green-600 font-bold text-xl mt-1">✓</div>
-                  <p className="text-lg text-gray-700">
-                    Persoonlijk advies van concept tot levering
-                  </p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-green-600 font-bold text-xl mt-1">✓</div>
-                  <p className="text-lg text-gray-700">
-                    Transparante offertes en projectprijzen
-                  </p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-green-600 font-bold text-xl mt-1">✓</div>
-                  <p className="text-lg text-gray-700">
-                    Meertalige ondersteuning: Nederlands, Frans, Engels, Turks
-                  </p>
-                </div>
+    <PageLayout
+      title="Zakelijke Oplossingen"
+      subtitle="Voor Bedrijven"
+      description="Professionele raambekleding voor bedrijven, projecten en dealers met professionele voorwaarden."
+      metaDescription="Professionele raambekleding voor bedrijven, projecten en dealers. KANIOU biedt zakelijke oplossingen met professionele voorwaarden."
+      breadcrumbs={[{ label: "Zakelijk" }]}
+      showCTA={true}
+    >
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+            🎯 Waarom kiezen voor KANIOU Business?
+          </h2>
+          <div className="bg-white rounded-xl p-8 shadow-lg max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 font-bold text-xl mt-1">✓</div>
+                <p className="text-lg text-gray-700">
+                  Raambekleding op maat voor alle projecttypes
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 font-bold text-xl mt-1">✓</div>
+                <p className="text-lg text-gray-700">
+                  Snelle afhandeling en levering, ook bij grote volumes
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 font-bold text-xl mt-1">✓</div>
+                <p className="text-lg text-gray-700">
+                  Persoonlijk advies van concept tot levering
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 font-bold text-xl mt-1">✓</div>
+                <p className="text-lg text-gray-700">
+                  Transparante offertes en projectprijzen
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 font-bold text-xl mt-1">✓</div>
+                <p className="text-lg text-gray-700">
+                  Meertalige ondersteuning: Nederlands, Frans, Engels, Turks
+                </p>
               </div>
             </div>
           </div>
-        </section>
+        </Container>
+      </section>
 
-        {/* Professional Applications Section */}
-        <section className="py-16 px-4 bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
-                📂 Professionele Toepassingen
-              </h2>
-              <p className="text-xl text-gray-700 mb-8">
-                Wij leveren raambekleding voor:
+      <section className="py-16 lg:py-20 bg-[#FAFAF8]">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+              📂 Professionele Toepassingen
+            </h2>
+            <p className="text-xl text-gray-700 mb-8">
+              Wij leveren raambekleding voor:
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <p className="text-lg font-medium text-gray-800">
+                • Kantoorgebouwen
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <p className="text-lg font-medium text-gray-800">
-                  • Kantoorgebouwen
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <p className="text-lg font-medium text-gray-800">
-                  • Restaurants & hotels
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <p className="text-lg font-medium text-gray-800">
-                  • Zorginstellingen
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <p className="text-lg font-medium text-gray-800">
-                  • Retail showrooms
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <p className="text-lg font-medium text-gray-800">
-                  • Vastgoedontwikkeling
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <p className="text-lg font-medium text-gray-800">
-                  • Openbare ruimtes & meer
-                </p>
-              </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <p className="text-lg font-medium text-gray-800">
+                • Restaurants & hotels
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <p className="text-lg font-medium text-gray-800">
+                • Zorginstellingen
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <p className="text-lg font-medium text-gray-800">
+                • Retail showrooms
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <p className="text-lg font-medium text-gray-800">
+                • Vastgoedontwikkeling
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <p className="text-lg font-medium text-gray-800">
+                • Openbare ruimtes & meer
+              </p>
             </div>
           </div>
-        </section>
+        </Container>
+      </section>
 
-        {/* Interested in Collaboration Section */}
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto text-center">
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
+          <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
               🤝 Geïnteresseerd in Samenwerking?
             </h2>
@@ -183,69 +148,69 @@ const BusinessPage = () => {
               </Button>
             </div>
           </div>
-        </section>
+        </Container>
+      </section>
 
-        <Separator className="my-8" />
+      <Separator className="my-0" />
 
-        {/* Dealer Opportunities Section */}
-        <section
-          id="dealer-section"
-          className="py-16 px-4 bg-gradient-to-br from-secondary/20 to-secondary/30"
-        >
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
-                🔗 Dealer & Reseller Opportunities
-              </h2>
-              <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-8">
-                Bent u actief in interieurdesign, installatie of retail?
-              </p>
-              <div className="bg-white rounded-xl p-8 shadow-lg max-w-4xl mx-auto mb-8">
-                <h3 className="text-xl font-bold mb-4 text-gray-900">
-                  Wij bieden:
-                </h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="text-primary text-lg">•</div>
-                    <p className="text-gray-700">
-                      Dealervoorwaarden & volumekortingen
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-primary text-lg">•</div>
-                    <p className="text-gray-700">
-                      White-label samenwerking mogelijk
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-primary text-lg">•</div>
-                    <p className="text-gray-700">
-                      Persoonlijke onboarding ondersteuning
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-primary text-lg">•</div>
-                    <p className="text-gray-700">
-                      Levering door heel België en Europa
-                    </p>
-                  </div>
+      <section
+        id="dealer-section"
+        className="py-16 lg:py-20 bg-[#FAFAF8]"
+      >
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+              🔗 Dealer & Reseller Opportunities
+            </h2>
+            <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-8">
+              Bent u actief in interieurdesign, installatie of retail?
+            </p>
+            <div className="bg-white rounded-xl p-8 shadow-lg max-w-4xl mx-auto mb-8">
+              <h3 className="text-xl font-bold mb-4 text-gray-900">
+                Wij bieden:
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="text-primary text-lg">•</div>
+                  <p className="text-gray-700">
+                    Dealervoorwaarden & volumekortingen
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-primary text-lg">•</div>
+                  <p className="text-gray-700">
+                    White-label samenwerking mogelijk
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-primary text-lg">•</div>
+                  <p className="text-gray-700">
+                    Persoonlijke onboarding ondersteuning
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-primary text-lg">•</div>
+                  <p className="text-gray-700">
+                    Levering door heel België en Europa
+                  </p>
                 </div>
               </div>
-              <Button
-                size="lg"
-                onClick={scrollToDealerForm}
-                className="bg-primary hover:bg-primary/90"
-              >
-                👉 Aanmelden als Dealer
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
             </div>
+            <Button
+              size="lg"
+              onClick={scrollToDealerForm}
+              className="bg-primary hover:bg-primary/90"
+            >
+              👉 Aanmelden als Dealer
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
           </div>
-        </section>
+        </Container>
+      </section>
 
-        {/* Contact Form Section */}
-        {showDealerForm && (
-          <section id="dealerform" className="py-16 px-4 bg-white">
+      {showDealerForm && (
+        <section id="dealerform" className="py-16 lg:py-20 bg-white">
+          <Container>
             <div className="max-w-3xl mx-auto">
               <Card className="w-full">
                 <CardHeader className="text-center">
@@ -282,12 +247,13 @@ const BusinessPage = () => {
                 </CardContent>
               </Card>
             </div>
-          </section>
-        )}
+          </Container>
+        </section>
+      )}
 
-        {/* Contact Information */}
-        <section className="py-16 px-4 bg-gray-900 text-white">
-          <div className="max-w-7xl mx-auto text-center">
+      <section className="py-16 lg:py-20 bg-gray-900 text-white">
+        <Container>
+          <div className="text-center">
             <h2 className="text-3xl font-bold mb-8">
               📧 Vragen? Email info@kaniou.be of gebruik ons contactformulier.
             </h2>
@@ -306,9 +272,9 @@ const BusinessPage = () => {
               </div>
             </div>
           </div>
-        </section>
-      </div>
-    </>
+        </Container>
+      </section>
+    </PageLayout>
   );
 };
 

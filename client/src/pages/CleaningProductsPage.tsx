@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { Link } from "wouter";
+import PageLayout from "@/components/layout/PageLayout";
 import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Check, Package, Heart, Eye } from "lucide-react";
+import { Star, Check, Package } from "lucide-react";
+import { Link } from "wouter";
 
-const CleaningProductsPage: React.FC = () => {
+const CleaningProductsPage = () => {
 
-  // HTC 620 product data
   const htcProduct = {
     id: 1,
     name: 'HTC 620 Vlekkenformule',
@@ -58,219 +56,183 @@ const CleaningProductsPage: React.FC = () => {
     reviewCount: 127
   };
 
-
-
   return (
-    <>
-      <Helmet>
-        <title>HTC 620 Vlekkenreiniger - Professionele Reinigingsproducten | KANIOU</title>
-        <meta
-          name="description"
-          content="HTC 620 vlekkenformule voor tapijten en textiel. Professionele kwaliteit vlekkenreiniger voor gordijnen, meubelstof en vloerbedekking. €9,95 incl. BTW."
-        />
-      </Helmet>
-
-      <Container className="py-8">
-        {/* Breadcrumb */}
-        <div className="mb-6">
-          <nav className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-[#d5c096]">Home</Link>
-            <span>/</span>
-            <Link href="/producten" className="hover:text-[#d5c096]">Producten</Link>
-            <span>/</span>
-            <span className="text-gray-900">Reiniging & Onderhoud</span>
-          </nav>
-        </div>
-
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Reiniging & Onderhoud
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl">
-            Professionele reinigingsproducten voor vloeren, stoffen en gordijnen. 
-            Houd uw interieur in perfecte staat met onze kwaliteitsproducten.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Product Image */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-6">
-              <Card className="overflow-hidden">
-                <div className="aspect-square bg-gray-100 flex items-center justify-center">
-                  <Package className="h-32 w-32 text-gray-400" />
-                </div>
-                {htcProduct.inStock && (
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-green-500 text-white">Op voorraad</Badge>
+    <PageLayout
+      title="Reinigingsproducten"
+      subtitle="Onderhoud"
+      breadcrumbs={[{ label: "Producten", href: "/producten" }, { label: "Reiniging" }]}
+      showCTA={true}
+    >
+      <section className="py-16 lg:py-20">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1">
+              <div className="sticky top-6">
+                <Card className="overflow-hidden">
+                  <div className="aspect-square bg-gray-100 flex items-center justify-center">
+                    <Package className="h-32 w-32 text-gray-400" />
                   </div>
-                )}
-                <div className="absolute top-4 right-4">
-                  <Badge className="bg-red-500 text-white">Professionele kwaliteit</Badge>
-                </div>
-              </Card>
-            </div>
-          </div>
-
-          {/* Product Details */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Product Header */}
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                {htcProduct.name}
-              </h2>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-5 w-5 ${i < Math.floor(htcProduct.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
-                    />
-                  ))}
-                  <span className="text-sm text-gray-600 ml-2">
-                    {htcProduct.rating} ({htcProduct.reviewCount} beoordelingen)
-                  </span>
-                </div>
+                  {htcProduct.inStock && (
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-green-500 text-white">Op voorraad</Badge>
+                    </div>
+                  )}
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-red-500 text-white">Professionele kwaliteit</Badge>
+                  </div>
+                </Card>
               </div>
             </div>
 
-            {/* Price and Purchase */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <div className="text-3xl font-bold text-[#d5c096]">
-                      €{htcProduct.price.toFixed(2)}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      incl. 21% BTW
-                    </div>
+            <div className="lg:col-span-2 space-y-6">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                  {htcProduct.name}
+                </h2>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-5 w-5 ${i < Math.floor(htcProduct.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                      />
+                    ))}
+                    <span className="text-sm text-gray-600 ml-2">
+                      {htcProduct.rating} ({htcProduct.reviewCount} beoordelingen)
+                    </span>
                   </div>
                 </div>
+              </div>
 
-                {/* Contact informatie voor bestellingen */}
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-3">
-                    Voor bestellingen en meer informatie:
-                  </p>
-                  <div className="flex flex-col gap-2">
-                    <Link href="/contact">
-                      <Button 
-                        className="w-full bg-[#d5c096] hover:bg-[#d5c096]/90"
-                        size="lg"
-                      >
-                        Neem Contact Op
-                      </Button>
-                    </Link>
-                    <Link href="/offerte">
-                      <Button 
-                        variant="outline" 
-                        className="w-full"
-                        size="lg"
-                      >
-                        Vraag Offerte Aan
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Product Features */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Belangrijkste voordelen</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {htcProduct.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <Check className="h-5 w-5 text-green-500" />
-                      <span className="text-sm">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Applications */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Toepassingen</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {htcProduct.applications.map((application, index) => (
-                    <Badge key={index} variant="secondary" className="text-sm">
-                      {application}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Product Specifications */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Technische specificaties</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">Volume:</span>
-                      <span className="text-sm font-medium">{htcProduct.specifications.volume}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">Type:</span>
-                      <span className="text-sm font-medium">{htcProduct.specifications.type}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">Merk:</span>
-                      <span className="text-sm font-medium">{htcProduct.specifications.brand}</span>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <div className="text-3xl font-bold text-[#d5c096]">
+                        €{htcProduct.price.toFixed(2)}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        incl. 21% BTW
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">pH-waarde:</span>
-                      <span className="text-sm font-medium">{htcProduct.specifications.pH}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">Biologisch afbreekbaar:</span>
-                      <span className="text-sm font-medium">
-                        {htcProduct.specifications.biodegradable ? 'Ja' : 'Nee'}
-                      </span>
+
+                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-3">
+                      Voor bestellingen en meer informatie:
+                    </p>
+                    <div className="flex flex-col gap-2">
+                      <Link href="/contact">
+                        <Button 
+                          className="w-full bg-[#d5c096] hover:bg-[#d5c096]/90"
+                          size="lg"
+                        >
+                          Neem Contact Op
+                        </Button>
+                      </Link>
+                      <Link href="/offerte">
+                        <Button 
+                          variant="outline" 
+                          className="w-full"
+                          size="lg"
+                        >
+                          Vraag Offerte Aan
+                        </Button>
+                      </Link>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Usage Instructions */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Gebruiksaanwijzing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ol className="space-y-2">
-                  {htcProduct.instructions.map((instruction, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="flex-shrink-0 w-6 h-6 bg-[#d5c096] text-white text-xs rounded-full flex items-center justify-center font-semibold">
-                        {index + 1}
-                      </span>
-                      <span className="text-sm">{instruction}</span>
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Belangrijkste voordelen</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {htcProduct.features.map((feature, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Check className="h-5 w-5 text-green-500" />
+                        <span className="text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Toepassingen</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {htcProduct.applications.map((application, index) => (
+                      <Badge key={index} variant="secondary" className="text-sm">
+                        {application}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Technische specificaties</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">Volume:</span>
+                        <span className="text-sm font-medium">{htcProduct.specifications.volume}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">Type:</span>
+                        <span className="text-sm font-medium">{htcProduct.specifications.type}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">Merk:</span>
+                        <span className="text-sm font-medium">{htcProduct.specifications.brand}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">pH-waarde:</span>
+                        <span className="text-sm font-medium">{htcProduct.specifications.pH}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">Biologisch afbreekbaar:</span>
+                        <span className="text-sm font-medium">
+                          {htcProduct.specifications.biodegradable ? 'Ja' : 'Nee'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gebruiksaanwijzing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ol className="space-y-2">
+                    {htcProduct.instructions.map((instruction, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 bg-[#d5c096] text-white text-xs rounded-full flex items-center justify-center font-semibold">
+                          {index + 1}
+                        </span>
+                        <span className="text-sm">{instruction}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-
-
-      </Container>
-    </>
+        </Container>
+      </section>
+    </PageLayout>
   );
 };
 

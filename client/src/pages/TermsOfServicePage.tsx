@@ -1,59 +1,15 @@
-import { Helmet } from "react-helmet-async";
+import PageLayout from "@/components/layout/PageLayout";
 import Container from "@/components/ui/container";
-import { useLanguage } from "@/context/LanguageContext";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 const TermsOfServicePage = () => {
-  const { t } = useLanguage();
-
   return (
-    <>
-      <Helmet>
-        <title>📄 Algemene Voorwaarden | {t("app.title")}</title>
-        <meta
-          name="description"
-          content="Algemene Gebruiksvoorwaarden en Verkoopvoorwaarden van KANIOU Zilvernaald. Lees de volledige voorwaarden voor het gebruik van www.kaniou.be."
-        />
-      </Helmet>
-
-      {/* Breadcrumb */}
-      <div className="bg-neutral-100 py-4">
+    <PageLayout
+      title="Algemene Voorwaarden"
+      breadcrumbs={[{ label: "Voorwaarden" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20">
         <Container>
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">
-                  🏠 Home
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>
-                →
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <BreadcrumbLink>Algemene Voorwaarden</BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </Container>
-      </div>
-
-      <div className="bg-neutral-100 py-16">
-        <Container>
-          <div className="text-center mb-12">
-            <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              📄 ALGEMENE VOORWAARDEN
-            </h1>
-            <p className="text-text-medium">
-              Laatst geüpdatet op 7 september 2025
-            </p>
-          </div>
-
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 lg:p-10">
             <div className="prose prose-lg max-w-none">
               
@@ -586,8 +542,8 @@ const TermsOfServicePage = () => {
             </div>
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

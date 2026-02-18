@@ -1,8 +1,8 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Helmet } from "react-helmet-async";
 import Container from "@/components/ui/container";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import PageLayout from "@/components/layout/PageLayout";
+
 type GalleryItem = {
   id: number;
   title: string;
@@ -17,64 +17,20 @@ const GalleryPage = () => {
   });
 
   return (
-    <>
-      <Helmet>
-        <title>Galerij - KANIOU zilvernaald</title>
-        <meta
-          name="description"
-          content="Ontdek onze galerij met prachtige realisaties van rolgordijnen, plissé gordijnen en andere raambekleding op maat."
-        />
-      </Helmet>
-
-      {/* Premium Hero Section */}
-      <div className="relative bg-gradient-to-br from-neutral-50 via-white to-yellow-50/30 pt-20 pb-16">
+    <PageLayout
+      title="Onze Realisaties"
+      subtitle="Premium Galerij"
+      description="Ontdek onze mooiste projecten en laat u inspireren door de oneindige mogelijkheden van premium raambekleding op maat."
+      metaDescription="Ontdek onze galerij met prachtige realisaties van rolgordijnen, plissé gordijnen en andere raambekleding op maat."
+      breadcrumbs={[{ label: "Galerij" }]}
+      showCTA={true}
+    >
+      <section className="py-16 lg:py-20 bg-white">
         <Container>
-          <div className="text-center mb-16">
-            {/* Premium Badge */}
-            <div className="inline-flex items-center mb-8 px-4 py-2 bg-gradient-to-r from-yellow-400/20 to-yellow-500/20 backdrop-blur-sm rounded-full border border-yellow-400/30">
-              <div className="w-2 h-2 bg-yellow-400 rounded-full mr-3 animate-pulse"></div>
-              <span className="text-yellow-700 text-sm font-medium uppercase tracking-wider">Premium Galerij</span>
-            </div>
-            
-            <h1 className="font-display text-5xl md:text-7xl text-primary font-bold mb-6 bg-gradient-to-br from-primary to-yellow-600 bg-clip-text text-transparent">
-              Onze Exclusieve
-            </h1>
-            <h2 className="font-display text-4xl md:text-6xl text-neutral-800 font-semibold mb-8">
-              Realisaties
-            </h2>
-            
-            <p className="text-xl md:text-2xl text-neutral-600 max-w-4xl mx-auto leading-relaxed mb-12">
-              Ontdek onze mooiste projecten en laat u inspireren door de oneindige mogelijkheden van 
-              <span className="text-primary font-semibold"> premium raambekleding op maat</span>.
-            </p>
-
-            {/* Premium Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{galleryItems.length}+</div>
-                <div className="text-sm uppercase tracking-wide text-neutral-600">Projecten</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">100%</div>
-                <div className="text-sm uppercase tracking-wide text-neutral-600">Maatwerk</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">30+</div>
-                <div className="text-sm uppercase tracking-wide text-neutral-600">Jaar Ervaring</div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </div>
-
-      {/* Gallery Section */}
-      <div className="py-16 bg-white">
-        <Container>
-          {/* Gallery Grid */}
           <GalleryGrid items={galleryItems} isLoading={isLoading} error={error} />
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

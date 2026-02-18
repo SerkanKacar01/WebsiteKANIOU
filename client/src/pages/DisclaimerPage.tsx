@@ -1,36 +1,15 @@
-import { Helmet } from "react-helmet-async";
+import PageLayout from "@/components/layout/PageLayout";
 import Container from "@/components/ui/container";
-import LanguageSelector from "@/components/layout/LanguageSelector";
-import { useLanguage } from "@/context/LanguageContext";
 
 const DisclaimerPage = () => {
-  const { t, language } = useLanguage();
-
   return (
-    <>
-      <Helmet>
-        <title>📢 Disclaimer | {t("app.title")}</title>
-        <meta
-          name="description"
-          content="Disclaimer en uitsluiting van aansprakelijkheid voor KANIOU Zilvernaald website en diensten."
-        />
-      </Helmet>
-
-      <div className="bg-neutral-100 py-16">
+    <PageLayout
+      title="Disclaimer"
+      breadcrumbs={[{ label: "Disclaimer" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20">
         <Container>
-          <div className="flex justify-end mb-6">
-            <LanguageSelector />
-          </div>
-
-          <div className="text-center mb-12">
-            <h1 className="font-display text-3xl md:text-4xl text-primary font-semibold mb-4">
-              📢 Disclaimer – KANIOU Zilvernaald
-            </h1>
-            <p className="text-text-medium">
-              Laatst bijgewerkt op: 7 september 2025
-            </p>
-          </div>
-
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 lg:p-10">
             <div className="prose prose-lg max-w-none">
               <p className="font-body text-text-medium mb-8">
@@ -159,8 +138,8 @@ const DisclaimerPage = () => {
             </div>
           </div>
         </Container>
-      </div>
-    </>
+      </section>
+    </PageLayout>
   );
 };
 

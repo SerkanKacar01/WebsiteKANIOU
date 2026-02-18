@@ -1,55 +1,21 @@
-import { Helmet } from "react-helmet-async";
+import PageLayout from "@/components/layout/PageLayout";
 import Container from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import QuoteForm from "@/components/forms/QuoteForm";
-import { CheckCircle, Clock, Phone, Mail } from "lucide-react";
+import { CheckCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const QuotePage = () => {
   return (
-    <>
-      <Helmet>
-        <title>Offerte aanvragen | KANIOU zilvernaald</title>
-        <meta
-          name="description"
-          content="Request a personalized quote for premium curtains, blinds, and window treatments from Elegant Drapes. Custom solutions tailored to your needs."
-        />
-      </Helmet>
-
-      {/* Luxury Hero Section */}
-      <div className="relative min-h-[40vh] overflow-hidden">
-        {/* Premium Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#2C3E50] to-[#0f3460] opacity-95"></div>
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(213, 179, 106, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(224, 193, 136, 0.08) 0%, transparent 50%)'
-        }}></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-[#D5B36A]/10 to-[#E0C188]/5 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-l from-[#E0C188]/10 to-[#D5B36A]/5 rounded-full blur-xl animate-pulse delay-1000"></div>
-        
-        <Container className="relative z-10 py-20">
+    <PageLayout
+      title="Offerte Aanvragen"
+      subtitle="Vrijblijvend"
+      breadcrumbs={[{ label: "Offerte" }]}
+      showCTA={false}
+    >
+      <section className="py-16 lg:py-20">
+        <Container>
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#D5B36A] to-[#E0C188] rounded-full mb-8 shadow-2xl">
-                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
-                </svg>
-              </div>
-              <h1 className="font-display text-4xl md:text-6xl text-white font-light mb-6 tracking-tight">
-                <span className="bg-gradient-to-r from-white to-[#F9F2E7] bg-clip-text text-transparent">
-                  Vraag vrijblijvend offerte aan
-                </span>
-              </h1>
-              <p className="font-body text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-                Vul onderstaand formulier in en onze specialisten nemen contact
-                met je op met een gepersonaliseerde offerte op maat van jouw
-                wensen.
-              </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#D5B36A] to-[#E0C188] mx-auto mt-8 rounded-full"></div>
-            </div>
-
-            {/* Premium Form Card */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-3xl rounded-3xl border border-white/20 shadow-2xl"></div>
               <Card className="relative bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-3xl overflow-hidden">
@@ -155,11 +121,9 @@ const QuotePage = () => {
             </div>
           </div>
         </Container>
-      </div>
+      </section>
 
-      {/* Premium Testimonials Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-[#F9F7F3] relative overflow-hidden">
-        {/* Background Elements */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-white to-[#F9F7F3] relative overflow-hidden">
         <div className="absolute top-10 left-1/4 w-64 h-64 bg-gradient-to-br from-[#D5B36A]/5 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-gradient-to-tl from-[#E0C188]/5 to-transparent rounded-full blur-3xl"></div>
         
@@ -262,7 +226,7 @@ const QuotePage = () => {
           </div>
         </Container>
       </section>
-    </>
+    </PageLayout>
   );
 };
 

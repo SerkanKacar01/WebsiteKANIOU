@@ -1,15 +1,6 @@
-import { Helmet } from "react-helmet-async";
+import PageLayout from "@/components/layout/PageLayout";
 import Container from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "wouter";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import {
   Accordion,
   AccordionContent,
@@ -17,29 +8,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  HomeIcon,
-  ChevronRight,
   CheckCircle,
   Settings,
   Shield,
   Droplets,
   Sparkles,
   HelpCircle,
-  Mail,
   Building,
   Home,
   DoorOpen,
   Bed,
   Users,
-  Volume2,
-  Crown,
-  Gem,
   Award,
-  Star,
   Palette,
-  Scissors,
-  Feather,
-  Waves,
   Eye,
   Layers,
 } from "lucide-react";
@@ -131,371 +112,189 @@ const TextielLamellenSimplePage = () => {
   ];
 
   return (
-    <>
-      <Helmet>
-        <title>Luxe Textiel Lamellen – Elegante Stofkunst voor Exclusieve Interieurs | KANIOU Zilvernaald</title>
-        <meta
-          name="description"
-          content="Ontdek onze exclusieve collectie textiel lamellen. Handgemaakte elegantie in premium stoffen, volledig op maat voor discerning interieurs. Tijdloze verfijning ontmoet moderne functionaliteit."
-        />
-      </Helmet>
-
-      {/* Luxury Breadcrumb */}
-      <div className="bg-gradient-to-r from-[#f5f3f8] via-[#f8f6fa] to-[#f5f3f8] py-6 border-b border-[#e6e0ea]/30">
+    <PageLayout
+      title="Textiel Lamellen"
+      subtitle="KANIOU Collectie"
+      description="Verfijnde elegantie in elke vezel. Onze exclusieve textiel lamellen transformeren ruimtes met zachte lijnen en luxueuze stoffen, perfect voor de meest veeleisende interieurs."
+      metaDescription="Ontdek onze exclusieve collectie textiel lamellen. Handgemaakte elegantie in premium stoffen, volledig op maat voor discerning interieurs. Tijdloze verfijning ontmoet moderne functionaliteit."
+      breadcrumbs={[{ label: "Producten" }, { label: "Textiel Lamellen" }]}
+    >
+      <section className="py-16 lg:py-20 bg-white">
         <Container>
-          <Breadcrumb>
-            <BreadcrumbList className="text-sm">
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/" className="text-[#8B7B85] hover:text-[#B8A8C8] transition-colors duration-300 flex items-center gap-1">
-                  <HomeIcon className="h-4 w-4" />
-                  <span className="hidden sm:inline">Home</span>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>
-                <ChevronRight className="h-3 w-3 text-[#B8A8C8]" />
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/" className="text-[#8B7B85] hover:text-[#B8A8C8] transition-colors duration-300">Producten</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>
-                <ChevronRight className="h-3 w-3 text-[#B8A8C8]" />
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <BreadcrumbLink className="text-[#2C3E50] font-medium">Textiel Lamellen</BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </Container>
-      </div>
-
-      <div className="min-h-screen bg-gradient-to-b from-[#fdfcfe] via-[#faf8fc] to-white">
-        {/* Luxury Hero Section */}
-        <section className="relative py-32 overflow-hidden">
-          {/* Sophisticated Background Pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#f5f3f8] via-[#f8f6fa] to-[#f2f0f5]"></div>
-          <div 
-            className="absolute inset-0 opacity-4" 
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23B8A8C8' fill-opacity='0.3'%3E%3Cpath d='M40 40c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8-8-3.6-8-8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-            }}
-          ></div>
-          
-          <Container className="relative">
-            <div className="text-center max-w-5xl mx-auto">
-              {/* Premium Badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] text-white px-6 py-3 rounded-full mb-8 shadow-lg">
-                <Feather className="h-5 w-5" />
-                <span className="text-sm font-medium tracking-wide uppercase">Premium Textiel Kunst</span>
-              </div>
-              
-              {/* Luxury Heading */}
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-[#2C3E50] font-light mb-8 tracking-tight leading-none">
-                <span className="block">Luxe</span>
-                <span className="block bg-gradient-to-r from-[#B8A8C8] via-[#D4C7DD] to-[#B8A8C8] bg-clip-text text-transparent font-medium">
-                  Textiel Lamellen
-                </span>
-                <span className="block text-4xl md:text-5xl lg:text-6xl font-light mt-4">
-                  Elegante Stofkunst
-                </span>
-              </h1>
-              
-              {/* Elegant Subtitle */}
-              <div className="flex items-center justify-center gap-4 mb-8">
-                <div className="w-12 h-px bg-gradient-to-r from-transparent to-[#B8A8C8]"></div>
-                <Scissors className="h-6 w-6 text-[#B8A8C8]" />
-                <div className="w-12 h-px bg-gradient-to-l from-transparent to-[#B8A8C8]"></div>
-              </div>
-              
-              <p className="font-light text-2xl md:text-3xl text-[#2C3E50] leading-relaxed mb-12 max-w-4xl mx-auto">
-                <span className="font-medium italic">Verfijnde elegantie</span> in elke vezel. 
-                Onze exclusieve textiel lamellen transformeren ruimtes met zachte lijnen en luxueuze stoffen, 
-                perfect voor de meest veeleisende interieurs.
-              </p>
-              
-              {/* Luxury Stats */}
-              <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-12">
-                <div className="text-center">
-                  <div className="text-3xl font-light text-[#B8A8C8] mb-2">500+</div>
-                  <div className="text-sm text-[#8B7B85] uppercase tracking-wider">Premium Stoffen</div>
-                </div>
-                <div className="text-center border-x border-[#e6e0ea]">
-                  <div className="text-3xl font-light text-[#B8A8C8] mb-2">100%</div>
-                  <div className="text-sm text-[#8B7B85] uppercase tracking-wider">Op Maat</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-light text-[#B8A8C8] mb-2">∞</div>
-                  <div className="text-sm text-[#8B7B85] uppercase tracking-wider">Design Mogelijkheden</div>
-                </div>
-              </div>
-              
-              {/* Premium CTA */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link href="/offerte">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-[#2C3E50] to-[#34495e] hover:from-[#34495e] hover:to-[#2C3E50] text-white px-12 py-6 text-lg font-medium rounded-full shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-105 border border-[#B8A8C8]/20"
-                  >
-                    <Feather className="mr-3 h-5 w-5" />
-                    Ontdek Uw Perfecte Stof
-                  </Button>
-                </Link>
-                <div className="text-sm text-[#8B7B85] italic">Gratis stofadvies & opmeting</div>
-              </div>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-[#f8f6f0] text-[#8B7355] px-4 py-2 rounded-full mb-6">
+              <CheckCircle className="h-4 w-4" />
+              <span className="text-sm font-medium uppercase tracking-wider">Exclusieve Eigenschappen</span>
             </div>
-          </Container>
-        </section>
+            <h2 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-light mb-6">
+              Verfijning in elk <span className="font-medium italic text-[#D5B992]">detail</span>
+            </h2>
+            <div className="w-24 h-px bg-[#D5B992] mx-auto"></div>
+          </div>
 
-        {/* Premium Features Section */}
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-[#fdfcfe] to-white"></div>
-          <Container className="relative">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-6">
-                <Waves className="h-6 w-6 text-[#B8A8C8]" />
-                <span className="text-[#8B7B85] uppercase tracking-wider text-sm font-medium">Exclusieve Eigenschappen</span>
-              </div>
-              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E50] mb-6">
-                Verfijning in elk Detail
-              </h2>
-              <div className="w-24 h-px bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] mx-auto"></div>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {advantages.map((advantage, index) => (
-                <Card
-                  key={index}
-                  className="border-none shadow-xl bg-gradient-to-br from-white to-[#fdfcfe] hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
-                >
-                  <CardContent className="p-8">
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 rounded-full bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <CheckCircle className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-[#2C3E50] leading-relaxed font-medium">{advantage}</p>
-                      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {advantages.map((advantage, index) => (
+              <Card key={index} className="group border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-full bg-gradient-to-r from-[#D5B992] to-[#E6C988] shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <CheckCircle className="h-6 w-6 text-white" />
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </Container>
-        </section>
+                    <div>
+                      <p className="text-[#2C3E50] leading-relaxed font-medium">{advantage}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </Container>
+      </section>
 
-        {/* Luxury Customization Section */}
-        <section className="py-24 bg-gradient-to-br from-[#f5f3f8] via-[#f8f6fa] to-[#f2f0f5] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#B8A8C8]/10 to-transparent rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#D4C7DD]/10 to-transparent rounded-full blur-3xl"></div>
-          
-          <Container className="relative">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-6">
-                <Palette className="h-6 w-6 text-[#B8A8C8]" />
-                <span className="text-[#8B7B85] uppercase tracking-wider text-sm font-medium">Maatwerk Opties</span>
-              </div>
-              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E50] mb-6">
-                Uw Unieke Stofcreatie
-              </h2>
-              <div className="w-24 h-px bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] mx-auto mb-8"></div>
-              <p className="text-lg text-[#8B7B85] max-w-3xl mx-auto leading-relaxed">
-                Componeer uw perfecte textiel lamellen met onze luxueuze stoffencollectie. 
-                Elke keuze wordt zorgvuldig afgestemd op uw persoonlijke smaak en interieurstijl.
-              </p>
+      <section className="py-16 lg:py-20">
+        <Container>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-white text-[#8B7355] px-4 py-2 rounded-full mb-6 shadow-sm">
+              <Palette className="h-4 w-4" />
+              <span className="text-sm font-medium uppercase tracking-wider">Maatwerk Opties</span>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {personalizationOptions.map((option, index) => (
-                <Card
-                  key={index}
-                  className="border-none shadow-2xl bg-white/80 backdrop-blur-sm hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 group"
-                >
+            <h2 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-light mb-6">
+              Uw unieke <span className="font-medium italic text-[#D5B992]">stofcreatie</span>
+            </h2>
+            <div className="w-24 h-px bg-[#D5B992] mx-auto mb-8"></div>
+            <p className="font-body text-xl text-[#2C3E50] leading-relaxed max-w-3xl mx-auto">
+              Componeer uw perfecte textiel lamellen met onze luxueuze stoffencollectie. 
+              Elke keuze wordt zorgvuldig afgestemd op uw persoonlijke smaak en interieurstijl.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {personalizationOptions.map((option, index) => {
+              const IconComponent = option.icon;
+              return (
+                <Card key={index} className="group border-0 shadow-lg bg-white/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:scale-105">
                   <CardContent className="p-8">
                     <div className="flex items-start gap-4 mb-6">
-                      <div className="p-4 rounded-2xl bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                        <option.icon className="h-6 w-6 text-white" />
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#D5B992] to-[#E6C988] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:shadow-lg transition-all duration-300">
+                        <IconComponent className="h-6 w-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-[#2C3E50] text-xl mb-3">
-                          {option.title}
-                        </h3>
+                        <h3 className="font-display text-lg font-semibold text-[#2C3E50] mb-3">{option.title}</h3>
                       </div>
                     </div>
                     <div className="space-y-3">
                       {option.items.map((item, itemIndex) => (
                         <div key={itemIndex} className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] mt-2 flex-shrink-0"></div>
-                          <p className="text-[#8B7B85] leading-relaxed">
-                            {item}
-                          </p>
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#D5B992] to-[#E6C988] mt-2 flex-shrink-0"></div>
+                          <p className="text-[#8B7355] leading-relaxed">{item}</p>
                         </div>
                       ))}
                     </div>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          </Container>
-        </section>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
 
-        {/* Applications Section */}
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-[#fdfcfe] to-white"></div>
-          <Container className="relative">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-6">
-                <Building className="h-6 w-6 text-[#B8A8C8]" />
-                <span className="text-[#8B7B85] uppercase tracking-wider text-sm font-medium">Premium Toepassingen</span>
-              </div>
-              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E50] mb-6">
-                Ideaal voor Exclusieve Ruimtes
-              </h2>
-              <div className="w-24 h-px bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] mx-auto"></div>
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-[#f8f6f0] text-[#8B7355] px-4 py-2 rounded-full mb-6">
+              <Building className="h-4 w-4" />
+              <span className="text-sm font-medium uppercase tracking-wider">Premium Toepassingen</span>
             </div>
-            <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-8">
-              {applications.map((app, index) => (
-                <Card
-                  key={index}
-                  className="border-none shadow-xl bg-gradient-to-br from-white to-[#fdfcfe] hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 text-center group"
-                >
+            <h2 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-light mb-6">
+              Ideaal voor exclusieve <span className="font-medium italic text-[#D5B992]">ruimtes</span>
+            </h2>
+            <div className="w-24 h-px bg-[#D5B992] mx-auto"></div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            {applications.map((app, index) => {
+              const AppIcon = app.icon;
+              return (
+                <Card key={index} className="group border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:scale-105 text-center">
                   <CardContent className="p-8">
                     <div className="flex justify-center mb-6">
-                      <div className="p-4 rounded-full bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <app.icon className="h-8 w-8 text-white" />
+                      <div className="p-4 rounded-full bg-gradient-to-r from-[#D5B992] to-[#E6C988] shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <AppIcon className="h-8 w-8 text-white" />
                       </div>
                     </div>
                     <p className="text-[#2C3E50] font-medium">{app.label}</p>
                   </CardContent>
                 </Card>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 lg:py-20">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 bg-white text-[#8B7355] px-4 py-2 rounded-full mb-6 shadow-sm">
+                <Sparkles className="h-4 w-4" />
+                <span className="text-sm font-medium uppercase tracking-wider">Zorg & Onderhoud</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-light mb-6">
+                Duurzame <span className="font-medium italic text-[#D5B992]">elegantie</span>
+              </h2>
+              <div className="w-24 h-px bg-[#D5B992] mx-auto"></div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {maintenanceInfo.map((info, index) => (
+                <Card key={index} className="group border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                  <CardContent className="p-8 text-center">
+                    <div className="flex justify-center mb-6">
+                      <div className="p-4 rounded-full bg-gradient-to-r from-[#D5B992] to-[#E6C988] shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        {index === 0 && <Shield className="h-8 w-8 text-white" />}
+                        {index === 1 && <Sparkles className="h-8 w-8 text-white" />}
+                        {index === 2 && <Droplets className="h-8 w-8 text-white" />}
+                      </div>
+                    </div>
+                    <p className="text-[#2C3E50] leading-relaxed font-medium text-lg">{info}</p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          </Container>
-        </section>
+          </div>
+        </Container>
+      </section>
 
-        {/* Maintenance Section */}
-        <section className="py-24 bg-gradient-to-br from-[#f5f3f8] via-[#f8f6fa] to-[#f2f0f5]">
-          <Container>
+      <section className="py-16 lg:py-20 bg-white">
+        <Container>
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-6">
-                <Shield className="h-6 w-6 text-[#B8A8C8]" />
-                <span className="text-[#8B7B85] uppercase tracking-wider text-sm font-medium">Zorg & Onderhoud</span>
+              <div className="inline-flex items-center gap-2 bg-[#f8f6f0] text-[#8B7355] px-4 py-2 rounded-full mb-6">
+                <HelpCircle className="h-4 w-4" />
+                <span className="text-sm font-medium uppercase tracking-wider">Veelgestelde Vragen</span>
               </div>
-              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E50] mb-6">
-                Duurzame Elegantie
+              <h2 className="font-display text-4xl md:text-5xl text-[#2C3E50] font-light mb-6">
+                Expertise tot uw <span className="font-medium italic text-[#D5B992]">dienst</span>
               </h2>
-              <div className="w-24 h-px bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] mx-auto"></div>
+              <div className="w-24 h-px bg-[#D5B992] mx-auto"></div>
             </div>
-            <div className="max-w-4xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-8">
-                {maintenanceInfo.map((info, index) => (
-                  <Card
-                    key={index}
-                    className="border-none shadow-xl bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
-                  >
-                    <CardContent className="p-8 text-center">
-                      <div className="flex justify-center mb-6">
-                        <div className="p-4 rounded-full bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          {index === 0 && <Shield className="h-8 w-8 text-white" />}
-                          {index === 1 && <Sparkles className="h-8 w-8 text-white" />}
-                          {index === 2 && <Droplets className="h-8 w-8 text-white" />}
-                        </div>
-                      </div>
-                      <p className="text-[#2C3E50] leading-relaxed font-medium text-lg">{info}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </Container>
-        </section>
 
-        {/* FAQ Section */}
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-[#fdfcfe] to-white"></div>
-          <Container className="relative">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 mb-6">
-                <HelpCircle className="h-6 w-6 text-[#B8A8C8]" />
-                <span className="text-[#8B7B85] uppercase tracking-wider text-sm font-medium">Veelgestelde Vragen</span>
-              </div>
-              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E50] mb-6">
-                Expertise tot Uw Dienst
-              </h2>
-              <div className="w-24 h-px bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] mx-auto"></div>
-            </div>
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="w-full space-y-4">
-                {faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`} className="border-none">
-                    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
-                      <AccordionTrigger className="text-left text-[#2C3E50] font-medium px-8 py-6 hover:no-underline">
-                        <div className="flex items-center gap-4">
-                          <div className="p-2 rounded-full bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] shadow-md">
-                            <HelpCircle className="h-4 w-4 text-white" />
-                          </div>
-                          <span className="text-lg">{faq.question}</span>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="text-[#8B7B85] px-16 pb-6 text-lg leading-relaxed">
-                        {faq.answer}
-                      </AccordionContent>
-                    </Card>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </Container>
-        </section>
-
-        {/* Luxury Call-to-Action Section */}
-        <section className="py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#2C3E50] via-[#34495e] to-[#2C3E50]"></div>
-          <div 
-            className="absolute inset-0 opacity-20" 
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23B8A8C8' fill-opacity='0.1'%3E%3Cpath d='M60 60c0-11 9-20 20-20s20 9 20 20-9 20-20 20-20-9-20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-            }}
-          ></div>
-          
-          <Container className="relative">
-            <div className="text-center text-white max-w-4xl mx-auto">
-              <div className="inline-flex items-center gap-2 mb-8">
-                <Feather className="h-8 w-8 text-[#B8A8C8]" />
-                <span className="text-[#B8A8C8] uppercase tracking-wider text-sm font-medium">Begin Uw Stoffenreis</span>
-              </div>
-              
-              <h2 className="text-4xl lg:text-6xl font-light mb-8 leading-tight">
-                Transformeer Uw Ruimte met
-                <span className="block font-medium bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] bg-clip-text text-transparent">
-                  Luxueuze Textiel Elegantie
-                </span>
-              </h2>
-              
-              <p className="text-xl mb-12 leading-relaxed text-gray-300 max-w-3xl mx-auto">
-                Ontdek onze exclusieve stoffencollectie en ontvang binnen 24 uur een gepersonaliseerd voorstel. 
-                Inclusief gratis stofadvies en professionele opmeting door onze textielspecialisten.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link href="/offerte">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-[#B8A8C8] to-[#D4C7DD] hover:from-[#D4C7DD] hover:to-[#B8A8C8] text-[#2C3E50] px-12 py-6 text-lg font-semibold rounded-full shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-105"
-                  >
-                    <Mail className="mr-3 h-6 w-6" />
-                    Exclusieve Stofconsultatie
-                  </Button>
-                </Link>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-[#B8A8C8] flex items-center justify-center text-white text-sm font-bold">5</div>
-                    <div className="w-8 h-8 rounded-full bg-[#D4C7DD] flex items-center justify-center text-white">⭐</div>
-                  </div>
-                  <span className="text-sm">Meer dan 750+ exclusieve projecten</span>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-      </div>
-    </>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-0 shadow-lg bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden">
+                  <AccordionTrigger className="px-8 py-6 text-left hover:no-underline hover:bg-[#f8f6f0]/50 transition-colors duration-300">
+                    <span className="font-display text-lg font-semibold text-[#2C3E50]">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-8 pb-6 text-[#8B7355] font-body leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </Container>
+      </section>
+    </PageLayout>
   );
 };
 

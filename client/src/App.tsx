@@ -129,8 +129,8 @@ function Router() {
         <Route path="/disclaimer" component={DisclaimerPage} />
 
         {/* Admin Routes */}
-        <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
         <Route path="/admin-login" component={AdminLoginPage} />
+        <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
         <Route path="/entrepreneur-dashboard" component={EntrepreneurDashboardPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
 

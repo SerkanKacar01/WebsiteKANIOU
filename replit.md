@@ -15,6 +15,7 @@ Preferred communication style: Simple, everyday language.
 - **Build Tool**: Vite
 - **Color Scheme**: Primary (#2C3E50), Secondary (#D5B992), Accent (#E67E22)
 - **UI/UX Decisions**: Responsive design across desktop and mobile, intuitive navigation, visual step indicators for configurators, consistent branding with gold accents (#E6C988, #E9C882). Emphasis on clear, concise informational content for products.
+- **PageLayout Component**: `client/src/components/layout/PageLayout.tsx` - Reusable template for all pages providing consistent hero banner (#2C3E50), breadcrumb navigation, and CTA section. All product and main pages use this component for uniform design.
 
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js

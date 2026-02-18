@@ -181,19 +181,19 @@ const ContactPage = () => {
       showCTA={false}
     >
       {/* Hero CTA Buttons */}
-      <section className="bg-[#2C3E50] -mt-8 pb-12">
+      <section className="py-10 bg-gradient-to-b from-[#f8f6f1] to-white">
         <Container>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/quote"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 shadow-lg"
             >
               <Calendar className="w-5 h-5" />
               Gratis adviesgesprek plannen
             </a>
             <a
               href="tel:+32467856405"
-              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:bg-white/20 hover:scale-105"
+              className="inline-flex items-center gap-3 bg-[#2C3E50] text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:bg-[#1a2a3a] hover:scale-105 shadow-lg"
             >
               <Phone className="w-5 h-5" />
               Direct bellen

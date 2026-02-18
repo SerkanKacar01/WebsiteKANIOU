@@ -495,7 +495,7 @@ export async function registerRoutes(app: Express): Promise<void> {
   });
 
   // Admin authentication status route
-  app.get("/api/admin/auth-status", async (req: any, res) => {
+  app.get("/api/admin/auth-status", noCache, async (req: any, res) => {
     try {
       // Check multiple sources for session ID with priority order
       const sessionId = req.cookies?.sessionId || req.session?.sessionId || req.headers?.authorization;

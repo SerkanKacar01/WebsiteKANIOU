@@ -1489,7 +1489,6 @@ const Home = () => {
 
   const [brandRef, brandVisible] = useScrollReveal(0.2);
   const [craftsmanshipRef, craftsmanshipVisible] = useScrollReveal(0.2);
-  const [galleryRef, galleryVisible] = useScrollReveal(0.1);
 
   return (
     <>
@@ -1641,78 +1640,6 @@ const Home = () => {
         {/* SHOWROOM SECTION */}
         <ShowroomSection />
 
-        {/* GALLERY PREVIEW */}
-        <section ref={galleryRef} className="py-32 bg-gray-50">
-          <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
-            <div
-              className={`text-center mb-20 transition-all duration-1000 ${
-                galleryVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <h2
-                className="text-5xl md:text-6xl font-light text-black mb-6"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Realisaties
-              </h2>
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto mb-6"></div>
-              <p className="text-gray-600 tracking-wide">
-                Een selectie uit ons portfolio
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
-              {[gallery1, gallery2, gallery3, gallery4, gallery5, gallery6].map(
-                (img, i) => (
-                  <div
-                    key={i}
-                    className={`relative overflow-hidden group cursor-pointer aspect-[4/5] transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 ${
-                      galleryVisible
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-12"
-                    }`}
-                    style={{
-                      transitionDelay: galleryVisible ? `${i * 100}ms` : "0ms",
-                    }}
-                    onClick={() => setLocation("/gallerij")}
-                    data-testid={`gallery-item-${i + 1}`}
-                  >
-                    <img
-                      src={img}
-                      alt={`Project ${i + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
-                  </div>
-                ),
-              )}
-            </div>
-
-            <div
-              className={`text-center mt-20 transition-all duration-1000 delay-600 ${
-                galleryVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <button
-                onClick={() => setLocation("/gallerij")}
-                className="group inline-flex items-center px-12 py-4 border border-black text-black hover:bg-black hover:text-white transition-all duration-500 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
-                data-testid="button-view-gallery"
-              >
-                <span className="relative z-10 text-xs tracking-widest uppercase mr-3">
-                  Bekijk alle projecten
-                </span>
-                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
-            </div>
-          </div>
-        </section>
 
         {/* GOOGLE REVIEWS SECTION */}
         <section className="py-16 md:py-32 bg-white">

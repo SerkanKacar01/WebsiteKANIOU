@@ -1,39 +1,48 @@
-// SendGrid Email Client - Replit Connector Integration
-// Uses Replit's connector API for secure credential management
+// SendGrid Email Client
+// Tries SENDGRID_API_KEY secret first, then Replit connector as fallback
 import sgMail from '@sendgrid/mail';
 
-async function getCredentials() {
-  const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
-  const xReplitToken = process.env.REPL_IDENTITY
-    ? 'repl ' + process.env.REPL_IDENTITY
-    : process.env.WEB_REPL_RENEWAL
-    ? 'depl ' + process.env.WEB_REPL_RENEWAL
-    : null;
+const FROM_EMAIL = 'info@kaniou.be';
 
-  if (!xReplitToken) {
-    throw new Error('X_REPLIT_TOKEN not found for repl/depl');
+async function getCredentials(): Promise<{ apiKey: string; email: string }> {
+  if (process.env.SENDGRID_API_KEY) {
+    const key = process.env.SENDGRID_API_KEY.trim();
+    if (key.startsWith('SG.') && key.length > 20) {
+      return { apiKey: key, email: FROM_EMAIL };
+    }
   }
 
-  const connectionSettings = await fetch(
-    'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=sendgrid',
-    {
-      headers: {
-        'Accept': 'application/json',
-        'X_REPLIT_TOKEN': xReplitToken
+  try {
+    const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
+    const xReplitToken = process.env.REPL_IDENTITY
+      ? 'repl ' + process.env.REPL_IDENTITY
+      : process.env.WEB_REPL_RENEWAL
+      ? 'depl ' + process.env.WEB_REPL_RENEWAL
+      : null;
+
+    if (xReplitToken && hostname) {
+      const connectionSettings = await fetch(
+        'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=sendgrid',
+        { headers: { 'Accept': 'application/json', 'X_REPLIT_TOKEN': xReplitToken } }
+      ).then(res => res.json()).then(data => data.items?.[0]);
+
+      if (connectionSettings?.settings?.api_key) {
+        return {
+          apiKey: connectionSettings.settings.api_key.trim(),
+          email: connectionSettings.settings.from_email?.trim() || FROM_EMAIL
+        };
       }
     }
-  ).then(res => res.json()).then(data => data.items?.[0]);
-
-  if (!connectionSettings || (!connectionSettings.settings.api_key || !connectionSettings.settings.from_email)) {
-    throw new Error('SendGrid not connected');
+  } catch (e) {
+    console.warn('SendGrid connector fallback failed:', (e as Error).message);
   }
-  return { apiKey: connectionSettings.settings.api_key.trim(), email: connectionSettings.settings.from_email.trim() };
+
+  throw new Error('SendGrid niet geconfigureerd — stel SENDGRID_API_KEY in of verbind de SendGrid connector');
 }
 
-// WARNING: Never cache this client.
 export async function getUncachableSendGridClient() {
   const { apiKey, email } = await getCredentials();
-  sgMail.setApiKey(apiKey.trim());
+  sgMail.setApiKey(apiKey);
   return {
     client: sgMail,
     fromEmail: email

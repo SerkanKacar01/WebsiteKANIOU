@@ -232,7 +232,7 @@ export interface IStorage {
   createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
   getPaymentOrderById(id: number): Promise<PaymentOrder | undefined>;
   getPaymentOrderByOrderNumber(orderNumber: string): Promise<PaymentOrder | undefined>;
-  getPaymentOrderByBonnummer(bonnummer: string): Promise<PaymentOrder | undefined>;
+  getPaymentOrderByBonnummer(bonnummer: string, customerEmail?: string, clientIp?: string): Promise<PaymentOrder | undefined>;
   getPaymentOrders(): Promise<PaymentOrder[]>;
   deletePaymentOrder(id: number): Promise<void>;
   updateOrderStatus(id: number, statusKey: string, isActive: boolean): Promise<void>;

@@ -1,5 +1,4 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
 import session from "express-session";
 import ConnectPgSimple from "connect-pg-simple";
 import cookieParser from "cookie-parser";
@@ -71,16 +70,26 @@ export async function registerRoutes(app: Express): Promise<void> {
   // Get database connection for session storage
   let sessionStore;
   try {
-    const PgSession = ConnectPgSimple(session);
-    sessionStore = new PgSession({
-      pool,
-      tableName: 'session',
-      createTableIfMissing: true,
-    });
-    console.log('✅ Using PostgreSQL session store for multi-instance deployment');
+    // Test database connectivity before initializing PgSession
+    const testResult = await pool.query('SELECT 1');
+    if (testResult) {
+      const PgSession = ConnectPgSimple(session);
+      sessionStore = new PgSession({
+        pool,
+        tableName: 'session',
+        createTableIfMissing: true,
+      });
+      console.log('✅ Using PostgreSQL session store for multi-instance deployment');
+    }
   } catch (error) {
     console.warn('⚠️  PostgreSQL session store unavailable, falling back to memory store:', error);
     // Fall back to memory store if database is unavailable
+    sessionStore = new session.MemoryStore();
+  }
+  
+  // Ensure sessionStore is always initialized
+  if (!sessionStore) {
+    console.warn('⚠️  Session store not initialized, using memory store fallback');
     sessionStore = new session.MemoryStore();
   }
   

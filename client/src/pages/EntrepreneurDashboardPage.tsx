@@ -49,7 +49,10 @@ import {
   Star,
   Calendar,
   Award,
-  Bell
+  Bell,
+  MessageSquare,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 
 interface OrderStatus {
@@ -155,6 +158,10 @@ export default function EntrepreneurDashboardPage() {
     expectedDeliveryDate: "",
     sendNotification: false,
   });
+
+  // Tab navigation state
+  const [activeTab, setActiveTab] = useState<"orders" | "quotes" | "messages">("orders");
+  const [expandedQuoteId, setExpandedQuoteId] = useState<number | null>(null);
 
   // Premium Animation State
   const [isAnimating, setIsAnimating] = useState(true);
@@ -330,6 +337,20 @@ export default function EntrepreneurDashboardPage() {
   // Fetch dashboard data
   const { data: dashboardData, isLoading: isLoadingDashboard } = useQuery<DashboardData>({
     queryKey: ["/api/admin/dashboard"],
+    enabled: !!authStatus?.authenticated,
+    retry: false,
+  });
+
+  // Fetch enterprise quotes
+  const { data: enterpriseQuotes } = useQuery<any[]>({
+    queryKey: ["/api/admin/enterprise-quotes"],
+    enabled: !!authStatus?.authenticated,
+    retry: false,
+  });
+
+  // Fetch contact submissions
+  const { data: contactSubmissions } = useQuery<any[]>({
+    queryKey: ["/api/admin/contact-submissions"],
     enabled: !!authStatus?.authenticated,
     retry: false,
   });
@@ -705,6 +726,48 @@ export default function EntrepreneurDashboardPage() {
                 </div>
               </div>
 
+              {/* Tab Navigation */}
+              <div className={`transform transition-all duration-1000 delay-400 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                <div className="flex gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-2">
+                  <button
+                    onClick={() => setActiveTab("orders")}
+                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      activeTab === "orders"
+                        ? "bg-gradient-to-r from-amber-500/80 to-orange-500/80 text-white shadow-lg shadow-amber-500/25"
+                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <Package className="w-5 h-5" />
+                    Bestellingen ({dashboardData?.orders?.length || 0})
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("quotes")}
+                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      activeTab === "quotes"
+                        ? "bg-gradient-to-r from-amber-500/80 to-orange-500/80 text-white shadow-lg shadow-amber-500/25"
+                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <FileText className="w-5 h-5" />
+                    Offerteaanvragen ({enterpriseQuotes?.length || 0})
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("messages")}
+                    className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      activeTab === "messages"
+                        ? "bg-gradient-to-r from-amber-500/80 to-orange-500/80 text-white shadow-lg shadow-amber-500/25"
+                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <MessageSquare className="w-5 h-5" />
+                    Berichten ({contactSubmissions?.length || 0})
+                  </button>
+                </div>
+              </div>
+
+              {/* Tab Content */}
+              {activeTab === "orders" && (
+              <>
               {/* Premium Search & Filter Section */}
               <div className={`transform transition-all duration-1000 delay-500 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
                 <div className="relative group">
@@ -1004,6 +1067,241 @@ export default function EntrepreneurDashboardPage() {
                   </Card>
                 </div>
               </div>
+              </>
+              )}
+
+              {/* Offerteaanvragen Tab */}
+              {activeTab === "quotes" && (
+                <div className={`transform transition-all duration-500 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/50 via-cyan-500/50 to-blue-500/50 rounded-2xl blur opacity-30"></div>
+                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+                      <CardHeader className="relative bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-b border-white/10">
+                        <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                          <FileText className="w-7 h-7 text-amber-300" />
+                          Offerteaanvragen
+                          <Badge className="bg-amber-500/20 text-amber-300 border-amber-400/30 ml-2">
+                            {enterpriseQuotes?.length || 0}
+                          </Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="relative p-0">
+                        {!enterpriseQuotes || enterpriseQuotes.length === 0 ? (
+                          <div className="text-center py-16">
+                            <FileText className="w-16 h-16 mx-auto text-slate-400 mb-4" />
+                            <h3 className="text-xl font-semibold text-white mb-2">Geen Offerteaanvragen</h3>
+                            <p className="text-slate-300">Er zijn nog geen offerteaanvragen ontvangen.</p>
+                          </div>
+                        ) : (
+                          <div className="divide-y divide-white/10">
+                            {enterpriseQuotes.map((quote: any) => (
+                              <div key={quote.id} className="hover:bg-white/5 transition-all duration-300">
+                                <div
+                                  className="p-6 cursor-pointer"
+                                  onClick={() => setExpandedQuoteId(expandedQuoteId === quote.id ? null : quote.id)}
+                                >
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                      <div className="bg-gradient-to-r from-amber-400/20 to-orange-500/20 p-2 rounded-lg">
+                                        <FileText className="w-5 h-5 text-amber-300" />
+                                      </div>
+                                      <div>
+                                        <div className="flex items-center gap-3">
+                                          <span className="font-mono text-amber-300 font-bold">
+                                            {quote.submissionId}
+                                          </span>
+                                          <Badge className={`${
+                                            quote.status === 'nieuw' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30' :
+                                            quote.status === 'in_behandeling' ? 'bg-blue-500/20 text-blue-300 border-blue-400/30' :
+                                            quote.status === 'afgerond' ? 'bg-purple-500/20 text-purple-300 border-purple-400/30' :
+                                            'bg-slate-500/20 text-slate-300 border-slate-400/30'
+                                          }`}>
+                                            {quote.status === 'nieuw' ? 'Nieuw' : quote.status === 'in_behandeling' ? 'In behandeling' : quote.status === 'afgerond' ? 'Afgerond' : quote.status}
+                                          </Badge>
+                                        </div>
+                                        <p className="text-white font-semibold mt-1">
+                                          {quote.contact?.firstName} {quote.contact?.lastName}
+                                        </p>
+                                        <div className="flex items-center gap-4 mt-1 text-sm text-slate-300">
+                                          <span>{quote.customerType}</span>
+                                          <span>•</span>
+                                          <span>{quote.projectType}</span>
+                                          <span>•</span>
+                                          <span>{quote.planning === 'asap' ? 'Zo snel mogelijk' : quote.planning === '2-4w' ? '2-4 weken' : quote.planning === '1-2m' ? '1-2 maanden' : 'Later'}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                      <span className="text-sm text-slate-400">
+                                        {formatDate(quote.createdAt)}
+                                      </span>
+                                      {expandedQuoteId === quote.id ? (
+                                        <ChevronUp className="w-5 h-5 text-slate-400" />
+                                      ) : (
+                                        <ChevronDown className="w-5 h-5 text-slate-400" />
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {expandedQuoteId === quote.id && (
+                                  <div className="px-6 pb-6 space-y-4 border-t border-white/10 pt-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                      <div>
+                                        <h4 className="text-emerald-300 font-semibold mb-3 flex items-center gap-2">
+                                          <Users className="w-4 h-4" />
+                                          Contactgegevens
+                                        </h4>
+                                        <div className="bg-white/5 rounded-lg p-4 space-y-2 text-sm">
+                                          <p className="text-white"><span className="text-slate-400">Naam:</span> {quote.contact?.firstName} {quote.contact?.lastName}</p>
+                                          <p className="text-white"><span className="text-slate-400">Email:</span> {quote.contact?.email}</p>
+                                          <p className="text-white"><span className="text-slate-400">Telefoon:</span> {quote.contact?.phone}</p>
+                                          {quote.contact?.address && <p className="text-white"><span className="text-slate-400">Adres:</span> {quote.contact?.address}</p>}
+                                          {quote.contact?.city && <p className="text-white"><span className="text-slate-400">Stad:</span> {quote.contact?.city}</p>}
+                                        </div>
+                                      </div>
+
+                                      <div>
+                                        <h4 className="text-cyan-300 font-semibold mb-3 flex items-center gap-2">
+                                          <Settings className="w-4 h-4" />
+                                          Voorkeuren
+                                        </h4>
+                                        <div className="bg-white/5 rounded-lg p-4 space-y-2 text-sm">
+                                          <p className="text-white"><span className="text-slate-400">Producttypes:</span> {quote.preferences?.productTypes?.join(', ') || 'Niet opgegeven'}</p>
+                                          {quote.preferences?.colors && <p className="text-white"><span className="text-slate-400">Kleuren:</span> {quote.preferences.colors.join(', ')}</p>}
+                                          {quote.preferences?.budget && <p className="text-white"><span className="text-slate-400">Budget:</span> {quote.preferences.budget}</p>}
+                                          <p className="text-white"><span className="text-slate-400">Metingen beschikbaar:</span> {quote.hasMeasurements ? 'Ja' : 'Nee'}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {quote.rooms && quote.rooms.length > 0 && (
+                                      <div>
+                                        <h4 className="text-purple-300 font-semibold mb-3 flex items-center gap-2">
+                                          <Building className="w-4 h-4" />
+                                          Ruimtes & Ramen ({quote.rooms.length})
+                                        </h4>
+                                        <div className="space-y-3">
+                                          {quote.rooms.map((room: any, roomIdx: number) => (
+                                            <div key={roomIdx} className="bg-white/5 rounded-lg p-4">
+                                              <p className="text-white font-semibold mb-2">{room.name}</p>
+                                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                                                {room.windows?.map((win: any, winIdx: number) => (
+                                                  <div key={winIdx} className="bg-white/5 rounded p-2 text-sm">
+                                                    <p className="text-slate-300">Raam {winIdx + 1}</p>
+                                                    <p className="text-white">{win.widthCm} × {win.heightCm} cm</p>
+                                                    {win.productType && <p className="text-amber-300 text-xs">{win.productType}</p>}
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {quote.services && Object.keys(quote.services).length > 0 && (
+                                      <div>
+                                        <h4 className="text-amber-300 font-semibold mb-3 flex items-center gap-2">
+                                          <CheckCircle className="w-4 h-4" />
+                                          Diensten
+                                        </h4>
+                                        <div className="bg-white/5 rounded-lg p-4 text-sm">
+                                          <div className="flex flex-wrap gap-2">
+                                            {quote.services.measurement && <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">Inmeten</Badge>}
+                                            {quote.services.installation && <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30">Installatie</Badge>}
+                                            {quote.services.removal && <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">Demontage</Badge>}
+                                            {quote.services.advice && <Badge className="bg-amber-500/20 text-amber-300 border-amber-400/30">Advies</Badge>}
+                                          </div>
+                                          {quote.services.notes && <p className="text-slate-300 mt-2">{quote.services.notes}</p>}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
+
+              {/* Berichten Tab */}
+              {activeTab === "messages" && (
+                <div className={`transform transition-all duration-500 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-400/50 via-pink-500/50 to-rose-500/50 rounded-2xl blur opacity-30"></div>
+                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+                      <CardHeader className="relative bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-b border-white/10">
+                        <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                          <MessageSquare className="w-7 h-7 text-amber-300" />
+                          Berichten
+                          <Badge className="bg-amber-500/20 text-amber-300 border-amber-400/30 ml-2">
+                            {contactSubmissions?.length || 0}
+                          </Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="relative p-0">
+                        {!contactSubmissions || contactSubmissions.length === 0 ? (
+                          <div className="text-center py-16">
+                            <MessageSquare className="w-16 h-16 mx-auto text-slate-400 mb-4" />
+                            <h3 className="text-xl font-semibold text-white mb-2">Geen Berichten</h3>
+                            <p className="text-slate-300">Er zijn nog geen berichten ontvangen.</p>
+                          </div>
+                        ) : (
+                          <div className="divide-y divide-white/10">
+                            {contactSubmissions.map((submission: any) => (
+                              <div key={submission.id} className="p-6 hover:bg-white/5 transition-all duration-300">
+                                <div className="flex items-start justify-between mb-3">
+                                  <div className="flex items-center gap-3">
+                                    <div className="bg-gradient-to-r from-purple-400/20 to-pink-500/20 p-2 rounded-lg">
+                                      <MessageSquare className="w-5 h-5 text-purple-300" />
+                                    </div>
+                                    <div>
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <Badge className={`${
+                                          submission.type === 'callback' ? 'bg-orange-500/20 text-orange-300 border-orange-400/30' :
+                                          submission.type === 'question' ? 'bg-blue-500/20 text-blue-300 border-blue-400/30' :
+                                          'bg-emerald-500/20 text-emerald-300 border-emerald-400/30'
+                                        }`}>
+                                          {submission.type === 'callback' ? 'Terugbelverzoek' : submission.type === 'question' ? 'Vraag' : 'Contact'}
+                                        </Badge>
+                                      </div>
+                                      <p className="text-white font-semibold text-lg">{submission.name}</p>
+                                      <div className="flex items-center gap-4 text-sm text-slate-300">
+                                        <span>{submission.email}</span>
+                                        {submission.phone && (
+                                          <>
+                                            <span>•</span>
+                                            <span className="font-mono">{submission.phone}</span>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <span className="text-sm text-slate-400">
+                                    {formatDate(submission.createdAt)}
+                                  </span>
+                                </div>
+                                <div className="ml-14">
+                                  <p className="text-amber-300 font-semibold mb-1">{submission.subject}</p>
+                                  <p className="text-slate-300 text-sm whitespace-pre-wrap">{submission.message}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
         </div>

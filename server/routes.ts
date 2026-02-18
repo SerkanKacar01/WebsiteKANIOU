@@ -460,16 +460,22 @@ export async function registerRoutes(app: Express): Promise<void> {
   });
 
   // Admin: get enterprise quotes
-  app.get("/api/admin/enterprise-quotes", async (req: any, res) => {
+  app.get("/api/admin/enterprise-quotes", requireAuth, async (req: any, res) => {
     try {
-      const sessionId = req.cookies?.sessionId || req.session?.sessionId;
-      if (!sessionId) return res.status(401).json({ error: "Unauthorized" });
-      const session = await storage.getAdminSession(sessionId);
-      if (!session) return res.status(401).json({ error: "Unauthorized" });
       const quotes = await storage.getEnterpriseQuotes();
       res.json(quotes);
     } catch (error) {
       console.error("Error fetching enterprise quotes:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+  app.get("/api/admin/contact-submissions", requireAuth, async (req: any, res) => {
+    try {
+      const submissions = await storage.getContactSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      console.error("Error fetching contact submissions:", error);
       res.status(500).json({ error: "Server error" });
     }
   });

@@ -49,7 +49,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Feature Specifications
 - **Product Catalog (Informational)**: Product catalog (curtains, blinds, shutters), smart quote system, image gallery, customer testimonials. All e-commerce/shop functionality (cart, checkout, payment, shop pages) has been completely removed. Product pages serve as informational displays only.
-- **Customer Communication**: Multi-step quote requests, general inquiries, automated email notifications via SendGrid, multilingual content (Dutch, French, English, Turkish). Floating action buttons provide quick access to contact forms, callback requests, measuring instructions, and quote requests.
+- **Customer Communication**: Multi-step quote requests, general inquiries, all submissions stored internally in database (no external email services), multilingual content (Dutch, French, English, Turkish). Floating action buttons provide quick access to contact forms, callback requests, measuring instructions, and quote requests. Admin dashboard has tabs for Bestellingen, Offerteaanvragen, and Berichten (contact/callback/question).
 - **Payment Integration**: Mollie for European payments (credit cards, SEPA, iDEAL, Bancontact). This functionality is integrated for order management but not directly accessible for customer e-commerce purchases due to the removal of the shopping cart.
 - **Content Management**: Full CRUD for products/categories, gallery management, simplified admin dashboard for content and customer management, testimonial system.
 - **Order Management**: Comprehensive entrepreneur dashboard for order status updates (6-step progression), client notes, PDF document uploads, notification preference management (email/WhatsApp). Secure hidden login at `/kaniouzilvernaald-dashboard`.
@@ -71,4 +71,4 @@ Preferred communication style: Simple, everyday language.
 
 ### Third-Party Services
 - **Payment Gateway**: Mollie
-- **Email Service**: SendGrid (for transactional and marketing emails), Mailgun (for specific email notifications like order confirmations and status updates)
+- **Email Service**: None - all form submissions and notifications are stored internally in the database and visible via the admin dashboard. No external email services (SendGrid/Mailgun removed).

@@ -727,8 +727,8 @@ export default function EntrepreneurDashboardPage() {
               </div>
 
               {/* Tab Navigation */}
-              <div className={`transform transition-all duration-1000 delay-400 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
-                <div className="flex flex-col sm:flex-row gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 mb-8">
+              <div className="relative z-20">
+                <div className="flex flex-col sm:flex-row gap-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 mb-8 shadow-2xl">
                   <button
                     onClick={() => setActiveTab("orders")}
                     className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 border ${

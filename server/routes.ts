@@ -1,17 +1,18 @@
 import type { Express } from "express";
+import express from "express";
 import session from "express-session";
 import ConnectPgSimple from "connect-pg-simple";
 import cookieParser from "cookie-parser";
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
 import { pool } from "./db";
-// Import security classes for ultra-secure tracking
 import { SecureBonnummerGenerator, TrackingSecurityMonitor } from "./storage";
 import {
   createSession,
   validateSession,
   deleteSession,
   isValidCredentials,
+  isValidCredentialsAsync,
 } from "./simpleAuth";
 import { sendEmail } from "./services/sendgrid";
 import {
@@ -26,8 +27,24 @@ import { randomBytes } from "crypto";
 import { adminLoginRateLimiter } from "./middleware/rateLimiter";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
 import { registerShopRoutes } from "./shop-routes";
+import {
+  createHelmetMiddleware,
+  createSecurityHeaders,
+  createGlobalRateLimiter,
+  createApiRateLimiter,
+  createAuthRateLimiter,
+  createFormRateLimiter,
+  createHppProtection,
+  inputSanitizationMiddleware,
+  suspiciousActivityDetector,
+  requestSizeLimiter,
+  secureErrorHandler,
+  generateRequestId,
+  securityAuditLogger,
+  bruteForcePrevention,
+  noCache,
+} from "./middleware/security";
 
-// Generate a secure session secret as fallback
 function generateSecureSessionSecret(): string {
   const secret = randomBytes(64).toString('hex');
   console.warn('⚠️  SECURITY: Using generated session secret. Set SESSION_SECRET environment variable for production!');
@@ -35,33 +52,26 @@ function generateSecureSessionSecret(): string {
 }
 
 export async function registerRoutes(app: Express): Promise<void> {
-  // Session and cookie middleware
+  app.set('trust proxy', 1);
+
+  app.use(express.json({ limit: '100kb' }));
+  app.use(express.urlencoded({ extended: false, limit: '100kb' }));
+
   app.use(cookieParser());
 
-  // Enhanced security middleware - Add security headers including CSP
-  app.use((req, res, next) => {
-    // Security headers voor maximale bescherming
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    
-    // Content Security Policy voor extra browser beveiliging - relaxed for development
-    const csp = [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com https://fonts.googleapis.com",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
-      "font-src 'self' https://fonts.gstatic.com data:",
-      "img-src 'self' data: https:",
-      "connect-src 'self' ws: wss:",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'"
-    ].join('; ');
-    
-    res.setHeader('Content-Security-Policy', csp);
-    next();
-  });
+  app.use(generateRequestId());
+
+  app.use(createHelmetMiddleware());
+
+  app.use(createSecurityHeaders());
+
+  app.use(createHppProtection());
+
+  app.use(suspiciousActivityDetector);
+
+  app.use(createGlobalRateLimiter());
+
+  app.use(securityAuditLogger);
 
   // GDPR-compliant session configuration with enhanced security
   const isProduction = process.env.NODE_ENV === 'production' || process.env.REPL_SLUG === 'kaniou-production';
@@ -126,8 +136,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     next();
   };
 
-  // Admin login route with enhanced rate limiting
-  app.post("/api/admin/login", adminLoginRateLimiter, async (req, res) => {
+  app.post("/api/admin/login", adminLoginRateLimiter, bruteForcePrevention, noCache, async (req, res) => {
     try {
       const { email, password } = req.body;
 
@@ -137,30 +146,40 @@ export async function registerRoutes(app: Express): Promise<void> {
           .json({ error: "Email en wachtwoord zijn vereist" });
       }
 
-      if (isValidCredentials(email, password)) {
+      if (typeof email !== 'string' || typeof password !== 'string') {
+        return res.status(400).json({ error: "Ongeldig verzoek" });
+      }
+
+      if (email.length > 254 || password.length > 128) {
+        return res.status(400).json({ error: "Ongeldig verzoek" });
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: "Ongeldig e-mailadres" });
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500));
+
+      if (await isValidCredentialsAsync(email, password)) {
+        if ((req as any).recordBruteForce) (req as any).recordBruteForce(true);
+
         const { sessionId, expiresAt } = createSession(email);
 
-        // Enhanced security logging
         console.log('🔑 SECURITY: Successful admin login:', {
           sessionId: sessionId.substring(0, 8) + '...',
-          email: email,
           ip: req.ip || 'unknown',
-          userAgent: req.get('user-agent'),
           timestamp: new Date().toISOString()
         });
 
-        // Only set cookies for admin authentication (essential cookies)
         (req.session as any).sessionId = sessionId;
         res.cookie("sessionId", sessionId, {
           httpOnly: true,
-          secure: isProduction, // Enhanced: Use same production detection
+          secure: isProduction,
           maxAge: 2 * 60 * 60 * 1000,
-          sameSite: 'lax',
+          sameSite: 'strict',
           path: '/',
-          // This is an essential cookie for admin functionality
         });
-
-        console.log('✅ Session created and cookie set successfully');
 
         res.json({
           success: true,
@@ -168,11 +187,10 @@ export async function registerRoutes(app: Express): Promise<void> {
           admin: { email },
         });
       } else {
-        // Enhanced security logging for failed attempts
+        if ((req as any).recordBruteForce) (req as any).recordBruteForce(false);
+
         console.warn('🚨 SECURITY: Failed admin login attempt:', {
-          email: email,
           ip: req.ip || 'unknown',
-          userAgent: req.get('user-agent'),
           timestamp: new Date().toISOString()
         });
         res.status(401).json({ error: "Ongeldige inloggegevens" });
@@ -236,8 +254,10 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  // Contact form submission endpoint
-  app.post("/api/contact", async (req, res) => {
+  const apiLimiter = createApiRateLimiter();
+  const formLimiter = createFormRateLimiter();
+
+  app.post("/api/contact", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
       // Validate request body
       const validation = insertContactSubmissionSchema.safeParse(req.body);
@@ -325,7 +345,7 @@ Dit bericht werd verzonden op ${new Date().toLocaleDateString("nl-NL")} om ${new
   });
 
   // Color sample request submission endpoint
-  app.post("/api/color-sample-requests", async (req, res) => {
+  app.post("/api/color-sample-requests", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
       // Validate request body
       const validation = insertColorSampleRequestSchema.safeParse(req.body);
@@ -413,7 +433,7 @@ Verzoek ID: ${sampleRequest.id}
   });
 
   // Quote request submission endpoint
-  app.post("/api/quote-requests", async (req, res) => {
+  app.post("/api/quote-requests", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
       // Validate request body
       const validation = insertQuoteRequestSchema.safeParse(req.body);
@@ -549,7 +569,7 @@ Verzoek ID: ${sampleRequest.id}
   });
 
   // Get all orders for admin dashboard (protected)
-  app.get("/api/admin/dashboard", requireAuth, async (req, res) => {
+  app.get("/api/admin/dashboard", requireAuth, noCache, async (req, res) => {
     try {
       const orders = await storage.getPaymentOrders();
 
@@ -1187,7 +1207,7 @@ Tijd: ${new Date().toLocaleString('nl-BE')}
   });
 
   // Contact form endpoints for floating action buttons
-  app.post("/api/contact/callback", async (req, res) => {
+  app.post("/api/contact/callback", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
       const { firstName, lastName, phone, type } = req.body;
 
@@ -1231,7 +1251,7 @@ Deze klant vraagt om teruggebeld te worden.
     }
   });
 
-  app.post("/api/contact/question", async (req, res) => {
+  app.post("/api/contact/question", formLimiter, inputSanitizationMiddleware, async (req, res) => {
     try {
       const { name, email, message, type } = req.body;
 
@@ -1456,8 +1476,7 @@ Beantwoord deze vraag zo snel mogelijk via e-mail.
     return emailRegex.test(email) && email.length <= 254; // RFC 5321 limit
   }
 
-  // Register shop routes for e-commerce
   registerShopRoutes(app);
 
-  // Routes are now registered
+  app.use(secureErrorHandler);
 }

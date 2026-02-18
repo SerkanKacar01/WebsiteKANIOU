@@ -20,13 +20,31 @@ Preferred communication style: Simple, everyday language.
 - **Runtime**: Node.js with Express.js
 - **Language**: TypeScript (ESM modules)
 - **API Design**: RESTful endpoints with validation
-- **Session Management**: Session-based user tracking
+- **Database Driver**: node-postgres (pg) for standard PostgreSQL compatibility
+- **Session Management**: PostgreSQL-backed session store (connect-pg-simple) with MemoryStore fallback
 - **File Uploads**: Multer for image processing
-- **Rate Limiting**: Enhanced multi-layer rate limiting with specialized admin login protection (max 3 attempts per 15 min)
-- **Security Headers**: Advanced security headers (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy)
-- **Session Security**: Production-aware secure cookie configuration with strong session secret generation
-- **Security Monitoring**: Comprehensive security event logging for admin activities and suspicious behavior detection
-- **Technical Implementations**: Secure admin authentication with bcryptjs, memory-based fallbacks for database operations during downtime, smart notification system for order updates, comprehensive document management, enhanced IP blocking for suspicious activities.
+
+### Security Architecture (Maximum Protection Level)
+- **Security Middleware Suite**: server/middleware/security.ts - centralized security module
+- **Helmet Integration**: Comprehensive HTTP security headers via helmet.js
+- **Rate Limiting (4-tier)**:
+  - Global: 300 requests/15min (static assets excluded)
+  - API: 100 requests/15min for API endpoints
+  - Auth: 5 attempts/15min for login endpoints
+  - Forms: 10 submissions/hour for contact/quote forms
+- **Security Headers**: X-Content-Type-Options, X-Frame-Options: DENY, X-XSS-Protection, HSTS (max-age 1 year, preload), Permissions-Policy (all sensors/APIs blocked), X-Download-Options, X-DNS-Prefetch-Control, X-Permitted-Cross-Domain-Policies, Referrer-Policy
+- **Content Security Policy**: Strict CSP with 'self' default, whitelisted Cookiebot/Google Fonts, frame-ancestors 'none', object-src 'none', form-action 'self', upgrade-insecure-requests
+- **Brute Force Prevention**: Exponential backoff lockout (1min → 2min → 4min → up to 1hr) after 3 failed attempts per IP
+- **Admin Authentication**: bcrypt password verification (cost factor 12), timing-safe HMAC comparison fallback, 48-byte session tokens, max 10 concurrent sessions, format validation
+- **Input Sanitization**: HTML entity encoding on all text inputs, honeypot fields, spam pattern detection
+- **Attack Detection**: Automatic blocking of path traversal, SQL injection, XSS, CMS probing (WordPress/PHP), config file probing (.env/.git), null byte injection
+- **HPP Protection**: HTTP Parameter Pollution prevention via hpp middleware
+- **Request Controls**: 100KB body size limit, request ID generation for audit trails
+- **Security Audit Logging**: All sensitive endpoint access logged with request ID, IP, method, path, user-agent
+- **Session Security**: httpOnly + secure + sameSite:strict cookies, 2-hour expiry, LRU session eviction
+- **Error Handling**: Production error handler hides stack traces and internal details
+- **CSRF Protection**: Single-use tokens with 1-hour expiry, session-bound validation
+- **Technical Implementations**: Memory-based fallbacks for database operations during downtime, smart notification system for order updates, comprehensive document management.
 
 ### Feature Specifications
 - **E-commerce System (Informational)**: Product catalog (curtains, blinds, shutters), smart quote system, image gallery, customer testimonials. All e-commerce purchasing capabilities (cart, checkout, payment integration) have been removed, transforming product pages into informational displays.

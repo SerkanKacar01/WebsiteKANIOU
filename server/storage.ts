@@ -35,6 +35,9 @@ import {
   colorSampleRequests,
   ColorSampleRequest,
   InsertColorSampleRequest,
+  enterpriseQuoteRequests,
+  EnterpriseQuoteRequest,
+  InsertEnterpriseQuoteRequest,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";
@@ -223,6 +226,11 @@ export interface IStorage {
   // Quote Requests
   createQuoteRequest(request: InsertQuoteRequest): Promise<QuoteRequest>;
   getQuoteRequests(): Promise<QuoteRequest[]>;
+  
+  // Enterprise Quote Requests
+  createEnterpriseQuote(request: InsertEnterpriseQuoteRequest): Promise<EnterpriseQuoteRequest>;
+  getEnterpriseQuotes(): Promise<EnterpriseQuoteRequest[]>;
+  getEnterpriseQuoteById(id: number): Promise<EnterpriseQuoteRequest | undefined>;
   
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
@@ -524,6 +532,21 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
   
   async getQuoteRequests(): Promise<QuoteRequest[]> {
     return await db.select().from(quoteRequests).orderBy(desc(quoteRequests.createdAt));
+  }
+
+  // Enterprise Quote Requests
+  async createEnterpriseQuote(request: InsertEnterpriseQuoteRequest): Promise<EnterpriseQuoteRequest> {
+    const result = await db.insert(enterpriseQuoteRequests).values(request).returning();
+    return result[0];
+  }
+
+  async getEnterpriseQuotes(): Promise<EnterpriseQuoteRequest[]> {
+    return await db.select().from(enterpriseQuoteRequests).orderBy(desc(enterpriseQuoteRequests.createdAt));
+  }
+
+  async getEnterpriseQuoteById(id: number): Promise<EnterpriseQuoteRequest | undefined> {
+    const result = await db.select().from(enterpriseQuoteRequests).where(eq(enterpriseQuoteRequests.id, id));
+    return result[0];
   }
   
   // Contact Submissions

@@ -1,0 +1,363 @@
+DOEL
+
+Bouw een enterprise-niveau offerteaanvraagformulier voor een gordijnen- en raamdecoratiebedrijf.
+
+Het formulier moet ondersteunen:
+	•	Meerdere ruimtes
+	•	Meerdere ramen per ruimte
+	•	Elk raam met verschillende breedte x hoogte maten
+	•	Verschillende voorkeuren per ruimte of per raam
+
+In deze fase:
+
+Geen prijsberekening, geen calculator, geen betalingsmodule.
+Enkel inhoud, structuur, validatie, UX en data-opslag.
+
+⸻
+
+1) PAGINASTRUCTUUR (ENTERPRISE LAYOUT)
+
+Layout vereisten
+
+Gebruik een 2-koloms desktop layout:
+	•	Linkerkolom: de formulierstappen
+	•	Rechterkolom: een sticky “Offerteoverzicht” paneel dat live update (zonder prijzen)
+
+Op mobiel:
+	•	Het overzicht wordt ingeklapt in een knop:
+“Toon overzicht”
+	•	Dit opent een bottom sheet / uitschuifpaneel
+
+⸻
+
+Stapnavigatie
+
+Het formulier moet een stapsgewijze wizard zijn met:
+	•	Stapindicator (Stap 1/5, Stap 2/5, enz.)
+	•	Vorige / Volgende knoppen
+	•	“Voortgang opslaan” optioneel (indien eenvoudig te implementeren)
+
+⸻
+
+2) STAP 1 — PROJECTOVERZICHT (HOOGWAARDIGE INTAKE)
+
+Velden
+	1.	Type klant (radio)
+	•	Particulier
+	•	Zakelijk
+	•	Project (vastgoed / horeca / grotere projecten)
+	2.	Type project (radio)
+	•	Nieuwbouw
+	•	Renovatie
+	•	Vervanging
+	3.	Gewenste planning (dropdown)
+	•	Zo snel mogelijk
+	•	Binnen 2–4 weken
+	•	Binnen 1–2 maanden
+	•	Geen haast / later plannen
+	4.	Heb je al maten? (radio)
+	•	Ja, ik heb maten
+	•	Nee, ik wens een opmeting
+	5.	Aantal ruimtes (dropdown)
+	•	1
+	•	2
+	•	3
+	•	4
+	•	5+
+
+Bij keuze 5+ tonen:
+“U kunt later extra ruimtes toevoegen.”
+
+⸻
+
+Microcopy onder stap 1
+
+Tekst:
+
+“Deze offerteaanvraag is ontworpen voor maatwerkoplossingen. U kunt meerdere ruimtes en meerdere ramen met verschillende afmetingen toevoegen.”
+
+⸻
+
+3) STAP 2 — RUIMTES & RAMEN (KERN: BREEDTE X HOOGTE + HERHALING)
+
+Hoofdvereiste
+
+Implementeer een herhaalbare structuur:
+	•	De gebruiker kan Ruimte-blokken toevoegen.
+	•	Binnen elke ruimte kunnen meerdere Raam-blokken toegevoegd worden.
+	•	Elk raam heeft eigen breedte x hoogte en opties.
+
+⸻
+
+Ruimte-blok velden
+	•	Naam ruimte (dropdown + mogelijkheid tot vrije invoer)
+	•	Woonkamer
+	•	Keuken
+	•	Slaapkamer
+	•	Bureau
+	•	Hal
+	•	Kinderkamer
+	•	Andere (tekstveld)
+	•	Opmerkingen bij ruimte (optioneel tekstveld)
+Placeholder:
+“Is er iets bijzonder aan deze ruimte? (bijv. radiator, schuin dak, grote raampartijen)”
+
+⸻
+
+Raam-blok velden (herhaalbaar)
+
+Elk raam moet bevatten:
+	1.	Raamnaam / label (tekst)
+Placeholder:
+“Bijvoorbeeld: Raam links / Voorgevel / Groot raam”
+	2.	Breedte (cm) (verplicht, numeriek)
+	3.	Hoogte (cm) (verplicht, numeriek)
+	4.	Montagetype (radio)
+	•	In de dag
+	•	Op de dag
+	•	Weet ik niet
+	5.	Aantal (dropdown)
+	•	1
+	•	2
+	•	3
+	•	4
+	•	5+
+	6.	Foto uploaden (optioneel)
+Kleine tekst:
+“Optioneel, maar helpt ons bij beter advies.”
+
+⸻
+
+UX-regels voor herhaling
+
+Knoppen:
+	•	“+ Ruimte toevoegen”
+	•	“+ Raam toevoegen”
+	•	“Raam dupliceren” (kopieert alle ingevulde gegevens)
+	•	Verwijderen van ruimte of raam (met bevestiging)
+
+⸻
+
+Validatievereisten
+	•	Breedte en hoogte zijn verplicht
+	•	Enkel positieve numerieke waarden
+	•	Als “Weet ik niet” gekozen wordt bij montagetype:
+Toon melding:
+“Geen probleem — wij controleren de maten tijdens de opmeting.”
+
+⸻
+
+Wat moet het overzichtspaneel tonen (geen prijzen)
+	•	Totaal aantal ruimtes
+	•	Totaal aantal ramen
+	•	Per ruimte:
+	•	Naam ruimte
+	•	Per raam:
+	•	Label
+	•	Breedte x hoogte
+	•	Aantal
+	•	Montagetype
+
+⸻
+
+4) STAP 3 — PRODUCT & STIJLVOORKEUREN
+
+Doel
+
+Producttype en voorkeuren verzamelen per:
+	•	Alle ramen samen
+OF
+	•	Per ruimte / per raam
+
+⸻
+
+Keuze bovenaan stap 3
+	•	Optie A: “Voorkeuren toepassen op ALLE ramen”
+	•	Optie B: “Voorkeuren instellen PER ruimte / PER raam”
+
+Bij A → één centrale selectie
+Bij B → selectie per ruimte of raam
+
+⸻
+
+Productkeuze (met visuals)
+
+Selecteerbaar:
+	•	Overgordijnen
+	•	Vitrage
+	•	Wave gordijnen
+	•	Dubbele plooi
+	•	Vouwgordijnen
+	•	Rolgordijnen
+	•	Duo rolgordijnen
+	•	Lamellen
+	•	Jaloezieën
+	•	Shutters
+
+⸻
+
+Lichtinval (radio)
+	•	Transparant / decoratief
+	•	Lichtdoorlatend
+	•	Verduisterend
+	•	Weet ik niet
+
+⸻
+
+Stijl (dropdown)
+	•	Modern
+	•	Hotel chic
+	•	Minimalistisch
+	•	Klassiek
+	•	Scandinavisch
+	•	Warm & gezellig
+	•	Weet ik niet
+
+⸻
+
+Kleurvoorkeur (optioneel)
+	•	Neutraal (wit / beige / grijs)
+	•	Warme tinten
+	•	Donkere tinten
+	•	Aardetinten
+	•	Geen voorkeur
+
+⸻
+
+Extra opmerkingen
+
+Tekstveld:
+
+“Heeft u specifieke wensen? (privacy, thermische isolatie, akoestiek, kindveilig, huisdieren, enz.)”
+
+⸻
+
+5) STAP 4 — DIENSTEN & AFSPRAAKVOORKEUR
+
+Selectievakjes
+	•	Opmeting aan huis
+	•	Installatieservice
+	•	Oude gordijnen verwijderen
+	•	Advies aan huis
+	•	Showroombezoek
+	•	Projectbegeleiding (voor zakelijke klanten)
+
+⸻
+
+Contactvoorkeur
+	•	Telefoon
+	•	WhatsApp
+	•	E-mail
+
+⸻
+
+Gewenst moment
+	•	Weekdag ochtend
+	•	Weekdag namiddag
+	•	Weekdag avond
+	•	Zaterdag
+
+⸻
+
+Stad / regio (tekstveld)
+
+⸻
+
+6) STAP 5 — CONTACTGEGEVENS
+
+Verplichte velden:
+	•	Voornaam
+	•	Achternaam
+	•	E-mail
+	•	Telefoonnummer
+	•	Straat + huisnummer
+	•	Postcode
+	•	Gemeente
+	•	Land (standaard België)
+
+⸻
+
+Voor Zakelijk / Project (voorwaardelijk zichtbaar)
+	•	Bedrijfsnaam
+	•	BTW-nummer
+
+⸻
+
+GDPR-toestemming (verplicht)
+
+Tekst:
+
+“Ik ga akkoord dat mijn gegevens gebruikt worden om contact met mij op te nemen over mijn offerteaanvraag, conform het privacybeleid.”
+
+Met link naar privacybeleid.
+
+⸻
+
+7) BEVESTIGINGSSCHERM
+
+Na verzending tonen:
+
+“Bedankt — uw offerteaanvraag werd succesvol ontvangen.”
+
+Toon een overzicht van:
+	•	Ruimtes en ramen met maten
+	•	Geselecteerde voorkeuren
+	•	Diensten
+	•	Contactgegevens (gedeeltelijk gemaskeerd)
+
+Knoppen:
+	•	“Aanvraag bewerken”
+	•	“Nieuwe aanvraag indienen”
+
+⸻
+
+8) DATA-OPSLAG VEREISTEN
+
+Bij verzending moet opgeslagen worden:
+	•	Unieke Submission ID
+	•	Datum en tijd
+	•	Type klant
+	•	Projectgegevens
+	•	Array van ruimtes
+	•	Elke ruimte bevat array van ramen
+	•	Voorkeuren (globaal of per ruimte/raam)
+	•	Geselecteerde diensten
+	•	Contactgegevens
+	•	Referenties naar geüploade bestanden
+
+⸻
+
+Admin-weergave
+
+Maak een basis adminpagina:
+
+“Offerteaanvragen”
+
+Elke aanvraag moet volledig zichtbaar zijn met alle details.
+
+⸻
+
+9) VISUAL & UX VEREISTEN
+	•	Strak, professioneel design
+	•	Geen speels of kinderachtig ontwerp
+	•	Moderne kaarten
+	•	Duidelijke typografie
+	•	Volledig responsive (desktop / tablet / mobiel)
+	•	Moet aanvoelen als een premium configurator
+
+⸻
+
+OPLEVERING VOOR DEZE FASE
+
+Replit moet implementeren:
+
+✅ Volledig multi-step formulier
+✅ Herhaalbare ruimtes + ramen met breedte x hoogte + duplicatie
+✅ Sticky overzichtspaneel (zonder prijs)
+✅ Validaties + professionele microcopy
+✅ Gestructureerde data-opslag
+✅ Basis admin-lijstweergave
+
+Geen prijsberekening.
+Geen calculator.
+Geen betalingsintegratie.

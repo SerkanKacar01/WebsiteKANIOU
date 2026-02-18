@@ -749,3 +749,29 @@ export const fabricOrderItemsRelations = relations(fabricOrderItems, ({ one }) =
     references: [pleatTypes.id],
   }),
 }));
+
+// Enterprise Quote Requests
+export const enterpriseQuoteRequests = pgTable("enterprise_quote_requests", {
+  id: serial("id").primaryKey(),
+  submissionId: text("submission_id").notNull().unique(),
+  status: text("status").default("nieuw"),
+  customerType: text("customer_type").notNull(),
+  projectType: text("project_type").notNull(),
+  planning: text("planning").notNull(),
+  hasMeasurements: boolean("has_measurements").default(false),
+  rooms: jsonb("rooms").notNull(),
+  preferences: jsonb("preferences").notNull(),
+  services: jsonb("services"),
+  contact: jsonb("contact").notNull(),
+  fileReferences: text("file_references").array(),
+  language: text("language").default("nl"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertEnterpriseQuoteSchema = createInsertSchema(enterpriseQuoteRequests).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type EnterpriseQuoteRequest = typeof enterpriseQuoteRequests.$inferSelect;
+export type InsertEnterpriseQuoteRequest = z.infer<typeof insertEnterpriseQuoteSchema>;

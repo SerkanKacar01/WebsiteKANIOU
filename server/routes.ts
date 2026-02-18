@@ -519,6 +519,116 @@ Verzoek ID: ${sampleRequest.id}
     }
   });
 
+  // Enterprise quote request submission
+  app.post("/api/enterprise-quote-requests", formLimiter, inputSanitizationMiddleware, async (req, res) => {
+    try {
+      const { customerType, projectType, planning, hasMeasurements, rooms, preferences, services, contact, website } = req.body;
+
+      if (website && website.length > 0) {
+        return res.status(400).json({ error: "Invalid submission" });
+      }
+
+      const validCustomerTypes = ["Particulier", "Zakelijk", "Project"];
+      const validProjectTypes = ["Nieuwbouw", "Renovatie", "Vervanging"];
+      const validPlannings = ["asap", "2-4w", "1-2m", "later"];
+
+      if (!customerType || !validCustomerTypes.includes(customerType)) {
+        return res.status(400).json({ error: "Ongeldig klanttype" });
+      }
+      if (!projectType || !validProjectTypes.includes(projectType)) {
+        return res.status(400).json({ error: "Ongeldig projecttype" });
+      }
+      if (!planning || !validPlannings.includes(planning)) {
+        return res.status(400).json({ error: "Ongeldige planning" });
+      }
+      if (!Array.isArray(rooms) || rooms.length === 0) {
+        return res.status(400).json({ error: "Minstens één ruimte vereist" });
+      }
+      for (const room of rooms) {
+        if (!room.name || typeof room.name !== "string") {
+          return res.status(400).json({ error: "Elke ruimte moet een naam hebben" });
+        }
+        if (!Array.isArray(room.windows) || room.windows.length === 0) {
+          return res.status(400).json({ error: "Elke ruimte moet minstens één raam hebben" });
+        }
+        for (const win of room.windows) {
+          if (!win.widthCm || !win.heightCm || win.widthCm <= 0 || win.heightCm <= 0 || win.widthCm > 2000 || win.heightCm > 1000) {
+            return res.status(400).json({ error: "Ongeldige raammaten (breedte/hoogte moeten positief zijn)" });
+          }
+        }
+      }
+      if (!preferences || !Array.isArray(preferences.productTypes) || preferences.productTypes.length === 0) {
+        return res.status(400).json({ error: "Selecteer minstens één producttype" });
+      }
+      if (!contact || typeof contact !== "object") {
+        return res.status(400).json({ error: "Contactgegevens vereist" });
+      }
+      const { firstName, lastName, email, phone } = contact;
+      if (!firstName || typeof firstName !== "string" || firstName.trim().length < 2) {
+        return res.status(400).json({ error: "Voornaam is verplicht (min. 2 tekens)" });
+      }
+      if (!lastName || typeof lastName !== "string" || lastName.trim().length < 2) {
+        return res.status(400).json({ error: "Achternaam is verplicht (min. 2 tekens)" });
+      }
+      if (!email || typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return res.status(400).json({ error: "Geldig e-mailadres is verplicht" });
+      }
+      if (!phone || typeof phone !== "string" || phone.trim().length < 8) {
+        return res.status(400).json({ error: "Geldig telefoonnummer is verplicht" });
+      }
+
+      const submissionId = `OFR-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+      const quote = await storage.createEnterpriseQuote({
+        submissionId,
+        customerType,
+        projectType,
+        planning,
+        hasMeasurements: hasMeasurements || false,
+        rooms,
+        preferences,
+        services: services || {},
+        contact,
+        language: "nl",
+        status: "nieuw",
+      });
+
+      try {
+        const { sendQuoteRequestEmail } = await import("./sendgrid/client");
+        await sendQuoteRequestEmail({
+          firstName: contact.firstName,
+          lastName: contact.lastName,
+          email: contact.email,
+          phone: contact.phone,
+          productType: preferences?.productTypes?.join(", ") || "Diverse",
+          message: `Enterprise offerte: ${(rooms as any[])?.length || 0} ruimte(s), type: ${customerType}, project: ${projectType}`,
+        });
+      } catch (emailError) {
+        console.error("Email notification failed:", emailError);
+      }
+
+      res.json({ success: true, submissionId, message: "Offerteaanvraag succesvol ontvangen" });
+    } catch (error: any) {
+      console.error("Enterprise quote submission error:", error);
+      res.status(500).json({ error: "Verzending mislukt" });
+    }
+  });
+
+  // Admin: get enterprise quotes
+  app.get("/api/admin/enterprise-quotes", async (req: any, res) => {
+    try {
+      const sessionId = req.cookies?.sessionId || req.session?.sessionId;
+      if (!sessionId) return res.status(401).json({ error: "Unauthorized" });
+      const session = await storage.getAdminSession(sessionId);
+      if (!session) return res.status(401).json({ error: "Unauthorized" });
+      const quotes = await storage.getEnterpriseQuotes();
+      res.json(quotes);
+    } catch (error) {
+      console.error("Error fetching enterprise quotes:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
   // Admin authentication status route
   app.get("/api/admin/auth-status", async (req: any, res) => {
     try {

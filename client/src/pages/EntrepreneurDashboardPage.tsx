@@ -160,7 +160,7 @@ export default function EntrepreneurDashboardPage() {
   });
 
   // Tab navigation state
-  const [activeTab, setActiveTab] = useState<"orders" | "quotes" | "messages">("orders");
+  const [activeTab, setActiveTab] = useState<"quotes" | "messages">("quotes");
   const [expandedQuoteId, setExpandedQuoteId] = useState<number | null>(null);
 
   // Premium Animation State
@@ -398,14 +398,34 @@ export default function EntrepreneurDashboardPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/enterprise-quotes"] });
       toast({
-        title: "✅ Offerte Verwijderd",
+        title: "Offerte Verwijderd",
         description: "De offerteaanvraag is succesvol verwijderd.",
       });
     },
     onError: () => {
       toast({
-        title: "❌ Verwijder Fout",
+        title: "Verwijder Fout",
         description: "Er is een probleem opgetreden bij het verwijderen van de offerte.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteMessageMutation = useMutation({
+    mutationFn: async (messageId: number) => {
+      await apiRequest("DELETE", `/api/admin/contact-submissions/${messageId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/contact-submissions"] });
+      toast({
+        title: "Bericht Verwijderd",
+        description: "Het bericht is succesvol verwijderd.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Verwijder Fout",
+        description: "Er is een probleem opgetreden bij het verwijderen van het bericht.",
         variant: "destructive",
       });
     },
@@ -651,133 +671,9 @@ export default function EntrepreneurDashboardPage() {
 
           <div className="px-6 pb-12">
             <div className="max-w-7xl mx-auto space-y-8">
-              {/* Premium Statistics Cards */}
-              <div className={`transform transition-all duration-1000 delay-300 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {/* Total Orders */}
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/50 to-orange-500/50 rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
-                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden h-full">
-                      <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-orange-500/10"></div>
-                      <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-white">
-                          Totaal Orders
-                        </CardTitle>
-                        <div className="bg-gradient-to-br from-amber-400/20 to-orange-500/20 backdrop-blur-sm p-3 rounded-xl border border-white/20">
-                          <Package className="w-6 h-6 text-amber-300" />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="relative">
-                        <div className="text-3xl font-bold text-white mb-2">
-                          {dashboardData?.totalOrders || 0}
-                        </div>
-                        <p className="text-slate-300 text-sm flex items-center gap-1">
-                          <TrendingUp className="w-3 h-3" />
-                          Premium bestellingen
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Pending Orders */}
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-400/50 to-cyan-500/50 rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
-                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden h-full">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-cyan-500/10"></div>
-                      <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-white">
-                          In Behandeling
-                        </CardTitle>
-                        <div className="bg-gradient-to-br from-blue-400/20 to-cyan-500/20 backdrop-blur-sm p-3 rounded-xl border border-white/20">
-                          <Zap className="w-6 h-6 text-blue-300" />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="relative">
-                        <div className="text-3xl font-bold text-white mb-2">
-                          {dashboardData?.pendingOrders || 0}
-                        </div>
-                        <p className="text-slate-300 text-sm flex items-center gap-1">
-                          <BarChart3 className="w-3 h-3" />
-                          Actieve projecten
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Total Revenue */}
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/50 to-teal-500/50 rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
-                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden h-full">
-                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-teal-500/10"></div>
-                      <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-white">
-                          Premium Omzet
-                        </CardTitle>
-                        <div className="bg-gradient-to-br from-emerald-400/20 to-teal-500/20 backdrop-blur-sm p-3 rounded-xl border border-white/20">
-                          <Euro className="w-6 h-6 text-emerald-300" />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="relative">
-                        <div className="text-3xl font-bold text-white mb-2">
-                          €{((dashboardData?.totalRevenue || 0) / 100).toFixed(2)}
-                        </div>
-                        <p className="text-slate-300 text-sm flex items-center gap-1">
-                          <Star className="w-3 h-3" />
-                          Bruto omzet
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Unique Customers */}
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-400/50 to-pink-500/50 rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
-                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl rounded-2xl overflow-hidden h-full">
-                      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-pink-500/10"></div>
-                      <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-white">
-                          VIP Klanten
-                        </CardTitle>
-                        <div className="bg-gradient-to-br from-purple-400/20 to-pink-500/20 backdrop-blur-sm p-3 rounded-xl border border-white/20">
-                          <Users className="w-6 h-6 text-purple-300" />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="relative">
-                        <div className="text-3xl font-bold text-white mb-2">
-                          {dashboardData?.uniqueCustomers || 0}
-                        </div>
-                        <p className="text-slate-300 text-sm flex items-center gap-1">
-                          <Award className="w-3 h-3" />
-                          Exclusieve klanten
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              </div>
-
-              {/* Enhanced Tab Navigation */}
+              {/* Tab Navigation */}
               <div className="mb-10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <button
-                    onClick={() => setActiveTab("orders")}
-                    className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
-                      activeTab === "orders"
-                        ? "bg-gradient-to-br from-amber-500 to-orange-600 border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.4)] scale-105 z-10"
-                        : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10"
-                    }`}
-                  >
-                    <div className={`p-4 rounded-xl mb-3 ${activeTab === 'orders' ? 'bg-white/20' : 'bg-amber-500/10'}`}>
-                      <Package className={`w-8 h-8 ${activeTab === 'orders' ? 'text-white' : 'text-amber-400'}`} />
-                    </div>
-                    <span className={`text-xl font-bold ${activeTab === 'orders' ? 'text-white' : 'text-slate-300'}`}>
-                      Bestellingen
-                    </span>
-                    <span className={`text-sm mt-1 ${activeTab === 'orders' ? 'text-white/80' : 'text-slate-500'}`}>
-                      ({dashboardData?.orders?.length || 0} totaal)
-                    </span>
-                  </button>
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <button
                     onClick={() => setActiveTab("quotes")}
                     className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
@@ -820,7 +716,7 @@ export default function EntrepreneurDashboardPage() {
 
               {/* Tab Content */}
               <div className="relative z-10">
-                {activeTab === "orders" && (
+                {false && (
                   <>
                     {/* Premium Search & Filter Section */}
                     <div className="transform transition-all duration-500 translate-y-0 opacity-100">
@@ -1375,9 +1271,25 @@ export default function EntrepreneurDashboardPage() {
                                       </div>
                                     </div>
                                   </div>
-                                  <span className="text-sm text-slate-400">
-                                    {formatDate(submission.createdAt)}
-                                  </span>
+                                  <div className="flex items-center gap-3">
+                                    <span className="text-sm text-slate-400">
+                                      {formatDate(submission.createdAt)}
+                                    </span>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
+                                      onClick={() => {
+                                        if (window.confirm('Weet u zeker dat u dit bericht wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
+                                          deleteMessageMutation.mutate(submission.id);
+                                        }
+                                      }}
+                                      disabled={deleteMessageMutation.isPending}
+                                    >
+                                      <Trash2 className="w-4 h-4 mr-1" />
+                                      Verwijder
+                                    </Button>
+                                  </div>
                                 </div>
                                 <div className="ml-14">
                                   <p className="text-amber-300 font-semibold mb-1">{submission.subject}</p>

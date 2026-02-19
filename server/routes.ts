@@ -495,6 +495,20 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
+  app.delete("/api/admin/contact-submissions/:id", requireAuth, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid submission ID" });
+      }
+      await storage.deleteContactSubmission(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting contact submission:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
   // Admin authentication status route
   app.get("/api/admin/auth-status", noCache, async (req: any, res) => {
     try {

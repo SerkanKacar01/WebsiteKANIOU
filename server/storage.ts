@@ -236,6 +236,7 @@ export interface IStorage {
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+  deleteContactSubmission(id: number): Promise<void>;
   
   // Payment Orders
   createPaymentOrder(order: InsertPaymentOrder): Promise<PaymentOrder>;
@@ -562,6 +563,10 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
   
   async getContactSubmissions(): Promise<ContactSubmission[]> {
     return await db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  async deleteContactSubmission(id: number): Promise<void> {
+    await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
   }
 
   // Payment Orders - FIXED VERSION

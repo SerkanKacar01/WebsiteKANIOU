@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, MessageSquare, Phone, Mail, ArrowRight } from "lucide-react";
+import { X, MessageSquare, Phone, Mail, ArrowRight, ShieldCheck, Star, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
@@ -10,7 +10,6 @@ const ExitIntentPopup = () => {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Check if user has already seen it in this session
     const shown = sessionStorage.getItem("exit_popup_shown");
     if (shown) {
       setHasShown(true);
@@ -18,7 +17,6 @@ const ExitIntentPopup = () => {
     }
 
     const handleMouseLeave = (e: MouseEvent) => {
-      // Trigger if mouse leaves the top of the viewport (indicating intent to close tab/navigate away)
       if (e.clientY <= 0 && !hasShown) {
         setIsVisible(true);
         setHasShown(true);
@@ -33,93 +31,119 @@ const ExitIntentPopup = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <Card className="relative w-full max-w-2xl bg-[#1a1a2e] border-[#C4A36C]/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-[#C4A36C]/10 rounded-full -translate-y-16 translate-x-16 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/5 rounded-full translate-y-24 -translate-x-24 blur-3xl"></div>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-500">
+      <Card className="relative w-full max-w-4xl bg-[#0f172a] border-[#C4A36C]/40 shadow-[0_0_80px_rgba(196,163,108,0.15)] overflow-hidden rounded-3xl">
+        {/* Enterprise Decorative Elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#C4A36C]/10 rounded-full -translate-y-32 translate-x-32 blur-[100px]"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/5 rounded-full translate-y-40 -translate-x-40 blur-[120px]"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none"></div>
 
         <button 
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors z-10"
+          className="absolute top-6 right-6 text-white/40 hover:text-[#C4A36C] transition-all z-20 hover:rotate-90 duration-300"
         >
-          <X className="w-6 h-6" />
+          <X className="w-8 h-8" />
         </button>
 
         <CardContent className="p-0">
-          <div className="grid md:grid-cols-2">
-            {/* Left side - Visual/Message */}
-            <div className="bg-gradient-to-br from-[#1a1a2e] to-[#2C3E50] p-8 flex flex-col justify-center border-r border-[#C4A36C]/10">
-              <div className="mb-6 inline-flex p-3 bg-[#C4A36C]/20 rounded-2xl">
-                <MessageSquare className="w-8 h-8 text-[#C4A36C]" />
+          <div className="grid md:grid-cols-2 min-h-[500px]">
+            {/* Left side - Brand Authority */}
+            <div className="relative bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] p-12 flex flex-col justify-center border-r border-[#C4A36C]/20 overflow-hidden">
+              <div className="relative z-10">
+                <div className="mb-8 inline-flex items-center gap-3 px-4 py-2 bg-[#C4A36C]/10 border border-[#C4A36C]/20 rounded-full">
+                  <ShieldCheck className="w-4 h-4 text-[#C4A36C]" />
+                  <span className="text-[#C4A36C] text-[10px] font-bold tracking-[0.2em] uppercase">Premium Specialist</span>
+                </div>
+                
+                <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
+                  Exclusief <br />
+                  <span className="bg-gradient-to-r from-[#C4A36C] via-[#E6C988] to-[#C4A36C] bg-clip-text text-transparent">Maatwerk</span>
+                </h2>
+                
+                <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-sm">
+                  Uw interieur verdient de perfecte afwerking. Laat onze experts u begeleiden naar de ideale oplossing voor uw woning.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6 pt-6 border-t border-white/10">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex text-[#C4A36C] gap-0.5">
+                      <Star className="w-3 h-3 fill-current" />
+                      <Star className="w-3 h-3 fill-current" />
+                      <Star className="w-3 h-3 fill-current" />
+                      <Star className="w-3 h-3 fill-current" />
+                      <Star className="w-3 h-3 fill-current" />
+                    </div>
+                    <p className="text-white text-xs font-bold uppercase tracking-widest">Top Rated</p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <Award className="w-4 h-4 text-[#C4A36C]" />
+                    <p className="text-white text-xs font-bold uppercase tracking-widest">15+ Jaar</p>
+                  </div>
+                </div>
               </div>
-              <h2 className="text-3xl font-bold text-white mb-4 leading-tight">
-                Wacht even! <br />
-                <span className="text-[#C4A36C]">Heeft u gevonden wat u zocht?</span>
-              </h2>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                Raamdecoratie is maatwerk en vraagt om specialistische kennis. Onze experts staan voor u klaar om al uw vragen te beantwoorden.
-              </p>
             </div>
 
-            {/* Right side - Actions */}
-            <div className="p-8 flex flex-col justify-center space-y-6 bg-[#1a1a2e]/50">
-              <div className="space-y-4">
-                <h3 className="text-white font-semibold text-sm uppercase tracking-widest border-l-2 border-[#C4A36C] pl-3 mb-6">
-                  Kies uw voorkeur
-                </h3>
+            {/* Right side - Seamless Interaction */}
+            <div className="p-12 flex flex-col justify-center space-y-8 bg-[#0f172a]">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-white font-bold text-xs uppercase tracking-[0.3em] mb-8 flex items-center gap-4">
+                    <span className="h-[1px] w-8 bg-[#C4A36C]"></span>
+                    Persoonlijke Service
+                  </h3>
+                </div>
                 
                 <button 
                   onClick={() => {
                     setLocation("/contact");
                     setIsVisible(false);
                   }}
-                  className="w-full group flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all duration-300"
+                  className="w-full group flex items-center justify-between p-6 bg-white/5 hover:bg-white/[0.08] border border-white/10 hover:border-[#C4A36C]/40 rounded-2xl transition-all duration-500 transform hover:-translate-y-1"
                 >
-                  <div className="flex items-center gap-4 text-left">
-                    <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
-                      <Mail className="w-5 h-5 text-blue-400" />
+                  <div className="flex items-center gap-5 text-left">
+                    <div className="p-3 bg-indigo-500/10 rounded-xl group-hover:bg-indigo-500/20 transition-colors">
+                      <Mail className="w-6 h-6 text-indigo-400" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">Stel een vraag</p>
-                      <p className="text-gray-500 text-xs">Direct antwoord via e-mail</p>
+                      <p className="text-white font-bold text-lg tracking-wide group-hover:text-[#C4A36C] transition-colors">Direct Advies</p>
+                      <p className="text-gray-400 text-xs">Stel uw vraag aan onze specialisten</p>
                     </div>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white transition-all transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-6 h-6 text-gray-600 group-hover:text-white transition-all transform group-hover:translate-x-2" />
                 </button>
 
                 <button 
                   onClick={() => {
                     window.location.href = "tel:+32467856405";
                   }}
-                  className="w-full group flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all duration-300"
+                  className="w-full group flex items-center justify-between p-6 bg-white/5 hover:bg-white/[0.08] border border-white/10 hover:border-[#C4A36C]/40 rounded-2xl transition-all duration-500 transform hover:-translate-y-1"
                 >
-                  <div className="flex items-center gap-4 text-left">
-                    <div className="p-2 bg-emerald-500/20 rounded-lg group-hover:bg-emerald-500/30 transition-colors">
-                      <Phone className="w-5 h-5 text-emerald-400" />
+                  <div className="flex items-center gap-5 text-left">
+                    <div className="p-3 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
+                      <Phone className="w-6 h-6 text-emerald-400" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">Direct bellen</p>
-                      <p className="text-gray-500 text-xs">+32 467 85 64 05</p>
+                      <p className="text-white font-bold text-lg tracking-wide group-hover:text-[#C4A36C] transition-colors">Telefonisch Contact</p>
+                      <p className="text-gray-400 text-xs">+32 467 85 64 05</p>
                     </div>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white transition-all transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-6 h-6 text-gray-600 group-hover:text-white transition-all transform group-hover:translate-x-2" />
                 </button>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-6">
                 <Button 
                   onClick={() => {
                     setLocation("/offerte");
                     setIsVisible(false);
                   }}
-                  className="w-full bg-[#C4A36C] hover:bg-[#b08f56] text-white py-6 rounded-xl font-bold text-sm tracking-widest uppercase shadow-lg shadow-[#C4A36C]/10"
+                  className="w-full h-16 bg-gradient-to-r from-[#C4A36C] to-[#D5B992] hover:from-[#D5B992] hover:to-[#C4A36C] text-white rounded-2xl font-black text-xs tracking-[0.25em] uppercase shadow-[0_10px_30px_rgba(196,163,108,0.3)] hover:shadow-[0_15px_40px_rgba(196,163,108,0.4)] transition-all duration-500 transform hover:scale-[1.02]"
                 >
-                  Vrijblijvende offerte aanvragen
+                  Vrijblijvende Offerte
                 </Button>
                 <button 
                   onClick={() => setIsVisible(false)}
-                  className="w-full text-center mt-4 text-gray-500 hover:text-white text-xs transition-colors"
+                  className="w-full text-center mt-6 text-gray-500 hover:text-[#C4A36C] text-[10px] font-bold uppercase tracking-widest transition-colors"
                 >
                   Nee bedankt, ik kijk nog even rond
                 </button>
@@ -133,3 +157,4 @@ const ExitIntentPopup = () => {
 };
 
 export default ExitIntentPopup;
+

@@ -131,7 +131,7 @@ const Header = () => {
             <div className="flex items-center gap-8">
               <a href="tel:+32468292953" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
                 <Phone className="w-3 h-3" />
-                <span>+32 468 29 29 53</span>
+                <span>+32 467 85 64 05</span>
               </a>
               <a href="mailto:info@kaniou.be" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
                 <Mail className="w-3 h-3" />
@@ -139,7 +139,7 @@ const Header = () => {
               </a>
               <span className="flex items-center gap-2 text-[11px] tracking-wide text-white/60">
                 <MapPin className="w-3 h-3" />
-                <span>Antwerpen, België</span>
+                <span>Maasmechelen, België</span>
               </span>
             </div>
             <div className="flex items-center gap-6">

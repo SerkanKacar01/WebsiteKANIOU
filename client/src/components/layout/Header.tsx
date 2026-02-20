@@ -86,7 +86,7 @@ const Header = () => {
       onMouseLeave={handleDropdownLeave}
     >
       <button
-        className={`flex items-center gap-1.5 py-6 text-[13px] font-medium tracking-[0.15em] uppercase transition-all duration-300 ${
+        className={`flex items-center gap-1.5 py-6 text-[12px] font-medium tracking-[0.12em] uppercase transition-all duration-300 ${
           activeDropdown === name ? "text-[#C4A36C]" : "text-[#2C3E50] hover:text-[#C4A36C]"
         }`}
         data-testid={`nav-link-${name}`}
@@ -172,7 +172,7 @@ const Header = () => {
             </button>
 
             {/* Desktop Navigation - Centered */}
-            <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6">
               <DropdownMenu name="collectie" label="Collectie" links={productLinks} />
               <DropdownMenu name="horren" label="Horren" links={horrenLinks} />
               <DropdownMenu name="gordijnen" label="Gordijnen" links={gordijnenLinks} />
@@ -181,7 +181,7 @@ const Header = () => {
 
               <button
                 onClick={() => setLocation("/producten/vouwgordijnen")}
-                className="py-6 text-[13px] font-medium tracking-[0.15em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
+                className="py-6 text-[12px] font-medium tracking-[0.12em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
                 data-testid="nav-link-vouwgordijnen"
               >
                 Vouwgordijnen
@@ -189,7 +189,7 @@ const Header = () => {
 
               <button
                 onClick={() => setLocation("/producten/houten-shutters")}
-                className="py-6 text-[13px] font-medium tracking-[0.15em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
+                className="py-6 text-[12px] font-medium tracking-[0.12em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
                 data-testid="nav-link-houten-shutters"
               >
                 Shutters
@@ -197,20 +197,20 @@ const Header = () => {
             </div>
 
             {/* CTA Buttons - Desktop */}
-            <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+            <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
               <button
                 onClick={() => setLocation("/contact")}
-                className="px-5 py-2.5 text-[12px] font-medium tracking-[0.15em] uppercase text-[#2C3E50] border border-[#2C3E50]/20 hover:border-[#2C3E50] hover:bg-[#2C3E50] hover:text-white transition-all duration-400"
+                className="px-4 py-2 text-[11px] font-bold tracking-[0.12em] uppercase text-[#2C3E50] border border-[#2C3E50]/20 hover:border-[#2C3E50] hover:bg-[#2C3E50] hover:text-white transition-all duration-400"
                 data-testid="nav-cta-contact"
               >
                 Contact
               </button>
               <button
                 onClick={() => setLocation("/offerte")}
-                className="px-6 py-2.5 text-[12px] font-medium tracking-[0.15em] uppercase bg-[#C4A36C] text-white hover:bg-[#b08f56] transition-all duration-400 shadow-sm hover:shadow-md"
+                className="px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase bg-[#C4A36C] text-white hover:bg-[#b08f56] transition-all duration-400 shadow-sm hover:shadow-md"
                 data-testid="nav-cta-offerte"
               >
-                Offerte Aanvragen
+                Offerte
               </button>
             </div>
 

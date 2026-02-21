@@ -353,37 +353,46 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Row 2: CTA Buttons strip (desktop only) */}
-          <div className="hidden lg:flex items-center justify-end gap-3 border-t border-gray-100/80 py-2">
+        </div>
+      </nav>
+
+      {/* CTA Buttons - Independent floating strip below header (desktop only) */}
+      <div className={`hidden lg:block transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-2 pointer-events-none h-0 overflow-hidden" : "opacity-100 translate-y-0"}`}>
+        <div className="max-w-[1800px] mx-auto px-4 lg:px-8 xl:px-12">
+          <div className="flex items-center justify-end gap-3 py-2.5">
             <button
               onClick={() => setLocation("/acties")}
-              className="group flex items-center gap-2 px-5 py-2 text-[11px] font-black tracking-[0.15em] uppercase bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-500 hover:to-red-400 transition-all duration-300 rounded-lg shadow-sm hover:shadow-lg hover:shadow-red-500/20 transform hover:scale-105"
+              className="group relative flex items-center gap-2 px-6 py-2.5 text-[11px] font-black tracking-[0.15em] uppercase overflow-hidden rounded-full shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40 transform hover:scale-105 transition-all duration-300"
               data-testid="nav-cta-acties"
             >
-              <Tag className="w-3.5 h-3.5" />
-              Acties & Korting
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-orange-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <Tag className="w-3.5 h-3.5 relative z-10 text-white" />
+              <span className="relative z-10 text-white">Acties & Korting</span>
             </button>
-
-            <div className="h-5 w-px bg-gray-200 mx-1"></div>
 
             <button
               onClick={() => setLocation("/contact")}
-              className="px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase text-[#2C3E50] border border-[#2C3E50]/20 hover:border-[#2C3E50] hover:bg-[#2C3E50] hover:text-white transition-all duration-300 rounded-lg"
+              className="group relative px-6 py-2.5 text-[11px] font-bold tracking-[0.12em] uppercase overflow-hidden rounded-full shadow-md shadow-[#C4A36C]/20 hover:shadow-lg hover:shadow-[#C4A36C]/30 transform hover:scale-105 transition-all duration-300"
               data-testid="nav-cta-contact"
             >
-              Contact
+              <div className="absolute inset-0 bg-gradient-to-r from-[#C4A36C] to-[#D5B992]"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#D5B992] to-[#e8d5b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <span className="relative z-10 text-white">Contact</span>
             </button>
 
             <button
               onClick={() => setLocation("/offerte")}
-              className="px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase bg-gradient-to-r from-[#C4A36C] to-[#D5B992] text-white hover:from-[#D5B992] hover:to-[#C4A36C] transition-all duration-300 rounded-lg shadow-sm hover:shadow-md"
+              className="group relative px-6 py-2.5 text-[11px] font-bold tracking-[0.12em] uppercase overflow-hidden rounded-full shadow-md shadow-[#C4A36C]/20 hover:shadow-lg hover:shadow-[#C4A36C]/30 transform hover:scale-105 transition-all duration-300"
               data-testid="nav-cta-offerte"
             >
-              Offerte Aanvragen
+              <div className="absolute inset-0 bg-gradient-to-r from-[#C4A36C] to-[#D5B992]"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#D5B992] to-[#e8d5b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <span className="relative z-10 text-white">Offerte Aanvragen</span>
             </button>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };

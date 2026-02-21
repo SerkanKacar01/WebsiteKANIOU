@@ -2,7 +2,17 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown, Phone, Mail, MapPin, Clock, Percent, Tag } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Percent,
+  Tag,
+} from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 
 const Header = () => {
@@ -14,7 +24,8 @@ const Header = () => {
   const [mobileCollectieOpen, setMobileCollectieOpen] = useState(false);
   const [mobileHorrenOpen, setMobileHorrenOpen] = useState(false);
   const [mobileGordijnenOpen, setMobileGordijnenOpen] = useState(false);
-  const [mobileOphangsystemenOpen, setMobileOphangsystemenOpen] = useState(false);
+  const [mobileOphangsystemenOpen, setMobileOphangsystemenOpen] =
+    useState(false);
   const [mobileScreensOpen, setMobileScreensOpen] = useState(false);
 
   useEffect(() => {
@@ -79,7 +90,15 @@ const Header = () => {
     }, 150);
   };
 
-  const DropdownMenu = ({ name, label, links }: { name: string; label: string; links: { name: string; path: string }[] }) => (
+  const DropdownMenu = ({
+    name,
+    label,
+    links,
+  }: {
+    name: string;
+    label: string;
+    links: { name: string; path: string }[];
+  }) => (
     <div
       className="relative"
       onMouseEnter={() => handleDropdownEnter(name)}
@@ -87,22 +106,30 @@ const Header = () => {
     >
       <button
         className={`flex items-center gap-1.5 py-5 text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-300 ${
-          activeDropdown === name ? "text-[#C4A36C]" : "text-[#2C3E50] hover:text-[#C4A36C]"
+          activeDropdown === name
+            ? "text-[#C4A36C]"
+            : "text-[#2C3E50] hover:text-[#C4A36C]"
         }`}
         data-testid={`nav-link-${name}`}
       >
         {label}
-        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === name ? "rotate-180" : ""}`} />
+        <ChevronDown
+          className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === name ? "rotate-180" : ""}`}
+        />
       </button>
 
       <div
         className={`absolute top-full left-1/2 -translate-x-1/2 pt-0 transition-all duration-300 ${
-          activeDropdown === name ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+          activeDropdown === name
+            ? "opacity-100 visible translate-y-0"
+            : "opacity-0 invisible -translate-y-2"
         }`}
       >
         <div className="w-72 bg-white shadow-2xl border border-gray-100 py-3 rounded-lg">
           <div className="px-5 pb-2 mb-2 border-b border-gray-100">
-            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#C4A36C]">{label}</span>
+            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#C4A36C]">
+              {label}
+            </span>
           </div>
           {links.map((link) => (
             <button
@@ -112,7 +139,7 @@ const Header = () => {
                 setActiveDropdown(null);
               }}
               className="w-full px-5 py-2.5 text-left text-[13px] text-gray-600 hover:text-[#2C3E50] hover:bg-gray-50/80 hover:pl-7 transition-all duration-200"
-              data-testid={`nav-${name}-${link.name.toLowerCase().replace(/\s/g, '-')}`}
+              data-testid={`nav-${name}-${link.name.toLowerCase().replace(/\s/g, "-")}`}
             >
               {link.name}
             </button>
@@ -125,15 +152,23 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* TOP BAR - Enterprise info bar (desktop only) */}
-      <div className={`hidden lg:block bg-[#0f172a] text-white/90 transition-all duration-500 ${isScrolled ? "h-0 overflow-hidden opacity-0" : "h-auto opacity-100"}`}>
+      <div
+        className={`hidden lg:block bg-[#0f172a] text-white/90 transition-all duration-500 ${isScrolled ? "h-0 overflow-hidden opacity-0" : "h-auto opacity-100"}`}
+      >
         <div className="max-w-[1800px] mx-auto px-8 xl:px-12">
           <div className="flex items-center justify-between h-10">
             <div className="flex items-center gap-8">
-              <a href="tel:+32467856405" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
+              <a
+                href="tel:+32467856405"
+                className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300"
+              >
                 <Phone className="w-3 h-3" />
                 <span>+32 467 85 64 05</span>
               </a>
-              <a href="mailto:info@kaniou.be" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
+              <a
+                href="mailto:info@kaniou.be"
+                className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300"
+              >
                 <Mail className="w-3 h-3" />
                 <span>info@kaniou.be</span>
               </a>
@@ -148,14 +183,18 @@ const Header = () => {
                 <span>Ma-Za: 10:00 - 18:00</span>
               </span>
               <div className="h-3 w-px bg-white/20"></div>
-              <span className="text-[11px] tracking-wider text-[#C4A36C] font-medium">Gratis Inmeting</span>
+              <span className="text-[11px] tracking-wider text-[#C4A36C] font-medium">
+                Gratis Inmeting
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       {/* MAIN NAVIGATION BAR - Two rows */}
-      <nav className={`bg-white transition-all duration-500 ${isScrolled ? "shadow-lg border-b border-gray-100" : "shadow-sm border-b border-gray-100/50"}`}>
+      <nav
+        className={`bg-white transition-all duration-500 ${isScrolled ? "shadow-lg border-b border-gray-100" : "shadow-sm border-b border-gray-100/50"}`}
+      >
         <div className="max-w-[1800px] mx-auto px-4 lg:px-8 xl:px-12">
           {/* Row 1: Logo + Product Navigation (full width) */}
           <div className="flex items-center justify-between h-16 lg:h-[68px]">
@@ -173,11 +212,27 @@ const Header = () => {
 
             {/* Desktop Navigation - Products get full space */}
             <div className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center">
-              <DropdownMenu name="collectie" label="Collectie" links={productLinks} />
+              <DropdownMenu
+                name="collectie"
+                label="Collectie"
+                links={productLinks}
+              />
               <DropdownMenu name="horren" label="Horren" links={horrenLinks} />
-              <DropdownMenu name="gordijnen" label="Gordijnen" links={gordijnenLinks} />
-              <DropdownMenu name="ophangsystemen" label="Ophangsystemen" links={ophangsystemenLinks} />
-              <DropdownMenu name="screens" label="Screens" links={screensLinks} />
+              <DropdownMenu
+                name="gordijnen"
+                label="Gordijnen"
+                links={gordijnenLinks}
+              />
+              <DropdownMenu
+                name="ophangsystemen"
+                label="Ophangsystemen"
+                links={ophangsystemenLinks}
+              />
+              <DropdownMenu
+                name="screens"
+                label="Screens"
+                links={screensLinks}
+              />
 
               <button
                 onClick={() => setLocation("/producten/vouwgordijnen")}
@@ -209,11 +264,21 @@ const Header = () => {
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="p-0 w-[300px] overflow-y-auto">
+                <SheetContent
+                  side="right"
+                  className="p-0 w-[300px] overflow-y-auto"
+                >
                   <div className="flex flex-col h-full">
                     <div className="flex justify-between items-center p-4 border-b border-gray-100">
-                      <button onClick={() => setLocation("/")} className="flex items-center">
-                        <img src={kaniouLogo} alt="KANIOU" className="h-8 w-auto" />
+                      <button
+                        onClick={() => setLocation("/")}
+                        className="flex items-center"
+                      >
+                        <img
+                          src={kaniouLogo}
+                          alt="KANIOU"
+                          className="h-8 w-auto"
+                        />
                       </button>
                       <Button
                         variant="ghost"
@@ -229,16 +294,26 @@ const Header = () => {
                     <div className="flex-1 p-4 space-y-2">
                       <div className="border-b border-gray-100 pb-2">
                         <button
-                          onClick={() => setMobileCollectieOpen(!mobileCollectieOpen)}
+                          onClick={() =>
+                            setMobileCollectieOpen(!mobileCollectieOpen)
+                          }
                           className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
                         >
                           <span>Collectie</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileCollectieOpen ? "rotate-180" : ""}`} />
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${mobileCollectieOpen ? "rotate-180" : ""}`}
+                          />
                         </button>
                         {mobileCollectieOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {productLinks.map((product) => (
-                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
+                              <button
+                                key={product.name}
+                                onClick={() =>
+                                  handleMobileNavClick(product.path)
+                                }
+                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
+                              >
                                 {product.name}
                               </button>
                             ))}
@@ -247,14 +322,25 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button onClick={() => setMobileHorrenOpen(!mobileHorrenOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
+                        <button
+                          onClick={() => setMobileHorrenOpen(!mobileHorrenOpen)}
+                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
+                        >
                           <span>Horren</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileHorrenOpen ? "rotate-180" : ""}`} />
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${mobileHorrenOpen ? "rotate-180" : ""}`}
+                          />
                         </button>
                         {mobileHorrenOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {horrenLinks.map((product) => (
-                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
+                              <button
+                                key={product.name}
+                                onClick={() =>
+                                  handleMobileNavClick(product.path)
+                                }
+                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
+                              >
                                 {product.name}
                               </button>
                             ))}
@@ -263,14 +349,27 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button onClick={() => setMobileGordijnenOpen(!mobileGordijnenOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
+                        <button
+                          onClick={() =>
+                            setMobileGordijnenOpen(!mobileGordijnenOpen)
+                          }
+                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
+                        >
                           <span>Gordijnen</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileGordijnenOpen ? "rotate-180" : ""}`} />
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${mobileGordijnenOpen ? "rotate-180" : ""}`}
+                          />
                         </button>
                         {mobileGordijnenOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {gordijnenLinks.map((product) => (
-                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
+                              <button
+                                key={product.name}
+                                onClick={() =>
+                                  handleMobileNavClick(product.path)
+                                }
+                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
+                              >
                                 {product.name}
                               </button>
                             ))}
@@ -279,14 +378,29 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button onClick={() => setMobileOphangsystemenOpen(!mobileOphangsystemenOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
+                        <button
+                          onClick={() =>
+                            setMobileOphangsystemenOpen(
+                              !mobileOphangsystemenOpen,
+                            )
+                          }
+                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
+                        >
                           <span>Ophangsystemen</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileOphangsystemenOpen ? "rotate-180" : ""}`} />
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${mobileOphangsystemenOpen ? "rotate-180" : ""}`}
+                          />
                         </button>
                         {mobileOphangsystemenOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {ophangsystemenLinks.map((product) => (
-                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
+                              <button
+                                key={product.name}
+                                onClick={() =>
+                                  handleMobileNavClick(product.path)
+                                }
+                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
+                              >
                                 {product.name}
                               </button>
                             ))}
@@ -295,14 +409,27 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button onClick={() => setMobileScreensOpen(!mobileScreensOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
+                        <button
+                          onClick={() =>
+                            setMobileScreensOpen(!mobileScreensOpen)
+                          }
+                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
+                        >
                           <span>Screens</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${mobileScreensOpen ? "rotate-180" : ""}`} />
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${mobileScreensOpen ? "rotate-180" : ""}`}
+                          />
                         </button>
                         {mobileScreensOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {screensLinks.map((product) => (
-                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
+                              <button
+                                key={product.name}
+                                onClick={() =>
+                                  handleMobileNavClick(product.path)
+                                }
+                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
+                              >
                                 {product.name}
                               </button>
                             ))}
@@ -311,13 +438,23 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button onClick={() => handleMobileNavClick("/producten/vouwgordijnen")} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
+                        <button
+                          onClick={() =>
+                            handleMobileNavClick("/producten/vouwgordijnen")
+                          }
+                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
+                        >
                           <span>Vouwgordijnen</span>
                         </button>
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button onClick={() => handleMobileNavClick("/producten/houten-shutters")} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
+                        <button
+                          onClick={() =>
+                            handleMobileNavClick("/producten/houten-shutters")
+                          }
+                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
+                        >
                           <span>Houten Shutters</span>
                         </button>
                       </div>
@@ -329,7 +466,7 @@ const Header = () => {
                           data-testid="mobile-cta-acties"
                         >
                           <Percent className="w-4 h-4" />
-                          Acties & Korting
+                          Exclusieve voorwaarden
                         </button>
                         <button
                           onClick={() => handleMobileNavClick("/contact")}
@@ -352,12 +489,13 @@ const Header = () => {
               </Sheet>
             </div>
           </div>
-
         </div>
       </nav>
 
       {/* CTA Buttons - Independent floating strip below header (desktop only) */}
-      <div className={`hidden lg:block transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-2 pointer-events-none h-0 overflow-hidden" : "opacity-100 translate-y-0"}`}>
+      <div
+        className={`hidden lg:block transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-2 pointer-events-none h-0 overflow-hidden" : "opacity-100 translate-y-0"}`}
+      >
         <div className="max-w-[1800px] mx-auto px-4 lg:px-8 xl:px-12">
           <div className="flex items-center justify-end gap-3 py-2.5">
             <button
@@ -368,7 +506,9 @@ const Header = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-orange-500"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <Tag className="w-3.5 h-3.5 relative z-10 text-white" />
-              <span className="relative z-10 text-white">Acties & Korting</span>
+              <span className="relative z-10 text-white">
+                Exclusieve voorwaarden
+              </span>
             </button>
 
             <button
@@ -388,7 +528,9 @@ const Header = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-[#C4A36C] to-[#D5B992]"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#D5B992] to-[#e8d5b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <span className="relative z-10 text-white">Offerte Aanvragen</span>
+              <span className="relative z-10 text-white">
+                Offerte Aanvragen
+              </span>
             </button>
           </div>
         </div>

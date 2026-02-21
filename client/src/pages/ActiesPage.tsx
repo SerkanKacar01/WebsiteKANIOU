@@ -2,19 +2,20 @@ import Container from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tag, CheckCircle, Clock, ArrowRight, Percent, Star, ShieldCheck } from "lucide-react";
+import { Tag, CheckCircle, Clock, ArrowRight, Percent, Star, ShieldCheck, Bell, Lock } from "lucide-react";
 import { useLocation } from "wouter";
 import PageLayout from "@/components/layout/PageLayout";
 
 const promotions = [
   {
     id: 1,
-    title: "20% Korting op Alle Horren",
+    title: "Korting op Alle Horren",
     description: "Bescherm uw huis tegen insecten en geniet van frisse lucht. Alle horren worden op maat gemaakt in een breed scala aan kleuren en afwerkingen.",
     category: "Horren",
-    discount: "-20%",
-    badge: "Populair",
-    validUntil: "Geldig tot 31 augustus 2026",
+    discount: null,
+    active: false,
+    badge: "Binnenkort",
+    validUntil: "Wordt binnenkort aangekondigd",
     features: ["Op maat gemaakt", "Gratis inmeting", "Professionele montage"],
     ctaLink: "/contact",
   },
@@ -23,20 +24,22 @@ const promotions = [
     title: "Rolgordijnen Voordeelpakket",
     description: "Bestel 3 of meer rolgordijnen en ontvang een aantrekkelijke bundelkorting. Keuze uit verduisterend, lichtdoorlatend of transparant.",
     category: "Rolgordijnen",
-    discount: "-15%",
-    badge: "Bundeldeal",
-    validUntil: "Geldig tot 30 september 2026",
+    discount: null,
+    active: false,
+    badge: "Binnenkort",
+    validUntil: "Wordt binnenkort aangekondigd",
     features: ["Vanaf 3 stuks", "Alle stoffen", "Inclusief montage"],
     ctaLink: "/contact",
   },
   {
     id: 3,
     title: "Shutters Seizoensactie",
-    description: "Geef uw interieur een tijdloze uitstraling met onze premium houten shutters. Nu met een exclusieve seizoenskorting.",
+    description: "Geef uw interieur een tijdloze uitstraling met onze premium houten shutters. Binnenkort met een exclusieve seizoenskorting.",
     category: "Shutters",
-    discount: "-10%",
-    badge: "Exclusief",
-    validUntil: "Geldig tot 31 juli 2026",
+    discount: null,
+    active: false,
+    badge: "Binnenkort",
+    validUntil: "Wordt binnenkort aangekondigd",
     features: ["Premium hout", "Op maat gemaakt", "10 jaar garantie"],
     ctaLink: "/contact",
   },
@@ -45,20 +48,22 @@ const promotions = [
     title: "Plissé Gordijnen Actie",
     description: "De perfecte oplossing voor draaikiepramen en dakramen. Kies uit honderden stoffen en kleuren voor de ideale lichtregulering.",
     category: "Plissés",
-    discount: "-25%",
-    badge: "Beste Deal",
-    validUntil: "Geldig tot 31 augustus 2026",
+    discount: null,
+    active: false,
+    badge: "Binnenkort",
+    validUntil: "Wordt binnenkort aangekondigd",
     features: ["300+ stoffen", "Alle raammaten", "Energiebesparend"],
     ctaLink: "/contact",
   },
   {
     id: 5,
     title: "Overgordijnen Collectie",
-    description: "Luxe overgordijnen in premium stoffen. Creëer warmte en sfeer in elke ruimte met onze nieuwe collectie tegen een actieprijs.",
+    description: "Luxe overgordijnen in premium stoffen. Creëer warmte en sfeer in elke ruimte met onze nieuwe collectie.",
     category: "Gordijnen",
-    discount: "-15%",
-    badge: "Nieuw",
-    validUntil: "Geldig tot 30 september 2026",
+    discount: null,
+    active: false,
+    badge: "Binnenkort",
+    validUntil: "Wordt binnenkort aangekondigd",
     features: ["Premium stoffen", "Confectie of maatwerk", "Gratis stalen"],
     ctaLink: "/contact",
   },
@@ -67,9 +72,10 @@ const promotions = [
     title: "Screens Zomeractie",
     description: "Houd de warmte buiten en geniet van het uitzicht. Inside en outside screens met hoge zonwering en maximale privacy.",
     category: "Screens",
-    discount: "-20%",
-    badge: "Zomer",
-    validUntil: "Geldig tot 31 augustus 2026",
+    discount: null,
+    active: false,
+    badge: "Binnenkort",
+    validUntil: "Wordt binnenkort aangekondigd",
     features: ["UV-bescherming", "Energiebesparend", "Windbestendig"],
     ctaLink: "/contact",
   },
@@ -83,17 +89,7 @@ const ActiesPage = () => {
     setLocation("/contact");
   };
 
-  const getBadgeColor = (badge: string) => {
-    switch (badge) {
-      case "Populair": return "bg-blue-500 text-white";
-      case "Bundeldeal": return "bg-purple-500 text-white";
-      case "Exclusief": return "bg-amber-600 text-white";
-      case "Beste Deal": return "bg-emerald-500 text-white";
-      case "Nieuw": return "bg-indigo-500 text-white";
-      case "Zomer": return "bg-orange-500 text-white";
-      default: return "bg-gray-500 text-white";
-    }
-  };
+  const hasActivePromotions = promotions.some(p => p.active);
 
   return (
     <PageLayout
@@ -110,13 +106,13 @@ const ActiesPage = () => {
         <Container>
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-6">
-              <div className="p-4 bg-red-500/20 rounded-2xl">
-                <Percent className="w-10 h-10 text-red-400" />
+              <div className="p-4 bg-[#C4A36C]/15 rounded-2xl border border-[#C4A36C]/20">
+                <Bell className="w-10 h-10 text-[#C4A36C]" />
               </div>
               <div>
-                <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-1">Tijdelijke Acties</p>
+                <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-1">Toekomstige Acties</p>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
-                  Tot <span className="text-red-400">25% korting</span> op geselecteerde producten
+                  Nieuwe acties worden <span className="text-[#C4A36C]">binnenkort</span> aangekondigd
                 </h2>
               </div>
             </div>
@@ -132,70 +128,131 @@ const ActiesPage = () => {
       <section className="py-16 lg:py-24 bg-[#FAFAF8]">
         <Container>
           <div className="text-center mb-16">
-            <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-4">Onze Aanbiedingen</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-4">Huidige Acties</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-lg">Ontdek welke producten momenteel in de aanbieding zijn. Alle kortingen zijn geldig zolang de voorraad strekt.</p>
+            <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-4">Binnenkort Beschikbaar</p>
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-4">Aankomende Acties</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">Op dit moment zijn er geen actieve kortingen. Hieronder ziet u een overzicht van producten waarvoor binnenkort acties worden aangekondigd.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {promotions.map((promo) => (
               <Card
                 key={promo.id}
-                className="group relative overflow-hidden rounded-2xl border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white"
+                className={`group relative overflow-hidden rounded-2xl border-0 transition-all duration-500 ${
+                  promo.active
+                    ? "shadow-lg hover:shadow-2xl transform hover:-translate-y-2 bg-white"
+                    : "shadow-md bg-white/60 hover:bg-white/80 hover:shadow-lg"
+                }`}
               >
-                {/* Discount Badge - Top Left */}
-                <div className="absolute top-5 left-5 z-10">
-                  <div className="bg-red-600 text-white font-black text-xl px-4 py-2 rounded-xl shadow-lg shadow-red-500/30">
-                    {promo.discount}
+                {/* Inactive overlay */}
+                {!promo.active && (
+                  <div className="absolute inset-0 z-20 pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-b from-gray-100/40 via-transparent to-gray-100/30 mix-blend-multiply"></div>
                   </div>
+                )}
+
+                {/* Discount or Coming Soon Badge - Top Left */}
+                <div className="absolute top-5 left-5 z-30">
+                  {promo.active && promo.discount ? (
+                    <div className="bg-red-600 text-white font-black text-xl px-4 py-2 rounded-xl shadow-lg shadow-red-500/30">
+                      {promo.discount}
+                    </div>
+                  ) : (
+                    <div className="bg-gray-400/80 backdrop-blur-sm text-white font-bold text-sm px-4 py-2 rounded-xl flex items-center gap-2">
+                      <Lock className="w-3.5 h-3.5" />
+                      Binnenkort
+                    </div>
+                  )}
                 </div>
 
-                {/* Category Badge - Top Right */}
-                <div className="absolute top-5 right-5 z-10">
-                  <Badge className={`${getBadgeColor(promo.badge)} font-bold px-3 py-1 text-[10px] tracking-widest uppercase`}>
-                    {promo.badge}
-                  </Badge>
+                {/* Status Badge - Top Right */}
+                <div className="absolute top-5 right-5 z-30">
+                  {promo.active ? (
+                    <Badge className="bg-emerald-500 text-white font-bold px-3 py-1 text-[10px] tracking-widest uppercase">
+                      Actief
+                    </Badge>
+                  ) : (
+                    <Badge className="bg-slate-400/70 backdrop-blur-sm text-white font-semibold px-3 py-1 text-[10px] tracking-widest uppercase border border-white/10">
+                      Inactief
+                    </Badge>
+                  )}
                 </div>
 
                 {/* Card Header with gradient */}
-                <div className="h-32 bg-gradient-to-br from-[#2C3E50] to-[#1a2332] relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#C4A36C]/10 to-transparent"></div>
+                <div className={`h-32 relative ${
+                  promo.active
+                    ? "bg-gradient-to-br from-[#2C3E50] to-[#1a2332]"
+                    : "bg-gradient-to-br from-[#64748b] to-[#475569]"
+                }`}>
+                  {promo.active && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#C4A36C]/10 to-transparent"></div>
+                  )}
+                  {!promo.active && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-48 h-px bg-white/10 absolute"></div>
+                      <div className="w-px h-24 bg-white/10 absolute"></div>
+                    </div>
+                  )}
                   <div className="absolute bottom-4 left-5">
-                    <Badge variant="outline" className="text-white/70 border-white/30 text-[10px] tracking-widest uppercase">
+                    <Badge variant="outline" className={`text-[10px] tracking-widest uppercase ${
+                      promo.active
+                        ? "text-white/70 border-white/30"
+                        : "text-white/40 border-white/15"
+                    }`}>
                       {promo.category}
                     </Badge>
                   </div>
                 </div>
 
-                <CardContent className="p-6 pt-5">
-                  <h3 className="text-xl font-bold text-[#2C3E50] mb-3 group-hover:text-[#C4A36C] transition-colors leading-tight">
+                <CardContent className="p-6 pt-5 relative z-10">
+                  <h3 className={`text-xl font-bold mb-3 leading-tight transition-colors ${
+                    promo.active
+                      ? "text-[#2C3E50] group-hover:text-[#C4A36C]"
+                      : "text-gray-400"
+                  }`}>
                     {promo.title}
                   </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed mb-5">
+                  <p className={`text-sm leading-relaxed mb-5 ${
+                    promo.active ? "text-gray-500" : "text-gray-400"
+                  }`}>
                     {promo.description}
                   </p>
 
                   <div className="space-y-2 mb-6">
                     {promo.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-sm">
-                        <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                        <span className="text-gray-600">{feature}</span>
+                        <CheckCircle className={`w-4 h-4 flex-shrink-0 ${
+                          promo.active ? "text-emerald-500" : "text-gray-300"
+                        }`} />
+                        <span className={promo.active ? "text-gray-600" : "text-gray-400"}>{feature}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-gray-400 mb-5 pb-5 border-b border-gray-100">
+                  <div className={`flex items-center gap-2 text-xs mb-5 pb-5 border-b ${
+                    promo.active ? "text-gray-400 border-gray-100" : "text-gray-300 border-gray-100/60"
+                  }`}>
                     <Clock className="w-3.5 h-3.5" />
                     <span>{promo.validUntil}</span>
                   </div>
 
-                  <Button
-                    onClick={handleContactRedirect}
-                    className="w-full bg-[#2C3E50] hover:bg-[#C4A36C] text-white font-bold text-xs tracking-widest uppercase py-5 rounded-xl transition-all duration-300 group-hover:bg-[#C4A36C]"
-                  >
-                    Meer Info
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  {promo.active ? (
+                    <Button
+                      onClick={handleContactRedirect}
+                      className="w-full bg-[#2C3E50] hover:bg-[#C4A36C] text-white font-bold text-xs tracking-widest uppercase py-5 rounded-xl transition-all duration-300 group-hover:bg-[#C4A36C]"
+                    >
+                      Meer Info
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleContactRedirect}
+                      variant="outline"
+                      className="w-full border-2 border-dashed border-gray-200 text-gray-400 font-bold text-xs tracking-widest uppercase py-5 rounded-xl hover:border-[#C4A36C]/50 hover:text-[#C4A36C] hover:bg-[#C4A36C]/5 transition-all duration-300 bg-gray-50/50"
+                    >
+                      <Bell className="w-4 h-4 mr-2" />
+                      Houd Mij Op De Hoogte
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -218,13 +275,13 @@ const ActiesPage = () => {
                   </div>
                   <h3 className="text-3xl font-bold text-white mb-6">Waarom KANIOU Zilvernaald?</h3>
                   <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-                    Al onze actieprijzen zijn inclusief professioneel advies en nauwkeurige inmeting. 
+                    Al onze producten worden geleverd met professioneel advies en nauwkeurige inmeting. 
                     Wij geloven in kwaliteit die lang meegaat, daarom bieden wij op al onze producten garantie.
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
                     <div className="text-center">
-                      <p className="text-4xl font-black text-[#C4A36C] mb-2">15+</p>
+                      <p className="text-4xl font-black text-[#C4A36C] mb-2">30+</p>
                       <p className="text-gray-400 text-sm uppercase tracking-widest">Jaar Ervaring</p>
                     </div>
                     <div className="text-center">

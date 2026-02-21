@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Mail, MapPin, Clock, Percent, Tag } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 
 const Header = () => {
@@ -86,7 +86,7 @@ const Header = () => {
       onMouseLeave={handleDropdownLeave}
     >
       <button
-        className={`flex items-center gap-1.5 py-6 text-[12px] font-medium tracking-[0.12em] uppercase transition-all duration-300 ${
+        className={`flex items-center gap-1.5 py-5 text-[13px] font-semibold tracking-[0.08em] uppercase transition-all duration-300 ${
           activeDropdown === name ? "text-[#C4A36C]" : "text-[#2C3E50] hover:text-[#C4A36C]"
         }`}
         data-testid={`nav-link-${name}`}
@@ -100,7 +100,7 @@ const Header = () => {
           activeDropdown === name ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
         }`}
       >
-        <div className="w-72 bg-white shadow-2xl border border-gray-100 py-3">
+        <div className="w-72 bg-white shadow-2xl border border-gray-100 py-3 rounded-lg">
           <div className="px-5 pb-2 mb-2 border-b border-gray-100">
             <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#C4A36C]">{label}</span>
           </div>
@@ -125,11 +125,11 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* TOP BAR - Enterprise info bar (desktop only) */}
-      <div className={`hidden lg:block bg-[#1a1a2e] text-white/90 transition-all duration-500 ${isScrolled ? "h-0 overflow-hidden opacity-0" : "h-auto opacity-100"}`}>
+      <div className={`hidden lg:block bg-[#0f172a] text-white/90 transition-all duration-500 ${isScrolled ? "h-0 overflow-hidden opacity-0" : "h-auto opacity-100"}`}>
         <div className="max-w-[1800px] mx-auto px-8 xl:px-12">
           <div className="flex items-center justify-between h-10">
             <div className="flex items-center gap-8">
-              <a href="tel:+32468292953" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
+              <a href="tel:+32467856405" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
                 <Phone className="w-3 h-3" />
                 <span>+32 467 85 64 05</span>
               </a>
@@ -154,11 +154,11 @@ const Header = () => {
         </div>
       </div>
 
-      {/* MAIN NAVIGATION BAR */}
+      {/* MAIN NAVIGATION BAR - Two rows */}
       <nav className={`bg-white transition-all duration-500 ${isScrolled ? "shadow-lg border-b border-gray-100" : "shadow-sm border-b border-gray-100/50"}`}>
         <div className="max-w-[1800px] mx-auto px-4 lg:px-8 xl:px-12">
-          <div className="flex items-center justify-between h-16 lg:h-[72px]">
-            {/* Logo */}
+          {/* Row 1: Logo + Product Navigation (full width) */}
+          <div className="flex items-center justify-between h-16 lg:h-[68px]">
             <button
               onClick={() => setLocation("/")}
               className="transition-all duration-500 hover:opacity-80 flex-shrink-0"
@@ -171,8 +171,8 @@ const Header = () => {
               />
             </button>
 
-            {/* Desktop Navigation - Centered */}
-            <div className="hidden lg:flex items-center gap-4 xl:gap-6">
+            {/* Desktop Navigation - Products get full space */}
+            <div className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center">
               <DropdownMenu name="collectie" label="Collectie" links={productLinks} />
               <DropdownMenu name="horren" label="Horren" links={horrenLinks} />
               <DropdownMenu name="gordijnen" label="Gordijnen" links={gordijnenLinks} />
@@ -181,7 +181,7 @@ const Header = () => {
 
               <button
                 onClick={() => setLocation("/producten/vouwgordijnen")}
-                className="py-6 text-[12px] font-medium tracking-[0.12em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
+                className="py-5 text-[13px] font-semibold tracking-[0.08em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
                 data-testid="nav-link-vouwgordijnen"
               >
                 Vouwgordijnen
@@ -189,28 +189,10 @@ const Header = () => {
 
               <button
                 onClick={() => setLocation("/producten/houten-shutters")}
-                className="py-6 text-[12px] font-medium tracking-[0.12em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
+                className="py-5 text-[13px] font-semibold tracking-[0.08em] uppercase text-[#2C3E50] hover:text-[#C4A36C] transition-all duration-300"
                 data-testid="nav-link-houten-shutters"
               >
                 Shutters
-              </button>
-            </div>
-
-            {/* CTA Buttons - Desktop */}
-            <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
-              <button
-                onClick={() => setLocation("/contact")}
-                className="px-4 py-2 text-[11px] font-bold tracking-[0.12em] uppercase text-[#2C3E50] border border-[#2C3E50]/20 hover:border-[#2C3E50] hover:bg-[#2C3E50] hover:text-white transition-all duration-400"
-                data-testid="nav-cta-contact"
-              >
-                Contact
-              </button>
-              <button
-                onClick={() => setLocation("/offerte")}
-                className="px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase bg-[#C4A36C] text-white hover:bg-[#b08f56] transition-all duration-400 shadow-sm hover:shadow-md"
-                data-testid="nav-cta-offerte"
-              >
-                Offerte
               </button>
             </div>
 
@@ -231,11 +213,7 @@ const Header = () => {
                   <div className="flex flex-col h-full">
                     <div className="flex justify-between items-center p-4 border-b border-gray-100">
                       <button onClick={() => setLocation("/")} className="flex items-center">
-                        <img
-                          src={kaniouLogo}
-                          alt="KANIOU"
-                          className="h-8 w-auto"
-                        />
+                        <img src={kaniouLogo} alt="KANIOU" className="h-8 w-auto" />
                       </button>
                       <Button
                         variant="ghost"
@@ -260,11 +238,7 @@ const Header = () => {
                         {mobileCollectieOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {productLinks.map((product) => (
-                              <button
-                                key={product.name}
-                                onClick={() => handleMobileNavClick(product.path)}
-                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
-                              >
+                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
                                 {product.name}
                               </button>
                             ))}
@@ -273,21 +247,14 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button
-                          onClick={() => setMobileHorrenOpen(!mobileHorrenOpen)}
-                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
-                        >
+                        <button onClick={() => setMobileHorrenOpen(!mobileHorrenOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
                           <span>Horren</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${mobileHorrenOpen ? "rotate-180" : ""}`} />
                         </button>
                         {mobileHorrenOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {horrenLinks.map((product) => (
-                              <button
-                                key={product.name}
-                                onClick={() => handleMobileNavClick(product.path)}
-                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
-                              >
+                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
                                 {product.name}
                               </button>
                             ))}
@@ -296,21 +263,14 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button
-                          onClick={() => setMobileGordijnenOpen(!mobileGordijnenOpen)}
-                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
-                        >
+                        <button onClick={() => setMobileGordijnenOpen(!mobileGordijnenOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
                           <span>Gordijnen</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${mobileGordijnenOpen ? "rotate-180" : ""}`} />
                         </button>
                         {mobileGordijnenOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {gordijnenLinks.map((product) => (
-                              <button
-                                key={product.name}
-                                onClick={() => handleMobileNavClick(product.path)}
-                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
-                              >
+                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
                                 {product.name}
                               </button>
                             ))}
@@ -319,21 +279,14 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button
-                          onClick={() => setMobileOphangsystemenOpen(!mobileOphangsystemenOpen)}
-                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
-                        >
+                        <button onClick={() => setMobileOphangsystemenOpen(!mobileOphangsystemenOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
                           <span>Ophangsystemen</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${mobileOphangsystemenOpen ? "rotate-180" : ""}`} />
                         </button>
                         {mobileOphangsystemenOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {ophangsystemenLinks.map((product) => (
-                              <button
-                                key={product.name}
-                                onClick={() => handleMobileNavClick(product.path)}
-                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
-                              >
+                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
                                 {product.name}
                               </button>
                             ))}
@@ -342,21 +295,14 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button
-                          onClick={() => setMobileScreensOpen(!mobileScreensOpen)}
-                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
-                        >
+                        <button onClick={() => setMobileScreensOpen(!mobileScreensOpen)} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
                           <span>Screens</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${mobileScreensOpen ? "rotate-180" : ""}`} />
                         </button>
                         {mobileScreensOpen && (
                           <div className="pl-4 pb-2 space-y-1">
                             {screensLinks.map((product) => (
-                              <button
-                                key={product.name}
-                                onClick={() => handleMobileNavClick(product.path)}
-                                className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black"
-                              >
+                              <button key={product.name} onClick={() => handleMobileNavClick(product.path)} className="block w-full text-left py-2 text-sm text-gray-600 hover:text-black">
                                 {product.name}
                               </button>
                             ))}
@@ -365,24 +311,26 @@ const Header = () => {
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button
-                          onClick={() => handleMobileNavClick("/producten/vouwgordijnen")}
-                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
-                        >
+                        <button onClick={() => handleMobileNavClick("/producten/vouwgordijnen")} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
                           <span>Vouwgordijnen</span>
                         </button>
                       </div>
 
                       <div className="border-b border-gray-100 pb-2">
-                        <button
-                          onClick={() => handleMobileNavClick("/producten/houten-shutters")}
-                          className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700"
-                        >
+                        <button onClick={() => handleMobileNavClick("/producten/houten-shutters")} className="w-full flex items-center justify-between py-3 text-sm tracking-widest uppercase text-gray-700">
                           <span>Houten Shutters</span>
                         </button>
                       </div>
 
                       <div className="pt-4 space-y-3">
+                        <button
+                          onClick={() => handleMobileNavClick("/acties")}
+                          className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300 rounded-lg"
+                          data-testid="mobile-cta-acties"
+                        >
+                          <Percent className="w-4 h-4" />
+                          Acties & Korting
+                        </button>
                         <button
                           onClick={() => handleMobileNavClick("/contact")}
                           className="w-full border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300"
@@ -403,6 +351,36 @@ const Header = () => {
                 </SheetContent>
               </Sheet>
             </div>
+          </div>
+
+          {/* Row 2: CTA Buttons strip (desktop only) */}
+          <div className="hidden lg:flex items-center justify-end gap-3 border-t border-gray-100/80 py-2">
+            <button
+              onClick={() => setLocation("/acties")}
+              className="group flex items-center gap-2 px-5 py-2 text-[11px] font-black tracking-[0.15em] uppercase bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-500 hover:to-red-400 transition-all duration-300 rounded-lg shadow-sm hover:shadow-lg hover:shadow-red-500/20 transform hover:scale-105"
+              data-testid="nav-cta-acties"
+            >
+              <Tag className="w-3.5 h-3.5" />
+              Acties & Korting
+            </button>
+
+            <div className="h-5 w-px bg-gray-200 mx-1"></div>
+
+            <button
+              onClick={() => setLocation("/contact")}
+              className="px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase text-[#2C3E50] border border-[#2C3E50]/20 hover:border-[#2C3E50] hover:bg-[#2C3E50] hover:text-white transition-all duration-300 rounded-lg"
+              data-testid="nav-cta-contact"
+            >
+              Contact
+            </button>
+
+            <button
+              onClick={() => setLocation("/offerte")}
+              className="px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase bg-gradient-to-r from-[#C4A36C] to-[#D5B992] text-white hover:from-[#D5B992] hover:to-[#C4A36C] transition-all duration-300 rounded-lg shadow-sm hover:shadow-md"
+              data-testid="nav-cta-offerte"
+            >
+              Offerte Aanvragen
+            </button>
           </div>
         </div>
       </nav>

@@ -226,7 +226,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center justify-center gap-10 xl:gap-14 flex-1">
               <MegaMenu name="raamdecoratie" label="Raamdecoratie" columns={megaMenuColumns} />
               <MegaMenu name="horren" label="Horren" columns={horrenColumns} />
-              <NavLink label="Op Maat & Advies" path="/offerte" icon={Ruler} />
+              <NavLink label="Op Maat & Advies" path="/op-maat-advies" icon={Ruler} />
               <NavLink label="Showroom" path="/contact" icon={Store} />
             </div>
 
@@ -370,7 +370,7 @@ const Header = () => {
 
                       {/* Simple links */}
                       <div className="border-b border-gray-100">
-                        <button onClick={() => handleMobileNavClick("/offerte")} className="w-full flex items-center gap-2 py-3 text-sm tracking-widest uppercase text-gray-700 font-semibold">
+                        <button onClick={() => handleMobileNavClick("/op-maat-advies")} className="w-full flex items-center gap-2 py-3 text-sm tracking-widest uppercase text-gray-700 font-semibold">
                           <Ruler className="w-4 h-4 text-[#C4A36C]" />
                           <span>Op Maat & Advies</span>
                         </button>

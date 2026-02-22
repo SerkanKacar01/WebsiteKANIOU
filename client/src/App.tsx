@@ -26,6 +26,7 @@ import BusinessPage from "@/pages/BusinessPage";
 import CleaningProductsPage from "@/pages/CleaningProductsPage";
 import AfspraakPage from "@/pages/AfspraakPage";
 import BedanktPage from "@/pages/BedanktPage";
+import OpMaatAdviesPage from "@/pages/OpMaatAdviesPage";
 
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import CookiePolicyPage from "@/pages/CookiePolicyPage";
@@ -71,6 +72,7 @@ function Router() {
     if (location === "/offerte") return "Offerte Aanvragen | KANIOU Zilvernaald";
     if (location === "/prijzen") return "Prijsoverzicht | KANIOU Zilvernaald";
     if (location === "/acties") return "Acties & Aanbiedingen | KANIOU Zilvernaald";
+    if (location === "/op-maat-advies") return "Raamdecoratie op maat & professioneel interieuradvies | KANIOU Maasmechelen";
     if (location === "/zakelijk") return "Zakelijk | KANIOU Zilvernaald";
     return t("app.title") + " | " + t("app.subtitle");
   };
@@ -117,6 +119,7 @@ function Router() {
         <Route path="/offerte" component={OffertePage} />
         <Route path="/prijzen" component={PrijzenPage} />
         <Route path="/afspraak" component={AfspraakPage} />
+        <Route path="/op-maat-advies" component={OpMaatAdviesPage} />
         <Route path="/acties" component={ActiesPage} />
         <Route path="/bedankt" component={BedanktPage} />
 

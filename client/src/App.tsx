@@ -51,6 +51,9 @@ import SquidTextielFoliePage from "@/pages/products/squid-textiel-folie";
 import VouwgordijnenPage from "@/pages/products/vouwgordijnen";
 import GordijnroedesPage from "@/pages/products/gordijnroedes";
 import HorrenPage from "@/pages/products/horren";
+import PlisseHordeurenPage from "@/pages/products/plisse-hordeuren";
+import OpzethorrenPage from "@/pages/products/opzethorren";
+import InzethorrenPage from "@/pages/products/inzethorren";
 import ScreenPage from "@/pages/products/screen";
 import ScreensInsidePage from "@/pages/products/screens-inside";
 import ScreensOutsidePage from "@/pages/products/screens-outside";
@@ -71,6 +74,9 @@ function Router() {
     if (location === "/acties") return "Acties & Aanbiedingen | KANIOU Zilvernaald";
     if (location === "/op-maat-advies") return "Raamdecoratie op maat & professioneel interieuradvies | KANIOU Maasmechelen";
     if (location === "/zakelijk") return "Zakelijk | KANIOU Zilvernaald";
+    if (location === "/producten/plisse-hordeuren") return "Plissé Hordeuren op Maat | KANIOU Zilvernaald";
+    if (location === "/producten/opzethorren") return "Opzethorren op Maat | KANIOU Zilvernaald";
+    if (location === "/producten/inzethorren") return "Inzethorren op Maat | KANIOU Zilvernaald";
     return t("app.title") + " | " + t("app.subtitle");
   };
 
@@ -99,6 +105,9 @@ function Router() {
         <Route path="/producten/gordijnrails" component={GordijnrailsPage} />
         <Route path="/producten/gordijnroedes" component={GordijnroedesPage} />
         <Route path="/producten/horren" component={HorrenPage} />
+        <Route path="/producten/plisse-hordeuren" component={PlisseHordeurenPage} />
+        <Route path="/producten/opzethorren" component={OpzethorrenPage} />
+        <Route path="/producten/inzethorren" component={InzethorrenPage} />
         <Route path="/producten/screen" component={ScreenPage} />
         <Route path="/producten/screens-inside" component={ScreensInsidePage} />
         <Route path="/producten/screens-outside" component={ScreensOutsidePage} />

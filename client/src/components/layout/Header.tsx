@@ -492,8 +492,8 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* CTA Buttons - Independent strip below header (desktop only) */}
-      <div className="hidden lg:block bg-gradient-to-r from-[#1e293b] via-[#0f172a] to-[#1e293b]">
+      {/* CTA Buttons - Transparent strip below header (desktop only) */}
+      <div className="hidden lg:block">
         <div className="max-w-[1800px] mx-auto px-4 lg:px-8 xl:px-12">
           <div className="flex items-center justify-end gap-3 py-2.5">
             <button

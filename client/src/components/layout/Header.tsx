@@ -10,8 +10,9 @@ import {
   Mail,
   MapPin,
   Clock,
-  Percent,
   Tag,
+  ShieldCheck,
+  CheckCircle,
 } from "lucide-react";
 import kaniouLogo from "@assets/KAN.LOGO kopie_1756921377138.png";
 
@@ -180,11 +181,17 @@ const Header = () => {
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-2 text-[11px] tracking-wide text-white/60">
                 <Clock className="w-3 h-3" />
-                <span>Ma-Za: 10:00 - 18:00</span>
+                <span>Ma–Za: 10:00 – 18:00</span>
               </span>
               <div className="h-3 w-px bg-white/20"></div>
-              <span className="text-[11px] tracking-wider text-[#C4A36C] font-medium">
+              <span className="flex items-center gap-2 text-[11px] tracking-wider text-[#C4A36C] font-medium">
+                <CheckCircle className="w-3 h-3" />
                 Gratis Inmeting
+              </span>
+              <div className="h-3 w-px bg-white/20"></div>
+              <span className="flex items-center gap-2 text-[11px] tracking-wider text-emerald-400 font-medium">
+                <ShieldCheck className="w-3 h-3" />
+                Kwaliteitsgarantie
               </span>
             </div>
           </div>
@@ -465,7 +472,7 @@ const Header = () => {
                           className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300 rounded-lg"
                           data-testid="mobile-cta-acties"
                         >
-                          <Percent className="w-4 h-4" />
+                          <Tag className="w-4 h-4" />
                           Exclusieve voorwaarden
                         </button>
                         <button

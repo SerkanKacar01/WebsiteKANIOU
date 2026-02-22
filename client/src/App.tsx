@@ -34,7 +34,6 @@ import DisclaimerPage from "@/pages/DisclaimerPage";
 import AdminLoginPage from "@/pages/AdminLoginPage";
 import EntrepreneurDashboardPage from "@/pages/EntrepreneurDashboardPage";
 import AdminGallery from "@/pages/AdminGallery";
-import SecureOrderTrackingPage from "@/pages/SecureOrderTrackingPage";
 
 import PlissesPage from "@/pages/products/plisses";
 import DuoPlissesPage from "@/pages/products/duo-plisses";
@@ -134,10 +133,6 @@ function Router() {
         <Route path="/kaniouzilvernaald-dashboard" component={AdminLoginPage} />
         <Route path="/entrepreneur-dashboard" component={EntrepreneurDashboardPage} />
         <Route path="/admin/gallery" component={AdminGallery} />
-
-        {/* Order Tracking */}
-        <Route path="/bestelling-volgen" component={SecureOrderTrackingPage} />
-        <Route path="/order-tracking" component={SecureOrderTrackingPage} />
 
         <Route component={NotFound} />
       </Switch>

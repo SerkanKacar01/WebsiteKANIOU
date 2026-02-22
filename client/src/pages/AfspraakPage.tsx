@@ -31,7 +31,7 @@ const AfspraakPage = () => {
                     <h3 className="font-semibold text-gray-900 mb-2">Telefonisch</h3>
                     <p className="text-gray-600 mb-1">Bel ons voor een directe afspraak:</p>
                     <a href="tel:+32123456789" className="text-[#E67E22] font-semibold hover:underline">
-                      +32 12 34 56 789
+                      +32 467 85 64 05
                     </a>
                   </div>
                   
@@ -46,8 +46,8 @@ const AfspraakPage = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Openingstijden</h3>
                     <div className="text-gray-600 space-y-1">
-                      <p>Ma - Vr: 09:00 - 18:00</p>
-                      <p>Zaterdag: 09:00 - 17:00</p>
+                      <p>Ma - Vr: 10:00 - 18:00</p>
+                      <p>Zaterdag: 10:00 - 17:00</p>
                       <p>Zondag: Gesloten</p>
                     </div>
                   </div>
@@ -75,14 +75,6 @@ const AfspraakPage = () => {
                       Bezoek onze showroom om alle materialen en kleuren te bekijken en te voelen.
                     </p>
                     <p className="text-sm text-[#E67E22] font-medium">Op afspraak</p>
-                  </div>
-
-                  <div className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                    <h3 className="font-semibold text-gray-900 mb-2">💻 Online Consultatie</h3>
-                    <p className="text-gray-600 mb-3">
-                      Videocall voor initieel advies en planning van uw project.
-                    </p>
-                    <p className="text-sm text-[#E67E22] font-medium">Gratis</p>
                   </div>
                 </CardContent>
               </Card>

@@ -266,18 +266,6 @@ const Header = () => {
               <MegaMenu name="horren" label="Horren" columns={horrenColumns} />
               <NavLink label="Op Maat & Advies" path="/offerte" icon={Ruler} />
               <NavLink label="Showroom" path="/contact" icon={Store} />
-              <NavLink label="Exclusieve Voorwaarden" path="/acties" icon={Sparkles} />
-              <NavLink label="Contact" path="/contact" />
-            </div>
-
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center flex-shrink-0">
-              <button
-                onClick={() => setLocation("/offerte")}
-                className="px-6 py-2.5 text-[11px] font-bold tracking-[0.12em] uppercase bg-gradient-to-r from-[#C4A36C] to-[#D5B992] text-white hover:from-[#D5B992] hover:to-[#C4A36C] transition-all duration-300 rounded-lg shadow-sm hover:shadow-md"
-              >
-                Offerte Aanvragen
-              </button>
             </div>
 
             {/* Mobile Menu Button */}

@@ -51,6 +51,7 @@ const requestTypes = [
   { id: "Offerte aanvraag", label: "Offerte aanvraag", icon: FileText },
   { id: "Terugbelverzoek", label: "Terugbelverzoek", icon: PhoneCall },
   { id: "Algemene vraag", label: "Algemene vraag", icon: HelpCircle },
+  { id: "Exclusieve voorwaarden", label: "Exclusieve voorwaarden", icon: Sparkles },
 ] as const;
 
 const contactFormSchema = z.object({

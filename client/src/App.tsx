@@ -23,7 +23,6 @@ import ActiesPage from "@/pages/ActiesPage";
 import PrijzenPage from "@/pages/PrijzenPage";
 import BusinessPage from "@/pages/BusinessPage";
 import CleaningProductsPage from "@/pages/CleaningProductsPage";
-import AfspraakPage from "@/pages/AfspraakPage";
 import BedanktPage from "@/pages/BedanktPage";
 import OpMaatAdviesPage from "@/pages/OpMaatAdviesPage";
 
@@ -117,7 +116,6 @@ function Router() {
         <Route path="/quote" component={QuotePage} />
         <Route path="/offerte" component={OffertePage} />
         <Route path="/prijzen" component={PrijzenPage} />
-        <Route path="/afspraak" component={AfspraakPage} />
         <Route path="/op-maat-advies" component={OpMaatAdviesPage} />
         <Route path="/acties" component={ActiesPage} />
         <Route path="/bedankt" component={BedanktPage} />

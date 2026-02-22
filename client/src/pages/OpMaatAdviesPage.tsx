@@ -306,10 +306,10 @@ const OpMaatAdviesPage = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <button
-                onClick={() => setLocation("/afspraak")}
+                onClick={() => setLocation("/contact")}
                 className="px-8 py-3.5 bg-[#C4A36C] hover:bg-[#D5B992] text-white text-[13px] font-bold tracking-[0.1em] uppercase rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                Plan een adviesgesprek
+                Neem contact op
               </button>
               <button
                 onClick={() => setLocation("/offerte")}

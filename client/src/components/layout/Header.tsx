@@ -268,6 +268,74 @@ const Header = () => {
               <NavLink label="Showroom" path="/contact" icon={Store} />
             </div>
 
+            {/* Plan Je Project - CTA Dropdown */}
+            <div
+              className="hidden lg:block relative flex-shrink-0"
+              onMouseEnter={() => handleDropdownEnter("planproject")}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <button
+                className={`flex items-center gap-2 px-5 py-2 text-[11px] font-bold tracking-[0.12em] uppercase rounded-lg transition-all duration-300 ${
+                  activeDropdown === "planproject"
+                    ? "bg-[#C4A36C] text-white shadow-md"
+                    : "bg-gradient-to-r from-[#C4A36C] to-[#D5B992] text-white hover:shadow-md"
+                }`}
+              >
+                Plan Je Project
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === "planproject" ? "rotate-180" : ""}`} />
+              </button>
+
+              <div
+                className={`absolute top-full right-0 pt-2 z-[60] transition-all duration-300 ${
+                  activeDropdown === "planproject" ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+                }`}
+              >
+                <div className="w-64 bg-white shadow-2xl border border-gray-100 rounded-xl overflow-hidden">
+                  <div className="px-5 py-3 bg-gradient-to-r from-[#1a2332] to-[#2C3E50]">
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C4A36C]">Plan Je Project</span>
+                  </div>
+                  <div className="py-1">
+                    <button
+                      onClick={() => { setLocation("/acties"); setActiveDropdown(null); }}
+                      className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-red-50/80 transition-all duration-200 group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                        <Tag className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-[12px] font-semibold text-[#2C3E50] group-hover:text-red-600 transition-colors">Exclusieve Voorwaarden</p>
+                        <p className="text-[10px] text-gray-400">Bekijk onze acties</p>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => { setLocation("/contact"); setActiveDropdown(null); }}
+                      className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-gray-50 transition-all duration-200 group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2C3E50] to-[#3d5166] flex items-center justify-center flex-shrink-0">
+                        <Mail className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-[12px] font-semibold text-[#2C3E50] group-hover:text-[#C4A36C] transition-colors">Contact</p>
+                        <p className="text-[10px] text-gray-400">Neem contact op</p>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => { setLocation("/offerte"); setActiveDropdown(null); }}
+                      className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-amber-50/80 transition-all duration-200 group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#C4A36C] to-[#D5B992] flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-[12px] font-semibold text-[#2C3E50] group-hover:text-[#C4A36C] transition-colors">Offerte Aanvragen</p>
+                        <p className="text-[10px] text-gray-400">Gratis & vrijblijvend</p>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Mobile Menu Button */}
             <div className="lg:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -389,47 +457,6 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Secondary CTA Bar - Full width integrated strip (desktop only, behind dropdowns) */}
-      <div className="hidden lg:block relative z-[40] bg-[#1a2332] border-t border-white/5">
-        <div className="max-w-[1800px] mx-auto px-8 xl:px-12">
-          <div className="flex items-center justify-between h-11">
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-4 bg-[#C4A36C] rounded-full"></div>
-              <span className="text-[10px] tracking-[0.2em] uppercase text-white/40 font-medium">Snelle Toegang</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setLocation("/acties")}
-                className="group flex items-center gap-2 px-5 py-1.5 text-[10px] font-bold tracking-[0.15em] uppercase bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-orange-500 text-white rounded transition-all duration-300 shadow-sm hover:shadow-md"
-                data-testid="nav-cta-acties"
-              >
-                <Tag className="w-3 h-3" />
-                Exclusieve Voorwaarden
-              </button>
-
-              <div className="h-4 w-px bg-white/10"></div>
-
-              <button
-                onClick={() => setLocation("/contact")}
-                className="group flex items-center gap-2 px-5 py-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-white/70 hover:text-white border border-white/15 hover:border-white/30 hover:bg-white/5 rounded transition-all duration-300"
-                data-testid="nav-cta-contact"
-              >
-                <Mail className="w-3 h-3" />
-                Contact
-              </button>
-
-              <button
-                onClick={() => setLocation("/offerte")}
-                className="group flex items-center gap-2 px-5 py-1.5 text-[10px] font-bold tracking-[0.15em] uppercase bg-[#C4A36C] hover:bg-[#D5B992] text-white rounded transition-all duration-300 shadow-sm hover:shadow-md"
-                data-testid="nav-cta-offerte"
-              >
-                <CheckCircle className="w-3 h-3" />
-                Offerte Aanvragen
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </header>
   );
 };

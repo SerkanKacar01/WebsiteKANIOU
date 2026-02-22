@@ -260,8 +260,8 @@ const Header = () => {
               <img src={kaniouLogo} alt="KANIOU Zilvernaald" className="h-9 lg:h-11 w-auto" />
             </button>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-5 xl:gap-7">
+            {/* Desktop Navigation - Centered */}
+            <div className="hidden lg:flex items-center justify-center gap-10 xl:gap-14 flex-1">
               <MegaMenu name="raamdecoratie" label="Raamdecoratie" columns={megaMenuColumns} />
               <MegaMenu name="horren" label="Horren" columns={horrenColumns} />
               <NavLink label="Op Maat & Advies" path="/offerte" icon={Ruler} />

@@ -139,7 +139,7 @@ const Header = () => {
 
   const MegaMenu = ({ name, label, columns }: { name: string; label: string; columns: typeof megaMenuColumns }) => (
     <div
-      className="relative"
+      className="static"
       onMouseEnter={() => handleDropdownEnter(name)}
       onMouseLeave={handleDropdownLeave}
     >
@@ -151,47 +151,6 @@ const Header = () => {
         {label}
         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === name ? "rotate-180" : ""}`} />
       </button>
-
-      <div
-        className={`absolute left-1/2 -translate-x-1/2 top-full pt-0 z-[60] transition-all duration-300 ${
-          activeDropdown === name ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-3"
-        }`}
-        style={{ width: "100vw", left: "50%", marginLeft: "-50vw" }}
-      >
-        <div className="bg-white shadow-2xl border-t border-gray-100">
-          <div className="max-w-[1400px] mx-auto px-8 xl:px-12 py-10">
-            <div className="flex items-center gap-3 mb-8 pb-5 border-b border-gray-100">
-              <div className="w-1 h-6 bg-[#C4A36C] rounded-full"></div>
-              <h3 className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#C4A36C]">{label}</h3>
-            </div>
-
-            <div className={`grid gap-10 ${columns.length >= 5 ? "grid-cols-5" : columns.length === 4 ? "grid-cols-4" : "grid-cols-3"}`}>
-              {columns.map((col) => (
-                <div key={col.title}>
-                  <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#2C3E50] mb-4 pb-2 border-b border-gray-100">
-                    {col.title}
-                  </h4>
-                  <div className="space-y-1">
-                    {col.links.map((link) => (
-                      <button
-                        key={link.name}
-                        onClick={() => {
-                          setLocation(link.path);
-                          setActiveDropdown(null);
-                        }}
-                        className="group w-full flex items-center gap-2 py-2 text-[13px] text-gray-500 hover:text-[#2C3E50] transition-all duration-200"
-                      >
-                        <ChevronRight className="w-3 h-3 text-gray-300 group-hover:text-[#C4A36C] group-hover:translate-x-0.5 transition-all duration-200" />
-                        {link.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 
@@ -249,7 +208,10 @@ const Header = () => {
       </div>
 
       {/* MAIN NAVIGATION BAR */}
-      <nav className={`bg-white transition-all duration-500 ${isScrolled ? "shadow-lg border-b border-gray-100" : "shadow-sm border-b border-gray-100/50"}`}>
+      <nav
+        className={`relative bg-white transition-all duration-500 ${isScrolled ? "shadow-lg border-b border-gray-100" : "shadow-sm border-b border-gray-100/50"}`}
+        onMouseLeave={handleDropdownLeave}
+      >
         <div className="max-w-[1800px] mx-auto px-4 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-16 lg:h-[68px]">
             <button
@@ -455,6 +417,55 @@ const Header = () => {
             </div>
           </div>
         </div>
+
+        {/* Raamdecoratie Mega Menu Panel */}
+        {[
+          { name: "raamdecoratie", label: "Raamdecoratie", columns: megaMenuColumns },
+          { name: "horren", label: "Horren", columns: horrenColumns },
+        ].map((menu) => (
+          <div
+            key={menu.name}
+            className={`absolute left-0 right-0 top-full z-[60] transition-all duration-300 ${
+              activeDropdown === menu.name ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-3 pointer-events-none"
+            }`}
+            onMouseEnter={() => handleDropdownEnter(menu.name)}
+            onMouseLeave={handleDropdownLeave}
+          >
+            <div className="bg-white shadow-2xl border-t border-gray-100/80">
+              <div className="max-w-[1400px] mx-auto px-8 xl:px-12 py-10">
+                <div className="flex items-center gap-3 mb-8 pb-5 border-b border-gray-100">
+                  <div className="w-1 h-6 bg-[#C4A36C] rounded-full"></div>
+                  <h3 className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#C4A36C]">{menu.label}</h3>
+                </div>
+
+                <div className={`grid gap-10 ${menu.columns.length >= 5 ? "grid-cols-5" : "grid-cols-3"}`}>
+                  {menu.columns.map((col) => (
+                    <div key={col.title}>
+                      <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#2C3E50] mb-4 pb-2 border-b border-gray-100">
+                        {col.title}
+                      </h4>
+                      <div className="space-y-1">
+                        {col.links.map((link) => (
+                          <button
+                            key={link.name}
+                            onClick={() => {
+                              setLocation(link.path);
+                              setActiveDropdown(null);
+                            }}
+                            className="group w-full flex items-center gap-2 py-2 text-[13px] text-gray-500 hover:text-[#2C3E50] transition-all duration-200"
+                          >
+                            <ChevronRight className="w-3 h-3 text-gray-300 group-hover:text-[#C4A36C] group-hover:translate-x-0.5 transition-all duration-200" />
+                            {link.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </nav>
 
     </header>

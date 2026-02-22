@@ -131,15 +131,19 @@ const ContactPage = () => {
     return () => clearInterval(timer);
   }, [displayTestimonials.length]);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const preselectedType = urlParams.get("type") === "exclusieve-voorwaarden" ? "Exclusieve voorwaarden" : "";
+  const preselectedProduct = urlParams.get("product") || "";
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      requestType: "",
+      requestType: preselectedType,
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
-      message: "",
+      message: preselectedProduct ? `Ik heb interesse in exclusieve voorwaarden voor: ${preselectedProduct}` : "",
       callbackTime: "",
       privacy: false,
       website: "",

@@ -96,9 +96,13 @@ const promotions = [
 const ActiesPage = () => {
   const [, setLocation] = useLocation();
 
-  const handleContactRedirect = () => {
+  const handleContactRedirect = (category?: string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setLocation("/contact");
+    if (category) {
+      setLocation(`/contact?type=exclusieve-voorwaarden&product=${encodeURIComponent(category)}`);
+    } else {
+      setLocation("/contact");
+    }
   };
 
   const hasActivePromotions = promotions.some(p => p.active);
@@ -252,7 +256,7 @@ const ActiesPage = () => {
 
                   {promo.active ? (
                     <Button
-                      onClick={handleContactRedirect}
+                      onClick={() => handleContactRedirect(promo.category)}
                       className="w-full bg-[#2C3E50] hover:bg-[#C4A36C] text-white font-bold text-xs tracking-widest uppercase py-5 rounded-xl transition-all duration-300 group-hover:bg-[#C4A36C]"
                     >
                       Meer Info
@@ -260,7 +264,7 @@ const ActiesPage = () => {
                     </Button>
                   ) : (
                     <Button
-                      onClick={handleContactRedirect}
+                      onClick={() => handleContactRedirect(promo.category)}
                       variant="outline"
                       className="w-full border-2 border-dashed border-gray-200 text-gray-400 font-bold text-xs tracking-widest uppercase py-5 rounded-xl hover:border-[#C4A36C]/50 hover:text-[#C4A36C] hover:bg-[#C4A36C]/5 transition-all duration-300 bg-gray-50/50"
                     >
@@ -310,7 +314,7 @@ const ActiesPage = () => {
                   </div>
 
                   <Button
-                    onClick={handleContactRedirect}
+                    onClick={() => handleContactRedirect()}
                     className="bg-gradient-to-r from-[#C4A36C] to-[#D5B992] hover:from-[#D5B992] hover:to-[#C4A36C] text-white font-bold text-xs tracking-[0.2em] uppercase px-10 py-6 rounded-xl shadow-lg shadow-[#C4A36C]/20 transition-all duration-300 transform hover:scale-105"
                   >
                     Neem Contact Op

@@ -11,7 +11,6 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import NotFound from "@/pages/not-found";
 import MobileLayoutWrapper from "@/components/layout/MobileLayoutWrapper";
 import Footer from "@/components/layout/Footer";
-import FloatingActionButtons from "@/components/FloatingActionButtons";
 import ExitIntentPopup from "@/components/layout/ExitIntentPopup";
 
 import Home from "@/pages/Home";
@@ -145,7 +144,6 @@ function Router() {
         <Route component={NotFound} />
       </Switch>
       <ExitIntentPopup />
-      <FloatingActionButtons />
       <Footer />
     </>
   );

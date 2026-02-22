@@ -14,7 +14,7 @@ const promotions = [
     category: "Vouwgordijnen",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["Op maat gemaakt", "Grote stofkeuze", "Gratis inmeting"],
     ctaLink: "/contact",
@@ -26,7 +26,7 @@ const promotions = [
     category: "Inbetweens & Overgordijnen",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["Inbetweens & overgordijnen", "Premium stoffen", "Confectie of maatwerk"],
     ctaLink: "/contact",
@@ -38,7 +38,7 @@ const promotions = [
     category: "Zonwering",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["Rolgordijnen & plissés", "Jaloezieën & lamellen", "Verduisterend of transparant"],
     ctaLink: "/contact",
@@ -50,7 +50,7 @@ const promotions = [
     category: "Screens",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["UV-bescherming", "Energiebesparend", "Windbestendig"],
     ctaLink: "/contact",
@@ -62,7 +62,7 @@ const promotions = [
     category: "Shutters",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["Premium hout", "Op maat gemaakt", "10 jaar garantie"],
     ctaLink: "/contact",
@@ -74,7 +74,7 @@ const promotions = [
     category: "Alle Horren",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["Alle typen horren", "Op maat gemaakt", "Professionele montage"],
     ctaLink: "/contact",
@@ -86,7 +86,7 @@ const promotions = [
     category: "Rails & Roedes",
     discount: null,
     active: false,
-    badge: "Binnenkort",
+    badge: "Voorwaarden volgen op korte termijn",
     validUntil: "Wordt binnenkort aangekondigd",
     features: ["Gordijnrails", "Gordijnroedes", "Elektrisch mogelijk"],
     ctaLink: "/contact",
@@ -105,9 +105,11 @@ const ActiesPage = () => {
 
   return (
     <PageLayout
-      title="Acties & Korting"
+      title="Exclusieve voorwaarden voor geselecteerde collecties"
       subtitle="Exclusieve Aanbiedingen"
-      description="Profiteer van tijdelijke kortingen op premium raamdecoratie. Vakmanschap tegen de beste prijs."
+      description="Binnen specifieke periodes bieden wij bijzondere voorwaarden op een selectie van onze premium raamdecoratie.
+      Ontdek de mogelijkheden via persoonlijk advies.
+"
       metaDescription="Bekijk de actuele acties en kortingen bij KANIOU Zilvernaald. Premium raamdecoratie tegen scherpe prijzen. Horren, rolgordijnen, shutters en meer."
       breadcrumbs={[{ label: "Acties & Korting" }]}
       showCTA={true}
@@ -122,9 +124,9 @@ const ActiesPage = () => {
                 <Bell className="w-10 h-10 text-[#C4A36C]" />
               </div>
               <div>
-                <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-1">Toekomstige Acties</p>
+                <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-1">Aankomende exclusieve voorwaarden</p>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
-                  Nieuwe acties worden <span className="text-[#C4A36C]">binnenkort</span> aangekondigd
+                  Binnen afzienbare termijn introduceren wij nieuwe,<span className="text-[#C4A36C]"> zorgvuldig samengestelde</span> voorwaarden op geselecteerde collecties.
                 </h2>
               </div>
             </div>
@@ -140,9 +142,10 @@ const ActiesPage = () => {
       <section className="py-16 lg:py-24 bg-[#FAFAF8]">
         <Container>
           <div className="text-center mb-16">
-            <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-4">Binnenkort Beschikbaar</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-4">Aankomende Acties</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-lg">Op dit moment zijn er geen actieve kortingen. Hieronder ziet u een overzicht van producten waarvoor binnenkort acties worden aangekondigd.</p>
+            <p className="text-[#C4A36C] text-xs font-bold tracking-[0.3em] uppercase mb-4">Binnen afzienbare termijn</p>
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C3E50] mb-4">Exclusieve voorwaarden op geselecteerde collecties</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">Op dit moment gelden bijzondere voorwaarden op een selectie van onze premium raamdecoratie.
+              Ontvang hoogwaardige kwaliteit en professioneel maatwerk met extra voordeel..</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -171,7 +174,7 @@ const ActiesPage = () => {
                   ) : (
                     <div className="bg-gray-400/80 backdrop-blur-sm text-white font-bold text-sm px-4 py-2 rounded-xl flex items-center gap-2">
                       <Lock className="w-3.5 h-3.5" />
-                      Binnenkort
+                      Voorwaarden korte termijn
                     </div>
                   )}
                 </div>

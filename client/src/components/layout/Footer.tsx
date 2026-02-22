@@ -1,9 +1,8 @@
 import React from 'react';
-import { Plus, Minus, ChevronDown } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const [isProductenExpanded, setIsProductenExpanded] = React.useState(true);
-  const [isContactDropdownOpen, setIsContactDropdownOpen] = React.useState(false);
 
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] via-[#222222] to-[#1a1a1a]">
@@ -151,38 +150,6 @@ const Footer: React.FC = () => {
               </div>
             </form>
 
-            {/* Contact Dropdown */}
-            <div className="relative mt-6">
-              <button
-                onMouseEnter={() => setIsContactDropdownOpen(true)}
-                onMouseLeave={() => setIsContactDropdownOpen(false)}
-                className="w-full px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-semibold tracking-widest uppercase rounded-sm transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-[1.02] flex items-center justify-center gap-2"
-              >
-                Contact
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isContactDropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {isContactDropdownOpen && (
-                <div 
-                  onMouseEnter={() => setIsContactDropdownOpen(true)}
-                  onMouseLeave={() => setIsContactDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-full bg-white shadow-xl rounded-sm overflow-hidden z-50"
-                >
-                  {[
-                    { name: "Plan een afspraak", href: "/contact" },
-                    { name: "Vrijblijvende offerte", href: "/quote" },
-                  ].map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="block px-5 py-3 text-sm text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-colors border-l-4 border-transparent hover:border-orange-500"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
         </div>
 

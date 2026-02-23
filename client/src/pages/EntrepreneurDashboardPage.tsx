@@ -18,13 +18,18 @@ import {
   CheckCircle,
   MessageSquare,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  ShieldCheck,
+  AlertTriangle,
+  XCircle,
+  RefreshCw,
+  Clock
 } from "lucide-react";
 
 export default function EntrepreneurDashboardPage() {
   const [, setLocation] = useLocation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [activeTab, setActiveTab] = useState<"quotes" | "messages">("quotes");
+  const [activeTab, setActiveTab] = useState<"quotes" | "messages" | "security">("quotes");
   const [expandedQuoteId, setExpandedQuoteId] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(true);
 
@@ -70,6 +75,26 @@ export default function EntrepreneurDashboardPage() {
     queryKey: ["/api/admin/contact-submissions"],
     enabled: !!authStatus?.authenticated,
     retry: false,
+  });
+
+  const { data: securityAudits, isLoading: isLoadingSecurity } = useQuery<any[]>({
+    queryKey: ["/api/admin/security-audits"],
+    enabled: !!authStatus?.authenticated && activeTab === "security",
+    retry: false,
+  });
+
+  const runAuditMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/admin/security-audits/run");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/security-audits"] });
+      toast({ title: "Beveiligingscontrole Voltooid", description: "Een nieuwe beveiligingsscan is succesvol uitgevoerd." });
+    },
+    onError: () => {
+      toast({ title: "Scan Mislukt", description: "Er is een probleem opgetreden bij de beveiligingsscan.", variant: "destructive" });
+    },
   });
 
   const logoutMutation = useMutation({
@@ -242,7 +267,7 @@ export default function EntrepreneurDashboardPage() {
           <div className="px-6 pb-12">
             <div className="max-w-7xl mx-auto space-y-8">
               <div className="mb-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <button
                     onClick={() => setActiveTab("quotes")}
                     className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
@@ -278,6 +303,25 @@ export default function EntrepreneurDashboardPage() {
                     </span>
                     <span className={`text-sm mt-1 ${activeTab === 'messages' ? 'text-white/80' : 'text-slate-500'}`}>
                       ({contactSubmissions?.length || 0} vragen)
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("security")}
+                    className={`group relative overflow-hidden flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-500 border-2 ${
+                      activeTab === "security"
+                        ? "bg-gradient-to-br from-amber-500 to-orange-600 border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.4)] scale-105 z-10"
+                        : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10"
+                    }`}
+                  >
+                    <div className={`p-4 rounded-xl mb-3 ${activeTab === 'security' ? 'bg-white/20' : 'bg-amber-500/10'}`}>
+                      <ShieldCheck className={`w-8 h-8 ${activeTab === 'security' ? 'text-white' : 'text-amber-400'}`} />
+                    </div>
+                    <span className={`text-xl font-bold ${activeTab === 'security' ? 'text-white' : 'text-slate-300'}`}>
+                      Beveiliging
+                    </span>
+                    <span className={`text-sm mt-1 ${activeTab === 'security' ? 'text-white/80' : 'text-slate-500'}`}>
+                      Dagelijkse scan
                     </span>
                   </button>
                 </div>
@@ -469,6 +513,145 @@ export default function EntrepreneurDashboardPage() {
                                 )}
                               </div>
                             ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "security" && (
+                <div className={`transform transition-all duration-500 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/50 via-orange-500/50 to-red-500/50 rounded-2xl blur opacity-30"></div>
+                    <Card className="relative bg-white/10 backdrop-blur-xl border-white/20 rounded-2xl overflow-hidden">
+                      <CardHeader className="border-b border-white/10">
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                            <ShieldCheck className="w-7 h-7 text-amber-400" />
+                            Beveiligingsoverzicht
+                          </CardTitle>
+                          <Button
+                            onClick={() => runAuditMutation.mutate()}
+                            disabled={runAuditMutation.isPending}
+                            className="bg-amber-500/20 hover:bg-amber-500/40 text-amber-300 border border-amber-400/30"
+                          >
+                            <RefreshCw className={`w-4 h-4 mr-2 ${runAuditMutation.isPending ? 'animate-spin' : ''}`} />
+                            {runAuditMutation.isPending ? 'Scannen...' : 'Nu Scannen'}
+                          </Button>
+                        </div>
+                        <p className="text-slate-400 text-sm mt-1">Automatische dagelijkse scan om 09:00 (Brussel tijd)</p>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        {isLoadingSecurity ? (
+                          <div className="p-12 text-center">
+                            <div className="w-10 h-10 border-3 border-amber-400/30 border-t-amber-400 rounded-full animate-spin mx-auto mb-3"></div>
+                            <p className="text-slate-400">Beveiligingsgegevens laden...</p>
+                          </div>
+                        ) : !securityAudits?.length ? (
+                          <div className="p-12 text-center">
+                            <ShieldCheck className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+                            <p className="text-slate-300">Nog geen beveiligingsscans uitgevoerd.</p>
+                            <Button onClick={() => runAuditMutation.mutate()} className="mt-4 bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                              Eerste scan uitvoeren
+                            </Button>
+                          </div>
+                        ) : (
+                          <div>
+                            {(() => {
+                              const latest = securityAudits[0];
+                              const checks = (latest.checks || []) as Array<{name: string; category: string; status: string; message: string}>;
+                              const categories = [...new Set(checks.map((c: any) => c.category))];
+                              return (
+                                <div>
+                                  <div className="p-6 border-b border-white/10">
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                      <div className="bg-white/5 rounded-xl p-4 text-center">
+                                        <div className={`text-4xl font-black ${latest.overallScore >= 90 ? 'text-emerald-400' : latest.overallScore >= 70 ? 'text-amber-400' : 'text-red-400'}`}>
+                                          {latest.overallScore}%
+                                        </div>
+                                        <p className="text-slate-400 text-sm mt-1">Security Score</p>
+                                      </div>
+                                      <div className="bg-emerald-500/10 rounded-xl p-4 text-center border border-emerald-400/20">
+                                        <div className="text-3xl font-bold text-emerald-400">{latest.passedChecks}</div>
+                                        <p className="text-emerald-300/70 text-sm mt-1">Geslaagd</p>
+                                      </div>
+                                      <div className="bg-amber-500/10 rounded-xl p-4 text-center border border-amber-400/20">
+                                        <div className="text-3xl font-bold text-amber-400">{latest.warningChecks}</div>
+                                        <p className="text-amber-300/70 text-sm mt-1">Waarschuwingen</p>
+                                      </div>
+                                      <div className="bg-red-500/10 rounded-xl p-4 text-center border border-red-400/20">
+                                        <div className="text-3xl font-bold text-red-400">{latest.failedChecks}</div>
+                                        <p className="text-red-300/70 text-sm mt-1">Mislukt</p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 mt-4 text-sm text-slate-400">
+                                      <Clock className="w-4 h-4" />
+                                      <span>Laatste scan: {formatDate(latest.createdAt)}</span>
+                                      <span className="mx-2">•</span>
+                                      <Badge className={`${
+                                        latest.overallStatus === 'VEILIG' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30' :
+                                        latest.overallStatus === 'WAARSCHUWING' ? 'bg-amber-500/20 text-amber-300 border-amber-400/30' :
+                                        'bg-red-500/20 text-red-300 border-red-400/30'
+                                      }`}>
+                                        {latest.overallStatus}
+                                      </Badge>
+                                    </div>
+                                  </div>
+
+                                  <div className="p-6 space-y-6">
+                                    {categories.map((category: string) => (
+                                      <div key={category}>
+                                        <h3 className="text-sm font-bold tracking-wider uppercase text-slate-400 mb-3">{category}</h3>
+                                        <div className="space-y-2">
+                                          {checks.filter((c: any) => c.category === category).map((check: any, idx: number) => (
+                                            <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                                              {check.status === 'pass' ? (
+                                                <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                                              ) : check.status === 'warning' ? (
+                                                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                                              ) : (
+                                                <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                                              )}
+                                              <div className="flex-1 min-w-0">
+                                                <p className="text-white font-medium text-sm">{check.name}</p>
+                                                <p className="text-slate-400 text-xs mt-0.5">{check.message}</p>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                  {securityAudits.length > 1 && (
+                                    <div className="p-6 border-t border-white/10">
+                                      <h3 className="text-sm font-bold tracking-wider uppercase text-slate-400 mb-3">Scangeschiedenis</h3>
+                                      <div className="space-y-2">
+                                        {securityAudits.slice(0, 10).map((audit: any) => (
+                                          <div key={audit.id} className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                                            <div className="flex items-center gap-3">
+                                              <span className={`text-lg font-bold ${audit.overallScore >= 90 ? 'text-emerald-400' : audit.overallScore >= 70 ? 'text-amber-400' : 'text-red-400'}`}>
+                                                {audit.overallScore}%
+                                              </span>
+                                              <Badge className={`text-xs ${
+                                                audit.overallStatus === 'VEILIG' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30' :
+                                                audit.overallStatus === 'WAARSCHUWING' ? 'bg-amber-500/20 text-amber-300 border-amber-400/30' :
+                                                'bg-red-500/20 text-red-300 border-red-400/30'
+                                              }`}>
+                                                {audit.overallStatus}
+                                              </Badge>
+                                            </div>
+                                            <span className="text-sm text-slate-400">{formatDate(audit.createdAt)}</span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })()}
                           </div>
                         )}
                       </CardContent>

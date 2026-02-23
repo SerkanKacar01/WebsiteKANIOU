@@ -777,3 +777,23 @@ export const insertEnterpriseQuoteSchema = createInsertSchema(enterpriseQuoteReq
 
 export type EnterpriseQuoteRequest = typeof enterpriseQuoteRequests.$inferSelect;
 export type InsertEnterpriseQuoteRequest = z.infer<typeof insertEnterpriseQuoteSchema>;
+
+export const securityAudits = pgTable("security_audits", {
+  id: serial("id").primaryKey(),
+  overallStatus: text("overall_status").notNull(),
+  overallScore: integer("overall_score").notNull(),
+  totalChecks: integer("total_checks").notNull(),
+  passedChecks: integer("passed_checks").notNull(),
+  failedChecks: integer("failed_checks").notNull(),
+  warningChecks: integer("warning_checks").notNull(),
+  checks: jsonb("checks").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertSecurityAuditSchema = createInsertSchema(securityAudits).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type SecurityAudit = typeof securityAudits.$inferSelect;
+export type InsertSecurityAudit = z.infer<typeof insertSecurityAuditSchema>;

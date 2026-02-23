@@ -21,6 +21,7 @@ import {
 } from "@shared/schema";
 import { randomBytes } from "crypto";
 import { adminLoginRateLimiter } from "./middleware/rateLimiter";
+import { runSecurityAudit } from "./securityAudit";
 import { csrfProtection, csrfTokenEndpoint, generateCSRFToken } from "./middleware/csrf";
 import {
   createHelmetMiddleware,
@@ -580,6 +581,37 @@ export async function registerRoutes(app: Express): Promise<void> {
     } catch (error: any) {
       console.error("Dashboard error:", error);
       res.status(500).json({ error: "Failed to load dashboard" });
+    }
+  });
+
+  app.get("/api/admin/security-audits", requireAuth, noCache, async (req, res) => {
+    try {
+      const audits = await storage.getSecurityAudits(30);
+      res.json(audits);
+    } catch (error: any) {
+      console.error("Security audits error:", error);
+      res.status(500).json({ error: "Failed to load security audits" });
+    }
+  });
+
+  app.get("/api/admin/security-audits/latest", requireAuth, noCache, async (req, res) => {
+    try {
+      const audit = await storage.getLatestSecurityAudit();
+      res.json(audit || null);
+    } catch (error: any) {
+      console.error("Latest security audit error:", error);
+      res.status(500).json({ error: "Failed to load latest security audit" });
+    }
+  });
+
+  app.post("/api/admin/security-audits/run", requireAuth, noCache, async (req, res) => {
+    try {
+      await runSecurityAudit();
+      const latest = await storage.getLatestSecurityAudit();
+      res.json({ success: true, audit: latest });
+    } catch (error: any) {
+      console.error("Manual security audit error:", error);
+      res.status(500).json({ error: "Failed to run security audit" });
     }
   });
 

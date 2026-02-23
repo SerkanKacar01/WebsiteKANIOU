@@ -4,6 +4,7 @@ import fs from "fs";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeAdminUser, startSessionCleanup } from "./adminSetup";
+import { startSecurityAuditScheduler } from "./securityAudit";
 
 // Validate environment variables before starting
 function validateEnvironment() {
@@ -75,6 +76,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // Initialize admin user and start session cleanup
   await initializeAdminUser();
   startSessionCleanup();
+  
+  // Start daily security audit scheduler (09:00 Brussels time)
+  startSecurityAuditScheduler();
   
   // Create a test order for bonnummer demonstration (development only)
   if (app.get("env") === "development") {

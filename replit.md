@@ -60,6 +60,7 @@ Preferred communication style: Simple, everyday language.
 - **AI Integration**: AI chatbot components have been removed; traditional contact forms and quote systems are maintained.
 - **GDPR Compliance**: Cookiebot integration for GDPR-compliant cookie consent management. Session-based functionality with production-aware secure cookie settings to ensure privacy compliance.
 - **Security Posture**: Multi-layered security architecture with rate limiting, IP blocking, security headers, secure session management, and comprehensive audit logging.
+- **Automated Security Audits**: Daily scheduled security scan at 09:00 Brussels time via node-cron (`server/securityAudit.ts`). Checks 23 security aspects across 7 categories (Infrastructure, Configuration, HTTP Security, Attack Prevention, Authentication, Monitoring, Data Security). Results stored in `security_audits` database table. Admin dashboard "Beveiliging" tab shows latest results, score history, and manual scan trigger.
 - **Data Flow**: Defined flows for customer journey, inquiries, quote processing, and order processing, emphasizing human follow-up for complex interactions.
 
 ## External Dependencies

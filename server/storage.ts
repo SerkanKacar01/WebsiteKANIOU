@@ -38,6 +38,9 @@ import {
   enterpriseQuoteRequests,
   EnterpriseQuoteRequest,
   InsertEnterpriseQuoteRequest,
+  securityAudits,
+  SecurityAudit,
+  InsertSecurityAudit,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, lt, and } from "drizzle-orm";
@@ -276,6 +279,10 @@ export interface IStorage {
   getColorSampleRequestById(id: number): Promise<ColorSampleRequest | undefined>;
   updateColorSampleRequestStatus(id: number, status: string): Promise<void>;
   
+  // Security Audits
+  createSecurityAudit(audit: InsertSecurityAudit): Promise<SecurityAudit>;
+  getSecurityAudits(limit?: number): Promise<SecurityAudit[]>;
+  getLatestSecurityAudit(): Promise<SecurityAudit | undefined>;
 }
 
 class DatabaseStorage implements IStorage {
@@ -1071,6 +1078,35 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
       if (request) {
         request.status = status;
       }
+    }
+  }
+
+  async createSecurityAudit(audit: InsertSecurityAudit): Promise<SecurityAudit> {
+    try {
+      const result = await db.insert(securityAudits).values(audit).returning();
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for security audit creation');
+      throw error;
+    }
+  }
+
+  async getSecurityAudits(limit: number = 30): Promise<SecurityAudit[]> {
+    try {
+      return await db.select().from(securityAudits).orderBy(desc(securityAudits.createdAt)).limit(limit);
+    } catch (error) {
+      console.warn('Database connection issue for security audits retrieval');
+      return [];
+    }
+  }
+
+  async getLatestSecurityAudit(): Promise<SecurityAudit | undefined> {
+    try {
+      const result = await db.select().from(securityAudits).orderBy(desc(securityAudits.createdAt)).limit(1);
+      return result[0];
+    } catch (error) {
+      console.warn('Database connection issue for latest security audit');
+      return undefined;
     }
   }
 

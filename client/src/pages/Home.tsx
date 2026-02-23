@@ -1622,17 +1622,68 @@ const Home = () => {
         {/* INSPIRATION GALLERY */}
         <InspirationGallery setLocation={setLocation} />
 
-        {/* SPLIT SECTION - ABOUT */}
-        <SplitSection
-          image={interiorImage}
-          subtitle="Productoverzicht"
-          title="Welke raamdecoratie bieden wij aan?"
-          description="KANIOU is er trots op alle wensen voor raamdecoratie te kunnen realiseren voor elke kamer en stijl. Onze producten zijn van hoge kwaliteit en helemaal afgestemd op jouw ramen en praktische behoeften. Ook op stijl hoef je niet in te boeten, want onze collectie raambekleding biedt tal van mogelijkheden in design, kleuren en stoffen."
-          buttonText="Bekijk al onze producten"
-          buttonPath="/producten/overgordijnen"
-          imageLeft={true}
-          setLocation={setLocation}
-        />
+        {/* EXCLUSIVE SERVICE SECTION */}
+        <section className="py-24 bg-[#f8f9fa]">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
+                <img 
+                  src={interiorImage} 
+                  alt="Luxe Raamdecoratie" 
+                  className="w-full h-[600px] object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end p-12">
+                  <p className="text-white text-lg font-light italic">"Perfectie in elk detail, van advies tot installatie."</p>
+                </div>
+              </div>
+              
+              <div className="lg:pl-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-px bg-[#C8A85B]" />
+                  <span className="text-[#C8A85B] text-xs tracking-[0.3em] uppercase font-semibold">Exclusieve Service</span>
+                </div>
+                
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#1a1f2e] mb-8 leading-[1.1]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Waarom kiezen voor <br />
+                  <span className="italic text-[#C8A85B]">KANIOU zilvernaald?</span>
+                </h2>
+                
+                <div className="space-y-8 mb-12">
+                  {[
+                    { title: "Persoonlijk Advies", desc: "Wij komen bij u langs voor een uitgebreid adviesgesprek op maat van uw interieur." },
+                    { title: "Maatwerk Expertise", desc: "Al onze producten worden tot op de millimeter nauwkeurig in ons eigen atelier vervaardigd." },
+                    { title: "Professionele Montage", desc: "Onze eigen vakmensen zorgen voor een vlekkeloze installatie en afwerking." }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex gap-6 group">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-full border border-[#C8A85B]/30 flex items-center justify-center text-[#C8A85B] group-hover:bg-[#C8A85B] group-hover:text-white transition-all duration-500">
+                        <span className="text-sm font-medium">0{idx + 1}</span>
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-[#1a1f2e] mb-2">{item.title}</h4>
+                        <p className="text-gray-500 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex flex-wrap gap-4">
+                  <button 
+                    onClick={() => setLocation("/contact")}
+                    className="px-10 py-4 bg-[#1a1f2e] text-white text-xs tracking-widest uppercase hover:bg-[#C8A85B] transition-all duration-500 shadow-xl"
+                  >
+                    Plan een afspraak
+                  </button>
+                  <button 
+                    onClick={() => setLocation("/op-maat-advies")}
+                    className="px-10 py-4 border border-[#1a1f2e]/20 text-[#1a1f2e] text-xs tracking-widest uppercase hover:bg-[#1a1f2e] hover:text-white transition-all duration-500"
+                  >
+                    Onze werkwijze
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* SPOTLIGHT SECTION */}
         {/* Promotional Banner */}

@@ -35,6 +35,7 @@ import showroomImageSrc from "@assets/Scherm­afbeelding_2025-12-10_om_02.26.40_
 import heroImg1Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.28.51_1771882239705.png";
 import heroImg2Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.00_1771882239705.png";
 import heroImg3Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.08_1771882239706.png";
+import lightMasterSrc from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.08_1771883743604.png";
 import heroImg4Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.18_1771882239707.png";
 import heroImg5Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.39_1771882239707.png";
 import heroImg6Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.53_1771882239708.png";
@@ -755,12 +756,12 @@ const LightMasterSection = ({
             onTouchEnd={() => setIsDragging(false)}
           >
             <div className="absolute inset-0">
-              <img src={heroImg5Src} alt="Kamer met raamdecoratie" className="w-full h-full object-cover" />
+              <img src={lightMasterSrc} alt="Kamer met raamdecoratie" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-amber-800/10" />
             </div>
 
             <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
-              <img src={heroImg5Src} alt="Kamer zonder raamdecoratie" className="w-full h-full object-cover" style={{ filter: 'brightness(1.6) contrast(1.15) saturate(0.5)' }} />
+              <img src={lightMasterSrc} alt="Kamer zonder raamdecoratie" className="w-full h-full object-cover" style={{ filter: 'brightness(1.6) contrast(1.15) saturate(0.5)' }} />
               <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 via-white/10 to-yellow-100/20" />
             </div>
 

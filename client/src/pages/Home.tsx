@@ -1354,94 +1354,168 @@ const LuxuryNavigation = () => {
   );
 };
 
-// ========== COLLAGE HERO ==========
-const CollageHero = ({
+// ========== ENTERPRISE SPLIT-SCREEN HERO ==========
+const SplitScreenHero = ({
   images,
   setLocation,
 }: {
   images: string[];
   setLocation: (path: string) => void;
 }) => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  const trustItems = [
+    { value: "30+", label: "Jaar ervaring" },
+    { value: "100%", label: "Op maat gemaakt" },
+    { value: "Gratis", label: "Inmeting aan huis" },
+  ];
 
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
-      <div className="absolute inset-0">
-        <div className="grid grid-cols-3 grid-rows-3 w-full h-full gap-1">
-          {images.map((img, idx) => (
-            <div
-              key={idx}
-              className="relative overflow-hidden cursor-pointer group"
-              onMouseEnter={() => setHoveredIndex(idx)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <img
-                src={img}
-                alt={`Interior showcase ${idx + 1}`}
-                className={`w-full h-full object-cover transition-all duration-700 ease-out ${
-                  hoveredIndex === idx ? "scale-110" : "scale-100"
-                }`}
-                style={{
-                  filter:
-                    hoveredIndex !== null && hoveredIndex !== idx
-                      ? "brightness(0.6)"
-                      : "brightness(1)",
-                  transition: "all 700ms cubic-bezier(0.34, 1.56, 0.64, 1)",
-                }}
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                style={{
-                  transform:
-                    hoveredIndex === idx
-                      ? "translate(0, 0)"
-                      : "translate(-100%, -100%)",
-                  transition:
-                    "transform 700ms ease-out, opacity 700ms ease-out",
-                }}
-              />
+    <div className="relative h-screen flex flex-col lg:flex-row overflow-hidden">
+      <div className="relative lg:w-[48%] h-[55vh] lg:h-full bg-[#1a1f2e] flex items-center z-10">
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+
+        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-[#C8A85B]/20 to-transparent hidden lg:block" />
+
+        <div className="relative w-full px-8 sm:px-12 lg:px-16 xl:px-20">
+          <div
+            className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-px bg-gradient-to-r from-[#C8A85B] to-transparent" />
+              <span className="text-[#C8A85B] text-[11px] tracking-[0.3em] uppercase font-medium">
+                Belgisch vakmanschap sinds 1994
+              </span>
             </div>
-          ))}
+
+            <h1
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white mb-3 leading-[1.05]"
+              style={{ fontFamily: "'Cormorant Garamond', serif", letterSpacing: "-0.02em" }}
+            >
+              KANIOU
+            </h1>
+            <p
+              className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem] font-light text-white/60 mb-8 leading-[1.15]"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Raamdecoratie die uw<br />
+              <span className="italic text-[#C8A85B]/80">interieur transformeert</span>
+            </p>
+
+            <p
+              className={`text-white/50 text-sm sm:text-base leading-relaxed max-w-md mb-10 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            >
+              Van exclusieve overgordijnen tot strakke rolgordijnen —
+              wij creëren op maat gemaakte raamoplossingen die perfect
+              aansluiten bij uw stijl en wensen.
+            </p>
+          </div>
+
+          <div
+            className={`flex flex-col sm:flex-row gap-4 mb-12 transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          >
+            <MagneticButton
+              onClick={() => setLocation("/offerte")}
+              className="group inline-flex items-center justify-center px-8 py-4 bg-[#C8A85B] text-[#1a1f2e] hover:bg-[#D4B96A] transition-all duration-500 hover:shadow-xl hover:shadow-[#C8A85B]/20 hover:-translate-y-0.5 relative overflow-hidden"
+              data-testid="button-request-quote"
+            >
+              <span className="relative z-10 text-xs tracking-[0.2em] uppercase font-semibold mr-3">
+                Gratis offerte aanvragen
+              </span>
+              <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-500" />
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            </MagneticButton>
+
+            <button
+              onClick={() => setLocation("/producten/overgordijnen")}
+              className="group inline-flex items-center justify-center px-8 py-4 border border-white/15 text-white/70 hover:text-white hover:border-white/40 transition-all duration-500 text-xs tracking-[0.2em] uppercase"
+            >
+              Ontdek collectie
+              <ArrowRight className="w-4 h-4 ml-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
+            </button>
+          </div>
+
+          <div
+            className={`hidden sm:flex items-center gap-8 lg:gap-10 pt-8 border-t border-white/[0.06] transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+          >
+            {trustItems.map((item, idx) => (
+              <div key={idx} className="text-center lg:text-left">
+                <div
+                  className="text-xl lg:text-2xl font-light text-[#C8A85B] mb-1"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {item.value}
+                </div>
+                <div className="text-[10px] tracking-[0.15em] uppercase text-white/35">
+                  {item.label}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="relative lg:w-[52%] h-[45vh] lg:h-full overflow-hidden">
+        {images.map((img, idx) => (
+          <div
+            key={idx}
+            className="absolute inset-0 transition-all duration-[1500ms] ease-in-out"
+            style={{
+              opacity: currentImage === idx ? 1 : 0,
+              transform: currentImage === idx ? 'scale(1)' : 'scale(1.08)',
+            }}
+          >
+            <img
+              src={img}
+              alt={`Premium interieur ${idx + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-[fadeInUp_1.2s_ease-out]">
-        <h1
-          className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-6 tracking-tighter leading-[0.9] transition-all duration-700 hover:scale-105"
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            letterSpacing: "-0.04em",
-            textShadow: "0 8px 32px rgba(0,0,0,0.5)",
-          }}
-        >
-          KANIOU raamdecoratie
-          <br />
-          <span className="italic bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text">
-            op maat, voor elke stijl
-          </span>
-        </h1>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1f2e] via-transparent to-transparent opacity-60 hidden lg:block" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1f2e] via-transparent to-transparent opacity-60 lg:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
 
-        <p className="text-lg md:text-xl text-white/90 mb-12 font-light tracking-wide max-w-xl mx-auto animate-[fadeInUp_1.4s_ease-out]">
-          Premium raamdecoratie op maat sinds meer dan 30 jaar
-        </p>
+        <div className="absolute bottom-8 right-8 flex gap-2">
+          {images.slice(0, 6).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentImage(idx)}
+              className={`transition-all duration-500 rounded-full ${
+                currentImage === idx
+                  ? 'w-8 h-2 bg-[#C8A85B]'
+                  : 'w-2 h-2 bg-white/30 hover:bg-white/60'
+              }`}
+              aria-label={`Toon afbeelding ${idx + 1}`}
+            />
+          ))}
+        </div>
 
-        <MagneticButton
-          onClick={() => setLocation("/offerte-aanvragen")}
-          className="group inline-flex items-center px-12 py-4 bg-white/10 backdrop-blur-sm border border-white/40 text-white hover:bg-white hover:text-black transition-all duration-700 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1 animate-[fadeInUp_1.6s_ease-out] relative overflow-hidden animate-glow-pulse"
-          data-testid="button-request-quote"
-        >
-          <span className="relative z-10 text-xs tracking-widest uppercase mr-3">
-            Vrijblijvend offerte aanvragen
-          </span>
-          <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
-          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-        </MagneticButton>
+        <div className="absolute bottom-8 left-8 hidden lg:block">
+          <div className="flex items-center gap-3 text-white/40 text-[10px] tracking-[0.2em] uppercase">
+            <div className="w-6 h-px bg-white/20" />
+            Swipe om te ontdekken
+          </div>
+        </div>
       </div>
 
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block">
-        <ChevronDown className="w-6 h-6 text-white/60 animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 hidden lg:block">
+        <ChevronDown className="w-5 h-5 text-white/40 animate-bounce" />
       </div>
     </div>
   );
@@ -1510,7 +1584,7 @@ const Home = () => {
 
       <div className="bg-white">
         {/* HERO SECTION */}
-        <CollageHero images={collageImages} setLocation={setLocation} />
+        <SplitScreenHero images={collageImages} setLocation={setLocation} />
 
         {/* PRODUCT CAROUSEL SECTION */}
         <section className="py-24 bg-white">

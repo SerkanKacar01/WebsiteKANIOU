@@ -35,7 +35,6 @@ import showroomImageSrc from "@assets/Scherm­afbeelding_2025-12-10_om_02.26.40_
 import heroImg1Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.28.51_1771882239705.png";
 import heroImg2Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.00_1771882239705.png";
 import heroImg3Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.08_1771882239706.png";
-import lightMasterSrc from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.08_1771883743604.png";
 import heroImg4Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.18_1771882239707.png";
 import heroImg5Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.39_1771882239707.png";
 import heroImg6Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.53_1771882239708.png";
@@ -686,131 +685,67 @@ const SplitSection = ({
   );
 };
 
-// ========== MEESTER OVER HET LICHT SECTION ==========
-const LightMasterSection = ({
-  setLocation,
-}: {
-  setLocation: (path: string) => void;
-}) => {
-  const [sliderPos, setSliderPos] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [sectionRef, sectionVisible] = useScrollReveal(0.15);
-
-  const handleMove = useCallback((clientX: number) => {
-    if (!sliderRef.current) return;
-    const rect = sliderRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    setSliderPos((x / rect.width) * 100);
-  }, []);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (isDragging) handleMove(e.clientX);
-  }, [isDragging, handleMove]);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    handleMove(e.touches[0].clientX);
-  }, [handleMove]);
-
-  useEffect(() => {
-    const handleUp = () => setIsDragging(false);
-    window.addEventListener('mouseup', handleUp);
-    return () => window.removeEventListener('mouseup', handleUp);
-  }, []);
-
-  const lightBenefits = [
-    { icon: "01", title: "Privacy op Maat", desc: "Bepaal zelf hoeveel inkijk u toelaat, zonder in te leveren op natuurlijk licht." },
-    { icon: "02", title: "Energiebesparing", desc: "Houd warmte binnen in de winter en buiten in de zomer met de juiste raamdecoratie." },
-    { icon: "03", title: "Sfeer Creëren", desc: "Van zacht gefilterd ochtendlicht tot volledige verduistering voor de perfecte nachtrust." },
+// ========== WIST U DAT — SCROLLING FACTS RIBBON ==========
+const FactsRibbon = () => {
+  const facts = [
+    "Wist u dat de juiste raamdecoratie tot 25% energie bespaart?",
+    "Maatwerk gordijnen gaan gemiddeld 3x langer mee dan confectie",
+    "70% van de warmte in huis ontsnapt via de ramen",
+    "Professionele montage voorkomt 95% van de problemen met raambekleding",
+    "De juiste lichtfiltering verbetert uw slaapkwaliteit met 40%",
+    "Op maat gemaakte shutters verhogen de waarde van uw woning",
+    "KANIOU gebruikt uitsluitend Europese premium stoffen en materialen",
+    "Gratis inmeting aan huis bespaart u gemiddeld €200 aan fouten",
   ];
 
+  const duplicated = [...facts, ...facts];
+
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 bg-[#1a1f2e] overflow-hidden">
-      <div className="max-w-[1500px] mx-auto px-4 md:px-6 lg:px-16">
-        <div className={`text-center mb-12 md:mb-20 transition-all duration-1000 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent to-[#C8A85B]" />
-            <span className="text-[#C8A85B] text-[11px] tracking-[0.3em] uppercase font-medium">Het Verschil Ervaren</span>
-            <div className="w-16 h-px bg-gradient-to-l from-transparent to-[#C8A85B]" />
-          </div>
-          <h2
-            className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-[1.05]"
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
-          >
-            Meester over het <span className="italic text-[#C8A85B]">Licht</span>
-          </h2>
-          <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto font-light">
-            Ontdek hoe raamdecoratie van KANIOU uw ruimte transformeert.
-            Versleep de slider en ervaar het verschil.
-          </p>
+    <section className="relative py-0 overflow-hidden bg-[#1a1f2e]">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1a1f2e] via-transparent to-[#1a1f2e] z-10 pointer-events-none" />
+
+      <div className="py-10 md:py-14">
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="w-12 h-px bg-gradient-to-r from-transparent to-[#C8A85B]/40" />
+          <span className="text-[#C8A85B]/60 text-[10px] tracking-[0.3em] uppercase font-medium">Wist u dat</span>
+          <div className="w-12 h-px bg-gradient-to-l from-transparent to-[#C8A85B]/40" />
         </div>
 
-        <div className={`transition-all duration-1000 delay-300 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="relative overflow-hidden">
           <div
-            ref={sliderRef}
-            className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden cursor-col-resize select-none shadow-2xl shadow-black/40"
-            onMouseMove={handleMouseMove}
-            onMouseDown={() => setIsDragging(true)}
-            onTouchMove={handleTouchMove}
-            onTouchStart={() => setIsDragging(true)}
-            onTouchEnd={() => setIsDragging(false)}
+            className="flex gap-0 animate-[marquee_60s_linear_infinite] hover:[animation-play-state:paused]"
+            style={{ width: 'max-content' }}
           >
-            <div className="absolute inset-0">
-              <img src={lightMasterSrc} alt="Kamer met raamdecoratie" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-amber-800/10" />
-            </div>
-
-            <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
-              <img src={lightMasterSrc} alt="Kamer zonder raamdecoratie" className="w-full h-full object-cover" style={{ filter: 'brightness(1.6) contrast(1.15) saturate(0.5)' }} />
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 via-white/10 to-yellow-100/20" />
-            </div>
-
-            <div
-              className="absolute top-0 bottom-0 z-10 flex items-center"
-              style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
-            >
-              <div className="w-px h-full bg-white/70 shadow-[0_0_20px_rgba(255,255,255,0.3)]" />
-              <div className="absolute top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-2xl shadow-black/30 flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-110 transition-transform duration-300">
-                <div className="flex items-center gap-1">
-                  <ChevronLeft className="w-4 h-4 text-[#1a1f2e]" />
-                  <ChevronRight className="w-4 h-4 text-[#1a1f2e]" />
-                </div>
+            {duplicated.map((fact, idx) => (
+              <div key={idx} className="flex items-center flex-shrink-0">
+                <span
+                  className="text-white/70 text-sm md:text-base lg:text-lg font-light tracking-wide whitespace-nowrap px-4 md:px-6 hover:text-[#C8A85B] transition-colors duration-500 cursor-default"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {fact}
+                </span>
+                <span className="text-[#C8A85B]/30 text-lg mx-2 md:mx-4 flex-shrink-0">◆</span>
               </div>
-            </div>
-
-            <div className="absolute top-6 left-6 px-4 py-2 bg-[#C8A85B] text-[#1a1f2e] text-[10px] md:text-xs tracking-widest uppercase font-semibold rounded-full shadow-lg">
-              Met KANIOU
-            </div>
-            <div className="absolute top-6 right-6 px-4 py-2 bg-white/90 text-gray-700 text-[10px] md:text-xs tracking-widest uppercase font-semibold rounded-full shadow-lg backdrop-blur-sm">
-              Zonder
-            </div>
+            ))}
           </div>
         </div>
 
-        <div className={`grid md:grid-cols-3 gap-8 md:gap-12 mt-16 md:mt-20 transition-all duration-1000 delay-600 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {lightBenefits.map((item, idx) => (
-            <div key={idx} className="text-center group">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full border border-[#C8A85B]/20 flex items-center justify-center group-hover:bg-[#C8A85B]/10 group-hover:border-[#C8A85B]/50 transition-all duration-500">
-                <span className="text-[#C8A85B] text-sm font-medium">{item.icon}</span>
-              </div>
-              <h4 className="text-xl text-white font-light mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                {item.title}
-              </h4>
-              <p className="text-white/40 text-sm leading-relaxed max-w-xs mx-auto">
-                {item.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className={`text-center mt-14 md:mt-16 transition-all duration-1000 delay-800 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <button
-            onClick={() => setLocation("/offerte")}
-            className="group inline-flex items-center px-10 py-4 bg-[#C8A85B] text-[#1a1f2e] text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#D4B96A] transition-all duration-500 hover:shadow-xl hover:shadow-[#C8A85B]/20 hover:-translate-y-0.5"
+        <div className="relative overflow-hidden mt-6">
+          <div
+            className="flex gap-0 animate-[marqueeReverse_55s_linear_infinite] hover:[animation-play-state:paused]"
+            style={{ width: 'max-content' }}
           >
-            Vraag gratis advies aan
-            <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1.5 transition-transform duration-500" />
-          </button>
+            {[...duplicated].reverse().map((fact, idx) => (
+              <div key={idx} className="flex items-center flex-shrink-0">
+                <span
+                  className="text-white/40 text-xs md:text-sm font-light tracking-wide whitespace-nowrap px-4 md:px-6 hover:text-white/70 transition-colors duration-500 cursor-default"
+                >
+                  {fact}
+                </span>
+                <span className="text-[#C8A85B]/20 text-sm mx-2 md:mx-4 flex-shrink-0">●</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1687,7 +1622,7 @@ const Home = () => {
         <PromotionalBanner />
 
 
-        <LightMasterSection setLocation={setLocation} />
+        <FactsRibbon />
 
         {/* CRAFTSMANSHIP / STATS SECTION */}
         <section ref={craftsmanshipRef} className="py-32 bg-white">

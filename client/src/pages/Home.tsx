@@ -685,135 +685,131 @@ const SplitSection = ({
   );
 };
 
-// ========== IN DE KIJKER / SPOTLIGHT SECTION ==========
-const SpotlightSection = ({
+// ========== MEESTER OVER HET LICHT SECTION ==========
+const LightMasterSection = ({
   setLocation,
 }: {
   setLocation: (path: string) => void;
 }) => {
-  const spotlights = [
-    {
-      label: "Nieuw",
-      title: "Duo Rolgordijnen",
-      description:
-        "Combineer privacy met lichtinval - de perfecte balans voor elk moment van de dag",
-      image: duoRolgordijnenSrc,
-      path: "/producten/duo-rolgordijnen",
-    },
-    {
-      label: "Populair",
-      title: "Houten Shutters",
-      description: "Tijdloze elegantie met perfecte lichtcontrole en isolatie",
-      image: houtenShuttersSrc,
-      path: "/producten/houten-shutters",
-    },
-    {
-      label: "Duurzaam",
-      title: "Textiel Lamellen",
-      description:
-        "Zachte materialen voor een warme uitstraling en optimale lichtfiltering",
-      image: textielLamellenSrc,
-      path: "/producten/textiel-lamellen",
-    },
+  const [sliderPos, setSliderPos] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [sectionRef, sectionVisible] = useScrollReveal(0.15);
+
+  const handleMove = useCallback((clientX: number) => {
+    if (!sliderRef.current) return;
+    const rect = sliderRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    setSliderPos((x / rect.width) * 100);
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (isDragging) handleMove(e.clientX);
+  }, [isDragging, handleMove]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    handleMove(e.touches[0].clientX);
+  }, [handleMove]);
+
+  useEffect(() => {
+    const handleUp = () => setIsDragging(false);
+    window.addEventListener('mouseup', handleUp);
+    return () => window.removeEventListener('mouseup', handleUp);
+  }, []);
+
+  const lightBenefits = [
+    { icon: "01", title: "Privacy op Maat", desc: "Bepaal zelf hoeveel inkijk u toelaat, zonder in te leveren op natuurlijk licht." },
+    { icon: "02", title: "Energiebesparing", desc: "Houd warmte binnen in de winter en buiten in de zomer met de juiste raamdecoratie." },
+    { icon: "03", title: "Sfeer Creëren", desc: "Van zacht gefilterd ochtendlicht tot volledige verduistering voor de perfecte nachtrust." },
   ];
 
   return (
-    <section className="py-12 md:py-24 bg-gray-50">
-      <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-16">
-        <div className="text-center mb-8 md:mb-16">
+    <section ref={sectionRef} className="py-20 md:py-32 bg-[#1a1f2e] overflow-hidden">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-6 lg:px-16">
+        <div className={`text-center mb-12 md:mb-20 transition-all duration-1000 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-16 h-px bg-gradient-to-r from-transparent to-[#C8A85B]" />
+            <span className="text-[#C8A85B] text-[11px] tracking-[0.3em] uppercase font-medium">Het Verschil Ervaren</span>
+            <div className="w-16 h-px bg-gradient-to-l from-transparent to-[#C8A85B]" />
+          </div>
           <h2
-            className="text-3xl md:text-5xl font-light text-black mb-3 md:mb-4"
+            className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-[1.05]"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            In de kijker
+            Meester over het <span className="italic text-[#C8A85B]">Licht</span>
           </h2>
-          <div className="w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-black/20 to-transparent mx-auto" />
+          <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto font-light">
+            Ontdek hoe raamdecoratie van KANIOU uw ruimte transformeert.
+            Versleep de slider en ervaar het verschil.
+          </p>
         </div>
 
-        {/* Mobile: Horizontal scroll carousel */}
-        <div className="md:hidden">
-          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {spotlights.map((item, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 w-[280px] snap-center cursor-pointer"
-                onClick={() => setLocation(item.path)}
-              >
-                <div className="group bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-40 overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute top-3 left-3 px-2 py-1 bg-black text-white text-[10px] tracking-widest uppercase">
-                      {item.label}
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <h3
-                      className="text-lg font-light text-black mb-2"
-                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600 text-xs leading-relaxed mb-3 line-clamp-2">
-                      {item.description}
-                    </p>
-                    <div className="inline-flex items-center text-black text-[10px] tracking-widest uppercase">
-                      Ontdekken
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* Scroll indicator dots */}
-          <div className="flex justify-center gap-2 mt-4">
-            {spotlights.map((_, index) => (
-              <div key={index} className="w-2 h-2 rounded-full bg-gray-300" />
-            ))}
-          </div>
-        </div>
+        <div className={`transition-all duration-1000 delay-300 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div
+            ref={sliderRef}
+            className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden cursor-col-resize select-none shadow-2xl shadow-black/40"
+            onMouseMove={handleMouseMove}
+            onMouseDown={() => setIsDragging(true)}
+            onTouchMove={handleTouchMove}
+            onTouchStart={() => setIsDragging(true)}
+            onTouchEnd={() => setIsDragging(false)}
+          >
+            <div className="absolute inset-0">
+              <img src={heroImg5Src} alt="Kamer met raamdecoratie" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-amber-800/10" />
+            </div>
 
-        {/* Desktop: Grid layout */}
-        <div className="hidden md:grid md:grid-cols-3 gap-8">
-          {spotlights.map((item, index) => (
-            <TiltCard
-              key={index}
-              className="cursor-pointer"
-              onClick={() => setLocation(item.path)}
+            <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
+              <img src={heroImg5Src} alt="Kamer zonder raamdecoratie" className="w-full h-full object-cover" style={{ filter: 'brightness(1.6) contrast(1.15) saturate(0.5)' }} />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 via-white/10 to-yellow-100/20" />
+            </div>
+
+            <div
+              className="absolute top-0 bottom-0 z-10 flex items-center"
+              style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
             >
-              <div className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-black text-white text-xs tracking-widest uppercase">
-                    {item.label}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h3
-                    className="text-2xl font-light text-black mb-3 group-hover:text-gray-700 transition-colors"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                    {item.description}
-                  </p>
-                  <div className="inline-flex items-center text-black text-xs tracking-widest uppercase group-hover:translate-x-2 transition-transform duration-500">
-                    Ontdekken
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </div>
+              <div className="w-px h-full bg-white/70 shadow-[0_0_20px_rgba(255,255,255,0.3)]" />
+              <div className="absolute top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-2xl shadow-black/30 flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-110 transition-transform duration-300">
+                <div className="flex items-center gap-1">
+                  <ChevronLeft className="w-4 h-4 text-[#1a1f2e]" />
+                  <ChevronRight className="w-4 h-4 text-[#1a1f2e]" />
                 </div>
               </div>
-            </TiltCard>
+            </div>
+
+            <div className="absolute top-6 left-6 px-4 py-2 bg-[#C8A85B] text-[#1a1f2e] text-[10px] md:text-xs tracking-widest uppercase font-semibold rounded-full shadow-lg">
+              Met KANIOU
+            </div>
+            <div className="absolute top-6 right-6 px-4 py-2 bg-white/90 text-gray-700 text-[10px] md:text-xs tracking-widest uppercase font-semibold rounded-full shadow-lg backdrop-blur-sm">
+              Zonder
+            </div>
+          </div>
+        </div>
+
+        <div className={`grid md:grid-cols-3 gap-8 md:gap-12 mt-16 md:mt-20 transition-all duration-1000 delay-600 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {lightBenefits.map((item, idx) => (
+            <div key={idx} className="text-center group">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full border border-[#C8A85B]/20 flex items-center justify-center group-hover:bg-[#C8A85B]/10 group-hover:border-[#C8A85B]/50 transition-all duration-500">
+                <span className="text-[#C8A85B] text-sm font-medium">{item.icon}</span>
+              </div>
+              <h4 className="text-xl text-white font-light mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                {item.title}
+              </h4>
+              <p className="text-white/40 text-sm leading-relaxed max-w-xs mx-auto">
+                {item.desc}
+              </p>
+            </div>
           ))}
+        </div>
+
+        <div className={`text-center mt-14 md:mt-16 transition-all duration-1000 delay-800 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <button
+            onClick={() => setLocation("/offerte")}
+            className="group inline-flex items-center px-10 py-4 bg-[#C8A85B] text-[#1a1f2e] text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#D4B96A] transition-all duration-500 hover:shadow-xl hover:shadow-[#C8A85B]/20 hover:-translate-y-0.5"
+          >
+            Vraag gratis advies aan
+            <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1.5 transition-transform duration-500" />
+          </button>
         </div>
       </div>
     </section>
@@ -1690,7 +1686,7 @@ const Home = () => {
         <PromotionalBanner />
 
 
-        <SpotlightSection setLocation={setLocation} />
+        <LightMasterSection setLocation={setLocation} />
 
         {/* CRAFTSMANSHIP / STATS SECTION */}
         <section ref={craftsmanshipRef} className="py-32 bg-white">

@@ -60,13 +60,19 @@ const gallery6 = gallery6Src;
 
 const heroImages = [
   heroImg3Src,
-  heroImg4Src,
+  heroImg7Src,
+  gallery1,
   heroImg5Src,
   heroImg6Src,
-  heroImg7Src,
+  gallery3,
+  heroImg4Src,
   heroImg8Src,
+  gallery2,
   heroImg1Src,
+  gallery5,
   heroImg2Src,
+  gallery4,
+  gallery6,
 ];
 
 // ========== ANIMATION HOOKS & COMPONENTS ==========
@@ -1405,7 +1411,7 @@ const SplitScreenHero = ({
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-px bg-gradient-to-r from-[#C8A85B] to-transparent" />
               <span className="text-[#C8A85B] text-[11px] tracking-[0.3em] uppercase font-medium">
-                Belgisch vakmanschap sinds 1994
+                Traditie, precisie en maatwerk sinds 1994
               </span>
             </div>
 
@@ -1426,9 +1432,7 @@ const SplitScreenHero = ({
             <p
               className={`text-white/50 text-sm sm:text-base leading-relaxed max-w-md mb-10 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
             >
-              Van exclusieve overgordijnen tot strakke rolgordijnen —
-              wij creëren op maat gemaakte raamoplossingen die perfect
-              aansluiten bij uw stijl en wensen.
+              Bij KANIOU in Maasmechelen realiseren wij hoogwaardige raamdecoratie op maat. Van gordijnen en inbetweens tot rolgordijnen en zonwering: elk project wordt professioneel begeleid, nauwkeurig opgemeten en perfect afgestemd op uw interieur en lichtinval.
             </p>
           </div>
 

@@ -894,7 +894,7 @@ const BrochureForm = () => {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-[11px] tracking-[0.2em] uppercase mb-2 text-[#C8A85B]/70 font-medium">
+                  <label className="block text-xs tracking-[0.15em] uppercase mb-2 text-gray-300 font-medium">
                     Naam
                   </label>
                   <Input
@@ -903,14 +903,14 @@ const BrochureForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="bg-white/[0.05] border-white/10 text-white placeholder:text-white/30 focus:border-[#C8A85B]/50 focus:ring-[#C8A85B]/10 h-12 rounded-sm"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-[#C8A85B]/60 focus:ring-[#C8A85B]/10 h-12 rounded-sm"
                     placeholder="Uw naam"
                     required
                     data-testid="input-brochure-name"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] tracking-[0.2em] uppercase mb-2 text-[#C8A85B]/70 font-medium">
+                  <label className="block text-xs tracking-[0.15em] uppercase mb-2 text-gray-300 font-medium">
                     E-mailadres
                   </label>
                   <Input
@@ -919,7 +919,7 @@ const BrochureForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="bg-white/[0.05] border-white/10 text-white placeholder:text-white/30 focus:border-[#C8A85B]/50 focus:ring-[#C8A85B]/10 h-12 rounded-sm"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-[#C8A85B]/60 focus:ring-[#C8A85B]/10 h-12 rounded-sm"
                     placeholder="uw@email.com"
                     required
                     data-testid="input-brochure-email"

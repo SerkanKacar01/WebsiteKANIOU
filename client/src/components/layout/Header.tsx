@@ -24,42 +24,42 @@ const megaMenuColumns = [
   {
     title: "Gordijnen",
     links: [
-      { name: "Inbetweens", path: "/producten/vitrages" },
-      { name: "Overgordijnen", path: "/producten/overgordijnen" },
-      { name: "Vitrages", path: "/producten/vitrages" },
-      { name: "Vouwgordijnen", path: "/producten/vouwgordijnen" },
+      { name: "Inbetweens", path: "/producten/vitrages", desc: "Lichtdoorlatende gordijnen die privacy combineren met zachte, natuurlijke lichtinval." },
+      { name: "Overgordijnen", path: "/producten/overgordijnen", desc: "Op maat gemaakte overgordijnen voor optimale verduistering, isolatie en luxe." },
+      { name: "Vitrages", path: "/producten/vitrages", desc: "Transparante raamdecoratie die daglicht filtert en een verfijnde sfeer creëert." },
+      { name: "Vouwgordijnen", path: "/producten/vouwgordijnen", desc: "Stijlvolle vouwgordijnen die textiel en functionaliteit harmonieus samenbrengen." },
     ],
   },
   {
     title: "Binnenzonwering",
     links: [
-      { name: "Rolgordijnen", path: "/producten/rolgordijnen" },
-      { name: "Duo Rolgordijnen", path: "/producten/duo-rolgordijnen" },
-      { name: "Plissés", path: "/producten/plisse" },
-      { name: "Duo Plissés", path: "/producten/duo-plisses" },
+      { name: "Rolgordijnen", path: "/producten/rolgordijnen", desc: "Strakke rolgordijnen op maat voor gecontroleerde lichtregulering." },
+      { name: "Duo Rolgordijnen", path: "/producten/duo-rolgordijnen", desc: "Transparante en verduisterende banen voor flexibele lichtbeheersing." },
+      { name: "Plissés", path: "/producten/plisse", desc: "Elegant geplooide plisségordijnen, geschikt voor diverse raamvormen." },
+      { name: "Duo Plissés", path: "/producten/duo-plisses", desc: "Honingraatstructuur voor verbeterde energie-efficiëntie en comfort." },
     ],
   },
   {
     title: "Jaloezieën",
     links: [
-      { name: "Houten Jaloezieën", path: "/producten/houten-jaloezieen" },
-      { name: "Aluminium Jaloezieën", path: "/producten/kunststof-jaloezieen" },
+      { name: "Houten Jaloezieën", path: "/producten/houten-jaloezieen", desc: "Warmte, karakter en natuurlijke uitstraling voor uw interieur." },
+      { name: "Aluminium Jaloezieën", path: "/producten/kunststof-jaloezieen", desc: "Nauwkeurige lichtregeling met een moderne, strakke afwerking." },
     ],
   },
   {
     title: "Lamellen",
     links: [
-      { name: "Textiel Lamellen", path: "/producten/textiel-lamellen" },
-      { name: "Kunststof Lamellen", path: "/producten/kunststof-lamellen" },
+      { name: "Textiel Lamellen", path: "/producten/textiel-lamellen", desc: "Verticale textiellamellen die grote raampartijen elegant structureren." },
+      { name: "Kunststof Lamellen", path: "/producten/kunststof-lamellen", desc: "Praktisch onderhoud gecombineerd met een strakke uitstraling." },
     ],
   },
   {
     title: "Speciale Toepassingen",
     links: [
-      { name: "Dakraam Zonweringen", path: "/producten/dakraam-zonweringen" },
-      { name: "Screens Inside", path: "/producten/screens-inside" },
-      { name: "Screens Outside", path: "/producten/screens-outside" },
-      { name: "Houten Shutters", path: "/producten/houten-shutters" },
+      { name: "Dakraam Zonweringen", path: "/producten/dakraam-zonweringen", desc: "Perfecte pasvorm en optimale verduistering voor dakramen." },
+      { name: "Screens Inside", path: "/producten/screens-inside", desc: "Zonlicht temperen zonder het zicht naar buiten te belemmeren." },
+      { name: "Screens Outside", path: "/producten/screens-outside", desc: "Warmte en zoninstraling effectief reduceren voor thermisch comfort." },
+      { name: "Houten Shutters", path: "/producten/houten-shutters", desc: "Licht, privacy en architecturale elegantie in één." },
     ],
   },
 ];
@@ -68,21 +68,21 @@ const horrenColumns = [
   {
     title: "Schuifhorren",
     links: [
-      { name: "Schuifdeur Horren", path: "/producten/horren" },
+      { name: "Schuifdeur Horren", path: "/producten/horren", desc: "Op maat gemaakte schuifdeurhorren voor grote glaspartijen met maximale ventilatie." },
     ],
   },
   {
     title: "Draaihorren",
     links: [
-      { name: "Draai Hordeuren", path: "/producten/horren" },
-      { name: "Plissé Hordeuren", path: "/producten/plisse-hordeuren" },
+      { name: "Draai Hordeuren", path: "/producten/horren", desc: "Functionele draaideurhorren op maat voor intensief dagelijks gebruik." },
+      { name: "Plissé Hordeuren", path: "/producten/plisse-hordeuren", desc: "Compacte plissé hordeuren die ruimtebesparend sluiten en elegant integreren." },
     ],
   },
   {
     title: "Raamhorren",
     links: [
-      { name: "Opzet Horren", path: "/producten/opzethorren" },
-      { name: "Inzet Horren", path: "/producten/inzethorren" },
+      { name: "Opzet Horren", path: "/producten/opzethorren", desc: "Zonder boren geplaatst en eenvoudig te verwijderen." },
+      { name: "Inzet Horren", path: "/producten/inzethorren", desc: "Naadloos geïntegreerd in het raamkozijn voor een subtiele oplossing." },
     ],
   },
 ];
@@ -445,17 +445,22 @@ const Header = () => {
                         {col.title}
                       </h4>
                       <div className="space-y-1">
-                        {col.links.map((link) => (
+                        {col.links.map((link: { name: string; path: string; desc?: string }) => (
                           <button
                             key={link.name}
                             onClick={() => {
                               setLocation(link.path);
                               setActiveDropdown(null);
                             }}
-                            className="group w-full flex items-center gap-2 py-2 text-[13px] text-gray-500 hover:text-[#2C3E50] transition-all duration-200"
+                            className="group w-full text-left py-2"
                           >
-                            <ChevronRight className="w-3 h-3 text-gray-300 group-hover:text-[#C4A36C] group-hover:translate-x-0.5 transition-all duration-200" />
-                            {link.name}
+                            <div className="flex items-center gap-2 text-[13px] text-gray-500 hover:text-[#2C3E50] transition-all duration-200">
+                              <ChevronRight className="w-3 h-3 flex-shrink-0 text-gray-300 group-hover:text-[#C4A36C] group-hover:translate-x-0.5 transition-all duration-200" />
+                              <span>{link.name}</span>
+                            </div>
+                            {link.desc && (
+                              <p className="text-[10px] text-gray-400 leading-relaxed mt-0.5 pl-5 group-hover:text-gray-500 transition-colors duration-200">{link.desc}</p>
+                            )}
                           </button>
                         ))}
                       </div>

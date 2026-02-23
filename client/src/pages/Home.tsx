@@ -854,43 +854,47 @@ const BrochureForm = () => {
   };
 
   return (
-    <section className="py-24 bg-gray-900 text-white">
+    <section className="py-24 bg-[#1a1f2e] text-white">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
+          <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-2xl shadow-black/40">
             <img
               src={gallery6}
               alt="KANIOU Brochure"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1a1f2e]/60 to-transparent" />
           </div>
 
           <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-px bg-[#C8A85B]" />
+              <span className="text-[#C8A85B] text-[11px] tracking-[0.3em] uppercase font-medium">Inspiratie</span>
+            </div>
             <h2
-              className="text-4xl md:text-5xl font-light mb-6"
+              className="text-4xl md:text-5xl font-light mb-6 text-white"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Vraag onze brochure aan en laat je inspireren!
+              Vraag onze brochure aan en laat je <span className="italic text-[#C8A85B]">inspireren!</span>
             </h2>
-            <div className="w-16 h-px bg-gradient-to-r from-white/30 to-transparent mb-8" />
+            <div className="w-16 h-px bg-gradient-to-r from-[#C8A85B]/30 to-transparent mb-8" />
 
             {submitted ? (
-              <div className="bg-white/10 rounded-lg p-8 text-center">
+              <div className="bg-[#C8A85B]/10 border border-[#C8A85B]/20 rounded-lg p-8 text-center">
                 <div
-                  className="text-2xl mb-4"
+                  className="text-2xl mb-4 text-[#C8A85B]"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 >
                   Bedankt!
                 </div>
-                <p className="text-white/80">
+                <p className="text-white/70">
                   Je ontvangt de brochure zo snel mogelijk in je mailbox.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm tracking-widest uppercase mb-2 text-white/80">
+                  <label className="block text-[11px] tracking-[0.2em] uppercase mb-2 text-[#C8A85B]/70 font-medium">
                     Naam
                   </label>
                   <Input
@@ -899,14 +903,14 @@ const BrochureForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
+                    className="bg-white/[0.05] border-white/10 text-white placeholder:text-white/30 focus:border-[#C8A85B]/50 focus:ring-[#C8A85B]/10 h-12 rounded-sm"
                     placeholder="Uw naam"
                     required
                     data-testid="input-brochure-name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm tracking-widest uppercase mb-2 text-white/80">
+                  <label className="block text-[11px] tracking-[0.2em] uppercase mb-2 text-[#C8A85B]/70 font-medium">
                     E-mailadres
                   </label>
                   <Input
@@ -915,7 +919,7 @@ const BrochureForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
+                    className="bg-white/[0.05] border-white/10 text-white placeholder:text-white/30 focus:border-[#C8A85B]/50 focus:ring-[#C8A85B]/10 h-12 rounded-sm"
                     placeholder="uw@email.com"
                     required
                     data-testid="input-brochure-email"
@@ -929,12 +933,12 @@ const BrochureForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, newsletter: e.target.checked })
                     }
-                    className="mt-1"
+                    className="mt-1 accent-[#C8A85B]"
                     data-testid="checkbox-brochure-newsletter"
                   />
                   <label
                     htmlFor="newsletter"
-                    className="text-sm text-white/70 leading-relaxed"
+                    className="text-sm text-white/50 leading-relaxed"
                   >
                     Ja, ik wil de nieuwsbrief ontvangen met informatie over
                     promoties, trends en nieuwe collecties.
@@ -942,7 +946,7 @@ const BrochureForm = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 bg-white text-black hover:bg-gray-100 transition-all duration-500 text-xs tracking-widest uppercase font-medium"
+                  className="w-full py-4 bg-[#C8A85B] text-[#1a1f2e] hover:bg-[#D4B96A] transition-all duration-500 text-xs tracking-[0.2em] uppercase font-semibold hover:shadow-xl hover:shadow-[#C8A85B]/20"
                   data-testid="button-brochure-submit"
                 >
                   Verstuur

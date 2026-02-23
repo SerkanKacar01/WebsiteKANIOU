@@ -32,6 +32,14 @@ import duoRolgordijnenSrc from "@assets/DUOROLGORDIJNEN_1765327273263.png";
 import houtenShuttersSrc from "@assets/HOUTEN_SHUTTERS_1765327379155.png";
 import textielLamellenSrc from "@assets/TEXTIEL_LAMELLEN_1765327446795.png";
 import showroomImageSrc from "@assets/Scherm­afbeelding_2025-12-10_om_02.26.40_1765330020631.png";
+import heroImg1Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.28.51_1771882239705.png";
+import heroImg2Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.00_1771882239705.png";
+import heroImg3Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.08_1771882239706.png";
+import heroImg4Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.18_1771882239707.png";
+import heroImg5Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.39_1771882239707.png";
+import heroImg6Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.29.53_1771882239708.png";
+import heroImg7Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.30.06_1771882239708.png";
+import heroImg8Src from "@assets/Scherm­afbeelding_2026-02-23_om_22.30.16_1771882239709.png";
 import PromotionalBanner from "@/components/PromotionalBanner";
 import {
   galleryImage1,
@@ -50,16 +58,15 @@ const gallery4 = gallery4Src;
 const gallery5 = gallery5Src;
 const gallery6 = gallery6Src;
 
-const collageImages = [
-  gallery1,
-  gallery2,
-  gallery3,
-  gallery4,
-  gallery5,
-  gallery6,
-  gallery1,
-  gallery2,
-  gallery3,
+const heroImages = [
+  heroImg3Src,
+  heroImg4Src,
+  heroImg5Src,
+  heroImg6Src,
+  heroImg7Src,
+  heroImg8Src,
+  heroImg1Src,
+  heroImg2Src,
 ];
 
 // ========== ANIMATION HOOKS & COMPONENTS ==========
@@ -1372,7 +1379,7 @@ const SplitScreenHero = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 3500);
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -1473,7 +1480,7 @@ const SplitScreenHero = ({
         {images.map((img, idx) => (
           <div
             key={idx}
-            className="absolute inset-0 transition-all duration-[1500ms] ease-in-out"
+            className="absolute inset-0 transition-all duration-[1200ms] ease-in-out"
             style={{
               opacity: currentImage === idx ? 1 : 0,
               transform: currentImage === idx ? 'scale(1)' : 'scale(1.08)',
@@ -1584,7 +1591,7 @@ const Home = () => {
 
       <div className="bg-white">
         {/* HERO SECTION */}
-        <SplitScreenHero images={collageImages} setLocation={setLocation} />
+        <SplitScreenHero images={heroImages} setLocation={setLocation} />
 
         {/* PRODUCT CAROUSEL SECTION */}
         <section className="py-24 bg-white">

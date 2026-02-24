@@ -39,32 +39,53 @@ const ROOM_OPTIONS = ["Slaapkamer", "Woonkamer", "Keuken", "Badkamer", "Zolder",
 const PRICE_PER_M1 = 35;
 
 function InbetweensCalculator() {
-  const [breedte, setBreedte] = useState(150);
-  const [hoogte, setHoogte] = useState(250);
-  const [breedteRaw, setBreedteRaw] = useState("150");
-  const [hoogteRaw, setHoogteRaw] = useState("250");
+  const [breedte, setBreedte] = useState<number | null>(null);
+  const [hoogte, setHoogte] = useState<number | null>(null);
+  const [breedteRaw, setBreedteRaw] = useState("");
+  const [hoogteRaw, setHoogteRaw] = useState("");
   const [plooiType, setPlooiType] = useState("Enkele plooi");
   const [aantalDelen, setAantalDelen] = useState("Stel");
   const [ruimte, setRuimte] = useState("Woonkamer");
 
   const plooiFactor = PLEAT_FACTORS[plooiType];
-  const stoffenMeters = (breedte / 100) * plooiFactor;
-  const totaalPrijs = stoffenMeters * PRICE_PER_M1;
+  const heeftBreedte = breedte !== null && breedte > 0;
+  const stoffenMeters = heeftBreedte ? (breedte! / 100) * plooiFactor : null;
+  const totaalPrijs = stoffenMeters !== null ? stoffenMeters * PRICE_PER_M1 : null;
 
   function clamp(val: number, min: number, max: number) {
     return Math.min(Math.max(val, min), max);
   }
 
   function applyBreedte(raw: string) {
+    if (raw.trim() === "") {
+      setBreedte(null);
+      setBreedteRaw("");
+      return;
+    }
     const parsed = parseInt(raw, 10);
-    const clamped = isNaN(parsed) ? 50 : clamp(parsed, 50, 999);
+    if (isNaN(parsed)) {
+      setBreedte(null);
+      setBreedteRaw("");
+      return;
+    }
+    const clamped = clamp(parsed, 50, 999);
     setBreedte(clamped);
     setBreedteRaw(String(clamped));
   }
 
   function applyHoogte(raw: string) {
+    if (raw.trim() === "") {
+      setHoogte(null);
+      setHoogteRaw("");
+      return;
+    }
     const parsed = parseInt(raw, 10);
-    const clamped = isNaN(parsed) ? 40 : clamp(parsed, 40, 285);
+    if (isNaN(parsed)) {
+      setHoogte(null);
+      setHoogteRaw("");
+      return;
+    }
+    const clamped = clamp(parsed, 40, 285);
     setHoogte(clamped);
     setHoogteRaw(String(clamped));
   }
@@ -83,7 +104,7 @@ function InbetweensCalculator() {
           </label>
           <div className="flex items-center border border-[#C8A85B]/30 rounded-lg overflow-hidden bg-white">
             <button
-              onClick={() => { const v = clamp(breedte - 1, 50, 999); setBreedte(v); setBreedteRaw(String(v)); }}
+              onClick={() => { const cur = breedte ?? 50; const v = clamp(cur - 1, 50, 999); setBreedte(v); setBreedteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-r border-[#C8A85B]/20"
             >
               <Minus className="w-3 h-3" />
@@ -91,15 +112,16 @@ function InbetweensCalculator() {
             <input
               type="text"
               inputMode="numeric"
+              placeholder="bv. 150"
               value={breedteRaw}
               onChange={(e) => setBreedteRaw(e.target.value)}
               onBlur={() => applyBreedte(breedteRaw)}
               onKeyDown={(e) => e.key === "Enter" && applyBreedte(breedteRaw)}
               onFocus={(e) => e.target.select()}
-              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0 bg-transparent"
+              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0 bg-transparent placeholder:font-normal placeholder:text-gray-300"
             />
             <button
-              onClick={() => { const v = clamp(breedte + 1, 50, 999); setBreedte(v); setBreedteRaw(String(v)); }}
+              onClick={() => { const cur = breedte ?? 49; const v = clamp(cur + 1, 50, 999); setBreedte(v); setBreedteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-l border-[#C8A85B]/20"
             >
               <Plus className="w-3 h-3" />
@@ -114,7 +136,7 @@ function InbetweensCalculator() {
           </label>
           <div className="flex items-center border border-[#C8A85B]/30 rounded-lg overflow-hidden bg-white">
             <button
-              onClick={() => { const v = clamp(hoogte - 1, 40, 285); setHoogte(v); setHoogteRaw(String(v)); }}
+              onClick={() => { const cur = hoogte ?? 40; const v = clamp(cur - 1, 40, 285); setHoogte(v); setHoogteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-r border-[#C8A85B]/20"
             >
               <Minus className="w-3 h-3" />
@@ -122,15 +144,16 @@ function InbetweensCalculator() {
             <input
               type="text"
               inputMode="numeric"
+              placeholder="bv. 250"
               value={hoogteRaw}
               onChange={(e) => setHoogteRaw(e.target.value)}
               onBlur={() => applyHoogte(hoogteRaw)}
               onKeyDown={(e) => e.key === "Enter" && applyHoogte(hoogteRaw)}
               onFocus={(e) => e.target.select()}
-              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0 bg-transparent"
+              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0 bg-transparent placeholder:font-normal placeholder:text-gray-300"
             />
             <button
-              onClick={() => { const v = clamp(hoogte + 1, 40, 285); setHoogte(v); setHoogteRaw(String(v)); }}
+              onClick={() => { const cur = hoogte ?? 39; const v = clamp(cur + 1, 40, 285); setHoogte(v); setHoogteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-l border-[#C8A85B]/20"
             >
               <Plus className="w-3 h-3" />
@@ -160,7 +183,7 @@ function InbetweensCalculator() {
           ))}
         </div>
         <p className="text-[9px] text-[#2C3E50]/40 mt-1.5">
-          Factor: ×{plooiFactor} — benodigd stof: {stoffenMeters.toFixed(2)} m¹ ({breedte} × {plooiFactor} = {stoffenMeters.toFixed(1)} m)
+          Factor: ×{plooiFactor}{stoffenMeters !== null ? ` — benodigd stof: ${stoffenMeters.toFixed(2)} m¹` : ""}
         </p>
       </div>
 
@@ -214,11 +237,13 @@ function InbetweensCalculator() {
           <span className="text-[9px] text-[#2C3E50]/40">incl. confectie</span>
         </div>
         <p className="font-display text-2xl font-black text-[#C8A85B]">
-          ± €{totaalPrijs.toFixed(0)}
+          {totaalPrijs !== null ? `± €${totaalPrijs.toFixed(0)}` : <span className="text-base font-normal text-[#2C3E50]/40">Voer een breedte in</span>}
         </p>
-        <p className="text-[10px] text-[#2C3E50]/50 mt-1">
-          {breedte} × {hoogte} cm · {plooiType} · {aantalDelen} · {ruimte}
-        </p>
+        {totaalPrijs !== null && (
+          <p className="text-[10px] text-[#2C3E50]/50 mt-1">
+            {breedte} cm · {plooiType} · {aantalDelen} · {ruimte}
+          </p>
+        )}
         <p className="text-[9px] text-[#2C3E50]/40 mt-2 leading-relaxed">
           Dit is een richtprijs. De exacte prijs wordt bepaald na gratis opmeting.
         </p>

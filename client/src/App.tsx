@@ -57,6 +57,7 @@ import InzethorrenPage from "@/pages/products/inzethorren";
 import ScreenPage from "@/pages/products/screen";
 import ScreensInsidePage from "@/pages/products/screens-inside";
 import ScreensOutsidePage from "@/pages/products/screens-outside";
+import DakraamZonweringenPage from "@/pages/products/dakraam-zonweringen";
 
 function Router() {
   const { t } = useLanguage();
@@ -111,6 +112,7 @@ function Router() {
         <Route path="/producten/screen" component={ScreenPage} />
         <Route path="/producten/screens-inside" component={ScreensInsidePage} />
         <Route path="/producten/screens-outside" component={ScreensOutsidePage} />
+        <Route path="/producten/dakraam-zonweringen" component={DakraamZonweringenPage} />
         <Route path="/producten/squid-textiel-folie" component={SquidTextielFoliePage} />
         <Route path="/producten/reiniging" component={CleaningProductsPage} />
 

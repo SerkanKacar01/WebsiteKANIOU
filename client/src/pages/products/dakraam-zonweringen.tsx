@@ -1,14 +1,14 @@
 import PageLayout from "@/components/layout/PageLayout";
 
-const OvergordijnenSimplePage = () => {
+const DakraamZonweringenPage = () => {
   return (
     <PageLayout
-      title="Overgordijnen"
+      title="Dakraam Zonweringen"
       subtitle="Inhoud volgt binnenkort."
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Prijzen & Collecties", href: "/prijzen-collecties" },
-        { label: "Overgordijnen" },
+        { label: "Dakraam Zonweringen" },
       ]}
     >
       <div className="py-24 text-center">
@@ -18,4 +18,4 @@ const OvergordijnenSimplePage = () => {
   );
 };
 
-export default OvergordijnenSimplePage;
+export default DakraamZonweringenPage;

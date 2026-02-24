@@ -36,7 +36,7 @@ const PLEAT_FACTORS: Record<string, number> = {
 const PLEAT_TYPES = ["Enkele plooi", "Dubbele plooi", "Triplooi", "Wave plooi"];
 const PANEL_OPTIONS = ["1 deel links", "1 deel rechts", "Stel"];
 const ROOM_OPTIONS = ["Slaapkamer", "Woonkamer", "Keuken", "Badkamer", "Zolder", "Anders"];
-const PRICE_PER_M2 = 35;
+const PRICE_PER_M1 = 35;
 
 function InbetweensCalculator() {
   const [breedte, setBreedte] = useState(150);
@@ -49,7 +49,7 @@ function InbetweensCalculator() {
 
   const plooiFactor = PLEAT_FACTORS[plooiType];
   const stoffenMeters = (breedte / 100) * plooiFactor * (hoogte / 100);
-  const totaalPrijs = stoffenMeters * PRICE_PER_M2;
+  const totaalPrijs = stoffenMeters * PRICE_PER_M1;
 
   function clamp(val: number, min: number, max: number) {
     return Math.min(Math.max(val, min), max);
@@ -160,7 +160,7 @@ function InbetweensCalculator() {
           ))}
         </div>
         <p className="text-[9px] text-[#2C3E50]/40 mt-1.5">
-          Factor: ×{plooiFactor} — benodigd stof: {stoffenMeters.toFixed(2)} m²
+          Factor: ×{plooiFactor} — benodigd stof: {stoffenMeters.toFixed(2)} m¹
         </p>
       </div>
 
@@ -242,9 +242,9 @@ const productCategories = [
       {
         title: "Inbetweens",
         description: "Lichtdoorlatende gordijnen die privacy combineren met zachte, natuurlijke lichtinval.",
-        priceFrom: "€75",
-        priceTo: "€195",
-        unit: "per m²",
+        priceFrom: "€35",
+        priceTo: "",
+        unit: "per m¹",
         features: ["Lichtdoorlatend", "Privacy behoud", "Diverse stoffen", "Op maat gemaakt"],
         path: "/producten/vitrages",
         popular: false,
@@ -535,7 +535,10 @@ const PrijzenPage = () => {
                           <div className="bg-gradient-to-r from-[#C8A85B]/8 to-[#D4AF37]/8 rounded-xl p-3 mb-4">
                             <p className="text-[10px] uppercase tracking-widest text-[#2C3E50]/50 mb-1 font-semibold">Prijsindicatie {product.unit}</p>
                             <p className="font-display text-xl font-black text-[#C8A85B]">
-                              {product.priceFrom} <span className="text-sm font-normal text-[#2C3E50]/40">-</span> {product.priceTo}
+                              {product.priceTo
+                                ? <>{product.priceFrom} <span className="text-sm font-normal text-[#2C3E50]/40">-</span> {product.priceTo}</>
+                                : product.priceFrom
+                              }
                             </p>
                           </div>
                           

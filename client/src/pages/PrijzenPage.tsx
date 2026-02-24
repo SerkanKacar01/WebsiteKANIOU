@@ -41,6 +41,8 @@ const PRICE_PER_M2 = 35;
 function InbetweensCalculator() {
   const [breedte, setBreedte] = useState(150);
   const [hoogte, setHoogte] = useState(250);
+  const [breedteRaw, setBreedteRaw] = useState("150");
+  const [hoogteRaw, setHoogteRaw] = useState("250");
   const [plooiType, setPlooiType] = useState("Enkele plooi");
   const [aantalDelen, setAantalDelen] = useState("Stel");
   const [ruimte, setRuimte] = useState("Woonkamer");
@@ -51,6 +53,20 @@ function InbetweensCalculator() {
 
   function clamp(val: number, min: number, max: number) {
     return Math.min(Math.max(val, min), max);
+  }
+
+  function applyBreedte(raw: string) {
+    const parsed = parseInt(raw, 10);
+    const clamped = isNaN(parsed) ? 50 : clamp(parsed, 50, 999);
+    setBreedte(clamped);
+    setBreedteRaw(String(clamped));
+  }
+
+  function applyHoogte(raw: string) {
+    const parsed = parseInt(raw, 10);
+    const clamped = isNaN(parsed) ? 40 : clamp(parsed, 40, 285);
+    setHoogte(clamped);
+    setHoogteRaw(String(clamped));
   }
 
   return (
@@ -67,22 +83,23 @@ function InbetweensCalculator() {
           </label>
           <div className="flex items-center border border-[#C8A85B]/30 rounded-lg overflow-hidden bg-white">
             <button
-              onClick={() => setBreedte(clamp(breedte - 1, 50, 999))}
+              onClick={() => { const v = clamp(breedte - 1, 50, 999); setBreedte(v); setBreedteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-r border-[#C8A85B]/20"
             >
               <Minus className="w-3 h-3" />
             </button>
             <input
-              type="number"
-              min={50}
-              max={999}
-              step={1}
-              value={breedte}
-              onChange={(e) => setBreedte(clamp(parseInt(e.target.value) || 50, 50, 999))}
-              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0"
+              type="text"
+              inputMode="numeric"
+              value={breedteRaw}
+              onChange={(e) => setBreedteRaw(e.target.value)}
+              onBlur={() => applyBreedte(breedteRaw)}
+              onKeyDown={(e) => e.key === "Enter" && applyBreedte(breedteRaw)}
+              onFocus={(e) => e.target.select()}
+              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0 bg-transparent"
             />
             <button
-              onClick={() => setBreedte(clamp(breedte + 1, 50, 999))}
+              onClick={() => { const v = clamp(breedte + 1, 50, 999); setBreedte(v); setBreedteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-l border-[#C8A85B]/20"
             >
               <Plus className="w-3 h-3" />
@@ -97,22 +114,23 @@ function InbetweensCalculator() {
           </label>
           <div className="flex items-center border border-[#C8A85B]/30 rounded-lg overflow-hidden bg-white">
             <button
-              onClick={() => setHoogte(clamp(hoogte - 1, 40, 285))}
+              onClick={() => { const v = clamp(hoogte - 1, 40, 285); setHoogte(v); setHoogteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-r border-[#C8A85B]/20"
             >
               <Minus className="w-3 h-3" />
             </button>
             <input
-              type="number"
-              min={40}
-              max={285}
-              step={1}
-              value={hoogte}
-              onChange={(e) => setHoogte(clamp(parseInt(e.target.value) || 40, 40, 285))}
-              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0"
+              type="text"
+              inputMode="numeric"
+              value={hoogteRaw}
+              onChange={(e) => setHoogteRaw(e.target.value)}
+              onBlur={() => applyHoogte(hoogteRaw)}
+              onKeyDown={(e) => e.key === "Enter" && applyHoogte(hoogteRaw)}
+              onFocus={(e) => e.target.select()}
+              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0 bg-transparent"
             />
             <button
-              onClick={() => setHoogte(clamp(hoogte + 1, 40, 285))}
+              onClick={() => { const v = clamp(hoogte + 1, 40, 285); setHoogte(v); setHoogteRaw(String(v)); }}
               className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-l border-[#C8A85B]/20"
             >
               <Plus className="w-3 h-3" />

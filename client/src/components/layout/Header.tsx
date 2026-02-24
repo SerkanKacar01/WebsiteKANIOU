@@ -230,7 +230,7 @@ const Header = () => {
               <NavLink label="Showroom" path="/contact" icon={Store} />
               <button
                 onClick={() => { setLocation("/prijzen-collecties"); setActiveDropdown(null); }}
-                className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-gray-700 hover:text-[#C4A36C] transition-colors whitespace-nowrap"
+                className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-gray-700 hover:text-[#C4A36C] transition-colors whitespace-nowrap border border-gray-800 rounded-full px-5 py-2"
               >
                 <Tag className="w-3.5 h-3.5 text-[#C4A36C]" />
                 Prijzen & Collecties

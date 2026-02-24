@@ -48,7 +48,7 @@ function InbetweensCalculator() {
   const [ruimte, setRuimte] = useState("Woonkamer");
 
   const plooiFactor = PLEAT_FACTORS[plooiType];
-  const stoffenMeters = (breedte / 100) * plooiFactor * (hoogte / 100);
+  const stoffenMeters = (breedte / 100) * plooiFactor;
   const totaalPrijs = stoffenMeters * PRICE_PER_M1;
 
   function clamp(val: number, min: number, max: number) {
@@ -160,7 +160,7 @@ function InbetweensCalculator() {
           ))}
         </div>
         <p className="text-[9px] text-[#2C3E50]/40 mt-1.5">
-          Factor: ×{plooiFactor} — benodigd stof: {stoffenMeters.toFixed(2)} m¹
+          Factor: ×{plooiFactor} — benodigd stof: {stoffenMeters.toFixed(2)} m¹ ({breedte} × {plooiFactor} = {stoffenMeters.toFixed(1)} m)
         </p>
       </div>
 

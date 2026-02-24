@@ -70,7 +70,7 @@ function Router() {
     if (location === "/about" || location === "/over-ons") return "Over Ons | KANIOU Zilvernaald";
     if (location === "/contact") return "Contact | KANIOU Zilvernaald";
     if (location === "/offerte") return "Offerte Aanvragen | KANIOU Zilvernaald";
-    if (location === "/prijzen") return "Prijsoverzicht | KANIOU Zilvernaald";
+    if (location === "/prijzen-collecties" || location === "/prijzen") return "Prijzen & Collecties | KANIOU Zilvernaald";
     if (location === "/acties") return "Acties & Aanbiedingen | KANIOU Zilvernaald";
     if (location === "/op-maat-advies") return "Raamdecoratie op maat & professioneel interieuradvies | KANIOU Maasmechelen";
     if (location === "/zakelijk") return "Zakelijk | KANIOU Zilvernaald";
@@ -123,6 +123,7 @@ function Router() {
         <Route path="/zakelijk" component={BusinessPage} />
         <Route path="/quote" component={QuotePage} />
         <Route path="/offerte" component={OffertePage} />
+        <Route path="/prijzen-collecties" component={PrijzenPage} />
         <Route path="/prijzen" component={PrijzenPage} />
         <Route path="/op-maat-advies" component={OpMaatAdviesPage} />
         <Route path="/acties" component={ActiesPage} />

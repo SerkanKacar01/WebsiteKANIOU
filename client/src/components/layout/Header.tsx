@@ -228,6 +228,13 @@ const Header = () => {
               <MegaMenu name="horren" label="Horren" columns={horrenColumns} />
               <NavLink label="Op Maat & Advies" path="/op-maat-advies" icon={Ruler} />
               <NavLink label="Showroom" path="/contact" icon={Store} />
+              <button
+                onClick={() => { setLocation("/prijzen-collecties"); setActiveDropdown(null); }}
+                className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-gray-700 hover:text-[#C4A36C] transition-colors whitespace-nowrap"
+              >
+                <Tag className="w-3.5 h-3.5 text-[#C4A36C]" />
+                Prijzen & Collecties
+              </button>
             </div>
 
             {/* Plan Je Project - CTA Dropdown */}
@@ -379,6 +386,12 @@ const Header = () => {
                         <button onClick={() => handleMobileNavClick("/contact")} className="w-full flex items-center gap-2 py-3 text-sm tracking-widest uppercase text-gray-700 font-semibold">
                           <Store className="w-4 h-4 text-[#C4A36C]" />
                           <span>Showroom</span>
+                        </button>
+                      </div>
+                      <div className="border-b border-gray-100">
+                        <button onClick={() => handleMobileNavClick("/prijzen-collecties")} className="w-full flex items-center gap-2 py-3 text-sm tracking-widest uppercase text-gray-700 font-semibold">
+                          <Tag className="w-4 h-4 text-[#C4A36C]" />
+                          <span>Prijzen & Collecties</span>
                         </button>
                       </div>
                       <div className="border-b border-gray-100">

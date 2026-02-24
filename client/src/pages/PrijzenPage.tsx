@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Container from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,10 +17,204 @@ import {
   Sun,
   Blinds,
   Layers,
-  Grip
+  Grip,
+  ChevronUp,
+  Calculator,
+  Minus,
+  Plus
 } from "lucide-react";
 import { Link } from "wouter";
 import PageLayout from "@/components/layout/PageLayout";
+
+const PLEAT_FACTORS: Record<string, number> = {
+  "Enkele plooi": 2,
+  "Dubbele plooi": 2.5,
+  "Triplooi": 3,
+  "Wave plooi": 3,
+};
+
+const PLEAT_TYPES = ["Enkele plooi", "Dubbele plooi", "Triplooi", "Wave plooi"];
+const PANEL_OPTIONS = ["1 deel links", "1 deel rechts", "Stel"];
+const ROOM_OPTIONS = ["Slaapkamer", "Woonkamer", "Keuken", "Badkamer", "Zolder", "Anders"];
+const PRICE_PER_M2 = 35;
+
+function InbetweensCalculator() {
+  const [breedte, setBreedte] = useState(150);
+  const [hoogte, setHoogte] = useState(250);
+  const [plooiType, setPlooiType] = useState("Enkele plooi");
+  const [aantalDelen, setAantalDelen] = useState("Stel");
+  const [ruimte, setRuimte] = useState("Woonkamer");
+
+  const plooiFactor = PLEAT_FACTORS[plooiType];
+  const stoffenMeters = (breedte / 100) * plooiFactor * (hoogte / 100);
+  const totaalPrijs = stoffenMeters * PRICE_PER_M2;
+
+  function clamp(val: number, min: number, max: number) {
+    return Math.min(Math.max(val, min), max);
+  }
+
+  return (
+    <div className="mt-5 pt-5 border-t border-[#C8A85B]/20 space-y-5">
+      <div className="flex items-center gap-2 mb-1">
+        <Calculator className="w-4 h-4 text-[#C8A85B]" />
+        <span className="text-xs font-bold text-[#2C3E50]/70 uppercase tracking-widest">Prijscalculator</span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-[10px] font-bold uppercase tracking-widest text-[#2C3E50]/50 mb-1.5">
+            Breedte (cm)
+          </label>
+          <div className="flex items-center border border-[#C8A85B]/30 rounded-lg overflow-hidden bg-white">
+            <button
+              onClick={() => setBreedte(clamp(breedte - 1, 50, 999))}
+              className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-r border-[#C8A85B]/20"
+            >
+              <Minus className="w-3 h-3" />
+            </button>
+            <input
+              type="number"
+              min={50}
+              max={999}
+              step={1}
+              value={breedte}
+              onChange={(e) => setBreedte(clamp(parseInt(e.target.value) || 50, 50, 999))}
+              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0"
+            />
+            <button
+              onClick={() => setBreedte(clamp(breedte + 1, 50, 999))}
+              className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-l border-[#C8A85B]/20"
+            >
+              <Plus className="w-3 h-3" />
+            </button>
+          </div>
+          <p className="text-[9px] text-[#2C3E50]/40 mt-1">min. 50 — max. 999 cm</p>
+        </div>
+
+        <div>
+          <label className="block text-[10px] font-bold uppercase tracking-widest text-[#2C3E50]/50 mb-1.5">
+            Hoogte (cm)
+          </label>
+          <div className="flex items-center border border-[#C8A85B]/30 rounded-lg overflow-hidden bg-white">
+            <button
+              onClick={() => setHoogte(clamp(hoogte - 1, 40, 285))}
+              className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-r border-[#C8A85B]/20"
+            >
+              <Minus className="w-3 h-3" />
+            </button>
+            <input
+              type="number"
+              min={40}
+              max={285}
+              step={1}
+              value={hoogte}
+              onChange={(e) => setHoogte(clamp(parseInt(e.target.value) || 40, 40, 285))}
+              className="flex-1 text-center text-sm font-bold text-[#2C3E50] py-2 outline-none w-0 min-w-0"
+            />
+            <button
+              onClick={() => setHoogte(clamp(hoogte + 1, 40, 285))}
+              className="px-2.5 py-2 text-[#C8A85B] hover:bg-[#C8A85B]/10 transition-colors border-l border-[#C8A85B]/20"
+            >
+              <Plus className="w-3 h-3" />
+            </button>
+          </div>
+          <p className="text-[9px] text-[#2C3E50]/40 mt-1">min. 40 — max. 285 cm</p>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-[10px] font-bold uppercase tracking-widest text-[#2C3E50]/50 mb-2">
+          Plooi type
+        </label>
+        <div className="grid grid-cols-2 gap-1.5">
+          {PLEAT_TYPES.map((type) => (
+            <button
+              key={type}
+              onClick={() => setPlooiType(type)}
+              className={`py-2 px-2 rounded-lg text-xs font-semibold border transition-all ${
+                plooiType === type
+                  ? "bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white border-transparent shadow-md"
+                  : "bg-white text-[#2C3E50]/70 border-[#C8A85B]/25 hover:border-[#C8A85B]/50"
+              }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+        <p className="text-[9px] text-[#2C3E50]/40 mt-1.5">
+          Factor: ×{plooiFactor} — benodigd stof: {stoffenMeters.toFixed(2)} m²
+        </p>
+      </div>
+
+      <div>
+        <label className="block text-[10px] font-bold uppercase tracking-widest text-[#2C3E50]/50 mb-2">
+          Aantal delen
+        </label>
+        <div className="grid grid-cols-3 gap-1.5">
+          {PANEL_OPTIONS.map((opt) => (
+            <button
+              key={opt}
+              onClick={() => setAantalDelen(opt)}
+              className={`py-2 px-1 rounded-lg text-xs font-semibold border transition-all ${
+                aantalDelen === opt
+                  ? "bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white border-transparent shadow-md"
+                  : "bg-white text-[#2C3E50]/70 border-[#C8A85B]/25 hover:border-[#C8A85B]/50"
+              }`}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-[10px] font-bold uppercase tracking-widest text-[#2C3E50]/50 mb-2">
+          Ruimte
+        </label>
+        <div className="grid grid-cols-3 gap-1.5">
+          {ROOM_OPTIONS.map((room) => (
+            <button
+              key={room}
+              onClick={() => setRuimte(room)}
+              className={`py-2 px-1 rounded-lg text-xs font-semibold border transition-all ${
+                ruimte === room
+                  ? "bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white border-transparent shadow-md"
+                  : "bg-white text-[#2C3E50]/70 border-[#C8A85B]/25 hover:border-[#C8A85B]/50"
+              }`}
+            >
+              {room}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-[#C8A85B]/10 to-[#D4AF37]/10 rounded-xl p-4 border border-[#C8A85B]/20">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#2C3E50]/50">
+            Prijsindicatie
+          </span>
+          <span className="text-[9px] text-[#2C3E50]/40">incl. confectie</span>
+        </div>
+        <p className="font-display text-2xl font-black text-[#C8A85B]">
+          ± €{totaalPrijs.toFixed(0)}
+        </p>
+        <p className="text-[10px] text-[#2C3E50]/50 mt-1">
+          {breedte} × {hoogte} cm · {plooiType} · {aantalDelen} · {ruimte}
+        </p>
+        <p className="text-[9px] text-[#2C3E50]/40 mt-2 leading-relaxed">
+          Dit is een richtprijs. De exacte prijs wordt bepaald na gratis opmeting.
+        </p>
+      </div>
+
+      <Link href="/offerte" className="block">
+        <Button className="w-full bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] hover:from-[#B8975A] hover:to-[#C4A882] text-white text-xs font-bold rounded-lg shadow-md py-2.5">
+          Offerte aanvragen
+          <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+        </Button>
+      </Link>
+    </div>
+  );
+}
 
 const productCategories = [
   {
@@ -35,6 +230,7 @@ const productCategories = [
         features: ["Lichtdoorlatend", "Privacy behoud", "Diverse stoffen", "Op maat gemaakt"],
         path: "/producten/vitrages",
         popular: false,
+        hasCalculator: true,
       },
       {
         title: "Overgordijnen",
@@ -45,6 +241,7 @@ const productCategories = [
         features: ["Premium stoffen", "Handgemaakt", "Diverse ophangingen", "Verduisterend"],
         path: "/producten/overgordijnen",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Vitrages",
@@ -55,6 +252,7 @@ const productCategories = [
         features: ["Transparant", "Lichtfilterend", "Verfijnd design", "Op maat"],
         path: "/producten/vitrages",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Vouwgordijnen",
@@ -65,6 +263,7 @@ const productCategories = [
         features: ["Stijlvol opvouwbaar", "Diverse stoffen", "Lichtregulering", "Compact design"],
         path: "/producten/vouwgordijnen",
         popular: false,
+        hasCalculator: false,
       },
     ],
   },
@@ -81,6 +280,7 @@ const productCategories = [
         features: ["Diverse stoffen", "Motorisatie mogelijk", "UV-bescherming", "Eenvoudige bediening"],
         path: "/producten/rolgordijnen",
         popular: true,
+        hasCalculator: false,
       },
       {
         title: "Duo Rolgordijnen",
@@ -91,6 +291,7 @@ const productCategories = [
         features: ["Dag/nacht functie", "Dubbele stofbaan", "Modern design", "Op maat"],
         path: "/producten/duo-rolgordijnen",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Plissé Gordijnen",
@@ -101,6 +302,7 @@ const productCategories = [
         features: ["Dubbel plissé", "Dag/nacht combinatie", "Isolerend", "Alle raamvormen"],
         path: "/producten/plisse",
         popular: true,
+        hasCalculator: false,
       },
       {
         title: "Duo Plissés",
@@ -111,6 +313,7 @@ const productCategories = [
         features: ["Honingraatstructuur", "Energiebesparend", "Geluidsisolerend", "Premium kwaliteit"],
         path: "/producten/duo-plisses",
         popular: false,
+        hasCalculator: false,
       },
     ],
   },
@@ -127,6 +330,7 @@ const productCategories = [
         features: ["Massief hout", "Diverse houtsoorten", "50mm lamellen", "Warmte-isolerend"],
         path: "/producten/houten-jaloezieen",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Aluminium Jaloezieën",
@@ -137,6 +341,7 @@ const productCategories = [
         features: ["Aluminium lamellen", "25/50mm breedtes", "Waterbestendig", "Onderhoudsvriendelijk"],
         path: "/producten/kunststof-jaloezieen",
         popular: false,
+        hasCalculator: false,
       },
     ],
   },
@@ -153,6 +358,7 @@ const productCategories = [
         features: ["Verticaal draaibaar", "Grote raampartijen", "Diverse dessins", "Lichtregulering"],
         path: "/producten/textiel-lamellen",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Kunststof Lamellen",
@@ -163,6 +369,7 @@ const productCategories = [
         features: ["Kunststof lamellen", "Vochtbestendig", "Eenvoudig reinigen", "Duurzaam"],
         path: "/producten/kunststof-lamellen",
         popular: false,
+        hasCalculator: false,
       },
     ],
   },
@@ -179,6 +386,7 @@ const productCategories = [
         features: ["Alle dakraammerken", "Verduisterend", "Perfecte pasvorm", "Isolerend"],
         path: "/producten/dakraam-zonweringen",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Screens Inside",
@@ -189,6 +397,7 @@ const productCategories = [
         features: ["Zicht behoud", "UV-bescherming", "Warmtewering", "Motoriseerbaar"],
         path: "/producten/screens-inside",
         popular: false,
+        hasCalculator: false,
       },
       {
         title: "Screens Outside",
@@ -199,6 +408,7 @@ const productCategories = [
         features: ["Buitenmontage", "Warmtewering tot 90%", "Windbestendig", "Motoriseerbaar"],
         path: "/producten/screens-outside",
         popular: false,
+        hasCalculator: false,
       },
     ],
   },
@@ -232,6 +442,12 @@ const services = [
 ];
 
 const PrijzenPage = () => {
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  const toggleCard = (title: string) => {
+    setExpandedCard(prev => prev === title ? null : title);
+  };
+
   return (
     <PageLayout
       title="Prijzen & Collecties"
@@ -267,66 +483,94 @@ const PrijzenPage = () => {
                 <div className="flex-1 h-px bg-gradient-to-r from-[#C8A85B]/30 to-transparent ml-4"></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {cat.products.map((product, prodIdx) => (
-                  <div key={prodIdx} className="group relative">
-                    <Card className={`h-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-400 border ${
-                      product.popular 
-                        ? 'border-[#C8A85B]/40 ring-1 ring-[#C8A85B]/20' 
-                        : 'border-gray-100 hover:border-[#C8A85B]/30'
-                    } group-hover:-translate-y-1`}>
-                      
-                      {product.popular && (
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg z-10">
-                          <div className="flex items-center gap-1">
-                            <Star className="w-3 h-3" />
-                            Populair
-                          </div>
-                        </div>
-                      )}
-                      
-                      <CardContent className="p-6">
-                        <h4 className="font-display text-lg text-[#2C3E50] font-black mb-2 tracking-tight group-hover:text-[#C8A85B] transition-colors">
-                          {product.title}
-                        </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
+                {cat.products.map((product, prodIdx) => {
+                  const isExpanded = expandedCard === product.title;
+                  return (
+                    <div key={prodIdx} className="group relative">
+                      <Card className={`bg-white rounded-2xl shadow-lg transition-all duration-300 border ${
+                        product.popular 
+                          ? 'border-[#C8A85B]/40 ring-1 ring-[#C8A85B]/20' 
+                          : isExpanded
+                            ? 'border-[#C8A85B]/50 shadow-xl ring-1 ring-[#C8A85B]/15'
+                            : 'border-gray-100 hover:border-[#C8A85B]/30'
+                      } ${!isExpanded ? 'hover:-translate-y-1' : ''}`}>
                         
-                        <p className="text-sm text-[#2C3E50]/65 leading-relaxed mb-4 min-h-[3rem]">
-                          {product.description}
-                        </p>
-                        
-                        <div className="bg-gradient-to-r from-[#C8A85B]/8 to-[#D4AF37]/8 rounded-xl p-3 mb-4">
-                          <p className="text-[10px] uppercase tracking-widest text-[#2C3E50]/50 mb-1 font-semibold">Prijsindicatie {product.unit}</p>
-                          <p className="font-display text-xl font-black text-[#C8A85B]">
-                            {product.priceFrom} <span className="text-sm font-normal text-[#2C3E50]/40">-</span> {product.priceTo}
-                          </p>
-                        </div>
-                        
-                        <div className="space-y-2 mb-5">
-                          {product.features.map((feature, fIdx) => (
-                            <div key={fIdx} className="flex items-center gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-[#C8A85B] flex-shrink-0" />
-                              <span className="text-xs text-[#2C3E50]/70">{feature}</span>
+                        {product.popular && (
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg z-10">
+                            <div className="flex items-center gap-1">
+                              <Star className="w-3 h-3" />
+                              Populair
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        )}
                         
-                        <div className="flex gap-2">
-                          <Link href={product.path} className="flex-1">
-                            <Button variant="outline" size="sm" className="w-full border-[#C8A85B]/30 text-[#C8A85B] hover:bg-[#C8A85B]/5 text-xs font-semibold rounded-lg">
-                              <Eye className="w-3 h-3 mr-1" />
-                              Bekijken
-                            </Button>
-                          </Link>
-                          <Link href="/offerte">
-                            <Button size="sm" className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] hover:from-[#B8975A] hover:to-[#C4A882] text-white text-xs font-semibold rounded-lg shadow-md">
-                              <ArrowRight className="w-3 h-3" />
-                            </Button>
-                          </Link>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                ))}
+                        <CardContent className="p-6">
+                          <h4 className="font-display text-lg text-[#2C3E50] font-black mb-2 tracking-tight group-hover:text-[#C8A85B] transition-colors">
+                            {product.title}
+                          </h4>
+                          
+                          <p className="text-sm text-[#2C3E50]/65 leading-relaxed mb-4 min-h-[3rem]">
+                            {product.description}
+                          </p>
+                          
+                          <div className="bg-gradient-to-r from-[#C8A85B]/8 to-[#D4AF37]/8 rounded-xl p-3 mb-4">
+                            <p className="text-[10px] uppercase tracking-widest text-[#2C3E50]/50 mb-1 font-semibold">Prijsindicatie {product.unit}</p>
+                            <p className="font-display text-xl font-black text-[#C8A85B]">
+                              {product.priceFrom} <span className="text-sm font-normal text-[#2C3E50]/40">-</span> {product.priceTo}
+                            </p>
+                          </div>
+                          
+                          <div className="space-y-2 mb-5">
+                            {product.features.map((feature, fIdx) => (
+                              <div key={fIdx} className="flex items-center gap-2">
+                                <CheckCircle className="w-3.5 h-3.5 text-[#C8A85B] flex-shrink-0" />
+                                <span className="text-xs text-[#2C3E50]/70">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          <div className="flex gap-2">
+                            {product.hasCalculator ? (
+                              <button
+                                onClick={() => toggleCard(product.title)}
+                                className="flex-1 flex items-center justify-center gap-1.5 border border-[#C8A85B]/30 text-[#C8A85B] hover:bg-[#C8A85B]/5 text-xs font-semibold rounded-lg py-2 px-3 transition-colors"
+                              >
+                                {isExpanded ? (
+                                  <>
+                                    <ChevronUp className="w-3 h-3" />
+                                    Sluiten
+                                  </>
+                                ) : (
+                                  <>
+                                    <Eye className="w-3 h-3" />
+                                    Bekijken
+                                  </>
+                                )}
+                              </button>
+                            ) : (
+                              <Link href={product.path} className="flex-1">
+                                <Button variant="outline" size="sm" className="w-full border-[#C8A85B]/30 text-[#C8A85B] hover:bg-[#C8A85B]/5 text-xs font-semibold rounded-lg">
+                                  <Eye className="w-3 h-3 mr-1" />
+                                  Bekijken
+                                </Button>
+                              </Link>
+                            )}
+                            <Link href="/offerte">
+                              <Button size="sm" className="bg-gradient-to-r from-[#C8A85B] to-[#D4AF37] hover:from-[#B8975A] hover:to-[#C4A882] text-white text-xs font-semibold rounded-lg shadow-md">
+                                <ArrowRight className="w-3 h-3" />
+                              </Button>
+                            </Link>
+                          </div>
+
+                          {product.hasCalculator && isExpanded && (
+                            <InbetweensCalculator />
+                          )}
+                        </CardContent>
+                      </Card>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}

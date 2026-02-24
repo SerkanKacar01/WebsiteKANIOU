@@ -1420,8 +1420,9 @@ const SplitScreenHero = ({
         {images.map((img, idx) => (
           <div
             key={idx}
-            className="absolute inset-0 transition-all duration-[1200ms] ease-in-out"
+            className="absolute inset-0 transition-all ease-in-out"
             style={{
+              transitionDuration: '1200ms',
               opacity: currentImage === idx ? 1 : 0,
               transform: currentImage === idx ? 'scale(1)' : 'scale(1.08)',
             }}

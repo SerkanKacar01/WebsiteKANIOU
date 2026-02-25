@@ -448,13 +448,13 @@ const Header = () => {
               <div className="max-w-[1400px] mx-auto px-8 xl:px-12 py-10">
                 <div className="flex items-center gap-3 mb-8 pb-5 border-b border-gray-100">
                   <div className="w-1 h-6 bg-[#C4A36C] rounded-full"></div>
-                  <h3 className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#C4A36C]">{menu.label}</h3>
+                  <h3 className="text-[11px] font-extrabold tracking-[0.25em] uppercase text-[#C4A36C]">{menu.label}</h3>
                 </div>
 
                 <div className={`grid gap-10 ${menu.columns.length >= 5 ? "grid-cols-5" : "grid-cols-3"}`}>
                   {menu.columns.map((col) => (
                     <div key={col.title}>
-                      <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#2C3E50] mb-4 pb-2 border-b border-gray-100">
+                      <h4 className="text-[12px] font-extrabold tracking-[0.2em] uppercase text-[#2C3E50] mb-4 pb-2 border-b border-gray-100">
                         {col.title}
                       </h4>
                       <div className="space-y-1">

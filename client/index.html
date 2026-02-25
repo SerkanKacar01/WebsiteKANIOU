@@ -7,23 +7,9 @@
     <!-- GDPR-compliant meta for search engines - no cookies involved -->
     <meta name="robots" content="index, follow" />
     <meta name="language" content="nl-BE" />
-    
-    <script>
-      (function() {
-        var isProduction = window.location.hostname.indexOf('replit.dev') === -1 &&
-                           window.location.hostname.indexOf('localhost') === -1 &&
-                           window.location.hostname.indexOf('127.0.0.1') === -1;
-        if (isProduction) {
-          var s = document.createElement('script');
-          s.id = 'Cookiebot';
-          s.src = 'https://consent.cookiebot.com/uc.js';
-          s.setAttribute('data-cbid', '277bd293-9336-4f15-ba87-4c760a56129b');
-          s.setAttribute('data-blockingmode', 'auto');
-          s.type = 'text/javascript';
-          document.head.appendChild(s);
-        }
-      })();
-    </script>
+
+    <!-- Cookiebot GDPR consent manager - must be first script in head -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="277bd293-9336-4f15-ba87-4c760a56129b" data-blockingmode="auto" type="text/javascript"></script>
   </head>
   <body>
     <div id="root"></div>

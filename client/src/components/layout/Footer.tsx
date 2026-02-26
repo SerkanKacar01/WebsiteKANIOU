@@ -39,19 +39,19 @@ const Footer: React.FC = () => {
                 <ul className="space-y-3 pt-2">
                   <li>
                     <a
-                      href="https://maps.google.com/?q=KANIOU+Zilvernaald+Maasmechelen"
+                      href="https://maps.google.com/?q=Pauwengraaf+66+3630+Maasmechelen"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-start gap-2.5 text-sm text-gray-400 hover:text-[#C8A85B] transition-colors group"
                     >
                       <MapPin className="w-4 h-4 text-[#C8A85B]/70 group-hover:text-[#C8A85B] mt-0.5 flex-shrink-0" />
-                      <span>Koninginnelaan 12<br />3630 Maasmechelen, België</span>
+                      <span>Pauwengraaf 66<br />3630 Maasmechelen, België</span>
                     </a>
                   </li>
                   <li>
-                    <a href="tel:+3289764530" className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-[#C8A85B] transition-colors group">
+                    <a href="tel:+32467856405" className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-[#C8A85B] transition-colors group">
                       <Phone className="w-4 h-4 text-[#C8A85B]/70 group-hover:text-[#C8A85B] flex-shrink-0" />
-                      +32 89 76 45 30
+                      +32 467 85 64 05
                     </a>
                   </li>
                   <li>
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
                   </div>
                   <ul className="space-y-1 pl-6">
                     {[
-                      { days: "Ma – Vr", hours: "09:00 – 17:30" },
+                      { days: "Ma – Vr", hours: "10:00 – 18:00" },
                       { days: "Zaterdag", hours: "10:00 – 17:00" },
                       { days: "Zondag", hours: "Gesloten" },
                     ].map((row) => (
@@ -221,12 +221,12 @@ const Footer: React.FC = () => {
                 <ul className="space-y-2 pt-1">
                   <li className="flex items-start gap-2 text-sm text-gray-400">
                     <MapPin className="w-4 h-4 text-[#C8A85B]/70 mt-0.5 flex-shrink-0" />
-                    <span>Koninginnelaan 12, 3630 Maasmechelen</span>
+                    <span>Pauwengraaf 66, 3630 Maasmechelen</span>
                   </li>
                   <li>
-                    <a href="tel:+3289764530" className="flex items-center gap-2 text-sm text-gray-400">
+                    <a href="tel:+32467856405" className="flex items-center gap-2 text-sm text-gray-400">
                       <Phone className="w-4 h-4 text-[#C8A85B]/70 flex-shrink-0" />
-                      +32 89 76 45 30
+                      +32 467 85 64 05
                     </a>
                   </li>
                   <li>
@@ -239,7 +239,7 @@ const Footer: React.FC = () => {
                 <div className="pt-1">
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#C8A85B]/70 mb-2">Openingstijden</p>
                   {[
-                    { days: "Ma – Vr", hours: "09:00 – 17:30" },
+                    { days: "Ma – Vr", hours: "10:00 – 18:00" },
                     { days: "Zaterdag", hours: "10:00 – 17:00" },
                     { days: "Zondag", hours: "Gesloten" },
                   ].map((row) => (

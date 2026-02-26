@@ -247,7 +247,7 @@ const Footer: React.FC = () => {
         <div className="hidden md:block border-t border-white/10 pt-8">
           <div className="text-center space-y-4">
             <p className="text-gray-500 text-sm">
-              © 2025 KANIOU Zilvernaald – Alle rechten voorbehouden
+              © 2026 KANIOU Zilvernaald – Alle rechten voorbehouden
             </p>
 
             <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-sm">

@@ -71,11 +71,11 @@ export function createSecurityHeaders() {
 
     const cspDirectives = [
       "default-src 'self'",
-      `script-src 'self' ${isProduction ? "'unsafe-inline'" : "'unsafe-inline' 'unsafe-eval'"} https://consent.cookiebot.com https://consentcdn.cookiebot.com`,
+      `script-src 'self' ${isProduction ? "'unsafe-inline'" : "'unsafe-inline' 'unsafe-eval'"} https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.googletagmanager.com`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://consentcdn.cookiebot.com",
       "font-src 'self' https://fonts.gstatic.com https://consentcdn.cookiebot.com data:",
-      "img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://consentcdn.cookiebot.com https://consent.cookiebot.com",
-      `connect-src 'self' https://consent.cookiebot.com https://consentcdn.cookiebot.com ${isProduction ? '' : 'ws: wss:'}`.trim(),
+      "img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://consentcdn.cookiebot.com https://consent.cookiebot.com https://www.google-analytics.com",
+      `connect-src 'self' https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.google-analytics.com ${isProduction ? '' : 'ws: wss:'}`.trim(),
       "frame-src https://consent.cookiebot.com https://consentcdn.cookiebot.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",

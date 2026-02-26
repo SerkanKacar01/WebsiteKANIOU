@@ -107,7 +107,7 @@ const GallerySection = () => {
   });
 
   // Use database items if available, otherwise use fallback items
-  const displayItems = !error && galleryItems ? galleryItems.slice(0, 6) : fallbackGalleryItems;
+  const displayItems = !error && galleryItems ? (galleryItems as GalleryItemType[]).slice(0, 6) : fallbackGalleryItems;
 
   return (
     <section id="gallery" className="py-8 md:py-16">

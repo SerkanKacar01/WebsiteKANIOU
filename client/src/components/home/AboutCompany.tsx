@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Award, Ruler, Truck, Headphones } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { inbetweenImage } from "@/assets/fallback";
+import { galleryImage1 } from "@/assets/fallback";
 
 const AboutCompany = () => {
   const { t } = useLanguage();
@@ -97,7 +97,7 @@ const AboutCompany = () => {
 
           <div className="relative">
             <img
-              src={inbetweenImage}
+              src={galleryImage1}
               alt={t('about.showroomImage')}
               className="w-full h-auto rounded-lg shadow-lg"
             />

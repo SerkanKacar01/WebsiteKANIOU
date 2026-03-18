@@ -16,15 +16,16 @@ const ExitIntentPopup = () => {
       return;
     }
 
-    const timer = setTimeout(() => {
-      if (!hasShown) {
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0 && !hasShown) {
         setIsVisible(true);
         setHasShown(true);
         sessionStorage.setItem("exit_popup_shown", "true");
       }
-    }, 5000);
+    };
 
-    return () => clearTimeout(timer);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, [hasShown]);
 
   useEffect(() => {

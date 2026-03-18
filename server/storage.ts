@@ -229,6 +229,9 @@ export interface IStorage {
   // Quote Requests
   createQuoteRequest(request: InsertQuoteRequest): Promise<QuoteRequest>;
   getQuoteRequests(): Promise<QuoteRequest[]>;
+  deleteQuoteRequest(id: number): Promise<void>;
+  getSmartQuoteRequests(): Promise<SmartQuoteRequest[]>;
+  deleteSmartQuoteRequest(id: number): Promise<void>;
   
   // Enterprise Quote Requests
   createEnterpriseQuote(request: InsertEnterpriseQuoteRequest): Promise<EnterpriseQuoteRequest>;

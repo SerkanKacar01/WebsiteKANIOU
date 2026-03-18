@@ -1,0 +1,139 @@
+REPLIT PROMPT — INTRAMODO LANDINGPAGE — HERO BANNER UPGRADE
+=============================================================
+
+Ik wil de bestaande hero banner op de IntraModo landingpage upgraden naar een meer professioneel en enterprise-achtig niveau. De huidige structuur en indeling mag blijven bestaan, maar ik wil de volgende verbeteringen toevoegen. Doe dit allemaal in de huidige chat. Verander NIET de bestaande pagina-structuur of andere secties buiten de hero banner.
+
+LET OP: Behoud het bestaande donkere kleurenschema (donkerblauw/zwart achtergrond met gouden accenten). Alle verbeteringen moeten passen binnen de bestaande stijl.
+
+---
+
+VISUELE DIEPTE EN ACHTERGROND-EFFECTEN
+
+Voeg de volgende subtiele achtergrond-effecten toe aan de hero sectie, achter alle bestaande content:
+
+1. Een heel subtiel rasterpatroon (grid lines) over de hele hero achtergrond. De lijnen moeten bijna onzichtbaar zijn, in de gouden accentkleur maar dan op ongeveer 3 procent opacity. Het raster moet vierkanten maken van ongeveer 80 bij 80 pixels.
+
+2. Twee zachte lichtgevende cirkels (orbs) die langzaam zweven met een oneindige animatie. De eerste orb moet rechtsboven in de hero staan, in een zachte gouden gloed op lage opacity. De tweede orb moet linksonder staan in een heel zachte blauwe gloed. Beide moeten een blur-filter hebben zodat ze er zacht en diffuus uitzien. Ze moeten achter alle content zitten.
+
+3. Een subtiele noise/grain texture overlay over de hele pagina. Dit is een vaste laag bovenop alles die niet klikbaar is, met hele lage opacity zodat het een analoge, premium textuur geeft aan het scherm.
+
+---
+
+TYPOGRAFIE UPGRADE
+
+Vervang de huidige fonts in de hero banner door het volgende:
+
+- De grote koptekst (zoals "Exclusief Maatwerk") moet het font Playfair Display gebruiken, bold, met een grootte van ongeveer 4.2rem voor het eerste woord.
+- Het woord "Maatwerk" (of het geaccentueerde woord) moet het font Cormorant Garamond gebruiken, italic en lichtgewicht (300), en moet een shimmer-animatie krijgen. De shimmer is een langzaam bewegend highlight-effect dat van links naar rechts beweegt over de gouden gradient tekst, alsof er licht overheen glijdt. Dit moet een oneindige animatie zijn die ongeveer 6 seconden duurt per cyclus.
+- Voeg onder de hoofdkop een subtekstregel toe in hoofdletters met brede letter-spacing die zegt "RAAMDECORATIE & INTERIEUR". Deze moet klein zijn (ongeveer 1rem), in een gedempte grijze kleur.
+- Alle bodytekst en knoppen moeten het font DM Sans gebruiken.
+- Importeer deze drie fonts via Google Fonts bovenaan de pagina.
+
+---
+
+STATISTIEKEN RIJ
+
+Voeg onder de bestaande beschrijvingstekst in de linkerkolom een rij toe met drie statistieken naast elkaar. Plaats deze onder een korte gouden horizontale lijn (divider) van ongeveer 60 pixels breed.
+
+De drie statistieken zijn:
+- "30+" met daaronder "JAAR ERVARING" in kleine hoofdletters
+- "5.000+" met daaronder "TEVREDEN KLANTEN" in kleine hoofdletters  
+- "100%" met daaronder "OP MAAT GEMAAKT" in kleine hoofdletters
+
+De cijfers moeten groot zijn (ongeveer 2rem) in het Playfair Display font. Het plus-teken en procent-teken moeten in de gouden accentkleur zijn. De labels eronder moeten klein zijn (0.7rem), in hoofdletters met brede letter-spacing, in een gedempte grijze kleur.
+
+---
+
+TRUST EN REVIEW RIJ
+
+Voeg onder de statistieken rij een nieuwe sectie toe, gescheiden door een dunne lijn bovenaan (in de gouden kleur op lage opacity).
+
+Deze rij moet bevatten, allemaal op één horizontale lijn:
+- Het woord "BEOORDEELD" in kleine gedempte hoofdletters
+- 5 gouden sterren (kleine star-iconen)
+- De score "4.9/5" in wit en bold
+- Een verticale scheidingslijn
+- De tekst "op basis van 200+ reviews" in een gedempte kleur
+
+---
+
+WHATSAPP CONTACTKAART
+
+Voeg in het service-paneel aan de rechterkant (waar nu "Direct Advies" en "Telefonisch Contact" staan) een derde contactkaart toe voor WhatsApp. Plaats deze onder de bestaande twee kaarten, in exact dezelfde stijl.
+
+De WhatsApp kaart moet bevatten:
+- Een icoon-achtergrond in een groene tint (de WhatsApp-groene kleur op lage opacity)
+- Een WhatsApp-telefoon-icoon in groen
+- Als titel: "WhatsApp"
+- Als subtekst: "Chat direct met ons team"
+- Een pijltje naar rechts, net zoals bij de andere kaarten
+- De kaart moet linken naar wa.me/32467856405
+
+---
+
+GARANTIE BADGE
+
+Voeg onder de "Nee bedankt, ik kijk nog even rond" tekst een garantie-badge toe. Dit is een horizontale balk met afgeronde hoeken, een heel subtiele groene rand en achtergrond (groen op zeer lage opacity).
+
+De badge bevat:
+- Een klein schildje-icoon in groen aan de linkerkant
+- De tekst "Gratis inmeting • Vrijblijvend advies • Garantie op montage" in het groen, klein lettertype
+
+---
+
+BOTTOM BAR
+
+Voeg helemaal onderaan de hero sectie een horizontale balk toe die over de volle breedte loopt. Deze balk moet een semi-transparante donkere achtergrond hebben met een blur-effect (glaseffect), en een heel subtiele gouden lijn aan de bovenkant.
+
+De balk bevat vier items naast elkaar, gescheiden door verticale lijntjes:
+1. Een huis-icoon + "Aan-huis service in heel België"
+2. Een klok-icoon + "Levering binnen 2–3 weken"
+3. Een schild-icoon + "5 jaar garantie"
+4. Een creditcard-icoon + "Betaling in termijnen mogelijk"
+
+De iconen moeten in de gouden accentkleur zijn, de tekst in een lichtgrijze kleur. De balk moet onderaan de hero vastzitten.
+
+---
+
+HOVER-EFFECTEN EN ANIMATIES
+
+Voeg de volgende interactie-effecten toe:
+
+1. De service-kaarten (Direct Advies, Telefonisch Contact, WhatsApp) moeten bij hover een klein beetje naar rechts schuiven (ongeveer 4 pixels) en een subtiele gouden rand krijgen. De pijl moet ook goud worden bij hover.
+
+2. De hoofdknop "Vrijblijvende Offerte" moet bij hover een glanzend lichteffect krijgen dat van links naar rechts beweegt (een shine/sweep effect). De knop moet ook een klein beetje omhoog komen (2 pixels) en een gouden schaduw krijgen.
+
+3. Het sluit-kruisje rechtsboven in het service-paneel moet bij hover een gouden rand en gouden kleur krijgen.
+
+4. Alle content in de hero moet met een staggered fade-in animatie verschijnen bij het laden van de pagina. Dit betekent dat elk element een klein beetje later verschijnt dan het vorige. De elementen moeten van onder naar boven inschuiven terwijl ze van onzichtbaar naar zichtbaar gaan. Begin met de badge bovenaan (0.2 seconde vertraging), dan de koptekst (0.4s), beschrijving (0.6s), statistieken (0.8s), trust-rij (1.0s), en de bottom bar (1.2s).
+
+---
+
+RESPONSIEF GEDRAG
+
+Zorg dat alle nieuwe elementen goed werken op mobiel:
+- Op schermen smaller dan 1024 pixels moet de layout van twee kolommen naar één kolom gaan
+- De statistieken mogen op kleinere schermen wrappen naar meerdere regels
+- De bottom bar items mogen wrappen op smalle schermen
+- De fonts moeten iets kleiner worden op mobiel (hoofdkop naar ongeveer 2.5rem)
+- Het service-paneel moet de volle breedte pakken op mobiel
+
+---
+
+SAMENVATTING VAN ALLE WIJZIGINGEN
+
+Dit is wat er dus moet gebeuren aan de bestaande hero banner:
+- Achtergrond: grid-lijnen, zwevende orbs, noise texture toevoegen
+- Fonts: Playfair Display, Cormorant Garamond en DM Sans importeren en toepassen
+- Shimmer-animatie op het accent-woord in de koptekst
+- Subtekstregel "RAAMDECORATIE & INTERIEUR" toevoegen
+- Statistieken rij met 3 cijfers toevoegen (30+, 5.000+, 100%)
+- Trust/review rij met sterren en score toevoegen
+- WhatsApp contactkaart toevoegen in het service-paneel
+- Garantie badge toevoegen onder de CTA knoppen
+- Bottom bar met 4 trust-items toevoegen onderaan de hero
+- Hover-effecten op kaarten, knop en kruisje
+- Staggered fade-in animatie op alle elementen
+- Responsive aanpassingen voor mobiel
+
+Verander NIETS aan andere secties van de pagina. Werk alleen binnen de hero banner sectie.

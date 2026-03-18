@@ -461,6 +461,52 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
+  // Admin: get all simple quote requests
+  app.get("/api/admin/quote-requests", requireAuth, async (req: any, res) => {
+    try {
+      const quotes = await storage.getQuoteRequests();
+      res.json(quotes);
+    } catch (error) {
+      console.error("Error fetching quote requests:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+  app.delete("/api/admin/quote-requests/:id", requireAuth, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+      await storage.deleteQuoteRequest(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting quote request:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+  // Admin: get smart quote requests
+  app.get("/api/admin/smart-quote-requests", requireAuth, async (req: any, res) => {
+    try {
+      const quotes = await storage.getSmartQuoteRequests();
+      res.json(quotes);
+    } catch (error) {
+      console.error("Error fetching smart quote requests:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
+  app.delete("/api/admin/smart-quote-requests/:id", requireAuth, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+      await storage.deleteSmartQuoteRequest(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting smart quote request:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
   // Admin: get enterprise quotes
   app.get("/api/admin/enterprise-quotes", requireAuth, async (req: any, res) => {
     try {

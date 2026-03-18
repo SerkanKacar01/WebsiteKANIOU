@@ -35,6 +35,8 @@ import {
   colorSampleRequests,
   ColorSampleRequest,
   InsertColorSampleRequest,
+  smartQuoteRequests,
+  SmartQuoteRequest,
   enterpriseQuoteRequests,
   EnterpriseQuoteRequest,
   InsertEnterpriseQuoteRequest,
@@ -544,6 +546,18 @@ Spray direct op de vlek, laat 2-3 minuten inwerken, en dep voorzichtig met een s
   
   async getQuoteRequests(): Promise<QuoteRequest[]> {
     return await db.select().from(quoteRequests).orderBy(desc(quoteRequests.createdAt));
+  }
+
+  async deleteQuoteRequest(id: number): Promise<void> {
+    await db.delete(quoteRequests).where(eq(quoteRequests.id, id));
+  }
+
+  async getSmartQuoteRequests(): Promise<SmartQuoteRequest[]> {
+    return await db.select().from(smartQuoteRequests).orderBy(desc(smartQuoteRequests.createdAt));
+  }
+
+  async deleteSmartQuoteRequest(id: number): Promise<void> {
+    await db.delete(smartQuoteRequests).where(eq(smartQuoteRequests.id, id));
   }
 
   // Enterprise Quote Requests

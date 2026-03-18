@@ -267,10 +267,9 @@ const ExitIntentPopup = () => {
           style={{ transitionDelay: '1.2s' }}>
           <div className="flex flex-wrap items-center justify-around gap-4 text-center">
             {[
-              { icon: <Home className="w-4 h-4" />, text: "Aan-huis service in heel België" },
-              { icon: <Clock className="w-4 h-4" />, text: "Levering binnen 2–3 weken" },
+              { icon: <Home className="w-4 h-4" />, text: "Aan-huis service in Nederland, België & Duitsland" },
+              { icon: <Clock className="w-4 h-4" />, text: "Levering binnen 8 tot 14 werkdagen" },
               { icon: <ShieldCheck className="w-4 h-4" />, text: "5 jaar garantie" },
-              { icon: <CreditCard className="w-4 h-4" />, text: "Betaling in termijnen mogelijk" },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 text-gray-300">
                 {i > 0 && <span className="hidden sm:block w-[1px] h-4 bg-white/10 mr-2" />}

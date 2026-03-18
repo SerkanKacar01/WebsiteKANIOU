@@ -162,7 +162,7 @@ const ExitIntentPopup = () => {
                   </div>
                   <span className="text-white font-bold text-sm">4.9/5</span>
                   <span className="w-[1px] h-4 bg-white/15" />
-                  <span className="text-[#8896a5] text-[0.7rem]">op basis van 200+ reviews</span>
+                  <span className="text-[#8896a5] text-[0.7rem]">op basis van 130+ reviews</span>
                 </div>
               </div>
 

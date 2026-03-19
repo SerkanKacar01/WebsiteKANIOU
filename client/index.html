@@ -8,15 +8,18 @@
     <meta name="robots" content="index, follow" />
     <meta name="language" content="nl-BE" />
 
-    <!-- ✅ Cookiebot GDPR consent manager - MUST be first script, before anything else -->
-    <script
-      id="Cookiebot"
-      src="https://consent.cookiebot.com/uc.js"
-      data-cbid="277bd293-9336-4f15-ba87-4c760a56129b"
-      data-blockingmode="auto"
-      type="text/javascript"
-      async
-    ></script>
+    <!-- ✅ Cookiebot GDPR consent manager - loads on production & deployed domains only -->
+    <script>
+      (function() {
+        var h = window.location.hostname;
+        var isProd = h === 'kaniou.be' || h === 'www.kaniou.be' || h.endsWith('.replit.app');
+        if (isProd) {
+          document.write('<scr' + 'ipt id="Cookiebot" src="https://consent.cookiebot.com/uc.js"' +
+            ' data-cbid="277bd293-9336-4f15-ba87-4c760a56129b"' +
+            ' data-blockingmode="auto" type="text/javascript"><\/scr' + 'ipt>');
+        }
+      })();
+    </script>
 
     <!-- Premium fonts for KANIOU -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

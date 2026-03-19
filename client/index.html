@@ -8,49 +8,20 @@
     <meta name="robots" content="index, follow" />
     <meta name="language" content="nl-BE" />
 
+    <!-- ✅ Cookiebot GDPR consent manager - MUST be first script, before anything else -->
+    <script
+      id="Cookiebot"
+      src="https://consent.cookiebot.com/uc.js"
+      data-cbid="277bd293-9336-4f15-ba87-4c760a56129b"
+      data-blockingmode="auto"
+      type="text/javascript"
+      async
+    ></script>
+
     <!-- Premium fonts for KANIOU -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:ital,wght@1,300&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-
-    <!-- Suppress third-party script errors (Cookiebot domain mismatch in dev) -->
-    <script>
-      (function() {
-        var _origOnError = window.onerror;
-        window.onerror = function(msg, src, line, col, err) {
-          if (src && (src.indexOf('cookiebot') !== -1 || src.indexOf('googletagmanager') !== -1)) {
-            return true;
-          }
-          if (!err && typeof msg === 'string') {
-            return true;
-          }
-          if (_origOnError) return _origOnError.apply(this, arguments);
-          return false;
-        };
-        window.addEventListener('unhandledrejection', function(e) {
-          if (e && e.reason && typeof e.reason !== 'object') {
-            e.preventDefault();
-          }
-        });
-      })();
-    </script>
-
-    <!-- Cookiebot GDPR consent manager - only on production domain -->
-    <script>
-      if (
-        window.location.hostname === 'kaniou.be' ||
-        window.location.hostname === 'www.kaniou.be' ||
-        window.location.hostname.endsWith('.replit.app')
-      ) {
-        var cb = document.createElement('script');
-        cb.id = 'Cookiebot';
-        cb.src = 'https://consent.cookiebot.com/uc.js';
-        cb.setAttribute('data-cbid', '277bd293-9336-4f15-ba87-4c760a56129b');
-        cb.setAttribute('data-blockingmode', 'auto');
-        cb.type = 'text/javascript';
-        document.head.appendChild(cb);
-      }
-    </script>
 
     <!-- Google Analytics 4 - blocked by Cookiebot until statistics consent given -->
     <script data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-8XK3VD9EZP"></script>

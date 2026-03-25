@@ -198,7 +198,7 @@ const ExitIntentPopup = () => {
 
               {/* Telefonisch Contact */}
               <button
-                onClick={() => { window.location.href = "tel:+32467856405"; }}
+                onClick={() => { window.location.href = "tel:+32471526687"; }}
                 className="service-card w-full group flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-2xl transition-all duration-300"
               >
                 <div className="flex items-center gap-4 text-left">
@@ -209,7 +209,7 @@ const ExitIntentPopup = () => {
                   </div>
                   <div>
                     <p className="text-white font-bold text-base group-hover:text-[#C4A36C] transition-colors">Telefonisch Contact</p>
-                    <p className="text-gray-400 text-xs">+32 467 85 64 05</p>
+                    <p className="text-gray-400 text-xs">+32 471 52 66 87</p>
                   </div>
                 </div>
                 <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-[#C4A36C] transition-all group-hover:translate-x-1" />
@@ -217,7 +217,7 @@ const ExitIntentPopup = () => {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/32467856405"
+                href="https://wa.me/32471526687"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="service-card w-full group flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-2xl transition-all duration-300"

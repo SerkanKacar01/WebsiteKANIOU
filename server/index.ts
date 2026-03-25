@@ -78,7 +78,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
           orderNumber: 'DEMO12345',
           customerName: 'Demo Klant',
           customerEmail: 'demo@kaniou.be',
-          customerPhone: '+32467856405',
+          customerPhone: '+32471526687',
           customerFirstName: 'Demo',
           customerLastName: 'Klant',
           customerAddress: 'Demostraat 123',

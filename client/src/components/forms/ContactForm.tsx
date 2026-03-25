@@ -171,7 +171,7 @@ const ContactForm = () => {
           </h3>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="https://wa.me/+32467856405"
+              href="https://wa.me/+32471526687"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center px-6 py-3 bg-[#25D366] hover:bg-[#20B358] text-white rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"

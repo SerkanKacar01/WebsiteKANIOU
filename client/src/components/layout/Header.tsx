@@ -174,9 +174,9 @@ const Header = () => {
         <div className="max-w-[1800px] mx-auto px-8 xl:px-12">
           <div className="flex items-center justify-between h-10">
             <div className="flex items-center gap-8">
-              <a href="tel:+32467856405" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
+              <a href="tel:+32471526687" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
                 <Phone className="w-3 h-3" />
-                <span>+32 467 85 64 05</span>
+                <span>+32 471 52 66 87</span>
               </a>
               <a href="mailto:info@kaniou.be" className="flex items-center gap-2 text-[11px] tracking-wide hover:text-[#C4A36C] transition-colors duration-300">
                 <Mail className="w-3 h-3" />

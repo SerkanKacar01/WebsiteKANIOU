@@ -31,7 +31,7 @@ const TermsOfServicePage = () => {
                   <strong>E-mail:</strong> <a href="mailto:info@kaniou.be" className="text-accent hover:underline">info@kaniou.be</a>
                 </p>
                 <p className="font-body text-text-medium">
-                  <strong>Telefoon:</strong> +32 467 85 64 05
+                  <strong>Telefoon:</strong> +32 471 52 66 87
                 </p>
                 <p className="font-body text-text-medium mt-2 text-sm">
                   (hierna "wij" of "KANIOU zilvernaald" of de "Verkoper")
@@ -526,7 +526,7 @@ const TermsOfServicePage = () => {
                     <strong>E-mail:</strong> <a href="mailto:info@kaniou.be" className="text-accent hover:underline">info@kaniou.be</a>
                   </p>
                   <p className="font-body text-text-medium">
-                    <strong>Telefoon:</strong> +32 467 85 64 05
+                    <strong>Telefoon:</strong> +32 471 52 66 87
                   </p>
                 </div>
               </div>

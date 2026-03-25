@@ -49,9 +49,9 @@ const Footer: React.FC = () => {
                     </a>
                   </li>
                   <li>
-                    <a href="tel:+32467856405" className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-[#C8A85B] transition-colors group">
+                    <a href="tel:+32471526687" className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-[#C8A85B] transition-colors group">
                       <Phone className="w-4 h-4 text-[#C8A85B]/70 group-hover:text-[#C8A85B] flex-shrink-0" />
-                      +32 467 85 64 05
+                      +32 471 52 66 87
                     </a>
                   </li>
                   <li>
@@ -224,9 +224,9 @@ const Footer: React.FC = () => {
                     <span>Pauwengraaf 66, 3630 Maasmechelen</span>
                   </li>
                   <li>
-                    <a href="tel:+32467856405" className="flex items-center gap-2 text-sm text-gray-400">
+                    <a href="tel:+32471526687" className="flex items-center gap-2 text-sm text-gray-400">
                       <Phone className="w-4 h-4 text-[#C8A85B]/70 flex-shrink-0" />
-                      +32 467 85 64 05
+                      +32 471 52 66 87
                     </a>
                   </li>
                   <li>

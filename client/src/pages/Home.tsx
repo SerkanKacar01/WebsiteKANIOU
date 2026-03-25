@@ -787,10 +787,10 @@ const ShowroomSection = () => {
               <div className="flex items-center gap-4">
                 <Phone className="w-5 h-5 text-gray-600 flex-shrink-0" />
                 <a
-                  href="tel:+32470592914"
+                  href="tel:+32471526687"
                   className="text-gray-600 hover:text-black transition-colors"
                 >
-                  +32 467 85 64 05
+                  +32 471 52 66 87
                 </a>
               </div>
               <div className="flex items-center gap-4">

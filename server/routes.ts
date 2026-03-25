@@ -835,7 +835,7 @@ We houden u uiteraard op de hoogte zodra uw bestelling gereed is voor levering o
 ━━━━━━━━━━━━━━━━━━━  
 Heeft u vragen over uw bestelling, levering of iets anders? Neem gerust contact met ons op:  
 📧 E-mail: info@kaniou.be  
-📞 Telefoon: +32 467 85 64 05 
+📞 Telefoon: +32 471 52 66 87 
 🌐 Website: www.kaniou.be
 
 ${newNoteFromEntrepreneur ? `💬 Bericht van KANIOU: ${newNoteFromEntrepreneur}` : ""}
@@ -986,7 +986,7 @@ ${expectedDeliveryDate ? `📅 Verwachte levering: ${expectedDeliveryDate}` : ''
 
 📦 **Volg uw bestelling**  
 ━━━━━━━━━━━━━━━━━━━  
-Voor vragen over uw bestelling kunt u contact opnemen via info@kaniou.be of +32 467 85 64 05.
+Voor vragen over uw bestelling kunt u contact opnemen via info@kaniou.be of +32 471 52 66 87.
 ${description ? `Beschrijving: ${description}` : ""}
 
 🛠 **Over uw bestelling**  
@@ -998,7 +998,7 @@ We houden u uiteraard op de hoogte zodra uw bestelling gereed is voor levering o
 ━━━━━━━━━━━━━━━━━━━  
 Heeft u vragen over uw bestelling, levering of iets anders? Neem gerust contact met ons op:  
 📧 E-mail: info@kaniou.be  
-📞 Telefoon: +32 467 85 64 05 
+📞 Telefoon: +32 471 52 66 87 
 🌐 Website: www.kaniou.be
 
 🛍 Bedankt voor uw vertrouwen in **KANIOU Zilvernaald || Gordijnen & Zonweringen** –  

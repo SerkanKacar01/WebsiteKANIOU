@@ -468,10 +468,10 @@ const ContactPage = () => {
                     Bel ons direct
                   </h3>
                   <a
-                    href="tel:+32467856405"
+                    href="tel:+32471526687"
                     className="text-xl font-bold text-[#C8A85B] hover:text-[#D4AF37] transition-colors mb-3"
                   >
-                    +32 467 85 64 05
+                    +32 471 52 66 87
                   </a>
                   <div className="border-t border-[#C8A85B]/15 pt-3 mb-4">
                     <div className="flex items-center justify-center gap-2 mb-1">
@@ -482,7 +482,7 @@ const ContactPage = () => {
                   </div>
                   <div className="mt-auto">
                     <a
-                      href="tel:+32467856405"
+                      href="tel:+32471526687"
                       className="inline-flex items-center gap-2 text-[#C8A85B] font-semibold hover:text-[#D4AF37] transition-colors text-sm"
                     >
                       Nu bellen

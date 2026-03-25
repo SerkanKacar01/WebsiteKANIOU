@@ -47,7 +47,7 @@ const ContactSection = () => {
               {t("Telefonisch bereikbaar")}
             </h3>
             <p className="font-body text-[14px] md:text-base text-text-medium">
-              {t("+32 467 85 64 05")}
+              {t("+32 471 52 66 87")}
             </p>
             <p className="font-body text-text-medium mt-2">
               {t("Maandag t/m Zaterdag: 10:00 – 18:00")}

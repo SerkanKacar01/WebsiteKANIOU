@@ -451,7 +451,7 @@ const QuoteWizard = () => {
               <div key={w.id} className="ml-3 text-gray-500 text-xs flex items-center gap-1.5 py-0.5">
                 <span className="w-1.5 h-1.5 bg-[#C4A36C] rounded-full flex-shrink-0"></span>
                 <span>{w.label || `Raam ${wi + 1}`}</span>
-                {w.width && w.height && <span className="text-gray-400">— {w.width}×{w.height} cm</span>}
+                {w.width && w.height && <span className="text-gray-400">— {w.width}×{w.height} mm</span>}
                 {w.mountType && <span className="text-gray-400">({w.mountType})</span>}
                 {Number(w.quantity) > 1 && <span className="text-gray-400">×{w.quantity}</span>}
               </div>
@@ -680,12 +680,12 @@ const QuoteWizard = () => {
                             <Input value={win.label} onChange={(e) => updateWindow(room.id, win.id, "label", e.target.value)} placeholder="Bijv. Links" className="h-9 text-sm" />
                           </div>
                           <div>
-                            <Label className="text-xs text-gray-400 mb-1 block">Breedte (cm)</Label>
-                            <Input type="number" min="1" value={win.width} onChange={(e) => updateWindow(room.id, win.id, "width", e.target.value)} placeholder="cm" className="h-9 text-sm" />
+                            <Label className="text-xs text-gray-400 mb-1 block">Breedte (mm)</Label>
+                            <Input type="number" min="1" value={win.width} onChange={(e) => updateWindow(room.id, win.id, "width", e.target.value)} placeholder="mm" className="h-9 text-sm" />
                           </div>
                           <div>
-                            <Label className="text-xs text-gray-400 mb-1 block">Hoogte (cm)</Label>
-                            <Input type="number" min="1" value={win.height} onChange={(e) => updateWindow(room.id, win.id, "height", e.target.value)} placeholder="cm" className="h-9 text-sm" />
+                            <Label className="text-xs text-gray-400 mb-1 block">Hoogte (mm)</Label>
+                            <Input type="number" min="1" value={win.height} onChange={(e) => updateWindow(room.id, win.id, "height", e.target.value)} placeholder="mm" className="h-9 text-sm" />
                           </div>
                           <div>
                             <Label className="text-xs text-gray-400 mb-1 block">Montage</Label>

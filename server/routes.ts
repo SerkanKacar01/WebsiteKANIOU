@@ -411,7 +411,7 @@ export async function registerRoutes(app: Express): Promise<void> {
           return res.status(400).json({ error: "Elke ruimte moet minstens één raam hebben" });
         }
         for (const win of room.windows) {
-          if (!win.widthCm || !win.heightCm || win.widthCm <= 0 || win.heightCm <= 0 || win.widthCm > 2000 || win.heightCm > 1000) {
+          if (!win.widthCm || !win.heightCm || win.widthCm <= 0 || win.heightCm <= 0 || win.widthCm > 100000 || win.heightCm > 100000) {
             return res.status(400).json({ error: "Ongeldige raammaten (breedte/hoogte moeten positief zijn)" });
           }
         }
